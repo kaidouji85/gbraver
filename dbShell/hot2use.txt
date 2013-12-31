@@ -1,0 +1,2 @@
+run db shell
+mongo hostname/gbraver shell file name

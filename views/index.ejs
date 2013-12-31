@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+    <form action="/battle" method="post">
+      <p>ユーザID<input type="text" name="userId"></p>
+      <p>ルームID<input type="text" name="roomId"></p>
+      <p><input type="submit" value="ログイン"></p>
+    </form>
+  </body>
+</html>
