@@ -41,6 +41,7 @@ var usersSchema = mongoose.Schema({
     userId : Number,
     status :{
         name : String,
+        pictName : String,
         hp : Number,
         power : Number,
         defenth : Number,
@@ -62,7 +63,7 @@ var server = http.createServer(app).listen(app.get('port'), function() {
 //サーバ側のゲーム処理
 var game = function(spec, my) {
     var that = {};
-    var inUserInfoArray = new Array();
+    var inUsersInfo = {};
     var userInputs = {};
     
     /**
@@ -71,11 +72,10 @@ var game = function(spec, my) {
      */
     that.join = function(userId,fn){
         Users.find({userId:userId},function(err,respUsers){
-            console.log(respUsers);
             var userInfo = respUsers[0];
-            inUserInfoArray.push(userInfo);
-            if(inUserInfoArray.length == MAX_PLAYER_NUM) {
-                fn(null,inUserInfoArray);    
+            inUsersInfo[userId] = userInfo;
+            if( Object.keys(inUsersInfo).length == MAX_PLAYER_NUM) {
+                fn(null,inUsersInfo);    
             }
         });
     };
