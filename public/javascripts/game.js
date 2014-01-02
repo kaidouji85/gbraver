@@ -56,6 +56,13 @@ function game(spec, my) {
     var labelEnemyHp;
     var labelEnemyActive;
     var labelEnemyBattery;
+    var labelPlayerSelectBattery;
+    var labelEnemySelectBattery;
+    var playerSelectBattery = 0;
+    var enemySelectBattery = 0;
+    var executePhase = waitPhase;
+    
+    const MAX_ACTIVE = 5000;
     
     core = new Core(640, 480);
     core.fps = 60;
@@ -63,6 +70,7 @@ function game(spec, my) {
     playerStatus = spec[userId].status;
     enemyStatus = spec[enemyUserId].status;
    
+    keyBind();
     preLoad();
     
     // ファイルのプリロードが完了したときに実行される関数
@@ -72,7 +80,7 @@ function game(spec, my) {
         //リフレッシュレートごとの処理
         core.rootScene.addEventListener('enterframe', function(e) {
             refreshMertor();
-            
+            executePhase();
         });
     };
 
@@ -85,6 +93,10 @@ function game(spec, my) {
         core.preload('/images/'+enemyStatus.pictName); 
     }
     
+    //キーバインド
+    function keyBind(){
+        core.keybind(90,'a');
+    }
     //初期化
     function init(){
         playerStatus.active = 0;
@@ -126,6 +138,11 @@ function game(spec, my) {
         labelBattery.y = 48;
         core.rootScene.addChild(labelBattery);
         
+        labelPlayerSelectBattery = new Label('');
+        labelPlayerSelectBattery.x = 400;
+        labelPlayerSelectBattery.y = 400;
+        core.rootScene.addChild(labelPlayerSelectBattery);
+        
         labelEnemyUnitName = new Label(enemyStatus.name);
         labelEnemyUnitName.x = 32;
         labelEnemyUnitName.y = 0;
@@ -145,6 +162,11 @@ function game(spec, my) {
         labelEnemyBattery.x = 32;
         labelEnemyBattery.y = 48;
         core.rootScene.addChild(labelEnemyBattery);
+        
+        labelEnemySelectBattery = new Label('');
+        labelEnemySelectBattery.x = 32;
+        labelEnemySelectBattery.y = 400;
+        core.rootScene.addChild(labelEnemySelectBattery);
     }
     
     //メータ系更新
@@ -158,6 +180,33 @@ function game(spec, my) {
         labelEnemyBattery.text = 'Battery' + enemyStatus.battery;
     }
 
+    //ウェイトフェイズ
+    function waitPhase(){
+        playerStatus.active += playerStatus.speed;
+        enemyStatus.active += enemyStatus.speed;
+        
+        if(playerStatus.active >= MAX_ACTIVE){
+            executePhase = playerCommandPhase;
+        } else if(enemyStatus.active >= MAX_ACTIVE) {
+            executePhase = enemyCommandPhase;
+        }
+    }
+    
+    //プレイヤーコマンド入力フェイズ
+    function playerCommandPhase(){
+        if(core.input.right){
+            playerSelectBattery ++;
+        } else if(core.input.left) {
+            playerSelectBattery --;
+        }
+        
+        labelPlayerSelectBattery.text = playerSelectBattery;
+    }
+    
+    //敵コマンド入力フェイズ
+    function enemyCommandPhase() {
+        
+    }
     
     return core;
 };
