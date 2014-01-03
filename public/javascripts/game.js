@@ -254,7 +254,7 @@ function game(spec, my) {
         console.log('playerCommandPhase');
     }
     
-    //敵のコマンド入力
+    //敵のコマンド入力フェイズ
     function enemyCommandPhase() {
         console.log('enemyCommandPhase');
     }
