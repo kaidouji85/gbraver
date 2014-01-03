@@ -56,7 +56,6 @@ function game(spec, my) {
     var labelEnemyHp;
     var labelEnemyActive;
     var labelEnemyBattery;
-    var labelPlayerSelectBattery;
     var labelEnemySelectBattery;
     var playerSelectBattery = 0;
     var enemySelectBattery = 0;
@@ -64,6 +63,7 @@ function game(spec, my) {
     var iconMinus;
     var executePhase = waitPhase;
     var playerSelectBatterySprite;
+    var counter = 0;
     
     const MAX_ACTIVE = 5000;
     
@@ -72,8 +72,7 @@ function game(spec, my) {
     
     playerStatus = spec[userId].status;
     enemyStatus = spec[enemyUserId].status;
-   
-    keyBind();
+
     preLoad();
     
     // ファイルのプリロードが完了したときに実行される関数
@@ -99,10 +98,6 @@ function game(spec, my) {
         core.preload('/images/Battery.png');
     }
     
-    //キーバインド
-    function keyBind(){
-        core.keybind(90,'a');
-    }
     //初期化
     function init(){
         playerStatus.active = 0;
@@ -146,12 +141,6 @@ function game(spec, my) {
         labelBattery.color = '#fff';
         core.rootScene.addChild(labelBattery);
         
-        labelPlayerSelectBattery = new Label('');
-        labelPlayerSelectBattery.x = 400;
-        labelPlayerSelectBattery.y = 64;
-        labelPlayerSelectBattery.color = '#fff';
-        core.rootScene.addChild(labelPlayerSelectBattery);
-        
         labelEnemyUnitName = new Label(enemyStatus.name);
         labelEnemyUnitName.x = 32;
         labelEnemyUnitName.y = 0;
@@ -184,23 +173,21 @@ function game(spec, my) {
         
         iconPlus = new Sprite(64, 64);
         iconPlus.image = core.assets['/images/plus.png'];
-        iconPlus.x = 180;
+        iconPlus.x = 256;
         iconPlus.y = 180;
         iconPlus.addEventListener(Event.TOUCH_START,function(e){
             playerSelectBatterySprite.value += 1;
             playerSelectBatterySprite.frame = playerSelectBatterySprite.value;
         });
-        core.rootScene.addChild(iconPlus);
         
         iconMinus = new Sprite(64, 64);
         iconMinus.image = core.assets['/images/minus.png'];
-        iconMinus.x = 256;
+        iconMinus.x = 180;
         iconMinus.y = 180;
         iconMinus.addEventListener(Event.TOUCH_START,function(e){
             playerSelectBatterySprite.value += -1;
             playerSelectBatterySprite.frame = playerSelectBatterySprite.value;
         });
-        core.rootScene.addChild(iconMinus);
         
         playerSelectBatterySprite = new Sprite(64,64);
         playerSelectBatterySprite.image = core.assets['/images/Battery.png'];
@@ -208,7 +195,20 @@ function game(spec, my) {
         playerSelectBatterySprite.y = 100;
         playerSelectBatterySprite.frame = 1;
         playerSelectBatterySprite.value = 0;
-        core.rootScene.addChild(playerSelectBatterySprite);
+        playerSelectBatterySprite.addEventListener(Event.TOUCH_START,function(e){
+            //アイコンを消す
+            core.rootScene.removeChild(playerSelectBatterySprite);
+            core.rootScene.removeChild(iconPlus);
+            core.rootScene.removeChild(iconMinus);
+            
+            //入寮情報を送信する
+            socket.emit("input", {
+                roomId : roomId,
+                userId : userId,
+                input : playerSelectBatterySprite.value
+            });
+            
+        });
         
         core.rootScene.backgroundColor = "black";
     }
@@ -231,19 +231,32 @@ function game(spec, my) {
         
         if(playerStatus.active >= MAX_ACTIVE){
             executePhase = playerCommandPhase;
+            preparePlayerCommandPhase();
         } else if(enemyStatus.active >= MAX_ACTIVE) {
             executePhase = enemyCommandPhase;
+            socket.emit("input", {
+                roomId : roomId,
+                userId : userId,
+                input : 'OK'
+            });
         }
+    }
+    
+    //プレイヤーコマンド入力フェイズの準備
+    function preparePlayerCommandPhase(){
+        core.rootScene.addChild(iconPlus);
+        core.rootScene.addChild(iconMinus);
+        core.rootScene.addChild(playerSelectBatterySprite);
     }
     
     //プレイヤーコマンド入力フェイズ
     function playerCommandPhase(){
-        labelPlayerSelectBattery.text = playerSelectBattery;
+        console.log('playerCommandPhase');
     }
     
-    //敵コマンド入力フェイズ
+    //敵のコマンド入力
     function enemyCommandPhase() {
-        
+        console.log('enemyCommandPhase');
     }
     
     return core;
