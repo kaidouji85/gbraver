@@ -63,10 +63,11 @@ function game(spec, my) {
     var iconPlus;
     var iconMinus;
     var executePhase = waitPhase;
+    var playerSelectBatterySprite;
     
     const MAX_ACTIVE = 5000;
     
-    core = new Core(640, 480);
+    core = new Core(320, 320);
     core.fps = 60;
     
     playerStatus = spec[userId].status;
@@ -95,6 +96,7 @@ function game(spec, my) {
         core.preload('/images/'+enemyStatus.pictName); 
         core.preload('/images/plus.png');
         core.preload('/images/minus.png');
+        core.preload('/images/Battery.png');
     }
     
     //キーバインド
@@ -106,94 +108,109 @@ function game(spec, my) {
         playerStatus.active = 0;
         playerStatus.battery = 5;
         playerSprite = new Sprite(128, 128);
-        playerSprite.addEventListener(Event.TOUCH_START,function(e){
-            playerSprite.x += 2;
-        });
+        playerSprite.image = core.assets['/images/'+playerStatus.pictName];
+        playerSprite.x = 192;
+        playerSprite.y = 80;
+        core.rootScene.addChild(playerSprite);
         
         enemyStatus.active = 0;
         enemyStatus.battery = 5;
         enemySprite = new Sprite(128, 128);
-    
-        playerSprite.image = core.assets['/images/'+playerStatus.pictName];
-        playerSprite.x = 200;
-        playerSprite.y = 128;
-        core.rootScene.addChild(playerSprite);
-        
         enemySprite.image = core.assets['/images/'+enemyStatus.pictName];
-        enemySprite.x = 32;
-        enemySprite.y = 128;
+        enemySprite.x = 0;
+        enemySprite.y = 80;
         enemySprite.scaleX = -1;
         core.rootScene.addChild(enemySprite);
         
         labelUnitName = new Label(playerStatus.name);
         labelUnitName.x = 200;
         labelUnitName.y = 0;
+        labelUnitName.color = '#fff';
         core.rootScene.addChild(labelUnitName);
         
         labelHp = new Label('HP');
         labelHp.x = 200;
         labelHp.y = 16;
+        labelHp.color = '#fff';
         core.rootScene.addChild(labelHp);
         
         labelActive = new Label('Active');
         labelActive.x = 200;
         labelActive.y = 32;
+        labelActive.color = '#fff';
         core.rootScene.addChild(labelActive);
         
         labelBattery = new Label('Battery');
         labelBattery.x = 200;
         labelBattery.y = 48;
+        labelBattery.color = '#fff';
         core.rootScene.addChild(labelBattery);
         
         labelPlayerSelectBattery = new Label('');
         labelPlayerSelectBattery.x = 400;
         labelPlayerSelectBattery.y = 64;
+        labelPlayerSelectBattery.color = '#fff';
         core.rootScene.addChild(labelPlayerSelectBattery);
         
         labelEnemyUnitName = new Label(enemyStatus.name);
         labelEnemyUnitName.x = 32;
         labelEnemyUnitName.y = 0;
+        labelEnemyUnitName.color = '#fff';
         core.rootScene.addChild(labelEnemyUnitName);       
 
         labelEnemyHp = new Label('HP');
         labelEnemyHp.x = 32;
         labelEnemyHp.y = 16;
+        labelEnemyHp.color = '#fff';
         core.rootScene.addChild(labelEnemyHp);
         
         labelEnemyActive = new Label('Active');
         labelEnemyActive.x = 32;
         labelEnemyActive.y = 32;
+        labelEnemyActive.color = '#fff';
         core.rootScene.addChild(labelEnemyActive);
         
         labelEnemyBattery = new Label('Battery');
         labelEnemyBattery.x = 32;
         labelEnemyBattery.y = 48;
+        labelEnemyBattery.color = '#fff';
         core.rootScene.addChild(labelEnemyBattery);
         
         labelEnemySelectBattery = new Label('');
         labelEnemySelectBattery.x = 32;
         labelEnemySelectBattery.y = 64;
+        labelEnemySelectBattery.color = '#fff';
         core.rootScene.addChild(labelEnemySelectBattery);
         
         iconPlus = new Sprite(64, 64);
         iconPlus.image = core.assets['/images/plus.png'];
-        iconPlus.x = 200;
-        iconPlus.y = 64;
+        iconPlus.x = 180;
+        iconPlus.y = 180;
         iconPlus.addEventListener(Event.TOUCH_START,function(e){
-            iconPlus.x += 2;
-            originX = e.x - this.x;
-            originY = e.y - this.y;            
-            console.log('x '+e.x);
-            console.log('y '+e.y);
-            
-        });
-        iconPlus.addEventListener(enchant.Event.TOUCH_MOVE, function(e){
-            this.x = e.x - originX;
-            this.y = e.y - originY;
+            playerSelectBatterySprite.value += 1;
+            playerSelectBatterySprite.frame = playerSelectBatterySprite.value;
         });
         core.rootScene.addChild(iconPlus);
         
-        core.rootScene.backgroundColor = "red";
+        iconMinus = new Sprite(64, 64);
+        iconMinus.image = core.assets['/images/minus.png'];
+        iconMinus.x = 256;
+        iconMinus.y = 180;
+        iconMinus.addEventListener(Event.TOUCH_START,function(e){
+            playerSelectBatterySprite.value += -1;
+            playerSelectBatterySprite.frame = playerSelectBatterySprite.value;
+        });
+        core.rootScene.addChild(iconMinus);
+        
+        playerSelectBatterySprite = new Sprite(64,64);
+        playerSelectBatterySprite.image = core.assets['/images/Battery.png'];
+        playerSelectBatterySprite.x = 220;
+        playerSelectBatterySprite.y = 100;
+        playerSelectBatterySprite.frame = 1;
+        playerSelectBatterySprite.value = 0;
+        core.rootScene.addChild(playerSelectBatterySprite);
+        
+        core.rootScene.backgroundColor = "black";
     }
     
     //メータ系更新
