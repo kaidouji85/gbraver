@@ -14,8 +14,8 @@ var inputs = null;  //全ユーザの入力情報
 // ページが読み込まれたときに実行される関数
 window.onload = function() {
     socket = io.connect(location.origin);
-    roomId = $("#roomId").val();
-    userId = $("#userId").val();
+    roomId = $("meta[name=roomId]").attr('content');
+    userId = $("meta[name=userId]").attr('content');
 
     //全プレイヤーの入室処理が完了した時に呼び出させる処理
     socket.on("startGame", function(data) {
@@ -60,6 +60,8 @@ function game(spec, my) {
     var labelEnemySelectBattery;
     var playerSelectBattery = 0;
     var enemySelectBattery = 0;
+    var iconPlus;
+    var iconMinus;
     var executePhase = waitPhase;
     
     const MAX_ACTIVE = 5000;
@@ -91,6 +93,8 @@ function game(spec, my) {
     function preLoad(){
         core.preload('/images/'+playerStatus.pictName);
         core.preload('/images/'+enemyStatus.pictName); 
+        core.preload('/images/plus.png');
+        core.preload('/images/minus.png');
     }
     
     //キーバインド
@@ -101,14 +105,17 @@ function game(spec, my) {
     function init(){
         playerStatus.active = 0;
         playerStatus.battery = 5;
-        playerSprite = new Sprite(256, 256);
-    
+        playerSprite = new Sprite(128, 128);
+        playerSprite.addEventListener(Event.TOUCH_START,function(e){
+            playerSprite.x += 2;
+        });
+        
         enemyStatus.active = 0;
         enemyStatus.battery = 5;
-        enemySprite = new Sprite(256, 256);
+        enemySprite = new Sprite(128, 128);
     
         playerSprite.image = core.assets['/images/'+playerStatus.pictName];
-        playerSprite.x = 400;
+        playerSprite.x = 200;
         playerSprite.y = 128;
         core.rootScene.addChild(playerSprite);
         
@@ -119,28 +126,28 @@ function game(spec, my) {
         core.rootScene.addChild(enemySprite);
         
         labelUnitName = new Label(playerStatus.name);
-        labelUnitName.x = 400;
+        labelUnitName.x = 200;
         labelUnitName.y = 0;
         core.rootScene.addChild(labelUnitName);
         
         labelHp = new Label('HP');
-        labelHp.x = 400;
+        labelHp.x = 200;
         labelHp.y = 16;
         core.rootScene.addChild(labelHp);
         
         labelActive = new Label('Active');
-        labelActive.x = 400;
+        labelActive.x = 200;
         labelActive.y = 32;
         core.rootScene.addChild(labelActive);
         
         labelBattery = new Label('Battery');
-        labelBattery.x = 400;
+        labelBattery.x = 200;
         labelBattery.y = 48;
         core.rootScene.addChild(labelBattery);
         
         labelPlayerSelectBattery = new Label('');
         labelPlayerSelectBattery.x = 400;
-        labelPlayerSelectBattery.y = 400;
+        labelPlayerSelectBattery.y = 64;
         core.rootScene.addChild(labelPlayerSelectBattery);
         
         labelEnemyUnitName = new Label(enemyStatus.name);
@@ -165,8 +172,28 @@ function game(spec, my) {
         
         labelEnemySelectBattery = new Label('');
         labelEnemySelectBattery.x = 32;
-        labelEnemySelectBattery.y = 400;
+        labelEnemySelectBattery.y = 64;
         core.rootScene.addChild(labelEnemySelectBattery);
+        
+        iconPlus = new Sprite(64, 64);
+        iconPlus.image = core.assets['/images/plus.png'];
+        iconPlus.x = 200;
+        iconPlus.y = 64;
+        iconPlus.addEventListener(Event.TOUCH_START,function(e){
+            iconPlus.x += 2;
+            originX = e.x - this.x;
+            originY = e.y - this.y;            
+            console.log('x '+e.x);
+            console.log('y '+e.y);
+            
+        });
+        iconPlus.addEventListener(enchant.Event.TOUCH_MOVE, function(e){
+            this.x = e.x - originX;
+            this.y = e.y - originY;
+        });
+        core.rootScene.addChild(iconPlus);
+        
+        core.rootScene.backgroundColor = "red";
     }
     
     //メータ系更新
@@ -194,12 +221,6 @@ function game(spec, my) {
     
     //プレイヤーコマンド入力フェイズ
     function playerCommandPhase(){
-        if(core.input.right){
-            playerSelectBattery ++;
-        } else if(core.input.left) {
-            playerSelectBattery --;
-        }
-        
         labelPlayerSelectBattery.text = playerSelectBattery;
     }
     
