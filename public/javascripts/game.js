@@ -1,4 +1,3 @@
-
 /**
  * ゲームメインクラス
  * @param {Object} spec
@@ -35,13 +34,10 @@ function game(spec, my) {
     var labelEnemyActive;
     var labelEnemyBattery;
     var labelEnemySelectBattery;
-    var playerSelectBattery = 0;
-    var enemySelectBattery = 0;
     var iconPlus;
     var iconMinus;
     var executePhase = waitPhase;
     var playerSelectBatterySprite;
-    var counter = 0;
     var inputs = null;
     
     /**
@@ -227,39 +223,49 @@ function game(spec, my) {
      * ウェイトフェイズ 
      */
     function waitPhase(){
+        //アクティブゲージを加算
         playerStatus.active += playerStatus.speed;
         enemyStatus.active += enemyStatus.speed;
         
         if(playerStatus.active >= MAX_ACTIVE){
+            //コマンドボタンを表示する
+            core.rootScene.addChild(iconPlus);
+            core.rootScene.addChild(iconMinus);
+            core.rootScene.addChild(playerSelectBatterySprite);
+            //攻撃バッテリー決定フェイズへ
             executePhase = atackBatteryPhase;
-            prepareAtackBatteryPhase();
         } else if(enemyStatus.active >= MAX_ACTIVE) {
-            executePhase = waitAtackBatteryPhase;
+            //コマンドを送信する
+            //待ちフェイズの場合、OKという文字を入力としてサーバへ送信する
             socket.emit("input", {
                 roomId : roomId,
                 userId : userId,
                 input : 'OK'
             });
+            //攻撃バッテリー決定待ちフェイズに遷移
+            executePhase = waitAtackBatteryPhase;
         }
     }
-    
-    /**
-     * 攻撃バッテリー決定フェイズの準備
-     */
-    function prepareAtackBatteryPhase(){
-        core.rootScene.addChild(iconPlus);
-        core.rootScene.addChild(iconMinus);
-        core.rootScene.addChild(playerSelectBatterySprite);
-    }
-    
+
     /**
      * 攻撃バッテリー決定フェイズ
      */
     function atackBatteryPhase(){
         if(inputs!==null){
+            //サーバの入力を受け取る
             playerStatus.selectBattery = inputs[userId];
             inputs = null;
-            console.log('ターン経過');
+            
+            //コマンドを送信する
+            //待ちフェイズの場合、OKという文字を入力としてサーバへ送信する
+            socket.emit("input", {
+                roomId : roomId,
+                userId : userId,
+                input : 'OK'
+            });
+            
+            //防御バッテリー決定待ちフェイズへ遷移
+            executePhase = waitDefenthBatteryPhase;
         }
     }
     
@@ -268,10 +274,46 @@ function game(spec, my) {
      */
     function waitAtackBatteryPhase() {
         if(inputs!==null){
+            //サーバの入力を受け取る
             enemyStatus.selectBattery = inputs[enemyUserId];
             inputs = null;
-            console.log('ターン経過');
+            
+            //コマンドボタンを表示する
+            core.rootScene.addChild(iconPlus);
+            core.rootScene.addChild(iconMinus);
+            core.rootScene.addChild(playerSelectBatterySprite);
+            
+            //防御バッテリー決定フェイズに遷移
+            executePhase = defenthBatteryPhase;
         }
+    }
+    
+    /**
+     * 防御バッテリー決定フェイズ
+     */
+    function defenthBatteryPhase() {
+        if(inputs!==null){
+            //サーバの入力を受け取る
+            playerStatus.selectBattery = inputs[userId];
+            inputs = null;
+            
+            console.log('player Battery : ' + playerStatus.selectBattery);
+            console.log('enemy Battery : ' + enemyStatus.selectBattery);
+        }
+    }
+
+    /**
+     * 防御バッテリー決定待ちフェイズ
+     */
+    function waitDefenthBatteryPhase() {
+        if(inputs!==null){
+            //サーバの入力を受け取る
+            enemyStatus.selectBattery = inputs[enemyUserId];
+            inputs = null;
+            
+            console.log('player Battery : ' + playerStatus.selectBattery);
+            console.log('enemy Battery : ' + enemyStatus.selectBattery);
+        }        
     }
 
     return core;
