@@ -1,47 +1,3 @@
-// enchant.js本体やクラスをエクスポートする
-enchant();
-
-//定数
-const MAX_PLAYER_NUM = 2;
-
-//グローバル変数
-var socket;         //socket.ioオブジェクトを格納するグローバル変数
-var roomId;         //ルームID
-var userId;         //ユーザID
-var enemyUserId;    //敵ユーザID
-var inputs = null;  //全ユーザの入力情報
-
-/**
- * ページが読み込まれたときに実行される関数
- */
-window.onload = function() {
-    socket = io.connect(location.origin);
-    roomId = $("meta[name=roomId]").attr('content');
-    userId = $("meta[name=userId]").attr('content');
-
-    //全プレイヤーの入室処理が完了した時に呼び出させる処理
-    socket.on("startGame", function(data) {
-        console.log(data);
-        for(uid in data){
-            if(uid != userId){
-                enemyUserId = uid;
-            }
-        }
-        game(data);
-    });
-
-    //サーバから全ユーザのコマンド入力情報が返される
-    socket.on("resp", function(data) {
-        inputs = data.inputs;
-    });
-
-    //ルームへ入室する
-    socket.emit("enterRoom", {
-        roomId : roomId,
-        userId : userId
-    });
-
-};
 
 /**
  * ゲームメインクラス
@@ -55,11 +11,20 @@ function game(spec, my) {
     var core = new Core(320, 320);
     
     /**
+     * 定数
+     */
+    const MAX_PLAYER_NUM = 2;
+    
+    /**
      * プライベート変数の宣言
      */
-    var playerStatus = spec[userId].status;
+    var socket = spec.socket;
+    var roomId = spec.roomId;
+    var userId = spec.userId;
+    var enemyUserId = spec.enemyUserId;
+    var playerStatus = spec.usersInfo[userId].status;
     var playerSprite;
-    var enemyStatus = spec[enemyUserId].status;;
+    var enemyStatus = spec.usersInfo[enemyUserId].status;;
     var enemySprite;
     var labelUnitName;
     var labelHp;
@@ -77,6 +42,7 @@ function game(spec, my) {
     var executePhase = waitPhase;
     var playerSelectBatterySprite;
     var counter = 0;
+    var inputs = null;
     
     /**
      * 定数の宣言
@@ -96,6 +62,13 @@ function game(spec, my) {
         core.start();
     };
     constructor();
+    
+    /**
+     * 全ユーザの入力を受け取る
+     */
+    socket.on("resp", function(data) {
+        inputs = data.inputs;
+    });
     
     /**
      * リフレッシュレートごとの処理 
