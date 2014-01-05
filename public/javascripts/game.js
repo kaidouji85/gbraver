@@ -11,7 +11,9 @@ var userId;         //ユーザID
 var enemyUserId;    //敵ユーザID
 var inputs = null;  //全ユーザの入力情報
 
-// ページが読み込まれたときに実行される関数
+/**
+ * ページが読み込まれたときに実行される関数
+ */
 window.onload = function() {
     socket = io.connect(location.origin);
     roomId = $("meta[name=roomId]").attr('content');
@@ -41,12 +43,23 @@ window.onload = function() {
 
 };
 
-//ゲームメイン関数
+/**
+ * ゲームメインクラス
+ * @param {Object} spec
+ * @param {Object} my
+ */
 function game(spec, my) {
-    var core;
-    var playerStatus;
+    /**
+     * 継承元クラス
+     */
+    var core = new Core(320, 320);
+    
+    /**
+     * プライベート変数の宣言
+     */
+    var playerStatus = spec[userId].status;
     var playerSprite;
-    var enemyStatus;
+    var enemyStatus = spec[enemyUserId].status;;
     var enemySprite;
     var labelUnitName;
     var labelHp;
@@ -65,31 +78,37 @@ function game(spec, my) {
     var playerSelectBatterySprite;
     var counter = 0;
     
+    /**
+     * 定数の宣言
+     */
     const MAX_ACTIVE = 5000;
     
-    core = new Core(320, 320);
-    core.fps = 60;
-    
-    playerStatus = spec[userId].status;
-    enemyStatus = spec[enemyUserId].status;
-
-    preLoad();
-    
-    // ファイルのプリロードが完了したときに実行される関数
-    core.onload = function() {
-        init();
-
-        //リフレッシュレートごとの処理
-        core.rootScene.addEventListener('enterframe', function(e) {
-            refreshMertor();
-            executePhase();
-        });
+    /**
+     * コンストラクタ
+     */
+    function constructor() {
+        core.fps = 60;
+        preLoad();
+        core.onload = function() {
+            init();
+            core.rootScene.addEventListener('enterframe', enterFrame);
+        };
+        core.start();
     };
-
-    // ゲームスタート
-    core.start();
+    constructor();
     
-    //リソースのプリロード
+    /**
+     * リフレッシュレートごとの処理 
+     * @param {Object} e
+     */
+    function enterFrame(e) {
+        refreshMertor();
+        executePhase();
+    }
+
+    /**
+     * リソースのプリロード
+     */
     function preLoad(){
         core.preload('/images/'+playerStatus.pictName);
         core.preload('/images/'+enemyStatus.pictName); 
@@ -98,10 +117,14 @@ function game(spec, my) {
         core.preload('/images/Battery.png');
     }
     
-    //初期化
+    /**
+     * 初期化
+     */
     function init(){
         playerStatus.active = 0;
         playerStatus.battery = 5;
+        playerStatus.selectBattery = 0;
+        
         playerSprite = new Sprite(128, 128);
         playerSprite.image = core.assets['/images/'+playerStatus.pictName];
         playerSprite.x = 192;
@@ -110,6 +133,8 @@ function game(spec, my) {
         
         enemyStatus.active = 0;
         enemyStatus.battery = 5;
+        enemyStatus.selectBattery = 0;
+        
         enemySprite = new Sprite(128, 128);
         enemySprite.image = core.assets['/images/'+enemyStatus.pictName];
         enemySprite.x = 0;
@@ -207,13 +232,14 @@ function game(spec, my) {
                 userId : userId,
                 input : playerSelectBatterySprite.value
             });
-            
         });
         
         core.rootScene.backgroundColor = "black";
     }
     
-    //メータ系更新
+    /**
+     * メータ系更新 
+     */
     function refreshMertor() {
         labelHp.text = 'HP ' + playerStatus.hp;
         labelActive.text = 'Active ' + playerStatus.active;
@@ -224,16 +250,18 @@ function game(spec, my) {
         labelEnemyBattery.text = 'Battery' + enemyStatus.battery;
     }
 
-    //ウェイトフェイズ
+    /**
+     * ウェイトフェイズ 
+     */
     function waitPhase(){
         playerStatus.active += playerStatus.speed;
         enemyStatus.active += enemyStatus.speed;
         
         if(playerStatus.active >= MAX_ACTIVE){
-            executePhase = playerCommandPhase;
-            preparePlayerCommandPhase();
+            executePhase = atackBatteryPhase;
+            prepareAtackBatteryPhase();
         } else if(enemyStatus.active >= MAX_ACTIVE) {
-            executePhase = enemyCommandPhase;
+            executePhase = waitAtackBatteryPhase;
             socket.emit("input", {
                 roomId : roomId,
                 userId : userId,
@@ -242,22 +270,36 @@ function game(spec, my) {
         }
     }
     
-    //プレイヤーコマンド入力フェイズの準備
-    function preparePlayerCommandPhase(){
+    /**
+     * 攻撃バッテリー決定フェイズの準備
+     */
+    function prepareAtackBatteryPhase(){
         core.rootScene.addChild(iconPlus);
         core.rootScene.addChild(iconMinus);
         core.rootScene.addChild(playerSelectBatterySprite);
     }
     
-    //プレイヤーコマンド入力フェイズ
-    function playerCommandPhase(){
-        console.log('playerCommandPhase');
+    /**
+     * 攻撃バッテリー決定フェイズ
+     */
+    function atackBatteryPhase(){
+        if(inputs!==null){
+            playerStatus.selectBattery = inputs[userId];
+            inputs = null;
+            console.log('ターン経過');
+        }
     }
     
-    //敵のコマンド入力フェイズ
-    function enemyCommandPhase() {
-        console.log('enemyCommandPhase');
+    /**
+     * 攻撃バッテリー決定待ちフェイズ
+     */
+    function waitAtackBatteryPhase() {
+        if(inputs!==null){
+            enemyStatus.selectBattery = inputs[enemyUserId];
+            inputs = null;
+            console.log('ターン経過');
+        }
     }
-    
+
     return core;
 };
