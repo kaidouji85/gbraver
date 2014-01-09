@@ -32,11 +32,11 @@ function game(spec, my) {
     var labelEnemyHp;
     var labelEnemyActive;
     var labelEnemyBattery;
-    var labelEnemySelectBattery;
     var iconPlus;
     var iconMinus;
     var executePhase = waitPhase;
     var playerSelectBatterySprite;
+    var enemySelectBatterySprite;
     var inputs = null;
     var atackUserId = null;
     var defenthUserId = null;
@@ -170,19 +170,12 @@ function game(spec, my) {
         labelEnemyBattery.color = '#fff';
         core.rootScene.addChild(labelEnemyBattery);
         
-        labelEnemySelectBattery = new Label('');
-        labelEnemySelectBattery.x = 32;
-        labelEnemySelectBattery.y = 64;
-        labelEnemySelectBattery.color = '#fff';
-        core.rootScene.addChild(labelEnemySelectBattery);
-        
         iconPlus = new Sprite(64, 64);
         iconPlus.image = core.assets['/images/plus.png'];
         iconPlus.x = 256;
         iconPlus.y = 180;
         iconPlus.addEventListener(Event.TOUCH_START,function(e){
-            playerSelectBatterySprite.value += 1;
-            playerSelectBatterySprite.frame = playerSelectBatterySprite.value;
+            playerSelectBatterySprite.frame ++;
         });
         
         iconMinus = new Sprite(64, 64);
@@ -190,8 +183,7 @@ function game(spec, my) {
         iconMinus.x = 180;
         iconMinus.y = 180;
         iconMinus.addEventListener(Event.TOUCH_START,function(e){
-            playerSelectBatterySprite.value += -1;
-            playerSelectBatterySprite.frame = playerSelectBatterySprite.value;
+            playerSelectBatterySprite.frame ++;
         });
         
         playerSelectBatterySprite = new Sprite(64,64);
@@ -199,7 +191,6 @@ function game(spec, my) {
         playerSelectBatterySprite.x = 220;
         playerSelectBatterySprite.y = 100;
         playerSelectBatterySprite.frame = 1;
-        playerSelectBatterySprite.value = 1;
         playerSelectBatterySprite.addEventListener(Event.TOUCH_START,function(e){
             //アイコンを消す
             core.rootScene.removeChild(playerSelectBatterySprite);
@@ -210,9 +201,16 @@ function game(spec, my) {
             socket.emit("input", {
                 roomId : roomId,
                 userId : userId,
-                input : playerSelectBatterySprite.value
+                input : playerSelectBatterySprite.frame
             });
         });
+        
+        enemySelectBatterySprite = new Sprite(64,64);
+        enemySelectBatterySprite.image = core.assets['/images/Battery.png'];
+        enemySelectBatterySprite.x = 32;
+        enemySelectBatterySprite.y = 100;
+        enemySelectBatterySprite.frame = 1;
+        enemySelectBatterySprite.value = 1;        
         
         core.rootScene.backgroundColor = "black";
     }
@@ -317,8 +315,20 @@ function game(spec, my) {
         statusMap[defenthUserId].selectBattery = inputs[defenthUserId];
         inputs = null;
         
-        console.log('player Battery : ' + statusMap[userId].selectBattery);
-        console.log('enemy Battery : ' + statusMap[enemyUserId].selectBattery);        
+        //バッテリー表示の準備
+        playerSelectBatterySprite.frame = statusMap[userId].selectBattery;
+        enemySelectBatterySprite.frame = statusMap[enemyUserId].selectBattery;
+        core.rootScene.addChild(playerSelectBatterySprite);
+        core.rootScene.addChild(enemySelectBatterySprite);
+        
+        //バッテリー表示フェイズに遷移
+        executePhase　= viewBatteryPhase;
+    }
+    
+    /**
+     * バッテリー表示フェイズ
+     */
+    function viewBatteryPhase() {
         
     }
 
