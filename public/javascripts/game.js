@@ -32,6 +32,7 @@ function game(spec, my) {
     var labelEnemyHp;
     var labelEnemyActive;
     var labelEnemyBattery;
+    var labelDamage;
     var iconPlus;
     var iconMinus;
     var executePhase = waitPhase;
@@ -40,6 +41,7 @@ function game(spec, my) {
     var inputs = null;
     var atackUserId = null;
     var defenthUserId = null;
+    var counter = 0;
     
     /**
      * 定数の宣言
@@ -102,19 +104,21 @@ function game(spec, my) {
      * 初期化
      */
     function init(){
-
+        //ステータス初期
         for(var uid in statusMap){
             statusMap[uid].active = 0;
             statusMap[uid].battery = 5;
             statusMap[uid].selectBattery = 0;
         }
         
+        //プレイヤースプライト
         playerSprite = new Sprite(128, 128);
         playerSprite.image = core.assets['/images/'+statusMap[userId].pictName];
         playerSprite.x = 192;
         playerSprite.y = 80;
         core.rootScene.addChild(playerSprite);
         
+        //敵キャラスプライト
         enemySprite = new Sprite(128, 128);
         enemySprite.image = core.assets['/images/'+statusMap[enemyUserId].pictName];
         enemySprite.x = 0;
@@ -122,54 +126,68 @@ function game(spec, my) {
         enemySprite.scaleX = -1;
         core.rootScene.addChild(enemySprite);
         
+        //プレイヤーユニット名ラベル
         labelUnitName = new Label();
         labelUnitName.x = 200;
         labelUnitName.y = 0;
         labelUnitName.color = '#fff';
         core.rootScene.addChild(labelUnitName);
         
+        //プレイヤーHPラベル
         labelHp = new Label('HP');
         labelHp.x = 200;
         labelHp.y = 16;
         labelHp.color = '#fff';
         core.rootScene.addChild(labelHp);
         
+        //プレイヤーアクティブポイントラベル
         labelActive = new Label('Active');
         labelActive.x = 200;
         labelActive.y = 32;
         labelActive.color = '#fff';
         core.rootScene.addChild(labelActive);
         
+        //プレイヤーバッテリーラベル
         labelBattery = new Label('Battery');
         labelBattery.x = 200;
         labelBattery.y = 48;
         labelBattery.color = '#fff';
         core.rootScene.addChild(labelBattery);
         
+        //敵ユニット名ラベル
         labelEnemyUnitName = new Label();
         labelEnemyUnitName.x = 32;
         labelEnemyUnitName.y = 0;
         labelEnemyUnitName.color = '#fff';
         core.rootScene.addChild(labelEnemyUnitName);       
 
+        //敵HPラベル
         labelEnemyHp = new Label('HP');
         labelEnemyHp.x = 32;
         labelEnemyHp.y = 16;
         labelEnemyHp.color = '#fff';
         core.rootScene.addChild(labelEnemyHp);
         
+        //敵アクティブポイント
         labelEnemyActive = new Label('Active');
         labelEnemyActive.x = 32;
         labelEnemyActive.y = 32;
         labelEnemyActive.color = '#fff';
         core.rootScene.addChild(labelEnemyActive);
         
+        //敵バッテリーラベル
         labelEnemyBattery = new Label('Battery');
         labelEnemyBattery.x = 32;
         labelEnemyBattery.y = 48;
         labelEnemyBattery.color = '#fff';
         core.rootScene.addChild(labelEnemyBattery);
         
+        //ダメージ表示ラベル
+        labelDamage = new Label();
+        labelDamage.y = 256;
+        labelDamage.color = "#fff";
+        
+        //バッテリープラスアイコン
         iconPlus = new Sprite(64, 64);
         iconPlus.image = core.assets['/images/plus.png'];
         iconPlus.x = 256;
@@ -178,14 +196,16 @@ function game(spec, my) {
             playerSelectBatterySprite.frame ++;
         });
         
+        //バッテリーマイナスアイコン
         iconMinus = new Sprite(64, 64);
         iconMinus.image = core.assets['/images/minus.png'];
         iconMinus.x = 180;
         iconMinus.y = 180;
         iconMinus.addEventListener(Event.TOUCH_START,function(e){
-            playerSelectBatterySprite.frame ++;
+            playerSelectBatterySprite.frame --;
         });
         
+        //プレイヤーが出したバッテリーの値
         playerSelectBatterySprite = new Sprite(64,64);
         playerSelectBatterySprite.image = core.assets['/images/Battery.png'];
         playerSelectBatterySprite.x = 220;
@@ -205,6 +225,7 @@ function game(spec, my) {
             });
         });
         
+        //敵が出したバッテリーの値
         enemySelectBatterySprite = new Sprite(64,64);
         enemySelectBatterySprite.image = core.assets['/images/Battery.png'];
         enemySelectBatterySprite.x = 32;
@@ -321,6 +342,9 @@ function game(spec, my) {
         core.rootScene.addChild(playerSelectBatterySprite);
         core.rootScene.addChild(enemySelectBatterySprite);
         
+        //演出制御用カウンタを初期化
+        counter = 0;
+        
         //バッテリー表示フェイズに遷移
         executePhase　= viewBatteryPhase;
     }
@@ -329,6 +353,48 @@ function game(spec, my) {
      * バッテリー表示フェイズ
      */
     function viewBatteryPhase() {
+        counter ++;
+        if(counter > 120) {
+            //ダメージ計算
+            var damage = 0;
+            var hit = 0;    //0:Miss 1:Hit 2:Defenth
+            var atackBattery = statusMap[atackUserId].selectBattery;
+            var defenthBattery = statusMap[defenthUserId].selectBattery;
+            if(atackBattery > defenthBattery){
+                damage = 1000;
+                hit = 1;
+            } else if(atackBattery === defenthBattery) {
+                damage = 500;
+                hit = 2;
+            } else {
+                damage = 0;
+                hit = 0;
+            }
+            
+            //HPからダメージをひく
+            statusMap[defenthUserId].hp -= damage;
+            
+            //ダメージ表示ラベル可視化
+            labelDamage.text = damage;
+            if(atackUserId === userId){
+                labelDamage.x = 32;
+            } else {
+                labelDamage.x = 180;
+            }
+            core.rootScene.addChild(labelDamage);
+            
+            //演出制御用カウンタを初期化
+            counter = 0;
+            
+            //ダメージ表示フェイズに遷移
+            executePhase　= viewDamagePhase;
+        }
+    }
+    
+    /**
+     * ダメージ表示フェイズ
+     */
+    function viewDamagePhase(){
         
     }
 
