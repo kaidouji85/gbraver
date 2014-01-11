@@ -98,6 +98,7 @@ function game(spec, my) {
     function enterFrame(e) {
         refreshMertor();
         executePhase();
+        counter ++;
     }
     
     /**
@@ -183,8 +184,8 @@ function game(spec, my) {
         core.rootScene.addChild(labelEnemyBattery);
         
         //ダメージ表示ラベル
-        labelDamage = new Label();
-        labelDamage.y = 256;
+        labelDamage = new Label('1000');
+        labelDamage.y = 200;
         labelDamage.color = "#fff";
         
         //バッテリープラスアイコン
@@ -237,6 +238,15 @@ function game(spec, my) {
     }
     
     /**
+     * フェイズを変更する
+     * phase 変更するフェイズ
+     */
+    function changePhase(phase){
+        counter = 0;
+        executePhase = phase;
+    }
+    
+    /**
      * メータ系更新 
      */
     function refreshMertor() {
@@ -269,7 +279,7 @@ function game(spec, my) {
             core.rootScene.addChild(playerSelectBatterySprite);
             
             //攻撃バッテリー決定フェイズへ
-            executePhase = atackBatteryPhase;
+            changePhase(atackBatteryPhase);
         } else if(statusMap[enemyUserId].active >= MAX_ACTIVE) {
             //敵を攻撃側に設定する
             atackUserId = enemyUserId;
@@ -284,7 +294,7 @@ function game(spec, my) {
             });
             
             //攻撃バッテリー決定フェイズに遷移
-            executePhase = atackBatteryPhase;
+            changePhase(atackBatteryPhase);
         }
     }
     
@@ -320,7 +330,7 @@ function game(spec, my) {
         }
 
         //防御バッテリー決定待フェイズへ遷移
-        executePhase = defenthBatteryPhase;
+        changePhase(defenthBatteryPhase);
     }
 
     /**
@@ -341,19 +351,15 @@ function game(spec, my) {
         enemySelectBatterySprite.frame = statusMap[enemyUserId].selectBattery;
         core.rootScene.addChild(playerSelectBatterySprite);
         core.rootScene.addChild(enemySelectBatterySprite);
-        
-        //演出制御用カウンタを初期化
-        counter = 0;
-        
+
         //バッテリー表示フェイズに遷移
-        executePhase　= viewBatteryPhase;
+        changePhase(viewBatteryPhase);
     }
     
     /**
      * バッテリー表示フェイズ
      */
     function viewBatteryPhase() {
-        counter ++;
         if(counter > 120) {
             //ダメージ計算
             var damage = 0;
@@ -383,11 +389,8 @@ function game(spec, my) {
             }
             core.rootScene.addChild(labelDamage);
             
-            //演出制御用カウンタを初期化
-            counter = 0;
-            
             //ダメージ表示フェイズに遷移
-            executePhase　= viewDamagePhase;
+            changePhase(viewDamagePhase);
         }
     }
     
@@ -395,7 +398,6 @@ function game(spec, my) {
      * ダメージ表示フェイズ
      */
     function viewDamagePhase(){
-        
     }
 
     return core;
