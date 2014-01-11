@@ -389,6 +389,10 @@ function game(spec, my) {
             }
             core.rootScene.addChild(labelDamage);
             
+            //バッテリーラベル表示ラベルを消す
+            core.rootScene.removeChild(playerSelectBatterySprite);
+            core.rootScene.removeChild(enemySelectBatterySprite);
+            
             //ダメージ表示フェイズに遷移
             changePhase(viewDamagePhase);
         }
@@ -398,6 +402,16 @@ function game(spec, my) {
      * ダメージ表示フェイズ
      */
     function viewDamagePhase(){
+        if(counter > 120) {
+            //ダメージ表示ラベルを消す
+            core.rootScene.removeChild(labelDamage);
+            
+            //攻撃側のアクティブゲージを0にする
+            statusMap[atackUserId].active = 0;
+            
+            //ウェイトフェイズに遷移
+            changePhase(waitPhase);
+        }
     }
 
     return core;
