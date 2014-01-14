@@ -33,8 +33,12 @@ function game(spec, my) {
     var labelEnemyActive;
     var labelEnemyBattery;
     var labelDamage;
+    var iconAtack;
+    var iconCharge;
     var iconPlus;
     var iconMinus;
+    var iconOk;
+    var iconPrev;
     var executePhase = waitPhase;
     var playerSelectBatterySprite;
     var enemySelectBatterySprite;
@@ -89,6 +93,12 @@ function game(spec, my) {
         core.preload('/images/plus.png');
         core.preload('/images/minus.png');
         core.preload('/images/Battery.png');
+        core.preload('/images/iconAtack.png');
+        core.preload('/images/iconCharge.png');
+        core.preload('/images/iconPlus.png');
+        core.preload('/images/iconMinus.png');
+        core.preload('/images/iconOk.png');
+        core.preload('/images/iconPrev.png');
     }    
     
     /**
@@ -188,35 +198,67 @@ function game(spec, my) {
         labelDamage.y = 200;
         labelDamage.color = "#fff";
         
+        //攻撃アイコン
+        iconAtack = new Sprite(96,48);
+        iconAtack.image = core.assets['/images/iconAtack.png'];
+        iconAtack.x = 100;
+        iconAtack.y = 100;
+        iconAtack.addEventListener(Event.TOUCH_START,function(e){
+            //攻撃、チャージアイコンを消す
+            core.rootScene.removeChild(iconAtack);
+            core.rootScene.removeChild(iconCharge);
+            
+            //バッテリー決定関連アイコンを出す
+            core.rootScene.addChild(iconPlus);
+            core.rootScene.addChild(iconMinus);
+            core.rootScene.addChild(iconOk);
+            core.rootScene.addChild(iconPrev);            
+            core.rootScene.addChild(playerSelectBatterySprite);
+        });        
+        
+        //チャージアイコン
+        iconCharge = new Sprite(96,48);
+        iconCharge.image = core.assets['/images/iconCharge.png'];
+        iconCharge.x = 100;
+        iconCharge.y = 100 + 55;
+        iconCharge.addEventListener(Event.TOUCH_START,function(e){
+                
+        });
+        
         //バッテリープラスアイコン
-        iconPlus = new Sprite(64, 64);
-        iconPlus.image = core.assets['/images/plus.png'];
-        iconPlus.x = 256;
-        iconPlus.y = 180;
+        iconPlus = new Sprite(96, 48);
+        iconPlus.image = core.assets['/images/iconPlus.png'];
+        iconPlus.x = 100;
+        iconPlus.y = 100;
         iconPlus.addEventListener(Event.TOUCH_START,function(e){
-            playerSelectBatterySprite.frame ++;
+            if(playerSelectBatterySprite.frame <5) {
+                playerSelectBatterySprite.frame ++;
+            }
         });
         
         //バッテリーマイナスアイコン
-        iconMinus = new Sprite(64, 64);
-        iconMinus.image = core.assets['/images/minus.png'];
-        iconMinus.x = 180;
-        iconMinus.y = 180;
+        iconMinus = new Sprite(96, 48);
+        iconMinus.image = core.assets['/images/iconMinus.png'];
+        iconMinus.x = 100;
+        iconMinus.y = 100 + 55;
         iconMinus.addEventListener(Event.TOUCH_START,function(e){
-            playerSelectBatterySprite.frame --;
+            if(playerSelectBatterySprite.frame>1) {
+                playerSelectBatterySprite.frame --;
+            }
         });
         
-        //プレイヤーが出したバッテリーの値
-        playerSelectBatterySprite = new Sprite(64,64);
-        playerSelectBatterySprite.image = core.assets['/images/Battery.png'];
-        playerSelectBatterySprite.x = 220;
-        playerSelectBatterySprite.y = 100;
-        playerSelectBatterySprite.frame = 1;
-        playerSelectBatterySprite.addEventListener(Event.TOUCH_START,function(e){
-            //アイコンを消す
-            core.rootScene.removeChild(playerSelectBatterySprite);
+        //決定アイコン
+        iconOk = new Sprite(96, 48);
+        iconOk.image = core.assets['/images/iconOk.png'];
+        iconOk.x = 100;
+        iconOk.y = 100 + 55*2;
+        iconOk.addEventListener(Event.TOUCH_START,function(e){
+            //バッテリー決定関連アイコンを消す
             core.rootScene.removeChild(iconPlus);
             core.rootScene.removeChild(iconMinus);
+            core.rootScene.removeChild(iconOk);
+            core.rootScene.removeChild(iconPrev);            
+            core.rootScene.removeChild(playerSelectBatterySprite);
             
             //入寮情報を送信する
             socket.emit("input", {
@@ -224,7 +266,32 @@ function game(spec, my) {
                 userId : userId,
                 input : playerSelectBatterySprite.frame
             });
-        });
+        }); 
+        
+        //戻るアイコン
+        iconPrev = new Sprite(96, 48);
+        iconPrev.image = core.assets['/images/iconPrev.png'];
+        iconPrev.x = 100;
+        iconPrev.y = 100 + 55*3;
+        iconPrev.addEventListener(Event.TOUCH_START,function(e){
+            //バッテリー決定関連アイコンを消す
+            core.rootScene.removeChild(iconPlus);
+            core.rootScene.removeChild(iconMinus);
+            core.rootScene.removeChild(iconOk);
+            core.rootScene.removeChild(iconPrev);            
+            core.rootScene.removeChild(playerSelectBatterySprite);
+            
+            //攻撃、チャージアイコンを出す
+            core.rootScene.addChild(iconAtack);
+            core.rootScene.addChild(iconCharge);
+        });               
+        
+        //プレイヤーが出したバッテリーの値
+        playerSelectBatterySprite = new Sprite(64,64);
+        playerSelectBatterySprite.image = core.assets['/images/Battery.png'];
+        playerSelectBatterySprite.x = 220;
+        playerSelectBatterySprite.y = 100;
+        playerSelectBatterySprite.frame = 1;
         
         //敵が出したバッテリーの値
         enemySelectBatterySprite = new Sprite(64,64);
@@ -274,9 +341,8 @@ function game(spec, my) {
             defenthUserId = enemyUserId;
             
             //コマンドボタンを表示する
-            core.rootScene.addChild(iconPlus);
-            core.rootScene.addChild(iconMinus);
-            core.rootScene.addChild(playerSelectBatterySprite);
+            core.rootScene.addChild(iconAtack);
+            core.rootScene.addChild(iconCharge);
             
             //攻撃バッテリー決定フェイズへ
             changePhase(atackBatteryPhase);
@@ -323,9 +389,10 @@ function game(spec, my) {
         }
         //攻撃側が敵の場合
         else {
-            //コマンドボタンを表示する
+            //バッテリー決定関連アイコンを出す
             core.rootScene.addChild(iconPlus);
             core.rootScene.addChild(iconMinus);
+            core.rootScene.addChild(iconOk);          
             core.rootScene.addChild(playerSelectBatterySprite);
         }
 
