@@ -116,27 +116,30 @@ for (var i = 0; i < MAX_ROOM; i++) {
 //socket.ioサーバ
 var io = require('socket.io').listen(server);
 io.sockets.on('connection', function(socket) {
+
     //入室
     socket.on("enterRoom", function(data) {
         var roomId = data.roomId;
         var userId = data.userId;
 
-        socket.set('loginInfo',{roomId : roomId,userId : userId},function(){
+        socket.set('loginInfo', {
+            roomId : roomId,
+            userId : userId
+        }, function() {
             socket.join(roomId);
             gameArray[roomId].join(userId, function(err, data) {
                 if (err) {
                     throw err;
                 }
-    
-                if (data!=null) {
-                    io.sockets.in(roomId).emit("startGame", data);
+
+                if (data != null) {
+                    io.sockets. in (roomId).emit("startGame", data);
                 }
             });
         });
 
-
     });
-    
+
     //クライアントからの入力受付
     socket.on("input", function(data) {
         console.log("input : data");
@@ -144,26 +147,29 @@ io.sockets.on('connection', function(socket) {
         var roomId = data.roomId;
         var userId = data.userId;
         var input = data.input;
-        
-        gameArray[roomId].input(userId,input,function(err,data){
+
+        gameArray[roomId].input(userId, input, function(err, data) {
             if (err) {
                 throw err;
             }
 
-            if (data!=null) {
-                io.sockets.in(roomId).emit("resp", data);
+            if (data != null) {
+                io.sockets. in (roomId).emit("resp", data);
             }
         });
-   });
-    
+    });
+
     //ソケットの接続切れ
-   socket.on("disconnect", function(data) {
-       //関連するソケットが入室していたルームを解散
-       socket.get('loginInfo',function(err,data){
-           console.log(data);
-           console.log(io.of(data.roomId).clients('room'));
-           gameArray[data.roomId].remove();
-       });
-       
-   });
+    socket.on("disconnect", function(data) {
+        //関連するソケットが入室していたルームを解散
+        socket.get('loginInfo', function(err, data) {
+            if (!err) {
+                console.log(data);
+                console.log(io.of(data.roomId).clients('room'));
+                gameArray[data.roomId].remove();
+            }
+        });
+
+    }); 
+
 });
