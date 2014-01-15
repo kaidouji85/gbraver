@@ -82,6 +82,14 @@ var game = function(spec, my) {
     };
     
     /**
+     * ルーム破壊
+     */
+    that.remove = function(){
+        inUsersInfo = {};
+        userInputs = {};
+    };
+    
+    /**
      * コマンド入力 
      * @param {Number} userId
      * @param {input} input
@@ -113,16 +121,20 @@ io.sockets.on('connection', function(socket) {
         var roomId = data.roomId;
         var userId = data.userId;
 
-        socket.join(roomId);
-        gameArray[roomId].join(userId, function(err, data) {
-            if (err) {
-                throw err;
-            }
-
-            if (data!=null) {
-                io.sockets.in(roomId).emit("startGame", data);
-            }
+        socket.set('loginInfo',{roomId : roomId,userId : userId},function(){
+            socket.join(roomId);
+            gameArray[roomId].join(userId, function(err, data) {
+                if (err) {
+                    throw err;
+                }
+    
+                if (data!=null) {
+                    io.sockets.in(roomId).emit("startGame", data);
+                }
+            });
         });
+
+
     });
     
     //クライアントからの入力受付
@@ -142,5 +154,16 @@ io.sockets.on('connection', function(socket) {
                 io.sockets.in(roomId).emit("resp", data);
             }
         });
-    });
+   });
+    
+    //ソケットの接続切れ
+   socket.on("disconnect", function(data) {
+       //関連するソケットが入室していたルームを解散
+       socket.get('loginInfo',function(err,data){
+           console.log(data);
+           console.log(io.of(data.roomId).clients('room'));
+           gameArray[data.roomId].remove();
+       });
+       
+   });
 });
