@@ -90,8 +90,6 @@ function game(spec, my) {
     function preLoad(){
         core.preload('/images/'+statusMap[userId].pictName);
         core.preload('/images/'+statusMap[enemyUserId].pictName); 
-        core.preload('/images/plus.png');
-        core.preload('/images/minus.png');
         core.preload('/images/Battery.png');
         core.preload('/images/iconAtack.png');
         core.preload('/images/iconCharge.png');
