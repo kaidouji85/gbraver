@@ -34,7 +34,8 @@ if ('development' == app.get('env')) {
 
 //DB::接続オブジェクト
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/gbraver');
+var mongoUri = process.env.MONGOHQ_URL || 'mongodb://localhost/gbraver';
+mongoose.connect(mongoUri);
 
 //DB::ユーザ情報モデルを定義
 var usersSchema = mongoose.Schema({
