@@ -438,7 +438,7 @@ function game(spec, my) {
                 core.rootScene.addChild(iconOk);
                 core.rootScene.addChild(playerSelectBatterySprite);
                 
-                if(statusMap[userId].battery > 1) {
+                if(statusMap[userId].battery >= 1) {
                     playerSelectBatterySprite.frame = 1;
                 } else {
                     playerSelectBatterySprite.frame = 0;
