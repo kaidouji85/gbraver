@@ -202,6 +202,9 @@ function game(spec, my) {
         iconAtack.x = 100;
         iconAtack.y = 100;
         iconAtack.addEventListener(Event.TOUCH_START,function(e){
+            //攻撃バッテリーを1に設定する
+            playerSelectBatterySprite.frame;
+            
             //攻撃、チャージアイコンを消す
             core.rootScene.removeChild(iconAtack);
             core.rootScene.removeChild(iconCharge);
@@ -220,7 +223,16 @@ function game(spec, my) {
         iconCharge.x = 100;
         iconCharge.y = 100 + 55;
         iconCharge.addEventListener(Event.TOUCH_START,function(e){
-                
+            //攻撃、チャージアイコンを消す
+            core.rootScene.removeChild(iconAtack);
+            core.rootScene.removeChild(iconCharge);
+            
+            //入寮情報を送信する
+            socket.emit("input", {
+                roomId : roomId,
+                userId : userId,
+                input : 'charge'
+            });
         });
         
         //バッテリープラスアイコン
@@ -229,7 +241,7 @@ function game(spec, my) {
         iconPlus.x = 100;
         iconPlus.y = 100;
         iconPlus.addEventListener(Event.TOUCH_START,function(e){
-            if(playerSelectBatterySprite.frame <5) {
+            if(playerSelectBatterySprite.frame < 5) {
                 playerSelectBatterySprite.frame ++;
             }
         });
@@ -333,6 +345,7 @@ function game(spec, my) {
             statusMap[uid].active += statusMap[uid].speed;
         }
 
+        //プレイヤーのアクティブゲージが満タンになった
         if(statusMap[userId].active >= MAX_ACTIVE){
             //プレイヤーを攻撃側に設定する
             atackUserId = userId;
@@ -350,7 +363,9 @@ function game(spec, my) {
             
             //攻撃バッテリー決定フェイズへ
             changePhase(atackBatteryPhase);
-        } else if(statusMap[enemyUserId].active >= MAX_ACTIVE) {
+        }
+        //敵のアクティブゲージが満タンになった
+        else if(statusMap[enemyUserId].active >= MAX_ACTIVE) {
             //敵を攻撃側に設定する
             atackUserId = enemyUserId;
             defenthUserId = userId;
@@ -384,26 +399,46 @@ function game(spec, my) {
         }
         
         //サーバの入力を受け取る
-        statusMap[atackUserId].selectBattery = inputs[atackUserId];
+        var command = inputs[atackUserId];
         inputs = null;
 
         //攻撃側がプレイヤーの場合
         if (atackUserId === userId) {
-            //コマンドを送信する
-            //待ちフェイズの場合、OKという文字を入力としてサーバへ送信する
-            socket.emit("input", {
-                roomId : roomId,
-                userId : userId,
-                input : 'OK'
-            });
+            //
+            if(command === 'charge') {
+                statusMap[atackUserId].battery = 5;
+                statusMap[atackUserId].active = 0;
+                changePhase(waitPhase);
+                return;
+            } else {
+                //
+                statusMap[atackUserId].selectBattery = command;
+                
+                //コマンドを送信する
+                //待ちフェイズの場合、OKという文字を入力としてサーバへ送信する
+                socket.emit("input", {
+                    roomId : roomId,
+                    userId : userId,
+                    input : 'OK'
+                });
+            }
         }
         //攻撃側が敵の場合
         else {
-            //バッテリー決定関連アイコンを出す
-            core.rootScene.addChild(iconPlus);
-            core.rootScene.addChild(iconMinus);
-            core.rootScene.addChild(iconOk);          
-            core.rootScene.addChild(playerSelectBatterySprite);
+            if(command === 'charge') {
+                statusMap[atackUserId].battery = 5;
+                statusMap[atackUserId].active = 0;
+                changePhase(waitPhase);
+                return;
+            } else {
+                //バッテリー決定関連アイコンを出す
+                core.rootScene.addChild(iconPlus);
+                core.rootScene.addChild(iconMinus);
+                core.rootScene.addChild(iconOk);
+                core.rootScene.addChild(playerSelectBatterySprite);
+                
+                statusMap[atackUserId].selectBattery = command;
+            }
         }
 
         //防御バッテリー決定待フェイズへ遷移
