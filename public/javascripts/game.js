@@ -338,6 +338,12 @@ function game(spec, my) {
             atackUserId = userId;
             defenthUserId = enemyUserId;
             
+            //バッテリーに加算する
+            if(statusMap[userId].battery < 5) {
+                console.log('plus battery');
+                statusMap[userId].battery ++;
+            }
+            
             //コマンドボタンを表示する
             core.rootScene.addChild(iconAtack);
             core.rootScene.addChild(iconCharge);
@@ -348,6 +354,12 @@ function game(spec, my) {
             //敵を攻撃側に設定する
             atackUserId = enemyUserId;
             defenthUserId = userId;
+            
+            //バッテリーに加算する
+            if(statusMap[enemyUserId].battery < 5) {
+                console.log('plus battery');
+                statusMap[enemyUserId].battery ++;
+            }
             
             //コマンドを送信する
             //待ちフェイズの場合、OKという文字を入力としてサーバへ送信する
@@ -410,6 +422,10 @@ function game(spec, my) {
         //サーバの入力を受け取る
         statusMap[defenthUserId].selectBattery = inputs[defenthUserId];
         inputs = null;
+        
+        //消費バッテリーを引く
+        statusMap[userId].battery -= statusMap[userId].selectBattery;
+        statusMap[enemyUserId].battery -= statusMap[enemyUserId].selectBattery;
         
         //バッテリー表示の準備
         playerSelectBatterySprite.frame = statusMap[userId].selectBattery;
