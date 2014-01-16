@@ -202,19 +202,22 @@ function game(spec, my) {
         iconAtack.x = 100;
         iconAtack.y = 100;
         iconAtack.addEventListener(Event.TOUCH_START,function(e){
-            //攻撃バッテリーを1に設定する
-            playerSelectBatterySprite.frame;
+            if(statusMap[userId].battery >= 1){
+                playerSelectBatterySprite.frame = 1;
+                
+                 //攻撃、チャージアイコンを消す
+                core.rootScene.removeChild(iconAtack);
+                core.rootScene.removeChild(iconCharge);
+                
+                //バッテリー決定関連アイコンを出す
+                core.rootScene.addChild(iconPlus);
+                core.rootScene.addChild(iconMinus);
+                core.rootScene.addChild(iconOk);
+                core.rootScene.addChild(iconPrev);            
+                core.rootScene.addChild(playerSelectBatterySprite);
+            }
             
-            //攻撃、チャージアイコンを消す
-            core.rootScene.removeChild(iconAtack);
-            core.rootScene.removeChild(iconCharge);
-            
-            //バッテリー決定関連アイコンを出す
-            core.rootScene.addChild(iconPlus);
-            core.rootScene.addChild(iconMinus);
-            core.rootScene.addChild(iconOk);
-            core.rootScene.addChild(iconPrev);            
-            core.rootScene.addChild(playerSelectBatterySprite);
+
         });        
         
         //チャージアイコン
@@ -241,7 +244,7 @@ function game(spec, my) {
         iconPlus.x = 100;
         iconPlus.y = 100;
         iconPlus.addEventListener(Event.TOUCH_START,function(e){
-            if(playerSelectBatterySprite.frame < 5) {
+            if(playerSelectBatterySprite.frame < statusMap[userId].battery) {
                 playerSelectBatterySprite.frame ++;
             }
         });
@@ -252,7 +255,7 @@ function game(spec, my) {
         iconMinus.x = 100;
         iconMinus.y = 100 + 55;
         iconMinus.addEventListener(Event.TOUCH_START,function(e){
-            if(playerSelectBatterySprite.frame>1) {
+            if(playerSelectBatterySprite.frame>playerSelectBatterySprite.minValue) {
                 playerSelectBatterySprite.frame --;
             }
         });
@@ -302,6 +305,7 @@ function game(spec, my) {
         playerSelectBatterySprite.x = 220;
         playerSelectBatterySprite.y = 100;
         playerSelectBatterySprite.frame = 1;
+        playerSelectBatterySprite.minValue = 0;
         
         //敵が出したバッテリーの値
         enemySelectBatterySprite = new Sprite(64,64);
@@ -360,6 +364,8 @@ function game(spec, my) {
             core.rootScene.addChild(iconAtack);
             core.rootScene.addChild(iconCharge);
             
+            playerSelectBatterySprite.minValue = 1;
+                        
             //攻撃バッテリー決定フェイズへ
             changePhase(atackBatteryPhase);
         }
@@ -431,6 +437,13 @@ function game(spec, my) {
                 core.rootScene.addChild(iconMinus);
                 core.rootScene.addChild(iconOk);
                 core.rootScene.addChild(playerSelectBatterySprite);
+                
+                if(statusMap[userId].battery > 1) {
+                    playerSelectBatterySprite.frame = 1;
+                } else {
+                    playerSelectBatterySprite.frame = 0;
+                }
+                playerSelectBatterySprite.minValue = 0;
             }
         }
     }
@@ -469,10 +482,13 @@ function game(spec, my) {
         if(counter > 120) {
             //ダメージ計算
             var damage = 0;
-            var hit = 0;    //0:Miss 1:Hit 2:Defenth
+            var hit = 0;    //0:Miss 1:Hit 2:Defenth 3:critical
             var atackBattery = statusMap[atackUserId].selectBattery;
             var defenthBattery = statusMap[defenthUserId].selectBattery;
-            if(atackBattery > defenthBattery){
+            if(defenthBattery === 0) {
+                damage = 2000;
+                hit = 3;
+            }else if(atackBattery > defenthBattery){
                 damage = 1000;
                 hit = 1;
             } else if(atackBattery === defenthBattery) {
