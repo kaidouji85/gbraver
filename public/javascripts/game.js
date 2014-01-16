@@ -353,7 +353,6 @@ function game(spec, my) {
             
             //バッテリーに加算する
             if(statusMap[userId].battery < 5) {
-                console.log('plus battery');
                 statusMap[userId].battery ++;
             }
             
@@ -372,7 +371,6 @@ function game(spec, my) {
             
             //バッテリーに加算する
             if(statusMap[enemyUserId].battery < 5) {
-                console.log('plus battery');
                 statusMap[enemyUserId].battery ++;
             }
             
@@ -401,19 +399,25 @@ function game(spec, my) {
         //サーバの入力を受け取る
         var command = inputs[atackUserId];
         inputs = null;
-
-        //攻撃側がプレイヤーの場合
-        if (atackUserId === userId) {
-            //
-            if(command === 'charge') {
-                statusMap[atackUserId].battery = 5;
-                statusMap[atackUserId].active = 0;
-                changePhase(waitPhase);
-                return;
-            } else {
-                //
-                statusMap[atackUserId].selectBattery = command;
-                
+        
+        //チャージの場合
+        if(command === 'charge') {
+            statusMap[atackUserId].battery = 5;
+            statusMap[atackUserId].active = 0;
+            
+            //ウェイトフェイズに遷移
+            changePhase(waitPhase);
+            return;    
+        } 
+        //攻撃の場合
+        else {
+            //攻撃バッテリー設定
+            statusMap[atackUserId].selectBattery = command;
+            
+            //防御バッテリー決定待フェイズへ遷移
+            changePhase(defenthBatteryPhase);
+            
+            if(atackUserId === userId){
                 //コマンドを送信する
                 //待ちフェイズの場合、OKという文字を入力としてサーバへ送信する
                 socket.emit("input", {
@@ -421,28 +425,14 @@ function game(spec, my) {
                     userId : userId,
                     input : 'OK'
                 });
-            }
-        }
-        //攻撃側が敵の場合
-        else {
-            if(command === 'charge') {
-                statusMap[atackUserId].battery = 5;
-                statusMap[atackUserId].active = 0;
-                changePhase(waitPhase);
-                return;
             } else {
                 //バッテリー決定関連アイコンを出す
                 core.rootScene.addChild(iconPlus);
                 core.rootScene.addChild(iconMinus);
                 core.rootScene.addChild(iconOk);
                 core.rootScene.addChild(playerSelectBatterySprite);
-                
-                statusMap[atackUserId].selectBattery = command;
             }
         }
-
-        //防御バッテリー決定待フェイズへ遷移
-        changePhase(defenthBatteryPhase);
     }
 
     /**
