@@ -10,11 +10,6 @@ function game(spec, my) {
     var core = new Core(320, 320);
     
     /**
-     * 定数
-     */
-    const MAX_PLAYER_NUM = 2;
-    
-    /**
      * プライベート変数の宣言
      */
     var socket = spec.socket;
@@ -51,6 +46,7 @@ function game(spec, my) {
      * 定数の宣言
      */
     const MAX_ACTIVE = 5000;
+    const MAX_PLAYER_NUM = 2;
     
     /**
      * コンストラクタ
@@ -82,6 +78,13 @@ function game(spec, my) {
      */
     socket.on("resp", function(data) {
         inputs = data.inputs;
+    });
+    
+    /**
+     * ルームが破棄された
+     */
+    socket.on("breakRoom", function(data) {
+        console.log('breakRoom');
     });
 
     /**
