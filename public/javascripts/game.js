@@ -232,8 +232,6 @@ function game(spec, my) {
             
             //入寮情報を送信する
             socket.emit("input", {
-                roomId : roomId,
-                userId : userId,
                 input : 'charge'
             });
         });
@@ -275,8 +273,6 @@ function game(spec, my) {
             
             //入寮情報を送信する
             socket.emit("input", {
-                roomId : roomId,
-                userId : userId,
                 input : playerSelectBatterySprite.frame
             });
         }); 
@@ -383,8 +379,6 @@ function game(spec, my) {
             //コマンドを送信する
             //待ちフェイズの場合、OKという文字を入力としてサーバへ送信する
             socket.emit("input", {
-                roomId : roomId,
-                userId : userId,
                 input : 'OK'
             });
             
@@ -427,8 +421,6 @@ function game(spec, my) {
                 //コマンドを送信する
                 //待ちフェイズの場合、OKという文字を入力としてサーバへ送信する
                 socket.emit("input", {
-                    roomId : roomId,
-                    userId : userId,
                     input : 'OK'
                 });
             } else {

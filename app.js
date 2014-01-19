@@ -82,14 +82,6 @@ var game = function(spec, my) {
     };
     
     /**
-     * ルーム破壊
-     */
-    that.remove = function(){
-        inUsersInfo = {};
-        userInputs = {};
-    };
-    
-    /**
      * コマンド入力 
      * @param {Number} userId
      * @param {input} input
@@ -144,19 +136,29 @@ io.sockets.on('connection', function(socket) {
     socket.on("input", function(data) {
         console.log("input : data");
         console.log(data);
-        var roomId = data.roomId;
-        var userId = data.userId;
+        var roomId;
+        var userId;
         var input = data.input;
+        
+        socket.get('loginInfo', function(err, data) {
+            if (!err) {
+                userId = data.userId;
+                roomId = data.roomId;
+                gameArray[roomId].input(userId, input, function(err, data) {
+                    if (err) {
+                        throw err;
+                    }
 
-        gameArray[roomId].input(userId, input, function(err, data) {
-            if (err) {
-                throw err;
+                    if (data != null) {
+                        io.sockets. in (roomId).emit("resp", data);
+                    }
+                });
             }
+        }); 
 
-            if (data != null) {
-                io.sockets. in (roomId).emit("resp", data);
-            }
-        });
+        
+
+
     });
 
     //ソケットの接続切れ
@@ -164,9 +166,7 @@ io.sockets.on('connection', function(socket) {
         //関連するソケットが入室していたルームを解散
         socket.get('loginInfo', function(err, data) {
             if (!err) {
-                console.log(data);
-                console.log(io.of(data.roomId).clients('room'));
-                gameArray[data.roomId].remove();
+                gameArray[data.roomId] = game();
             }
         });
 
