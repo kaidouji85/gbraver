@@ -476,18 +476,19 @@ function game(spec, my) {
     function viewBatteryPhase() {
         if(counter > 120) {
             //ダメージ計算
-            var damage = 0;
             var hit = 0;    //0:Miss 1:Hit 2:Defenth 3:critical
             var atackBattery = statusMap[atackUserId].selectBattery;
             var defenthBattery = statusMap[defenthUserId].selectBattery;
+            var damage = statusMap[atackUserId].weapons[atackBattery].power;
+            
             if(defenthBattery === 0) {
-                damage = 2000;
+                damage = damage*2;
                 hit = 3;
             }else if(atackBattery > defenthBattery){
-                damage = 1000;
+                damage = damage;
                 hit = 1;
             } else if(atackBattery === defenthBattery) {
-                damage = 500;
+                damage = damage/2;
                 hit = 2;
             } else {
                 damage = 0;
