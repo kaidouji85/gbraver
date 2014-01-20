@@ -40,9 +40,14 @@ var usersSchema = mongoose.Schema({
         name : String,
         pictName : String,
         hp : Number,
-        power : Number,
-        defenth : Number,
-        speed : Number
+        speed : Number,
+        weapons : {
+            1 : {name : String,power : Number},
+            2 : {name : String,power : Number},
+            3 : {name : String,power : Number},
+            4 : {name : String,power : Number},
+            5 : {name : String,power : Number}
+        }
     }
 });
 var Users = mongoose.model('Users', usersSchema); 
