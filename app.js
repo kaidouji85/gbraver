@@ -56,6 +56,7 @@ var Users = mongoose.model('Users', usersSchema);
 app.get('/', routes.index);
 app.get('/users', user.list);
 app.post('/battle', routes.battle);
+app.get('/debug', routes.debug);
 
 //httpサーバ
 var server = http.createServer(app).listen(app.get('port'), function() {
