@@ -4,19 +4,27 @@
  * @param {Object} my
  */
 function game(spec, my) {
-    /**
-     * 継承元クラス
-     */
+    const MAX_ACTIVE = 5000;
+    const MAX_PLAYER_NUM = 2;
+    
     var core = new Core(320, 320);
     
-    /**
-     * プライベート変数の宣言
-     */
+    var usersInfo = spec.usersInfo;
     var socket = spec.socket;
     var roomId = spec.roomId;
     var userId = spec.userId;
-    var enemyUserId = spec.enemyUserId;
+    var enemyUserId = null;
     var statusMap = {};
+    for(uid in usersInfo){
+        statusMap[uid] = usersInfo[uid].status;
+        statusMap[uid].active = 0;
+        statusMap[uid].battery = 5;
+        statusMap[uid].selectBattery = 0;
+        if(uid != userId){
+            enemyUserId = uid;
+        }
+    }
+
     var playerSprite;
     var enemySprite;
     var labelUnitName;
@@ -37,41 +45,20 @@ function game(spec, my) {
     var executePhase = waitPhase;
     var playerSelectBatterySprite;
     var enemySelectBatterySprite;
+    
     var inputs = null;
+    
     var atackUserId = null;
     var defenthUserId = null;
     var counter = 0;
     
-    /**
-     * 定数の宣言
-     */
-    const MAX_ACTIVE = 5000;
-    const MAX_PLAYER_NUM = 2;
-    
-    /**
-     * コンストラクタ
-     */
-    function constructor() {
-        //FPSの設定
-        core.fps = 60;
-        
-        //キャラクターのステータスをセット
-        statusMap[userId] = spec.usersInfo[userId].status;
-        statusMap[enemyUserId] = spec.usersInfo[enemyUserId].status;
-        
-        //素材のプリロード
-        preLoad();
-        
-        //プリロード完了後の処理
-        core.onload = function() {
-            init();
-            core.rootScene.addEventListener('enterframe', enterFrame);
-        };
-        
-        //ゲーム開始処理
-        core.start();
+    core.fps = 60;
+    preLoad();
+    core.onload = function() {
+        init();
+        core.rootScene.addEventListener('enterframe', enterFrame);
     };
-    constructor();
+    core.start(); 
     
     /**
      * 全ユーザの入力を受け取る
@@ -116,13 +103,6 @@ function game(spec, my) {
      * 初期化
      */
     function init(){
-        //ステータス初期
-        for(var uid in statusMap){
-            statusMap[uid].active = 0;
-            statusMap[uid].battery = 5;
-            statusMap[uid].selectBattery = 0;
-        }
-        
         //プレイヤースプライト
         playerSprite = new Sprite(128, 128);
         playerSprite.image = core.assets['/images/'+statusMap[userId].pictName];
