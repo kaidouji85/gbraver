@@ -4,13 +4,15 @@
  * @param {Object} my
  */
 function game(spec, my) {
+    //定数
     const MAX_ACTIVE = 5000;
     const MAX_PLAYER_NUM = 2;
     
+    //スーパークラス
     var core = new Core(320, 320);
     
+    //プライベート変数
     var usersInfo = spec.usersInfo;
-    var socket = spec.socket;
     var roomId = spec.roomId;
     var userId = spec.userId;
     var enemyUserId = null;
@@ -58,21 +60,20 @@ function game(spec, my) {
         init();
         core.rootScene.addEventListener('enterframe', enterFrame);
     };
-    core.start(); 
     
-    /**
-     * 全ユーザの入力を受け取る
-     */
-    socket.on("resp", function(data) {
+    var sendInput = null;
+    core.onSendInput = function(fn){
+        sendInput = fn;
+    }
+    
+    core.emitResp = function(data){
         inputs = data.inputs;
-    });
+    }
     
-    /**
-     * ルームが破棄された
-     */
-    socket.on("breakRoom", function(data) {
+    core.emitBreakRoom = function(data){
         console.log('breakRoom');
-    });
+    }
+    
 
     /**
      * リソースのプリロード
@@ -213,10 +214,10 @@ function game(spec, my) {
             core.rootScene.removeChild(iconAtack);
             core.rootScene.removeChild(iconCharge);
             
-            //入寮情報を送信する
-            socket.emit("input", {
-                input : 'charge'
-            });
+            //入力情報を送信する
+           sendInput({
+               input : 'charge'
+           });
         });
         
         //バッテリープラスアイコン
@@ -254,8 +255,8 @@ function game(spec, my) {
             core.rootScene.removeChild(iconPrev);            
             core.rootScene.removeChild(playerSelectBatterySprite);
             
-            //入寮情報を送信する
-            socket.emit("input", {
+            //入力情報を送信する
+            sendInput({
                 input : playerSelectBatterySprite.frame
             });
         }); 
@@ -361,7 +362,7 @@ function game(spec, my) {
             
             //コマンドを送信する
             //待ちフェイズの場合、OKという文字を入力としてサーバへ送信する
-            socket.emit("input", {
+            sendInput({
                 input : 'OK'
             });
             
@@ -403,7 +404,7 @@ function game(spec, my) {
             if(atackUserId === userId){
                 //コマンドを送信する
                 //待ちフェイズの場合、OKという文字を入力としてサーバへ送信する
-                socket.emit("input", {
+                sendInput({
                     input : 'OK'
                 });
             } else {
