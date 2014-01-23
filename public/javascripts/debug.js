@@ -1,5 +1,9 @@
 enchant();
 window.onload = function() {
+    basic();
+};
+
+function basic(){
     var userInfo = {};
     userInfo[1] = {
         userId : 1,
@@ -60,5 +64,4 @@ window.onload = function() {
     });
     
     Game.start();
-    
-};
+}

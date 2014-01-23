@@ -17,12 +17,12 @@ function game(spec, my) {
     var roomId = spec.roomId;
     var userId = spec.userId;
     var enemyUserId = null;
-    var statusMap = {};
+    var statusArray = {};
     for(uid in usersInfo){
-        statusMap[uid] = usersInfo[uid].status;
-        statusMap[uid].active = 0;
-        statusMap[uid].battery = 5;
-        statusMap[uid].selectBattery = 0;
+        statusArray[uid] = usersInfo[uid].status;
+        statusArray[uid].active = 0;
+        statusArray[uid].battery = 5;
+        statusArray[uid].selectBattery = 0;
         if(uid != userId){
             enemyUserId = uid;
         }
@@ -71,26 +71,20 @@ function game(spec, my) {
     var atackUserId = null;
     var defenthUserId = null;
 
-    //画像のプリロード
-    core.preload('/images/' + statusMap[userId].pictName);
-    core.preload('/images/' + statusMap[enemyUserId].pictName);
-    core.preload('/images/Battery.png');
-    core.preload('/images/iconAtack.png');
-    core.preload('/images/iconCharge.png');
-    core.preload('/images/iconPlus.png');
-    core.preload('/images/iconMinus.png');
-    core.preload('/images/iconOk.png');
-    core.preload('/images/iconPrev.png'); 
-
-    var counter = 0;
-    core.onload = function() {
-        initSprite();
-        core.rootScene.addEventListener('enterframe', function(e){
-            refreshMertor();
-            executePhase();
-            counter ++;
-        });
-    };
+    /**
+     * 画像のプリロード 
+     */
+    function preloadPict() {
+        core.preload('/images/' + statusArray[userId].pictName);
+        core.preload('/images/' + statusArray[enemyUserId].pictName);
+        core.preload('/images/Battery.png');
+        core.preload('/images/iconAtack.png');
+        core.preload('/images/iconCharge.png');
+        core.preload('/images/iconPlus.png');
+        core.preload('/images/iconMinus.png');
+        core.preload('/images/iconOk.png');
+        core.preload('/images/iconPrev.png'); 
+    }
     
     /**
      * スプライト初期化
@@ -98,14 +92,14 @@ function game(spec, my) {
     function initSprite(){
         //プレイヤースプライト
         playerSprite = new Sprite(128, 128);
-        playerSprite.image = core.assets['/images/'+statusMap[userId].pictName];
+        playerSprite.image = core.assets['/images/'+statusArray[userId].pictName];
         playerSprite.x = 192;
         playerSprite.y = 80;
         core.rootScene.addChild(playerSprite);
         
         //敵キャラスプライト
         enemySprite = new Sprite(128, 128);
-        enemySprite.image = core.assets['/images/'+statusMap[enemyUserId].pictName];
+        enemySprite.image = core.assets['/images/'+statusArray[enemyUserId].pictName];
         enemySprite.x = 0;
         enemySprite.y = 80;
         enemySprite.scaleX = -1;
@@ -178,7 +172,7 @@ function game(spec, my) {
         iconAtack.x = 100;
         iconAtack.y = 100;
         iconAtack.addEventListener(Event.TOUCH_START,function(e){
-            if(statusMap[userId].battery >= 1){
+            if(statusArray[userId].battery >= 1){
                 playerSelectBatterySprite.frame = 1;
                 
                  //攻撃、チャージアイコンを消す
@@ -216,7 +210,7 @@ function game(spec, my) {
         iconPlus.x = 100;
         iconPlus.y = 100;
         iconPlus.addEventListener(Event.TOUCH_START,function(e){
-            if(playerSelectBatterySprite.frame < statusMap[userId].battery) {
+            if(playerSelectBatterySprite.frame < statusArray[userId].battery) {
                 playerSelectBatterySprite.frame ++;
             }
         });
@@ -287,6 +281,20 @@ function game(spec, my) {
     }
     
     /**
+     * ゲームメイン処理
+     */
+    var counter = 0;
+    preloadPict();
+    core.onload = function() {
+        initSprite();
+        core.rootScene.addEventListener('enterframe', function(e){
+            refreshMertor();
+            executePhase();
+            counter ++;
+        });
+    };
+    
+    /**
      * フェイズを変更する
      * phase 変更するフェイズ
      */
@@ -299,13 +307,13 @@ function game(spec, my) {
      * メータ系更新 
      */
     function refreshMertor() {
-        labelHp.text = 'HP ' + statusMap[userId].hp;
-        labelActive.text = 'Active ' + statusMap[userId].active;
-        labelBattery.text = 'Battery' + statusMap[userId].battery;
+        labelHp.text = 'HP ' + statusArray[userId].hp;
+        labelActive.text = 'Active ' + statusArray[userId].active;
+        labelBattery.text = 'Battery' + statusArray[userId].battery;
 
-        labelEnemyHp.text = 'HP ' + statusMap[enemyUserId].hp;
-        labelEnemyActive.text = 'Active ' + statusMap[enemyUserId].active;
-        labelEnemyBattery.text = 'Battery' + statusMap[enemyUserId].battery;
+        labelEnemyHp.text = 'HP ' + statusArray[enemyUserId].hp;
+        labelEnemyActive.text = 'Active ' + statusArray[enemyUserId].active;
+        labelEnemyBattery.text = 'Battery' + statusArray[enemyUserId].battery;
     }
 
     /**
@@ -313,49 +321,35 @@ function game(spec, my) {
      */
     function waitPhase(){
         //アクティブゲージを加算
-        for(var uid in statusMap){
-            statusMap[uid].active += statusMap[uid].speed;
+        for(var uid in statusArray){
+            statusArray[uid].active += statusArray[uid].speed;
         }
-
-        //プレイヤーのアクティブゲージが満タンになった
-        if(statusMap[userId].active >= MAX_ACTIVE){
-            //プレイヤーを攻撃側に設定する
-            atackUserId = userId;
-            defenthUserId = enemyUserId;
-            
-            //バッテリーに加算する
-            if(statusMap[userId].battery < 5) {
-                statusMap[userId].battery ++;
+        
+        //アクティブゲージが満タンか確認
+        for(var uid in statusArray){
+            if(statusArray[uid].active >= MAX_ACTIVE){
+                if(uid === userId){
+                    atackUserId = userId;
+                    defenthUserId = enemyUserId;
+                    
+                    core.rootScene.addChild(iconAtack);
+                    core.rootScene.addChild(iconCharge);
+                    playerSelectBatterySprite.minValue = 1;
+                } else {
+                    atackUserId = enemyUserId;
+                    defenthUserId = userId;  
+                    
+                    sendInput({
+                        input : 'OK'
+                    });                  
+                }
+                
+                if(statusArray[uid].battery < 5) {
+                    statusArray[uid].battery ++;
+                }
+                changePhase(atackBatteryPhase);
+                break;
             }
-            
-            //コマンドボタンを表示する
-            core.rootScene.addChild(iconAtack);
-            core.rootScene.addChild(iconCharge);
-            
-            playerSelectBatterySprite.minValue = 1;
-                        
-            //攻撃バッテリー決定フェイズへ
-            changePhase(atackBatteryPhase);
-        }
-        //敵のアクティブゲージが満タンになった
-        else if(statusMap[enemyUserId].active >= MAX_ACTIVE) {
-            //敵を攻撃側に設定する
-            atackUserId = enemyUserId;
-            defenthUserId = userId;
-            
-            //バッテリーに加算する
-            if(statusMap[enemyUserId].battery < 5) {
-                statusMap[enemyUserId].battery ++;
-            }
-            
-            //コマンドを送信する
-            //待ちフェイズの場合、OKという文字を入力としてサーバへ送信する
-            sendInput({
-                input : 'OK'
-            });
-            
-            //攻撃バッテリー決定フェイズに遷移
-            changePhase(atackBatteryPhase);
         }
     }
     
@@ -374,8 +368,8 @@ function game(spec, my) {
         
         //チャージの場合
         if(command === 'charge') {
-            statusMap[atackUserId].battery = 5;
-            statusMap[atackUserId].active = 0;
+            statusArray[atackUserId].battery = 5;
+            statusArray[atackUserId].active = 0;
             
             //ウェイトフェイズに遷移
             changePhase(waitPhase);
@@ -384,7 +378,7 @@ function game(spec, my) {
         //攻撃の場合
         else {
             //攻撃バッテリー設定
-            statusMap[atackUserId].selectBattery = command;
+            statusArray[atackUserId].selectBattery = command;
             
             //防御バッテリー決定待フェイズへ遷移
             changePhase(defenthBatteryPhase);
@@ -402,7 +396,7 @@ function game(spec, my) {
                 core.rootScene.addChild(iconOk);
                 core.rootScene.addChild(playerSelectBatterySprite);
                 
-                if(statusMap[userId].battery >= 1) {
+                if(statusArray[userId].battery >= 1) {
                     playerSelectBatterySprite.frame = 1;
                 } else {
                     playerSelectBatterySprite.frame = 0;
@@ -422,16 +416,16 @@ function game(spec, my) {
         }
         
         //サーバの入力を受け取る
-        statusMap[defenthUserId].selectBattery = inputs[defenthUserId];
+        statusArray[defenthUserId].selectBattery = inputs[defenthUserId];
         inputs = null;
         
         //消費バッテリーを引く
-        statusMap[userId].battery -= statusMap[userId].selectBattery;
-        statusMap[enemyUserId].battery -= statusMap[enemyUserId].selectBattery;
+        statusArray[userId].battery -= statusArray[userId].selectBattery;
+        statusArray[enemyUserId].battery -= statusArray[enemyUserId].selectBattery;
         
         //バッテリー表示の準備
-        playerSelectBatterySprite.frame = statusMap[userId].selectBattery;
-        enemySelectBatterySprite.frame = statusMap[enemyUserId].selectBattery;
+        playerSelectBatterySprite.frame = statusArray[userId].selectBattery;
+        enemySelectBatterySprite.frame = statusArray[enemyUserId].selectBattery;
         core.rootScene.addChild(playerSelectBatterySprite);
         core.rootScene.addChild(enemySelectBatterySprite);
 
@@ -446,9 +440,9 @@ function game(spec, my) {
         if(counter > 120) {
             //ダメージ計算
             var hit = 0;    //0:Miss 1:Hit 2:Defenth 3:critical
-            var atackBattery = statusMap[atackUserId].selectBattery;
-            var defenthBattery = statusMap[defenthUserId].selectBattery;
-            var damage = statusMap[atackUserId].weapons[atackBattery].power;
+            var atackBattery = statusArray[atackUserId].selectBattery;
+            var defenthBattery = statusArray[defenthUserId].selectBattery;
+            var damage = statusArray[atackUserId].weapons[atackBattery].power;
             
             if(defenthBattery === 0) {
                 damage = damage*2;
@@ -465,7 +459,7 @@ function game(spec, my) {
             }
             
             //HPからダメージをひく
-            statusMap[defenthUserId].hp -= damage;
+            statusArray[defenthUserId].hp -= damage;
             
             //ダメージ表示ラベル可視化
             labelDamage.text = damage;
@@ -494,7 +488,7 @@ function game(spec, my) {
             core.rootScene.removeChild(labelDamage);
             
             //攻撃側のアクティブゲージを0にする
-            statusMap[atackUserId].active = 0;
+            statusArray[atackUserId].active = 0;
             
             //ウェイトフェイズに遷移
             changePhase(waitPhase);
