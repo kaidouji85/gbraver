@@ -10,8 +10,9 @@ function game(spec, my) {
     
     //スーパークラス
     var core = new Core(320, 320);
-    
-    //プライベート変数
+    core.fps = 60;
+    core.rootScene.backgroundColor = "black";
+
     var usersInfo = spec.usersInfo;
     var roomId = spec.roomId;
     var userId = spec.userId;
@@ -27,6 +28,7 @@ function game(spec, my) {
         }
     }
 
+    //スプライト
     var playerSprite;
     var enemySprite;
     var labelUnitName;
@@ -48,62 +50,52 @@ function game(spec, my) {
     var playerSelectBatterySprite;
     var enemySelectBatterySprite;
     
-    var inputs = null;
-    
-    var atackUserId = null;
-    var defenthUserId = null;
-    var counter = 0;
-    
-    core.fps = 60;
-    preLoad();
-    core.onload = function() {
-        init();
-        core.rootScene.addEventListener('enterframe', enterFrame);
-    };
-    
+    //サーバにコマンド送信する
     var sendInput = null;
     core.onSendInput = function(fn){
         sendInput = fn;
-    }
+    };
     
+    //サーバからのレスポンスを受け取る
+    var inputs = null;
     core.emitResp = function(data){
         inputs = data.inputs;
-    }
+    };
     
+    //ルームが破棄された
     core.emitBreakRoom = function(data){
         console.log('breakRoom');
-    }
+    };
     
+    //攻撃、防御側のユーザIDを格納
+    var atackUserId = null;
+    var defenthUserId = null;
 
-    /**
-     * リソースのプリロード
-     */
-    function preLoad(){
-        core.preload('/images/'+statusMap[userId].pictName);
-        core.preload('/images/'+statusMap[enemyUserId].pictName); 
-        core.preload('/images/Battery.png');
-        core.preload('/images/iconAtack.png');
-        core.preload('/images/iconCharge.png');
-        core.preload('/images/iconPlus.png');
-        core.preload('/images/iconMinus.png');
-        core.preload('/images/iconOk.png');
-        core.preload('/images/iconPrev.png');
-    }    
+    //画像のプリロード
+    core.preload('/images/' + statusMap[userId].pictName);
+    core.preload('/images/' + statusMap[enemyUserId].pictName);
+    core.preload('/images/Battery.png');
+    core.preload('/images/iconAtack.png');
+    core.preload('/images/iconCharge.png');
+    core.preload('/images/iconPlus.png');
+    core.preload('/images/iconMinus.png');
+    core.preload('/images/iconOk.png');
+    core.preload('/images/iconPrev.png'); 
+
+    var counter = 0;
+    core.onload = function() {
+        initSprite();
+        core.rootScene.addEventListener('enterframe', function(e){
+            refreshMertor();
+            executePhase();
+            counter ++;
+        });
+    };
     
     /**
-     * リフレッシュレートごとの処理 
-     * @param {Object} e
+     * スプライト初期化
      */
-    function enterFrame(e) {
-        refreshMertor();
-        executePhase();
-        counter ++;
-    }
-    
-    /**
-     * 初期化
-     */
-    function init(){
+    function initSprite(){
         //プレイヤースプライト
         playerSprite = new Sprite(128, 128);
         playerSprite.image = core.assets['/images/'+statusMap[userId].pictName];
@@ -200,8 +192,6 @@ function game(spec, my) {
                 core.rootScene.addChild(iconPrev);            
                 core.rootScene.addChild(playerSelectBatterySprite);
             }
-            
-
         });        
         
         //チャージアイコン
@@ -293,9 +283,7 @@ function game(spec, my) {
         enemySelectBatterySprite.x = 32;
         enemySelectBatterySprite.y = 100;
         enemySelectBatterySprite.frame = 1;
-        enemySelectBatterySprite.value = 1;        
-        
-        core.rootScene.backgroundColor = "black";
+        enemySelectBatterySprite.value = 1;
     }
     
     /**
