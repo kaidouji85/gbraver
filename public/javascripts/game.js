@@ -167,10 +167,10 @@ function game(spec, my) {
         labelDamage.color = "#fff";
         
         //攻撃アイコン
-        iconAtack = new Sprite(96,48);
+        iconAtack = new Sprite(96,30);
         iconAtack.image = core.assets['/images/iconAtack.png'];
         iconAtack.x = 100;
-        iconAtack.y = 100;
+        iconAtack.y = 80;
         iconAtack.addEventListener(Event.TOUCH_START,function(e){
             if(statusArray[userId].battery >= 1){
                 playerSelectBatterySprite.frame = 1;
@@ -189,10 +189,10 @@ function game(spec, my) {
         });        
         
         //チャージアイコン
-        iconCharge = new Sprite(96,48);
+        iconCharge = new Sprite(96,30);
         iconCharge.image = core.assets['/images/iconCharge.png'];
         iconCharge.x = 100;
-        iconCharge.y = 100 + 55;
+        iconCharge.y = 80 + 40*1;
         iconCharge.addEventListener(Event.TOUCH_START,function(e){
             //攻撃、チャージアイコンを消す
             core.rootScene.removeChild(iconAtack);
@@ -205,10 +205,10 @@ function game(spec, my) {
         });
         
         //バッテリープラスアイコン
-        iconPlus = new Sprite(96, 48);
+        iconPlus = new Sprite(96, 30);
         iconPlus.image = core.assets['/images/iconPlus.png'];
         iconPlus.x = 100;
-        iconPlus.y = 100;
+        iconPlus.y = 80;
         iconPlus.addEventListener(Event.TOUCH_START,function(e){
             if(playerSelectBatterySprite.frame < statusArray[userId].battery) {
                 playerSelectBatterySprite.frame ++;
@@ -216,10 +216,10 @@ function game(spec, my) {
         });
         
         //バッテリーマイナスアイコン
-        iconMinus = new Sprite(96, 48);
+        iconMinus = new Sprite(96, 30);
         iconMinus.image = core.assets['/images/iconMinus.png'];
         iconMinus.x = 100;
-        iconMinus.y = 100 + 55;
+        iconMinus.y = 80 + 40*1;
         iconMinus.addEventListener(Event.TOUCH_START,function(e){
             if(playerSelectBatterySprite.frame>playerSelectBatterySprite.minValue) {
                 playerSelectBatterySprite.frame --;
@@ -227,10 +227,10 @@ function game(spec, my) {
         });
         
         //決定アイコン
-        iconOk = new Sprite(96, 48);
+        iconOk = new Sprite(96, 30);
         iconOk.image = core.assets['/images/iconOk.png'];
         iconOk.x = 100;
-        iconOk.y = 100 + 55*2;
+        iconOk.y = 80 + 40*2;
         iconOk.addEventListener(Event.TOUCH_START,function(e){
             //バッテリー決定関連アイコンを消す
             core.rootScene.removeChild(iconPlus);
@@ -246,10 +246,10 @@ function game(spec, my) {
         }); 
         
         //戻るアイコン
-        iconPrev = new Sprite(96, 48);
+        iconPrev = new Sprite(96, 30);
         iconPrev.image = core.assets['/images/iconPrev.png'];
         iconPrev.x = 100;
-        iconPrev.y = 100 + 55*3;
+        iconPrev.y = 80 + 40*3;
         iconPrev.addEventListener(Event.TOUCH_START,function(e){
             //バッテリー決定関連アイコンを消す
             core.rootScene.removeChild(iconPlus);
