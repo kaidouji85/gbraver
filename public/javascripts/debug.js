@@ -40,9 +40,8 @@ function basic(){
     }; 
 
     var Game = game({
-        roomId : 1,
-        userId : 1,
-        socket : {},
+        roomId : '1',
+        userId : '1',
         usersInfo : userInfo
     });
     
