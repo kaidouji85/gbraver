@@ -49,6 +49,7 @@ function game(spec, my) {
     var executePhase = waitPhase;
     var playerSelectBatterySprite;
     var enemySelectBatterySprite;
+    var labelWeaponDescription;
     
     //サーバにコマンド送信する
     var sendInput = null;
@@ -165,6 +166,13 @@ function game(spec, my) {
         labelDamage = new Label('1000');
         labelDamage.y = 200;
         labelDamage.color = "#fff";
+                
+        //武器説明ラベル
+        labelWeaponDescription = new Label('バスターナックル<br>攻撃力：3200');
+        labelWeaponDescription.x = 8;
+        labelWeaponDescription.y = 256;
+        labelWeaponDescription.color = "#fff";
+        //core.rootScene.addChild(labelWeaponDescription);
         
         //攻撃アイコン
         iconAtack = new Sprite(96,30);
@@ -174,17 +182,20 @@ function game(spec, my) {
         iconAtack.addEventListener(Event.TOUCH_START,function(e){
             if(statusArray[userId].battery >= 1){
                 playerSelectBatterySprite.frame = 1;
-                
                  //攻撃、チャージアイコンを消す
                 core.rootScene.removeChild(iconAtack);
                 core.rootScene.removeChild(iconCharge);
                 
-                //バッテリー決定関連アイコンを出す
+                //バッテリー決定関連オブジェクトを表示する
                 core.rootScene.addChild(iconPlus);
                 core.rootScene.addChild(iconMinus);
                 core.rootScene.addChild(iconOk);
                 core.rootScene.addChild(iconPrev);            
                 core.rootScene.addChild(playerSelectBatterySprite);
+                
+                labelWeaponDescription.text = statusArray[userId].weapons[playerSelectBatterySprite.frame].power;
+                labelWeaponDescription.text = getWeaponDescription(statusArray[userId].weapons,1);
+                core.rootScene.addChild(labelWeaponDescription);
             }
         });        
         
@@ -212,6 +223,7 @@ function game(spec, my) {
         iconPlus.addEventListener(Event.TOUCH_START,function(e){
             if(playerSelectBatterySprite.frame < statusArray[userId].battery) {
                 playerSelectBatterySprite.frame ++;
+                labelWeaponDescription.text = getWeaponDescription(statusArray[userId].weapons,playerSelectBatterySprite.frame);
             }
         });
         
@@ -223,6 +235,7 @@ function game(spec, my) {
         iconMinus.addEventListener(Event.TOUCH_START,function(e){
             if(playerSelectBatterySprite.frame>playerSelectBatterySprite.minValue) {
                 playerSelectBatterySprite.frame --;
+                labelWeaponDescription.text = getWeaponDescription(statusArray[userId].weapons,playerSelectBatterySprite.frame);
             }
         });
         
@@ -232,12 +245,13 @@ function game(spec, my) {
         iconOk.x = 100;
         iconOk.y = 80 + 40*2;
         iconOk.addEventListener(Event.TOUCH_START,function(e){
-            //バッテリー決定関連アイコンを消す
+            //バッテリー決定関連オブジェクトを消す
             core.rootScene.removeChild(iconPlus);
             core.rootScene.removeChild(iconMinus);
             core.rootScene.removeChild(iconOk);
             core.rootScene.removeChild(iconPrev);            
             core.rootScene.removeChild(playerSelectBatterySprite);
+            core.rootScene.removeChild(labelWeaponDescription);
             
             //入力情報を送信する
             sendInput({
@@ -251,17 +265,18 @@ function game(spec, my) {
         iconPrev.x = 100;
         iconPrev.y = 80 + 40*3;
         iconPrev.addEventListener(Event.TOUCH_START,function(e){
-            //バッテリー決定関連アイコンを消す
+            //バッテリー決定関連オブジェクトを消す
             core.rootScene.removeChild(iconPlus);
             core.rootScene.removeChild(iconMinus);
             core.rootScene.removeChild(iconOk);
             core.rootScene.removeChild(iconPrev);            
             core.rootScene.removeChild(playerSelectBatterySprite);
+            core.rootScene.removeChild(labelWeaponDescription);
             
             //攻撃、チャージアイコンを出す
             core.rootScene.addChild(iconAtack);
             core.rootScene.addChild(iconCharge);
-        });               
+        });
         
         //プレイヤーが出したバッテリーの値
         playerSelectBatterySprite = new Sprite(64,64);
@@ -278,6 +293,14 @@ function game(spec, my) {
         enemySelectBatterySprite.y = 100;
         enemySelectBatterySprite.frame = 1;
         enemySelectBatterySprite.value = 1;
+    }
+    
+    /**
+     * 武器の説明文を生成する
+     */
+    function getWeaponDescription(weapons,battery){
+        var description = weapons[battery].name + "    " + weapons[battery].power;
+        return description;
     }
     
     /**
