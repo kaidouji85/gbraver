@@ -7,6 +7,7 @@ function game(spec, my) {
     //定数
     const MAX_ACTIVE = 5000;
     const MAX_PLAYER_NUM = 2;
+    const CHARGE_WAIT_FRAME = 30;
     
     //スーパークラス
     var core = new Core(320, 320);
@@ -331,11 +332,11 @@ function game(spec, my) {
      */
     function refreshMertor() {
         labelHp.text = 'HP ' + statusArray[userId].hp;
-        labelActive.text = 'Active ' + statusArray[userId].active;
+        labelActive.text = 'Active ' + (statusArray[userId].active>0 ? statusArray[userId].active : 0);
         labelBattery.text = 'Battery' + statusArray[userId].battery;
 
         labelEnemyHp.text = 'HP ' + statusArray[enemyUserId].hp;
-        labelEnemyActive.text = 'Active ' + statusArray[enemyUserId].active;
+        labelEnemyActive.text = 'Active ' + (statusArray[enemyUserId].active >0 ? statusArray[enemyUserId].active : 0);
         labelEnemyBattery.text = 'Battery' + statusArray[enemyUserId].battery;
     }
 
@@ -392,7 +393,7 @@ function game(spec, my) {
         //チャージの場合
         if(command === 'charge') {
             statusArray[atackUserId].battery = 5;
-            statusArray[atackUserId].active = 0;
+            statusArray[atackUserId].active = -statusArray[atackUserId].speed*CHARGE_WAIT_FRAME;
             
             //ウェイトフェイズに遷移
             changePhase(waitPhase);
