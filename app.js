@@ -162,20 +162,21 @@ io.sockets.on('connection', function(socket) {
 
     //ソケットの接続切れ
     socket.on("disconnect", function(data) {
-        console.log('test disconnect');
+        console.log('disconnect');
         //関連するソケットが入室していたルームを解散
-        socket.get('loginInfo', function(err, data) {
-            
-            if (!err && data.roomId) {
+        socket.get('loginInfo', function(err, data) {            
+            if (!err && data && data.roomId) {
+                console.log('leave room');
                 var roomId = data.roomId;
                 gameArray[data.roomId] = game();
                 socket.leave(roomId);
                 var clients = io.sockets.clients(roomId);
-                for(var index in clients ){
-                    console.log('leave');
+                for (var index in clients ) {
+                    console.log('leave client');
                     clients[index].leave(roomId);
-                    clients[index].emit('breakRoom',{});
+                    clients[index].disconnect();
                 }
+
             }
         });
     });

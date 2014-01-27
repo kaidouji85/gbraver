@@ -35,8 +35,8 @@ window.onload = function() {
         Game.emitResp(data);
     });
     
-    //ルーム解体
-    socket.on("breakRoom", function(data) {
-        Game.emitBreakRoom(data);
+    //socket.ioの接続が切れた
+    socket.on("disconnect", function(data) {
+        Game.emitDisconnect(data);
     });
 };

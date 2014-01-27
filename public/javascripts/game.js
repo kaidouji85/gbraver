@@ -61,12 +61,14 @@ function game(spec, my) {
     //サーバからのレスポンスを受け取る
     var inputs = null;
     core.emitResp = function(data){
+        console.log('input');
+        console.log(data);
         inputs = data.inputs;
     };
     
     //ルームが破棄された
-    core.emitBreakRoom = function(data){
-        console.log('breakRoom');
+    core.emitDisconnect = function(data){
+        console.log('disconnect');
     };
     
     //攻撃、防御側のユーザIDを格納
