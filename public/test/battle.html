@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="mocha.css" />
+        <script src="../javascripts/jquery-2.0.3.min.js"></script>
+        <script src="mocha.js"></script>
+        <script>
+            mocha.setup('bdd');
+        </script>
+        <script src="battleTest.js"></script>
+        <script>
+            var assert = function(expr, msg) {
+                if (!expr) throw new Error(msg || 'failed');
+            };
+            
+            assert.equal = function(a, b, msg) {
+                if (a !== b) throw new Error(msg || ('failed : '+a+','+b));
+            };
+            
+            $(function() {
+                mocha.run();
+            });
+        </script>
+    </head>
+    <body>
+        <div id="mocha"></div>
+    </body>
+</html>
