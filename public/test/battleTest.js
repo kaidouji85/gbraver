@@ -39,7 +39,7 @@ describe('Battleクラスのテスト', function() {
             
             var ret = Battle.doWaitPhase();
             var statusArray = Battle.getStatusArray();
-            assert.equal('1',ret);
+            assert.equal('1',ret,'ユーザID1のターンになる');
             assert.isTrue(statusArray[1].active>=Battle.MAX_ACTIVE,"アクティブゲージが最大値以上になる");
         });
         
@@ -82,11 +82,57 @@ describe('Battleクラスのテスト', function() {
             
             var ret = Battle.doWaitPhase();
             var statusArray = Battle.getStatusArray();
-            assert.equal('2',ret);
-            assert.isTrue(statusArray[5].active>=Battle.MAX_ACTIVE,"アクティブゲージが最大値以上になる");
-            assert.isTrue(statusArray[2].active>=Battle.MAX_ACTIVE,"アクティブゲージが最大値以上になる");
+            assert.equal('2',ret,'ユーザID2のターンになる');
+            assert.isTrue(statusArray[5].active>=Battle.MAX_ACTIVE,"ユーザID5のアクティブゲージが最大値以上になる");
+            assert.isTrue(statusArray[2].active>=Battle.MAX_ACTIVE,"ユーザID2のアクティブゲージが最大値以上になる");
             
         });
+        
+        it('自分のターンになったらバッテリーが1回復する',function(){
+            var testData = {};
+            testData[1] = {
+                name : 'グランブレイバー',
+                pictName : 'GranBraver.PNG',
+                hp : 3200,
+                speed : 230,
+                active : 0,
+                battery : 3,
+                weapons : {
+                    1 : {name : 'バスターナックル',power : 800},
+                    2 : {name : 'バスターナックル',power : 1100},
+                    3 : {name : 'バスターナックル',power : 1600},
+                    4 : {name : 'バスターナックル',power : 2100},
+                    5 : {name : 'バスターナックル',power : 2800}
+                }
+            };
+            testData[2] = {
+                name : 'ランドーザ',
+                pictName : 'Landozer.PNG',
+                hp : 4700,
+                speed : 150,
+                active : 0,
+                battery : 2,
+                weapons : {
+                    1 : {name:'ブレイクパンチ',power:1200},
+                    2 : {name:'ブレイクパンチ',power:1700},
+                    3 : {name:'ブレイクパンチ',power:2300},
+                    4 : {name:'ブレイクパンチ',power:2900},
+                    5 : {name:'ブレイクパンチ',power:3800}
+                }
+            }; 
+            
+            var Battle = battle({
+                statusArray : testData    
+            });
+            
+            var ret = Battle.doWaitPhase();
+            var statusArray = Battle.getStatusArray();
+            assert.equal('1',ret,'ユーザID1のターンになる');
+            assert.equal(4,statusArray[1].battery,'バッテリーが1回復する');
+            assert.isTrue(statusArray[1].active>=Battle.MAX_ACTIVE,"アクティブゲージが最大値以上になる"); 
+            
+        });        
+        
     });
     
     describe('攻撃', function() {
@@ -183,11 +229,111 @@ describe('Battleクラスのテスト', function() {
                 defenthBattery : 4
             });
             var statusArray = Battle.getStatusArray();
-            assert.isTrue('1'===retWaitPhase,'ユーザID1のターンになる');
-            assert.isTrue(Battle.ATACK_GUARD===retAtack.hit,'防御判定になる');
-            assert.isTrue(2100/2===retAtack.damage,'ダメージが半減される');
-            assert.isTrue(1===statusArray[1].battery,'攻撃側バッテリーが減る');
-            assert.isTrue(1===statusArray[2].battery,'防御側バッテリーが減る');
+            assert.equal('1',retWaitPhase,'ユーザID1のターンになる');
+            assert.equal(Battle.ATACK_GUARD,retAtack.hit,'防御判定になる');
+            assert.equal(2100/2,retAtack.damage,'ダメージが半減される');
+            assert.equal(1,statusArray[1].battery,'攻撃側バッテリーが減る');
+            assert.equal(1,statusArray[2].battery,'防御側バッテリーが減る');
+        });
+        
+         it('防御側が多くバッテリーを出したので攻撃ミスになりダメージが0になる',function(){
+            var testData = {};
+            testData[1] = {
+                name : 'グランブレイバー',
+                pictName : 'GranBraver.PNG',
+                hp : 3200,
+                speed : 230,
+                active : 0,
+                battery : 5,
+                weapons : {
+                    1 : {name : 'バスターナックル',power : 800},
+                    2 : {name : 'バスターナックル',power : 1100},
+                    3 : {name : 'バスターナックル',power : 1600},
+                    4 : {name : 'バスターナックル',power : 2100},
+                    5 : {name : 'バスターナックル',power : 2800}
+                }
+            };
+            testData[2] = {
+                name : 'ランドーザ',
+                pictName : 'Landozer.PNG',
+                hp : 4700,
+                speed : 150,
+                active : 0,
+                battery : 5,
+                weapons : {
+                    1 : {name:'ブレイクパンチ',power:1200},
+                    2 : {name:'ブレイクパンチ',power:1700},
+                    3 : {name:'ブレイクパンチ',power:2300},
+                    4 : {name:'ブレイクパンチ',power:2900},
+                    5 : {name:'ブレイクパンチ',power:3800}
+                }
+            }; 
+            
+            var Battle = battle({
+                statusArray : testData    
+            });
+            
+            var retWaitPhase = Battle.doWaitPhase();
+            var retAtack = Battle.atack({
+                atackBattery : 2,
+                defenthBattery : 4
+            });
+            var statusArray = Battle.getStatusArray();
+            assert.equal('1',retWaitPhase,'ユーザID1のターンになる');
+            assert.equal(Battle.ATACK_MISS,retAtack.hit,'攻撃ミスになる');
+            assert.equal(0,retAtack.damage,'ダメージが0になる');
+            assert.equal(3,statusArray[1].battery,'攻撃側バッテリーが減る');
+            assert.equal(1,statusArray[2].battery,'防御側バッテリーが減る');
+        });
+        
+         it('防御側がバッテリーに0を指定したので、クリティカルヒットになる',function(){
+            var testData = {};
+            testData[1] = {
+                name : 'グランブレイバー',
+                pictName : 'GranBraver.PNG',
+                hp : 3200,
+                speed : 230,
+                active : 0,
+                battery : 5,
+                weapons : {
+                    1 : {name : 'バスターナックル',power : 800},
+                    2 : {name : 'バスターナックル',power : 1100},
+                    3 : {name : 'バスターナックル',power : 1600},
+                    4 : {name : 'バスターナックル',power : 2100},
+                    5 : {name : 'バスターナックル',power : 2800}
+                }
+            };
+            testData[2] = {
+                name : 'ランドーザ',
+                pictName : 'Landozer.PNG',
+                hp : 4700,
+                speed : 150,
+                active : 0,
+                battery : 5,
+                weapons : {
+                    1 : {name:'ブレイクパンチ',power:1200},
+                    2 : {name:'ブレイクパンチ',power:1700},
+                    3 : {name:'ブレイクパンチ',power:2300},
+                    4 : {name:'ブレイクパンチ',power:2900},
+                    5 : {name:'ブレイクパンチ',power:3800}
+                }
+            }; 
+            
+            var Battle = battle({
+                statusArray : testData    
+            });
+            
+            var retWaitPhase = Battle.doWaitPhase();
+            var retAtack = Battle.atack({
+                atackBattery : 5,
+                defenthBattery : 0
+            });
+            var statusArray = Battle.getStatusArray();
+            assert.equal('1',retWaitPhase,'ユーザID1のターンになる');
+            assert.equal(Battle.ATACK_CRITICAL,retAtack.hit,'クリィカルヒットになる');
+            assert.equal(2800*2,retAtack.damage,'ダメージが2倍になる');
+            assert.equal(0,statusArray[1].battery,'攻撃側バッテリーが減る');
+            assert.equal(5,statusArray[2].battery,'防御側バッテリーが減る');
         });
     });
 }); 
