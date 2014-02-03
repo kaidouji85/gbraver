@@ -179,11 +179,11 @@ describe('Battleクラスのテスト', function() {
                 defenthBattery : 1
             });
             var statusArray = Battle.getStatusArray();
-            assert.equal('1',retWaitPhase);
-            assert.equal(Battle.ATACK_HIT,retAtack.hit);
-            assert.equal(1600,retAtack.damage);
-            assert.equal(2,statusArray[1].battery);
-            assert.equal(4,statusArray[2].battery);
+            assert.equal('1',retWaitPhase,'ユーザID1のターンになる');
+            assert.equal(Battle.ATACK_HIT,retAtack.hit,'攻撃ヒット判定になる');
+            assert.equal(1600,retAtack.damage,'ダメージが通常通りになる');
+            assert.equal(2,statusArray[1].battery,'ユーザID1の残バッテリー');
+            assert.equal(4,statusArray[2].battery,'ユーザID2の残バッテリー');
         });
         
          it('攻撃・防御側が同じバッテリーを出したので防御判定になりダメージが半減される',function(){
@@ -335,5 +335,49 @@ describe('Battleクラスのテスト', function() {
             assert.equal(0,statusArray[1].battery,'攻撃側バッテリーが減る');
             assert.equal(5,statusArray[2].battery,'防御側バッテリーが減る');
         });
+    });
+    
+    describe('現在のステータスを取得', function() {
+        it('ユーザ１IDを指定して、任意のキャラクターステータスを取り出す',function(){
+            var testData = {};
+            testData[8] = {
+                name : 'グランブレイバー',
+                pictName : 'GranBraver.PNG',
+                hp : 3200,
+                speed : 230,
+                active : 0,
+                battery : 5,
+                weapons : {
+                    1 : {name : 'バスターナックル',power : 800},
+                    2 : {name : 'バスターナックル',power : 1100},
+                    3 : {name : 'バスターナックル',power : 1600},
+                    4 : {name : 'バスターナックル',power : 2100},
+                    5 : {name : 'バスターナックル',power : 2800}
+                }
+            };
+            testData[12] = {
+                name : 'ゼロブレイバー',
+                pictName : 'ZeroBraver.PNG',
+                hp : 4200,
+                speed : 230,
+                active : 0,
+                battery : 5,
+                weapons : {
+                    1 : {name : 'バスターナックル',power : 800},
+                    2 : {name : 'バスターナックル',power : 1100},
+                    3 : {name : 'バスターナックル',power : 1600},
+                    4 : {name : 'バスターナックル',power : 2100},
+                    5 : {name : 'バスターナックル',power : 2800}
+                }
+            };
+            
+            var Battle = battle({
+                statusArray : testData
+            });
+            var ret = Battle.getStatusArray();
+            assert.deepEqual(testData[12],ret[12],'ユーザID12のステータスが取得できる');
+        });
+        
+
     });
 }); 
