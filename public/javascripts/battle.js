@@ -22,10 +22,19 @@ var battle = function(spec,my){
     
     /**
      * ウェイトフェイズ実行 
-     * @return {Integer} 行動権を取得したプレイヤーID
+     * @return
+     * {
+     *     turn : 経過したターン数
+     *     atackUserId : 行動件を取得したユーザID
+     * }
      */
     that.doWaitPhase = function() {
+        var ret = {
+            turn : 0,
+            atackUserId : null
+        };
         while(true){
+            ret.turn ++;
             //アクティブゲージを加算
             for(var uid in statusArray){
                 statusArray[uid].active += statusArray[uid].speed;
@@ -38,8 +47,8 @@ var battle = function(spec,my){
                     if(statusArray[uid].battery < 5) {
                         statusArray[uid].battery ++;
                     }
-                    
-                    return uid;
+                    ret.atackUserId = uid;
+                    return ret;
                 }
             }
         }
