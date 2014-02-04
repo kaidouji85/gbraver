@@ -11,8 +11,9 @@ var battle = function(spec,my){
     that.ATACK_MISS = 2;
     that.ATACK_GUARD = 3;
     that.ATACK_CRITICAL = 4;
-    
-    var statusArray = spec.statusArray;
+
+    var statusArray = {};
+    $.extend(true,statusArray,spec.statusArray);
     var atackUserId = null;
     
     that.getStatusArray = function() {

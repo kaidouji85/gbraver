@@ -113,6 +113,17 @@ function game(spec, my) {
         labelEnemyBattery.text = 'Battery' + statusArray[enemyUserId].battery;
     }
 
+    //最初のウェイトフェイズの準備をする
+    /*
+    atackUserId = Battle.doWaitPhase();
+    for(var uid in statusArray){
+        if(uid != atackUserId){
+            defenthUserId = uid;
+            break;
+        }
+    }
+    */
+
     /**
      * ウェイトフェイズ 
      */
