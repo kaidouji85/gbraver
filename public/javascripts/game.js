@@ -113,51 +113,50 @@ function game(spec, my) {
         labelEnemyBattery.text = 'Battery' + statusArray[enemyUserId].battery;
     }
 
-    //最初のウェイトフェイズの準備をする
-    /*
-    atackUserId = Battle.doWaitPhase();
-    for(var uid in statusArray){
-        if(uid != atackUserId){
-            defenthUserId = uid;
-            break;
-        }
-    }
-    */
-
     /**
      * ウェイトフェイズ 
      */
+    var waitPhaseTurn = 0;
     function waitPhase(){
+        if(counter == 0) {
+            //最初のウェイトフェイズの準備をする
+            var ret = Battle.doWaitPhase();
+            atackUserId = ret.atackUserId;
+            waitPhaseTurn = ret.turn;
+            for(var uid in statusArray){
+                if(uid != atackUserId){
+                    defenthUserId = uid;
+                    break;
+                }
+            }
+        }
+        
         //アクティブゲージを加算
         for(var uid in statusArray){
             statusArray[uid].active += statusArray[uid].speed;
         }
         
-        //アクティブゲージが満タンか確認
-        for(var uid in statusArray){
-            if(statusArray[uid].active >= MAX_ACTIVE){
-                if(uid === userId){
-                    atackUserId = userId;
-                    defenthUserId = enemyUserId;
-                    
-                    core.rootScene.addChild(iconAtack);
-                    core.rootScene.addChild(iconCharge);
-                    playerSelectBatterySprite.minValue = 1;
-                } else {
-                    atackUserId = enemyUserId;
-                    defenthUserId = userId;  
-                    
-                    sendInput({
-                        input : 'OK'
-                    });                  
-                }
-                
-                if(statusArray[uid].battery < 5) {
-                    statusArray[uid].battery ++;
-                }
-                changePhase(atackBatteryPhase);
-                break;
+        if(counter >= waitPhaseTurn-1){
+            if (atackUserId === userId) {
+                atackUserId = userId;
+                defenthUserId = enemyUserId;
+
+                core.rootScene.addChild(iconAtack);
+                core.rootScene.addChild(iconCharge);
+                playerSelectBatterySprite.minValue = 1;
+            } else {
+                atackUserId = enemyUserId;
+                defenthUserId = userId;
+
+                sendInput({
+                    input : 'OK'
+                });
             }
+
+            if (statusArray[atackUserId].battery < 5) {
+                statusArray[atackUserId].battery++;
+            }
+            changePhase(atackBatteryPhase);
         }
     }
     
