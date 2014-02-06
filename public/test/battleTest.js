@@ -39,7 +39,7 @@ describe('Battleクラスのテスト', function() {
             
             var ret = Battle.doWaitPhase();
             var statusArray = Battle.getStatusArray();
-            assert.equal('1',ret.atackUserId,'ユーザID1のターンになる');
+            assert.equal(ret.atackUserId,'1','ユーザID1のターンになる');
             assert.isTrue(statusArray[1].active>=Battle.MAX_ACTIVE,"アクティブゲージが最大値以上になる");
         });
         
@@ -82,7 +82,7 @@ describe('Battleクラスのテスト', function() {
             
             var ret = Battle.doWaitPhase();
             var statusArray = Battle.getStatusArray();
-            assert.equal('2',ret.atackUserId,'ユーザID2のターンになる');
+            assert.equal(ret.atackUserId,'2','ユーザID2のターンになる');
             assert.isTrue(statusArray[5].active>=Battle.MAX_ACTIVE,"ユーザID5のアクティブゲージが最大値以上になる");
             assert.isTrue(statusArray[2].active>=Battle.MAX_ACTIVE,"ユーザID2のアクティブゲージが最大値以上になる");
             
@@ -127,7 +127,7 @@ describe('Battleクラスのテスト', function() {
             
             var ret = Battle.doWaitPhase();
             var statusArray = Battle.getStatusArray();
-            assert.equal('1',ret.atackUserId,'ユーザID1のターンになる');
+            assert.equal(ret.atackUserId,'1','ユーザID1のターンになる');
             assert.equal(4,statusArray[1].battery,'バッテリーが1回復する');
             assert.isTrue(statusArray[1].active>=Battle.MAX_ACTIVE,"アクティブゲージが最大値以上になる"); 
         });        
@@ -171,8 +171,8 @@ describe('Battleクラスのテスト', function() {
             
             var ret = Battle.doWaitPhase();
             var statusArray = Battle.getStatusArray();
-            assert.equal('1',ret.atackUserId,'ユーザID1のターンになる');
-            assert.equal( Math.round(Battle.MAX_ACTIVE/statusArray[1].speed),ret.turn,'ターン経過数が取得できる');
+            assert.equal(ret.atackUserId,'1','ユーザID1のターンになる');
+            assert.equal(ret.turn,Math.round(Battle.MAX_ACTIVE/statusArray[1].speed),'ターン経過数が取得できる');
             assert.isTrue(statusArray[1].active>=Battle.MAX_ACTIVE,"アクティブゲージが最大値以上になる"); 
         });  
     });
@@ -221,11 +221,11 @@ describe('Battleクラスのテスト', function() {
                 defenthBattery : 1
             });
             var statusArray = Battle.getStatusArray();
-            assert.equal('1',retWaitPhase.atackUserId,'ユーザID1のターンになる');
-            assert.equal(Battle.ATACK_HIT,retAtack.hit,'攻撃ヒット判定になる');
-            assert.equal(1600,retAtack.damage,'ダメージが通常通りになる');
-            assert.equal(2,statusArray[1].battery,'ユーザID1の残バッテリー');
-            assert.equal(4,statusArray[2].battery,'ユーザID2の残バッテリー');
+            assert.equal(retWaitPhase.atackUserId,'1','ユーザID1のターンになる');
+            assert.equal(retAtack.hit,Battle.ATACK_HIT,'攻撃ヒット判定になる');
+            assert.equal(retAtack.damage,1600,'ダメージが通常通りになる');
+            assert.equal(statusArray[1].battery,2,'ユーザID1の残バッテリー');
+            assert.equal(statusArray[2].battery,4,'ユーザID2の残バッテリー');
         });
         
          it('攻撃・防御側が同じバッテリーを出したので防御判定になりダメージが半減される',function(){
@@ -271,11 +271,11 @@ describe('Battleクラスのテスト', function() {
                 defenthBattery : 4
             });
             var statusArray = Battle.getStatusArray();
-            assert.equal('1',retWaitPhase.atackUserId,'ユーザID1のターンになる');
-            assert.equal(Battle.ATACK_GUARD,retAtack.hit,'防御判定になる');
-            assert.equal(2100/2,retAtack.damage,'ダメージが半減される');
-            assert.equal(1,statusArray[1].battery,'攻撃側バッテリーが減る');
-            assert.equal(1,statusArray[2].battery,'防御側バッテリーが減る');
+            assert.equal(retWaitPhase.atackUserId,'1','ユーザID1のターンになる');
+            assert.equal(retAtack.hit,Battle.ATACK_GUARD,'防御判定になる');
+            assert.equal(retAtack.damage,2100/2,'ダメージが半減される');
+            assert.equal(statusArray[1].battery,1,'攻撃側バッテリーが減る');
+            assert.equal(statusArray[2].battery,1,'防御側バッテリーが減る');
         });
         
          it('防御側が多くバッテリーを出したので攻撃ミスになりダメージが0になる',function(){
@@ -321,11 +321,11 @@ describe('Battleクラスのテスト', function() {
                 defenthBattery : 4
             });
             var statusArray = Battle.getStatusArray();
-            assert.equal('1',retWaitPhase.atackUserId,'ユーザID1のターンになる');
-            assert.equal(Battle.ATACK_MISS,retAtack.hit,'攻撃ミスになる');
-            assert.equal(0,retAtack.damage,'ダメージが0になる');
-            assert.equal(3,statusArray[1].battery,'攻撃側バッテリーが減る');
-            assert.equal(1,statusArray[2].battery,'防御側バッテリーが減る');
+            assert.equal(retWaitPhase.atackUserId,'1','ユーザID1のターンになる');
+            assert.equal(retAtack.hit,Battle.ATACK_MISS,'攻撃ミスになる');
+            assert.equal(retAtack.damage,0,'ダメージが0になる');
+            assert.equal(statusArray[1].battery,3,'攻撃側バッテリーが減る');
+            assert.equal(statusArray[2].battery,1,'防御側バッテリーが減る');
         });
         
          it('防御側がバッテリーに0を指定したので、クリティカルヒットになる',function(){
@@ -371,11 +371,11 @@ describe('Battleクラスのテスト', function() {
                 defenthBattery : 0
             });
             var statusArray = Battle.getStatusArray();
-            assert.equal('1',retWaitPhase.atackUserId,'ユーザID1のターンになる');
-            assert.equal(Battle.ATACK_CRITICAL,retAtack.hit,'クリィカルヒットになる');
-            assert.equal(2800*2,retAtack.damage,'ダメージが2倍になる');
-            assert.equal(0,statusArray[1].battery,'攻撃側バッテリーが減る');
-            assert.equal(5,statusArray[2].battery,'防御側バッテリーが減る');
+            assert.equal(retWaitPhase.atackUserId,'1','ユーザID1のターンになる');
+            assert.equal(retAtack.hit,Battle.ATACK_CRITICAL,'クリィカルヒットになる');
+            assert.equal(retAtack.damage,2800*2,'ダメージが2倍になる');
+            assert.equal(statusArray[1].battery,0,'攻撃側バッテリーが減る');
+            assert.equal(statusArray[2].battery,5,'防御側バッテリーが減る');
         });
     });
     
