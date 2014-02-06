@@ -99,5 +99,14 @@ var battle = function(spec,my){
             return ret;
     };
     
+    /**
+     * チャージ 
+     */
+    that.charge = function(){
+        statusArray[atackUserId].battery = 5;
+        statusArray[atackUserId].active = 0;
+        atackUserId = null;
+    };
+    
     return that;
 };
