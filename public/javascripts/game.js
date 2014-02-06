@@ -84,6 +84,7 @@ function game(spec, my) {
     preloadPict();
     core.onload = function() {
         initSprite();
+        changePhase(waitPhase);
         core.rootScene.addEventListener('enterframe', function(e){
             refreshMertor();
             executePhase();
@@ -96,8 +97,20 @@ function game(spec, my) {
      * phase 変更するフェイズ
      */
     function changePhase(phase){
-        counter = 0;
+        counter = 1;
         executePhase = phase;
+
+        if(phase === waitPhase){
+            prepareWaitPhase();
+        } else if(phase === atackBatteryPhase) {
+            prepareAtackBatteryPhase();
+        } else if(phase === defenthBatteryPhase) {
+            prepareDefenthBatteryPhase();
+        } else if (phase === viewBatteryPhase) {
+            prepareViewBatteryPhase();
+        } else if(phase === viewDamagePhase) {
+            prepareViewDamagePhase();
+        }
     }
     
     /**
@@ -113,50 +126,50 @@ function game(spec, my) {
         labelEnemyBattery.text = 'Battery' + statusArray[enemyUserId].battery;
     }
 
+    var waitPhaseTurn;
+    
+    /**
+     * ウェイトフェイズ準備
+     */
+    function prepareWaitPhase(){
+        var ret = Battle.doWaitPhase();
+        atackUserId = ret.atackUserId;
+        waitPhaseTurn = ret.turn;
+        for (var uid in statusArray) {
+            if (uid != atackUserId) {
+                defenthUserId = uid;
+                break;
+            }
+        }
+    }
+    
     /**
      * ウェイトフェイズ 
      */
-    var waitPhaseTurn = 0;
     function waitPhase(){
-        if(counter == 0) {
-            //最初のウェイトフェイズの準備をする
-            var ret = Battle.doWaitPhase();
-            atackUserId = ret.atackUserId;
-            waitPhaseTurn = ret.turn;
-            for(var uid in statusArray){
-                if(uid != atackUserId){
-                    defenthUserId = uid;
-                    break;
-                }
-            }
-        }
-        
-        //アクティブゲージを加算
-        for(var uid in statusArray){
-            statusArray[uid].active += statusArray[uid].speed;
-        }
-        
-        if(counter >= waitPhaseTurn-1){
-            if (atackUserId === userId) {
-                atackUserId = userId;
-                defenthUserId = enemyUserId;
-
-                core.rootScene.addChild(iconAtack);
-                core.rootScene.addChild(iconCharge);
-                playerSelectBatterySprite.minValue = 1;
-            } else {
-                atackUserId = enemyUserId;
-                defenthUserId = userId;
-
-                sendInput({
-                    input : 'OK'
-                });
-            }
-
-            if (statusArray[atackUserId].battery < 5) {
-                statusArray[atackUserId].battery++;
-            }
+        if(counter >= waitPhaseTurn){
             changePhase(atackBatteryPhase);
+        }
+    }
+    
+    /**
+     * 攻撃バッテリー決定フェイズ準備
+     */
+    function prepareAtackBatteryPhase(){
+        if (atackUserId === userId) {
+            atackUserId = userId;
+            defenthUserId = enemyUserId;
+
+            core.rootScene.addChild(iconAtack);
+            core.rootScene.addChild(iconCharge);
+            playerSelectBatterySprite.minValue = 1;
+        } else {
+            atackUserId = enemyUserId;
+            defenthUserId = userId;
+
+            sendInput({
+                input : 'OK'
+            });
         }
     }
     
@@ -175,42 +188,41 @@ function game(spec, my) {
         
         //チャージの場合
         if(command === 'charge') {
-            statusArray[atackUserId].battery = 5;
-            statusArray[atackUserId].active = -statusArray[atackUserId].speed*CHARGE_WAIT_FRAME;
-            
-            //ウェイトフェイズに遷移
+            Battle.charge();
             changePhase(waitPhase);
-            return;    
         } 
         //攻撃の場合
         else {
-            //攻撃バッテリー設定
             statusArray[atackUserId].selectBattery = command;
-            
-            //防御バッテリー決定待フェイズへ遷移
             changePhase(defenthBatteryPhase);
-            
-            if(atackUserId === userId){
-                //コマンドを送信する
-                //待ちフェイズの場合、OKという文字を入力としてサーバへ送信する
-                sendInput({
-                    input : 'OK'
-                });
-            } else {
-                //バッテリー決定関連アイコンを出す
-                core.rootScene.addChild(iconPlus);
-                core.rootScene.addChild(iconMinus);
-                core.rootScene.addChild(iconOk);
-                core.rootScene.addChild(playerSelectBatterySprite);
-                
-                if(statusArray[userId].battery >= 1) {
-                    playerSelectBatterySprite.frame = 1;
-                } else {
-                    playerSelectBatterySprite.frame = 0;
-                }
-                playerSelectBatterySprite.minValue = 0;
-            }
         }
+    }
+
+    /**
+    *  防御バッテリー決定フェイズ準備
+    */
+    function prepareDefenthBatteryPhase(){
+        if (atackUserId === userId) {
+            //コマンドを送信する
+            //待ちフェイズの場合、OKという文字を入力としてサーバへ送信する
+            sendInput({
+                input : 'OK'
+            });
+        } else {
+            //バッテリー決定関連アイコンを出す
+            core.rootScene.addChild(iconPlus);
+            core.rootScene.addChild(iconMinus);
+            core.rootScene.addChild(iconOk);
+            core.rootScene.addChild(playerSelectBatterySprite);
+
+            if (statusArray[userId].battery >= 1) {
+                playerSelectBatterySprite.frame = 1;
+            } else {
+                playerSelectBatterySprite.frame = 0;
+            }
+            playerSelectBatterySprite.minValue = 0;
+        }  
+      
     }
 
     /**
@@ -224,66 +236,53 @@ function game(spec, my) {
         
         //サーバの入力を受け取る
         statusArray[defenthUserId].selectBattery = inputs[defenthUserId];
-        inputs = null;
-        
-        //消費バッテリーを引く
-        statusArray[userId].battery -= statusArray[userId].selectBattery;
-        statusArray[enemyUserId].battery -= statusArray[enemyUserId].selectBattery;
+        inputs = null;        
+        changePhase(viewBatteryPhase);
+    }
+    
+    var viewDamage;
+    /**
+     * バッテリー表示フェイズ準備
+     */
+    function prepareViewBatteryPhase(){
+        var ret = Battle.atack({
+            atackBattery : statusArray[atackUserId].selectBattery,
+            defenthBattery : statusArray[defenthUserId].selectBattery,
+        });
+        viewDamage = ret.damage;
         
         //バッテリー表示の準備
         playerSelectBatterySprite.frame = statusArray[userId].selectBattery;
         enemySelectBatterySprite.frame = statusArray[enemyUserId].selectBattery;
         core.rootScene.addChild(playerSelectBatterySprite);
         core.rootScene.addChild(enemySelectBatterySprite);
-
-        //バッテリー表示フェイズに遷移
-        changePhase(viewBatteryPhase);
-    }
+    }    
     
     /**
      * バッテリー表示フェイズ
      */
     function viewBatteryPhase() {
         if(counter > 120) {
-            //ダメージ計算
-            var hit = 0;    //0:Miss 1:Hit 2:Defenth 3:critical
-            var atackBattery = statusArray[atackUserId].selectBattery;
-            var defenthBattery = statusArray[defenthUserId].selectBattery;
-            var damage = statusArray[atackUserId].weapons[atackBattery].power;
-            
-            if(defenthBattery === 0) {
-                damage = damage*2;
-                hit = 3;
-            }else if(atackBattery > defenthBattery){
-                damage = damage;
-                hit = 1;
-            } else if(atackBattery === defenthBattery) {
-                damage = damage/2;
-                hit = 2;
-            } else {
-                damage = 0;
-                hit = 0;
-            }
-            
-            //HPからダメージをひく
-            statusArray[defenthUserId].hp -= damage;
-            
-            //ダメージ表示ラベル可視化
-            labelDamage.text = damage;
-            if(atackUserId === userId){
-                labelDamage.x = 32;
-            } else {
-                labelDamage.x = 180;
-            }
-            core.rootScene.addChild(labelDamage);
-            
-            //バッテリーラベル表示ラベルを消す
-            core.rootScene.removeChild(playerSelectBatterySprite);
-            core.rootScene.removeChild(enemySelectBatterySprite);
-            
-            //ダメージ表示フェイズに遷移
             changePhase(viewDamagePhase);
         }
+    }
+
+    /**
+     * ダメージ表示フェイズ
+     */
+    function prepareViewDamagePhase() {
+        //ダメージ表示ラベル可視化
+        labelDamage.text = viewDamage;
+        if (atackUserId === userId) {
+            labelDamage.x = 32;
+        } else {
+            labelDamage.x = 180;
+        }
+        core.rootScene.addChild(labelDamage);
+
+        //バッテリーラベル表示ラベルを消す
+        core.rootScene.removeChild(playerSelectBatterySprite);
+        core.rootScene.removeChild(enemySelectBatterySprite);
     }
     
     /**
@@ -291,18 +290,10 @@ function game(spec, my) {
      */
     function viewDamagePhase(){
         if(counter > 120) {
-            //ダメージ表示ラベルを消す
             core.rootScene.removeChild(labelDamage);
-            
-            //攻撃側のアクティブゲージを0にする
-            statusArray[atackUserId].active = 0;
-            
-            //ウェイトフェイズに遷移
             changePhase(waitPhase);
         }
     }
-    
-    
     
     /**
      * 画像のプリロード 

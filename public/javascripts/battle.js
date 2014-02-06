@@ -12,8 +12,7 @@ var battle = function(spec,my){
     that.ATACK_GUARD = 3;
     that.ATACK_CRITICAL = 4;
 
-    var statusArray = {};
-    $.extend(true,statusArray,spec.statusArray);
+    var statusArray = spec.statusArray;
     var atackUserId = null;
     
     that.getStatusArray = function() {
@@ -87,6 +86,7 @@ var battle = function(spec,my){
             }
             
             statusArray[atackUserId].battery -= atackBattery;
+            statusArray[atackUserId].active = 0;
             statusArray[defenthUserId].hp -= damage;
             statusArray[defenthUserId].battery -= defenthBattery;
             
