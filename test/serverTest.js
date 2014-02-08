@@ -14,6 +14,9 @@ describe('serverクラスのテスト', function(){
         httpServer : app
     });
 
+    //本テストではテストケースごとに別々のルームを利用する想定である。
+    //なので、afterEachを用いてテストケース終了毎にルームIDを
+    //0、1、2、3とインクリメントさせている。
     afterEach(function(){
         roomId ++;
     });
@@ -31,10 +34,18 @@ describe('serverクラスのテスト', function(){
             });
         });
         
-        //本システムのsocket.ioサーバテストは、2つのクライアントデータが正しく
+        //本テストでは2プレイヤーに「gameStart」が送信されることを確認するものだが、
+        //1テストケースでは1プレイヤーの通信レスポンスしかテストができない。
+        //そこで本テストでは
+        //  (1)ユーザ0、ユーザ1がルームXに入室 -> ユーザ0が「gameStart」を送信する
+        //  (2)ユーザ0、ユーザ1がルームX+1に入室 -> ユーザ1が「gameStart」を送信する
+        //というパターンを用意することで、2プレイヤーの通信をテストすることにした。
+        //
+        //しかし、(1)、(2)で異なるのは「gameStart」を受信したユーザIDだけであり、
+        //コピー&ペーストで作成するのは保守性が悪いと考えforEachを用いてコード量を少なくすることにした。
         var userIds = [0,1];
         userIds.forEach(function(userId){
-            it('2人入室したらサーバから「gameStart」が返される #ユーザ' + userId + 'の確認', function(done) {
+            it('2人が入室したらユーザID'+userId+'に「gameStart」が返される', function(done) {
                 var clients = [];
                 for (var i in userIds) {
                     clients[i] = io.connect(SERVER_URL, option);
@@ -51,9 +62,5 @@ describe('serverクラスのテスト', function(){
                 });
             });
         });
-        
-
-
-
     });
 });
