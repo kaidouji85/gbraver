@@ -1,72 +1,52 @@
 var assert = require('chai').assert;
+var io = require('socket.io-client');
 const SERVER_PORT = 3000;
 
 describe('serverクラスのテスト', function(){
     var Server;
+    var clients = [];
     
     before(function(){
-        //ダミーWebサーバ
-        var fs = require('fs');
-        var app = require('http').createServer(handler);
-        app.listen(SERVER_PORT);
-        function handler(req, res) {
-            fs.readFile(__dirname + '/index.html', function(err, data) {
-                if (err) {
-                    res.writeHead(500);
-                    return res.end('Error loading index.html');
-                }
-                res.writeHead(200);
-                res.end(data);
-            });
-        }
-        
+        var app = require('http').createServer().listen(3000);
         var server = require('../server.js');
         Server = server({
             httpServer : app
         });
-    });
         
-    describe('入室',function(){
-        it('入室したらサーバから入室成功メッセージが返される',function(done){
-            var io = require('socket.io-client');
-            var socket = io.connect('http://localhost',{
+        for(var i=0; i<3; i++){
+            clients[i] = io.connect('http://localhost', {
+                'force new connection' : true,
+                port : 3000
+            });
+        }
+    });
+
+    describe('入室正常系',function(){
+        it('1人目が入室したらサーバから「succesEnterRoom」が返される',function(done){
+            clients[0] = io.connect('http://localhost',{
                 'force new connection' : true,
                 port : 3000
             });
             
-            socket.emit('enterRoom',{
+            clients[0].emit('enterRoom',{
                 roomId : 1,
                 userId : 1
             });
-            socket.on('succesEnterRoom',function(){
+            clients[0].on('succesEnterRoom',function(){
                 done();
             });
         });
         
-        it('二人が同じ部屋に入室したらゲーム開始メッセージが送信される',function(done){
-            var io = require('socket.io-client');
-            var socket1 = io.connect('http://localhost',{
-                'force new connection' : true,
-                port : 3000
-            });
-            var socket2 = io.connect('http://localhost',{
-                'force new connection' : true,
-                port : 3000
-            });            
-            
-            socket1.emit('enterRoom',{
-                roomId : 2,
+        it('入室したらサーバから入室成功メッセージが返される',function(done){
+            console.log('test dayon');
+            console.log(clients[1]);
+            clients[1].emit('enterRoom',{
+                roomId : 1,
                 userId : 1
             });
-            socket2.emit('enterRoom',{
-                roomId : 2,
-                userId : 2
-            });
-              
-            socket1.on('gameStart',function(data){
-                socket2.on('gameStart',function(data){
-                    done();
-                });
+            
+            clients[1].on('gameStart',function(){
+                done(); 
             });
         });
     });
