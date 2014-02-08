@@ -9,7 +9,10 @@
     "express": "3.4.7",
     "ejs": "*",
     "socket.io":"*",
-    "mongoose":"*"
+    "mongoose":"*",
+    "chai": "*",
+    "mocha": "*",
+    "socket.io-client" : "*"
   },
   "engines": {
     "node": "0.10.x"
