@@ -3,51 +3,56 @@ var io = require('socket.io-client');
 const SERVER_PORT = 3000;
 
 describe('serverクラスのテスト', function(){
-    var Server;
-    var clients = [];
-    
-    before(function(){
-        var app = require('http').createServer().listen(3000);
-        var server = require('../server.js');
-        Server = server({
-            httpServer : app
-        });
-        
-        for(var i=0; i<3; i++){
-            clients[i] = io.connect('http://localhost', {
-                'force new connection' : true,
-                port : 3000
-            });
-        }
+    var roomId = 0;
+    var option = {
+        'force new connection' : true,
+         port : 3000
+    };
+    var app = require('http').createServer().listen(3000);
+    var httpServer = require('../server.js');
+    var Server = server({
+        httpServer : httpServer
+    });
+
+    afterEach(function(){
+        roomId ++;
     });
 
     describe('入室正常系',function(){
-        it('1人目が入室したらサーバから「succesEnterRoom」が返される',function(done){
-            clients[0] = io.connect('http://localhost',{
-                'force new connection' : true,
-                port : 3000
+        it('入室したらサーバから「succesEnterRoom」が返される',function(done){
+            var client = io.connect('http://localhost',option);
+            client.emit('enterRoom',{
+                roomId : roomId,
+                userId : 0
             });
             
-            clients[0].emit('enterRoom',{
-                roomId : 1,
-                userId : 1
-            });
-            clients[0].on('succesEnterRoom',function(){
-                done();
+            client.on('succesEnterRoom',function(){
+                done();    
             });
         });
         
-        it('入室したらサーバから入室成功メッセージが返される',function(done){
-            console.log('test dayon');
-            console.log(clients[1]);
-            clients[1].emit('enterRoom',{
-                roomId : 1,
-                userId : 1
-            });
-            
-            clients[1].on('gameStart',function(){
-                done(); 
+        var userIds = [0,1];
+        userIds.forEach(function(userId){
+            it('2人入室したらサーバから「gameStart」が返される #ユーザ' + userId + 'の確認', function(done) {
+                var clients = [];
+                for (var i in userIds) {
+                    clients[i] = io.connect('http://localhost', option);
+                    clients[i].emit('enterRoom', {
+                        roomId : roomId,
+                        userId : i
+                    });
+                }
+
+                clients[userId].on('succesEnterRoom', function() {
+                    clients[userId].on('gameStart', function() {
+                        done();
+                    });
+                });
             });
         });
+        
+
+
+
     });
 });

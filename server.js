@@ -17,7 +17,6 @@ function server(spec, my) {
             
             socket.join(roomId);
             socket.emit('succesEnterRoom');
-            console.log('room ' +  roomId +' in ' + io.sockets.clients(roomId).length);
             if(io.sockets.clients(roomId).length >= 2){
                 io.sockets.in(roomId).emit('gameStart');
             }
