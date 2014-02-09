@@ -22,7 +22,7 @@ describe('serverクラスのテスト', function(){
             name : 'ゼロブレイバー',
             pictName : 'GranBraver.PNG',
             hp : 4200,
-            speed : 270,
+            speed : 500,
             weapons : {
                 1 : {name:'ゼロナックル',power:1200},
                 2 : {name:'ゼロナックル',power:1200},
@@ -39,7 +39,7 @@ describe('serverクラスのテスト', function(){
             name : 'グランブレイバー',
             pictName : 'GranBraver.PNG',
             hp : 3200,
-            speed : 230,
+            speed : 500,
             weapons : {
                 1 : {name:'バスターナックル',power:800},
                 2 : {name:'バスターナックル',power:1100},
@@ -49,6 +49,24 @@ describe('serverクラスのテスト', function(){
             }
         }
     };
+    
+    user[2] = {
+        userId : 2,
+        status :{
+            name : 'ランドーザ',
+            pictName : 'Landozer.PNG',
+            hp : 4700,
+            speed : 250,
+            weapons : {
+                1 : {name:'ブレイクパンチ',power:1200},
+                2 : {name:'ブレイクパンチ',power:1700},
+                3 : {name:'ブレイクパンチ',power:2300},
+                4 : {name:'ブレイクパンチ',power:2900},
+                5 : {name:'ブレイクパンチ',power:3800}
+            }
+        }
+    };
+    
     
     Server.onGetUserData(function(userId,fn){
         fn(null,user[userId]);
@@ -88,8 +106,9 @@ describe('serverクラスのテスト', function(){
             it('2人が入室したらユーザID'+userId+'に「gameStart」が返される', function(done) {
                 var clients = [];
                 for (var i in userIds) {
-                    clients[i] = io.connect(SERVER_URL, option);
-                    clients[i].emit('enterRoom', {
+                    var nowUserId = userIds[i];
+                    clients[nowUserId] = io.connect(SERVER_URL, option);
+                    clients[nowUserId].emit('enterRoom', {
                         roomId : roomId,
                         userId : i
                     });
@@ -97,9 +116,42 @@ describe('serverクラスのテスト', function(){
 
                 clients[userId].on('succesEnterRoom', function() {
                     clients[userId].on('gameStart', function(data) {
-                        assert.deepEqual(data[0],user[0],'ユーザ0のデータが正しく取得できる');
-                        assert.deepEqual(data[1],user[1],'ユーザ1のデータが正しく取得できる');
+                        var expect = {
+                            0 : user[0],
+                            1 : user[1]
+                        };
+                        assert.deepEqual(data,expect,'ユーザのデータが正しく取得できる');
                         done();
+                    });
+                });
+            });
+        });
+    });
+    
+    describe('戦闘ロジック', function() {
+        var userIds = [1, 2];
+        userIds.forEach(function(userId) {
+            it('ウェイトフェイズにユーザID' + userId + 'が行動権を取得したユーザIDが返される', function(done) {
+                var clients = [];
+                for (var i in userIds) {
+                    var nowUserId = userIds[i];
+                    clients[nowUserId] = io.connect(SERVER_URL, option);
+                    clients[nowUserId].emit('enterRoom', {
+                        roomId : roomId,
+                        userId : i
+                    });
+                }
+
+                clients[userId].on('succesEnterRoom', function() {
+                    clients[userId].on('gameStart', function(data) {
+                        clients[userId].on('waitPhase', function(data) {
+                            var expect = {
+                                atackuserId : 1,
+                                turn : 10
+                            };
+                            assert.deepEqual(data, expect, '正しいウェイトフェイズオブジェクトが返される');
+                            done();
+                        });
                     });
                 });
             });
