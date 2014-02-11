@@ -92,27 +92,16 @@ describe('serverクラスのテスト', function(){
             });
         });
         
-        //本テストでは2プレイヤーに「gameStart」が送信されることを確認するものだが、
-        //1テストケースでは1プレイヤーの通信レスポンスしかテストができない。
-        //そこで本テストでは
-        //  (1)ユーザ0、ユーザ1がルームXに入室 -> ユーザ0が「gameStart」を送信する
-        //  (2)ユーザ0、ユーザ1がルームX+1に入室 -> ユーザ1が「gameStart」を送信する
-        //というパターンを用意することで、2プレイヤーの通信をテストすることにした。
-        //
-        //しかし、(1)、(2)で異なるのは「gameStart」を受信したユーザIDだけであり、
-        //コピー&ペーストで作成するのは保守性が悪いと考えforEachを用いてコード量を少なくすることにした。
-        var userIds = [0,1];
-        userIds.forEach(function(userId){
-            it('2人が入室したらユーザID'+userId+'に「gameStart」が返される', function(done) {
-                var clients = [];
-                for (var i in userIds) {
-                    var nowUserId = userIds[i];
-                    clients[nowUserId] = io.connect(SERVER_URL, option);
-                    clients[nowUserId].emit('enterRoom', {
-                        roomId : roomId,
-                        userId : i
-                    });
-                }
+        it('2人が入室したら「gameStart」が返される', function(done) {
+            var userIds = [0, 1];
+            var clients = [];
+            var gameStartCount = 0;
+            userIds.forEach(function(userId) {
+                clients[userId] = io.connect(SERVER_URL, option);
+                clients[userId].emit('enterRoom', {
+                    roomId : roomId,
+                    userId : userId
+                });
 
                 clients[userId].on('succesEnterRoom', function() {
                     clients[userId].on('gameStart', function(data) {
@@ -120,27 +109,29 @@ describe('serverクラスのテスト', function(){
                             0 : user[0],
                             1 : user[1]
                         };
-                        assert.deepEqual(data,expect,'ユーザのデータが正しく取得できる');
-                        done();
+                        assert.deepEqual(data, expect, 'ユーザのデータが正しく取得できる');
+                        //「gameStart」を2人が受信したらテスト成功
+                        gameStartCount++;
+                        if (gameStartCount===2) {
+                            done();
+                        }
                     });
                 });
             });
-        });
+        });    
     });
-    
+    /*
     describe('戦闘ロジック', function() {
-        var userIds = [1, 2];
-        userIds.forEach(function(userId) {
-            it('ウェイトフェイズにユーザID' + userId + 'が行動権を取得したユーザIDが返される', function(done) {
-                var clients = [];
-                for (var i in userIds) {
-                    var nowUserId = userIds[i];
-                    clients[nowUserId] = io.connect(SERVER_URL, option);
-                    clients[nowUserId].emit('enterRoom', {
-                        roomId : roomId,
-                        userId : i
-                    });
-                }
+        it('ウェイトフェイズに行動権を取得したユーザIDが返される', function(done) {
+            var userIds = [1, 2];
+            var clients = [];
+            var waitPhaseCount = 0;
+            userIds.forEach(function(userId) {
+                clients[userId] = io.connect(SERVER_URL, option);
+                clients[userId].emit('enterRoom', {
+                    roomId : roomId,
+                    userId : userId
+                });
 
                 clients[userId].on('succesEnterRoom', function() {
                     clients[userId].on('gameStart', function(data) {
@@ -150,11 +141,16 @@ describe('serverクラスのテスト', function(){
                                 turn : 10
                             };
                             assert.deepEqual(data, expect, '正しいウェイトフェイズオブジェクトが返される');
-                            done();
+                            waitPhaseCount ++;
+                            if(waitPhaseCount===2){
+                                done();    
+                            }
+                            
                         });
                     });
                 });
             });
-        });
+        }); 
     });
+    */
 });

@@ -1,3 +1,5 @@
+var battle = require('./battle.js');
+
 /**
  * ゲームサーバ
  * @param spec {Object}
@@ -32,8 +34,26 @@ function server(spec, my) {
                 roomObject[roomId].user[userId] = data;
                 socket.emit('succesEnterRoom');
                 if(io.sockets.clients(roomId).length >= 2){
+                    //ゲームスタート
                     var respData = roomObject[roomId].user;
                     io.sockets.in(roomId).emit('gameStart',respData);
+                    
+                    //戦闘クラスの初期化
+                    /*
+                    var statusArray = {};
+                    for(var i in roomObject[roomId].user){
+                        var userId = roomObject[roomId].user[i].userId;
+                        var status = roomObject[roomId].user[i].status;
+                        statusArray[userId] = status;
+                    }
+                    roomObject[roomId].battle = battle({
+                        sattusArray : statusArray
+                    });
+                    */
+                    
+                    //ウェイトフェイズ実行
+                    //var waitPhaseResult = roomObject[roomId].battle.doWaitPhase();
+                    //io.sockets.in(roomId).emit('waitPhase',waitPhaseResult);
                 }
             });
         });
