@@ -203,6 +203,66 @@ describe('serverクラスのテスト', function(){
                     });
                 });
             });
+        });
+        
+        it('攻撃側、防御側がコマンド送信したので攻撃・防御側バッテリー、当たり判定、ダメージが返される',function(done){
+            var damagePhaseCount = 0;
+            function isRecieveDamagePhaseCount(data) {
+                var expect = {
+                    atackBattery : 3,
+                    defenthBattery : 2,
+                    hit : 1,
+                    damage : 1600
+                };
+                assert.deepEqual(data,expect,'サーバから攻撃・防御側バッテリー、当たり判定、ダメージが返されるか確認する');
+                
+                damagePhaseCount++;
+                if (damagePhaseCount === 2) {
+                    done();
+                }
+            };
+            
+            var client1 = io.connect(SERVER_URL, option);
+            client1.emit('enterRoom', {
+                roomId : roomId,
+                userId : 1
+            });
+            client1.on('succesEnterRoom', function() {
+                client1.on('gameStart', function(data) {
+                    client1.emit('ready');
+                    client1.on('waitPhase', function(data) {
+                        client1.emit('atack', {
+                            battery : 3
+                        });
+                        client1.on('selectDefenthBatteryPhase', function() {
+                            client1.on('damagePhase',function(data){
+                                isRecieveDamagePhaseCount(data);
+                            });
+                        });
+                    });
+                });
+            });
+
+            var client2 = io.connect(SERVER_URL, option);
+            client2.emit('enterRoom', {
+                roomId : roomId,
+                userId : 2
+            });
+            client2.on('succesEnterRoom', function() {
+                client2.on('gameStart', function(data) {
+                    client2.emit('ready');
+                    client2.on('waitPhase', function(data) {
+                        client2.on('selectDefenthBatteryPhase', function() {
+                            client2.emit('defenth',{battery:2});
+                            client2.on('damagePhase',function(data){
+                                isRecieveDamagePhaseCount(data);
+                            });
+                        });
+                    });
+                });
+            });
         }); 
     });
+    
+    
 });

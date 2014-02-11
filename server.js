@@ -18,7 +18,8 @@ function server(spec, my) {
         roomObject[i] = {
             user : {},
             battle : null,
-            respBuffer : {}
+            respBuffer : {},
+            atackBattery : 0,
         };
     }
     
@@ -52,7 +53,20 @@ function server(spec, my) {
                 });
                 
                 socket.on('atack',function(data){
+                    roomObject[roomId].atackBattery = data.battery;
                     io.sockets.in(roomId).emit('selectDefenthBatteryPhase');
+                }); 
+                
+                socket.on('defenth',function(data){
+                    var atackBattery = roomObject[roomId].atackBattery;
+                    var defenthBattery = data.battery;
+                    var atackResult = roomObject[roomId].battle.atack({
+                        atackBattery : atackBattery,
+                        defenthBattery : defenthBattery
+                    });
+                    atackResult.atackBattery = atackBattery;
+                    atackResult.defenthBattery = defenthBattery;
+                    io.sockets.in(roomId).emit('damagePhase',atackResult);
                 }); 
             });
         });
