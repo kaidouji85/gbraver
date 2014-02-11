@@ -49,8 +49,11 @@ function server(spec, my) {
                         var waitPhaseResult = roomObject[roomId].battle.doWaitPhase();
                         io.sockets.in(roomId).emit('waitPhase',waitPhaseResult);
                     }
+                });
+                
+                socket.on('atack',function(data){
+                    io.sockets.in(roomId).emit('selectDefenthBatteryPhase');
                 }); 
-
             });
         });
     });

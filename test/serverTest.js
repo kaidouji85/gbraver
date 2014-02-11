@@ -156,6 +156,41 @@ describe('serverクラスのテスト', function(){
                     });
                 });
             });
+        });
+        
+        it('攻撃を選択したので、防御側プレイヤーがバッテリー選択状態に遷移する',function(done){
+                var client1 = io.connect(SERVER_URL, option);
+                client1.emit('enterRoom', {
+                    roomId : roomId,
+                    userId : 1
+                });
+                client1.on('succesEnterRoom', function() {
+                    client1.on('gameStart', function(data) {
+                        client1.emit('ready');
+                        client1.on('waitPhase', function(data) {
+                            client1.emit('atack',{battery:3});
+                            client1.on('selectDefenthBatteryPhase',function(){
+                                
+                            });
+                        });
+                    });
+                });
+                
+                var client2 = io.connect(SERVER_URL, option);
+                client2.emit('enterRoom', {
+                    roomId : roomId,
+                    userId : 2
+                });
+                client2.on('succesEnterRoom', function() {
+                    client2.on('gameStart', function(data) {
+                        client2.emit('ready');
+                        client2.on('waitPhase', function(data) {
+                            client2.on('selectDefenthBatteryPhase',function(){
+                                done();
+                            });
+                        });
+                    });
+                });                
         }); 
     });
 });
