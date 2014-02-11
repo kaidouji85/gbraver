@@ -28,6 +28,7 @@ var battle = function(spec,my){
      * }
      */
     that.doWaitPhase = function() {
+        console.log('doWaitPhase');
         var ret = {
             turn : 0,
             atackUserId : null
@@ -36,6 +37,7 @@ var battle = function(spec,my){
             ret.turn ++;
             //アクティブゲージを加算
             for(var uid in statusArray){
+                console.log('uid'+uid+' active'+statusArray[uid].active);
                 statusArray[uid].active += statusArray[uid].speed;
             }
             

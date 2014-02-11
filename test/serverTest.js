@@ -23,6 +23,8 @@ describe('serverクラスのテスト', function(){
             pictName : 'GranBraver.PNG',
             hp : 4200,
             speed : 500,
+            active : 0,
+            battery : 5,
             weapons : {
                 1 : {name:'ゼロナックル',power:1200},
                 2 : {name:'ゼロナックル',power:1200},
@@ -40,6 +42,8 @@ describe('serverクラスのテスト', function(){
             pictName : 'GranBraver.PNG',
             hp : 3200,
             speed : 500,
+            active : 0,
+            battery : 5,
             weapons : {
                 1 : {name:'バスターナックル',power:800},
                 2 : {name:'バスターナックル',power:1100},
@@ -57,6 +61,8 @@ describe('serverクラスのテスト', function(){
             pictName : 'Landozer.PNG',
             hp : 4700,
             speed : 250,
+            active : 0,
+            battery : 5,
             weapons : {
                 1 : {name:'ブレイクパンチ',power:1200},
                 2 : {name:'ブレイクパンチ',power:1700},

@@ -39,26 +39,38 @@ function server(spec, my) {
                     io.sockets.in(roomId).emit('gameStart',respData);
                     
                     //戦闘クラスの初期化
-                    /*
-                    var statusArray = {};
-                    for(var i in roomObject[roomId].user){
-                        var userId = roomObject[roomId].user[i].userId;
-                        var status = roomObject[roomId].user[i].status;
-                        statusArray[userId] = status;
-                    }
-                    roomObject[roomId].battle = battle({
-                        sattusArray : statusArray
-                    });
-                    */
+                    initBattle(roomId);
                     
                     //ウェイトフェイズ実行
-                    //var waitPhaseResult = roomObject[roomId].battle.doWaitPhase();
+                    console.log('test doWaitPhase');
+                    console.log(roomObject[roomId].battle);
+                    var waitPhaseResult = roomObject[roomId].battle.doWaitPhase();
+                    //conosle.log(waitPhaseResult);
                     //io.sockets.in(roomId).emit('waitPhase',waitPhaseResult);
                 }
             });
         });
     });
-
+    
+    /**
+     * 戦闘クラスの初期化 
+     * @param {Integer} roomId
+     * @return void
+     */
+    function initBattle(roomId) {
+        var statusArray = {};
+        for (var i in roomObject[roomId].user) {
+            var nowUserId = roomObject[roomId].user[i].userId;
+            var status = roomObject[roomId].user[i].status;
+            status.active = 0;
+            status.battery = 5;
+            statusArray[nowUserId] = status;
+        }
+        roomObject[roomId].battle = battle({
+            statusArray : statusArray
+        });
+    }
+    
     return io;
 };
 
