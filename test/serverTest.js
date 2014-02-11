@@ -141,7 +141,6 @@ describe('serverクラスのテスト', function(){
 
                 clients[userId].on('succesEnterRoom', function() {
                     clients[userId].on('gameStart', function(data) {
-                        console.log('emit ready uid='+userId);
                         clients[userId].emit('ready');
                         clients[userId].on('waitPhase', function(data) {
                             var expect = {
@@ -153,9 +152,7 @@ describe('serverクラスのテスト', function(){
                             if(waitPhaseCount===2){
                                 done();    
                             }
-                            
                         });
-                        
                     });
                 });
             });

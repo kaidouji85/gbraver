@@ -5,12 +5,14 @@ var battle = require('./battle.js');
  * @param spec {Object}
  * {
  *     httpServer : httpサーバオブジェクト
+ *     logLevel : socket.ioのログレベル
  * }
  * @param my {Object}
  */
 function server(spec, my) {
     var app = spec.httpServer;
-    var io = require('socket.io').listen(app);
+    var logLevel = spec.logLevel || 1;
+    var io = require('socket.io').listen(app,{'log level':logLevel});
     var roomObject = {};
     for(var i=0; i<100; i++){
         roomObject[i] = {
