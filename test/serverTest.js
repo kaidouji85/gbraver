@@ -126,7 +126,7 @@ describe('serverクラスのテスト', function(){
             });
         });    
     });
-    /*
+    
     describe('戦闘ロジック', function() {
         it('ウェイトフェイズに行動権を取得したユーザIDが返される', function(done) {
             var userIds = [1, 2];
@@ -141,9 +141,11 @@ describe('serverクラスのテスト', function(){
 
                 clients[userId].on('succesEnterRoom', function() {
                     clients[userId].on('gameStart', function(data) {
+                        console.log('emit ready uid='+userId);
+                        clients[userId].emit('ready');
                         clients[userId].on('waitPhase', function(data) {
                             var expect = {
-                                atackuserId : 1,
+                                atackUserId : '1',
                                 turn : 10
                             };
                             assert.deepEqual(data, expect, '正しいウェイトフェイズオブジェクトが返される');
@@ -153,10 +155,10 @@ describe('serverクラスのテスト', function(){
                             }
                             
                         });
+                        
                     });
                 });
             });
         }); 
     });
-    */
 });

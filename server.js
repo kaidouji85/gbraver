@@ -15,7 +15,8 @@ function server(spec, my) {
     for(var i=0; i<100; i++){
         roomObject[i] = {
             user : {},
-            battle : null
+            battle : null,
+            respBuffer : {}
         };
     }
     
@@ -34,20 +35,20 @@ function server(spec, my) {
                 roomObject[roomId].user[userId] = data;
                 socket.emit('succesEnterRoom');
                 if(io.sockets.clients(roomId).length >= 2){
-                    //ゲームスタート
                     var respData = roomObject[roomId].user;
                     io.sockets.in(roomId).emit('gameStart',respData);
-                    
-                    //戦闘クラスの初期化
-                    initBattle(roomId);
-                    
-                    //ウェイトフェイズ実行
-                    console.log('test doWaitPhase');
-                    console.log(roomObject[roomId].battle);
-                    var waitPhaseResult = roomObject[roomId].battle.doWaitPhase();
-                    //conosle.log(waitPhaseResult);
-                    //io.sockets.in(roomId).emit('waitPhase',waitPhaseResult);
                 }
+                
+                socket.on('ready', function() {
+                    roomObject[roomId].respBuffer[userId] = 'ready';
+                    if (Object.keys(roomObject[roomId].respBuffer).length == 2) {
+                        roomObject[roomId].respBuffer = {};
+                        initBattle(roomId);
+                        var waitPhaseResult = roomObject[roomId].battle.doWaitPhase();
+                        io.sockets.in(roomId).emit('waitPhase',waitPhaseResult);
+                    }
+                }); 
+
             });
         });
     });
@@ -61,7 +62,7 @@ function server(spec, my) {
         var statusArray = {};
         for (var i in roomObject[roomId].user) {
             var nowUserId = roomObject[roomId].user[i].userId;
-            var status = roomObject[roomId].user[i].status;
+            var status =  roomObject[roomId].user[i].status;
             status.active = 0;
             status.battery = 5;
             statusArray[nowUserId] = status;
