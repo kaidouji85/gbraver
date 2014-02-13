@@ -33,24 +33,40 @@ function server(spec, my) {
             var roomId = data.roomId;
             var userId = data.userId;
             
-            socket.join(roomId);
-            getUserData(userId,function(err,data){
-                roomObject[roomId].user[userId] = data;
-                socket.emit('succesEnterRoom');
-                if(io.sockets.clients(roomId).length >= 2){
-                    var respData = roomObject[roomId].user;
-                    io.sockets.in(roomId).emit('gameStart',respData);
+            socket.get('loginInfo',function(err,data){
+                if(!data){
+                    var loginInfo = {
+                        userId : userId,
+                        roomId : roomId
+                    };
+                    socket.set('loginInfo',loginInfo,function(){
+                        socket.join(roomId);
+                        getUserData(userId,function(err,data){
+                            roomObject[roomId].user[userId] = data;
+                            socket.emit('succesEnterRoom');
+                            if(io.sockets.clients(roomId).length >= 2){
+                                var respData = roomObject[roomId].user;
+                                io.sockets.in(roomId).emit('gameStart',respData);
+                            }
+                        });
+                    });
+                } else {
+                    socket.emit('enterRoomError','このコネクションは既に入室しています。');
                 }
-                
+            });
+            
+            
+            //getUserData(userId,function(err,data){    
+                /*
                 socket.on('ready', function() {
                     roomObject[roomId].respBuffer[userId] = 'ready';
                     if (Object.keys(roomObject[roomId].respBuffer).length == 2) {
                         roomObject[roomId].respBuffer = {};
                         initBattle(roomId);
-                        var waitPhaseResult = roomObject[roomId].battle.doWaitPhase();
-                        io.sockets.in(roomId).emit('waitPhase',waitPhaseResult);
+                        emitWaitPhase();
                     }
                 });
+                
                 
                 socket.on('atack',function(data){
                     roomObject[roomId].atackBattery = data.battery;
@@ -67,8 +83,18 @@ function server(spec, my) {
                     atackResult.atackBattery = atackBattery;
                     atackResult.defenthBattery = defenthBattery;
                     io.sockets.in(roomId).emit('damagePhase',atackResult);
-                }); 
-            });
+                    //console.log(atackResult);
+                    //console.log(roomObject[roomId].battle.getStatusArray());
+                    //emitWaitPhase();
+                });
+                
+                
+                function emitWaitPhase(){
+                    var waitPhaseResult = roomObject[roomId].battle.doWaitPhase();
+                    io.sockets.in(roomId).emit('waitPhase',waitPhaseResult);
+                }
+                */
+            //});
         });
     });
     
