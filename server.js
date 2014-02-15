@@ -18,7 +18,7 @@ function server(spec, my) {
         roomObject[i] = {
             user : {},
             battle : null,
-            respBuffer : {},
+            commandBuffer : {},
             atackBattery : 0,
         };
     }
@@ -47,6 +47,7 @@ function server(spec, my) {
                             if(io.sockets.clients(roomId).length >= 2){
                                 var respData = roomObject[roomId].user;
                                 io.sockets.in(roomId).emit('gameStart',respData);
+                                initBattle(roomId);
                             }
                         });
                     });
@@ -55,47 +56,22 @@ function server(spec, my) {
                 }
             });
             
-            
-            //getUserData(userId,function(err,data){    
-                /*
-                socket.on('ready', function() {
-                    roomObject[roomId].respBuffer[userId] = 'ready';
-                    if (Object.keys(roomObject[roomId].respBuffer).length == 2) {
-                        roomObject[roomId].respBuffer = {};
-                        initBattle(roomId);
-                        emitWaitPhase();
+            socket.on('ready',function(){
+                socket.get('loginInfo',function(err,loginInfo){
+                    var roomId = loginInfo.roomId;
+                    var userId = loginInfo.userId;
+                    roomObject[roomId].commandBuffer[userId] = 'ready';
+                    if(Object.keys(roomObject[roomId].commandBuffer).length ===2){
+                        var ret = roomObject[roomId].battle.doWaitPhase();
+                        ret.phase = 'wait';
+                        io.sockets.in(roomId).emit('resp',ret);
                     }
                 });
-                
-                
-                socket.on('atack',function(data){
-                    roomObject[roomId].atackBattery = data.battery;
-                    io.sockets.in(roomId).emit('selectDefenthBatteryPhase');
-                }); 
-                
-                socket.on('defenth',function(data){
-                    var atackBattery = roomObject[roomId].atackBattery;
-                    var defenthBattery = data.battery;
-                    var atackResult = roomObject[roomId].battle.atack({
-                        atackBattery : atackBattery,
-                        defenthBattery : defenthBattery
-                    });
-                    atackResult.atackBattery = atackBattery;
-                    atackResult.defenthBattery = defenthBattery;
-                    io.sockets.in(roomId).emit('damagePhase',atackResult);
-                    //console.log(atackResult);
-                    //console.log(roomObject[roomId].battle.getStatusArray());
-                    //emitWaitPhase();
-                });
-                
-                
-                function emitWaitPhase(){
-                    var waitPhaseResult = roomObject[roomId].battle.doWaitPhase();
-                    io.sockets.in(roomId).emit('waitPhase',waitPhaseResult);
-                }
-                */
-            //});
+            });
         });
+        
+        
+        
     });
     
     /**

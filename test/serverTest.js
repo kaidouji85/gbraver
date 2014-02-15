@@ -115,6 +115,7 @@ describe('serverクラスのテスト', function(){
                             0 : user[0],
                             1 : user[1]
                         };
+                        assert.deepEqual(data,expect);
                     });                        
                 });
                 
@@ -199,6 +200,37 @@ describe('serverクラスのテスト', function(){
     
     
     describe('戦闘ロジック', function() {
+        it('入室して「ready」を送信したらウェイトフェイズの結果が返される',function(done){
+            var userIds = [1,2];
+            var clients = [];
+            var respCount=0;
+            userIds.forEach(function(userId){
+                clients[userId] = io.connect(SERVER_URL, option);
+                clients[userId].emit('enterRoom', {
+                    roomId : roomId,
+                    userId : userId
+                });
+                
+                clients[userId].on('succesEnterRoom',function(){              
+                    clients[userId].on('gameStart',function(){
+                        clients[userId].emit('ready');
+                        clients[userId].on('resp',function(data){
+                            var expect = {
+                                phase : 'wait',
+                                atackUserId : '1',
+                                turn : 10
+                            };
+                            assert.deepEqual(data,expect);
+                            respCount ++;
+                            if(respCount===2){
+                                done();
+                            }
+                        });
+                    });          
+                });
+            });
+        });
+        
         /*
         it('ウェイトフェイズに行動権を取得したユーザIDが返される', function(done) {
             var userIds = [1, 2];
