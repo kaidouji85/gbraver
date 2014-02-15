@@ -1,5 +1,5 @@
 var battle = require('./battle.js');
-
+var room = require('./room.js');
 /**
  * ゲームサーバ
  * @param spec {Object}
@@ -13,16 +13,9 @@ function server(spec, my) {
     var io = require('socket.io').listen(app, {
         'log level' : logLevel
     });
-    var roomObject = {};
-    for (var i = 0; i < 100; i++) {
-        roomObject[i] = {
-            user : {},
-            battle : null,
-            commandBuffer : {},
-            atackUserId : -1,
-            atackBattery : 0,
-            phase : ''
-        };
+    var roomArray = {};
+    for(var i = 0; i < 100; i++){
+        roomArray[i] = room();
     }
 
     /**
@@ -49,13 +42,11 @@ function server(spec, my) {
                     socket.set('loginInfo', loginInfo, function() {
                         getUserData(userId, function(err, data) {
                             socket.join(roomId);
-                            roomObject[roomId].user[userId] = data;
                             socket.emit('succesEnterRoom');
-                            if (io.sockets.clients(roomId).length >= 2) {
-                                var respData = roomObject[roomId].user;
-                                io.sockets. in (roomId).emit('gameStart', respData);
-                                initBattle(roomId);
-                                roomObject[roomId].phase = 'prepare';
+                            roomArray[roomId].addUser(data);
+                            if(roomArray[roomId].isGameStart()){
+                                io.sockets.in(roomId).emit('gameStart', roomArray[roomId].getUsers());
+                                roomArray[roomId].initBattle();
                             }
                         });
                     });
@@ -71,74 +62,14 @@ function server(spec, my) {
                 var userId = loginInfo.userId;
                 var method = data.method;
                 var param = data.param;
-
-                switch(roomObject[roomId].phase) {
-                    case 'prepare':
-                        if (method === 'ready') {
-                            roomObject[roomId].commandBuffer[userId] = 'ready';
-                            if (Object.keys(roomObject[roomId].commandBuffer).length === 2) {
-                                var ret = roomObject[roomId].battle.doWaitPhase();
-                                ret.phase = 'wait';
-                                roomObject[roomId].phase = 'wait';
-                                roomObject[roomId].atackUserId = ret.atackUserId;
-                                roomObject[roomId].commandBuffer = {};
-                                io.sockets. in (roomId).emit('resp', ret);
-                            }
-                        }
-                        break;
-                    case 'wait':
-                        if (method == 'ok') {
-                            roomObject[roomId].commandBuffer[userId] = 'ok';
-                            if (Object.keys(roomObject[roomId].commandBuffer).length === 2) {
-                                var ret = {
-                                    phase : 'atackCommand'
-                                };
-                                roomObject[roomId].phase = 'atackCommand';
-                                roomObject[roomId].commandBuffer = {};
-                                io.sockets. in (roomId).emit('resp', ret);
-                            }
-                        }
-                        break;
-                    case 'atackCommand':
-                        if (roomObject[roomId].atackUserId == userId && method === 'atack') {
-                            roomObject[roomId].atackBattery = param.battery;
-                            roomObject[roomId].commandBuffer[userId] = 'ok';
-                        } else if (method === 'ok') {
-                            roomObject[roomId].commandBuffer[userId] = 'ok';
-                        }
-
-                        if (Object.keys(roomObject[roomId].commandBuffer).length === 2) {
-                            var ret = {
-                                phase : 'defenthCommand'
-                            };
-                            roomObject[roomId].phase = 'defenthCommand';
-                            roomObject[roomId].commandBuffer = {};
-                            io.sockets. in (roomId).emit('resp', ret);
-                        }
-                        break;
+                roomArray[roomId].setCommand(userId,method,param);
+                if(roomArray[roomId].isInputFinish()){
+                    var ret = roomArray[roomId].executePhase();
+                    io.sockets.in(roomId).emit('resp', ret);
                 }
             });
         });
     });
-
-    /**
-     * 戦闘クラスの初期化
-     * @param {Integer} roomId
-     * @return void
-     */
-    function initBattle(roomId) {
-        var statusArray = {};
-        for (var i in roomObject[roomId].user) {
-            var nowUserId = roomObject[roomId].user[i].userId;
-            var status = roomObject[roomId].user[i].status;
-            status.active = 0;
-            status.battery = 5;
-            statusArray[nowUserId] = status;
-        }
-        roomObject[roomId].battle = battle({
-            statusArray : statusArray
-        });
-    }
 
     return io;
 };
