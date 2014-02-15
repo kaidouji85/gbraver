@@ -19,6 +19,7 @@ function server(spec, my) {
             user : {},
             battle : null,
             commandBuffer : {},
+            atackUserId : -1,
             atackBattery : 0,
             phase : ''
         };
@@ -61,25 +62,41 @@ function server(spec, my) {
                 socket.get('loginInfo',function(err,loginInfo){
                     var roomId = loginInfo.roomId;
                     var userId = loginInfo.userId;
-                    var commandName = data.name;
-                    var commandParam = data.param;
-                    if(roomObject[roomId].phase === 'prepare'){
-                        if (commandName === 'ready') {
-                            roomObject[roomId].commandBuffer[userId] = 'ready';
-                            if (Object.keys(roomObject[roomId].commandBuffer).length === 2) {
-                                var ret = roomObject[roomId].battle.doWaitPhase();
-                                ret.phase = 'wait';
-                                roomObject[roomId].phase = 'wait';
-                                io.sockets.in(roomId).emit('resp', ret);
+                    var method = data.method;
+                    var param = data.param;
+                    
+                    switch(roomObject[roomId].phase){
+                        case 'prepare':
+                            if (method === 'ready') {
+                                roomObject[roomId].commandBuffer[userId] = 'ready';
+                                if (Object.keys(roomObject[roomId].commandBuffer).length === 2) {
+                                    var ret = roomObject[roomId].battle.doWaitPhase();
+                                    ret.phase = 'wait';
+                                    roomObject[roomId].phase = 'wait';
+                                    roomObject[roomId].atackUserId = ret.atackUserId;
+                                    roomObject[roomId].commandBuffer = {};
+                                    io.sockets.in(roomId).emit('resp', ret);
+                                }
                             }
-                        }
+                            break;
+                        case 'wait':
+                            if(method == 'ok'){
+                                console.log('ok');
+                                roomObject[roomId].commandBuffer[userId] = 'ok';
+                                if (Object.keys(roomObject[roomId].commandBuffer).length === 2) {
+                                    var ret = {
+                                        phase : 'atackCommand'
+                                    };
+                                    roomObject[roomId].phase = 'atackCommand';
+                                    roomObject[roomId].commandBuffer = {};
+                                    io.sockets.in(roomId).emit('resp', ret);
+                                }
+                            }
+                            break;
                     }
                 });
             });
         });
-        
-        
-        
     });
     
     /**

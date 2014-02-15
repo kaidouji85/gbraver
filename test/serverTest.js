@@ -214,7 +214,7 @@ describe('serverクラスのテスト', function(){
                 clients[userId].on('succesEnterRoom',function(){              
                     clients[userId].on('gameStart',function(){
                         clients[userId].emit('command',{
-                            name : 'ready'
+                            method : 'ready'
                         });
                         clients[userId].on('resp',function(data){
                             var expect = {
@@ -233,16 +233,8 @@ describe('serverクラスのテスト', function(){
             });    
         });
         
-        /*
         it('ウェイトフェイズからアタックコマンドフェイズに遷移する',function(done){
-            var isGreen = 0;
-            function greenCheck(){
-                isGreen ++;
-                if(isGreen===2){
-                    done();
-                }
-            }
-            
+            var calledCount = 0;
             var client1 = io.connect(SERVER_URL, option);
             client1.emit('enterRoom', {
                 roomId : roomId,
@@ -250,19 +242,23 @@ describe('serverクラスのテスト', function(){
             });
             client1.on('succesEnterRoom', function() {
                 client1.on('gameStart', function() {
-                    client1.emit('ready');
+                    client1.emit('command',{method:'ready'});
                     var count = 0;
                     client1.on('resp', function(data) {
                         switch(count){
                             case 0:
                                 assert.equal('wait',data.phase,'ウェイトフェイズになる');
-                                client1.emit('command','ok');
+                                client1.emit('command',{method:'ok'});
                                 break;
                             case 1:
                                 var expect = {
                                     phase : 'atackCommand'
                                 };
                                 assert.deepEqual(data,expect,'アタックコマンドフェイズ告知のオブジェクトが正しい');
+                                calledCount ++;
+                                if(calledCount === 2){
+                                    done();
+                                }
                                 break;
                         }
                         count ++;
@@ -277,19 +273,23 @@ describe('serverクラスのテスト', function(){
             });
             client2.on('succesEnterRoom', function() {
                 client2.on('gameStart', function() {
-                    client2.emit('ready');
+                    client2.emit('command',{method:'ready'});
                     var count = 0;
                     client2.on('resp', function(data) {
                         switch(count){
                             case 0:
                                 assert.equal('wait',data.phase,'ウェイトフェイズになる');
-                                client2.emit('command','ok');
+                                client2.emit('command',{method:'ok'});
                                 break;
                             case 1:
                                 var expect = {
                                     phase : 'atackCommand'
                                 };
                                 assert.deepEqual(data,expect,'アタックコマンドフェイズ告知のオブジェクトが正しい');
+                                calledCount ++;
+                                if(calledCount === 2){
+                                    done();
+                                }
                                 break;
                         }
                         count ++;
@@ -297,6 +297,5 @@ describe('serverクラスのテスト', function(){
                 });
             });
         });
-        */
     });
 });
