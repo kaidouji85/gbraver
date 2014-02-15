@@ -81,7 +81,6 @@ function server(spec, my) {
                             break;
                         case 'wait':
                             if(method == 'ok'){
-                                console.log('ok');
                                 roomObject[roomId].commandBuffer[userId] = 'ok';
                                 if (Object.keys(roomObject[roomId].commandBuffer).length === 2) {
                                     var ret = {
@@ -92,6 +91,24 @@ function server(spec, my) {
                                     io.sockets.in(roomId).emit('resp', ret);
                                 }
                             }
+                            break;
+                        case 'atackCommand':
+                            if(roomObject[roomId].atackUserId==userId && method==='atack'){
+                                roomObject[roomId].atackBattery = param.battery;
+                                roomObject[roomId].commandBuffer[userId] = 'ok';
+                            } else if(method === 'ok') {
+                                roomObject[roomId].commandBuffer[userId] = 'ok';
+                            }
+
+                            if (Object.keys(roomObject[roomId].commandBuffer).length === 2) {
+                                var ret = {
+                                    phase : 'defenthCommand'
+                                };
+                                roomObject[roomId].phase = 'defenthCommand';
+                                roomObject[roomId].commandBuffer = {};
+                                io.sockets. in (roomId).emit('resp', ret);
+                            }
+
                             break;
                     }
                 });

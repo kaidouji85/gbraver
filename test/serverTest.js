@@ -297,5 +297,89 @@ describe('serverクラスのテスト', function(){
                 });
             });
         });
+        
+        
+        it('アタックコマンドからディフェンスコマンドに遷移する',function(done){
+            var calledCount = 0;
+            var client1 = io.connect(SERVER_URL, option);
+            client1.emit('enterRoom', {
+                roomId : roomId,
+                userId : 1
+            });
+            client1.on('succesEnterRoom', function() {
+                client1.on('gameStart', function() {
+                    client1.emit('command',{method:'ready'});
+                    var count = 0;
+                    client1.on('resp', function(data) {
+                        switch(count){
+                            case 0:
+                                assert.equal('wait',data.phase,'ウェイトフェイズになる');
+                                client1.emit('command',{method:'ok'});
+                                break;
+                            case 1:
+                                assert.equal(data.phase,'atackCommand','アタックコマンドフェイズになる');
+                                client1.emit('command',{
+                                    method : 'atack',
+                                    param : {
+                                        battery : 3
+                                    }
+                                });
+                                break;
+                            case 2:
+                                var expect = {
+                                    phase : 'defenthCommand'
+                                };
+                                assert.deepEqual(data,expect,'ディフェンスコマンドフェイズ告知のオブジェクトが正しい');
+                                calledCount ++;
+                                if(calledCount === 2){
+                                    done();
+                                }
+                                break;
+                        }
+                        count ++;
+                    });
+                });
+            });
+
+            var client2 = io.connect(SERVER_URL, option);
+            client2.emit('enterRoom', {
+                roomId : roomId,
+                userId : 2
+            });
+            client2.on('succesEnterRoom', function() {
+                client2.on('gameStart', function() {
+                    client2.emit('command',{method:'ready'});
+                    var count = 0;
+                    client2.on('resp', function(data) {
+                        switch(count){
+                            case 0:
+                                assert.equal('wait',data.phase,'ウェイトフェイズになる');
+                                client2.emit('command',{method:'ok'});
+                                break;
+                            case 1:
+                                assert.equal(data.phase,'atackCommand','アタックコマンドフェイズになる');
+                                var expect = {
+                                    phase : 'defenthCommand'
+                                };
+                                client2.emit('command',{
+                                    method : 'ok'
+                                });
+                                break;
+                            case 2:
+                                var expect = {
+                                    phase : 'defenthCommand'
+                                };
+                                assert.deepEqual(data,expect,'ディフェンスコマンドフェイズ告知のオブジェクトが正しい');
+                                calledCount ++;
+                                if(calledCount === 2){
+                                    done();
+                                }
+                                break;
+                        }
+                        count ++;
+                    });
+                });
+            });
+        });
     });
 });
