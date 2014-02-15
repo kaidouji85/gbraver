@@ -213,7 +213,9 @@ describe('serverクラスのテスト', function(){
                 
                 clients[userId].on('succesEnterRoom',function(){              
                     clients[userId].on('gameStart',function(){
-                        clients[userId].emit('ready');
+                        clients[userId].emit('command',{
+                            name : 'ready'
+                        });
                         clients[userId].on('resp',function(data){
                             var expect = {
                                 phase : 'wait',
@@ -228,107 +230,18 @@ describe('serverクラスのテスト', function(){
                         });
                     });          
                 });
-            });
+            });    
         });
         
         /*
-        it('ウェイトフェイズに行動権を取得したユーザIDが返される', function(done) {
-            var userIds = [1, 2];
-            var clients = [];
-            var waitPhaseCount = 0;
-            userIds.forEach(function(userId) {
-                clients[userId] = io.connect(SERVER_URL, option);
-                clients[userId].emit('enterRoom', {
-                    roomId : roomId,
-                    userId : userId
-                });
-
-                clients[userId].on('succesEnterRoom', function() {
-                    clients[userId].on('gameStart', function(data) {
-                        clients[userId].emit('ready');
-                        clients[userId].on('waitPhase', function(data) {
-                            var expect = {
-                                atackUserId : '1',
-                                turn : 10
-                            };
-                            assert.deepEqual(data, expect, '正しいウェイトフェイズオブジェクトが返される');
-                            waitPhaseCount ++;
-                            if(waitPhaseCount===2){
-                                done();    
-                            }
-                        });
-                    });
-                });
-            });
-        });
-        */
-        
-        /*
-        it('攻撃を選択したので、防御側プレイヤーがバッテリー選択状態に遷移する',function(done){
-            //両方のプレイヤーに「selectDefenthBatteryPhase」が送信されることを確認したい。
-            //そこでisRecieveSelectBatteryPhase()が2回呼ばれたら成功するようにテストを組んだ。
-            var selectDefenthBatteryPhaseCount = 0;
-            function isRecieveSelectBatteryPhase() {
-                selectDefenthBatteryPhaseCount++;
-                if (selectDefenthBatteryPhaseCount === 2) {
+        it('ウェイトフェイズからアタックコマンドフェイズに遷移する',function(done){
+            var isGreen = 0;
+            function greenCheck(){
+                isGreen ++;
+                if(isGreen===2){
                     done();
                 }
-            };
-
-            var client1 = io.connect(SERVER_URL, option);
-            client1.emit('enterRoom', {
-                roomId : roomId,
-                userId : 1
-            });
-            client1.on('succesEnterRoom', function() {
-                client1.on('gameStart', function(data) {
-                    client1.emit('ready');
-                    client1.on('waitPhase', function(data) {
-                        client1.emit('atack', {
-                            battery : 3
-                        });
-                        client1.on('selectDefenthBatteryPhase', function() {
-                            isRecieveSelectBatteryPhase();
-                        });
-                    });
-                });
-            });
-
-            var client2 = io.connect(SERVER_URL, option);
-            client2.emit('enterRoom', {
-                roomId : roomId,
-                userId : 2
-            });
-            client2.on('succesEnterRoom', function() {
-                client2.on('gameStart', function(data) {
-                    client2.emit('ready');
-                    client2.on('waitPhase', function(data) {
-                        client2.on('selectDefenthBatteryPhase', function() {
-                            isRecieveSelectBatteryPhase();
-                        });
-                    });
-                });
-            });
-        });
-        */
-       
-        /*
-        it('攻撃側、防御側がコマンド送信したので攻撃・防御側バッテリー、当たり判定、ダメージが返される',function(done){
-            var damagePhaseCount = 0;
-            function isRecieveDamagePhase(data) {
-                var expect = {
-                    atackBattery : 3,
-                    defenthBattery : 2,
-                    hit : 1,
-                    damage : 1600
-                };
-                assert.deepEqual(data,expect,'サーバから攻撃・防御側バッテリー、当たり判定、ダメージが返されるか確認する');
-                
-                damagePhaseCount++;
-                if (damagePhaseCount === 2) {
-                    done();
-                }
-            };
+            }
             
             var client1 = io.connect(SERVER_URL, option);
             client1.emit('enterRoom', {
@@ -336,17 +249,23 @@ describe('serverクラスのテスト', function(){
                 userId : 1
             });
             client1.on('succesEnterRoom', function() {
-                client1.on('gameStart', function(data) {
+                client1.on('gameStart', function() {
                     client1.emit('ready');
-                    client1.on('waitPhase', function(data) {
-                        client1.emit('atack', {
-                            battery : 3
-                        });
-                        client1.on('selectDefenthBatteryPhase', function() {
-                            client1.on('damagePhase',function(data){
-                                isRecieveDamagePhase(data);
-                            });
-                        });
+                    var count = 0;
+                    client1.on('resp', function(data) {
+                        switch(count){
+                            case 0:
+                                assert.equal('wait',data.phase,'ウェイトフェイズになる');
+                                client1.emit('command','ok');
+                                break;
+                            case 1:
+                                var expect = {
+                                    phase : 'atackCommand'
+                                };
+                                assert.deepEqual(data,expect,'アタックコマンドフェイズ告知のオブジェクトが正しい');
+                                break;
+                        }
+                        count ++;
                     });
                 });
             });
@@ -357,87 +276,27 @@ describe('serverクラスのテスト', function(){
                 userId : 2
             });
             client2.on('succesEnterRoom', function() {
-                client2.on('gameStart', function(data) {
+                client2.on('gameStart', function() {
                     client2.emit('ready');
-                    client2.on('waitPhase', function(data) {
-                        client2.on('selectDefenthBatteryPhase', function() {
-                            client2.emit('defenth',{battery:2});
-                            client2.on('damagePhase',function(data){
-                                isRecieveDamagePhase(data);
-                            });
-                        });
+                    var count = 0;
+                    client2.on('resp', function(data) {
+                        switch(count){
+                            case 0:
+                                assert.equal('wait',data.phase,'ウェイトフェイズになる');
+                                client2.emit('command','ok');
+                                break;
+                            case 1:
+                                var expect = {
+                                    phase : 'atackCommand'
+                                };
+                                assert.deepEqual(data,expect,'アタックコマンドフェイズ告知のオブジェクトが正しい');
+                                break;
+                        }
+                        count ++;
                     });
                 });
             });
         });
         */
-        
-        /*
-        it('攻撃が終了して、ウェイトフェイズが再び訪れる',function(done){
-            var waitPhaseCount = 0;
-            function isRecieveWaitPhase(data) {
-                waitPhaseCount++;
-                if (waitPhaseCount === 2) {
-                    done();
-                }
-            };
-            
-            var c1WaitCount = 0;
-            var client1 = io.connect(SERVER_URL, option);
-            client1.emit('enterRoom', {
-                roomId : roomId,
-                userId : 1
-            });
-            client1.on('succesEnterRoom', function() {
-                client1.on('gameStart', function(data) {
-                    client1.emit('ready');
-                    client1.on('waitPhase', function(data) {
-                        if(c1WaitCount === 0){
-                            console.log('c1 atack');
-                            client1.emit('atack', {
-                                battery : 3
-                            });
-                            client1.on('selectDefenthBatteryPhase', function() {
-                                client1.on('damagePhase',function(data){
-                                });
-                            });                    
-                        } else {
-                            isRecieveWaitPhase();
-                        }
-                        c1WaitCount ++;
-                    });
-                });
-            });
-
-            var c2WaitCount = 0;
-            var client2 = io.connect(SERVER_URL, option);
-            client2.emit('enterRoom', {
-                roomId : roomId,
-                userId : 2
-            });
-            client2.on('succesEnterRoom', function() {
-                client2.on('gameStart', function(data) {
-                    client2.emit('ready');
-                    client2.on('waitPhase', function(data) {
-                        console.log('c2 defenth');
-                        if(c2WaitCount === 0){
-                            client1.emit('atack', {
-                                battery : 3
-                            });
-                            client2.on('selectDefenthBatteryPhase', function() {
-                                client2.emit('defenth',{battery:2});
-                                client2.on('damagePhase',function(data){
-                                });
-                            });                 
-                        } else {
-                            isRecieveWaitPhase();
-                        }
-                        c2WaitCount ++;
-
-                    });
-                });
-            });
-        });
-        */  
     });
 });

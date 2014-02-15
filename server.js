@@ -20,6 +20,7 @@ function server(spec, my) {
             battle : null,
             commandBuffer : {},
             atackBattery : 0,
+            phase : ''
         };
     }
     
@@ -56,15 +57,22 @@ function server(spec, my) {
                 }
             });
             
-            socket.on('ready',function(){
+            socket.on('command',function(data){
                 socket.get('loginInfo',function(err,loginInfo){
                     var roomId = loginInfo.roomId;
                     var userId = loginInfo.userId;
-                    roomObject[roomId].commandBuffer[userId] = 'ready';
-                    if(Object.keys(roomObject[roomId].commandBuffer).length ===2){
-                        var ret = roomObject[roomId].battle.doWaitPhase();
-                        ret.phase = 'wait';
-                        io.sockets.in(roomId).emit('resp',ret);
+                    var commandName = data.name;
+                    var commandParam = data.param;
+                    if(roomObject[roomId].phase === 'prepare'){
+                        if (commandName === 'ready') {
+                            roomObject[roomId].commandBuffer[userId] = 'ready';
+                            if (Object.keys(roomObject[roomId].commandBuffer).length === 2) {
+                                var ret = roomObject[roomId].battle.doWaitPhase();
+                                ret.phase = 'wait';
+                                roomObject[roomId].phase = 'wait';
+                                io.sockets.in(roomId).emit('resp', ret);
+                            }
+                        }
                     }
                 });
             });
@@ -91,6 +99,7 @@ function server(spec, my) {
         roomObject[roomId].battle = battle({
             statusArray : statusArray
         });
+        roomObject[roomId].phase = 'prepare';
     }
     
     return io;
