@@ -1,4 +1,5 @@
 describe('serverクラスのテスト', function(){
+    var ce = require('cloneextend');
     var assert = require('chai').assert;
     var io = require('socket.io-client');
     var SERVER_PORT = 3000;
@@ -69,7 +70,8 @@ describe('serverクラスのテスト', function(){
     
     
     Server.onGetUserData(function(userId,fn){
-        fn(null,user[userId]);
+        var userData = ce.clone(user[userId]);
+        fn(null,userData);
     });
     
     //本テストではテストケースごとに別々のルームを利用する想定である。
