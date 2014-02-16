@@ -233,7 +233,7 @@ describe('serverクラスのテスト', function(){
             });    
         });
         
-        it('ウェイトフェイズからアタックコマンドフェイズに遷移する',function(done){
+        it('攻撃、防御バッテリーを決定してダメージ計算結果を受け取り、再びウェイトフェイズに遷移する',function(done){
             var calledCount = 0;
             var client1 = io.connect(SERVER_URL, option);
             client1.emit('enterRoom', {
@@ -245,79 +245,22 @@ describe('serverクラスのテスト', function(){
                     client1.emit('command',{method:'ready'});
                     var count = 0;
                     client1.on('resp', function(data) {
+                        var expect;
                         switch(count){
                             case 0:
-                                assert.equal('wait',data.phase,'ウェイトフェイズになる');
+                                expect = {
+                                    phase : 'wait',
+                                    atackUserId : '1',
+                                    turn : 10
+                                };
+                                assert.deepEqual(data,expect,'ウェイトフェイズになる#client1');
                                 client1.emit('command',{method:'ok'});
                                 break;
                             case 1:
-                                var expect = {
+                                expect = {
                                     phase : 'atackCommand'
                                 };
-                                assert.deepEqual(data,expect,'アタックコマンドフェイズ告知のオブジェクトが正しい');
-                                calledCount ++;
-                                if(calledCount === 2){
-                                    done();
-                                }
-                                break;
-                        }
-                        count ++;
-                    });
-                });
-            });
-
-            var client2 = io.connect(SERVER_URL, option);
-            client2.emit('enterRoom', {
-                roomId : roomId,
-                userId : 2
-            });
-            client2.on('succesEnterRoom', function() {
-                client2.on('gameStart', function() {
-                    client2.emit('command',{method:'ready'});
-                    var count = 0;
-                    client2.on('resp', function(data) {
-                        switch(count){
-                            case 0:
-                                assert.equal('wait',data.phase,'ウェイトフェイズになる');
-                                client2.emit('command',{method:'ok'});
-                                break;
-                            case 1:
-                                var expect = {
-                                    phase : 'atackCommand'
-                                };
-                                assert.deepEqual(data,expect,'アタックコマンドフェイズ告知のオブジェクトが正しい');
-                                calledCount ++;
-                                if(calledCount === 2){
-                                    done();
-                                }
-                                break;
-                        }
-                        count ++;
-                    });
-                });
-            });
-        });
-        
-        
-        it('アタックコマンドからディフェンスコマンドに遷移する',function(done){
-            var calledCount = 0;
-            var client1 = io.connect(SERVER_URL, option);
-            client1.emit('enterRoom', {
-                roomId : roomId,
-                userId : 1
-            });
-            client1.on('succesEnterRoom', function() {
-                client1.on('gameStart', function() {
-                    client1.emit('command',{method:'ready'});
-                    var count = 0;
-                    client1.on('resp', function(data) {
-                        switch(count){
-                            case 0:
-                                assert.equal('wait',data.phase,'ウェイトフェイズになる');
-                                client1.emit('command',{method:'ok'});
-                                break;
-                            case 1:
-                                assert.equal(data.phase,'atackCommand','アタックコマンドフェイズになる');
+                                assert.deepEqual(data,expect,'アタックコマンドフェイズになる#client1');
                                 client1.emit('command',{
                                     method : 'atack',
                                     param : {
@@ -326,10 +269,23 @@ describe('serverクラスのテスト', function(){
                                 });
                                 break;
                             case 2:
-                                var expect = {
+                                expect = {
                                     phase : 'defenthCommand'
                                 };
-                                assert.deepEqual(data,expect,'ディフェンスコマンドフェイズ告知のオブジェクトが正しい');
+                                assert.deepEqual(data,expect,'ディフェンスコマンドフェイズになる#client1');
+                                client1.emit('command',{
+                                    method : 'ok'
+                                });
+                                break;
+                            case 3:
+                                expect = {
+                                    phase : 'damage',
+                                    hit : 1,
+                                    damage : 1600,
+                                    atackBattery : 3,
+                                    defenthBattery : 2
+                                };
+                                assert.deepEqual(data,expect,'ダメーフェイズになる#client1');
                                 calledCount ++;
                                 if(calledCount === 2){
                                     done();
@@ -351,16 +307,22 @@ describe('serverクラスのテスト', function(){
                     client2.emit('command',{method:'ready'});
                     var count = 0;
                     client2.on('resp', function(data) {
+                        var expect;
                         switch(count){
                             case 0:
-                                assert.equal('wait',data.phase,'ウェイトフェイズになる');
+                                expect = {
+                                    phase : 'wait',
+                                    atackUserId : '1',
+                                    turn : 10
+                                };
+                                assert.deepEqual(data,expect,'ウェイトフェイズになる#client2');
                                 client2.emit('command',{method:'ok'});
                                 break;
                             case 1:
-                                assert.equal(data.phase,'atackCommand','アタックコマンドフェイズになる');
-                                var expect = {
-                                    phase : 'defenthCommand'
+                                expect = {
+                                    phase : 'atackCommand'
                                 };
+                                assert.deepEqual(data,expect,'アタックコマンドフェイズになる#client2');
                                 client2.emit('command',{
                                     method : 'ok'
                                 });
@@ -369,12 +331,27 @@ describe('serverクラスのテスト', function(){
                                 var expect = {
                                     phase : 'defenthCommand'
                                 };
-                                assert.deepEqual(data,expect,'ディフェンスコマンドフェイズ告知のオブジェクトが正しい');
+                                assert.deepEqual(data,expect,'ディフェンスコマンドフェイズ告知のオブジェクトが正しい#client2');
+                                client2.emit('command',{
+                                    method : 'defenth',
+                                    param : {
+                                        battery : 2
+                                    }
+                                });
+                                break;
+                            case 3:
+                                expect = {
+                                    phase : 'damage',
+                                    hit : 1,
+                                    damage : 1600,
+                                    atackBattery : 3,
+                                    defenthBattery : 2
+                                };
+                                assert.deepEqual(data,expect,'ダメーフェイズになる#client2');
                                 calledCount ++;
                                 if(calledCount === 2){
                                     done();
                                 }
-                                break;
                         }
                         count ++;
                     });

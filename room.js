@@ -3,6 +3,7 @@ const PHASE_PREPARE = 'prepare';
 const PHASE_WAIT = 'wait';
 const PHASE_ATACK_COMMAND = 'atackCommand';
 const PHASE_DEFENTH_COMMAND = 'defenthCommand';
+const PHASE_DAMAGE = 'damage';
 
 function room(){
     var that = {};
@@ -60,6 +61,14 @@ function room(){
                     inputFlag[userId] = true;
                 }
                 break;
+           case PHASE_DEFENTH_COMMAND:
+                if (atackUserId!=userId && method==='defenth') {
+                    defenthBattery = param.battery;
+                    inputFlag[userId] = true;
+                } else if (method === 'ok') {
+                    inputFlag[userId] = true;
+                }     
+                break;
         }
     };
     
@@ -73,22 +82,29 @@ function room(){
             case PHASE_PREPARE:
                 ret = Battle.doWaitPhase();
                 ret.phase = PHASE_WAIT;
-                phase = PHASE_WAIT;
                 atackUserId = ret.atackUserId;
                 break;
             case PHASE_WAIT:
                 ret = {
                     phase : PHASE_ATACK_COMMAND
                 };
-                phase = PHASE_ATACK_COMMAND; 
                 break;
             case PHASE_ATACK_COMMAND:
                 var ret = {
                     phase : PHASE_DEFENTH_COMMAND
                 };
-                phase = PHASE_DEFENTH_COMMAND;
+                break;
+            case PHASE_DEFENTH_COMMAND:
+                var ret = Battle.atack({
+                    atackBattery : atackBattery,
+                    defenthBattery : defenthBattery
+                });
+                ret.phase = PHASE_DAMAGE;
+                ret.atackBattery = atackBattery;
+                ret.defenthBattery = defenthBattery;
                 break;
         }
+        phase = ret.phase;
         inputFlag = {};
         return ret;
     };
