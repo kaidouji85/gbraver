@@ -23,8 +23,6 @@ describe('serverクラスのテスト', function(){
             pictName : 'GranBraver.PNG',
             hp : 4200,
             speed : 500,
-            active : 0,
-            battery : 5,
             weapons : {
                 1 : {name:'ゼロナックル',power:1200},
                 2 : {name:'ゼロナックル',power:1200},
@@ -42,8 +40,6 @@ describe('serverクラスのテスト', function(){
             pictName : 'GranBraver.PNG',
             hp : 3200,
             speed : 500,
-            active : 0,
-            battery : 5,
             weapons : {
                 1 : {name:'バスターナックル',power:800},
                 2 : {name:'バスターナックル',power:1100},
@@ -61,8 +57,6 @@ describe('serverクラスのテスト', function(){
             pictName : 'Landozer.PNG',
             hp : 4700,
             speed : 300,
-            active : 0,
-            battery : 5,
             weapons : {
                 1 : {name:'ブレイクパンチ',power:1200},
                 2 : {name:'ブレイクパンチ',power:1700},
@@ -112,8 +106,42 @@ describe('serverクラスのテスト', function(){
                 clients[userId].on('succesEnterRoom', function(){
                     clients[userId].on('gameStart', function(data) {
                         var expect = {
-                            0 : user[0],
-                            1 : user[1]
+                            0 : {
+                                userId : 0,
+                                status :{
+                                    name : 'ゼロブレイバー',
+                                    pictName : 'GranBraver.PNG',
+                                    hp : 4200,
+                                    speed : 500,
+                                    active : 0,
+                                    battery : 5,
+                                    weapons : {
+                                        1 : {name:'ゼロナックル',power:1200},
+                                        2 : {name:'ゼロナックル',power:1200},
+                                        3 : {name:'ゼロナックル',power:1700},
+                                        4 : {name:'ゼロナックル',power:2700},
+                                        5 : {name:'ゼロナックル',power:3700},
+                                    }
+                                }                                
+                            },
+                            1 : {
+                                userId : 1,
+                                status :{
+                                    name : 'グランブレイバー',
+                                    pictName : 'GranBraver.PNG',
+                                    hp : 3200,
+                                    speed : 500,
+                                    active : 0,
+                                    battery : 5,
+                                    weapons : {
+                                        1 : {name:'バスターナックル',power:800},
+                                        2 : {name:'バスターナックル',power:1100},
+                                        3 : {name:'バスターナックル',power:1600},
+                                        4 : {name:'バスターナックル',power:2100},
+                                        5 : {name:'バスターナックル',power:2800},
+                                    }
+                                }                                
+                            }
                         };
                         assert.deepEqual(data,expect);
                     });                        
@@ -493,7 +521,7 @@ describe('serverクラスのテスト', function(){
                     });
                 });
             });
-        });
+        });   
     });
     
     after(function(){

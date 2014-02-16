@@ -45,8 +45,8 @@ function server(spec, my) {
                             socket.emit('succesEnterRoom');
                             roomArray[roomId].addUser(data);
                             if(roomArray[roomId].isGameStart()){
-                                io.sockets.in(roomId).emit('gameStart', roomArray[roomId].getUsers());
                                 roomArray[roomId].initBattle();
+                                io.sockets.in(roomId).emit('gameStart', roomArray[roomId].getUsers());
                             }
                         });
                     });
