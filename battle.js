@@ -1,3 +1,5 @@
+var ce = require('cloneextend');
+
 /**
  * 戦闘ロジック
  * @param {Object} spec
@@ -12,7 +14,7 @@ var battle = function(spec,my){
     that.ATACK_GUARD = 3;
     that.ATACK_CRITICAL = 4;
 
-    var statusArray = spec.statusArray;
+    var statusArray = ce.clone(spec.statusArray);
     var atackUserId = null;
     
     that.getStatusArray = function() {
