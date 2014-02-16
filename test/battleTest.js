@@ -271,6 +271,7 @@ describe('Battleクラスのテスト', function() {
             var statusArray = Battle.getStatusArray();
             assert.equal(retAtack.hit,Battle.ATACK_GUARD,'防御判定になる');
             assert.equal(retAtack.damage,2100/2,'ダメージが半減される');
+            assert.equal(statusArray[2].hp,3650,'HPが減っている');
         });
         
          it('防御側が多くバッテリーを出したので攻撃ミスになりダメージが0になる',function(){
@@ -318,6 +319,7 @@ describe('Battleクラスのテスト', function() {
             var statusArray = Battle.getStatusArray();
             assert.equal(retAtack.hit,Battle.ATACK_MISS,'攻撃ミスになる');
             assert.equal(retAtack.damage,0,'ダメージが0になる');
+            assert.equal(statusArray[2].hp,4700,'HPが減っていない');
         });
         
          it('防御側がバッテリーに0を指定したので、クリティカルヒットになる',function(){
@@ -365,6 +367,7 @@ describe('Battleクラスのテスト', function() {
             var statusArray = Battle.getStatusArray();
             assert.equal(retAtack.hit,Battle.ATACK_CRITICAL,'クリィカルヒットになる');
             assert.equal(retAtack.damage,2800*2,'ダメージが2倍になる');
+            assert.equal(statusArray[2].hp,-900,'HPが減っている');
         });
         
         it('攻撃後にアクティブゲージが0になっている',function(){
