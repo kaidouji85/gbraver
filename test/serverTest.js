@@ -495,4 +495,8 @@ describe('serverクラスのテスト', function(){
             });
         });
     });
+    
+    after(function(){
+        app.close();
+    });
 });
