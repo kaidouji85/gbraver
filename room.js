@@ -4,6 +4,7 @@ const PHASE_WAIT = 'wait';
 const PHASE_ATACK_COMMAND = 'atackCommand';
 const PHASE_DEFENTH_COMMAND = 'defenthCommand';
 const PHASE_DAMAGE = 'damage';
+const PHASE_CHARGE = 'charge';
 
 function room(){
     var that = {};
@@ -11,6 +12,7 @@ function room(){
     var Battle = null;
     var phase = '';
     var inputFlag = {};
+    var atackCommand = '';
     var atackUserId = -1;
     var atackBattery = 0;
     var defenthBattery = 0;
@@ -50,14 +52,22 @@ function room(){
                 break;
             case PHASE_WAIT:
             case PHASE_DAMAGE:
+            case PHASE_CHARGE:
                 if (method == 'ok') {
                     inputFlag[userId] = true;
                 }   
                 break;
             case PHASE_ATACK_COMMAND:
-                if (atackUserId==userId && method==='atack') {
-                    atackBattery = param.battery;
-                    inputFlag[userId] = true;
+                if (atackUserId==userId) {
+                    if(method==='atack'){
+                        atackCommand = 'atack';
+                        atackBattery = param.battery;
+                        inputFlag[userId] = true;
+                    } else if(method==='charge') {
+                        atackCommand = 'charge';
+                        inputFlag[userId] = true;
+                    }
+
                 } else if (method === 'ok') {
                     inputFlag[userId] = true;
                 }
@@ -82,6 +92,7 @@ function room(){
         switch(phase) {
             case PHASE_PREPARE:
             case PHASE_DAMAGE:
+            case PHASE_CHARGE:
                 ret = Battle.doWaitPhase();
                 ret.phase = PHASE_WAIT;
                 atackUserId = ret.atackUserId;
@@ -92,9 +103,16 @@ function room(){
                 };
                 break;
             case PHASE_ATACK_COMMAND:
-                ret = {
-                    phase : PHASE_DEFENTH_COMMAND
-                };
+                if(atackCommand==='atack'){
+                    ret = {
+                        phase : PHASE_DEFENTH_COMMAND
+                    };
+                } else if (atackCommand==='charge') {
+                    Battle.charge();
+                    ret = {
+                        phase : PHASE_CHARGE
+                    };
+                }
                 break;
             case PHASE_DEFENTH_COMMAND:
                 ret = Battle.atack({

@@ -377,5 +377,122 @@ describe('serverクラスのテスト', function(){
                 });
             });
         });
+        
+        it('チャージコマンドを実行してウェイトフェイズに遷移する',function(done){
+            var calledCount = 0;
+            var client1 = io.connect(SERVER_URL, option);
+            client1.emit('enterRoom', {
+                roomId : roomId,
+                userId : 1
+            });
+            client1.on('succesEnterRoom', function() {
+                client1.on('gameStart', function() {
+                    client1.emit('command',{method:'ready'});
+                    var count = 0;
+                    client1.on('resp', function(data) {
+                        var expect;
+                        switch(count){
+                            case 0:
+                                expect = {
+                                    phase : 'wait',
+                                    atackUserId : '1',
+                                    turn : 10
+                                };
+                                assert.deepEqual(data,expect,'ウェイトフェイズになる#client1');
+                                client1.emit('command',{method:'ok'});
+                                break;
+                            case 1:
+                                expect = {
+                                    phase : 'atackCommand'
+                                };
+                                assert.deepEqual(data,expect,'アタックコマンドフェイズになる#client1');
+                                client1.emit('command',{
+                                    method : 'charge'
+                                });
+                                break;
+                            case 2:
+                                expect = {
+                                    phase : 'charge'
+                                };
+                                assert.deepEqual(data,expect,'チャージフェイズになる#client1');
+                                client1.emit('command',{
+                                    method : 'ok'
+                                });                                    
+                                break;
+                            case 3:
+                                expect = {
+                                    phase : 'wait',
+                                    atackUserId : '2',
+                                    turn : 7
+                                };
+                                assert.deepEqual(data,expect,'ウェイトフェイズに戻る#client1');
+                                calledCount ++;
+                                if(calledCount === 2){
+                                    done();
+                                }
+                                break;
+                        }
+                        count ++;
+                    });
+                });
+            });
+
+            var client2 = io.connect(SERVER_URL, option);
+            client2.emit('enterRoom', {
+                roomId : roomId,
+                userId : 2
+            });
+            client2.on('succesEnterRoom', function() {
+                client2.on('gameStart', function() {
+                    client2.emit('command',{method:'ready'});
+                    var count = 0;
+                    client2.on('resp', function(data) {
+                        var expect;
+                        switch(count){
+                            case 0:
+                                expect = {
+                                    phase : 'wait',
+                                    atackUserId : '1',
+                                    turn : 10
+                                };
+                                assert.deepEqual(data,expect,'ウェイトフェイズになる#client2');
+                                client2.emit('command',{method:'ok'});
+                                break;
+                            case 1:
+                                expect = {
+                                    phase : 'atackCommand'
+                                };
+                                assert.deepEqual(data,expect,'アタックコマンドフェイズになる#client2');
+                                client2.emit('command',{
+                                    method : 'ok'
+                                });
+                                break;
+                            case 2:
+                                expect = {
+                                    phase : 'charge'
+                                };
+                                assert.deepEqual(data,expect,'チャージフェイズになる#client2');
+                                client2.emit('command',{
+                                    method : 'ok'
+                                });                                
+                                break;
+                            case 3:
+                                expect = {
+                                    phase : 'wait',
+                                    atackUserId : '2',
+                                    turn : 7
+                                };
+                                assert.deepEqual(data,expect,'ウェイトフェイズに戻る#client2');                                
+                                calledCount ++;
+                                if(calledCount === 2){
+                                    done();
+                                }
+                                break;
+                        }
+                        count ++;
+                    });
+                });
+            });
+        });
     });
 });
