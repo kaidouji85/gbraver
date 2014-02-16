@@ -409,7 +409,7 @@ describe('Battleクラスのテスト', function() {
                 defenthBattery : 1
             });
             var statusArray = Battle.getStatusArray();
-            assert.equal(statusArray[1].active,0,'攻撃ヒット判定になる');
+            assert.equal(statusArray[1].active,0,'アクティブゲージが0になる');
         });
         
         it('攻撃後に攻撃側、防御側のバッテリーが減っている',function(){

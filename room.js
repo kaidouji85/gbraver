@@ -49,6 +49,7 @@ function room(){
                 }
                 break;
             case PHASE_WAIT:
+            case PHASE_DAMAGE:
                 if (method == 'ok') {
                     inputFlag[userId] = true;
                 }   
@@ -80,6 +81,7 @@ function room(){
         var ret = null;
         switch(phase) {
             case PHASE_PREPARE:
+            case PHASE_DAMAGE:
                 ret = Battle.doWaitPhase();
                 ret.phase = PHASE_WAIT;
                 atackUserId = ret.atackUserId;
@@ -90,12 +92,12 @@ function room(){
                 };
                 break;
             case PHASE_ATACK_COMMAND:
-                var ret = {
+                ret = {
                     phase : PHASE_DEFENTH_COMMAND
                 };
                 break;
             case PHASE_DEFENTH_COMMAND:
-                var ret = Battle.atack({
+                ret = Battle.atack({
                     atackBattery : atackBattery,
                     defenthBattery : defenthBattery
                 });

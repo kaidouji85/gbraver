@@ -286,6 +286,15 @@ describe('serverクラスのテスト', function(){
                                     defenthBattery : 2
                                 };
                                 assert.deepEqual(data,expect,'ダメーフェイズになる#client1');
+                                client1.emit('command',{method : 'ok'});
+                                break;
+                            case 4:
+                                expect = {
+                                    phase : 'wait',
+                                    atackUserId : '2',
+                                    turn : 7
+                                };
+                                assert.deepEqual(data,expect,'ウェイトフェイズに戻る#client1');
                                 calledCount ++;
                                 if(calledCount === 2){
                                     done();
@@ -348,10 +357,20 @@ describe('serverクラスのテスト', function(){
                                     defenthBattery : 2
                                 };
                                 assert.deepEqual(data,expect,'ダメーフェイズになる#client2');
+                                client2.emit('command',{method : 'ok'});
+                                break;
+                            case 4:
+                                expect = {
+                                    phase : 'wait',
+                                    atackUserId : '2',
+                                    turn : 7
+                                };
+                                assert.deepEqual(data,expect,'ウェイトフェイズに戻る#client2');                                
                                 calledCount ++;
                                 if(calledCount === 2){
                                     done();
                                 }
+                                break;
                         }
                         count ++;
                     });
