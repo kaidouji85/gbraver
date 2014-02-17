@@ -125,9 +125,22 @@ function room(){
                 break;
         }
         phase = ret.phase;
+        ret.statusArray = createRespStatusArray();
         inputFlag = {};
         return ret;
     };
+
+    function createRespStatusArray(){
+        var nowStatus = Battle.getStatusArray();
+        var statusArray = {};
+        for(var i in nowStatus){
+            statusArray[i] = {};
+            statusArray[i].hp = nowStatus[i].hp;
+            statusArray[i].active = nowStatus[i].active;
+            statusArray[i].battery = nowStatus[i].battery;
+        }
+        return statusArray;
+    }
 
     return that;    
 }

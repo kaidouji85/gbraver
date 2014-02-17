@@ -250,7 +250,19 @@ describe('serverクラスのテスト', function(){
                             var expect = {
                                 phase : 'wait',
                                 atackUserId : '1',
-                                turn : 10
+                                turn : 10,
+                                statusArray : {
+                                    1 : {
+                                        hp : 3200,
+                                        battery : 5,
+                                        active : 5000
+                                    },
+                                    2 : {
+                                        hp : 4700,
+                                        battery : 5,
+                                        active : 3000
+                                    }
+                                }
                             };
                             assert.deepEqual(data,expect);
                             respCount ++;
@@ -281,14 +293,38 @@ describe('serverクラスのテスト', function(){
                                 expect = {
                                     phase : 'wait',
                                     atackUserId : '1',
-                                    turn : 10
+                                    turn : 10,
+                                    statusArray : {
+                                        1 : {
+                                            hp : 3200,
+                                            battery : 5,
+                                            active : 5000
+                                        },
+                                        2 : {
+                                            hp : 4700,
+                                            battery : 5,
+                                            active : 3000
+                                        }
+                                    }                                    
                                 };
                                 assert.deepEqual(data,expect,'ウェイトフェイズになる#client1');
                                 client1.emit('command',{method:'ok'});
                                 break;
                             case 1:
                                 expect = {
-                                    phase : 'atackCommand'
+                                    phase : 'atackCommand',
+                                    statusArray : {
+                                        1 : {
+                                            hp : 3200,
+                                            battery : 5,
+                                            active : 5000
+                                        },
+                                        2 : {
+                                            hp : 4700,
+                                            battery : 5,
+                                            active : 3000
+                                        }
+                                    }                                    
                                 };
                                 assert.deepEqual(data,expect,'アタックコマンドフェイズになる#client1');
                                 client1.emit('command',{
@@ -300,7 +336,19 @@ describe('serverクラスのテスト', function(){
                                 break;
                             case 2:
                                 expect = {
-                                    phase : 'defenthCommand'
+                                    phase : 'defenthCommand',
+                                    statusArray : {
+                                        1 : {
+                                            hp : 3200,
+                                            battery : 5,
+                                            active : 5000
+                                        },
+                                        2 : {
+                                            hp : 4700,
+                                            battery : 5,
+                                            active : 3000
+                                        }
+                                    }                                    
                                 };
                                 assert.deepEqual(data,expect,'ディフェンスコマンドフェイズになる#client1');
                                 client1.emit('command',{
@@ -313,7 +361,19 @@ describe('serverクラスのテスト', function(){
                                     hit : 1,
                                     damage : 1600,
                                     atackBattery : 3,
-                                    defenthBattery : 2
+                                    defenthBattery : 2,
+                                    statusArray : {
+                                        1 : {
+                                            hp : 3200,
+                                            battery : 2,
+                                            active : 0
+                                        },
+                                        2 : {
+                                            hp : 3100,
+                                            battery : 3,
+                                            active : 3000
+                                        }
+                                    }                                     
                                 };
                                 assert.deepEqual(data,expect,'ダメーフェイズになる#client1');
                                 client1.emit('command',{method : 'ok'});
@@ -322,7 +382,19 @@ describe('serverクラスのテスト', function(){
                                 expect = {
                                     phase : 'wait',
                                     atackUserId : '2',
-                                    turn : 7
+                                    turn : 7,
+                                    statusArray : {
+                                        1 : {
+                                            hp : 3200,
+                                            battery : 2,
+                                            active : 3500
+                                        },
+                                        2 : {
+                                            hp : 3100,
+                                            battery : 4,
+                                            active : 5100
+                                        }
+                                    }                                    
                                 };
                                 assert.deepEqual(data,expect,'ウェイトフェイズに戻る#client1');
                                 calledCount ++;
@@ -352,14 +424,38 @@ describe('serverクラスのテスト', function(){
                                 expect = {
                                     phase : 'wait',
                                     atackUserId : '1',
-                                    turn : 10
+                                    turn : 10,
+                                    statusArray : {
+                                        1 : {
+                                            hp : 3200,
+                                            battery : 5,
+                                            active : 5000
+                                        },
+                                        2 : {
+                                            hp : 4700,
+                                            battery : 5,
+                                            active : 3000
+                                        }
+                                    }                                    
                                 };
                                 assert.deepEqual(data,expect,'ウェイトフェイズになる#client2');
                                 client2.emit('command',{method:'ok'});
                                 break;
                             case 1:
                                 expect = {
-                                    phase : 'atackCommand'
+                                    phase : 'atackCommand',
+                                    statusArray : {
+                                        1 : {
+                                            hp : 3200,
+                                            battery : 5,
+                                            active : 5000
+                                        },
+                                        2 : {
+                                            hp : 4700,
+                                            battery : 5,
+                                            active : 3000
+                                        }
+                                    }                                    
                                 };
                                 assert.deepEqual(data,expect,'アタックコマンドフェイズになる#client2');
                                 client2.emit('command',{
@@ -368,7 +464,19 @@ describe('serverクラスのテスト', function(){
                                 break;
                             case 2:
                                 var expect = {
-                                    phase : 'defenthCommand'
+                                    phase : 'defenthCommand',
+                                    statusArray : {
+                                        1 : {
+                                            hp : 3200,
+                                            battery : 5,
+                                            active : 5000
+                                        },
+                                        2 : {
+                                            hp : 4700,
+                                            battery : 5,
+                                            active : 3000
+                                        }
+                                    }                                    
                                 };
                                 assert.deepEqual(data,expect,'ディフェンスコマンドフェイズ告知のオブジェクトが正しい#client2');
                                 client2.emit('command',{
@@ -384,7 +492,19 @@ describe('serverクラスのテスト', function(){
                                     hit : 1,
                                     damage : 1600,
                                     atackBattery : 3,
-                                    defenthBattery : 2
+                                    defenthBattery : 2,
+                                    statusArray : {
+                                        1 : {
+                                            hp : 3200,
+                                            battery : 2,
+                                            active : 0
+                                        },
+                                        2 : {
+                                            hp : 3100,
+                                            battery : 3,
+                                            active : 3000
+                                        }
+                                    }                                    
                                 };
                                 assert.deepEqual(data,expect,'ダメーフェイズになる#client2');
                                 client2.emit('command',{method : 'ok'});
@@ -393,7 +513,19 @@ describe('serverクラスのテスト', function(){
                                 expect = {
                                     phase : 'wait',
                                     atackUserId : '2',
-                                    turn : 7
+                                    turn : 7,
+                                    statusArray : {
+                                        1 : {
+                                            hp : 3200,
+                                            battery : 2,
+                                            active : 3500
+                                        },
+                                        2 : {
+                                            hp : 3100,
+                                            battery : 4,
+                                            active : 5100
+                                        }
+                                    }
                                 };
                                 assert.deepEqual(data,expect,'ウェイトフェイズに戻る#client2');                                
                                 calledCount ++;
@@ -426,14 +558,38 @@ describe('serverクラスのテスト', function(){
                                 expect = {
                                     phase : 'wait',
                                     atackUserId : '1',
-                                    turn : 10
+                                    turn : 10,
+                                    statusArray : {
+                                        1 : {
+                                            hp : 3200,
+                                            battery : 5,
+                                            active : 5000
+                                        },
+                                        2 : {
+                                            hp : 4700,
+                                            battery : 5,
+                                            active : 3000
+                                        }
+                                    }                                        
                                 };
                                 assert.deepEqual(data,expect,'ウェイトフェイズになる#client1');
                                 client1.emit('command',{method:'ok'});
                                 break;
                             case 1:
                                 expect = {
-                                    phase : 'atackCommand'
+                                    phase : 'atackCommand',
+                                    statusArray : {
+                                        1 : {
+                                            hp : 3200,
+                                            battery : 5,
+                                            active : 5000
+                                        },
+                                        2 : {
+                                            hp : 4700,
+                                            battery : 5,
+                                            active : 3000
+                                        }
+                                    }                                     
                                 };
                                 assert.deepEqual(data,expect,'アタックコマンドフェイズになる#client1');
                                 client1.emit('command',{
@@ -442,7 +598,19 @@ describe('serverクラスのテスト', function(){
                                 break;
                             case 2:
                                 expect = {
-                                    phase : 'charge'
+                                    phase : 'charge',
+                                    statusArray : {
+                                        1 : {
+                                            hp : 3200,
+                                            battery : 5,
+                                            active : 0
+                                        },
+                                        2 : {
+                                            hp : 4700,
+                                            battery : 5,
+                                            active : 3000
+                                        }
+                                    }                                     
                                 };
                                 assert.deepEqual(data,expect,'チャージフェイズになる#client1');
                                 client1.emit('command',{
@@ -453,7 +621,19 @@ describe('serverクラスのテスト', function(){
                                 expect = {
                                     phase : 'wait',
                                     atackUserId : '2',
-                                    turn : 7
+                                    turn : 7,
+                                    statusArray : {
+                                        1 : {
+                                            hp : 3200,
+                                            battery : 5,
+                                            active : 3500
+                                        },
+                                        2 : {
+                                            hp : 4700,
+                                            battery : 5,
+                                            active : 5100
+                                        }
+                                    }                                     
                                 };
                                 assert.deepEqual(data,expect,'ウェイトフェイズに戻る#client1');
                                 calledCount ++;
@@ -483,14 +663,38 @@ describe('serverクラスのテスト', function(){
                                 expect = {
                                     phase : 'wait',
                                     atackUserId : '1',
-                                    turn : 10
+                                    turn : 10,
+                                    statusArray : {
+                                        1 : {
+                                            hp : 3200,
+                                            battery : 5,
+                                            active : 5000
+                                        },
+                                        2 : {
+                                            hp : 4700,
+                                            battery : 5,
+                                            active : 3000
+                                        }
+                                    }                                        
                                 };
                                 assert.deepEqual(data,expect,'ウェイトフェイズになる#client2');
                                 client2.emit('command',{method:'ok'});
                                 break;
                             case 1:
                                 expect = {
-                                    phase : 'atackCommand'
+                                    phase : 'atackCommand',
+                                    statusArray : {
+                                        1 : {
+                                            hp : 3200,
+                                            battery : 5,
+                                            active : 5000
+                                        },
+                                        2 : {
+                                            hp : 4700,
+                                            battery : 5,
+                                            active : 3000
+                                        }
+                                    }                                     
                                 };
                                 assert.deepEqual(data,expect,'アタックコマンドフェイズになる#client2');
                                 client2.emit('command',{
@@ -499,7 +703,19 @@ describe('serverクラスのテスト', function(){
                                 break;
                             case 2:
                                 expect = {
-                                    phase : 'charge'
+                                    phase : 'charge',
+                                    statusArray : {
+                                        1 : {
+                                            hp : 3200,
+                                            battery : 5,
+                                            active : 0
+                                        },
+                                        2 : {
+                                            hp : 4700,
+                                            battery : 5,
+                                            active : 3000
+                                        }
+                                    }                                    
                                 };
                                 assert.deepEqual(data,expect,'チャージフェイズになる#client2');
                                 client2.emit('command',{
@@ -510,7 +726,19 @@ describe('serverクラスのテスト', function(){
                                 expect = {
                                     phase : 'wait',
                                     atackUserId : '2',
-                                    turn : 7
+                                    turn : 7,
+                                    statusArray : {
+                                        1 : {
+                                            hp : 3200,
+                                            battery : 5,
+                                            active : 3500
+                                        },
+                                        2 : {
+                                            hp : 4700,
+                                            battery : 5,
+                                            active : 5100
+                                        }
+                                    }                                    
                                 };
                                 assert.deepEqual(data,expect,'ウェイトフェイズに戻る#client2');                                
                                 calledCount ++;
