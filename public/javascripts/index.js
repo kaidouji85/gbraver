@@ -9,34 +9,28 @@ window.onload = function() {
     roomId = $("meta[name=roomId]").attr('content');
     userId = $("meta[name=userId]").attr('content');
 
-    //全プレイヤーの入室処理が完了した時に呼び出させる処理
-    socket.on("startGame", function(data) {
-        console.log(data);
-        Game = game({
-            roomId : roomId,
-            userId : userId,
-            usersInfo : data
-        });
-        
-        Game.onSendInput(function(data){
-            socket.emit("input",data);
-        });
-        Game.start();
-    });
-
     //ルームへ入室する
     socket.emit("enterRoom", {
         roomId : roomId,
         userId : userId
     });
     
-    //サーバからのレスポンスがきた
-    socket.on("resp", function(data) {
-        Game.emitResp(data);
+    //入室成功
+    socket.on('succesEnterRoom',function(){
+        console.log('succesEnterRoom');
     });
-    
-    //socket.ioの接続が切れた
-    socket.on("disconnect", function(data) {
-        Game.emitDisconnect(data);
+
+    //全プレイヤーの入室処理が完了した時に呼び出させる処理
+    socket.on("gameStart", function(data) {
+        console.log(data);
+        var statusArray = {};
+        for(var uid in data){
+            statusArray[uid] = data[uid].status;
+        }
+        Game = game({
+            userId : userId,
+            statusArray : statusArray
+        });
+        Game.start();
     });
 };
