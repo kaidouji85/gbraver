@@ -15,65 +15,6 @@ describe('serverクラスのテスト', function(){
         httpServer : app
     });
     
-    //test data
-    var user = {};
-    user[0] = {
-        userId : 0,
-        status :{
-            name : 'ゼロブレイバー',
-            pictName : 'GranBraver.PNG',
-            hp : 4200,
-            speed : 500,
-            weapons : {
-                1 : {name:'ゼロナックル',power:1200},
-                2 : {name:'ゼロナックル',power:1200},
-                3 : {name:'ゼロナックル',power:1700},
-                4 : {name:'ゼロナックル',power:2700},
-                5 : {name:'ゼロナックル',power:3700},
-            }
-        }
-    };    
-    
-    user[1] = {
-        userId : 1,
-        status :{
-            name : 'グランブレイバー',
-            pictName : 'GranBraver.PNG',
-            hp : 3200,
-            speed : 500,
-            weapons : {
-                1 : {name:'バスターナックル',power:800},
-                2 : {name:'バスターナックル',power:1100},
-                3 : {name:'バスターナックル',power:1600},
-                4 : {name:'バスターナックル',power:2100},
-                5 : {name:'バスターナックル',power:2800},
-            }
-        }
-    };
-    
-    user[2] = {
-        userId : 2,
-        status :{
-            name : 'ランドーザ',
-            pictName : 'Landozer.PNG',
-            hp : 4700,
-            speed : 300,
-            weapons : {
-                1 : {name:'ブレイクパンチ',power:1200},
-                2 : {name:'ブレイクパンチ',power:1700},
-                3 : {name:'ブレイクパンチ',power:2300},
-                4 : {name:'ブレイクパンチ',power:2900},
-                5 : {name:'ブレイクパンチ',power:3800}
-            }
-        }
-    };
-    
-    
-    Server.onGetUserData(function(userId,fn){
-        var userData = ce.clone(user[userId]);
-        fn(null,userData);
-    });
-    
     //本テストではテストケースごとに別々のルームを利用する想定である。
     //なので、afterEachを用いてテストケース終了毎にルームIDを
     //0、1、2、3とインクリメントさせている。
@@ -105,52 +46,8 @@ describe('serverクラスのテスト', function(){
                     userId : userId
                 });
                 
-                clients[userId].on('succesEnterRoom', function(){
-                    clients[userId].on('gameStart', function(data) {
-                        var expect = {
-                            0 : {
-                                userId : 0,
-                                status :{
-                                    name : 'ゼロブレイバー',
-                                    pictName : 'GranBraver.PNG',
-                                    hp : 4200,
-                                    speed : 500,
-                                    active : 0,
-                                    battery : 5,
-                                    weapons : {
-                                        1 : {name:'ゼロナックル',power:1200},
-                                        2 : {name:'ゼロナックル',power:1200},
-                                        3 : {name:'ゼロナックル',power:1700},
-                                        4 : {name:'ゼロナックル',power:2700},
-                                        5 : {name:'ゼロナックル',power:3700},
-                                    }
-                                }                                
-                            },
-                            1 : {
-                                userId : 1,
-                                status :{
-                                    name : 'グランブレイバー',
-                                    pictName : 'GranBraver.PNG',
-                                    hp : 3200,
-                                    speed : 500,
-                                    active : 0,
-                                    battery : 5,
-                                    weapons : {
-                                        1 : {name:'バスターナックル',power:800},
-                                        2 : {name:'バスターナックル',power:1100},
-                                        3 : {name:'バスターナックル',power:1600},
-                                        4 : {name:'バスターナックル',power:2100},
-                                        5 : {name:'バスターナックル',power:2800},
-                                    }
-                                }                                
-                            }
-                        };
-                        assert.deepEqual(data,expect);
-                    });                        
-                });
-                
                 clients[userId].on('gameStart', function(data){
-                    //「gameStart」を2人が受信したらテスト成功
+                    assertOfGameStart(data);
                     gameStartCount++;
                     if (gameStartCount===2) {
                         done();
@@ -158,6 +55,78 @@ describe('serverクラスのテスト', function(){
                 });
             });
         });
+        
+        function assertOfGameStart(data) {
+            var expect = {
+                0 : {
+                    userId : 0,
+                    status : {
+                        name : 'ゼロブレイバー',
+                        pictName : 'GranBraver.PNG',
+                        hp : 4200,
+                        speed : 500,
+                        active : 0,
+                        battery : 5,
+                        weapons : {
+                            1 : {
+                                name : 'ゼロナックル',
+                                power : 1200
+                            },
+                            2 : {
+                                name : 'ゼロナックル',
+                                power : 1200
+                            },
+                            3 : {
+                                name : 'ゼロナックル',
+                                power : 1700
+                            },
+                            4 : {
+                                name : 'ゼロナックル',
+                                power : 2700
+                            },
+                            5 : {
+                                name : 'ゼロナックル',
+                                power : 3700
+                            },
+                        }
+                    }
+                },
+                1 : {
+                    userId : 1,
+                    status : {
+                        name : 'グランブレイバー',
+                        pictName : 'GranBraver.PNG',
+                        hp : 3200,
+                        speed : 500,
+                        active : 0,
+                        battery : 5,
+                        weapons : {
+                            1 : {
+                                name : 'バスターナックル',
+                                power : 800
+                            },
+                            2 : {
+                                name : 'バスターナックル',
+                                power : 1100
+                            },
+                            3 : {
+                                name : 'バスターナックル',
+                                power : 1600
+                            },
+                            4 : {
+                                name : 'バスターナックル',
+                                power : 2100
+                            },
+                            5 : {
+                                name : 'バスターナックル',
+                                power : 2800
+                            },
+                        }
+                    }
+                }
+            };
+            assert.deepEqual(data, expect, 'gameStartのレスポンスが正しい');
+        }
         
         it('入室しているプレイヤーが同じ部屋に入室しようとしたらエラーがでる #ルームID、ユーザIDが前回入室時と同じ',function(done){
             var client = io.connect(SERVER_URL,option);
@@ -756,5 +725,63 @@ describe('serverクラスのテスト', function(){
     
     after(function(){
         app.close();
+    });
+    
+    //test data
+    var user = {};
+    user[0] = {
+        userId : 0,
+        status :{
+            name : 'ゼロブレイバー',
+            pictName : 'GranBraver.PNG',
+            hp : 4200,
+            speed : 500,
+            weapons : {
+                1 : {name:'ゼロナックル',power:1200},
+                2 : {name:'ゼロナックル',power:1200},
+                3 : {name:'ゼロナックル',power:1700},
+                4 : {name:'ゼロナックル',power:2700},
+                5 : {name:'ゼロナックル',power:3700},
+            }
+        }
+    };    
+    
+    user[1] = {
+        userId : 1,
+        status :{
+            name : 'グランブレイバー',
+            pictName : 'GranBraver.PNG',
+            hp : 3200,
+            speed : 500,
+            weapons : {
+                1 : {name:'バスターナックル',power:800},
+                2 : {name:'バスターナックル',power:1100},
+                3 : {name:'バスターナックル',power:1600},
+                4 : {name:'バスターナックル',power:2100},
+                5 : {name:'バスターナックル',power:2800},
+            }
+        }
+    };
+    
+    user[2] = {
+        userId : 2,
+        status :{
+            name : 'ランドーザ',
+            pictName : 'Landozer.PNG',
+            hp : 4700,
+            speed : 300,
+            weapons : {
+                1 : {name:'ブレイクパンチ',power:1200},
+                2 : {name:'ブレイクパンチ',power:1700},
+                3 : {name:'ブレイクパンチ',power:2300},
+                4 : {name:'ブレイクパンチ',power:2900},
+                5 : {name:'ブレイクパンチ',power:3800}
+            }
+        }
+    };
+    
+    Server.onGetUserData(function(userId,fn){
+        var userData = ce.clone(user[userId]);
+        fn(null,userData);
     });
 });
