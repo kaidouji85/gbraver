@@ -14,12 +14,12 @@ function game(spec, my) {
     preLoad();
     core.onload = function() {
         initSprite();
-        emitReady();
+        emitReady();    
         core.rootScene.addEventListener('enterframe', function(e) {
         });
     };
     
-    var emitReady;   
+    var emitReady = function(){};   
     core.onReady = function(fn){
         emitReady = fn;
     };

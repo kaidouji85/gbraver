@@ -32,5 +32,17 @@ window.onload = function() {
             statusArray : statusArray
         });
         Game.start();
+        Game.onReady(function(){
+            socket.emit('command',{method:'ready'});
+        });
+    });
+    
+    socket.on('resp', function(data) {
+        var phase = data.phase;
+        switch(phase){
+            case 'wait':
+                Game.doWaitPhase(data);
+                break;
+        }
     });
 };
