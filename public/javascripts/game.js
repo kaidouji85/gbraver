@@ -16,8 +16,20 @@ function game(spec, my) {
         initSprite();
         emitReady();    
         core.rootScene.addEventListener('enterframe', function(e) {
+            var frame = core.frame - phaseFrame;
+            switch(phase){
+                case 'wait':
+                    break;
+            }
         });
     };
+    
+    var phase = '';
+    var phaseFrame = 0;
+    function changePhase(phaseName){
+        phase = phaseName;
+        phaseFrame = core.frame;
+    }
     
     var emitReady = function(){};   
     core.onReady = function(fn){
@@ -59,6 +71,18 @@ function game(spec, my) {
                 activeBarArray[uid].direction = 'left';
                 activeBarArray[uid].scaleX = -1;
             }
+            activeBarArray[uid].turn = 0;
+            activeBarArray[uid].plus = function(turn,speed){
+                this.turn = turn;
+                this.speed = speed;
+            };
+            activeBarArray[uid].addEventListener('enterframe', function(e) {
+                if(activeBarArray[uid].turn > 0) {
+                    this.value += this.speed * this.maxValue / 5000;
+                    this.turn --;                    
+                }
+
+            });
             core.rootScene.addChild(activeBarArray[uid]);
         }
     }
@@ -66,9 +90,11 @@ function game(spec, my) {
     core.doWaitPhase = function(data){
         var atackUserId = data.atackUserId;
         var newStatusArray = data.statusArray;
+        var turn = data.turn;
         for(var uid in newStatusArray) {
-            var value = newStatusArray[uid].active / 5000 * activeBarArray[uid].maxValue;
-            activeBarArray[uid].value = value;
+            //var value = newStatusArray[uid].active / 5000 * activeBarArray[uid].maxValue;
+            //activeBarArray[uid].value = value;
+            activeBarArray[uid].plus(turn,statusArray[uid].speed);
         }
     };
 

@@ -70,7 +70,7 @@ window.onload = function() {
         var waitPhaseData = {
             phase : 'wait',
             atackUserId : '1',
-            turn : 10,
+            turn : 20,
             statusArray : {
                 2 : {
                     hp : 4700,
