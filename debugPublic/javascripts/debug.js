@@ -33,7 +33,7 @@ window.onload = function() {
             name : 'グランブレイバー',
             pictName : 'GranBraver.PNG',
             hp : 3200,
-            speed : 500,
+            speed : 250,
             active : 0,
             battery : 5,
             weapons : {
@@ -66,4 +66,25 @@ window.onload = function() {
         userId : '1'
     });
     Game.start();
+    Game.onReady(function() {
+        var waitPhaseData = {
+            phase : 'wait',
+            atackUserId : '1',
+            turn : 10,
+            statusArray : {
+                2 : {
+                    hp : 4700,
+                    battery : 5,
+                    active : 1500
+                },
+                1 : {
+                    hp : 3200,
+                    battery : 5,
+                    active : 5000
+                }
+            }
+        };
+        Game.doWaitPhase(waitPhaseData);
+    });
+
 };
