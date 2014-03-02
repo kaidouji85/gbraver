@@ -6,7 +6,6 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
-
 var app = express();
 
 // all environments
@@ -25,15 +24,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 // development only
 if ('development' == app.get('env')) {
     app.use(express.errorHandler());
+    app.use(express.static(path.join(__dirname, 'debugPublic')));
 }
-
 
 //DB::接続オブジェクト
 var mongoose = require('mongoose');
 var mongoUri = process.env.MONGOHQ_URL || 'mongodb://localhost/gbraver';
 mongoose.connect(mongoUri);
 
-//DB::ユーザ情報モデルを定義
+//DB::ユーザ情報モデル
 var usersSchema = mongoose.Schema({
     userId : Number,
     status : {
@@ -52,11 +51,10 @@ var usersSchema = mongoose.Schema({
 });
 var Users = mongoose.model('Users', usersSchema); 
 
-//ルーティング設定
+//ルーティング
 app.get('/', routes.index);
 app.get('/users', user.list);
 app.post('/battle', routes.battle);
-app.get('/debug', routes.debug);
 
 //httpサーバ
 var server = http.createServer(app).listen(app.get('port'), function() {
@@ -75,5 +73,4 @@ WsServer.onGetUserData(function(userId,fn){
         var userInfo = respUsers[0];
         fn(null, userInfo);
     });
-  
 });

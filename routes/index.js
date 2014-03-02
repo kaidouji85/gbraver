@@ -1,4 +1,3 @@
-
 /*
  * GET home page.
  */
@@ -11,10 +10,4 @@ exports.battle = function(req, res){
   var userId = req.body.userId;
   var roomId = req.body.roomId;
   res.render('battle', {userId:userId,roomId:roomId});
-};
-
-exports.debug = function(req, res){
-  var userId = req.body.userId;
-  var roomId = req.body.roomId;
-  res.render('debug', {});
 };
