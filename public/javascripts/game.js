@@ -58,11 +58,9 @@ function game(spec, my) {
             core.rootScene.addChild(charaSpriteArray[uid]);
             
             //アクティブゲージ
-            activeBarArray[uid] = new Bar(0,0);
-            activeBarArray[uid].y = 40;
+            activeBarArray[uid] = activeBar();
             activeBarArray[uid].image =  core.assets[PICT_PREFIX+PICT_ACTIVE_BAR];
-            activeBarArray[uid].maxValue = 120;
-            activeBarArray[uid].value = 0;
+            activeBarArray[uid].y = 40;
             if(uid === userId){
                 activeBarArray[uid].x = 190;
                 activeBarArray[uid].direction = 'right';
@@ -71,18 +69,6 @@ function game(spec, my) {
                 activeBarArray[uid].direction = 'left';
                 activeBarArray[uid].scaleX = -1;
             }
-            activeBarArray[uid].turn = 0;
-            activeBarArray[uid].plus = function(turn,speed){
-                this.turn = turn;
-                this.speed = speed;
-            };
-            activeBarArray[uid].addEventListener('enterframe', function(e) {
-                if(activeBarArray[uid].turn > 0) {
-                    this.value += this.speed * this.maxValue / 5000;
-                    this.turn --;                    
-                }
-
-            });
             core.rootScene.addChild(activeBarArray[uid]);
         }
     }
