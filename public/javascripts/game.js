@@ -10,6 +10,7 @@ function game(spec, my) {
     var userId = spec.userId;
     var charaSpriteArray = {};
     var activeBarArray = {};
+    var hpLabelArray = {};
     
     preLoad();
     core.onload = function() {
@@ -60,7 +61,7 @@ function game(spec, my) {
             //アクティブゲージ
             activeBarArray[uid] = activeBar();
             activeBarArray[uid].image =  core.assets[PICT_PREFIX+PICT_ACTIVE_BAR];
-            activeBarArray[uid].y = 40;
+            activeBarArray[uid].y = 28;
             if(uid === userId){
                 activeBarArray[uid].x = 190;
                 activeBarArray[uid].direction = 'right';
@@ -70,6 +71,17 @@ function game(spec, my) {
                 activeBarArray[uid].scaleX = -1;
             }
             core.rootScene.addChild(activeBarArray[uid]);
+            
+            //HPラベル
+            hpLabelArray[uid] = new MutableText(0,0);
+            hpLabelArray[uid].y = 8;
+            if(uid===userId){
+                hpLabelArray[uid].x = 190;
+            } else {
+                hpLabelArray[uid].x = 20;
+            }
+            hpLabelArray[uid].text = 'HP '+statusArray[uid].hp;
+            core.rootScene.addChild(hpLabelArray[uid]);
         }
     }
     
@@ -78,8 +90,6 @@ function game(spec, my) {
         var newStatusArray = data.statusArray;
         var turn = data.turn;
         for(var uid in newStatusArray) {
-            //var value = newStatusArray[uid].active / 5000 * activeBarArray[uid].maxValue;
-            //activeBarArray[uid].value = value;
             activeBarArray[uid].plus(turn,statusArray[uid].speed);
         }
     };
