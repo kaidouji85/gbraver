@@ -1,6 +1,7 @@
 function game(spec, my) {
     var PICT_PREFIX = location.origin + '/images/';
     var PICT_ACTIVE_BAR = 'activeBar.png';
+    var PICT_ACTIVE_BASE = 'activeBase.png';
     
     var core = new Core(320, 320);
     core.fps = 60;
@@ -11,6 +12,7 @@ function game(spec, my) {
     var charaSpriteArray = {};
     var activeBarArray = {};
     var hpLabelArray = {};
+    var activeBaseArray = {};
     
     preLoad();
     core.onload = function() {
@@ -42,6 +44,7 @@ function game(spec, my) {
             core.preload(PICT_PREFIX + statusArray[uid].pictName);
         }
         core.preload(PICT_PREFIX+PICT_ACTIVE_BAR);
+        core.preload(PICT_PREFIX+PICT_ACTIVE_BASE);
     }
 
     function initSprite() {
@@ -58,10 +61,21 @@ function game(spec, my) {
             }
             core.rootScene.addChild(charaSpriteArray[uid]);
             
+            //アクティブゲージ土台
+            activeBaseArray[uid] = new Sprite(120,18);
+            activeBaseArray[uid].image = core.assets[PICT_PREFIX+PICT_ACTIVE_BASE];
+            activeBaseArray[uid].y = 29;
+            if(uid === userId){
+                activeBaseArray[uid].x = 190;
+            } else {
+                activeBaseArray[uid].x = 10;
+            }
+            core.rootScene.addChild(activeBaseArray[uid]);            
+            
             //アクティブゲージ
             activeBarArray[uid] = activeBar();
             activeBarArray[uid].image =  core.assets[PICT_PREFIX+PICT_ACTIVE_BAR];
-            activeBarArray[uid].y = 28;
+            activeBarArray[uid].y = 30;
             if(uid === userId){
                 activeBarArray[uid].x = 190;
                 activeBarArray[uid].direction = 'right';
@@ -71,6 +85,7 @@ function game(spec, my) {
                 activeBarArray[uid].scaleX = -1;
             }
             core.rootScene.addChild(activeBarArray[uid]);
+            
             
             //HPラベル
             hpLabelArray[uid] = new MutableText(0,0);
