@@ -4,16 +4,18 @@ function game(spec, my) {
     var PICT_ACTIVE_BASE = 'activeBase.png';
     
     var core = new Core(320, 320);
-    core.fps = 60;
-    core.rootScene.backgroundColor = "black";
-
+    var phase = '';
+    var phaseFrame = 0;
     var statusArray = $.extend(true, {}, spec.statusArray);
     var userId = spec.userId;
     var charaSpriteArray = {};
     var activeBarArray = {};
     var hpLabelArray = {};
     var activeBaseArray = {};
+    var batteryMertorArray = {};
     
+    core.fps = 60;
+    core.rootScene.backgroundColor = "black";
     preLoad();
     core.onload = function() {
         initSprite();
@@ -27,8 +29,6 @@ function game(spec, my) {
         });
     };
     
-    var phase = '';
-    var phaseFrame = 0;
     function changePhase(phaseName){
         phase = phaseName;
         phaseFrame = core.frame;
@@ -86,7 +86,6 @@ function game(spec, my) {
             }
             core.rootScene.addChild(activeBarArray[uid]);
             
-            
             //HPラベル
             hpLabelArray[uid] = new MutableText(0,0);
             hpLabelArray[uid].y = 8;
@@ -97,6 +96,9 @@ function game(spec, my) {
             }
             hpLabelArray[uid].text = 'HP '+statusArray[uid].hp;
             core.rootScene.addChild(hpLabelArray[uid]);
+            
+            //バッテリーメータ
+            batteryMertorArray;
         }
     }
     
