@@ -73,7 +73,8 @@ function game(spec, my) {
             core.rootScene.addChild(activeBaseArray[uid]);            
             
             //アクティブゲージ
-            activeBarArray[uid] = activeBar();
+            
+            activeBarArray[uid] = customBar();
             activeBarArray[uid].image =  core.assets[PICT_PREFIX+PICT_ACTIVE_BAR];
             activeBarArray[uid].y = 30;
             if(uid === userId){
@@ -86,6 +87,7 @@ function game(spec, my) {
             }
             core.rootScene.addChild(activeBarArray[uid]);
             
+            
             //HPラベル
             hpLabelArray[uid] = new MutableText(0,0);
             hpLabelArray[uid].y = 8;
@@ -96,7 +98,7 @@ function game(spec, my) {
             }
             hpLabelArray[uid].text = 'HP '+statusArray[uid].hp;
             core.rootScene.addChild(hpLabelArray[uid]);
-            
+           
             //バッテリーメータ
             batteryMertorArray;
         }
@@ -107,7 +109,7 @@ function game(spec, my) {
         var newStatusArray = data.statusArray;
         var turn = data.turn;
         for(var uid in newStatusArray) {
-            activeBarArray[uid].plus(turn,statusArray[uid].speed);
+            activeBarArray[uid].plus(turn,120*statusArray[uid].speed/5000);
         }
     };
 
