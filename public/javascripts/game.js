@@ -2,7 +2,9 @@ function game(spec, my) {
     var PICT_PREFIX = location.origin + '/images/';
     var PICT_ACTIVE_BAR = 'activeBar.png';
     var PICT_ACTIVE_BAR_BACK = 'activeBack.png';
-    
+    var PICT_BATTERY_GAUGE = 'batteryGauge.png';
+    var PICT_BATTERY_BACK = 'batteryBack.png';
+
     var core = new Core(320, 320);
     var phase = '';
     var phaseFrame = 0;
@@ -45,6 +47,8 @@ function game(spec, my) {
         }
         core.preload(PICT_PREFIX+PICT_ACTIVE_BAR);
         core.preload(PICT_PREFIX+PICT_ACTIVE_BAR_BACK);
+        core.preload(PICT_PREFIX+PICT_BATTERY_GAUGE);
+        core.preload(PICT_PREFIX+PICT_BATTERY_BACK);
     }
 
     function initSprite() {
@@ -52,14 +56,17 @@ function game(spec, my) {
             //キャラクタースプライト
             charaSpriteArray[uid] = new Sprite(128, 128);
             charaSpriteArray[uid].image = core.assets[PICT_PREFIX+statusArray[uid].pictName];
+            charaSpriteArray[uid].x = uid===userId ? 192 : 0;
             charaSpriteArray[uid].y = 80;
-            if(uid === userId){
-                charaSpriteArray[uid].x = 192;
-            } else {
-                charaSpriteArray[uid].x = 0;
-                charaSpriteArray[uid].scaleX = -1;
-            }
+            charaSpriteArray[uid].scaleX = uid===userId ? 1 : -1;
             core.rootScene.addChild(charaSpriteArray[uid]);
+            
+            //HPラベル
+            hpLabelArray[uid] = new MutableText(0,0);
+            hpLabelArray[uid].y = 4;
+            hpLabelArray[uid].x = uid===userId ? 190 : 10;
+            hpLabelArray[uid].text = 'HP '+statusArray[uid].hp;
+            core.rootScene.addChild(hpLabelArray[uid]);            
             
             //アクティブゲージ
             activeBarArray[uid] = customBar({
@@ -68,23 +75,21 @@ function game(spec, my) {
                 maxValue : 120,
                 direction : uid===userId ? 'right' : 'left'
             });
-            activeBarArray[uid].x = (uid===userId ? 190 : 130);
-            activeBarArray[uid].y = 30;
+            activeBarArray[uid].x = uid===userId ? 190 : 130;
+            activeBarArray[uid].y = 22;
             core.rootScene.addChild(activeBarArray[uid]);
-            
-            //HPラベル
-            hpLabelArray[uid] = new MutableText(0,0);
-            hpLabelArray[uid].y = 8;
-            if(uid===userId){
-                hpLabelArray[uid].x = 190;
-            } else {
-                hpLabelArray[uid].x = 20;
-            }
-            hpLabelArray[uid].text = 'HP '+statusArray[uid].hp;
-            core.rootScene.addChild(hpLabelArray[uid]);
            
             //バッテリーメータ
-            batteryMertorArray;
+            batteryMertorArray[uid] = new batteryMertor({
+                gaugeImage : core.assets[PICT_PREFIX + PICT_BATTERY_GAUGE],
+                backImage : core.assets[PICT_PREFIX + PICT_BATTERY_BACK],
+                direction : uid===userId ? 'right' : 'left'
+            });
+            batteryMertorArray[uid].x = uid===userId ? 190 : 10;
+            batteryMertorArray[uid].y = 43;
+            batteryMertorArray[uid].setValue(5);
+            core.rootScene.addChild(batteryMertorArray[uid]);
+            
         }
     }
     
