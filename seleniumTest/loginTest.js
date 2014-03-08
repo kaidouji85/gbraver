@@ -16,6 +16,7 @@ test.describe('ログイン', function() {
     });
 
     test.it('2人が同じ部屋にログインして戦闘画面が表示される', function() {
+        //ログイン処理
         drivers.forEach(function(driver,index) {
             driver.get(URL);
             var userId = driver.findElement(webdriver.By.name('userId'));
@@ -23,12 +24,20 @@ test.describe('ログイン', function() {
             var loginButton = driver.findElement(webdriver.By.name('loginButton'));
             userId.sendKeys(index===0 ? 1 : 2);
             roomId.sendKeys(1);
-            loginButton.click();       
+            loginButton.click();
         });
         
-        drivers[1].wait(function(){
-            return false;
-        }, 100000000);
+        //入室確認
+        drivers.forEach(function(driver,index) {
+            driver.wait(function() {
+                return driver.getTitle().then(function(title) {
+                    return 'Gブレイバー 戦闘'===title;
+                });
+            }, 1000);
+            console.log('kitayo ' + index);
+        }); 
+        
+
         
     }); 
 

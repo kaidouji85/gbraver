@@ -24,7 +24,6 @@ test.describe('Google Search', function() {
             return driver.getTitle().then(function(title) {
                 return 'webdriver - Google 検索'===title;
             });
-           return true;
         }, 1000);
         
         //ページ遷移実行後にこれらのコマンドが実行される
