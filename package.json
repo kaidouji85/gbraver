@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "test" : "mocha unitTest/ -R spec"
   },
   "dependencies": {
     "express": "3.4.7",
@@ -13,7 +14,8 @@
     "chai": "*",
     "mocha": "*",
     "socket.io-client" : "*",
-    "cloneextend" : "*"
+    "cloneextend" : "*",
+    "selenium-webdriver" : "*"
   },
   "engines": {
     "node": "0.10.x"
