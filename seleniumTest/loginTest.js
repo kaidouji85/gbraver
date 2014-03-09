@@ -1,4 +1,4 @@
-var assert = require('assert');
+var assert = require('chai').assert;
 var webdriver = require('selenium-webdriver');
 var test = require('selenium-webdriver/testing');
 var URL = 'localhost:3000';
@@ -14,8 +14,29 @@ test.describe('ログイン', function() {
             drivers.push(driver);
         }
     });
-
-    test.it('2人が同じ部屋にログインして戦闘画面が表示される', function() {
+    
+    test.it('ログインするとルームID、ユーザIDがmetaタグに格納される', function(){
+        var driver = drivers[0];
+        driver.get(URL);
+        driver.findElement(webdriver.By.name('userId')).sendKeys(1);
+        driver.findElement(webdriver.By.name('roomId')).sendKeys(0);
+        driver.findElement(webdriver.By.name('loginButton')).click();
+        
+        driver.wait(function() {
+            return driver.getTitle().then(function(title) {
+                return 'Gブレイバー 戦闘' === title;
+            });
+        }, 1000);
+        driver.findElement(webdriver.By.name('userId')).getAttribute('content').then(function(userId){
+            driver.findElement(webdriver.By.name('roomId')).getAttribute('content').then(function(roomId){
+                assert.equal(userId,1,'正しいユーザIDがMetaタグに格納されている');
+                assert.equal(roomId,0,'正しいルームIDがMetaタグに格納されている');
+            });
+        });
+                
+    });
+    
+    test.it('異なるユーザが2人同じ部屋にログインしたので「succesEnterRoom」がサーバから送信される', function() {
         //ログイン処理
         drivers.forEach(function(driver,index) {
             driver.get(URL);
@@ -34,11 +55,17 @@ test.describe('ログイン', function() {
                     return 'Gブレイバー 戦闘'===title;
                 });
             }, 1000);
-            console.log('kitayo ' + index);
-        }); 
-        
-
-        
+            
+            /*
+            driver.executeScript(function() {
+                gbraver.acceptGameStart = false;
+                gbraver.socket.once("gameStart",function(data){
+                    gbraver.acceptGameStart = true;
+                    gbraver.gameStartRespData;
+                });
+            });
+            */
+        });
     }); 
 
     test.after(function() {
