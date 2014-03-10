@@ -7,15 +7,15 @@ function atackCommand(spec,my){
     var chargeImage = spec.chargeImage;
     var atackIcon = new Sprite(ICON_WIDTH,ICON_HEIGHT);
     var chargeIcon = new Sprite(ICON_WIDTH,ICON_HEIGHT);
+    var emitPushAtackButton;
     var emitPushChargeButton;
     
     atackIcon.image = atackImage;
     atackIcon.x = 0;
     atackIcon.y = 0;
     atackIcon.addEventListener(Event.TOUCH_START,function(e){
-        atackIcon.visible = false;
-        chargeIcon.visible = false;
-    });
+        emitPushAtackButton();
+    });    
     that.addChild(atackIcon);
     
     chargeIcon.image = chargeImage;
@@ -26,9 +26,13 @@ function atackCommand(spec,my){
     });
     that.addChild(chargeIcon);
     
+    that.onPushAtackButton = function(fnc){
+        emitPushAtackButton = fnc;
+    };
+    
     that.onPushChargeButton = function(fnc){
         emitPushChargeButton = fnc;
     };
-    
+
     return that;
 }
