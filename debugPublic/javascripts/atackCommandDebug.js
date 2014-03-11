@@ -30,6 +30,7 @@ window.onload = function() {
        AtackCommand.onPushChargeButton(function(){
            alert('チャージ');
        });
+       //AtackCommand.setVisible(false);
        core.rootScene.addChild(AtackCommand);
        
        //バッテリーコマンド
@@ -48,7 +49,8 @@ window.onload = function() {
        });
        BatteryCommand.onPushOkButton(function(){
            alert('OK');
-       });       
+       });
+       //BatteryCommand.setVisible(false);
        core.rootScene.addChild(BatteryCommand);
        
     };

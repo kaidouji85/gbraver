@@ -4,6 +4,11 @@ function game(spec, my) {
     var PICT_ACTIVE_BAR_BACK = 'activeBack.png';
     var PICT_BATTERY_GAUGE = 'batteryGauge.png';
     var PICT_BATTERY_BACK = 'batteryBack.png';
+    var PICT_ICON_ATACK = 'iconAtack.png';
+    var PICT_ICON_CHARGE = 'iconCharge.png';
+    var PICT_ICON_PLUS = 'iconPlus.png';
+    var PICT_ICON_MINUS = 'iconMinus.png';
+    var PICT_ICON_OK = 'iconOk.png';
 
     var core = new Core(320, 320);
     var phase = '';
@@ -15,6 +20,8 @@ function game(spec, my) {
     var hpLabelArray = {};
     var activeBaseArray = {};
     var batteryMertorArray = {};
+    var AtackCommand;
+    var BatteryCommand;
     
     core.fps = 60;
     core.rootScene.backgroundColor = "black";
@@ -49,6 +56,11 @@ function game(spec, my) {
         core.preload(PICT_PREFIX+PICT_ACTIVE_BAR_BACK);
         core.preload(PICT_PREFIX+PICT_BATTERY_GAUGE);
         core.preload(PICT_PREFIX+PICT_BATTERY_BACK);
+        core.preload(PICT_PREFIX+PICT_ICON_ATACK);
+        core.preload(PICT_PREFIX+PICT_ICON_CHARGE);
+        core.preload(PICT_PREFIX+PICT_ICON_PLUS);
+        core.preload(PICT_PREFIX+PICT_ICON_MINUS);
+        core.preload(PICT_PREFIX+PICT_ICON_OK);        
     }
 
     function initSprite() {
@@ -89,8 +101,29 @@ function game(spec, my) {
             batteryMertorArray[uid].y = 43;
             batteryMertorArray[uid].setValue(5);
             core.rootScene.addChild(batteryMertorArray[uid]);
-            
         }
+        
+        //攻撃コマンド
+        AtackCommand = atackCommand({
+            atackImage : core.assets[PICT_PREFIX + PICT_ICON_ATACK],
+            chargeImage : core.assets[PICT_PREFIX + PICT_ICON_CHARGE]
+        });
+        AtackCommand.setVisible(false);
+        AtackCommand.x = 100;
+        AtackCommand.y = 80;
+        core.rootScene.addChild(AtackCommand);
+        
+        //防御コマンド
+        BatteryCommand = batteryCommand({
+           plusImage : core.assets[PICT_PREFIX+PICT_ICON_PLUS],
+           minusImage : core.assets[PICT_PREFIX+PICT_ICON_MINUS],
+           okImage : core.assets[PICT_PREFIX+PICT_ICON_OK]
+        });
+        //BatteryCommand.setVisible(true);
+        BatteryCommand.x = 100;
+        BatteryCommand.y = 80;
+        core.rootScene.addChild(BatteryCommand);
+
     }
     
     core.doWaitPhase = function(data){
