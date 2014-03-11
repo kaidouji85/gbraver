@@ -11,8 +11,7 @@ function game(spec, my) {
     var PICT_ICON_OK = 'iconOk.png';
 
     var core = new Core(320, 320);
-    var phase = '';
-    var phaseFrame = 0;
+    var startAtackCommandFrame = -1;
     var statusArray = $.extend(true, {}, spec.statusArray);
     var userId = spec.userId;
     var charaSpriteArray = {};
@@ -28,20 +27,13 @@ function game(spec, my) {
     preLoad();
     core.onload = function() {
         initSprite();
-        emitReady();    
+        emitReady();
         core.rootScene.addEventListener('enterframe', function(e) {
-            var frame = core.frame - phaseFrame;
-            switch(phase){
-                case 'wait':
-                    break;
+            if(core.frame===startAtackCommandFrame){
+                doAtackCommandPhase();
             }
         });
     };
-    
-    function changePhase(phaseName){
-        phase = phaseName;
-        phaseFrame = core.frame;
-    }
     
     var emitReady = function(){};   
     core.onReady = function(fn){
@@ -111,15 +103,18 @@ function game(spec, my) {
         AtackCommand.setVisible(false);
         AtackCommand.x = 100;
         AtackCommand.y = 80;
+        AtackCommand.onPushAtackButton(function(){
+           moveBatteryCommand();
+        });
         core.rootScene.addChild(AtackCommand);
         
-        //防御コマンド
+        //バッテリーコマンド
         BatteryCommand = batteryCommand({
            plusImage : core.assets[PICT_PREFIX+PICT_ICON_PLUS],
            minusImage : core.assets[PICT_PREFIX+PICT_ICON_MINUS],
            okImage : core.assets[PICT_PREFIX+PICT_ICON_OK]
         });
-        //BatteryCommand.setVisible(true);
+        BatteryCommand.setVisible(false);
         BatteryCommand.x = 100;
         BatteryCommand.y = 80;
         core.rootScene.addChild(BatteryCommand);
@@ -133,7 +128,20 @@ function game(spec, my) {
         for(var uid in newStatusArray) {
             activeBarArray[uid].plus(turn,120*statusArray[uid].speed/5000);
         }
+        if(userId===atackUserId){
+            startAtackCommandFrame = core.frame + turn;    
+        }
+        
     };
+    
+    function doAtackCommandPhase(){
+        AtackCommand.setVisible(true); 
+    };
+    
+    function moveBatteryCommand(){
+        AtackCommand.setVisible(false);
+        BatteryCommand.setVisible(true);
+    }
 
     return core;
 }
