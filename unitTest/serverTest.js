@@ -1,24 +1,31 @@
 describe('serverクラスのテスト', function() {
     var SERVER_PORT = 3000;
-    var SERVER_URL = 'http://localhost';
+    var SERVER_URL = 'http://localhost'; 
+    
     var testDataUses = require('./testDataUsers.js');
     var assert = require('chai').assert;
     var io = require('socket.io-client');
-    var option = {
-        'force new connection' : true,
-        port : 3000
-    };
-    var app = require('http').createServer().listen(3000);
+    var app = require('http').createServer().listen(SERVER_PORT); 
     var server = require('../server.js');
-    var Server = server({
-        httpServer : app
-    });
+    
+    var option;
+    var Server;
     var roomId = -1;
     var complates;
-
-    Server.onGetUserData(function(userId, fn) {
-        var userData = testDataUses.getUserData(userId);
-        fn(null, userData);
+    
+    before(function(){
+        option = {
+            'force new connection' : true,
+            port : 3000
+        };
+        Server = server({
+            httpServer : app
+        });
+        roomId = -1;
+        Server.onGetUserData(function(userId, fn) {
+            var userData = testDataUses.getUserData(userId);
+            fn(null, userData);
+        });        
     });
 
     beforeEach(function() {
@@ -29,18 +36,6 @@ describe('serverクラスのテスト', function() {
     after(function() {
         app.close();
     });
-    
-    function complateCLient(index) {
-        complates[index] = "";
-    }
-
-    function isFinishTest() {
-        if (Object.keys(complates).length === 2) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     describe('入室系テスト', function() {
         it('入室したらサーバから「succesEnterRoom」が返される', function(done) {
@@ -587,4 +582,16 @@ describe('serverクラスのテスト', function() {
 
         });
     });
+    
+    function complateCLient(index) {
+        complates[index] = "";
+    }
+
+    function isFinishTest() {
+        if (Object.keys(complates).length === 2) {
+            return true;
+        } else {
+            return false;
+        }
+    }    
 }); 
