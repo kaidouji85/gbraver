@@ -13,32 +13,41 @@ window.onload = function() {
     core.start();
 
     core.onload = function() {
-         var test = customBar({
-             barImage : core.assets[PICT_PREFIX + PICT_ACTIVE_BAR],
-             backImage : core.assets[PICT_PREFIX + PICT_ACTIVE_BAR_BACK],
-             maxValue : 120,
-             direction : 'right'
-         });
-        test.value = 0;
+        var test = customBar({
+            barImage : core.assets[PICT_PREFIX + PICT_ACTIVE_BAR],
+            backImage : core.assets[PICT_PREFIX + PICT_ACTIVE_BAR_BACK],
+            maxValue : 120,
+            direction : 'right'
+        });
         test.x = 50;
         test.y = 50;
-        test.plus(60,120/60);
+        test.plus(60, 120 / 60);
         core.rootScene.addChild(test);
-        
-         var test2 = customBar({
-             barImage : core.assets[PICT_PREFIX + PICT_ACTIVE_BAR],
-             backImage : core.assets[PICT_PREFIX + PICT_ACTIVE_BAR_BACK],
-             maxValue : 120,
-             direction : 'left'
-         });
-        test2.value = 0;
+
+        var test2 = customBar({
+            barImage : core.assets[PICT_PREFIX + PICT_ACTIVE_BAR],
+            backImage : core.assets[PICT_PREFIX + PICT_ACTIVE_BAR_BACK],
+            maxValue : 120,
+            direction : 'left'
+        });
         test2.x = 170;
         test2.y = 80;
-        test2.plus(60,120/60);
-        core.rootScene.addChild(test2);        
-
-        core.rootScene.addEventListener('enterframe', function(e) {
+        test2.plus(60, 120 / 60);
+        core.rootScene.addChild(test2);
+        
+        var test3 = customBar({
+            barImage : core.assets[PICT_PREFIX + PICT_ACTIVE_BAR],
+            backImage : core.assets[PICT_PREFIX + PICT_ACTIVE_BAR_BACK],
+            maxValue : 120,
+            direction : 'left'
         });
+        test3.setValue(120);
+        test3.x = 170;
+        test3.y = 150;
+        core.rootScene.addChild(test3);
+        
+        core.rootScene.addEventListener('enterframe', function(e) {
+        }); 
 
     };
 };

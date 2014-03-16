@@ -19,13 +19,13 @@ function game(spec, my) {
     var charaSpriteArray = {};
     var activeBarArray = {};
     var hpLabelArray = {};
-    var activeBaseArray = {};
     var batteryMertorArray = {};
     var batteryNumberArray = {};
     var AtackCommand;
     var BatteryCommand;
     var emitReady = function(){};
     var emitFrameEvent = function(){};
+    var emitCommand = function(){};
     var emitFrame = -1;
     var selectMaxBattery = 5;
     var selectMinBattery = 0;
@@ -46,7 +46,38 @@ function game(spec, my) {
     core.onReady = function(fn){
         emitReady = fn;
     };
+
+    core.doWaitPhase = function(data){
+        var atackUserId = data.atackUserId;
+        var newStatusArray = data.statusArray;
+        var turn = data.turn;
+        for(var uid in newStatusArray) {
+            activeBarArray[uid].plus(turn,120*statusArray[uid].speed/5000);
+        }
+        setFrameCountEvent(core.frame + turn,function(){
+            emitCommand({method:'ok'});
+        });
+    };
     
+    core.doAtackCommandPhase = function(data){
+        AtackCommand.setVisible(true);
+    };
+    
+    core.doChargePhase = function(data){
+        for(var uid in data.statusArray){
+            hpLabelArray[uid].text = 'HP ' + data.statusArray[uid].hp;
+            batteryMertorArray[uid].setValue(data.statusArray[uid].battery);
+            activeBarArray[uid].setValue(120*data.statusArray[uid].active/5000);
+            setFrameCountEvent(core.frame + 10, function(){
+                emitCommand({method:'ok'});
+            });
+        } 
+    };
+    
+    core.onCommand = function(fn) {
+        emitCommand = fn;
+    };
+
     function setFrameCountEvent(frame,fnc){
         emitFrame = frame;
         emitFrameEvent = fnc;
@@ -128,6 +159,9 @@ function game(spec, my) {
         AtackCommand.onPushAtackButton(function(){
            moveBatteryCommand();
         });
+        AtackCommand.onPushChargeButton(function() {
+            charge();
+        });        
         core.rootScene.addChild(AtackCommand);
         
         //バッテリーコマンド
@@ -151,23 +185,6 @@ function game(spec, my) {
         });        
         core.rootScene.addChild(BatteryCommand);
     }
-    
-    core.doWaitPhase = function(data){
-        var atackUserId = data.atackUserId;
-        var newStatusArray = data.statusArray;
-        var turn = data.turn;
-        for(var uid in newStatusArray) {
-            activeBarArray[uid].plus(turn,120*statusArray[uid].speed/5000);
-        }
-        if(userId===atackUserId){
-            setFrameCountEvent(core.frame + turn,doAtackCommandPhase);
-        }
-        
-    };
-    
-    function doAtackCommandPhase(){
-        AtackCommand.setVisible(true); 
-    };
     
     function moveBatteryCommand(){
         AtackCommand.setVisible(false);
@@ -204,6 +221,11 @@ function game(spec, my) {
         AtackCommand.setVisible(true);
         BatteryCommand.setVisible(false);
         batteryNumberArray[userId].visible = false;        
+    }
+    
+    function charge(){
+        AtackCommand.setVisible(false);
+        emitCommand({method:'charge'});
     }
 
     return core;

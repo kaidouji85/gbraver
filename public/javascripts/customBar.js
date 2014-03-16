@@ -17,7 +17,11 @@ function customBar(spec, my) {
     
     that.addChild(BarBack);
     that.addChild(MainBar);
+    
     that.plus = MainBar.plus;
+    that.setValue = function(value){
+        MainBar.value = value;
+    };
     
     return that;
 };

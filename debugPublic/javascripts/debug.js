@@ -61,6 +61,9 @@ window.onload = function() {
         }
     };
 
+    /**
+     * 先攻プレイヤーがチャージを選択する
+     */
     var Game = game({
         statusArray : data,
         userId : '1'
@@ -75,7 +78,7 @@ window.onload = function() {
                 2 : {
                     hp : 4700,
                     battery : 5,
-                    active : 1500
+                    active : 3000
                 },
                 1 : {
                     hp : 3200,
@@ -85,6 +88,46 @@ window.onload = function() {
             }
         };
         Game.doWaitPhase(waitPhaseData);
+        Game.onCommand(function(command){
+            console.log(command);    
+            var data = {
+                phase : 'atackCommand',
+                statusArray : {
+                    1 : {
+                        hp : 3200,
+                        battery : 5,
+                        active : 5000
+                    },
+                    2 : {
+                        hp : 4700,
+                        battery : 5,
+                        active : 3000
+                    }
+                }
+            };
+            Game.doAtackCommandPhase(data);
+            Game.onCommand(function(command){
+                console.log(command);
+                var data = {
+                    phase : 'charge',
+                    statusArray : {
+                        1 : {
+                            hp : 3200,
+                            battery : 5,
+                            active : 0
+                        },
+                        2 : {
+                            hp : 4700,
+                            battery : 5,
+                            active : 3000
+                        }
+                    }                    
+                };
+                Game.doChargePhase(data);
+                Game.onCommand(function(command){
+                    console.log(command);
+                });
+            });
+        });
     });
-
 };

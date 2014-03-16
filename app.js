@@ -7,6 +7,7 @@ var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
 var app = express();
+var ce = require('cloneextend');
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -72,7 +73,43 @@ WsServer.onGetUserData(function(userId,fn){
     Users.find({
         userId : userId
     }, function(err, respUsers) {
-        var userInfo = respUsers[0];
+        var userInfo = crateUserInfo(respUsers[0]);
         fn(null, userInfo);
     });
 });
+
+function crateUserInfo(userData){
+    var userInfo = {
+        userId : userData.userId,
+        status : {
+            name : userData.status.name,
+            pictName : userData.status.pictName,
+            hp : userData.status.hp,
+            speed : userData.status.speed,
+            weapons : {
+                1 : {
+                    name : userData.status.weapons['1'].name,
+                    power : userData.status.weapons['1'].power
+                },
+                2 : {
+                    name : userData.status.weapons['2'].name,
+                    power : userData.status.weapons['2'].power
+                },
+                3 : {
+                    name : userData.status.weapons['3'].name,
+                    power : userData.status.weapons['3'].power
+                },
+                4 : {
+                    name : userData.status.weapons['4'].name,
+                    power : userData.status.weapons['4'].power
+                },
+                5 : {
+                    name : userData.status.weapons['5'].name,
+                    power : userData.status.weapons['5'].power
+                }
+            }
+        }
+    };
+    
+    return userInfo;
+}
