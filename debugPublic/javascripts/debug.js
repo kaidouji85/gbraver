@@ -63,7 +63,8 @@ gbraverDebug.statusArray = {
 
 window.onload = function() {
     //firstTurnPlayerCharge_asFirstTurnplayer();
-    firstTurnPlayerCharge_asSecondTurnplayer();
+    //firstTurnPlayerCharge_asSecondTurnplayer();
+    firstPlayerAtack();
 };
 
 /**
@@ -208,4 +209,51 @@ function firstTurnPlayerCharge_asSecondTurnplayer() {
             });
         });
     });
+}
+
+function firstPlayerAtack(){
+    var Game = game({
+        statusArray : gbraverDebug.statusArray,
+        userId : '1'
+    });
+    Game.start();
+    Game.onReady(function() {
+        var waitPhaseData = {
+            phase : 'wait',
+            atackUserId : '1',
+            turn : 20,
+            statusArray : {
+                2 : {
+                    hp : 4700,
+                    battery : 5,
+                    active : 3000
+                },
+                1 : {
+                    hp : 3200,
+                    battery : 5,
+                    active : 5000
+                }
+            }
+        };
+        Game.doWaitPhase(waitPhaseData);
+        Game.onCommand(function(command) {
+            console.log(command);
+            var data = {
+                phase : 'atackCommand',
+                statusArray : {
+                    1 : {
+                        hp : 3200,
+                        battery : 5,
+                        active : 5000
+                    },
+                    2 : {
+                        hp : 4700,
+                        battery : 5,
+                        active : 3000
+                    }
+                }
+            };
+            Game.doAtackCommandPhase(data);
+        });   
+    });    
 }
