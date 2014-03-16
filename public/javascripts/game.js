@@ -9,6 +9,8 @@ function game(spec, my) {
     var PICT_ICON_PLUS = 'iconPlus.png';
     var PICT_ICON_MINUS = 'iconMinus.png';
     var PICT_ICON_OK = 'iconOk.png';
+    var PICT_BATTERY_NUMBER = 'batteryNumber.png';
+    var PICT_ICON_PREV = 'iconPrev.png';
 
     var core = new Core(320, 320);
     var startAtackCommandFrame = -1;
@@ -19,11 +21,14 @@ function game(spec, my) {
     var hpLabelArray = {};
     var activeBaseArray = {};
     var batteryMertorArray = {};
+    var batteryNumberArray = {};
     var AtackCommand;
     var BatteryCommand;
     var emitReady = function(){};
     var emitFrameEvent = function(){};
     var emitFrame = -1;
+    var selectMaxBattery = 5;
+    var selectMinBattery = 0;
         
     core.fps = 60;
     core.rootScene.backgroundColor = "black";
@@ -59,7 +64,9 @@ function game(spec, my) {
         core.preload(PICT_PREFIX+PICT_ICON_CHARGE);
         core.preload(PICT_PREFIX+PICT_ICON_PLUS);
         core.preload(PICT_PREFIX+PICT_ICON_MINUS);
-        core.preload(PICT_PREFIX+PICT_ICON_OK);        
+        core.preload(PICT_PREFIX+PICT_ICON_OK);
+        core.preload(PICT_PREFIX+PICT_BATTERY_NUMBER); 
+        core.preload(PICT_PREFIX + PICT_ICON_PREV);
     }
 
     function initSprite() {
@@ -100,6 +107,14 @@ function game(spec, my) {
             batteryMertorArray[uid].y = 43;
             batteryMertorArray[uid].setValue(5);
             core.rootScene.addChild(batteryMertorArray[uid]);
+            
+            //出したバッテリー
+            batteryNumberArray[uid] = new Sprite(64,64);
+            batteryNumberArray[uid].image = core.assets[PICT_PREFIX + PICT_BATTERY_NUMBER];
+            batteryNumberArray[uid].x = uid===userId ? 226 : 30;
+            batteryNumberArray[uid].y = 110;
+            batteryNumberArray[uid].visible = false;
+            core.rootScene.addChild(batteryNumberArray[uid]);
         }
         
         //攻撃コマンド
@@ -119,13 +134,22 @@ function game(spec, my) {
         BatteryCommand = batteryCommand({
            plusImage : core.assets[PICT_PREFIX+PICT_ICON_PLUS],
            minusImage : core.assets[PICT_PREFIX+PICT_ICON_MINUS],
-           okImage : core.assets[PICT_PREFIX+PICT_ICON_OK]
+           okImage : core.assets[PICT_PREFIX+PICT_ICON_OK],
+           prevImage : core.assets[PICT_PREFIX + PICT_ICON_PREV]
         });
         BatteryCommand.setVisible(false);
         BatteryCommand.x = 100;
         BatteryCommand.y = 80;
+        BatteryCommand.onPushPlusButton(function() {
+            plusBattery();
+        });
+        BatteryCommand.onPushMinuxButton(function() {
+            minusBattery();
+        });
+        BatteryCommand.onPushPrevButton(function() {
+            prevAtackCommand();
+        });        
         core.rootScene.addChild(BatteryCommand);
-
     }
     
     core.doWaitPhase = function(data){
@@ -148,6 +172,38 @@ function game(spec, my) {
     function moveBatteryCommand(){
         AtackCommand.setVisible(false);
         BatteryCommand.setVisible(true);
+        batteryNumberArray[userId].visible = true;
+        selectMaxBattery = getSelectMaxBatteryForAtack();
+        selectMinBattery = getSelectMinBatteryForAtack();
+        batteryNumberArray[userId].frame = selectMinBattery;
+    }
+    
+    function getSelectMaxBatteryForAtack(){
+        return statusArray[userId].battery;
+    }
+    
+    function getSelectMinBatteryForAtack(){
+        return 1;
+    }
+    
+    function plusBattery(){
+        var number = batteryNumberArray[userId].frame;
+        if(number<selectMaxBattery){
+            batteryNumberArray[userId].frame ++;    
+        }
+    }
+    
+    function minusBattery(){
+        var number = batteryNumberArray[userId].frame;
+        if(selectMinBattery<number){
+            batteryNumberArray[userId].frame --;    
+        }
+    }
+    
+    function prevAtackCommand(){
+        AtackCommand.setVisible(true);
+        BatteryCommand.setVisible(false);
+        batteryNumberArray[userId].visible = false;        
     }
 
     return core;

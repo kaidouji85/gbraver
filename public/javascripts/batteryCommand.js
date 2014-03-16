@@ -6,9 +6,11 @@ function batteryCommand(spec,my) {
     var plusImage = spec.plusImage;
     var minusImage = spec.minusImage;
     var okImage = spec.okImage;
+    var prevImage = spec.prevImage;
     var plusIcon = new Sprite(ICON_WIDTH,ICON_HEIGHT);
     var minusIcon = new Sprite(ICON_WIDTH,ICON_HEIGHT);
     var okIcon = new Sprite(ICON_WIDTH,ICON_HEIGHT);
+    var prevIcon = new Sprite(ICON_WIDTH,ICON_HEIGHT);
         
     plusIcon.image = plusImage;
     plusIcon.x = 0;
@@ -25,6 +27,11 @@ function batteryCommand(spec,my) {
     okIcon.y =80;
     that.addChild(okIcon);
     
+    prevIcon.image = prevImage;
+    prevIcon.x = 0;
+    prevIcon.y = 120;
+    that.addChild(prevIcon);
+    
     that.onPushPlusButton = function(fnc){
         plusIcon.addEventListener(Event.TOUCH_START,fnc);
     };
@@ -37,11 +44,15 @@ function batteryCommand(spec,my) {
         okIcon.addEventListener(Event.TOUCH_START,fnc); 
     };
 
+    that.onPushPrevButton = function(fnc){
+        prevIcon.addEventListener(Event.TOUCH_START,fnc);
+    };
+
     that.setVisible = function(visible){
         for(var i in that.childNodes){
             that.childNodes[i].visible = visible;
         }
     };
-        
+  
     return that;
 }
