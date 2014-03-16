@@ -20,6 +20,9 @@ function customBar(spec, my) {
     
     that.plus = MainBar.plus;
     that.setValue = function(value){
+        if(maxValue<value) {
+           value=maxValue; 
+        }
         MainBar.value = value;
     };
     

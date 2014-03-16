@@ -36,11 +36,8 @@ window.onload = function() {
             socket.emit('command',{method:'ready'});
         });
         
-        Game.onCommand(function(method,param){
-            socket.emit('command',{
-                method:method,
-                param : param
-            });
+        Game.onCommand(function(command){
+            socket.emit('command',command);
         });
     });
     
@@ -51,7 +48,10 @@ window.onload = function() {
                 Game.doWaitPhase(data);
                 break;
             case 'atackCommand':
-                Game.doAtackCommand(data);
+                Game.doAtackCommandPhase(data);
+                break;
+            case 'charge':
+                Game.doChargePhase(data);
                 break;
         }
     });

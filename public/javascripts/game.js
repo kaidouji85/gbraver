@@ -29,6 +29,7 @@ function game(spec, my) {
     var emitFrame = -1;
     var selectMaxBattery = 5;
     var selectMinBattery = 0;
+    var atackUserId = -1;
         
     core.fps = 60;
     core.rootScene.backgroundColor = "black";
@@ -48,9 +49,9 @@ function game(spec, my) {
     };
 
     core.doWaitPhase = function(data){
-        var atackUserId = data.atackUserId;
         var newStatusArray = data.statusArray;
         var turn = data.turn;
+        atackUserId = data.atackUserId;
         for(var uid in newStatusArray) {
             activeBarArray[uid].plus(turn,120*statusArray[uid].speed/5000);
         }
@@ -60,18 +61,21 @@ function game(spec, my) {
     };
     
     core.doAtackCommandPhase = function(data){
-        AtackCommand.setVisible(true);
+        refreshMertor(data.statusArray);
+        if(atackUserId===userId){
+            AtackCommand.setVisible(true);    
+        } else {
+            setFrameCountEvent(core.frame + 1, function(){
+                emitCommand({method:'ok'});
+            });
+        }
     };
     
     core.doChargePhase = function(data){
-        for(var uid in data.statusArray){
-            hpLabelArray[uid].text = 'HP ' + data.statusArray[uid].hp;
-            batteryMertorArray[uid].setValue(data.statusArray[uid].battery);
-            activeBarArray[uid].setValue(120*data.statusArray[uid].active/5000);
-            setFrameCountEvent(core.frame + 10, function(){
-                emitCommand({method:'ok'});
-            });
-        } 
+        refreshMertor(data.statusArray);
+        setFrameCountEvent(core.frame + 30, function(){
+            emitCommand({method:'ok'});
+        });
     };
     
     core.onCommand = function(fn) {
@@ -186,6 +190,14 @@ function game(spec, my) {
         core.rootScene.addChild(BatteryCommand);
     }
     
+    function refreshMertor(statusArray){
+        for(var uid in statusArray){
+            hpLabelArray[uid].text = 'HP ' + statusArray[uid].hp;
+            batteryMertorArray[uid].setValue(statusArray[uid].battery);
+            activeBarArray[uid].setValue(120*statusArray[uid].active/5000);
+        }
+    }
+
     function moveBatteryCommand(){
         AtackCommand.setVisible(false);
         BatteryCommand.setVisible(true);
