@@ -21,7 +21,10 @@ function game(spec, my) {
     var batteryMertorArray = {};
     var AtackCommand;
     var BatteryCommand;
-    
+    var emitReady = function(){};
+    var emitFrameEvent = function(){};
+    var emitFrame = -1;
+        
     core.fps = 60;
     core.rootScene.backgroundColor = "black";
     preLoad();
@@ -29,16 +32,20 @@ function game(spec, my) {
         initSprite();
         emitReady();
         core.rootScene.addEventListener('enterframe', function(e) {
-            if(core.frame===startAtackCommandFrame){
-                doAtackCommandPhase();
+            if(core.frame===emitFrame){
+                emitFrameEvent();
             }
         });
     };
-    
-    var emitReady = function(){};   
+
     core.onReady = function(fn){
         emitReady = fn;
     };
+    
+    function setFrameCountEvent(frame,fnc){
+        emitFrame = frame;
+        emitFrameEvent = fnc;
+    }
 
     function preLoad() {
         for (var uid in statusArray) {
@@ -129,7 +136,7 @@ function game(spec, my) {
             activeBarArray[uid].plus(turn,120*statusArray[uid].speed/5000);
         }
         if(userId===atackUserId){
-            startAtackCommandFrame = core.frame + turn;    
+            setFrameCountEvent(core.frame + turn,doAtackCommandPhase);
         }
         
     };
