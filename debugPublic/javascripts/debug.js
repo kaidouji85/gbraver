@@ -1,5 +1,6 @@
 enchant();
 var gbraverDebug = {};
+var assert;
 gbraverDebug.statusArray = {
     2 : {
         name : 'ランドーザ',
@@ -62,9 +63,10 @@ gbraverDebug.statusArray = {
 };
 
 window.onload = function() {
-    //firstTurnPlayerCharge_asFirstTurnplayer();
+    assert = chai.assert;
+    firstTurnPlayerCharge_asFirstTurnplayer();
     //firstTurnPlayerCharge_asSecondTurnplayer();
-    firstPlayerAtack();
+    //firstPlayerAtack();
 };
 
 /**
@@ -96,7 +98,11 @@ function firstTurnPlayerCharge_asFirstTurnplayer() {
         };
         Game.doWaitPhase(waitPhaseData);
         Game.onCommand(function(command) {
-            console.log(command);
+            var expect = {
+                method : 'ok'
+            };
+            assert.deepEqual(command,expect,'ウェイトフェイズ終了時のコマンド送信が正しい');
+            
             var data = {
                 phase : 'atackCommand',
                 statusArray : {
@@ -113,8 +119,13 @@ function firstTurnPlayerCharge_asFirstTurnplayer() {
                 }
             };
             Game.doAtackCommandPhase(data);
+            console.log('チャージを選択');
             Game.onCommand(function(command) {
-                console.log(command);
+                var expect = {
+                    method : 'charge'
+                };
+                assert.deepEqual(command,expect,'チャージ選択時のコマンド送信が正しい');
+                
                 var data = {
                     phase : 'charge',
                     statusArray : {
@@ -132,7 +143,11 @@ function firstTurnPlayerCharge_asFirstTurnplayer() {
                 };
                 Game.doChargePhase(data);
                 Game.onCommand(function(command) {
-                    console.log(command);
+                    var expect = {
+                        method : 'ok'
+                    };
+                    assert.deepEqual(command,expect,'チャージ終了時のコマンド送信が正しい');
+                    console.log('finish');
                 });
             });
         });
@@ -254,6 +269,9 @@ function firstPlayerAtack(){
                 }
             };
             Game.doAtackCommandPhase(data);
+            Game.onCommand(function(command){
+                
+            });
         });   
     });    
 }
