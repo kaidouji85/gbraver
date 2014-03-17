@@ -64,9 +64,9 @@ gbraverDebug.statusArray = {
 
 window.onload = function() {
     assert = chai.assert;
-    firstTurnPlayerCharge_asFirstTurnplayer();
+    //firstTurnPlayerCharge_asFirstTurnplayer();
     //firstTurnPlayerCharge_asSecondTurnplayer();
-    //firstPlayerAtack();
+    firstPlayerAtack();
 };
 
 /**
@@ -252,7 +252,6 @@ function firstPlayerAtack(){
         };
         Game.doWaitPhase(waitPhaseData);
         Game.onCommand(function(command) {
-            console.log(command);
             var data = {
                 phase : 'atackCommand',
                 statusArray : {
@@ -268,9 +267,58 @@ function firstPlayerAtack(){
                     }
                 }
             };
+            console.log('3で攻撃');
             Game.doAtackCommandPhase(data);
             Game.onCommand(function(command){
+                var expect = {
+                    method : 'atack',
+                    param : { 
+                        battery : 3
+                    }
+                };
+                assert.deepEqual(command,expect,'攻撃コマンドフェイズのコマンドが正しい');
                 
+                var data = {
+                    phase : 'defenthCommand',
+                    statusArray : {
+                    1 : { hp : 3200,
+                        battery : 5,
+                        active : 5000
+                        },
+                        2 : { hp : 4700,
+                            battery : 5,
+                            active : 3000
+                        }
+                    }
+                };
+                Game.doDefenthCommandPhase(data);
+                Game.onCommand(function(command){
+                    var expect = {
+                        method : 'ok'
+                    };
+                    assert.deepEqual(command,expect,'防御コマンドフェイズのコマンドが正しい');
+                    
+                    var data = {
+                        phase : 'damage',
+                        hit : 1,
+                        damage : 1600,
+                        atackBattery : 3,
+                        defenthBattery : 2,
+                        statusArray : {
+                            1 : {
+                                hp : 3200,
+                                battery : 2,
+                                active : 0
+                            },
+                            2 : {
+                                hp : 3100,
+                                battery : 3,
+                                active : 3000
+                            }
+                        }                        
+                    };
+                    Game.doDamagePhase(data);
+                });
             });
         });   
     });    

@@ -21,6 +21,7 @@ function game(spec, my) {
     var hpLabelArray = {};
     var batteryMertorArray = {};
     var batteryNumberArray = {};
+    var damageLabelArray = {};
     var AtackCommand;
     var BatteryCommand;
     var emitReady = function(){};
@@ -49,10 +50,9 @@ function game(spec, my) {
     };
 
     core.doWaitPhase = function(data){
-        var newStatusArray = data.statusArray;
         var turn = data.turn;
         atackUserId = data.atackUserId;
-        for(var uid in newStatusArray) {
+        for(var uid in statusArray) {
             activeBarArray[uid].plus(turn,120*statusArray[uid].speed/5000);
         }
         setFrameCountEvent(core.frame + turn,function(){
@@ -77,6 +77,49 @@ function game(spec, my) {
             emitCommand({method:'ok'});
         });
     };
+    
+    core.doDefenthCommandPhase = function(data){
+        refreshMertor(data.statusArray);
+        if(atackUserId===userId){
+            setFrameCountEvent(core.frame + 30, function(){
+                emitCommand({method:'ok'});
+            });
+        }
+    };
+    
+    core.doDamagePhase = function(data){
+        var atackBattery = data.atackBattery;
+        var defenthBattery = data.defenthBattery;
+        var damage = data.damage;
+        
+        visibleBatteryNumber(atackBattery,defenthBattery);
+        setFrameCountEvent(core.frame + 120, function(){
+            invisibleBatteryNumber();
+            visibleDamage(damage);
+        });        
+    };
+    
+    function visibleBatteryNumber(atackBattery,defenthBattery){
+        for(var uid in batteryNumberArray){
+            batteryNumberArray[uid].frame = uid===atackUserId ? atackBattery : defenthBattery;
+            batteryNumberArray[uid].visible = true;
+        }
+    }
+    
+    function invisibleBatteryNumber(){
+        for (var uid in batteryNumberArray) {
+            batteryNumberArray[uid].visible = false;
+        }
+    }
+    
+    function visibleDamage(damage){
+        for (var uid in statusArray) {
+            if (uid !== atackUserId) {
+                damageLabelArray[uid].visible = true;
+                damageLabelArray[uid].text = String(damage);
+            }
+        }
+    }
     
     core.onCommand = function(fn) {
         emitCommand = fn;
@@ -150,6 +193,14 @@ function game(spec, my) {
             batteryNumberArray[uid].y = 110;
             batteryNumberArray[uid].visible = false;
             core.rootScene.addChild(batteryNumberArray[uid]);
+            
+            //ダメージラベル
+            damageLabelArray[uid] = new MutableText(0,0);
+            damageLabelArray[uid].x = uid===userId ? 230 : 20;
+            damageLabelArray[uid].y = 210;
+            damageLabelArray[uid].visible = false;
+            //damageLabelArray[uid].text = '1000';
+            core.rootScene.addChild(damageLabelArray[uid]);
         }
         
         //攻撃コマンド
@@ -186,6 +237,9 @@ function game(spec, my) {
         });
         BatteryCommand.onPushPrevButton(function() {
             prevAtackCommand();
+        });
+        BatteryCommand.onPushOkButton(function() {
+            selectBattery();
         });        
         core.rootScene.addChild(BatteryCommand);
     }
@@ -238,6 +292,27 @@ function game(spec, my) {
     function charge(){
         AtackCommand.setVisible(false);
         emitCommand({method:'charge'});
+    }
+    
+    function selectBattery(){
+        var battery = batteryNumberArray[userId].frame;
+        BatteryCommand.setVisible(false);
+        batteryNumberArray[userId].visible = false;
+        
+        if(atackUserId===userId){
+            sendAtackCommand(battery);
+        } else {
+            
+        }
+    }
+    
+    function sendAtackCommand(battery){
+        emitCommand({
+            method : 'atack',
+            param : {
+                battery : battery
+            }
+        });
     }
 
     return core;
