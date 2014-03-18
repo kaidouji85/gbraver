@@ -10,6 +10,7 @@ function batteryMertor(spec,my){
     var direction = spec.direction;
     var batteryArray = [];
     var batteryBack = new Sprite(BACK_WIDTH,HEIGHT);
+    var value;
     
     batteryBack.image = backImage;
     that.addChild(batteryBack);
@@ -21,11 +22,15 @@ function batteryMertor(spec,my){
         that.addChild(batteryArray[i]);
     }
     
-    that.setValue = function(value){
+    that.setValue = function(Lvalue){
+        value = Lvalue;
         for(var i=0; i<MAX_BATTERY; i++){
             batteryArray[i].visible = i<value ? true : false;
         }
-
+    };
+    
+    that.getValue = function(){
+        return value;
     };
     
     return that;

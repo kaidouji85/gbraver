@@ -11,6 +11,7 @@ function game(spec, my) {
     var PICT_ICON_OK = 'iconOk.png';
     var PICT_BATTERY_NUMBER = 'batteryNumber.png';
     var PICT_ICON_PREV = 'iconPrev.png';
+    var WAIT_TIME_ACTIVE_RESET = 30;
 
     var core = new Core(320, 320);
     var startAtackCommandFrame = -1;
@@ -54,8 +55,9 @@ function game(spec, my) {
         atackUserId = data.atackUserId;
         for(var uid in statusArray) {
             activeBarArray[uid].plus(turn,120*statusArray[uid].speed/5000);
-        }
+        }        
         setFrameCountEvent(core.frame + turn,function(){
+            refreshMertor(data.statusArray);
             emitCommand({method:'ok'});
         });
     };
@@ -73,7 +75,7 @@ function game(spec, my) {
     
     core.doChargePhase = function(data){
         refreshMertor(data.statusArray);
-        setFrameCountEvent(core.frame + 30, function(){
+        setFrameCountEvent(core.frame + WAIT_TIME_ACTIVE_RESET, function(){
             emitCommand({method:'ok'});
         });
     };
@@ -98,18 +100,20 @@ function game(spec, my) {
             visibleDamage(damage);
             setFrameCountEvent(core.frame + 120,function(){
                 invisibleDamage();
-                resetActiveBar();
+                refreshMertor(data.statusArray);
                 atackUserId = -1;
-                setFrameCountEvent(core.frame + 30,function(){
+                setFrameCountEvent(core.frame + WAIT_TIME_ACTIVE_RESET,function(){
                     emitCommand({method:'ok'});
                 });
-                
             });
         });
     };
     
     function visibleBatteryNumber(atackBattery,defenthBattery){
-        for(var uid in batteryNumberArray){
+        for(var uid in statusArray){
+            var battery = batteryMertorArray[uid].getValue();
+            battery -= uid===atackUserId ? atackBattery : defenthBattery;
+            batteryMertorArray[uid].setValue(battery);
             batteryNumberArray[uid].frame = uid===atackUserId ? atackBattery : defenthBattery;
             batteryNumberArray[uid].visible = true;
         }
@@ -131,15 +135,6 @@ function game(spec, my) {
                 break;
             }
         }
-    }
-    
-    function resetActiveBar() {
-        for (var uid in statusArray) {
-            if (uid === atackUserId) {
-                activeBarArray[uid].setValue(0);
-                break;
-            }
-        }        
     }
     
     function invisibleDamage(){
