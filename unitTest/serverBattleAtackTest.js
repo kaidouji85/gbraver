@@ -10,8 +10,8 @@ describe('serverクラスのテスト', function() {
 
     var option;
     var Server;
-    var roomId = -1;
-    var complates;
+    var roomId = 1;
+    var complates = {};
 
     before(function() {
         option = {
@@ -21,78 +21,81 @@ describe('serverクラスのテスト', function() {
         Server = server({
             httpServer : app
         });
-        roomId = -1;
         Server.onGetUserData(function(userId, fn) {
             var userData = testDataUses.getUserData(userId);
             fn(null, userData);
         });
     });
-
-    beforeEach(function() {
-        roomId++;
-        complates = {};
-    });
-
+    
     after(function() {
         app.close();
     });
 
     describe('戦闘ロジック#攻撃・防御を一通り', function() {
-        it('攻撃、防御バッテリーを決定してダメージ計算結果を受け取り、再びウェイトフェイズに遷移するaaaa', function(done) {
+        it('攻撃、防御バッテリーを決定してダメージ計算結果を受け取り、再びウェイトフェイズに遷移する', function(done) {
+            //ユーザ1の挙動
             var client1 = io.connect(SERVER_URL, option);
             client1.emit('enterRoom', {
                 roomId : roomId,
                 userId : 1
             });
-            client1.on('succesEnterRoom', function() {
-                client1.on('gameStart', function() {
-                    client1.emit('command', {
-                        method : 'ready'
-                    });
-                    var count = 0;
-                    client1.on('resp', function(data) {
-                        var expect;
-                        switch(count) {
-                            case 0:
-                                assertOfWaitPhase1(data);
-                                client1.emit('command', {
-                                    method : 'ok'
-                                });
-                                break;
-                            case 1:
-                                assertOfAtackCommandPhase(data);
-                                client1.emit('command', {
-                                    method : 'atack',
-                                    param : {
-                                        battery : 3
-                                    }
-                                });
-                                break;
-                            case 2:
-                                assertOfDefenthCommandPhase(data);
-                                client1.emit('command', {
-                                    method : 'ok'
-                                });
-                                break;
-                            case 3:
-                                assertOfDamagePhase(data);
-                                client1.emit('command', {
-                                    method : 'ok'
-                                });
-                                break;
-                            case 4:
-                                assertOfWaitPhase2(data);
-                                complateCLient(1);
-                                if (isFinishTest()) {
-                                    done();
-                                }
-                                break;
-                        }
-                        count++;
-                    });
+            client1.once('succesEnterRoom', function() {
+                client1.once('gameStart', function() {
+                    doGameStart_Client1();
                 });
             });
-
+            
+            function doGameStart_Client1(){
+                client1.emit('command', {
+                    method : 'ready'
+                });
+                client1.once('resp',doWaitPhase1_Client1);
+            }
+            
+            function doWaitPhase1_Client1(data){
+                assertOfWaitPhase1(data);
+                client1.emit('command', {
+                    method : 'ok'
+                });
+                client1.once('resp',doAtackCommandPhase_Client1);
+            }
+            
+            function doAtackCommandPhase_Client1(data){
+                assertOfAtackCommandPhase(data);
+                client1.emit('command', {
+                    method : 'atack',
+                    param : {
+                        battery : 3
+                    }
+                }); 
+                client1.once('resp',doDefenthCommandPhase_Client1);
+            }
+            
+            function doDefenthCommandPhase_Client1(data){
+                assertOfDefenthCommandPhase(data);
+                client1.emit('command', {
+                    method : 'ok'
+                }); 
+                client1.once('resp',doDamagePhase_Client1);
+            }
+            
+            function doDamagePhase_Client1(data){
+                assertOfDamagePhase(data);
+                client1.emit('command', {
+                    method : 'ok'
+                });
+                client1.once('resp',doWaitPhase2_Client1);
+            }
+            
+            function doWaitPhase2_Client1(data){
+                assertOfWaitPhase2(data);
+                complateCLient(1);
+                if (isFinishTest()) {
+                    done();
+                }
+            }
+            
+            //ユーザ2の挙動
             var client2 = io.connect(SERVER_URL, option);
             client2.emit('enterRoom', {
                 roomId : roomId,
@@ -146,6 +149,7 @@ describe('serverクラスのテスト', function() {
                     });
                 });
             });
+            
         });
     });
 
