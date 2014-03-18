@@ -66,7 +66,7 @@ window.onload = function() {
     assert = chai.assert;
     //firstTurnPlayerCharge_asFirstTurnplayer();
     //firstTurnPlayerCharge_asSecondTurnplayer();
-    firstPlayerAtack();
+    firstPlayerAtack_asAtacker();
 };
 
 /**
@@ -226,7 +226,10 @@ function firstTurnPlayerCharge_asSecondTurnplayer() {
     });
 }
 
-function firstPlayerAtack(){
+/**
+ * バッテリー3で攻撃する #攻撃プレイヤー視点
+ */
+function firstPlayerAtack_asAtacker(){
     var Game = game({
         statusArray : gbraverDebug.statusArray,
         userId : '1'
@@ -318,6 +321,32 @@ function firstPlayerAtack(){
                         }                        
                     };
                     Game.doDamagePhase(data);
+                    Game.onCommand(function(command){
+                        var expect = {
+                            method : 'ok'
+                        };
+                        assert.deepEqual(command,expect,'ウェイトフェイズ2のコマンドが正しい');
+                        
+                        var data = {
+                            phase : 'wait',
+                            atackUserId : '2',
+                            turn : 14,
+                            statusArray : {
+                            1 : { hp : 3200,
+                                battery : 2,
+                                active : 3500
+                                },
+                                2 : { hp : 3100,
+                                    battery : 4,
+                                    active : 5100
+                                }
+                            }
+                        };
+                        Game.doWaitPhase(data);
+                        Game.onCommand(function(command){
+                            console.log('finish');
+                        });
+                    });
                 });
             });
         });   

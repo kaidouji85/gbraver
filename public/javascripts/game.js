@@ -96,7 +96,16 @@ function game(spec, my) {
         setFrameCountEvent(core.frame + 120, function(){
             invisibleBatteryNumber();
             visibleDamage(damage);
-        });        
+            setFrameCountEvent(core.frame + 120,function(){
+                invisibleDamage();
+                resetActiveBar();
+                atackUserId = -1;
+                setFrameCountEvent(core.frame + 30,function(){
+                    emitCommand({method:'ok'});
+                });
+                
+            });
+        });
     };
     
     function visibleBatteryNumber(atackBattery,defenthBattery){
@@ -117,8 +126,29 @@ function game(spec, my) {
             if (uid !== atackUserId) {
                 damageLabelArray[uid].visible = true;
                 damageLabelArray[uid].text = String(damage);
+                statusArray[uid].hp -= damage;
+                hpLabelArray[uid].text = 'HP '+statusArray[uid].hp;
+                break;
             }
         }
+    }
+    
+    function resetActiveBar() {
+        for (var uid in statusArray) {
+            if (uid === atackUserId) {
+                activeBarArray[uid].setValue(0);
+                break;
+            }
+        }        
+    }
+    
+    function invisibleDamage(){
+        for (var uid in statusArray) {
+            if (uid !== atackUserId) {
+                damageLabelArray[uid].visible = false;
+                break;
+            }
+        }        
     }
     
     core.onCommand = function(fn) {

@@ -19,12 +19,7 @@ function customBar(spec, my) {
     that.addChild(MainBar);
     
     that.plus = MainBar.plus;
-    that.setValue = function(value){
-        if(maxValue<value) {
-           value=maxValue; 
-        }
-        MainBar.value = value;
-    };
+    that.setValue = MainBar.setValue;
     
     return that;
 };
@@ -49,10 +44,18 @@ function mainBar(spec, my) {
 
     that.addEventListener('enterframe', function(e) {
         if (turn > 0) {
-            that.value += speed;
+            //that.value += speed;
+            that.setValue(that.value + speed);
             turn--;
         }
     });
+    
+    that.setValue = function(value){
+        if(maxValue<value) {
+           value=maxValue; 
+        }
+        that.value = value;        
+    };
 
     return that;
 }
