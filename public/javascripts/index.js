@@ -53,6 +53,12 @@ window.onload = function() {
             case 'charge':
                 Game.doChargePhase(data);
                 break;
+            case 'defenthCommand':
+                Game.doDefenthCommandPhase(data);
+                break;
+            case 'damage':
+                Game.doDamagePhase(data);
+                break;
         }
     });
 };

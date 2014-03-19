@@ -289,11 +289,11 @@ function game(spec, my) {
         batteryNumberArray[userId].visible = true;
         selectMaxBattery = getSelectMaxBattery();
         selectMinBattery = getSelectMinBattery();
-        batteryNumberArray[userId].frame = statusArray[userId].battery>0 ? 1 : 0;        
+        batteryNumberArray[userId].frame = batteryMertorArray[userId].getValue()>0 ? 1 : 0;        
     }
     
     function getSelectMaxBattery(){
-        return statusArray[userId].battery;
+        return batteryMertorArray[userId].getValue();;
     }
     
     function getSelectMinBattery(){
