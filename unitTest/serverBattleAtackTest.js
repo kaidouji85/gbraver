@@ -11,7 +11,6 @@ describe('serverクラスのテスト', function() {
     var option;
     var Server;
     var roomId = 1;
-    var complates = {};
 
     before(function() {
         option = {
@@ -89,10 +88,12 @@ describe('serverクラスのテスト', function() {
 
             function doWaitPhase2_Client1(data) {
                 assertOfWaitPhase2(data);
-                complateCLient(1);
-                if (isFinishTest()) {
+                client1.emit('command', {
+                    method : 'ok'
+                });
+                client1.once('resp', function(data){
                     done();
-                }
+                });
             }
             
             //ユーザ2の挙動
@@ -151,10 +152,9 @@ describe('serverクラスのテスト', function() {
 
             function doWaitPhase2_Client2(data) {
                 assertOfWaitPhase2(data);
-                complateCLient(2);
-                if (isFinishTest()) {
-                    done();
-                }
+                client2.emit('command', {
+                    method : 'ok'
+                });
             }
             
             //アサーション
@@ -262,17 +262,4 @@ describe('serverクラスのテスト', function() {
             }
         });
     });
-
-    function complateCLient(index) {
-        complates[index] = "";
-    }
-
-    function isFinishTest() {
-        if (Object.keys(complates).length === 2) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
 });
