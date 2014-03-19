@@ -86,6 +86,8 @@ function game(spec, my) {
             setFrameCountEvent(core.frame + 30, function(){
                 emitCommand({method:'ok'});
             });
+        } else {
+            viewBatteryCommand();
         }
     };
     
@@ -279,19 +281,23 @@ function game(spec, my) {
 
     function moveBatteryCommand(){
         AtackCommand.setVisible(false);
-        BatteryCommand.setVisible(true);
-        batteryNumberArray[userId].visible = true;
-        selectMaxBattery = getSelectMaxBatteryForAtack();
-        selectMinBattery = getSelectMinBatteryForAtack();
-        batteryNumberArray[userId].frame = selectMinBattery;
+        viewBatteryCommand();
     }
     
-    function getSelectMaxBatteryForAtack(){
+    function viewBatteryCommand(){
+        BatteryCommand.setVisible(true);
+        batteryNumberArray[userId].visible = true;
+        selectMaxBattery = getSelectMaxBattery();
+        selectMinBattery = getSelectMinBattery();
+        batteryNumberArray[userId].frame = statusArray[userId].battery>0 ? 1 : 0;        
+    }
+    
+    function getSelectMaxBattery(){
         return statusArray[userId].battery;
     }
     
-    function getSelectMinBatteryForAtack(){
-        return 1;
+    function getSelectMinBattery(){
+        return userId===atackUserId ? 1 : 0;
     }
     
     function plusBattery(){
@@ -327,7 +333,7 @@ function game(spec, my) {
         if(atackUserId===userId){
             sendAtackCommand(battery);
         } else {
-            
+            sendDefenthCommand(battery);
         }
     }
     
@@ -338,6 +344,15 @@ function game(spec, my) {
                 battery : battery
             }
         });
+    }
+    
+    function sendDefenthCommand(battery){
+        emitCommand({
+            method : 'defenth',
+            param : {
+                battery : battery
+            }
+        });        
     }
 
     return core;

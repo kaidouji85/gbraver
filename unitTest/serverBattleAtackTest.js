@@ -260,7 +260,6 @@ describe('serverクラスのテスト', function() {
                 };
                 assert.deepEqual(data, expect, 'ウェイトフェイズ#2のレスポンスオブジェクトが正しい');
             }
-
         });
     });
 
