@@ -53,6 +53,10 @@ function batteryCommand(spec,my) {
             that.childNodes[i].visible = visible;
         }
     };
+    
+    that.setPrevButtonVisible = function(visible){
+        prevIcon.visible = visible;
+    };
   
     return that;
 }

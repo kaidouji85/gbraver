@@ -286,10 +286,12 @@ function game(spec, my) {
     
     function viewBatteryCommand(){
         BatteryCommand.setVisible(true);
+        BatteryCommand.setPrevButtonVisible(userId===atackUserId ? true : false);
         batteryNumberArray[userId].visible = true;
         selectMaxBattery = getSelectMaxBattery();
         selectMinBattery = getSelectMinBattery();
-        batteryNumberArray[userId].frame = batteryMertorArray[userId].getValue()>0 ? 1 : 0;        
+        batteryNumberArray[userId].frame = batteryMertorArray[userId].getValue()>0 ? 1 : 0;
+        
     }
     
     function getSelectMaxBattery(){

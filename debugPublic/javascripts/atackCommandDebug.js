@@ -56,6 +56,8 @@ window.onload = function() {
         BatteryCommand.onPushPrevButton(function() {
             alert('Prev');
         });
+        BatteryCommand.setPrevButtonVisible(true);
+        
         //BatteryCommand.setVisible(false);
         core.rootScene.addChild(BatteryCommand);
 
