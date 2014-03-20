@@ -39,51 +39,54 @@ describe('serverクラスのテスト', function() {
 
     describe('戦闘ロジック#チャージ', function() {
         it('チャージコマンドを実行してウェイトフェイズに遷移する', function(done) {
+            //ユーザ1
             var client1 = io.connect(SERVER_URL, option);
             client1.emit('enterRoom', {
                 roomId : roomId,
                 userId : 1
             });
-            client1.on('succesEnterRoom', function() {
-                client1.on('gameStart', function() {
+            client1.once('succesEnterRoom', function() {
+                client1.once('gameStart', function() {
                     client1.emit('command', {
                         method : 'ready'
                     });
-                    var count = 0;
-                    client1.on('resp', function(data) {
-                        var expect;
-                        switch(count) {
-                            case 0:
-                                assertOfWaitPhase1(data);
-                                client1.emit('command', {
-                                    method : 'ok'
-                                });
-                                break;
-                            case 1:
-                                assertOfAtackCommandPhase(data);
-                                client1.emit('command', {
-                                    method : 'charge'
-                                });
-                                break;
-                            case 2:
-                                assertOfChargePhase(data);
-                                client1.emit('command', {
-                                    method : 'ok'
-                                });
-                                break;
-                            case 3:
-                                assertOfWaitPhase2(data);
-                                complateCLient(1);
-                                if (isFinishTest()) {
-                                    done();
-                                }
-                                break;
-                        }
-                        count++;
-                    });
+                    client1.once('resp', doWaitPhase1_Client1);
                 });
             });
 
+            function doWaitPhase1_Client1(data) {
+                assertOfWaitPhase1(data);
+                client1.emit('command', {
+                    method : 'ok'
+                });
+                client1.once('resp', doAtackCommandPhase_Client1);
+            }
+
+            function doAtackCommandPhase_Client1(data) {
+                assertOfAtackCommandPhase(data);
+                client1.emit('command', {
+                    method : 'charge'
+                });
+                client1.once('resp', doChargePhase_Client1);
+            }
+
+            function doChargePhase_Client1(data) {
+                assertOfChargePhase(data);
+                client1.emit('command', {
+                    method : 'ok'
+                });
+                client1.once('resp', doWaitPhase2_Client1);
+            }
+
+            function doWaitPhase2_Client1(data) {
+                assertOfWaitPhase2(data);
+                complateCLient(1);
+                if (isFinishTest()) {
+                    done();
+                }
+            }
+            
+            //ユーザ2
             var client2 = io.connect(SERVER_URL, option);
             client2.emit('enterRoom', {
                 roomId : roomId,
