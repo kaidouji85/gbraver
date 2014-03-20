@@ -85,134 +85,138 @@ describe('serverクラスのテスト', function() {
                     done();
                 }
             }
-            
+
             //ユーザ2
             var client2 = io.connect(SERVER_URL, option);
             client2.emit('enterRoom', {
                 roomId : roomId,
                 userId : 2
             });
-            client2.on('succesEnterRoom', function() {
-                client2.on('gameStart', function() {
+
+            client2.once('succesEnterRoom', function() {
+                client2.once('gameStart', function() {
                     client2.emit('command', {
                         method : 'ready'
                     });
-                    var count = 0;
-                    client2.on('resp', function(data) {
-                        var expect;
-                        switch(count) {
-                            case 0:
-                                assertOfWaitPhase1(data);
-                                client2.emit('command', {
-                                    method : 'ok'
-                                });
-                                break;
-                            case 1:
-                                assertOfAtackCommandPhase(data);
-                                client2.emit('command', {
-                                    method : 'ok'
-                                });
-                                break;
-                            case 2:
-                                assertOfChargePhase(data);
-                                client2.emit('command', {
-                                    method : 'ok'
-                                });
-                                break;
-                            case 3:
-                                assertOfWaitPhase2(data);
-                                complateCLient(2);
-                                if (isFinishTest()) {
-                                    done();
-                                }
-                                break;
-                        }
-                        count++;
-                    });
+                    client2.once('resp', doWaitPhase1_Client2);
                 });
             });
+
+            function doWaitPhase1_Client2(data) {
+                assertOfWaitPhase1(data);
+                client2.emit('command', {
+                    method : 'ok'
+                });
+                client2.once('resp', doAtackCommandPhase_Client2);
+            }
+
+            function doAtackCommandPhase_Client2(data) {
+                assertOfAtackCommandPhase(data);
+                client2.emit('command', {
+                    method : 'ok'
+                });
+                client2.once('resp', doChargePhase_Client2);
+            }
+
+            function doChargePhase_Client2(data) {
+                assertOfChargePhase(data);
+                client2.emit('command', {
+                    method : 'ok'
+                });
+                client2.once('resp', doWaitPhase2_Client2);
+            }
+
+            function doWaitPhase2_Client2(data) {
+                assertOfWaitPhase2(data);
+                complateCLient(2);
+                if (isFinishTest()) {
+                    done();
+                }
+            }
+            
+            //アサーション
+            function assertOfWaitPhase1(data) {
+                expect = {
+                    phase : 'wait',
+                    atackUserId : '1',
+                    turn : 10,
+                    statusArray : {
+                        1 : {
+                            hp : 3200,
+                            battery : 5,
+                            active : 5000
+                        },
+                        2 : {
+                            hp : 4700,
+                            battery : 5,
+                            active : 3000
+                        }
+                    }
+                };
+                assert.deepEqual(data, expect, 'ウェイトフェイズのレスポンスオブジェクトが正しい');
+            }
+
+            function assertOfAtackCommandPhase(data) {
+                expect = {
+                    phase : 'atackCommand',
+                    statusArray : {
+                        1 : {
+                            hp : 3200,
+                            battery : 5,
+                            active : 5000
+                        },
+                        2 : {
+                            hp : 4700,
+                            battery : 5,
+                            active : 3000
+                        }
+                    }
+                };
+                assert.deepEqual(data, expect, 'アタックコマンドフェイズのレスポンスオブジェクトが正しい');
+            }
+
+            function assertOfChargePhase(data) {
+                expect = {
+                    phase : 'charge',
+                    statusArray : {
+                        1 : {
+                            hp : 3200,
+                            battery : 5,
+                            active : 0
+                        },
+                        2 : {
+                            hp : 4700,
+                            battery : 5,
+                            active : 3000
+                        }
+                    }
+                };
+                assert.deepEqual(data, expect, 'チャージフェイズのレスポンスオブジェクトが正しい');
+            }
+
+            function assertOfWaitPhase2(data) {
+                expect = {
+                    phase : 'wait',
+                    atackUserId : '2',
+                    turn : 7,
+                    statusArray : {
+                        1 : {
+                            hp : 3200,
+                            battery : 5,
+                            active : 3500
+                        },
+                        2 : {
+                            hp : 4700,
+                            battery : 5,
+                            active : 5100
+                        }
+                    }
+                };
+                assert.deepEqual(data, expect, 'ウェイトフェイズに戻る');
+            }
+
         });
     });
-
-    function assertOfWaitPhase1(data) {
-        expect = {
-            phase : 'wait',
-            atackUserId : '1',
-            turn : 10,
-            statusArray : {
-                1 : {
-                    hp : 3200,
-                    battery : 5,
-                    active : 5000
-                },
-                2 : {
-                    hp : 4700,
-                    battery : 5,
-                    active : 3000
-                }
-            }
-        };
-        assert.deepEqual(data, expect, 'ウェイトフェイズのレスポンスオブジェクトが正しい');
-    }
-
-    function assertOfAtackCommandPhase(data) {
-        expect = {
-            phase : 'atackCommand',
-            statusArray : {
-                1 : {
-                    hp : 3200,
-                    battery : 5,
-                    active : 5000
-                },
-                2 : {
-                    hp : 4700,
-                    battery : 5,
-                    active : 3000
-                }
-            }
-        };
-        assert.deepEqual(data, expect, 'アタックコマンドフェイズのレスポンスオブジェクトが正しい');
-    }
-
-    function assertOfChargePhase(data) {
-        expect = {
-            phase : 'charge',
-            statusArray : {
-                1 : {
-                    hp : 3200,
-                    battery : 5,
-                    active : 0
-                },
-                2 : {
-                    hp : 4700,
-                    battery : 5,
-                    active : 3000
-                }
-            }
-        };
-        assert.deepEqual(data, expect, 'チャージフェイズのレスポンスオブジェクトが正しい');
-    }
-
-    function assertOfWaitPhase2(data) {
-        expect = {
-            phase : 'wait',
-            atackUserId : '2',
-            turn : 7,
-            statusArray : {
-                1 : {
-                    hp : 3200,
-                    battery : 5,
-                    active : 3500
-                },
-                2 : {
-                    hp : 4700,
-                    battery : 5,
-                    active : 5100
-                }
-            }
-        };
-        assert.deepEqual(data, expect, 'ウェイトフェイズに戻る');
-    }
 
     function complateCLient(index) {
         complates[index] = "";
