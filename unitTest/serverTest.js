@@ -196,6 +196,34 @@ describe('serverクラスのテスト', function() {
         });
     });
     
+    describe('退出処理',function(){
+        it('一人退室したのでルームが破棄される', function(done) {
+            var client1 = io.connect(SERVER_URL, option);
+            client1.emit('enterRoom', {
+                roomId : roomId,
+                userId : 1
+            });
+            client1.once('succesEnterRoom',function(data){
+                client1.once('gameStart', function(data) {
+                    client1.disconnect();
+                });
+            });
+
+            var client2 = io.connect(SERVER_URL, option);
+            client2.emit('enterRoom', {
+                roomId : roomId,
+                userId : 2
+            });
+            client2.once('succesEnterRoom',function(data){
+                client2.once('gameStart', function(data) {
+                    client2.once('disconnect', function() {
+                        done();
+                    });
+                });
+            });
+        });
+    });
+    
     function complateCLient(index) {
         complates[index] = "";
     }

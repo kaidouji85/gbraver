@@ -69,6 +69,21 @@ function server(spec, my) {
                 }
             });
         });
+
+        socket.on('disconnect', function(data) {
+            socket.get('loginInfo', function(err, data) {
+                var roomId = data.roomId;
+                socket.leave(roomId);
+                var clients = io.sockets.clients(roomId);
+                if (clients.length === 0) {
+                    roomArray[roomId] = room();
+                } else {
+                    for (var i in clients) {
+                        clients[i].disconnect();
+                    }
+                }
+            });
+        });
     });
 
     return io;
