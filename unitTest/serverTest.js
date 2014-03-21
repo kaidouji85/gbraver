@@ -198,6 +198,7 @@ describe('serverクラスのテスト', function() {
     
     describe('退出処理',function(){
         it('一人退室したのでルームが破棄される', function(done) {
+            //ユーザ1
             var client1 = io.connect(SERVER_URL, option);
             client1.emit('enterRoom', {
                 roomId : roomId,
@@ -209,6 +210,7 @@ describe('serverクラスのテスト', function() {
                 });
             });
 
+            //ユーザ2
             var client2 = io.connect(SERVER_URL, option);
             client2.emit('enterRoom', {
                 roomId : roomId,
@@ -222,6 +224,44 @@ describe('serverクラスのテスト', function() {
                 });
             });
         });
+        
+        it('ルーム退出後も入室できる', function(done) {
+            //ユーザ1
+            var client1 = io.connect(SERVER_URL, option);
+            client1.emit('enterRoom', {
+                roomId : roomId,
+                userId : 1
+            });
+            client1.once('succesEnterRoom',function(data){
+                client1.once('gameStart', function(data) {
+                    client1.disconnect();
+                });
+            });
+
+            //ユーザ2
+            var client2 = io.connect(SERVER_URL, option);
+            client2.emit('enterRoom', {
+                roomId : roomId,
+                userId : 2
+            });
+            client2.once('succesEnterRoom',function(data){
+                client2.once('gameStart', function(data) {
+                    client2.once('disconnect',doReEnterRoom);
+                });
+            });
+            
+            //ルーム破棄後に再ログインする
+            function doReEnterRoom(){
+                var client3 = io.connect(SERVER_URL, option);
+                client3.emit('enterRoom', {
+                    roomId : roomId,
+                    userId : 2
+                });
+                client3.once('succesEnterRoom',function(data){
+                    done();
+                });
+            }
+        }); 
     });
     
     function complateCLient(index) {
