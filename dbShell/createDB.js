@@ -1,6 +1,7 @@
 db.users.remove();
 db.users.insert({
     userId : 'take',
+    password : 'pass',
     status :{
         name : 'グランブレイバー',
         pictName : 'GranBraver.PNG',
@@ -17,6 +18,7 @@ db.users.insert({
 });
 db.users.insert({
     userId : 'uchi',
+    password : 'pass',
     status :{
         name : 'ランドーザ',
         pictName : 'Landozer.PNG',

@@ -11,9 +11,11 @@ test.describe('ログイン', function() {
                      build();
     });
     
+    //TODO : パスワード認証が未実装
     test.it('ログインするとルームID、ユーザIDがmetaタグに格納される', function(){
         driver.get(URL);
-        driver.findElement(webdriver.By.name('userId')).sendKeys(1);
+        driver.findElement(webdriver.By.name('userId')).sendKeys('take');
+        driver.findElement(webdriver.By.name('password')).sendKeys('pass');
         driver.findElement(webdriver.By.name('roomId')).sendKeys(0);
         driver.findElement(webdriver.By.name('loginButton')).click();
         
@@ -24,11 +26,10 @@ test.describe('ログイン', function() {
         }, 1000);
         driver.findElement(webdriver.By.name('userId')).getAttribute('content').then(function(userId){
             driver.findElement(webdriver.By.name('roomId')).getAttribute('content').then(function(roomId){
-                assert.equal(userId,1,'正しいユーザIDがMetaタグに格納されている');
+                assert.equal(userId,'take','正しいユーザIDがMetaタグに格納されている');
                 assert.equal(roomId,0,'正しいルームIDがMetaタグに格納されている');
             });
-        });
-                
+        });        
     });
 
     test.after(function() {

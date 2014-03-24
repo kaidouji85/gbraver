@@ -38,6 +38,7 @@ db.on('error', console.error.bind(console, 'connection error:'));
 //DB::ユーザ情報モデル
 var usersSchema = mongoose.Schema({
     userId : String,
+    password : String,
     status : {
         name : String,
         pictName : String,
@@ -110,6 +111,5 @@ function crateUserInfo(userData){
             }
         }
     };
-    
     return userInfo;
 }
