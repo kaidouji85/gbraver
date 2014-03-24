@@ -19,7 +19,7 @@ function game(spec, my) {
     var userId = spec.userId;
     var charaSpriteArray = {};
     var activeBarArray = {};
-    var hpLabelArray = {};
+    var hpMertorArray = {};
     var batteryMertorArray = {};
     var batteryNumberArray = {};
     var damageLabelArray = {};
@@ -133,7 +133,7 @@ function game(spec, my) {
                 damageLabelArray[uid].visible = true;
                 damageLabelArray[uid].text = String(damage);
                 statusArray[uid].hp -= damage;
-                hpLabelArray[uid].text = 'HP '+statusArray[uid].hp;
+                hpMertorArray[uid].setValue(statusArray[uid].hp);
                 break;
             }
         }
@@ -183,13 +183,13 @@ function game(spec, my) {
             charaSpriteArray[uid].y = 80;
             charaSpriteArray[uid].scaleX = uid===userId ? 1 : -1;
             core.rootScene.addChild(charaSpriteArray[uid]);
-            
-            //HPラベル
-            hpLabelArray[uid] = new MutableText(0,0);
-            hpLabelArray[uid].y = 4;
-            hpLabelArray[uid].x = uid===userId ? 190 : 10;
-            hpLabelArray[uid].text = 'HP '+statusArray[uid].hp;
-            core.rootScene.addChild(hpLabelArray[uid]);            
+
+            //HPメータ
+            hpMertorArray[uid] = hpMertor();
+            hpMertorArray[uid].y = 4;
+            hpMertorArray[uid].x = uid===userId ? 190 : 10;
+            hpMertorArray[uid].setValue(statusArray[uid].hp);
+            core.rootScene.addChild(hpMertorArray[uid]);            
             
             //アクティブゲージ
             activeBarArray[uid] = customBar({
@@ -273,7 +273,7 @@ function game(spec, my) {
     
     function refreshMertor(statusArray){
         for(var uid in statusArray){
-            hpLabelArray[uid].text = 'HP ' + statusArray[uid].hp;
+            hpMertorArray[uid].setValue(statusArray[uid].hp);
             batteryMertorArray[uid].setValue(statusArray[uid].battery);
             activeBarArray[uid].setValue(120*statusArray[uid].active/5000);
         }

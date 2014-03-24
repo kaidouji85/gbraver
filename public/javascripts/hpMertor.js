@@ -12,7 +12,7 @@ function hpMertor(spec,my){
     };
     
     function getSpaceSize(value){
-        return 4 - String(value).length;
+        return 5 - String(value).length;
     }
     
     return that;
