@@ -12,6 +12,7 @@ function mongoDao(spec, my) {
             }, function(err, data) {
                 userData = createUserData(data);
                 fn(null, userData);
+                db.close();
             });
         });
     };
