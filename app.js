@@ -8,6 +8,7 @@ var http = require('http');
 var path = require('path');
 var app = express();
 var ce = require('cloneextend');
+var mongoDao = require('./mongoDao.js');
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -27,33 +28,9 @@ if ('development' == app.get('env')) {
     app.use(express.errorHandler());
     app.use(express.static(path.join(__dirname, 'debugPublic')));
 }
-
-//DB::接続オブジェクト
-var mongoose = require('mongoose');
+//DB
 var mongoUri = process.env.MONGOHQ_URL || 'mongodb://localhost/gbraver';
-mongoose.connect(mongoUri);
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-
-//DB::ユーザ情報モデル
-var usersSchema = mongoose.Schema({
-    userId : String,
-    password : String,
-    status : {
-        name : String,
-        pictName : String,
-        hp : Number,
-        speed : Number,
-        weapons : {
-            1 : {name : String,power : Number},
-            2 : {name : String,power : Number},
-            3 : {name : String,power : Number},
-            4 : {name : String,power : Number},
-            5 : {name : String,power : Number}
-        }
-    }
-});
-var Users = mongoose.model('Users', usersSchema); 
+var dao = mongoDao({url : mongoUri});
 
 //ルーティング
 app.get('/', routes.index);
@@ -71,45 +48,7 @@ var WsServer = wsServer({
     httpServer:server
 });
 WsServer.onGetUserData(function(userId,fn){
-    Users.find({
-        userId : userId
-    }, function(err, respUsers) {
-        var userInfo = crateUserInfo(respUsers[0]);
-        fn(null, userInfo);
+    dao.getUserData(userId,function(err,data){
+        fn(null,data);
     });
 });
-
-function crateUserInfo(userData){
-    var userInfo = {
-        userId : userData.userId,
-        status : {
-            name : userData.status.name,
-            pictName : userData.status.pictName,
-            hp : userData.status.hp,
-            speed : userData.status.speed,
-            weapons : {
-                1 : {
-                    name : userData.status.weapons['1'].name,
-                    power : userData.status.weapons['1'].power
-                },
-                2 : {
-                    name : userData.status.weapons['2'].name,
-                    power : userData.status.weapons['2'].power
-                },
-                3 : {
-                    name : userData.status.weapons['3'].name,
-                    power : userData.status.weapons['3'].power
-                },
-                4 : {
-                    name : userData.status.weapons['4'].name,
-                    power : userData.status.weapons['4'].power
-                },
-                5 : {
-                    name : userData.status.weapons['5'].name,
-                    power : userData.status.weapons['5'].power
-                }
-            }
-        }
-    };
-    return userInfo;
-}
