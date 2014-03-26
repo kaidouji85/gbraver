@@ -4,8 +4,7 @@ var mongoDao = require('../mongoDao.js');
 describe('Mongo DBからユーザ情報を取得する', function() {
     //TODO : テスト実行時にDBデータを入れ替える処理が未実装
     it('存在するユーザの情報を取得したのでユーザ情報を取得することができる', function(done) {
-        var dao = mongoDao();
-        dao.connect('mongodb://localhost/gbraver');
+        var dao = mongoDao({url:'mongodb://localhost/gbraver'});
         dao.getUserData('take', function(err, userData){
             assertOfUserData(userData);
             done();

@@ -15,7 +15,8 @@
     "mocha": "*",
     "socket.io-client" : "*",
     "cloneextend" : "*",
-    "selenium-webdriver" : "*"
+    "selenium-webdriver" : "*",
+    "mongodb" : "*"
   },
   "engines": {
     "node": "0.10.x"

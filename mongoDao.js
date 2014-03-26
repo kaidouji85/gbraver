@@ -1,93 +1,58 @@
-var mongoose = require('mongoose');
+var MongoClient = require('mongodb').MongoClient;
 
 function mongoDao(spec, my) {
     var that = {};
-    var db;
-    var usersSchema = mongoose.Schema({
-        userId : String,
-        password : String,
-        status : {
-            name : String,
-            pictName : String,
-            hp : Number,
-            speed : Number,
-            weapons : {
-                1 : {
-                    name : String,
-                    power : Number
-                },
-                2 : {
-                    name : String,
-                    power : Number
-                },
-                3 : {
-                    name : String,
-                    power : Number
-                },
-                4 : {
-                    name : String,
-                    power : Number
-                },
-                5 : {
-                    name : String,
-                    power : Number
-                }
-            }
-        }
-    });
-
-    that.User = mongoose.model('Users', usersSchema);
-
-    that.connect = function(url) {
-        mongoose.connect(url);
-        db = mongoose.connection;
-    };
+    var url = spec.url;
 
     that.getUserData = function(userId, fn) {
-        that.User.findOne({
-            userId : userId
-        }, function(err, respUser) {
-            var userInfo = crateUserInfo(respUser);
-            fn(null, userInfo);
+        MongoClient.connect(url, function(err, db) {
+            var collection = db.collection('users');
+            collection.findOne({
+                userId : userId
+            }, function(err, data) {
+                userData = createUserData(data);
+                fn(null, userData);
+            });
         });
     };
 
-    function crateUserInfo(userData) {
-        var userInfo = {
-            userId : userData.userId,
+    function createUserData(data) {
+        var userData = {
+            userId : data.userId,
             status : {
-                name : userData.status.name,
-                pictName : userData.status.pictName,
-                hp : userData.status.hp,
-                speed : userData.status.speed,
+                name : data.status.name,
+                pictName : data.status.pictName,
+                hp : data.status.hp,
+                speed : data.status.speed,
                 weapons : {
                     1 : {
-                        name : userData.status.weapons['1'].name,
-                        power : userData.status.weapons['1'].power
+                        name : data.status.weapons['1'].name,
+                        power : data.status.weapons['1'].power
                     },
                     2 : {
-                        name : userData.status.weapons['2'].name,
-                        power : userData.status.weapons['2'].power
+                        name : data.status.weapons['2'].name,
+                        power : data.status.weapons['2'].power
                     },
                     3 : {
-                        name : userData.status.weapons['3'].name,
-                        power : userData.status.weapons['3'].power
+                        name : data.status.weapons['3'].name,
+                        power : data.status.weapons['3'].power
                     },
                     4 : {
-                        name : userData.status.weapons['4'].name,
-                        power : userData.status.weapons['4'].power
+                        name : data.status.weapons['4'].name,
+                        power : data.status.weapons['4'].power
                     },
                     5 : {
-                        name : userData.status.weapons['5'].name,
-                        power : userData.status.weapons['5'].power
+                        name : data.status.weapons['5'].name,
+                        power : data.status.weapons['5'].power
                     }
                 }
             }
         };
-        return userInfo;
+
+        return userData;
     }
 
     return that;
 }
 
-module.exports = mongoDao;
+module.exports = mongoDao; 
