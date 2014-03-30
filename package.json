@@ -15,7 +15,9 @@
     "socket.io-client" : "*",
     "cloneextend" : "*",
     "selenium-webdriver" : "*",
-    "mongodb" : "*"
+    "mongodb" : "*",
+    "passport" : "*",
+    "passport-google" : "*"
   },
   "engines": {
     "node": "0.10.x"

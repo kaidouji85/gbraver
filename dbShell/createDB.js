@@ -1,6 +1,6 @@
 db.users.remove();
 db.users.insert({
-    userId : 'take',
+    userId : 'kaidouji85@gmail.com',
     password : 'pass',
     status :{
         name : 'グランブレイバー',
@@ -17,7 +17,7 @@ db.users.insert({
     }
 });
 db.users.insert({
-    userId : 'uchi',
+    userId : 'gbraver85001@gmail.com',
     password : 'pass',
     status :{
         name : 'ランドーザ',

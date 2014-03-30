@@ -6,9 +6,10 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
-var app = express();
 var ce = require('cloneextend');
 var mongoDao = require('./mongoDao.js');
+var passport = require('passport');
+var app = express();
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -18,10 +19,12 @@ app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.cookieParser('your secret here'));
 app.use(express.session());
 app.use(app.router);
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // development only
 if ('development' == app.get('env')) {
@@ -32,10 +35,39 @@ if ('development' == app.get('env')) {
 var mongoUri = process.env.MONGOHQ_URL || 'mongodb://localhost/gbraver';
 var dao = mongoDao({url : mongoUri});
 
+//Google認証
+var GoogleStrategy = require('passport-google').Strategy;
+passport.serializeUser(function(user, done) {
+    done(null, user);
+});
+
+passport.deserializeUser(function(obj, done) {
+    done(null, obj);
+}); 
+
+passport.use(new GoogleStrategy({
+    returnURL : 'http://localhost:3000/auth/google/return',
+    realm : 'http://localhost:3000/'
+},function(identifier, profile, done) {
+    done(null, profile);
+}));
+
 //ルーティング
 app.get('/', routes.index);
 app.get('/users', user.list);
 app.post('/battle', routes.battle);
+app.get('/selectRoom',routes.selectRoom);
+app.get('/auth/google', passport.authenticate('google'));
+app.get('/auth/google/return', function (req, res, next) {
+    passport.authenticate('google', function (err, user) {
+        if(user){
+            res.redirect('/selectRoom');
+        } else {
+            res.redirect('/');
+        }
+    })(req, res, next);
+});
+
 
 //httpサーバ
 var server = http.createServer(app).listen(app.get('port'), function() {

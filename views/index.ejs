@@ -7,11 +7,6 @@
   <body>
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
-    <form action="/battle" method="post">
-      <p>ユーザID<input type="text" name="userId"></p>
-      <p>パスワード<input type='text' name='password'></p>
-      <p>ルームID<input type="text" name="roomId"></p>
-      <p><input type="submit" value="ログイン" name="loginButton"></p>
-    </form>
+    <a href="/auth/google" name="googleLogin">Googleアカウントでログイン</a>
   </body>
 </html>
