@@ -1,0 +1,3 @@
+本テストの実行コマンドは以下の通り
+
+NODE_MAIL_ADDRESS="gmailアドレス" NODE_PASSWORD=“gmailパスワード" mocha seleniumTest/ -R spec

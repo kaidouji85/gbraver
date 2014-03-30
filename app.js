@@ -60,6 +60,9 @@ app.get('/selectRoom',routes.selectRoom);
 app.get('/auth/google', passport.authenticate('google'));
 app.get('/auth/google/return', function (req, res, next) {
     passport.authenticate('google', function (err, user) {
+        req.session.gbraver = {
+            user : user
+        };
         if(user){
             res.redirect('/selectRoom');
         } else {
