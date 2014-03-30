@@ -10,7 +10,6 @@
     "express": "3.4.7",
     "ejs": "*",
     "socket.io":"*",
-    "mongoose":"*",
     "chai": "*",
     "mocha": "*",
     "socket.io-client" : "*",
