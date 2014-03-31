@@ -56,4 +56,4 @@ function mongoDao(spec, my) {
     return that;
 }
 
-module.exports = mongoDao; 
+module.exports = mongoDao;

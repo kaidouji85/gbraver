@@ -1,3 +1,9 @@
 本テストの実行コマンドは以下の通り
 
-NODE_MAIL_ADDRESS="gmailアドレス" NODE_PASSWORD=“gmailパスワード" mocha seleniumTest/ -R spec
+#OS X
+NODE_MAIL_ADDRESS="gmailアドレス" NODE_PASSWORD="gmailパスワード" mocha seleniumTest/ -R spec
+
+#Windows
+set NODE_MAIL_ADDRESS=gmailアドレス
+set NODE_PASSWORD=gmailパスワード
+mocha seleniumTest/ -R spec

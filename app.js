@@ -1,3 +1,6 @@
+//定数
+var PORT = process.env.PORT || 3000;
+
 /**
  * Module dependencies.
  */
@@ -12,7 +15,7 @@ var passport = require('passport');
 var app = express();
 
 // all environments
-app.set('port', process.env.PORT || 3000);
+app.set('port', PORT);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(express.favicon());
@@ -43,11 +46,11 @@ passport.serializeUser(function(user, done) {
 
 passport.deserializeUser(function(obj, done) {
     done(null, obj);
-}); 
+});
 
 passport.use(new GoogleStrategy({
-    returnURL : 'http://localhost:3000/auth/google/return',
-    realm : 'http://localhost:3000/'
+    returnURL : 'http://localhost:'+PORT+'/auth/google/return',
+    realm : 'http://localhost:'+PORT+'/'
 },function(identifier, profile, done) {
     done(null, profile);
 }));

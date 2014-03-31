@@ -2,7 +2,6 @@ var MongoClient = require('mongodb').MongoClient;
 
 var take = {
     userId : 'take',
-    password : 'pass',
     status : {
         name : 'グランブレイバー',
         pictName : 'GranBraver.PNG',
@@ -35,7 +34,6 @@ var take = {
 
 var uchi = {
     userId : 'uchi',
-    password : 'pass',
     status : {
         name : 'ランドーザ',
         pictName : 'Landozer.PNG',
