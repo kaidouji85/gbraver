@@ -86,7 +86,7 @@ var WsServer = wsServer({
     httpServer:server
 });
 WsServer.onGetUserData(function(userId,fn){
-    dao.getUserData(userId,function(err,data){
+    dao.getPlayerData(userId,function(err,data){
         fn(null,data);
     });
 });

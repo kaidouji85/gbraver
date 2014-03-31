@@ -4,53 +4,71 @@ function mongoDao(spec, my) {
     var that = {};
     var url = spec.url;
 
-    that.getUserData = function(userId, fn) {
+    that.getPlayerData = function(userId, fn) {
         MongoClient.connect(url, function(err, db) {
-            var collection = db.collection('users');
-            collection.findOne({
-                userId : userId
-            }, function(err, data) {
-                userData = createUserData(data);
-                fn(null, userData);
-                db.close();
+            getUserData(userId,db,function(err,user){
+                var armdozerId = user.armdozerId;
+                getArmdozerData(armdozerId,db,function(err,armdozer){
+                    var playerData = createPlayerData(user,armdozer);
+                    db.close();
+                    fn(null,playerData);
+                });
             });
         });
     };
+    
+    function getUserData(userId, db, fn) {
+        var collection = db.collection('users');
+        collection.findOne({
+            userId : userId
+        }, function(err, data) {
+            fn(null, data);
+        });
+    }
 
-    function createUserData(data) {
-        var userData = {
-            userId : data.userId,
+    function getArmdozerData(armdozerId, db, fn) {
+        var collection = db.collection('armdozers');
+        collection.findOne({
+            armdozerId : armdozerId
+        }, function(err, data) {
+            fn(null, data);
+        });
+    }    
+
+    function createPlayerData(user,armdozer) {
+        var playerData = {
+            userId : user.userId,
             status : {
-                name : data.status.name,
-                pictName : data.status.pictName,
-                hp : data.status.hp,
-                speed : data.status.speed,
+                name : armdozer.name,
+                pictName : armdozer.pictName,
+                hp : armdozer.hp,
+                speed : armdozer.speed,
                 weapons : {
                     1 : {
-                        name : data.status.weapons['1'].name,
-                        power : data.status.weapons['1'].power
+                        name : armdozer.weapons['1'].name,
+                        power : armdozer.weapons['1'].power
                     },
                     2 : {
-                        name : data.status.weapons['2'].name,
-                        power : data.status.weapons['2'].power
+                        name : armdozer.weapons['2'].name,
+                        power : armdozer.weapons['2'].power
                     },
                     3 : {
-                        name : data.status.weapons['3'].name,
-                        power : data.status.weapons['3'].power
+                        name : armdozer.weapons['3'].name,
+                        power : armdozer.weapons['3'].power
                     },
                     4 : {
-                        name : data.status.weapons['4'].name,
-                        power : data.status.weapons['4'].power
+                        name : armdozer.weapons['4'].name,
+                        power : armdozer.weapons['4'].power
                     },
                     5 : {
-                        name : data.status.weapons['5'].name,
-                        power : data.status.weapons['5'].power
+                        name : armdozer.weapons['5'].name,
+                        power : armdozer.weapons['5'].power
                     }
                 }
             }
         };
 
-        return userData;
+        return playerData;
     }
 
     return that;

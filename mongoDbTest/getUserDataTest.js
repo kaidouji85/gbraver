@@ -15,7 +15,7 @@ describe('Mongo DBからユーザ情報を取得する', function() {
         var dao = mongoDao({
             url : mongoUrl
         });
-        dao.getUserData('take', function(err, userData) {
+        dao.getPlayerData('take', function(err, userData) {
             assertOfUserData(userData);
             done();
         });
