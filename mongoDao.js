@@ -6,7 +6,7 @@ function mongoDao(spec, my) {
 
     that.getPlayerData = function(userId, fn) {
         MongoClient.connect(url, function(err, db) {
-            getUserData(userId,db,function(err,user){
+            getOrCreateUserData(userId,db,function(err,user){
                 var armdozerId = user.armdozerId;
                 getArmdozerData(armdozerId,db,function(err,armdozer){
                     var playerData = createPlayerData(user,armdozer);
@@ -17,6 +17,18 @@ function mongoDao(spec, my) {
         });
     };
     
+    function getOrCreateUserData(userId, db, fn){
+        getUserData(userId, db, function(err,user){
+            if(user!==null){
+                fn(err,user);
+            } else {
+                createUser(userId,db,function(err,user){
+                    fn(null,user);
+                });
+            }
+        });
+    }
+    
     function getUserData(userId, db, fn) {
         var collection = db.collection('users');
         collection.findOne({
@@ -24,6 +36,17 @@ function mongoDao(spec, my) {
         }, function(err, data) {
             fn(null, data);
         });
+    }
+    
+    function createUser(userId,db,fn){
+        var collection = db.collection('users');
+        var userData = {
+            userId : userId,
+            armdozerId : 'granBraver'
+        };
+        collection.insert(userData, function(err, data) {
+            fn(null, userData);
+        });   
     }
 
     function getArmdozerData(armdozerId, db, fn) {
