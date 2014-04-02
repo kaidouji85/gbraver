@@ -1,1 +1,1 @@
-web: node app.js
+web: IP=gbraver.herokuapp.com node app.js
