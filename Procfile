@@ -1,1 +1,1 @@
-web: IP=gbraver.herokuapp.com node app.js
+web: IP=gbraver.herokuapp.com PORT=80 node app.js
