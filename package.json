@@ -10,12 +10,14 @@
     "express": "3.4.7",
     "ejs": "*",
     "socket.io":"*",
-    "mongoose":"*",
     "chai": "*",
     "mocha": "*",
     "socket.io-client" : "*",
     "cloneextend" : "*",
-    "selenium-webdriver" : "*"
+    "selenium-webdriver" : "*",
+    "mongodb" : "*",
+    "passport" : "*",
+    "passport-google" : "*"
   },
   "engines": {
     "node": "0.10.x"

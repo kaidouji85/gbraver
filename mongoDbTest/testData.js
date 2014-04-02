@@ -1,15 +1,22 @@
-db.users.remove();
-db.users.insert({
-    userId : 'kaidouji85@gmail.com',
-    armdozerId : 'granBraver'
-});
-db.users.insert({
-    userId : 'gbraver85001@gmail.com',
-    armdozerId : 'landozer'
-});
+var MongoClient = require('mongodb').MongoClient;
 
-db.armdozers.remove();
-db.armdozers.insert({
+/**
+ * ユーザデータ
+ */
+var take = {
+    userId : 'take',
+    armdozerId : 'granBraver'
+};
+
+var uchi = {
+    userId : 'uchi',
+    armdozerId : 'landozer'
+};
+
+/**
+ * アームドーザデータ
+ */
+var granBraver = {
     armdozerId : 'granBraver',
     name : 'グランブレイバー',
     pictName : 'GranBraver.PNG',
@@ -36,10 +43,10 @@ db.armdozers.insert({
             name : 'バスターナックル',
             power : 2800
         },
-    }      
-});
+    }
+};
 
-db.armdozers.insert({
+var landozer = {
     armdozerId : 'landozer',
     name : 'ランドーザ',
     pictName : 'Landozer.PNG',
@@ -66,5 +73,39 @@ db.armdozers.insert({
             name : 'ブレイクパンチ',
             power : 3800
         }
-    }       
-});
+    }
+};
+
+var userData = [take,uchi];
+var armdozerData = [granBraver,landozer];
+
+function insertData(mongoUrl,fnc) {
+    MongoClient.connect(mongoUrl, function(err, db) {
+        insertUserData(userData,db,function(err,result){
+            insertArmdozerData(armdozerData,db,function(err,result){
+                db.close();
+                fnc(null,true);
+            });
+        });
+    });
+}
+
+function insertUserData(userData,db,fnc) {
+    var collection = db.collection('users');
+    collection.remove({}, {}, function(err, deletes) {
+        collection.insert(userData, function(err, data) {
+            fnc(null, true);
+        });
+    });
+}
+
+function insertArmdozerData(armdozerData,db,fnc) {
+    var collection = db.collection('armdozers');
+    collection.remove({}, {}, function(err, deletes) {
+        collection.insert(armdozerData, function(err, data) {
+            fnc(null, true);
+        });
+    });
+}
+
+module.exports.insertData = insertData;
