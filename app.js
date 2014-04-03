@@ -49,7 +49,7 @@ passport.deserializeUser(function(obj, done) {
 });
 
 passport.use(new GoogleStrategy({
-    returnURL : 'http://gbraver.herokuapp.com//auth/google/return',
+    returnURL : 'http://gbraver.herokuapp.com/auth/google/return',
     realm : 'http://gbraver.herokuapp.com/'
 },function(identifier, profile, done) {
     done(null, profile);
