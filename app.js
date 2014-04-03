@@ -1,6 +1,7 @@
 //定数
 var PORT = process.env.PORT || 3000;
-var IP =  process.env.IP || 'localhost';
+var BASE_URL = process.env.BASE_URL || 'http://localhost:'+PORT;
+
 /**
  * Module dependencies.
  */
@@ -49,8 +50,8 @@ passport.deserializeUser(function(obj, done) {
 });
 
 passport.use(new GoogleStrategy({
-    returnURL : 'http://'+IP+':'+PORT+'/auth/google/return',
-    realm : 'http://'+IP+':'+PORT+'/'
+    returnURL : BASE_URL+'/auth/google/return',
+    realm : BASE_URL 
 },function(identifier, profile, done) {
     done(null, profile);
 }));
