@@ -313,6 +313,8 @@ function game(spec, my) {
         batteryNumberArray[userId].visible = false;        
     }
     
+    core.charge = charge;
+    
     function charge(){
         AtackCommand.setVisible(false);
         emitCommand({method:'charge'});
