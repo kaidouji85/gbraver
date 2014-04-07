@@ -26,9 +26,7 @@ function game(spec, my) {
     var AtackCommand;
     var BatteryCommand;
     var emitReady = function(){};
-    var emitFrameEvent = function(){};
     var emitCommand = function(){};
-    var emitFrame = -1;
     var selectMaxBattery = 5;
     var selectMinBattery = 0;
     var atackUserId = -1;
@@ -40,9 +38,6 @@ function game(spec, my) {
         initSprite();
         emitReady();
         core.rootScene.addEventListener('enterframe', function(e) {
-            if(core.frame===emitFrame){
-                emitFrameEvent();
-            }
         });
     };
 
@@ -55,10 +50,11 @@ function game(spec, my) {
         atackUserId = data.atackUserId;
         for(var uid in statusArray) {
             activeBarArray[uid].plus(turn,120*statusArray[uid].speed/5000);
-        }        
-        setFrameCountEvent(core.frame + turn,function(){
+        }
+        
+        core.rootScene.tl.delay(turn).then(function(){
             refreshMertor(data.statusArray);
-            emitCommand({method:'ok'});
+            emitCommand({method:'ok'});            
         });
     };
     
@@ -67,7 +63,7 @@ function game(spec, my) {
         if(atackUserId===userId){
             AtackCommand.setVisible(true);    
         } else {
-            setFrameCountEvent(core.frame + 1, function(){
+            core.rootScene.tl.delay(1).then(function(){
                 emitCommand({method:'ok'});
             });
         }
@@ -75,7 +71,7 @@ function game(spec, my) {
     
     core.doChargePhase = function(data){
         refreshMertor(data.statusArray);
-        setFrameCountEvent(core.frame + WAIT_TIME_ACTIVE_RESET, function(){
+        core.rootScene.tl.delay(WAIT_TIME_ACTIVE_RESET).then(function(){
             emitCommand({method:'ok'});
         });
     };
@@ -83,7 +79,7 @@ function game(spec, my) {
     core.doDefenthCommandPhase = function(data){
         refreshMertor(data.statusArray);
         if(atackUserId===userId){
-            setFrameCountEvent(core.frame + 30, function(){
+            core.rootScene.tl.delay(30).then(function(){
                 emitCommand({method:'ok'});
             });
         } else {
@@ -97,14 +93,14 @@ function game(spec, my) {
         var damage = data.damage;
         
         visibleBatteryNumber(atackBattery,defenthBattery);
-        setFrameCountEvent(core.frame + 120, function(){
+        core.rootScene.tl.delay(120).then(function(){
             invisibleBatteryNumber();
             visibleDamage(damage);
-            setFrameCountEvent(core.frame + 120,function(){
+            core.rootScene.tl.delay(120).then(function(){
                 invisibleDamage();
                 refreshMertor(data.statusArray);
                 atackUserId = -1;
-                setFrameCountEvent(core.frame + WAIT_TIME_ACTIVE_RESET,function(){
+                core.rootScene.tl.delay(WAIT_TIME_ACTIVE_RESET).then(function(){
                     emitCommand({method:'ok'});
                 });
             });
@@ -151,11 +147,6 @@ function game(spec, my) {
     core.onCommand = function(fn) {
         emitCommand = fn;
     };
-
-    function setFrameCountEvent(frame,fnc){
-        emitFrame = frame;
-        emitFrameEvent = fnc;
-    }
 
     function preLoad() {
         for (var uid in statusArray) {
