@@ -69,9 +69,9 @@ window.onload = function() {
     //firstTurnPlayerCharge_asFirstTurnplayer();
     //firstTurnPlayerCharge_asSecondTurnplayer();
     //firstPlayerAtack_asAtacker();
-    //firstPlayerAtack_asDefenther();
+    firstPlayerAtack_asDefenther();
     
-    autoTestProt();
+    //autoTestProt();
 };
 
 /**
