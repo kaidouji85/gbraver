@@ -1,3 +1,4 @@
+enchant();
 var gbraverDebug = {};
 var assert;
 gbraverDebug.statusArray = {
@@ -63,11 +64,15 @@ gbraverDebug.statusArray = {
     }
 };
 
+window.onload = function(){
+    firstTurnPlayerCharge_asFirstTurnplayer();
+};
+
 /**
  * 自動テストプロトタイプ
  */
-function firstTurnPlayerCharge_asFirstTurnplayer(done) {
-    enchant();
+function firstTurnPlayerCharge_asFirstTurnplayer() {
+    
     assert = chai.assert;
     var Game = game({
         statusArray : gbraverDebug.statusArray,
@@ -144,7 +149,6 @@ function firstTurnPlayerCharge_asFirstTurnplayer(done) {
                         };
                         assert.deepEqual(command, expect, 'チャージ終了時のコマンド送信が正しい');
                         console.log('finish');
-                        done();
                     });
                 });
                 Game.charge();//チャーコマンド

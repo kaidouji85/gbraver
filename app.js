@@ -33,7 +33,8 @@ app.use(passport.session());
 // development only
 if ('development' == app.get('env')) {
     app.use(express.errorHandler());
-    app.use(express.static(path.join(__dirname, 'debugPublic')));
+    app.use(express.static(path.join(__dirname, 'publicForDebug')));
+    app.use(express.static(path.join(__dirname, 'publicForTest')));
 }
 //DB
 var mongoUri = process.env.MONGOHQ_URL || 'mongodb://localhost/gbraver';
