@@ -13,8 +13,6 @@ test.describe('ログイン', function() {
         driver = new webdriver.Builder().
                      withCapabilities(webdriver.Capabilities.chrome()).
                      build();
-        console.log(NODE_MAIL_ADDRESS);
-        console.log(NODE_PASSWORD);
     });
 
     test.it('ログインするとルームID、ユーザIDがmetaタグに格納される', function(){

@@ -149,6 +149,7 @@ function firstTurnPlayerCharge_asFirstTurnplayer() {
                         };
                         assert.deepEqual(command, expect, 'チャージ終了時のコマンド送信が正しい');
                         console.log('finish');
+                        $('title').text('Gブレイバー　チャージテスト finish');
                     });
                 });
                 Game.charge();//チャーコマンド
