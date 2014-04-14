@@ -1,6 +1,10 @@
 enchant();
 var gbraverDebug = {};
 var assert;
+
+/**
+ * テストデータ
+ */
 gbraverDebug.statusArray = {
     2 : {
         name : 'ランドーザ',
@@ -69,7 +73,7 @@ window.onload = function(){
 };
 
 /**
- * 自動テストプロトタイプ
+ * 先攻プレイヤーがチャージを選択する　＃先攻プレイヤー視点
  */
 function firstTurnPlayerCharge_asFirstTurnplayer() {
     
@@ -78,8 +82,11 @@ function firstTurnPlayerCharge_asFirstTurnplayer() {
         statusArray : gbraverDebug.statusArray,
         userId : '1'
     });
+    
     Game.start();
-    Game.onReady(function() {
+    Game.onReady(waitPhase);
+
+    function waitPhase() {
         var waitPhaseData = {
             phase : 'wait',
             atackUserId : '1',
@@ -96,64 +103,74 @@ function firstTurnPlayerCharge_asFirstTurnplayer() {
                     active : 5000
                 }
             }
-        };
+        }; 
+
         Game.doWaitPhase(waitPhaseData);
-        Game.onCommand(function(command) {
+        Game.onCommand(function(command){
             var expect = {
                 method : 'ok'
             };
             assert.deepEqual(command, expect, 'ウェイトフェイズ終了時のコマンド送信が正しい');
-
-            var data = {
-                phase : 'atackCommand',
-                statusArray : {
-                    1 : {
-                        hp : 3200,
-                        battery : 5,
-                        active : 5000
-                    },
-                    2 : {
-                        hp : 4700,
-                        battery : 5,
-                        active : 3000
-                    }
-                }
-            };
-            Game.doAtackCommandPhase(data);
-            Game.rootScene.tl.delay(1).then(function() {
-                Game.onCommand(function(command) {
-                    var expect = {
-                        method : 'charge'
-                    };
-                    assert.deepEqual(command, expect, 'チャージ選択時のコマンド送信が正しい');
-
-                    var data = {
-                        phase : 'charge',
-                        statusArray : {
-                            1 : {
-                                hp : 3200,
-                                battery : 5,
-                                active : 0
-                            },
-                            2 : {
-                                hp : 4700,
-                                battery : 5,
-                                active : 3000
-                            }
-                        }
-                    };
-                    Game.doChargePhase(data);
-                    Game.onCommand(function(command) {
-                        var expect = {
-                            method : 'ok'
-                        };
-                        assert.deepEqual(command, expect, 'チャージ終了時のコマンド送信が正しい');
-                        console.log('finish');
-                        $('title').text('Gブレイバー　チャージテスト finish');
-                    });
-                });
-                Game.charge();//チャーコマンド
-            });
+            atackCommandPhase();
         });
-    });
+    }
+    
+    function atackCommandPhase() {
+        var atackCommand = {
+            phase : 'atackCommand',
+            statusArray : {
+                1 : {
+                    hp : 3200,
+                    battery : 5,
+                    active : 5000
+                },
+                2 : {
+                    hp : 4700,
+                    battery : 5,
+                    active : 3000
+                }
+            }
+        }; 
+
+        Game.doAtackCommandPhase(atackCommand);
+        Game.rootScene.tl.delay(60).then(function(){
+            Game.onCommand(selectCommand);
+            Game.charge();
+        });
+    }
+
+    function selectCommand(command) {
+        var expect = {
+            method : 'charge'
+        };
+        assert.deepEqual(command, expect, 'チャージ選択時のコマンド送信が正しい');
+        chargePhase();
+    }
+
+    function chargePhase() {
+        var charge = {
+            phase : 'charge',
+            statusArray : {
+                1 : {
+                    hp : 3200,
+                    battery : 5,
+                    active : 0
+                },
+                2 : {
+                    hp : 4700,
+                    battery : 5,
+                    active : 3000
+                }
+            }
+        };
+        Game.doChargePhase(charge);
+        Game.onCommand(function(command) {
+            var expect = {
+                method : 'ok'
+            };
+            assert.deepEqual(command, expect, 'チャージ終了時のコマンド送信が正しい');
+            console.log('finish');
+            $('title').text('Gブレイバー　チャージテスト finish');
+        });
+    } 
 }
