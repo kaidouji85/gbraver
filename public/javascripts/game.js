@@ -270,6 +270,8 @@ function game(spec, my) {
         }
     }
 
+    //TODO : public関数の書き方に統一したい
+    core.moveBatteryCommand = moveBatteryCommand;
     function moveBatteryCommand(){
         AtackCommand.setVisible(false);
         viewBatteryCommand();
@@ -293,6 +295,8 @@ function game(spec, my) {
         return userId===atackUserId ? 1 : 0;
     }
     
+    //TODO : public関数の書き方に統一したい
+    core.plusBattery = plusBattery;
     function plusBattery(){
         var number = batteryNumberArray[userId].frame;
         if(number<selectMaxBattery){
@@ -313,13 +317,15 @@ function game(spec, my) {
         batteryNumberArray[userId].visible = false;        
     }
     
+    //TODO : public関数の書き方に統一したい
     core.charge = charge;
-    
     function charge(){
         AtackCommand.setVisible(false);
         emitCommand({method:'charge'});
     }
     
+    //TODO : public関数の書き方に統一したい
+    core.selectBattery = selectBattery;
     function selectBattery(){
         var battery = batteryNumberArray[userId].frame;
         BatteryCommand.setVisible(false);
