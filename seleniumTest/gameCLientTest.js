@@ -59,6 +59,22 @@ test.describe('ゲーム画面', function() {
         }, 10000);
     });
 
+    test.it('敵がチャージを選択する', function(){
+        var URL = 'localhost:'+PORT+'/enemyChargeTest.html';
+        driver.get(URL);
+        driver.wait(function() {
+            return driver.getTitle().then(function(title) {
+                return '敵がチャージを選択する' === title;
+            });
+        }, 1000);
+       
+        driver.wait(function() {
+            return driver.getTitle().then(function(title) {
+                return 'finish' === title;
+            });
+        }, 10000);
+    });
+
     test.after(function() {
         driver.quit();
     });
