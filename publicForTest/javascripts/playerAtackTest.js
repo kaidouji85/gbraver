@@ -227,6 +227,5 @@ function firstPlayerAtack_asAtacker(){
     function finish(command){
         console.log('finish');
         $('title').text('finish');
-       
     }
 }
