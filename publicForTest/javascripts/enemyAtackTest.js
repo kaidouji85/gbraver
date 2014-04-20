@@ -82,7 +82,9 @@ function firstPlayerAtack_asDefenther(){
         userId : '2'
     });
     Game.start();
-    Game.onReady(function() {
+    Game.onReady(waitPhase);
+    
+    function waitPhase(){
         var waitPhaseData = {
             phase : 'wait',
             atackUserId : '1',
@@ -100,112 +102,127 @@ function firstPlayerAtack_asDefenther(){
                 }
             }
         };
-        Game.doWaitPhase(waitPhaseData);
-        Game.onCommand(function(command) {
-            var data = {
-                phase : 'atackCommand',
-                statusArray : {
-                    1 : {
-                        hp : 3200,
-                        battery : 5,
-                        active : 5000
-                    },
-                    2 : {
-                        hp : 4700,
-                        battery : 5,
-                        active : 3000
-                    }
+        Game.doWaitPhase(waitPhaseData); 
+        Game.onCommand(atackCommandPhase);
+    }
+    
+    function atackCommandPhase(command){
+        var data = {
+            phase : 'atackCommand',
+            statusArray : {
+                1 : {
+                    hp : 3200,
+                    battery : 5,
+                    active : 5000
+                },
+                2 : {
+                    hp : 4700,
+                    battery : 5,
+                    active : 3000
                 }
-            };
-            Game.doAtackCommandPhase(data);
-            Game.onCommand(function(command){
-                var expect = {
-                    method : 'ok'
-                };
-                assert.deepEqual(command,expect,'攻撃コマンドフェイズのコマンドが正しい');
-                
-                var data = {
-                    phase : 'defenthCommand',
-                    statusArray : {
-                    1 : { hp : 3200,
-                        battery : 5,
-                        active : 5000
-                        },
-                        2 : { hp : 4700,
-                            battery : 5,
-                            active : 3000
-                        }
-                    }
-                };
-                Game.doDefenthCommandPhase(data);
-                console.log('2で防御する');
-                
-                Game.onCommand(function(command){
-                    var expect = {
-                        method : 'defenth',
-                        param : {
-                            battery : 2
-                        }
-                    };
-                    assert.deepEqual(command,expect,'防御コマンドフェイズのコマンドが正しい');
-                    
-                    var data = {
-                        phase : 'damage',
-                        hit : 1,
-                        damage : 1600,
-                        atackBattery : 3,
-                        defenthBattery : 2,
-                        statusArray : {
-                            1 : {
-                                hp : 3200,
-                                battery : 2,
-                                active : 0
-                            },
-                            2 : {
-                                hp : 3100,
-                                battery : 3,
-                                active : 3000
-                            }
-                        }                        
-                    };
-                    Game.doDamagePhase(data);
-                    Game.onCommand(function(command){
-                        var expect = {
-                            method : 'ok'
-                        };
-                        assert.deepEqual(command,expect,'ウェイトフェイズ2のコマンドが正しい');
-                        
-                        var data = {
-                            phase : 'wait',
-                            atackUserId : '2',
-                            turn : 14,
-                            statusArray : {
-                            1 : { hp : 3200,
-                                battery : 2,
-                                active : 3500
-                                },
-                                2 : { hp : 3100,
-                                    battery : 4,
-                                    active : 5100
-                                }
-                            }
-                        };
-                        Game.doWaitPhase(data);
-                        Game.onCommand(function(command){
-                            console.log('finish');
-                            $('title').text('finish');
-                        });
-                    });
-                });
-                
-                //コマンド入力
-                Game.rootScene.tl.delay(60).then(function() {
-                    Game.plusBattery();
-                }).delay(20).then(function() {
-                    Game.selectBattery();
-                });
+            }
+        };
+        Game.doAtackCommandPhase(data);
+        Game.onCommand(defenthCommandPhase);
+    }
+    
 
-            });
-        });   
-    });    
+    function defenthCommandPhase(command) {
+        var expect = {
+            method : 'ok'
+        };
+        assert.deepEqual(command, expect, '攻撃コマンドフェイズのコマンドが正しい');
+
+        var data = {
+            phase : 'defenthCommand',
+            statusArray : {
+                1 : {
+                    hp : 3200,
+                    battery : 5,
+                    active : 5000
+                },
+                2 : {
+                    hp : 4700,
+                    battery : 5,
+                    active : 3000
+                }
+            }
+        };
+        Game.doDefenthCommandPhase(data);
+        selectCommnad();
+    }
+    
+    function selectCommnad(){
+        Game.onCommand(damagePhase);
+
+        Game.rootScene.tl.delay(60).then(function() {
+            Game.plusBattery();
+        }).delay(20).then(function() {
+            Game.selectBattery();
+        });
+  
+    }
+    
+    function damagePhase(command) {
+        var expect = {
+
+            method : 'defenth',
+            param : {
+                battery : 2
+            }
+        };
+        assert.deepEqual(command, expect, '防御コマンドフェイズのコマンドが正しい');
+
+        var data = {
+            phase : 'damage',
+            hit : 1,
+            damage : 1600,
+            atackBattery : 3,
+            defenthBattery : 2,
+            statusArray : {
+                1 : {
+                    hp : 3200,
+                    battery : 2,
+                    active : 0
+                },
+                2 : {
+                    hp : 3100,
+                    battery : 3,
+                    active : 3000
+                }
+            }
+        };
+        Game.doDamagePhase(data);
+        Game.onCommand(waitPhase2);
+    }
+
+    function waitPhase2(command){
+        var expect = {
+            method : 'ok'
+        };
+        assert.deepEqual(command, expect, 'ウェイトフェイズ2のコマンドが正しい');
+
+        var data = {
+            phase : 'wait',
+            atackUserId : '2',
+            turn : 14,
+            statusArray : {
+                1 : {
+                    hp : 3200,
+                    battery : 2,
+                    active : 3500
+                },
+                2 : {
+                    hp : 3100,
+                    battery : 4,
+                    active : 5100
+                }
+            }
+        };
+        Game.doWaitPhase(data);
+        Game.onCommand(function(command) {
+            console.log('finish');
+            $('title').text('finish');
+        });
+    }
 }
