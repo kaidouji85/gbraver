@@ -79,6 +79,77 @@ function firstTurnPlayerCharge_asSecondTurnplayer() {
         userId : '2'
     });
     Game.start();
+    Game.onReady(waitPhase);
+    
+    function waitPhase(){
+        var waitPhaseData = {
+            phase : 'wait',
+            atackUserId : '1',
+            turn : 20,
+            statusArray : {
+                2 : {
+                    hp : 4700,
+                    battery : 5,
+                    active : 3000
+                },
+                1 : {
+                    hp : 3200,
+                    battery : 5,
+                    active : 5000
+                }
+            }
+        };
+        Game.doWaitPhase(waitPhaseData);
+        Game.onCommand(atackCommand);      
+    }
+    
+    function atackCommand(command) {
+        console.log(command);
+        var data = {
+            phase : 'atackCommand',
+            statusArray : {
+                1 : {
+                    hp : 3200,
+                    battery : 5,
+                    active : 5000
+                },
+                2 : {
+                    hp : 4700,
+                    battery : 5,
+                    active : 3000
+                }
+            }
+        };
+        Game.doAtackCommandPhase(data);
+        Game.onCommand(charge);
+    }
+
+    function charge(command) {
+        console.log(command);
+        var data = {
+            phase : 'charge',
+            statusArray : {
+                1 : {
+                    hp : 3200,
+                    battery : 5,
+                    active : 0
+                },
+                2 : {
+                    hp : 4700,
+                    battery : 5,
+                    active : 3000
+                }
+            }
+        };
+        Game.doChargePhase(data);
+        Game.onCommand(function(command) {
+            console.log('finish');
+            $('title').text('finish');
+        });
+    }
+
+    
+    /*
     Game.onReady(function() {
         var waitPhaseData = {
             phase : 'wait',
@@ -141,4 +212,5 @@ function firstTurnPlayerCharge_asSecondTurnplayer() {
             });
         });
     });
+    */
 }
