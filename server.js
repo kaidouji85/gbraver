@@ -30,6 +30,17 @@ function server(spec, my) {
     };
 
     io.sockets.on('connection', function(socket) {
+        socket.on('auth',function(data){
+            var userId = data.userId;
+            getUserData(userId, function(err, data) {
+                if(err){
+                    socket.emit('authError');
+                } else {
+                    socket.emit('successAuth');
+                }
+            });
+        });
+        
         socket.on('enterRoom', function(data) {
             var roomId = data.roomId;
             var userId = data.userId;

@@ -2,6 +2,10 @@ var ce = require('cloneextend');
 var user = {};
 
 function getUserData(userId){
+    if((userId in user)===false){
+       return null; 
+    }
+    
     var userData = ce.clone(user[userId]);
     return userData;
 }
@@ -98,6 +102,38 @@ user[2] = {
                 name : 'ブレイクパンチ',
                 power : 3800
             }
+        }
+    }
+};
+
+user['test001@gmail.com'] = {
+    userId : 'test001@gmail.com',
+    status : {
+        name : 'グランブレイバー',
+        pictName : 'GranBraver.PNG',
+        hp : 3200,
+        speed : 500,
+        weapons : {
+            1 : {
+                name : 'バスターナックル',
+                power : 800
+            },
+            2 : {
+                name : 'バスターナックル',
+                power : 1100
+            },
+            3 : {
+                name : 'バスターナックル',
+                power : 1600
+            },
+            4 : {
+                name : 'バスターナックル',
+                power : 2100
+            },
+            5 : {
+                name : 'バスターナックル',
+                power : 2800
+            },
         }
     }
 };
