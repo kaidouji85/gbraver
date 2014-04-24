@@ -49,7 +49,8 @@ describe('serverクラスのテスト', function() {
             client.emit('auth', {
                 userId : 'nainaiUser@gmail.com'
             });
-            client.on('authError', function() {
+            client.on('authError', function(message) {
+                assert.equal(message,'nainaiUser@gmail.comは存在しないユーザです');
                 done();
             });            
         });

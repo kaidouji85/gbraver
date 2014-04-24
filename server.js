@@ -42,7 +42,8 @@ function server(spec, my) {
                         socket.emit('successAuth');
                     });
                 } else {
-                    socket.emit('authError');
+                    var message = userId + 'は存在しないユーザです';
+                    socket.emit('authError',message);
                 }
             });
         });
