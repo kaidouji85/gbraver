@@ -138,4 +138,35 @@ user['test001@gmail.com'] = {
     }
 };
 
+user['test002@gmail.com'] = {
+    userId : 'test002@gmail.com',
+    status : {
+        name : 'ランドーザ',
+        pictName : 'Landozer.PNG',
+        hp : 4700,
+        speed : 300,
+        weapons : {
+            1 : {
+                name : 'ブレイクパンチ',
+                power : 1200
+            },
+            2 : {
+                name : 'ブレイクパンチ',
+                power : 1700
+            },
+            3 : {
+                name : 'ブレイクパンチ',
+                power : 2300
+            },
+            4 : {
+                name : 'ブレイクパンチ',
+                power : 2900
+            },
+            5 : {
+                name : 'ブレイクパンチ',
+                power : 3800
+            }
+        }
+    }
+};
 module.exports.getUserData = getUserData;

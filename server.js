@@ -33,28 +33,31 @@ function server(spec, my) {
         socket.on('auth',function(data){
             var userId = data.userId;
             getUserData(userId, function(err, data) {
-                if(err){
-                    socket.emit('authError');
+                if(!err){
+                    var loginInfo = {
+                        userId : userId,
+                        roomId : null
+                    };
+                    socket.set('loginInfo', loginInfo, function() {
+                        socket.emit('successAuth');
+                    });
                 } else {
-                    socket.emit('successAuth');
+                    socket.emit('authError');
                 }
             });
         });
         
         socket.on('enterRoom', function(data) {
             var roomId = data.roomId;
-            var userId = data.userId;
-            socket.get('loginInfo', function(err, data) {
-                if (!data) {
-                    var loginInfo = {
-                        userId : userId,
-                        roomId : roomId
-                    };
+            socket.get('loginInfo', function(err, loginInfo) {
+                if (loginInfo.roomId===null) {
+                    loginInfo.roomId = roomId;
                     socket.set('loginInfo', loginInfo, function() {
-                        getUserData(userId, function(err, data) {
+                        var userId = loginInfo.userId;
+                        getUserData(userId, function(err, userData) {
                             socket.join(roomId);
                             socket.emit('succesEnterRoom');
-                            roomArray[roomId].addUser(data);
+                            roomArray[roomId].addUser(userData);
                             if(roomArray[roomId].isGameStart()){
                                 roomArray[roomId].initBattle();
                                 io.sockets.in(roomId).emit('gameStart', roomArray[roomId].getUsers());
