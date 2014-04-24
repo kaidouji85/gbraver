@@ -41,18 +41,26 @@ describe('serverクラスのテスト', function() {
         it('チャージコマンドを実行してウェイトフェイズに遷移する', function(done) {
             //ユーザ1
             var client1 = io.connect(SERVER_URL, option);
-            client1.emit('enterRoom', {
-                roomId : roomId,
-                userId : 1
+            client1.emit('auth',{
+                userId : 'test001@gmail.com'
             });
-            client1.once('succesEnterRoom', function() {
-                client1.once('gameStart', function() {
-                    client1.emit('command', {
-                        method : 'ready'
-                    });
-                    client1.once('resp', doWaitPhase1_Client1);
+            client1.once('successAuth',function(){
+                enterRoom_Client1();
+            });
+            
+            function enterRoom_Client1(){
+                client1.emit('enterRoom', {
+                    roomId : roomId
                 });
-            });
+                client1.once('succesEnterRoom', function() {
+                    client1.once('gameStart', function() {
+                        client1.emit('command', {
+                            method : 'ready'
+                        });
+                        client1.once('resp', doWaitPhase1_Client1);
+                    });
+                });
+            }
 
             function doWaitPhase1_Client1(data) {
                 assertOfWaitPhase1(data);
@@ -80,7 +88,7 @@ describe('serverクラスのテスト', function() {
 
             function doWaitPhase2_Client1(data) {
                 assertOfWaitPhase2(data);
-                complateCLient(1);
+                complateCLient('test001@gmail.com');
                 if (isFinishTest()) {
                     done();
                 }
@@ -88,19 +96,26 @@ describe('serverクラスのテスト', function() {
 
             //ユーザ2
             var client2 = io.connect(SERVER_URL, option);
-            client2.emit('enterRoom', {
-                roomId : roomId,
-                userId : 2
+            client2.emit('auth',{
+                userId : 'test002@gmail.com'
             });
-
-            client2.once('succesEnterRoom', function() {
-                client2.once('gameStart', function() {
-                    client2.emit('command', {
-                        method : 'ready'
-                    });
-                    client2.once('resp', doWaitPhase1_Client2);
+            client1.once('successAuth',function(){
+                enterRoom_Client2();
+            });
+            
+            function enterRoom_Client2(){
+                client2.emit('enterRoom', {
+                    roomId : roomId
                 });
-            });
+                client2.once('succesEnterRoom', function() {
+                    client2.once('gameStart', function() {
+                        client2.emit('command', {
+                            method : 'ready'
+                        });
+                        client2.once('resp', doWaitPhase1_Client2);
+                    });
+                });
+            }
 
             function doWaitPhase1_Client2(data) {
                 assertOfWaitPhase1(data);
@@ -128,7 +143,7 @@ describe('serverクラスのテスト', function() {
 
             function doWaitPhase2_Client2(data) {
                 assertOfWaitPhase2(data);
-                complateCLient(2);
+                complateCLient('test002@gmail.com');
                 if (isFinishTest()) {
                     done();
                 }
@@ -138,15 +153,15 @@ describe('serverクラスのテスト', function() {
             function assertOfWaitPhase1(data) {
                 expect = {
                     phase : 'wait',
-                    atackUserId : '1',
+                    atackUserId : 'test001@gmail.com',
                     turn : 10,
                     statusArray : {
-                        1 : {
+                        'test001@gmail.com' : {
                             hp : 3200,
                             battery : 5,
                             active : 5000
                         },
-                        2 : {
+                        'test002@gmail.com' : {
                             hp : 4700,
                             battery : 5,
                             active : 3000
@@ -160,12 +175,12 @@ describe('serverクラスのテスト', function() {
                 expect = {
                     phase : 'atackCommand',
                     statusArray : {
-                        1 : {
+                        'test001@gmail.com' : {
                             hp : 3200,
                             battery : 5,
                             active : 5000
                         },
-                        2 : {
+                        'test002@gmail.com' : {
                             hp : 4700,
                             battery : 5,
                             active : 3000
@@ -179,12 +194,12 @@ describe('serverクラスのテスト', function() {
                 expect = {
                     phase : 'charge',
                     statusArray : {
-                        1 : {
+                        'test001@gmail.com' : {
                             hp : 3200,
                             battery : 5,
                             active : 0
                         },
-                        2 : {
+                        'test002@gmail.com' : {
                             hp : 4700,
                             battery : 5,
                             active : 3000
@@ -197,15 +212,15 @@ describe('serverクラスのテスト', function() {
             function assertOfWaitPhase2(data) {
                 expect = {
                     phase : 'wait',
-                    atackUserId : '2',
+                    atackUserId : 'test002@gmail.com',
                     turn : 7,
                     statusArray : {
-                        1 : {
+                        'test001@gmail.com' : {
                             hp : 3200,
                             battery : 5,
                             active : 3500
                         },
-                        2 : {
+                        'test002@gmail.com' : {
                             hp : 4700,
                             battery : 5,
                             active : 5100
