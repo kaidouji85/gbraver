@@ -8,11 +8,18 @@ window.onload = function() {
     socket = io.connect(location.origin);
     roomId = $("meta[name=roomId]").attr('content');
     userId = $("meta[name=userId]").attr('content');
-
-    //ルームへ入室する
-    socket.emit("enterRoom", {
-        roomId : roomId,
+    
+    //ユーザ認証する
+    socket.emit('auth',{
         userId : userId
+    });
+    
+    //ユーザ認証成功
+    socket.on('successAuth',function(){
+        socket.emit("enterRoom", {
+            roomId : roomId,
+            userId : userId
+        });        
     });
     
     //入室成功
