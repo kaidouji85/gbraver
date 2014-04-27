@@ -14,7 +14,6 @@ function game(spec, my) {
     var WAIT_TIME_ACTIVE_RESET = 30;
 
     var core = new Core(320, 320);
-    var startAtackCommandFrame = -1;
     var statusArray = $.extend(true, {}, spec.statusArray);
     var userId = spec.userId;
     var charaSpriteArray = {};
@@ -32,12 +31,14 @@ function game(spec, my) {
     var atackUserId = -1;
         
     core.fps = 60;
-    core.rootScene.backgroundColor = "black";
+    core.battleScene = new Scene();
+    core.battleScene.backgroundColor = "black";
+    core.pushScene(core.battleScene);
     preLoad();
     core.onload = function() {
         initSprite();
         emitReady();
-        core.rootScene.addEventListener('enterframe', function(e) {
+        core.battleScene.addEventListener('enterframe', function(e) {
         });
     };
 
@@ -52,7 +53,7 @@ function game(spec, my) {
             activeBarArray[uid].plus(turn,120*statusArray[uid].speed/5000);
         }
         
-        core.rootScene.tl.delay(turn).then(function(){
+        core.battleScene.tl.delay(turn).then(function(){
             refreshMertor(data.statusArray);
             emitCommand({method:'ok'});            
         });
@@ -63,7 +64,7 @@ function game(spec, my) {
         if(atackUserId===userId){
             AtackCommand.setVisible(true);    
         } else {
-            core.rootScene.tl.delay(1).then(function(){
+            core.battleScene.tl.delay(1).then(function(){
                 emitCommand({method:'ok'});
             });
         }
@@ -71,7 +72,7 @@ function game(spec, my) {
     
     core.doChargePhase = function(data){
         refreshMertor(data.statusArray);
-        core.rootScene.tl.delay(WAIT_TIME_ACTIVE_RESET).then(function(){
+        core.battleScene.tl.delay(WAIT_TIME_ACTIVE_RESET).then(function(){
             emitCommand({method:'ok'});
         });
     };
@@ -79,7 +80,7 @@ function game(spec, my) {
     core.doDefenthCommandPhase = function(data){
         refreshMertor(data.statusArray);
         if(atackUserId===userId){
-            core.rootScene.tl.delay(30).then(function(){
+            core.battleScene.tl.delay(30).then(function(){
                 emitCommand({method:'ok'});
             });
         } else {
@@ -93,14 +94,14 @@ function game(spec, my) {
         var damage = data.damage;
         
         visibleBatteryNumber(atackBattery,defenthBattery);
-        core.rootScene.tl.delay(120).then(function(){
+        core.battleScene.tl.delay(120).then(function(){
             invisibleBatteryNumber();
             visibleDamage(damage);
-            core.rootScene.tl.delay(120).then(function(){
+            core.battleScene.tl.delay(120).then(function(){
                 invisibleDamage();
                 refreshMertor(data.statusArray);
                 atackUserId = -1;
-                core.rootScene.tl.delay(WAIT_TIME_ACTIVE_RESET).then(function(){
+                core.battleScene.tl.delay(WAIT_TIME_ACTIVE_RESET).then(function(){
                     emitCommand({method:'ok'});
                 });
             });
@@ -173,14 +174,14 @@ function game(spec, my) {
             charaSpriteArray[uid].x = uid===userId ? 192 : 0;
             charaSpriteArray[uid].y = 80;
             charaSpriteArray[uid].scaleX = uid===userId ? 1 : -1;
-            core.rootScene.addChild(charaSpriteArray[uid]);
+            core.battleScene.addChild(charaSpriteArray[uid]);
 
             //HPメータ
             hpMertorArray[uid] = hpMertor();
             hpMertorArray[uid].y = 4;
             hpMertorArray[uid].x = uid===userId ? 190 : 10;
             hpMertorArray[uid].setValue(statusArray[uid].hp);
-            core.rootScene.addChild(hpMertorArray[uid]);            
+            core.battleScene.addChild(hpMertorArray[uid]);            
             
             //アクティブゲージ
             activeBarArray[uid] = customBar({
@@ -191,7 +192,7 @@ function game(spec, my) {
             });
             activeBarArray[uid].x = uid===userId ? 190 : 130;
             activeBarArray[uid].y = 22;
-            core.rootScene.addChild(activeBarArray[uid]);
+            core.battleScene.addChild(activeBarArray[uid]);
            
             //バッテリーメータ
             batteryMertorArray[uid] = new batteryMertor({
@@ -202,7 +203,7 @@ function game(spec, my) {
             batteryMertorArray[uid].x = uid===userId ? 190 : 10;
             batteryMertorArray[uid].y = 43;
             batteryMertorArray[uid].setValue(5);
-            core.rootScene.addChild(batteryMertorArray[uid]);
+            core.battleScene.addChild(batteryMertorArray[uid]);
             
             //出したバッテリー
             batteryNumberArray[uid] = new Sprite(64,64);
@@ -210,7 +211,7 @@ function game(spec, my) {
             batteryNumberArray[uid].x = uid===userId ? 226 : 30;
             batteryNumberArray[uid].y = 110;
             batteryNumberArray[uid].visible = false;
-            core.rootScene.addChild(batteryNumberArray[uid]);
+            core.battleScene.addChild(batteryNumberArray[uid]);
             
             //ダメージラベル
             damageLabelArray[uid] = new MutableText(0,0);
@@ -218,7 +219,7 @@ function game(spec, my) {
             damageLabelArray[uid].y = 210;
             damageLabelArray[uid].visible = false;
             //damageLabelArray[uid].text = '1000';
-            core.rootScene.addChild(damageLabelArray[uid]);
+            core.battleScene.addChild(damageLabelArray[uid]);
         }
         
         //攻撃コマンド
@@ -235,7 +236,7 @@ function game(spec, my) {
         AtackCommand.onPushChargeButton(function() {
             charge();
         });        
-        core.rootScene.addChild(AtackCommand);
+        core.battleScene.addChild(AtackCommand);
         
         //バッテリーコマンド
         BatteryCommand = batteryCommand({
@@ -259,7 +260,7 @@ function game(spec, my) {
         BatteryCommand.onPushOkButton(function() {
             selectBattery();
         });        
-        core.rootScene.addChild(BatteryCommand);
+        core.battleScene.addChild(BatteryCommand);
     }
     
     function refreshMertor(statusArray){

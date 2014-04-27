@@ -133,7 +133,7 @@ function firstTurnPlayerCharge_asFirstTurnplayer() {
         }; 
 
         Game.doAtackCommandPhase(atackCommand);
-        Game.rootScene.tl.delay(60).then(function(){
+        Game.battleScene.tl.delay(60).then(function(){
             Game.onCommand(selectCommand);
             Game.charge();
         });

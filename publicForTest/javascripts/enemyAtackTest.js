@@ -155,7 +155,7 @@ function firstPlayerAtack_asDefenther(){
     function selectCommnad(){
         Game.onCommand(damagePhase);
 
-        Game.rootScene.tl.delay(60).then(function() {
+        Game.battleScene.tl.delay(60).then(function() {
             Game.plusBattery();
         }).delay(20).then(function() {
             Game.selectBattery();

@@ -129,7 +129,7 @@ function firstPlayerAtack_asAtacker(){
     function selectCommand(){
         Game.onCommand(defenthCommandPhase);
         
-        Game.rootScene.tl.delay(60).then(function() {
+        Game.battleScene.tl.delay(60).then(function() {
             Game.moveBatteryCommand();
         }).delay(20).then(function() {
             Game.plusBattery();
