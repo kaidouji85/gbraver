@@ -74,12 +74,15 @@ window.onload = function(){
 };
 
 function firstTurnPlayerCharge_asSecondTurnplayer() {
-    var Game = game({
-        statusArray : gbraverDebug.statusArray,
-        userId : '2'
-    });
+    var Game = game();
     Game.start();
-    Game.onReady(waitPhase);
+    Game.onload = function(){
+        Game.changeBattleScene({
+            statusArray : gbraverDebug.statusArray,
+            userId : '2'            
+        });
+        waitPhase();
+    };
     
     function waitPhase(){
         var waitPhaseData = {

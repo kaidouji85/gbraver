@@ -77,12 +77,15 @@ window.onload = function(){
  * プレイヤーが攻撃を選択する
  */
 function firstPlayerAtack_asAtacker(){
-    var Game = game({
-        statusArray : gbraverDebug.statusArray,
-        userId : '1'
-    });
+    var Game = game();
     Game.start();
-    Game.onReady(waitPhase);
+    Game.onload = function(){
+        Game.changeBattleScene({
+            statusArray : gbraverDebug.statusArray,
+            userId : '1'            
+        });
+        waitPhase();
+    };
     
     function waitPhase(){
         var waitPhaseData = {
