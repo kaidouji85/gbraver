@@ -4,68 +4,70 @@ window.onload = function() {
     var roomId;
     var userId;
     var inputs = null;
-    var Game;
-    socket = io.connect(location.origin);
-    roomId = $("meta[name=roomId]").attr('content');
-    userId = $("meta[name=userId]").attr('content');
-    
-    //ユーザ認証する
-    socket.emit('auth',{
-        userId : userId
-    });
-    
-    //ユーザ認証成功
-    socket.on('successAuth',function(){
-        socket.emit("enterRoom", {
-            roomId : roomId,
-            userId : userId
-        });        
-    });
-    
-    //入室成功
-    socket.on('succesEnterRoom',function(){
-        console.log('succesEnterRoom');
-    });
+    var Game = new game();
+    Game.start();
+    Game.onload = function() {
+        socket = io.connect(location.origin);
+        roomId = $("meta[name=roomId]").attr('content');
+        userId = $("meta[name=userId]").attr('content');
 
-    //全プレイヤーの入室処理が完了した時に呼び出させる処理
-    socket.on("gameStart", function(data) {
-        console.log(data);
-        var statusArray = {};
-        for(var uid in data){
-            statusArray[uid] = data[uid].status;
-        }
-        Game = game({
-            userId : userId,
-            statusArray : statusArray
+        //ユーザ認証する
+        socket.emit('auth', {
+            userId : userId
         });
-        Game.start();
-        Game.onReady(function(){
-            socket.emit('command',{method:'ready'});
+
+        //ユーザ認証成功
+        socket.on('successAuth', function() {
+            socket.emit("enterRoom", {
+                roomId : roomId,
+                userId : userId
+            });
         });
-        
-        Game.onCommand(function(command){
-            socket.emit('command',command);
+
+        //入室成功
+        socket.on('succesEnterRoom', function() {
+            console.log('succesEnterRoom');
         });
-    });
-    
-    socket.on('resp', function(data) {
-        var phase = data.phase;
-        switch(phase){
-            case 'wait':
-                Game.doWaitPhase(data);
-                break;
-            case 'atackCommand':
-                Game.doAtackCommandPhase(data);
-                break;
-            case 'charge':
-                Game.doChargePhase(data);
-                break;
-            case 'defenthCommand':
-                Game.doDefenthCommandPhase(data);
-                break;
-            case 'damage':
-                Game.doDamagePhase(data);
-                break;
-        }
-    });
+
+        //全プレイヤーの入室処理が完了した時に呼び出させる処理
+        socket.on("gameStart", function(data) {
+            console.log(data);
+            var statusArray = {};
+            for (var uid in data) {
+                statusArray[uid] = data[uid].status;
+            }
+            Game.changeBattleScene({
+                userId : userId,
+                statusArray : statusArray
+            });
+            socket.emit('command', {
+                method : 'ready'
+            });
+
+            Game.onCommand(function(command) {
+                socket.emit('command', command);
+            });
+        });
+
+        socket.on('resp', function(data) {
+            var phase = data.phase;
+            switch(phase) {
+                case 'wait':
+                    Game.doWaitPhase(data);
+                    break;
+                case 'atackCommand':
+                    Game.doAtackCommandPhase(data);
+                    break;
+                case 'charge':
+                    Game.doChargePhase(data);
+                    break;
+                case 'defenthCommand':
+                    Game.doDefenthCommandPhase(data);
+                    break;
+                case 'damage':
+                    Game.doDamagePhase(data);
+                    break;
+            }
+        });
+    };
 };
