@@ -14,8 +14,8 @@ function game(spec, my) {
     var WAIT_TIME_ACTIVE_RESET = 30;
 
     var core = new Core(320, 320);
-    var statusArray = $.extend(true, {}, spec.statusArray);
-    var userId = spec.userId;
+    var statusArray;
+    var userId;    
     var charaSpriteArray = {};
     var activeBarArray = {};
     var hpMertorArray = {};
@@ -35,16 +35,24 @@ function game(spec, my) {
     core.battleScene.backgroundColor = "black";
     core.pushScene(core.battleScene);
     preLoad();
+    
     core.onload = function() {
-        initSprite();
         emitReady();
-        core.battleScene.addEventListener('enterframe', function(e) {
-        });
     };
-
+    
     core.onReady = function(fn){
         emitReady = fn;
     };
+    
+    core.changeBattleScene = function(spec){
+        statusArray = $.extend(true, {}, spec.statusArray);
+        userId = spec.userId;        
+        initSprite();
+        core.battleScene.addEventListener('enterframe', function(e) {
+        });                
+    };
+
+
 
     core.doWaitPhase = function(data){
         var turn = data.turn;
@@ -150,9 +158,9 @@ function game(spec, my) {
     };
 
     function preLoad() {
-        for (var uid in statusArray) {
-            core.preload(PICT_PREFIX + statusArray[uid].pictName);
-        }
+        core.preload(PICT_PREFIX+'GranBraver.PNG');
+        core.preload(PICT_PREFIX+'Landozer.PNG');
+        
         core.preload(PICT_PREFIX+PICT_ACTIVE_BAR);
         core.preload(PICT_PREFIX+PICT_ACTIVE_BAR_BACK);
         core.preload(PICT_PREFIX+PICT_BATTERY_GAUGE);

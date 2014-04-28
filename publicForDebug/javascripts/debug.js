@@ -66,9 +66,9 @@ gbraverDebug.statusArray = {
 
 window.onload = function() {
     assert = chai.assert;
-    //firstTurnPlayerCharge_asFirstTurnplayer();
+    firstTurnPlayerCharge_asFirstTurnplayer();
     //firstTurnPlayerCharge_asSecondTurnplayer();
-    firstPlayerAtack_asAtacker();
+    //firstPlayerAtack_asAtacker();
     //firstPlayerAtack_asDefenther();
 };
 
@@ -76,12 +76,18 @@ window.onload = function() {
  * 先攻プレイヤーがチャージを選択する　＃先攻プレイヤー視点
  */
 function firstTurnPlayerCharge_asFirstTurnplayer() {
-    var Game = game({
-        statusArray : gbraverDebug.statusArray,
-        userId : '1'
-    });
+    var Game = game();
+    
     Game.start();
-    Game.onReady(function() {
+    Game.onload = function(){
+        Game.changeBattleScene({
+            statusArray : gbraverDebug.statusArray,
+            userId : '1'
+        });
+        waitPhase();
+    };
+
+    function waitPhase() {
         var waitPhaseData = {
             phase : 'wait',
             atackUserId : '1',
@@ -98,63 +104,75 @@ function firstTurnPlayerCharge_asFirstTurnplayer() {
                     active : 5000
                 }
             }
-        };
+        }; 
+
         Game.doWaitPhase(waitPhaseData);
+        Game.onCommand(function(command){
+            var expect = {
+                method : 'ok'
+            };
+            assert.deepEqual(command, expect, 'ウェイトフェイズ終了時のコマンド送信が正しい');
+            atackCommandPhase();
+        });
+    }
+    
+    function atackCommandPhase() {
+        var atackCommand = {
+            phase : 'atackCommand',
+            statusArray : {
+                1 : {
+                    hp : 3200,
+                    battery : 5,
+                    active : 5000
+                },
+                2 : {
+                    hp : 4700,
+                    battery : 5,
+                    active : 3000
+                }
+            }
+        }; 
+
+        Game.doAtackCommandPhase(atackCommand);
+        
+        console.log('チャージを選択する');
+        Game.onCommand(selectCommand);
+    }
+
+    function selectCommand(command) {
+        var expect = {
+            method : 'charge'
+        };
+        assert.deepEqual(command, expect, 'チャージ選択時のコマンド送信が正しい');
+        chargePhase();
+    }
+
+    function chargePhase() {
+        var charge = {
+            phase : 'charge',
+            statusArray : {
+                1 : {
+                    hp : 3200,
+                    battery : 5,
+                    active : 0
+                },
+                2 : {
+                    hp : 4700,
+                    battery : 5,
+                    active : 3000
+                }
+            }
+        };
+        Game.doChargePhase(charge);
         Game.onCommand(function(command) {
             var expect = {
                 method : 'ok'
             };
-            assert.deepEqual(command,expect,'ウェイトフェイズ終了時のコマンド送信が正しい');
-            
-            var data = {
-                phase : 'atackCommand',
-                statusArray : {
-                    1 : {
-                        hp : 3200,
-                        battery : 5,
-                        active : 5000
-                    },
-                    2 : {
-                        hp : 4700,
-                        battery : 5,
-                        active : 3000
-                    }
-                }
-            };
-            Game.doAtackCommandPhase(data);
-            console.log('チャージを選択');
-            Game.onCommand(function(command) {
-                var expect = {
-                    method : 'charge'
-                };
-                assert.deepEqual(command,expect,'チャージ選択時のコマンド送信が正しい');
-                
-                var data = {
-                    phase : 'charge',
-                    statusArray : {
-                        1 : {
-                            hp : 3200,
-                            battery : 5,
-                            active : 0
-                        },
-                        2 : {
-                            hp : 4700,
-                            battery : 5,
-                            active : 3000
-                        }
-                    }
-                };
-                Game.doChargePhase(data);
-                Game.onCommand(function(command) {
-                    var expect = {
-                        method : 'ok'
-                    };
-                    assert.deepEqual(command,expect,'チャージ終了時のコマンド送信が正しい');
-                    console.log('finish');
-                });
-            });
+            assert.deepEqual(command, expect, 'チャージ終了時のコマンド送信が正しい');
+            console.log('finish');
+            $('title').text('finish');
         });
-    });
+    } 
 }
 
 /**
