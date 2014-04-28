@@ -66,10 +66,10 @@ gbraverDebug.statusArray = {
 
 window.onload = function() {
     assert = chai.assert;
-    firstTurnPlayerCharge_asFirstTurnplayer();
+    //firstTurnPlayerCharge_asFirstTurnplayer();
     //firstTurnPlayerCharge_asSecondTurnplayer();
     //firstPlayerAtack_asAtacker();
-    //firstPlayerAtack_asDefenther();
+    firstPlayerAtack_asDefenther();
 };
 
 /**
@@ -179,12 +179,17 @@ function firstTurnPlayerCharge_asFirstTurnplayer() {
  * 先攻プレイヤーがチャージを選択する　＃後攻プレイヤー視点
  */
 function firstTurnPlayerCharge_asSecondTurnplayer() {
-    var Game = game({
-        statusArray : gbraverDebug.statusArray,
-        userId : '2'
-    });
+    var Game = game();
     Game.start();
-    Game.onReady(function() {
+    Game.onload = function(){
+        Game.changeBattleScene({
+            statusArray : gbraverDebug.statusArray,
+            userId : '2'            
+        });
+        waitPhase();
+    };
+    
+    function waitPhase(){
         var waitPhaseData = {
             phase : 'wait',
             atackUserId : '1',
@@ -203,60 +208,68 @@ function firstTurnPlayerCharge_asSecondTurnplayer() {
             }
         };
         Game.doWaitPhase(waitPhaseData);
-        Game.onCommand(function(command) {
-            console.log(command);
-            var data = {
-                phase : 'atackCommand',
-                statusArray : {
-                    1 : {
-                        hp : 3200,
-                        battery : 5,
-                        active : 5000
-                    },
-                    2 : {
-                        hp : 4700,
-                        battery : 5,
-                        active : 3000
-                    }
+        Game.onCommand(atackCommand);      
+    }
+    
+    function atackCommand(command) {
+        console.log(command);
+        var data = {
+            phase : 'atackCommand',
+            statusArray : {
+                1 : {
+                    hp : 3200,
+                    battery : 5,
+                    active : 5000
+                },
+                2 : {
+                    hp : 4700,
+                    battery : 5,
+                    active : 3000
                 }
-            };
-            Game.doAtackCommandPhase(data);
-            Game.onCommand(function(command) {
-                console.log(command);
-                var data = {
-                    phase : 'charge',
-                    statusArray : {
-                        1 : {
-                            hp : 3200,
-                            battery : 5,
-                            active : 0
-                        },
-                        2 : {
-                            hp : 4700,
-                            battery : 5,
-                            active : 3000
-                        }
-                    }
-                };
-                Game.doChargePhase(data);
-                Game.onCommand(function(command) {
-                    console.log(command);
-                });
-            });
+            }
+        };
+        Game.doAtackCommandPhase(data);
+        Game.onCommand(charge);
+    }
+
+    function charge(command) {
+        console.log(command);
+        var data = {
+            phase : 'charge',
+            statusArray : {
+                1 : {
+                    hp : 3200,
+                    battery : 5,
+                    active : 0
+                },
+                2 : {
+                    hp : 4700,
+                    battery : 5,
+                    active : 3000
+                }
+            }
+        };
+        Game.doChargePhase(data);
+        Game.onCommand(function(command) {
+            console.log('finish');
+            $('title').text('finish');
         });
-    });
+    }
 }
 
 /**
  * バッテリー3で攻撃して2で防御する #攻撃プレイヤー視点
  */
 function firstPlayerAtack_asAtacker(){
-    var Game = game({
-        statusArray : gbraverDebug.statusArray,
-        userId : '1'
-    });
+    var Game = game();
     Game.start();
-    Game.onReady(waitPhase);
+    Game.onload = function(){
+        Game.changeBattleScene({
+            statusArray : gbraverDebug.statusArray,
+            userId : '1'            
+        });
+        waitPhase();
+    };
     
     function waitPhase(){
         var waitPhaseData = {
@@ -399,6 +412,153 @@ function firstPlayerAtack_asAtacker(){
  * バッテリー3で攻撃して2で防御する #防御プレイヤー視点
  */
 function firstPlayerAtack_asDefenther(){
+    var Game = game();
+    Game.start();
+    Game.onload = function(){
+        Game.changeBattleScene({
+            statusArray : gbraverDebug.statusArray,
+            userId : '2'            
+        });
+        waitPhase();
+    };
+    
+    function waitPhase(){
+        var waitPhaseData = {
+            phase : 'wait',
+            atackUserId : '1',
+            turn : 20,
+            statusArray : {
+                2 : {
+                    hp : 4700,
+                    battery : 5,
+                    active : 3000
+                },
+                1 : {
+                    hp : 3200,
+                    battery : 5,
+                    active : 5000
+                }
+            }
+        };
+        Game.doWaitPhase(waitPhaseData); 
+        Game.onCommand(atackCommandPhase);
+    }
+    
+    function atackCommandPhase(command){
+        var data = {
+            phase : 'atackCommand',
+            statusArray : {
+                1 : {
+                    hp : 3200,
+                    battery : 5,
+                    active : 5000
+                },
+                2 : {
+                    hp : 4700,
+                    battery : 5,
+                    active : 3000
+                }
+            }
+        };
+        Game.doAtackCommandPhase(data);
+        Game.onCommand(defenthCommandPhase);
+    }
+    
+
+    function defenthCommandPhase(command) {
+        var expect = {
+            method : 'ok'
+        };
+        assert.deepEqual(command, expect, '攻撃コマンドフェイズのコマンドが正しい');
+
+        var data = {
+            phase : 'defenthCommand',
+            statusArray : {
+                1 : {
+                    hp : 3200,
+                    battery : 5,
+                    active : 5000
+                },
+                2 : {
+                    hp : 4700,
+                    battery : 5,
+                    active : 3000
+                }
+            }
+        };
+        Game.doDefenthCommandPhase(data);
+        selectCommnad();
+    }
+    
+    function selectCommnad(){
+        Game.onCommand(damagePhase);
+        console.log('2で防御する');
+    }
+    
+    function damagePhase(command) {
+        var expect = {
+
+            method : 'defenth',
+            param : {
+                battery : 2
+            }
+        };
+        assert.deepEqual(command, expect, '防御コマンドフェイズのコマンドが正しい');
+
+        var data = {
+            phase : 'damage',
+            hit : 1,
+            damage : 1600,
+            atackBattery : 3,
+            defenthBattery : 2,
+            statusArray : {
+                1 : {
+                    hp : 3200,
+                    battery : 2,
+                    active : 0
+                },
+                2 : {
+                    hp : 3100,
+                    battery : 3,
+                    active : 3000
+                }
+            }
+        };
+        Game.doDamagePhase(data);
+        Game.onCommand(waitPhase2);
+    }
+
+    function waitPhase2(command){
+        var expect = {
+            method : 'ok'
+        };
+        assert.deepEqual(command, expect, 'ウェイトフェイズ2のコマンドが正しい');
+
+        var data = {
+            phase : 'wait',
+            atackUserId : '2',
+            turn : 14,
+            statusArray : {
+                1 : {
+                    hp : 3200,
+                    battery : 2,
+                    active : 3500
+                },
+                2 : {
+                    hp : 3100,
+                    battery : 4,
+                    active : 5100
+                }
+            }
+        };
+        Game.doWaitPhase(data);
+        Game.onCommand(function(command) {
+            console.log('finish');
+            $('title').text('finish');
+        });
+    }
+
+    /*
     var Game = game({
         statusArray : gbraverDebug.statusArray,
         userId : '2'
@@ -519,5 +679,6 @@ function firstPlayerAtack_asDefenther(){
                 });
             });
         });   
-    });    
+    });
+    */    
 }

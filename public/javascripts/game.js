@@ -24,7 +24,6 @@ function game(spec, my) {
     var damageLabelArray = {};
     var AtackCommand;
     var BatteryCommand;
-    var emitReady = function(){};
     var emitCommand = function(){};
     var selectMaxBattery = 5;
     var selectMinBattery = 0;
@@ -35,14 +34,6 @@ function game(spec, my) {
     core.battleScene.backgroundColor = "black";
     core.pushScene(core.battleScene);
     preLoad();
-    
-    core.onload = function() {
-        emitReady();
-    };
-    
-    core.onReady = function(fn){
-        emitReady = fn;
-    };
     
     core.changeBattleScene = function(spec){
         statusArray = $.extend(true, {}, spec.statusArray);
