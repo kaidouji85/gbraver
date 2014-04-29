@@ -1,4 +1,8 @@
 function game(spec, my) {
+    /**
+     * ゲームコア
+     */
+    
     var PICT_PREFIX = location.origin + '/images/';
     var PICT_ACTIVE_BAR = 'activeBar.png';
     var PICT_ACTIVE_BAR_BACK = 'activeBack.png';
@@ -11,9 +15,37 @@ function game(spec, my) {
     var PICT_ICON_OK = 'iconOk.png';
     var PICT_BATTERY_NUMBER = 'batteryNumber.png';
     var PICT_ICON_PREV = 'iconPrev.png';
-    var WAIT_TIME_ACTIVE_RESET = 30;
 
     var core = new Core(320, 320);
+        
+    core.fps = 60;
+    core.battleScene = new Scene();
+    core.battleScene.backgroundColor = "black";
+    core.pushScene(core.battleScene);
+    preLoad();
+    
+    function preLoad() {
+        core.preload(PICT_PREFIX+'GranBraver.PNG');
+        core.preload(PICT_PREFIX+'Landozer.PNG');
+        
+        core.preload(PICT_PREFIX+PICT_ACTIVE_BAR);
+        core.preload(PICT_PREFIX+PICT_ACTIVE_BAR_BACK);
+        core.preload(PICT_PREFIX+PICT_BATTERY_GAUGE);
+        core.preload(PICT_PREFIX+PICT_BATTERY_BACK);
+        core.preload(PICT_PREFIX+PICT_ICON_ATACK);
+        core.preload(PICT_PREFIX+PICT_ICON_CHARGE);
+        core.preload(PICT_PREFIX+PICT_ICON_PLUS);
+        core.preload(PICT_PREFIX+PICT_ICON_MINUS);
+        core.preload(PICT_PREFIX+PICT_ICON_OK);
+        core.preload(PICT_PREFIX+PICT_BATTERY_NUMBER); 
+        core.preload(PICT_PREFIX + PICT_ICON_PREV);
+    }
+
+    /**
+     * 戦闘シーン
+     */
+    var WAIT_TIME_ACTIVE_RESET = 30;
+
     var statusArray;
     var userId;    
     var charaSpriteArray = {};
@@ -28,13 +60,7 @@ function game(spec, my) {
     var selectMaxBattery = 5;
     var selectMinBattery = 0;
     var atackUserId = -1;
-        
-    core.fps = 60;
-    core.battleScene = new Scene();
-    core.battleScene.backgroundColor = "black";
-    core.pushScene(core.battleScene);
-    preLoad();
-    
+
     core.changeBattleScene = function(spec){
         statusArray = $.extend(true, {}, spec.statusArray);
         userId = spec.userId;        
@@ -42,8 +68,103 @@ function game(spec, my) {
         core.battleScene.addEventListener('enterframe', function(e) {
         });                
     };
+    
+    function initSprite() {
+        for(var uid in statusArray){
+            //キャラクタースプライト
+            charaSpriteArray[uid] = new Sprite(128, 128);
+            charaSpriteArray[uid].image = core.assets[PICT_PREFIX+statusArray[uid].pictName];
+            charaSpriteArray[uid].x = uid===userId ? 192 : 0;
+            charaSpriteArray[uid].y = 80;
+            charaSpriteArray[uid].scaleX = uid===userId ? 1 : -1;
+            core.battleScene.addChild(charaSpriteArray[uid]);
 
-
+            //HPメータ
+            hpMertorArray[uid] = hpMertor();
+            hpMertorArray[uid].y = 4;
+            hpMertorArray[uid].x = uid===userId ? 190 : 10;
+            hpMertorArray[uid].setValue(statusArray[uid].hp);
+            core.battleScene.addChild(hpMertorArray[uid]);            
+            
+            //アクティブゲージ
+            activeBarArray[uid] = customBar({
+                barImage : core.assets[PICT_PREFIX + PICT_ACTIVE_BAR],
+                backImage : core.assets[PICT_PREFIX + PICT_ACTIVE_BAR_BACK],
+                maxValue : 120,
+                direction : uid===userId ? 'right' : 'left'
+            });
+            activeBarArray[uid].x = uid===userId ? 190 : 130;
+            activeBarArray[uid].y = 22;
+            core.battleScene.addChild(activeBarArray[uid]);
+           
+            //バッテリーメータ
+            batteryMertorArray[uid] = new batteryMertor({
+                gaugeImage : core.assets[PICT_PREFIX + PICT_BATTERY_GAUGE],
+                backImage : core.assets[PICT_PREFIX + PICT_BATTERY_BACK],
+                direction : uid===userId ? 'right' : 'left'
+            });
+            batteryMertorArray[uid].x = uid===userId ? 190 : 10;
+            batteryMertorArray[uid].y = 43;
+            batteryMertorArray[uid].setValue(5);
+            core.battleScene.addChild(batteryMertorArray[uid]);
+            
+            //出したバッテリー
+            batteryNumberArray[uid] = new Sprite(64,64);
+            batteryNumberArray[uid].image = core.assets[PICT_PREFIX + PICT_BATTERY_NUMBER];
+            batteryNumberArray[uid].x = uid===userId ? 226 : 30;
+            batteryNumberArray[uid].y = 110;
+            batteryNumberArray[uid].visible = false;
+            core.battleScene.addChild(batteryNumberArray[uid]);
+            
+            //ダメージラベル
+            damageLabelArray[uid] = new MutableText(0,0);
+            damageLabelArray[uid].x = uid===userId ? 230 : 20;
+            damageLabelArray[uid].y = 210;
+            damageLabelArray[uid].visible = false;
+            //damageLabelArray[uid].text = '1000';
+            core.battleScene.addChild(damageLabelArray[uid]);
+        }
+        
+        //攻撃コマンド
+        AtackCommand = atackCommand({
+            atackImage : core.assets[PICT_PREFIX + PICT_ICON_ATACK],
+            chargeImage : core.assets[PICT_PREFIX + PICT_ICON_CHARGE]
+        });
+        AtackCommand.setVisible(false);
+        AtackCommand.x = 100;
+        AtackCommand.y = 80;
+        AtackCommand.onPushAtackButton(function(){
+           core.moveBatteryCommand();
+        });
+        AtackCommand.onPushChargeButton(function() {
+            core.charge();
+        });        
+        core.battleScene.addChild(AtackCommand);
+        
+        //バッテリーコマンド
+        BatteryCommand = batteryCommand({
+           plusImage : core.assets[PICT_PREFIX+PICT_ICON_PLUS],
+           minusImage : core.assets[PICT_PREFIX+PICT_ICON_MINUS],
+           okImage : core.assets[PICT_PREFIX+PICT_ICON_OK],
+           prevImage : core.assets[PICT_PREFIX + PICT_ICON_PREV]
+        });
+        BatteryCommand.setVisible(false);
+        BatteryCommand.x = 100;
+        BatteryCommand.y = 80;
+        BatteryCommand.onPushPlusButton(function() {
+            core.plusBattery();
+        });
+        BatteryCommand.onPushMinuxButton(function() {
+            core.minusBattery();
+        });
+        BatteryCommand.onPushPrevButton(function() {
+            core.prevAtackCommand();
+        });
+        BatteryCommand.onPushOkButton(function() {
+            core.selectBattery();
+        });        
+        core.battleScene.addChild(BatteryCommand);
+    }
 
     core.doWaitPhase = function(data){
         var turn = data.turn;
@@ -147,120 +268,6 @@ function game(spec, my) {
     core.onCommand = function(fn) {
         emitCommand = fn;
     };
-
-    function preLoad() {
-        core.preload(PICT_PREFIX+'GranBraver.PNG');
-        core.preload(PICT_PREFIX+'Landozer.PNG');
-        
-        core.preload(PICT_PREFIX+PICT_ACTIVE_BAR);
-        core.preload(PICT_PREFIX+PICT_ACTIVE_BAR_BACK);
-        core.preload(PICT_PREFIX+PICT_BATTERY_GAUGE);
-        core.preload(PICT_PREFIX+PICT_BATTERY_BACK);
-        core.preload(PICT_PREFIX+PICT_ICON_ATACK);
-        core.preload(PICT_PREFIX+PICT_ICON_CHARGE);
-        core.preload(PICT_PREFIX+PICT_ICON_PLUS);
-        core.preload(PICT_PREFIX+PICT_ICON_MINUS);
-        core.preload(PICT_PREFIX+PICT_ICON_OK);
-        core.preload(PICT_PREFIX+PICT_BATTERY_NUMBER); 
-        core.preload(PICT_PREFIX + PICT_ICON_PREV);
-    }
-
-    function initSprite() {
-        for(var uid in statusArray){
-            //キャラクタースプライト
-            charaSpriteArray[uid] = new Sprite(128, 128);
-            charaSpriteArray[uid].image = core.assets[PICT_PREFIX+statusArray[uid].pictName];
-            charaSpriteArray[uid].x = uid===userId ? 192 : 0;
-            charaSpriteArray[uid].y = 80;
-            charaSpriteArray[uid].scaleX = uid===userId ? 1 : -1;
-            core.battleScene.addChild(charaSpriteArray[uid]);
-
-            //HPメータ
-            hpMertorArray[uid] = hpMertor();
-            hpMertorArray[uid].y = 4;
-            hpMertorArray[uid].x = uid===userId ? 190 : 10;
-            hpMertorArray[uid].setValue(statusArray[uid].hp);
-            core.battleScene.addChild(hpMertorArray[uid]);            
-            
-            //アクティブゲージ
-            activeBarArray[uid] = customBar({
-                barImage : core.assets[PICT_PREFIX + PICT_ACTIVE_BAR],
-                backImage : core.assets[PICT_PREFIX + PICT_ACTIVE_BAR_BACK],
-                maxValue : 120,
-                direction : uid===userId ? 'right' : 'left'
-            });
-            activeBarArray[uid].x = uid===userId ? 190 : 130;
-            activeBarArray[uid].y = 22;
-            core.battleScene.addChild(activeBarArray[uid]);
-           
-            //バッテリーメータ
-            batteryMertorArray[uid] = new batteryMertor({
-                gaugeImage : core.assets[PICT_PREFIX + PICT_BATTERY_GAUGE],
-                backImage : core.assets[PICT_PREFIX + PICT_BATTERY_BACK],
-                direction : uid===userId ? 'right' : 'left'
-            });
-            batteryMertorArray[uid].x = uid===userId ? 190 : 10;
-            batteryMertorArray[uid].y = 43;
-            batteryMertorArray[uid].setValue(5);
-            core.battleScene.addChild(batteryMertorArray[uid]);
-            
-            //出したバッテリー
-            batteryNumberArray[uid] = new Sprite(64,64);
-            batteryNumberArray[uid].image = core.assets[PICT_PREFIX + PICT_BATTERY_NUMBER];
-            batteryNumberArray[uid].x = uid===userId ? 226 : 30;
-            batteryNumberArray[uid].y = 110;
-            batteryNumberArray[uid].visible = false;
-            core.battleScene.addChild(batteryNumberArray[uid]);
-            
-            //ダメージラベル
-            damageLabelArray[uid] = new MutableText(0,0);
-            damageLabelArray[uid].x = uid===userId ? 230 : 20;
-            damageLabelArray[uid].y = 210;
-            damageLabelArray[uid].visible = false;
-            //damageLabelArray[uid].text = '1000';
-            core.battleScene.addChild(damageLabelArray[uid]);
-        }
-        
-        //攻撃コマンド
-        AtackCommand = atackCommand({
-            atackImage : core.assets[PICT_PREFIX + PICT_ICON_ATACK],
-            chargeImage : core.assets[PICT_PREFIX + PICT_ICON_CHARGE]
-        });
-        AtackCommand.setVisible(false);
-        AtackCommand.x = 100;
-        AtackCommand.y = 80;
-        AtackCommand.onPushAtackButton(function(){
-           core.moveBatteryCommand();
-        });
-        AtackCommand.onPushChargeButton(function() {
-            core.charge();
-        });        
-        core.battleScene.addChild(AtackCommand);
-        
-        //バッテリーコマンド
-        BatteryCommand = batteryCommand({
-           plusImage : core.assets[PICT_PREFIX+PICT_ICON_PLUS],
-           minusImage : core.assets[PICT_PREFIX+PICT_ICON_MINUS],
-           okImage : core.assets[PICT_PREFIX+PICT_ICON_OK],
-           prevImage : core.assets[PICT_PREFIX + PICT_ICON_PREV]
-        });
-        BatteryCommand.setVisible(false);
-        BatteryCommand.x = 100;
-        BatteryCommand.y = 80;
-        BatteryCommand.onPushPlusButton(function() {
-            core.plusBattery();
-        });
-        BatteryCommand.onPushMinuxButton(function() {
-            core.minusBattery();
-        });
-        BatteryCommand.onPushPrevButton(function() {
-            core.prevAtackCommand();
-        });
-        BatteryCommand.onPushOkButton(function() {
-            core.selectBattery();
-        });        
-        core.battleScene.addChild(BatteryCommand);
-    }
     
     function refreshMertor(statusArray){
         for(var uid in statusArray){
