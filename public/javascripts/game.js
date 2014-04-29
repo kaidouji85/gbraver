@@ -22,6 +22,7 @@ function game(spec, my) {
     core.battleScene = new Scene();
     core.battleScene.backgroundColor = "black";
     core.pushScene(core.battleScene);
+    core.roomSelectScene;
     preLoad();
     
     function preLoad() {
@@ -65,6 +66,7 @@ function game(spec, my) {
         statusArray = $.extend(true, {}, spec.statusArray);
         userId = spec.userId;        
         initSprite();
+        
         core.battleScene.addEventListener('enterframe', function(e) {
         });                
     };
@@ -355,5 +357,15 @@ function game(spec, my) {
         });        
     }
 
+
+    /**
+     * ルームセレクト
+     */
+    
+    core.changeRoomSelectScene = function(spec){
+        core.roomSelectScene = new roomSelectScene(spec);
+        core.replaceScene(core.roomSelectScene);
+    };
+    
     return core;
 }
