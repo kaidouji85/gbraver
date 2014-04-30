@@ -2,7 +2,10 @@ function game(spec, my) {
     /**
      * ゲームコア
      */
+    var core = new Core(320, 320);
     
+    //TODO : 戦闘画面の画像パス定数もcore.XXXXXのようにパブリック関数化したい
+    //       また、画像パス定数の値をPICT_PREFIX+XXXXのようにフルパスにしたい
     var PICT_PREFIX = location.origin + '/images/';
     var PICT_ACTIVE_BAR = 'activeBar.png';
     var PICT_ACTIVE_BAR_BACK = 'activeBack.png';
@@ -15,8 +18,7 @@ function game(spec, my) {
     var PICT_ICON_OK = 'iconOk.png';
     var PICT_BATTERY_NUMBER = 'batteryNumber.png';
     var PICT_ICON_PREV = 'iconPrev.png';
-
-    var core = new Core(320, 320);
+    core.PICT_ENTER_ROOM_BUTTON = PICT_PREFIX + 'enterRoomButton.png';       
         
     core.fps = 60;
     core.battleScene = new Scene();
@@ -26,9 +28,9 @@ function game(spec, my) {
     preLoad();
     
     function preLoad() {
+        //戦闘画面
         core.preload(PICT_PREFIX+'GranBraver.PNG');
         core.preload(PICT_PREFIX+'Landozer.PNG');
-        
         core.preload(PICT_PREFIX+PICT_ACTIVE_BAR);
         core.preload(PICT_PREFIX+PICT_ACTIVE_BAR_BACK);
         core.preload(PICT_PREFIX+PICT_BATTERY_GAUGE);
@@ -40,6 +42,9 @@ function game(spec, my) {
         core.preload(PICT_PREFIX+PICT_ICON_OK);
         core.preload(PICT_PREFIX+PICT_BATTERY_NUMBER); 
         core.preload(PICT_PREFIX + PICT_ICON_PREV);
+        
+        //ルームセレクト画面
+        core.preload(core.PICT_ENTER_ROOM_BUTTON);
     }
 
     /**
@@ -363,8 +368,15 @@ function game(spec, my) {
      */
     
     core.changeRoomSelectScene = function(spec){
+        spec.core = core;
         core.roomSelectScene = new roomSelectScene(spec);
         core.replaceScene(core.roomSelectScene);
+        core.roomSelectScene.initSprite();
+    };
+    
+    //TODO : roomSelectSceneの存在確認チェックを入れたい
+    core.onEnterRoom = function(fn){
+        core.roomSelectScene.onEnterRoom(fn);
     };
     
     return core;
