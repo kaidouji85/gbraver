@@ -22,8 +22,6 @@ function game(spec, my) {
         
     core.fps = 60;
     core.battleScene = new Scene();
-    core.battleScene.backgroundColor = "black";
-    core.pushScene(core.battleScene);
     core.roomSelectScene;
     preLoad();
     
@@ -68,12 +66,11 @@ function game(spec, my) {
     var atackUserId = -1;
 
     core.changeBattleScene = function(spec){
+        core.battleScene.backgroundColor = "black";
+        core.pushScene(core.battleScene);
         statusArray = $.extend(true, {}, spec.statusArray);
         userId = spec.userId;        
-        initSprite();
-        
-        core.battleScene.addEventListener('enterframe', function(e) {
-        });                
+        initSprite();                
     };
     
     function initSprite() {
