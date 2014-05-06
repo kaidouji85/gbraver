@@ -82,12 +82,12 @@ function enterRoomAndGameStart(){
     };
     
     function enterRoom(){
-        console.log('0番の部屋に入室する');
-        Game.onEnterRoom(function(param){
+        console.log('2番の部屋に入室する');
+        Game.onEnterRoom(function(data){
             var expect = {
-                roomId : 0
+                roomId : 2
             };
-            assert.deepEqual(expect,param,'入室コールバック関数が返す入室情報が正しい');
+            assert.deepEqual(expect,data,'入室コールバック関数が返す入室情報が正しい');
             Game.roomSelectScene.tl.delay(60).then(changeBattleScene);
         });
     }

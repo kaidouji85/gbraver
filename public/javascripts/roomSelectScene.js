@@ -3,8 +3,11 @@ function roomSelectScene(spec,my){
     var userId = spec.userId;
     var core = spec.core;
     var emitEnterRoom;
-    var enterRoomButtonArray;
+    var enterRoomButtonArray = new Array();
     var labelEnterRoomWait;
+    
+    var CNT_MAX_ENTER_ROOM = 5;
+    
     that.backgroundColor = 'black';
     
     that.onEnterRoom = function(fn){
@@ -13,11 +16,18 @@ function roomSelectScene(spec,my){
     
     that.initSprite = function(){
         //入室ボタン
-        enterRoomButtonArray = new Button('ルーム0<br>入室','blue',40,200);
-        enterRoomButtonArray.x = 50;
-        enterRoomButtonArray.y = 10;
-        enterRoomButtonArray.addEventListener(Event.TOUCH_START,onPushEnterRoom);
-        that.addChild(enterRoomButtonArray);
+        for(var i=0; i<CNT_MAX_ENTER_ROOM; i++){
+            var button = new Button('ルーム'+i+'<br>入室','blue',40,200);
+            enterRoomButtonArray.push(button);
+        }
+        enterRoomButtonArray.forEach(function(button,i){
+            button.x = 50;
+            button.y = 10+60*i;
+            button.addEventListener(Event.TOUCH_END,function(e){
+                pushEnterRoom(i);
+            });            
+            that.addChild(button);
+        });    
        
         //入室中
         labelEnterRoomWait = new Label('待機中');
@@ -28,13 +38,15 @@ function roomSelectScene(spec,my){
         that.addChild(labelEnterRoomWait);
     };
     
-    function onPushEnterRoom(){
-        enterRoomButtonArray.visible = false;
+    function pushEnterRoom(roomId){
+        enterRoomButtonArray.forEach(function(button){
+            button.visible = false;
+        });
         labelEnterRoomWait.visible = true;
         emitEnterRoom({
-            roomId : 0
+            roomId : roomId
         });
     }
-    
+   
     return that;
 }

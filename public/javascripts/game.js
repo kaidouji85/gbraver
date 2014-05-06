@@ -359,7 +359,6 @@ function game(spec, my) {
     /**
      * ルームセレクト
      */
-    
     core.changeRoomSelectScene = function(spec){
         spec.core = core;
         core.roomSelectScene = new roomSelectScene(spec);
