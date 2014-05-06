@@ -8,7 +8,6 @@ window.onload = function() {
     Game.start();
     Game.onload = function() {
         socket = io.connect(location.origin);
-        roomId = $("meta[name=roomId]").attr('content');
         userId = $("meta[name=userId]").attr('content');
 
         //ユーザ認証する
@@ -18,9 +17,12 @@ window.onload = function() {
 
         //ユーザ認証成功
         socket.on('successAuth', function() {
-            socket.emit("enterRoom", {
-                roomId : roomId,
+            Game.changeRoomSelectScene({
                 userId : userId
+            });
+            
+            Game.onEnterRoom(function(data){
+                socket.emit('enterRoom',data);
             });
         });
 
@@ -31,7 +33,6 @@ window.onload = function() {
 
         //全プレイヤーの入室処理が完了した時に呼び出させる処理
         socket.on("gameStart", function(data) {
-            console.log(data);
             var statusArray = {};
             for (var uid in data) {
                 statusArray[uid] = data[uid].status;

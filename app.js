@@ -60,8 +60,8 @@ passport.use(new GoogleStrategy({
 //ルーティング
 app.get('/', routes.index);
 app.get('/users', user.list);
-app.post('/battle', routes.battle);
-app.get('/selectRoom',routes.selectRoom);
+app.get('/gameMain', routes.gameMain);
+//app.get('/selectRoom',routes.selectRoom);
 app.get('/auth/google', passport.authenticate('google'));
 app.get('/auth/google/return', function (req, res, next) {
     passport.authenticate('google', function (err, user) {
@@ -69,7 +69,7 @@ app.get('/auth/google/return', function (req, res, next) {
             user : user
         };
         if(user){
-            res.redirect('/selectRoom');
+            res.redirect('/gameMain');
         } else {
             res.redirect('/');
         }

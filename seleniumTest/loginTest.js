@@ -14,7 +14,11 @@ test.describe('ログイン', function() {
                      withCapabilities(webdriver.Capabilities.chrome()).
                      build();
     });
-
+    
+    test.after(function() {
+        driver.quit();
+    });
+    
     test.it('ログインするとルームID、ユーザIDがmetaタグに格納される', function(){
         driver.get(URL);
         driver.findElement(webdriver.By.name('googleLogin')).click();
@@ -31,26 +35,11 @@ test.describe('ログイン', function() {
 
         driver.wait(function() {
             return driver.getTitle().then(function(title) {
-                return 'Gブレイバー ルームセレクト' === title;
+                return 'Gブレイバー' === title;
             });
-        }, 1000);
-        driver.findElement(webdriver.By.name('roomId')).sendKeys(0);
-        driver.findElement(webdriver.By.name('enterRoom')).click();
-
-        driver.wait(function() {
-            return driver.getTitle().then(function(title) {
-                return 'Gブレイバー 戦闘' === title;
-            });
-        }, 1000);
+        }, 10000);
         driver.findElement(webdriver.By.name('userId')).getAttribute('content').then(function(userId){
-            driver.findElement(webdriver.By.name('roomId')).getAttribute('content').then(function(roomId){
-                assert.equal(userId,NODE_MAIL_ADDRESS,'正しいユーザIDがMetaタグに格納されている');
-                assert.equal(roomId,0,'正しいルームIDがMetaタグに格納されている');
-            });
+            assert.equal(userId,NODE_MAIL_ADDRESS,'正しいユーザIDがMetaタグに格納されている');
         });
-    });
-
-    test.after(function() {
-        driver.quit();
     });
 });
