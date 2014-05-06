@@ -11,11 +11,7 @@ function game(spec, my) {
     var PICT_ACTIVE_BAR_BACK = 'activeBack.png';
     var PICT_BATTERY_GAUGE = 'batteryGauge.png';
     var PICT_BATTERY_BACK = 'batteryBack.png';
-    var PICT_ICON_PLUS = 'iconPlus.png';
-    var PICT_ICON_MINUS = 'iconMinus.png';
-    var PICT_ICON_OK = 'iconOk.png';
     var PICT_BATTERY_NUMBER = 'batteryNumber.png';
-    var PICT_ICON_PREV = 'iconPrev.png';
     core.ICON_WIDTH = 74;
     core.ICON_HEIGHT = 24;
         
@@ -32,11 +28,7 @@ function game(spec, my) {
         core.preload(PICT_PREFIX+PICT_ACTIVE_BAR_BACK);
         core.preload(PICT_PREFIX+PICT_BATTERY_GAUGE);
         core.preload(PICT_PREFIX+PICT_BATTERY_BACK);
-        core.preload(PICT_PREFIX+PICT_ICON_PLUS);
-        core.preload(PICT_PREFIX+PICT_ICON_MINUS);
-        core.preload(PICT_PREFIX+PICT_ICON_OK);
         core.preload(PICT_PREFIX+PICT_BATTERY_NUMBER); 
-        core.preload(PICT_PREFIX + PICT_ICON_PREV);
     }
 
     /**
@@ -55,6 +47,10 @@ function game(spec, my) {
     var BatteryCommand;
     var atackIcon;
     var chargeIcon;
+    var plusIcon;
+    var minusIcon;
+    var okIcon;
+    var prevIcon;
     var emitCommand = function(){};
     var selectMaxBattery = 5;
     var selectMinBattery = 0;
@@ -124,44 +120,51 @@ function game(spec, my) {
             core.battleScene.addChild(damageLabelArray[uid]);
         }
         
-        //攻撃コマンド
-        atackIcon = new Button('こうげき','light',core.ICON_HEIGHT,core.ICON_WIDTH);
+        //攻撃アイコン
+        atackIcon = new Button('攻撃','light',core.ICON_HEIGHT,core.ICON_WIDTH);
         atackIcon.x = 100;
         atackIcon.y = 80;
         atackIcon.addEventListener(Event.TOUCH_END,core.moveBatteryCommand);
         core.battleScene.addChild(atackIcon);
         
+        //チャージアイコン
         chargeIcon = new Button('チャージ','light',core.ICON_HEIGHT,core.ICON_WIDTH);
         chargeIcon.x = 100;
-        chargeIcon.y = 80 +40*1;
+        chargeIcon.y = 80 +40;
         chargeIcon.addEventListener(Event.TOUCH_END,core.charge);
         core.battleScene.addChild(chargeIcon);
         
         setAtackCommandVisible(false);
         
-        //バッテリーコマンド
-        BatteryCommand = batteryCommand({
-           plusImage : core.assets[PICT_PREFIX+PICT_ICON_PLUS],
-           minusImage : core.assets[PICT_PREFIX+PICT_ICON_MINUS],
-           okImage : core.assets[PICT_PREFIX+PICT_ICON_OK],
-           prevImage : core.assets[PICT_PREFIX + PICT_ICON_PREV]
-        });
-        BatteryCommand.setVisible(false);
-        BatteryCommand.x = 100;
-        BatteryCommand.y = 80;
-        BatteryCommand.onPushPlusButton(function() {
-            core.plusBattery();
-        });
-        BatteryCommand.onPushMinuxButton(function() {
-            core.minusBattery();
-        });
-        BatteryCommand.onPushPrevButton(function() {
-            core.prevAtackCommand();
-        });
-        BatteryCommand.onPushOkButton(function() {
-            core.selectBattery();
-        });        
-        core.battleScene.addChild(BatteryCommand);
+        //+アイコン
+        plusIcon = new Button('+','light',core.ICON_HEIGHT,core.ICON_WIDTH);
+        plusIcon.x = 100;
+        plusIcon.y = 80;
+        plusIcon.addEventListener(Event.TOUCH_END,core.plusBattery);
+        core.battleScene.addChild(plusIcon);
+        
+        //-アイコン
+        minusIcon = new Button('-','light',core.ICON_HEIGHT,core.ICON_WIDTH);
+        minusIcon.x = 100;
+        minusIcon.y = 80 + 40;
+        minusIcon.addEventListener(Event.TOUCH_END,core.minusBattery);
+        core.battleScene.addChild(minusIcon);
+        
+        //決定アイコン
+        okIcon = new Button('決定','light',core.ICON_HEIGHT,core.ICON_WIDTH);
+        okIcon.x = 100;
+        okIcon.y = 80 + 40*2;
+        okIcon.addEventListener(Event.TOUCH_END,core.selectBattery);
+        core.battleScene.addChild(okIcon);
+        
+        //戻るアイコン
+        prevIcon = new Button('戻る','light',core.ICON_HEIGHT,core.ICON_WIDTH);
+        prevIcon.x = 100;
+        prevIcon.y = 200;
+        prevIcon.addEventListener(Event.TOUCH_END,core.prevAtackCommand);
+        core.battleScene.addChild(prevIcon);
+        
+        setBatteryCommandVisible(false);
     }
 
     core.doWaitPhase = function(data){
@@ -281,8 +284,8 @@ function game(spec, my) {
     };
     
     function viewBatteryCommand(){
-        BatteryCommand.setVisible(true);
-        BatteryCommand.setPrevButtonVisible(userId===atackUserId ? true : false);
+        setBatteryCommandVisible(true);
+        prevIcon.visible = userId===atackUserId ? true : false;
         batteryNumberArray[userId].visible = true;
         selectMaxBattery = getSelectMaxBattery();
         selectMinBattery = getSelectMinBattery();
@@ -314,7 +317,7 @@ function game(spec, my) {
     
     core.prevAtackCommand = function(){
         setAtackCommandVisible(true);
-        BatteryCommand.setVisible(false);
+        setBatteryCommandVisible(false);
         batteryNumberArray[userId].visible = false;        
     };
     
@@ -325,7 +328,7 @@ function game(spec, my) {
     
     core.selectBattery = function(){
         var battery = batteryNumberArray[userId].frame;
-        BatteryCommand.setVisible(false);
+        setBatteryCommandVisible(false);
         batteryNumberArray[userId].visible = false;
         
         if(atackUserId===userId){
@@ -356,6 +359,13 @@ function game(spec, my) {
     function setAtackCommandVisible(visible){
         atackIcon.visible = visible;
         chargeIcon.visible = visible;
+    }
+    
+    function setBatteryCommandVisible(visible){
+        plusIcon.visible = visible;
+        minusIcon.visible = visible;
+        okIcon.visible = visible;
+        prevIcon.visible = visible;
     }
 
 
