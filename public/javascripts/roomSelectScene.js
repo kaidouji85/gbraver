@@ -17,7 +17,7 @@ function roomSelectScene(spec,my){
     that.initSprite = function(){
         //入室ボタン
         for(var i=0; i<CNT_MAX_ENTER_ROOM; i++){
-            var button = new Button('ルーム'+i+'<br>入室','blue',40,200);
+            var button = new Button('ルーム'+i,'blue',40,200);
             enterRoomButtonArray.push(button);
         }
         enterRoomButtonArray.forEach(function(button,i){
