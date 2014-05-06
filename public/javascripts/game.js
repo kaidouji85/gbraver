@@ -2,7 +2,7 @@ function game(spec, my) {
     /**
      * ゲームコア
      */
-    var core = new Core(320, 320);
+    var core = new Core(320, 480);
     
     //TODO : 戦闘画面の画像パス定数もcore.XXXXXのようにパブリック関数化したい
     //       また、画像パス定数の値をPICT_PREFIX+XXXXのようにフルパスにしたい
@@ -14,6 +14,8 @@ function game(spec, my) {
     var PICT_BATTERY_NUMBER = 'batteryNumber.png';
     core.ICON_WIDTH = 74;
     core.ICON_HEIGHT = 24;
+    core.COMMAND_POX_X = 100;
+    core.COMMAND_POS_Y = 240;
         
     core.fps = 60;
     core.battleScene = new Scene();
@@ -122,15 +124,15 @@ function game(spec, my) {
         
         //攻撃アイコン
         atackIcon = new Button('攻撃','light',core.ICON_HEIGHT,core.ICON_WIDTH);
-        atackIcon.x = 100;
-        atackIcon.y = 80;
+        atackIcon.x = core.COMMAND_POX_X;
+        atackIcon.y = core.COMMAND_POS_Y;
         atackIcon.addEventListener(Event.TOUCH_END,core.moveBatteryCommand);
         core.battleScene.addChild(atackIcon);
         
         //チャージアイコン
         chargeIcon = new Button('チャージ','light',core.ICON_HEIGHT,core.ICON_WIDTH);
-        chargeIcon.x = 100;
-        chargeIcon.y = 80 +40;
+        chargeIcon.x = core.COMMAND_POX_X;
+        chargeIcon.y = core.COMMAND_POS_Y +40;
         chargeIcon.addEventListener(Event.TOUCH_END,core.charge);
         core.battleScene.addChild(chargeIcon);
         
@@ -138,29 +140,29 @@ function game(spec, my) {
         
         //+アイコン
         plusIcon = new Button('+','light',core.ICON_HEIGHT,core.ICON_WIDTH);
-        plusIcon.x = 100;
-        plusIcon.y = 80;
+        plusIcon.x = core.COMMAND_POX_X;
+        plusIcon.y = core.COMMAND_POS_Y;
         plusIcon.addEventListener(Event.TOUCH_END,core.plusBattery);
         core.battleScene.addChild(plusIcon);
         
         //-アイコン
         minusIcon = new Button('-','light',core.ICON_HEIGHT,core.ICON_WIDTH);
-        minusIcon.x = 100;
-        minusIcon.y = 80 + 40;
+        minusIcon.x = core.COMMAND_POX_X;
+        minusIcon.y = core.COMMAND_POS_Y + 40;
         minusIcon.addEventListener(Event.TOUCH_END,core.minusBattery);
         core.battleScene.addChild(minusIcon);
         
         //決定アイコン
         okIcon = new Button('決定','light',core.ICON_HEIGHT,core.ICON_WIDTH);
-        okIcon.x = 100;
-        okIcon.y = 80 + 40*2;
+        okIcon.x = core.COMMAND_POX_X;
+        okIcon.y = core.COMMAND_POS_Y + 40*2;
         okIcon.addEventListener(Event.TOUCH_END,core.selectBattery);
         core.battleScene.addChild(okIcon);
         
         //戻るアイコン
         prevIcon = new Button('戻る','light',core.ICON_HEIGHT,core.ICON_WIDTH);
-        prevIcon.x = 100;
-        prevIcon.y = 200;
+        prevIcon.x = core.COMMAND_POX_X;
+        prevIcon.y = core.COMMAND_POS_Y + 40*3;
         prevIcon.addEventListener(Event.TOUCH_END,core.prevAtackCommand);
         core.battleScene.addChild(prevIcon);
         

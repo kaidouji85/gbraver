@@ -66,10 +66,10 @@ gbraverDebug.statusArray = {
 
 window.onload = function() {
     assert = chai.assert;
-    //firstTurnPlayerCharge_asFirstTurnplayer();
+    firstTurnPlayerCharge_asFirstTurnplayer();
     //firstTurnPlayerCharge_asSecondTurnplayer();
     //firstPlayerAtack_asAtacker();
-    firstPlayerAtack_asDefenther();
+    //firstPlayerAtack_asDefenther();
 };
 
 /**
