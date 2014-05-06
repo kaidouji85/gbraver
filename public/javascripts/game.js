@@ -12,10 +12,10 @@ function game(spec, my) {
     var PICT_BATTERY_GAUGE = 'batteryGauge.png';
     var PICT_BATTERY_BACK = 'batteryBack.png';
     var PICT_BATTERY_NUMBER = 'batteryNumber.png';
-    core.ICON_WIDTH = 74;
-    core.ICON_HEIGHT = 24;
-    core.COMMAND_POX_X = 100;
-    core.COMMAND_POS_Y = 240;
+    core.ICON_WIDTH = 124;
+    core.ICON_HEIGHT = 40;
+    core.COMMAND_POX_X = 8;
+    core.COMMAND_POS_Y = 300;
         
     core.fps = 60;
     core.battleScene = new Scene();
@@ -131,8 +131,8 @@ function game(spec, my) {
         
         //チャージアイコン
         chargeIcon = new Button('チャージ','light',core.ICON_HEIGHT,core.ICON_WIDTH);
-        chargeIcon.x = core.COMMAND_POX_X;
-        chargeIcon.y = core.COMMAND_POS_Y +40;
+        chargeIcon.x = core.COMMAND_POX_X + core.ICON_WIDTH + 32;
+        chargeIcon.y = core.COMMAND_POS_Y;
         chargeIcon.addEventListener(Event.TOUCH_END,core.charge);
         core.battleScene.addChild(chargeIcon);
         
@@ -147,22 +147,22 @@ function game(spec, my) {
         
         //-アイコン
         minusIcon = new Button('-','light',core.ICON_HEIGHT,core.ICON_WIDTH);
-        minusIcon.x = core.COMMAND_POX_X;
-        minusIcon.y = core.COMMAND_POS_Y + 40;
+        minusIcon.x = core.COMMAND_POX_X + core.ICON_WIDTH + 32;
+        minusIcon.y = core.COMMAND_POS_Y;
         minusIcon.addEventListener(Event.TOUCH_END,core.minusBattery);
         core.battleScene.addChild(minusIcon);
         
         //決定アイコン
         okIcon = new Button('決定','light',core.ICON_HEIGHT,core.ICON_WIDTH);
         okIcon.x = core.COMMAND_POX_X;
-        okIcon.y = core.COMMAND_POS_Y + 40*2;
+        okIcon.y = core.COMMAND_POS_Y + core.ICON_HEIGHT + 16;
         okIcon.addEventListener(Event.TOUCH_END,core.selectBattery);
         core.battleScene.addChild(okIcon);
         
         //戻るアイコン
         prevIcon = new Button('戻る','light',core.ICON_HEIGHT,core.ICON_WIDTH);
-        prevIcon.x = core.COMMAND_POX_X;
-        prevIcon.y = core.COMMAND_POS_Y + 40*3;
+        prevIcon.x = core.COMMAND_POX_X + core.ICON_WIDTH + 32;
+        prevIcon.y = core.COMMAND_POS_Y + core.ICON_HEIGHT + 16;
         prevIcon.addEventListener(Event.TOUCH_END,core.prevAtackCommand);
         core.battleScene.addChild(prevIcon);
         
