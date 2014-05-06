@@ -126,6 +126,7 @@ function game(spec, my) {
         atackIcon = new Button('攻撃','light',core.ICON_HEIGHT,core.ICON_WIDTH);
         atackIcon.x = core.COMMAND_POX_X;
         atackIcon.y = core.COMMAND_POS_Y;
+        atackIcon.visible = false;
         atackIcon.addEventListener(Event.TOUCH_END,core.moveBatteryCommand);
         core.battleScene.addChild(atackIcon);
         
@@ -133,15 +134,15 @@ function game(spec, my) {
         chargeIcon = new Button('チャージ','light',core.ICON_HEIGHT,core.ICON_WIDTH);
         chargeIcon.x = core.COMMAND_POX_X + core.ICON_WIDTH + 32;
         chargeIcon.y = core.COMMAND_POS_Y;
+        chargeIcon.visible = false;
         chargeIcon.addEventListener(Event.TOUCH_END,core.charge);
         core.battleScene.addChild(chargeIcon);
-        
-        setAtackCommandVisible(false);
         
         //+アイコン
         plusIcon = new Button('+','light',core.ICON_HEIGHT,core.ICON_WIDTH);
         plusIcon.x = core.COMMAND_POX_X;
         plusIcon.y = core.COMMAND_POS_Y;
+        plusIcon.visible = false;
         plusIcon.addEventListener(Event.TOUCH_END,core.plusBattery);
         core.battleScene.addChild(plusIcon);
         
@@ -149,6 +150,7 @@ function game(spec, my) {
         minusIcon = new Button('-','light',core.ICON_HEIGHT,core.ICON_WIDTH);
         minusIcon.x = core.COMMAND_POX_X + core.ICON_WIDTH + 32;
         minusIcon.y = core.COMMAND_POS_Y;
+        minusIcon.visible = false;
         minusIcon.addEventListener(Event.TOUCH_END,core.minusBattery);
         core.battleScene.addChild(minusIcon);
         
@@ -156,6 +158,7 @@ function game(spec, my) {
         okIcon = new Button('決定','light',core.ICON_HEIGHT,core.ICON_WIDTH);
         okIcon.x = core.COMMAND_POX_X;
         okIcon.y = core.COMMAND_POS_Y + core.ICON_HEIGHT + 16;
+        okIcon.visible = false;
         okIcon.addEventListener(Event.TOUCH_END,core.selectBattery);
         core.battleScene.addChild(okIcon);
         
@@ -163,10 +166,9 @@ function game(spec, my) {
         prevIcon = new Button('戻る','light',core.ICON_HEIGHT,core.ICON_WIDTH);
         prevIcon.x = core.COMMAND_POX_X + core.ICON_WIDTH + 32;
         prevIcon.y = core.COMMAND_POS_Y + core.ICON_HEIGHT + 16;
+        prevIcon.visible = false;
         prevIcon.addEventListener(Event.TOUCH_END,core.prevAtackCommand);
         core.battleScene.addChild(prevIcon);
-        
-        setBatteryCommandVisible(false);
     }
 
     core.doWaitPhase = function(data){
