@@ -5,6 +5,7 @@ function atackCommand(spec,my){
     var that = new Group();
     var atackImage = spec.atackImage;
     var chargeImage = spec.chargeImage;
+    var scene = spec.scene;
     var atackIcon = new Sprite(ICON_WIDTH,ICON_HEIGHT);
     var chargeIcon = new Sprite(ICON_WIDTH,ICON_HEIGHT);
     

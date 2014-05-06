@@ -11,13 +11,13 @@ function game(spec, my) {
     var PICT_ACTIVE_BAR_BACK = 'activeBack.png';
     var PICT_BATTERY_GAUGE = 'batteryGauge.png';
     var PICT_BATTERY_BACK = 'batteryBack.png';
-    var PICT_ICON_ATACK = 'iconAtack.png';
-    var PICT_ICON_CHARGE = 'iconCharge.png';
     var PICT_ICON_PLUS = 'iconPlus.png';
     var PICT_ICON_MINUS = 'iconMinus.png';
     var PICT_ICON_OK = 'iconOk.png';
     var PICT_BATTERY_NUMBER = 'batteryNumber.png';
     var PICT_ICON_PREV = 'iconPrev.png';
+    core.ICON_WIDTH = 74;
+    core.ICON_HEIGHT = 24;
         
     core.fps = 60;
     core.battleScene = new Scene();
@@ -32,8 +32,6 @@ function game(spec, my) {
         core.preload(PICT_PREFIX+PICT_ACTIVE_BAR_BACK);
         core.preload(PICT_PREFIX+PICT_BATTERY_GAUGE);
         core.preload(PICT_PREFIX+PICT_BATTERY_BACK);
-        core.preload(PICT_PREFIX+PICT_ICON_ATACK);
-        core.preload(PICT_PREFIX+PICT_ICON_CHARGE);
         core.preload(PICT_PREFIX+PICT_ICON_PLUS);
         core.preload(PICT_PREFIX+PICT_ICON_MINUS);
         core.preload(PICT_PREFIX+PICT_ICON_OK);
@@ -54,8 +52,9 @@ function game(spec, my) {
     var batteryMertorArray = {};
     var batteryNumberArray = {};
     var damageLabelArray = {};
-    var AtackCommand;
     var BatteryCommand;
+    var atackIcon;
+    var chargeIcon;
     var emitCommand = function(){};
     var selectMaxBattery = 5;
     var selectMinBattery = 0;
@@ -126,20 +125,19 @@ function game(spec, my) {
         }
         
         //攻撃コマンド
-        AtackCommand = atackCommand({
-            atackImage : core.assets[PICT_PREFIX + PICT_ICON_ATACK],
-            chargeImage : core.assets[PICT_PREFIX + PICT_ICON_CHARGE]
-        });
-        AtackCommand.setVisible(false);
-        AtackCommand.x = 100;
-        AtackCommand.y = 80;
-        AtackCommand.onPushAtackButton(function(){
-           core.moveBatteryCommand();
-        });
-        AtackCommand.onPushChargeButton(function() {
-            core.charge();
-        });        
-        core.battleScene.addChild(AtackCommand);
+        atackIcon = new Button('こうげき','light',core.ICON_HEIGHT,core.ICON_WIDTH);
+        atackIcon.x = 100;
+        atackIcon.y = 80;
+        atackIcon.addEventListener(Event.TOUCH_END,core.moveBatteryCommand);
+        core.battleScene.addChild(atackIcon);
+        
+        chargeIcon = new Button('チャージ','light',core.ICON_HEIGHT,core.ICON_WIDTH);
+        chargeIcon.x = 100;
+        chargeIcon.y = 80 +40*1;
+        chargeIcon.addEventListener(Event.TOUCH_END,core.charge);
+        core.battleScene.addChild(chargeIcon);
+        
+        setAtackCommandVisible(false);
         
         //バッテリーコマンド
         BatteryCommand = batteryCommand({
@@ -182,7 +180,7 @@ function game(spec, my) {
     core.doAtackCommandPhase = function(data){
         refreshMertor(data.statusArray);
         if(atackUserId===userId){
-            AtackCommand.setVisible(true);    
+            setAtackCommandVisible(true); 
         } else {
             core.battleScene.tl.delay(1).then(function(){
                 emitCommand({method:'ok'});
@@ -278,7 +276,7 @@ function game(spec, my) {
     }
 
     core.moveBatteryCommand = function(){
-        AtackCommand.setVisible(false);
+        setAtackCommandVisible(false);
         viewBatteryCommand();
     };
     
@@ -315,13 +313,13 @@ function game(spec, my) {
     };
     
     core.prevAtackCommand = function(){
-        AtackCommand.setVisible(true);
+        setAtackCommandVisible(true);
         BatteryCommand.setVisible(false);
         batteryNumberArray[userId].visible = false;        
     };
     
     core.charge = function(){
-        AtackCommand.setVisible(false);
+        setAtackCommandVisible(false);
         emitCommand({method:'charge'});
     };
     
@@ -353,6 +351,11 @@ function game(spec, my) {
                 battery : battery
             }
         });        
+    }
+    
+    function setAtackCommandVisible(visible){
+        atackIcon.visible = visible;
+        chargeIcon.visible = visible;
     }
 
 

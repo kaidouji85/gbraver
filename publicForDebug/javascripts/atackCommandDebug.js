@@ -22,7 +22,8 @@ window.onload = function() {
         //攻撃コマンド
         var AtackCommand = atackCommand({
             atackImage : core.assets[PICT_PREFIX + PICT_ICON_ATACK],
-            chargeImage : core.assets[PICT_PREFIX + PICT_ICON_CHARGE]
+            chargeImage : core.assets[PICT_PREFIX + PICT_ICON_CHARGE],
+            scene : core.rootScene
         });
         AtackCommand.x = 30;
         AtackCommand.y = 30;
