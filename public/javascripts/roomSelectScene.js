@@ -3,7 +3,7 @@ function roomSelectScene(spec,my){
     var userId = spec.userId;
     var core = spec.core;
     var emitEnterRoom;
-    var enterRoomButton;
+    var enterRoomButtonArray;
     var labelEnterRoomWait;
     that.backgroundColor = 'black';
     
@@ -13,13 +13,12 @@ function roomSelectScene(spec,my){
     
     that.initSprite = function(){
         //入室ボタン
-        enterRoomButton = new Sprite(200,40);
-        enterRoomButton.image = core.assets[core.PICT_ENTER_ROOM_BUTTON];
-        enterRoomButton.x = 10;
-        enterRoomButton.y = 10;
-        enterRoomButton.addEventListener(Event.TOUCH_START,onPushEnterRoom);
-        that.addChild(enterRoomButton);
-        
+        enterRoomButtonArray = new Button('ルーム0<br>入室','blue',40,200);
+        enterRoomButtonArray.x = 50;
+        enterRoomButtonArray.y = 10;
+        enterRoomButtonArray.addEventListener(Event.TOUCH_START,onPushEnterRoom);
+        that.addChild(enterRoomButtonArray);
+       
         //入室中
         labelEnterRoomWait = new Label('待機中');
         labelEnterRoomWait.color = "white";
@@ -30,7 +29,7 @@ function roomSelectScene(spec,my){
     };
     
     function onPushEnterRoom(){
-        enterRoomButton.visible = false;
+        enterRoomButtonArray.visible = false;
         labelEnterRoomWait.visible = true;
         emitEnterRoom({
             roomId : 0

@@ -18,7 +18,6 @@ function game(spec, my) {
     var PICT_ICON_OK = 'iconOk.png';
     var PICT_BATTERY_NUMBER = 'batteryNumber.png';
     var PICT_ICON_PREV = 'iconPrev.png';
-    core.PICT_ENTER_ROOM_BUTTON = PICT_PREFIX + 'enterRoomButton.png';       
         
     core.fps = 60;
     core.battleScene = new Scene();
@@ -40,9 +39,6 @@ function game(spec, my) {
         core.preload(PICT_PREFIX+PICT_ICON_OK);
         core.preload(PICT_PREFIX+PICT_BATTERY_NUMBER); 
         core.preload(PICT_PREFIX + PICT_ICON_PREV);
-        
-        //ルームセレクト画面
-        core.preload(core.PICT_ENTER_ROOM_BUTTON);
     }
 
     /**
