@@ -45,7 +45,7 @@ window.onload = function() {
                 method : 'ready'
             });
 
-            Game.onCommand(function(command) {
+            Game.battleScene.onCommand(function(command) {
                 socket.emit('command', command);
             });
         });
@@ -54,19 +54,19 @@ window.onload = function() {
             var phase = data.phase;
             switch(phase) {
                 case 'wait':
-                    Game.doWaitPhase(data);
+                    Game.battleScene.doWaitPhase(data);
                     break;
                 case 'atackCommand':
-                    Game.doAtackCommandPhase(data);
+                    Game.battleScene.doAtackCommandPhase(data);
                     break;
                 case 'charge':
-                    Game.doChargePhase(data);
+                    Game.battleScene.doChargePhase(data);
                     break;
                 case 'defenthCommand':
-                    Game.doDefenthCommandPhase(data);
+                    Game.battleScene.doDefenthCommandPhase(data);
                     break;
                 case 'damage':
-                    Game.doDamagePhase(data);
+                    Game.battleScene.doDamagePhase(data);
                     break;
             }
         });
