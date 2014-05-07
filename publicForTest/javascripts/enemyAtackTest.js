@@ -105,8 +105,8 @@ function firstPlayerAtack_asDefenther(){
                 }
             }
         };
-        Game.doWaitPhase(waitPhaseData); 
-        Game.onCommand(atackCommandPhase);
+        Game.battleScene.doWaitPhase(waitPhaseData); 
+        Game.battleScene.onCommand(atackCommandPhase);
     }
     
     function atackCommandPhase(command){
@@ -125,8 +125,8 @@ function firstPlayerAtack_asDefenther(){
                 }
             }
         };
-        Game.doAtackCommandPhase(data);
-        Game.onCommand(defenthCommandPhase);
+        Game.battleScene.doAtackCommandPhase(data);
+        Game.battleScene.onCommand(defenthCommandPhase);
     }
     
 
@@ -151,17 +151,17 @@ function firstPlayerAtack_asDefenther(){
                 }
             }
         };
-        Game.doDefenthCommandPhase(data);
+        Game.battleScene.doDefenthCommandPhase(data);
         selectCommnad();
     }
     
     function selectCommnad(){
-        Game.onCommand(damagePhase);
+        Game.battleScene.onCommand(damagePhase);
 
         Game.battleScene.tl.delay(60).then(function() {
-            Game.plusBattery();
+            Game.battleScene.plusBattery();
         }).delay(20).then(function() {
-            Game.selectBattery();
+            Game.battleScene.selectBattery();
         });
   
     }
@@ -195,8 +195,8 @@ function firstPlayerAtack_asDefenther(){
                 }
             }
         };
-        Game.doDamagePhase(data);
-        Game.onCommand(waitPhase2);
+        Game.battleScene.doDamagePhase(data);
+        Game.battleScene.onCommand(waitPhase2);
     }
 
     function waitPhase2(command){
@@ -222,8 +222,8 @@ function firstPlayerAtack_asDefenther(){
                 }
             }
         };
-        Game.doWaitPhase(data);
-        Game.onCommand(function(command) {
+        Game.battleScene.doWaitPhase(data);
+        Game.battleScene.onCommand(function(command) {
             console.log('finish');
             $('title').text('finish');
         });

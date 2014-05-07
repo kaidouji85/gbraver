@@ -106,8 +106,8 @@ function firstTurnPlayerCharge_asFirstTurnplayer() {
             }
         }; 
 
-        Game.doWaitPhase(waitPhaseData);
-        Game.onCommand(function(command){
+        Game.battleScene.doWaitPhase(waitPhaseData);
+        Game.battleScene.onCommand(function(command){
             var expect = {
                 method : 'ok'
             };
@@ -133,10 +133,10 @@ function firstTurnPlayerCharge_asFirstTurnplayer() {
             }
         }; 
 
-        Game.doAtackCommandPhase(atackCommand);
+        Game.battleScene.doAtackCommandPhase(atackCommand);
         Game.battleScene.tl.delay(60).then(function(){
-            Game.onCommand(selectCommand);
-            Game.charge();
+            Game.battleScene.onCommand(selectCommand);
+            Game.battleScene.charge();
         });
     }
 
@@ -164,8 +164,8 @@ function firstTurnPlayerCharge_asFirstTurnplayer() {
                 }
             }
         };
-        Game.doChargePhase(charge);
-        Game.onCommand(function(command) {
+        Game.battleScene.doChargePhase(charge);
+        Game.battleScene.onCommand(function(command) {
             var expect = {
                 method : 'ok'
             };
