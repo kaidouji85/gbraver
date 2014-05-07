@@ -105,8 +105,8 @@ function firstPlayerAtack_asAtacker(){
                 }
             }
         };
-        Game.doWaitPhase(waitPhaseData);
-        Game.onCommand(atackCommandPhase);
+        Game.battleScene.doWaitPhase(waitPhaseData);
+        Game.battleScene.onCommand(atackCommandPhase);
     }
     
     function atackCommandPhase(command){
@@ -125,21 +125,21 @@ function firstPlayerAtack_asAtacker(){
                 }
             }
         };
-        Game.doAtackCommandPhase(data);
+        Game.battleScene.doAtackCommandPhase(data);
         selectCommand();
     }
     
     function selectCommand(){
-        Game.onCommand(defenthCommandPhase);
+        Game.battleScene.onCommand(defenthCommandPhase);
         
         Game.battleScene.tl.delay(60).then(function() {
-            Game.moveBatteryCommand();
+            Game.battleScene.moveBatteryCommand();
         }).delay(20).then(function() {
-            Game.plusBattery();
+            Game.battleScene.plusBattery();
         }).delay(20).then(function() {
-            Game.plusBattery();
+            Game.battleScene.plusBattery();
         }).delay(20).then(function() {
-            Game.selectBattery();
+            Game.battleScene.selectBattery();
         });
     }
     
@@ -167,8 +167,8 @@ function firstPlayerAtack_asAtacker(){
                 }
             }
         };
-        Game.doDefenthCommandPhase(data);
-        Game.onCommand(damagePhase);
+        Game.battleScene.doDefenthCommandPhase(data);
+        Game.battleScene.onCommand(damagePhase);
     }
 
     function damagePhase(command) {
@@ -196,8 +196,8 @@ function firstPlayerAtack_asAtacker(){
                 }
             }
         };
-        Game.doDamagePhase(data);
-        Game.onCommand(waitPhase2);
+        Game.battleScene.doDamagePhase(data);
+        Game.battleScene.onCommand(waitPhase2);
     }
     
     function waitPhase2(command){
@@ -223,8 +223,8 @@ function firstPlayerAtack_asAtacker(){
                 }
             }
         };
-        Game.doWaitPhase(data); 
-        Game.onCommand(finish); 
+        Game.battleScene.doWaitPhase(data); 
+        Game.battleScene.onCommand(finish); 
     }
     
     function finish(command){
