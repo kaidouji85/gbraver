@@ -46,7 +46,7 @@ function game(spec, my) {
         core.roomSelectScene.initSprite();//TODO : initSprite()をchangeRoom()の中で実行したい。
     };
     
-    //TODO : roomSelectSceneの存在確認チェックを入れたい
+    //TODO : この関数を消して、直接roomSelectSceneからonEnterRoom()を呼び出すようにしたい
     core.onEnterRoom = function(fn){
         core.roomSelectScene.onEnterRoom(fn);
     };

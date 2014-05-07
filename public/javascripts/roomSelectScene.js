@@ -38,6 +38,7 @@ function roomSelectScene(spec,my){
         that.addChild(labelEnterRoomWait);
     };
     
+    that.pushEnterRoom = pushEnterRoom;
     function pushEnterRoom(roomId){
         enterRoomButtonArray.forEach(function(button){
             button.visible = false;
