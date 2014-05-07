@@ -87,7 +87,7 @@ function battleScene(spec,my){
         atackIcon.x = core.COMMAND_POX_X;
         atackIcon.y = core.COMMAND_POS_Y;
         atackIcon.visible = false;
-        atackIcon.addEventListener(Event.TOUCH_END,core.moveBatteryCommand);
+        atackIcon.addEventListener(Event.TOUCH_END,moveBatteryCommand);
         that.addChild(atackIcon);
         
         //チャージアイコン
@@ -95,7 +95,7 @@ function battleScene(spec,my){
         chargeIcon.x = core.COMMAND_POX_X + core.ICON_WIDTH + 32;
         chargeIcon.y = core.COMMAND_POS_Y;
         chargeIcon.visible = false;
-        chargeIcon.addEventListener(Event.TOUCH_END,core.charge);
+        chargeIcon.addEventListener(Event.TOUCH_END,charge);
         that.addChild(chargeIcon);
         
         //+アイコン
@@ -103,7 +103,7 @@ function battleScene(spec,my){
         plusIcon.x = core.COMMAND_POX_X;
         plusIcon.y = core.COMMAND_POS_Y;
         plusIcon.visible = false;
-        plusIcon.addEventListener(Event.TOUCH_END,core.plusBattery);
+        plusIcon.addEventListener(Event.TOUCH_END,plusBattery);
         that.addChild(plusIcon);
         
         //-アイコン
@@ -111,7 +111,7 @@ function battleScene(spec,my){
         minusIcon.x = core.COMMAND_POX_X + core.ICON_WIDTH + 32;
         minusIcon.y = core.COMMAND_POS_Y;
         minusIcon.visible = false;
-        minusIcon.addEventListener(Event.TOUCH_END,core.minusBattery);
+        minusIcon.addEventListener(Event.TOUCH_END,minusBattery);
         that.addChild(minusIcon);
         
         //決定アイコン
@@ -119,7 +119,7 @@ function battleScene(spec,my){
         okIcon.x = core.COMMAND_POX_X;
         okIcon.y = core.COMMAND_POS_Y + core.ICON_HEIGHT + 16;
         okIcon.visible = false;
-        okIcon.addEventListener(Event.TOUCH_END,core.selectBattery);
+        okIcon.addEventListener(Event.TOUCH_END,selectBattery);
         that.addChild(okIcon);
         
         //戻るアイコン
@@ -127,11 +127,12 @@ function battleScene(spec,my){
         prevIcon.x = core.COMMAND_POX_X + core.ICON_WIDTH + 32;
         prevIcon.y = core.COMMAND_POS_Y + core.ICON_HEIGHT + 16;
         prevIcon.visible = false;
-        prevIcon.addEventListener(Event.TOUCH_END,core.prevAtackCommand);
+        prevIcon.addEventListener(Event.TOUCH_END,prevAtackCommand);
         that.addChild(prevIcon);
     }
-
-    that.doWaitPhase = function(data){
+    
+    that.doWaitPhase = doWaitPhase;
+    function doWaitPhase(data){
         var turn = data.turn;
         atackUserId = data.atackUserId;
         for(var uid in statusArray) {
@@ -144,7 +145,8 @@ function battleScene(spec,my){
         });
     };
     
-    that.doAtackCommandPhase = function(data){
+    that.doAtackCommandPhase = doAtackCommandPhase;
+    function doAtackCommandPhase(data){
         refreshMertor(data.statusArray);
         if(atackUserId===userId){
             setAtackCommandVisible(true); 
@@ -155,14 +157,16 @@ function battleScene(spec,my){
         }
     };
     
-    that.doChargePhase = function(data){
+    that.doChargePhase = doChargePhase;
+    function doChargePhase(data){
         refreshMertor(data.statusArray);
         that.tl.delay(WAIT_TIME_ACTIVE_RESET).then(function(){
             emitCommand({method:'ok'});
         });
     };
     
-    that.doDefenthCommandPhase = function(data){
+    that.doDefenthCommandPhase = doDefenthCommandPhase;
+    function doDefenthCommandPhase(data){
         refreshMertor(data.statusArray);
         if(atackUserId===userId){
             that.tl.delay(30).then(function(){
@@ -173,7 +177,8 @@ function battleScene(spec,my){
         }
     };
     
-    that.doDamagePhase = function(data){
+    that.doDamagePhase = doDamagePhase;
+    function doDamagePhase(data){
         var atackBattery = data.atackBattery;
         var defenthBattery = data.defenthBattery;
         var damage = data.damage;
@@ -230,7 +235,8 @@ function battleScene(spec,my){
         }        
     }
     
-    that.onCommand = function(fn) {
+    that.onCommand = onCommand;
+    function onCommand(fn) {
         emitCommand = fn;
     };
     
@@ -242,7 +248,8 @@ function battleScene(spec,my){
         }
     }
 
-    that.moveBatteryCommand = function(){
+    that.moveBatteryCommand = moveBatteryCommand;
+    function moveBatteryCommand(){
         setAtackCommandVisible(false);
         viewBatteryCommand();
     };
@@ -265,32 +272,37 @@ function battleScene(spec,my){
         return userId===atackUserId ? 1 : 0;
     }
     
-    that.plusBattery = function(){
+    that.plusBattery = plusBattery;
+    function plusBattery(){
         var number = batteryNumberArray[userId].frame;
         if(number<selectMaxBattery){
             batteryNumberArray[userId].frame ++;    
         }
     };
     
-    that.minusBattery = function (){
+    that.minusBattery = minusBattery;
+    function minusBattery(){
         var number = batteryNumberArray[userId].frame;
         if(selectMinBattery<number){
             batteryNumberArray[userId].frame --;    
         }
     };
     
-    that.prevAtackCommand = function(){
+    that.prevAtackCommand = prevAtackCommand;
+    function prevAtackCommand(){
         setAtackCommandVisible(true);
         setBatteryCommandVisible(false);
         batteryNumberArray[userId].visible = false;        
     };
     
-    that.charge = function(){
+    that.charge = charge;
+    function charge(){
         setAtackCommandVisible(false);
         emitCommand({method:'charge'});
     };
     
-    that.selectBattery = function(){
+    that.selectBattery = selectBattery;
+    function selectBattery(){
         var battery = batteryNumberArray[userId].frame;
         setBatteryCommandVisible(false);
         batteryNumberArray[userId].visible = false;

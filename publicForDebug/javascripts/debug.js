@@ -66,10 +66,10 @@ gbraverDebug.statusArray = {
 
 window.onload = function() {
     assert = chai.assert;
-    firstTurnPlayerCharge_asFirstTurnplayer();
+    //firstTurnPlayerCharge_asFirstTurnplayer();
     //firstTurnPlayerCharge_asSecondTurnplayer();
     //firstPlayerAtack_asAtacker();
-    //firstPlayerAtack_asDefenther();
+    firstPlayerAtack_asDefenther();
 };
 
 /**
@@ -106,8 +106,8 @@ function firstTurnPlayerCharge_asFirstTurnplayer() {
             }
         }; 
 
-        Game.doWaitPhase(waitPhaseData);
-        Game.onCommand(function(command){
+        Game.battleScene.doWaitPhase(waitPhaseData);
+        Game.battleScene.onCommand(function(command){
             var expect = {
                 method : 'ok'
             };
@@ -133,10 +133,10 @@ function firstTurnPlayerCharge_asFirstTurnplayer() {
             }
         }; 
 
-        Game.doAtackCommandPhase(atackCommand);
+        Game.battleScene.doAtackCommandPhase(atackCommand);
         
         console.log('チャージを選択する');
-        Game.onCommand(selectCommand);
+        Game.battleScene.onCommand(selectCommand);
     }
 
     function selectCommand(command) {
@@ -163,8 +163,8 @@ function firstTurnPlayerCharge_asFirstTurnplayer() {
                 }
             }
         };
-        Game.doChargePhase(charge);
-        Game.onCommand(function(command) {
+        Game.battleScene.doChargePhase(charge);
+        Game.battleScene.onCommand(function(command) {
             var expect = {
                 method : 'ok'
             };
@@ -207,8 +207,8 @@ function firstTurnPlayerCharge_asSecondTurnplayer() {
                 }
             }
         };
-        Game.doWaitPhase(waitPhaseData);
-        Game.onCommand(atackCommand);      
+        Game.battleScene.doWaitPhase(waitPhaseData);
+        Game.battleScene.onCommand(atackCommand);      
     }
     
     function atackCommand(command) {
@@ -228,8 +228,8 @@ function firstTurnPlayerCharge_asSecondTurnplayer() {
                 }
             }
         };
-        Game.doAtackCommandPhase(data);
-        Game.onCommand(charge);
+        Game.battleScene.doAtackCommandPhase(data);
+        Game.battleScene.onCommand(charge);
     }
 
     function charge(command) {
@@ -249,8 +249,8 @@ function firstTurnPlayerCharge_asSecondTurnplayer() {
                 }
             }
         };
-        Game.doChargePhase(data);
-        Game.onCommand(function(command) {
+        Game.battleScene.doChargePhase(data);
+        Game.battleScene.onCommand(function(command) {
             console.log('finish');
             $('title').text('finish');
         });
@@ -289,8 +289,8 @@ function firstPlayerAtack_asAtacker(){
                 }
             }
         };
-        Game.doWaitPhase(waitPhaseData);
-        Game.onCommand(atackCommandPhase);
+        Game.battleScene.doWaitPhase(waitPhaseData);
+        Game.battleScene.onCommand(atackCommandPhase);
     }
     
     function atackCommandPhase(command){
@@ -309,12 +309,12 @@ function firstPlayerAtack_asAtacker(){
                 }
             }
         };
-        Game.doAtackCommandPhase(data);
+        Game.battleScene.doAtackCommandPhase(data);
         selectCommand();
     }
     
     function selectCommand(){
-        Game.onCommand(defenthCommandPhase);
+        Game.battleScene.onCommand(defenthCommandPhase);
         console.log('3で攻撃する');
     }
     
@@ -342,8 +342,8 @@ function firstPlayerAtack_asAtacker(){
                 }
             }
         };
-        Game.doDefenthCommandPhase(data);
-        Game.onCommand(damagePhase);
+        Game.battleScene.doDefenthCommandPhase(data);
+        Game.battleScene.onCommand(damagePhase);
     }
 
     function damagePhase(command) {
@@ -371,8 +371,8 @@ function firstPlayerAtack_asAtacker(){
                 }
             }
         };
-        Game.doDamagePhase(data);
-        Game.onCommand(waitPhase2);
+        Game.battleScene.doDamagePhase(data);
+        Game.battleScene.onCommand(waitPhase2);
     }
     
     function waitPhase2(command){
@@ -398,8 +398,8 @@ function firstPlayerAtack_asAtacker(){
                 }
             }
         };
-        Game.doWaitPhase(data); 
-        Game.onCommand(finish); 
+        Game.battleScene.doWaitPhase(data); 
+        Game.battleScene.onCommand(finish); 
     }
     
     function finish(command){
@@ -440,8 +440,8 @@ function firstPlayerAtack_asDefenther(){
                 }
             }
         };
-        Game.doWaitPhase(waitPhaseData); 
-        Game.onCommand(atackCommandPhase);
+        Game.battleScene.doWaitPhase(waitPhaseData); 
+        Game.battleScene.onCommand(atackCommandPhase);
     }
     
     function atackCommandPhase(command){
@@ -460,8 +460,8 @@ function firstPlayerAtack_asDefenther(){
                 }
             }
         };
-        Game.doAtackCommandPhase(data);
-        Game.onCommand(defenthCommandPhase);
+        Game.battleScene.doAtackCommandPhase(data);
+        Game.battleScene.onCommand(defenthCommandPhase);
     }
     
 
@@ -486,12 +486,12 @@ function firstPlayerAtack_asDefenther(){
                 }
             }
         };
-        Game.doDefenthCommandPhase(data);
+        Game.battleScene.doDefenthCommandPhase(data);
         selectCommnad();
     }
     
     function selectCommnad(){
-        Game.onCommand(damagePhase);
+        Game.battleScene.onCommand(damagePhase);
         console.log('2で防御する');
     }
     
@@ -524,8 +524,8 @@ function firstPlayerAtack_asDefenther(){
                 }
             }
         };
-        Game.doDamagePhase(data);
-        Game.onCommand(waitPhase2);
+        Game.battleScene.doDamagePhase(data);
+        Game.battleScene.onCommand(waitPhase2);
     }
 
     function waitPhase2(command){
@@ -551,8 +551,8 @@ function firstPlayerAtack_asDefenther(){
                 }
             }
         };
-        Game.doWaitPhase(data);
-        Game.onCommand(function(command) {
+        Game.battleScene.doWaitPhase(data);
+        Game.battleScene.onCommand(function(command) {
             console.log('finish');
             $('title').text('finish');
         });
