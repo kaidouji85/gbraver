@@ -24,6 +24,11 @@ function battleScene(spec,my){
     var atackUserId = -1;
 
     var WAIT_TIME_ACTIVE_RESET = 30;
+    var ICON_WIDTH = 124;
+    var ICON_HEIGHT = 40;
+    var COMMAND_POX_X = 8;
+    var COMMAND_POS_Y = 300;
+    
     initSprite();
     
     function initSprite() {
@@ -83,49 +88,49 @@ function battleScene(spec,my){
         }
         
         //攻撃アイコン
-        atackIcon = new Button('攻撃','light',core.ICON_HEIGHT,core.ICON_WIDTH);
-        atackIcon.x = core.COMMAND_POX_X;
-        atackIcon.y = core.COMMAND_POS_Y;
+        atackIcon = new Button('攻撃','light',ICON_HEIGHT,ICON_WIDTH);
+        atackIcon.x = COMMAND_POX_X;
+        atackIcon.y = COMMAND_POS_Y;
         atackIcon.visible = false;
         atackIcon.addEventListener(Event.TOUCH_END,moveBatteryCommand);
         that.addChild(atackIcon);
         
         //チャージアイコン
-        chargeIcon = new Button('チャージ','light',core.ICON_HEIGHT,core.ICON_WIDTH);
-        chargeIcon.x = core.COMMAND_POX_X + core.ICON_WIDTH + 32;
-        chargeIcon.y = core.COMMAND_POS_Y;
+        chargeIcon = new Button('チャージ','light',ICON_HEIGHT,ICON_WIDTH);
+        chargeIcon.x = COMMAND_POX_X + ICON_WIDTH + 32;
+        chargeIcon.y = COMMAND_POS_Y;
         chargeIcon.visible = false;
         chargeIcon.addEventListener(Event.TOUCH_END,charge);
         that.addChild(chargeIcon);
         
         //+アイコン
-        plusIcon = new Button('+','light',core.ICON_HEIGHT,core.ICON_WIDTH);
-        plusIcon.x = core.COMMAND_POX_X;
-        plusIcon.y = core.COMMAND_POS_Y;
+        plusIcon = new Button('+','light',ICON_HEIGHT,ICON_WIDTH);
+        plusIcon.x = COMMAND_POX_X;
+        plusIcon.y = COMMAND_POS_Y;
         plusIcon.visible = false;
         plusIcon.addEventListener(Event.TOUCH_END,plusBattery);
         that.addChild(plusIcon);
         
         //-アイコン
-        minusIcon = new Button('-','light',core.ICON_HEIGHT,core.ICON_WIDTH);
-        minusIcon.x = core.COMMAND_POX_X + core.ICON_WIDTH + 32;
-        minusIcon.y = core.COMMAND_POS_Y;
+        minusIcon = new Button('-','light',ICON_HEIGHT,ICON_WIDTH);
+        minusIcon.x = COMMAND_POX_X + ICON_WIDTH + 32;
+        minusIcon.y = COMMAND_POS_Y;
         minusIcon.visible = false;
         minusIcon.addEventListener(Event.TOUCH_END,minusBattery);
         that.addChild(minusIcon);
         
         //決定アイコン
-        okIcon = new Button('決定','light',core.ICON_HEIGHT,core.ICON_WIDTH);
-        okIcon.x = core.COMMAND_POX_X;
-        okIcon.y = core.COMMAND_POS_Y + core.ICON_HEIGHT + 16;
+        okIcon = new Button('決定','light',ICON_HEIGHT,ICON_WIDTH);
+        okIcon.x = COMMAND_POX_X;
+        okIcon.y = COMMAND_POS_Y + ICON_HEIGHT + 16;
         okIcon.visible = false;
         okIcon.addEventListener(Event.TOUCH_END,selectBattery);
         that.addChild(okIcon);
         
         //戻るアイコン
-        prevIcon = new Button('戻る','light',core.ICON_HEIGHT,core.ICON_WIDTH);
-        prevIcon.x = core.COMMAND_POX_X + core.ICON_WIDTH + 32;
-        prevIcon.y = core.COMMAND_POS_Y + core.ICON_HEIGHT + 16;
+        prevIcon = new Button('戻る','light',ICON_HEIGHT,ICON_WIDTH);
+        prevIcon.x = COMMAND_POX_X + ICON_WIDTH + 32;
+        prevIcon.y = COMMAND_POS_Y + ICON_HEIGHT + 16;
         prevIcon.visible = false;
         prevIcon.addEventListener(Event.TOUCH_END,prevAtackCommand);
         that.addChild(prevIcon);

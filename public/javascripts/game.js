@@ -4,18 +4,12 @@ function game(spec, my) {
      */
     var core = new Core(320, 480);
     
-    //TODO : 戦闘画面の画像パス定数もcore.XXXXXのようにパブリック関数化したい
-    //       また、画像パス定数の値をPICT_PREFIX+XXXXのようにフルパスにしたい
     core.PICT_PREFIX = location.origin + '/images/';
     core.PICT_ACTIVE_BAR = core.PICT_PREFIX+'activeBar.png';
     core.PICT_ACTIVE_BAR_BACK = core.PICT_PREFIX+'activeBack.png';
     core.PICT_BATTERY_GAUGE = core.PICT_PREFIX+'batteryGauge.png';
     core.PICT_BATTERY_BACK = core.PICT_PREFIX+'batteryBack.png';
     core.PICT_BATTERY_NUMBER = core.PICT_PREFIX+'batteryNumber.png';
-    core.ICON_WIDTH = 124;      //TODO : battleSceneの中に入れたい
-    core.ICON_HEIGHT = 40;      //TODO : battleSceneの中に入れたい
-    core.COMMAND_POX_X = 8;     //TODO : battleSceneの中に入れたい
-    core.COMMAND_POS_Y = 300;   //TODO : battleSceneの中に入れたい
         
     core.fps = 60;
     core.battleScene = new Scene();
