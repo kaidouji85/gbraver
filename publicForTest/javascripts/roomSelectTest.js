@@ -87,7 +87,7 @@ function enterRoomAndGameStart(){
             Game.roomSelectScene.pushEnterRoom(2);
         });
         
-        Game.onEnterRoom(function(data){
+        Game.roomSelectScene.onEnterRoom(function(data){
             var expect = {
                 roomId : 2
             };

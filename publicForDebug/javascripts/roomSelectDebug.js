@@ -83,7 +83,7 @@ function enterRoomAndGameStart(){
     
     function enterRoom(){
         console.log('2番の部屋に入室する');
-        Game.onEnterRoom(function(data){
+        Game.roomSelectScene.onEnterRoom(function(data){
             var expect = {
                 roomId : 2
             };

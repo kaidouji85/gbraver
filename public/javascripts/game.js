@@ -26,30 +26,19 @@ function game(spec, my) {
         core.preload(core.PICT_BATTERY_BACK);
         core.preload(core.PICT_BATTERY_NUMBER); 
     }
-    
-    /**
-     * 戦闘シーン
-     */
+
     core.changeBattleScene = function(spec){
         spec.core = core;
         core.battleScene = new battleScene(spec);
         core.pushScene(core.battleScene);             
     };
 
-    /**
-     * ルームセレクト
-     */
     core.changeRoomSelectScene = function(spec){
         spec.core = core;
         core.roomSelectScene = new roomSelectScene(spec);
         core.replaceScene(core.roomSelectScene);
         core.roomSelectScene.initSprite();//TODO : initSprite()をchangeRoom()の中で実行したい。
     };
-    
-    //TODO : この関数を消して、直接roomSelectSceneからonEnterRoom()を呼び出すようにしたい
-    core.onEnterRoom = function(fn){
-        core.roomSelectScene.onEnterRoom(fn);
-    };
-    
+
     return core;
 }

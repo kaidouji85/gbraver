@@ -21,7 +21,7 @@ window.onload = function() {
                 userId : userId
             });
             
-            Game.onEnterRoom(function(data){
+            Game.roomSelectScene.onEnterRoom(function(data){
                 socket.emit('enterRoom',data);
             });
         });
