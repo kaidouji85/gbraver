@@ -50,25 +50,41 @@ function server(spec, my) {
         
         socket.on('enterRoom', function(data) {
             var roomId = data.roomId;
-            socket.get('loginInfo', function(err, loginInfo) {
+            socket.get('loginInfo', function(err, loginInfo){
+                isLogin(loginInfo);
+            });
+            
+            function isLogin(loginInfo){
+                if(loginInfo!==null){
+                    isAlreadyEnterRoom(loginInfo);
+                } else {
+                    socket.emit('enterRoomError', 'ユーザ認証が完了していません。');
+                }
+            }
+            
+            function isAlreadyEnterRoom(loginInfo){
                 if (loginInfo.roomId===null) {
                     loginInfo.roomId = roomId;
                     socket.set('loginInfo', loginInfo, function() {
-                        var userId = loginInfo.userId;
-                        getUserData(userId, function(err, userData) {
-                            socket.join(roomId);
-                            socket.emit('succesEnterRoom');
-                            roomArray[roomId].addUser(userData);
-                            if(roomArray[roomId].isGameStart()){
-                                roomArray[roomId].initBattle();
-                                io.sockets.in(roomId).emit('gameStart', roomArray[roomId].getUsers());
-                            }
-                        });
+                        prepareBattle(loginInfo);
                     });
                 } else {
                     socket.emit('enterRoomError', 'このコネクションは既に入室しています。');
                 }
-            });
+            }
+            
+            function prepareBattle(loginInfo) {
+                var userId = loginInfo.userId;
+                getUserData(userId, function(err, userData) {
+                    socket.join(roomId);
+                    socket.emit('succesEnterRoom');
+                    roomArray[roomId].addUser(userData);
+                    if (roomArray[roomId].isGameStart()) {
+                        roomArray[roomId].initBattle();
+                        io.sockets. in (roomId).emit('gameStart', roomArray[roomId].getUsers());
+                    }
+                });
+            }
         });
 
         socket.on('command', function(data) {

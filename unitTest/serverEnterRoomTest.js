@@ -139,6 +139,18 @@ describe('serverクラスのテスト', function() {
                 }); 
             }
         });
+        
+        it('ユーザ認証なしで入室したら、エラーが返される', function(done) {
+            var client = io.connect(SERVER_URL, option);
+            client.emit('enterRoom', {
+                roomId : roomId
+            });
+            client.on('enterRoomError', function(message) {
+                assert.equal(message, 'ユーザ認証が完了していません。');
+                done();
+            }); 
+
+        });
     });
 
 
