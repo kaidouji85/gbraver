@@ -19,15 +19,16 @@ function server(spec, my) {
     }
 
     /**
-     * ユーザ情報取
+     * 戦闘用プレイヤー情報取得
      * この関数の実装は外部で行う
      * @param {String} useId
      * @param {Function} callback(err,data)
      */
     var getUserData;
-    io.onGetUserData = function(fn) {
+    io.onGetPlayerData = function(fn) {
         getUserData = fn;
     };
+    
 
     io.sockets.on('connection', function(socket) {
         socket.on('auth',function(data){

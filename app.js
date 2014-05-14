@@ -87,7 +87,7 @@ var wsServer = require('./server.js');
 var WsServer = wsServer({
     httpServer:server
 });
-WsServer.onGetUserData(function(userId,fn){
+WsServer.onGetPlayerData(function(userId,fn){
     dao.getPlayerData(userId,function(err,data){
         fn(null,data);
     });

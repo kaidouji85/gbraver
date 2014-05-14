@@ -2,7 +2,7 @@ describe('serverクラスのテスト', function() {
     var SERVER_PORT = 3001;
     var SERVER_URL = 'http://localhost'; 
     
-    var testDataUses = require('./testDataUsers.js');
+    var testDataUses = require('./testPlayerData.js');
     var assert = require('chai').assert;
     var io = require('socket.io-client');
     var app = require('http').createServer().listen(SERVER_PORT); 
@@ -19,7 +19,8 @@ describe('serverクラスのテスト', function() {
         Server = server({
             httpServer : app
         });
-        Server.onGetUserData(function(userId, fn) {
+        //TODO : onGetUserData関数を呼び出したい
+        Server.onGetPlayerData(function(userId, fn) {
             var userData = testDataUses.getUserData(userId);
             if(userData===null){
                 fn(new Error('user not exist.'), null);

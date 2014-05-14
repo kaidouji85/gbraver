@@ -1,6 +1,9 @@
+//TODO : palyerDataとは、usersコレクションとarmdozersを結合したものである
+//       データ構造はdbShell/createDB.jsを参照
 var ce = require('cloneextend');
 var user = {};
 
+//TODO : 関数名をgetPlayerDataに変更したい。
 function getUserData(userId){
     if((userId in user)===false){
        return null; 
