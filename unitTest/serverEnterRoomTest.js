@@ -2,7 +2,7 @@ describe('serverクラスのテスト', function() {
     var SERVER_PORT = 3000;
     var SERVER_URL = 'http://localhost'; 
     
-    var testDataUses = require('./testPlayerData.js');
+    var testPlayerData = require('./testPlayerData.js');
     var assert = require('chai').assert;
     var io = require('socket.io-client');
     var app = require('http').createServer().listen(SERVER_PORT); 
@@ -23,7 +23,7 @@ describe('serverクラスのテスト', function() {
         });
         roomId = -1;
         Server.onGetPlayerData(function(userId, fn) {
-            var userData = testDataUses.getUserData(userId);
+            var userData = testPlayerData.getPlayerData(userId);
             fn(null, userData);
         });        
     });
@@ -84,7 +84,7 @@ describe('serverクラスのテスト', function() {
             function assertOfGameStart(data, userIdArray) {
                 var expect = {};
                 userIdArray.forEach(function(userId) {
-                    expect[userId] = testDataUses.getUserData(userId);
+                    expect[userId] = testPlayerData.getPlayerData(userId);
                     expect[userId].status.battery = 5;
                     expect[userId].status.active = 0;
                 });

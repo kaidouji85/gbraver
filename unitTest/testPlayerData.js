@@ -1,19 +1,19 @@
 //TODO : palyerDataとは、usersコレクションとarmdozersを結合したものである
 //       データ構造はdbShell/createDB.jsを参照
 var ce = require('cloneextend');
-var user = {};
+var player = {};
 
 //TODO : 関数名をgetPlayerDataに変更したい。
-function getUserData(userId){
-    if((userId in user)===false){
+function getPlayerData(userId){
+    if((userId in player)===false){
        return null; 
     }
     
-    var userData = ce.clone(user[userId]);
-    return userData;
+    var playerData = ce.clone(player[userId]);
+    return playerData;
 }
 
-user['test001@gmail.com'] = {
+player['test001@gmail.com'] = {
     userId : 'test001@gmail.com',
     status : {
         name : 'グランブレイバー',
@@ -45,7 +45,7 @@ user['test001@gmail.com'] = {
     }
 };
 
-user['test002@gmail.com'] = {
+player['test002@gmail.com'] = {
     userId : 'test002@gmail.com',
     status : {
         name : 'ランドーザ',
@@ -76,4 +76,4 @@ user['test002@gmail.com'] = {
         }
     }
 };
-module.exports.getUserData = getUserData;
+module.exports.getPlayerData = getPlayerData;
