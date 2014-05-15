@@ -142,12 +142,10 @@ function server(spec, my) {
             socket.get('loginInfo', function(err, loginInfo) {
                 var userId = loginInfo.userId;
                 var armdozerId = data.armdozerId;
-                getUserData(userId,function(err,userData){
-                    setArmdozerId(userId,armdozerId,function(err,result){
-                        if(result === true){
-                            socket.emit('successSetArmdozer',{});
-                        }
-                    });
+                setArmdozerId(userId, armdozerId, function(err, result) {
+                    if (result === true) {
+                        socket.emit('successSetArmdozer', {});
+                    }
                 });
             });            
         });
