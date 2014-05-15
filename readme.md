@@ -19,22 +19,22 @@ node.js、socket.io、enchant.jsがあれば簡単に出来るだろうという
 
 
 ## 導入方法
-1. 必須ソフトウェア
+1. 必須ソフトウェア  
 導入の前提として、以下のソフトがインストールされている必要があります。  
-# node.js
-# mongodb
+* node.js
+* mongodb
 
-2. githubからソースコードのコピー
+2. githubからソースコードのコピー  
 githubからプロジェクトをダウントードします。
 
 
-3. 依存ライブラリのインストール
+3. 依存ライブラリのインストール  
 プロジェクトフォルダのルートに移動して、以下コマンドで依存ライブラリをインストールします。  
 
 `npm install`
 
 
-4. データベースの初期化
+4. データベースの初期化  
 以下コマンドで、データベースを初期化します。  
 
 `mongodb mongo ホスト名/gbraver createDB.js`
@@ -49,13 +49,13 @@ githubからプロジェクトをダウントードします。
 ## テスト実行方法
 テストの実行コマンドは以下の通りです。
 
-ユニットテスト
+ユニットテスト  
 `npm test`
 
-DAOテスト
+DAOテスト  
 `mocha mongoDbTest/ -R spec`
 
-Seleniumテスト
+Seleniumテスト  
 `NODE_MAIL_ADDRESS="テスト用Googleアカウント"  NODE_PASSWORD="テスト用Googleアカウントパスワード" mocha seleniumTest/ -R spec`
 
 
@@ -65,6 +65,5 @@ Seleniumテスト
 
 
 ## その他
-中の人のブログです。  
-毎日プログラム  <http://blog.livedoor.jp/kaidouji85/>  
-α版公開サイト <http://gbraver.herokuapp.com/>  
+中の人のブログです。 毎日プログラム  <http://blog.livedoor.jp/kaidouji85/>    
+α版公開サイト <http://gbraver.herokuapp.com/>    
