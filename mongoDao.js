@@ -26,6 +26,18 @@ function mongoDao(spec, my) {
         });        
     };
     
+    that.setArmdozerId = function(userId,armdozerId,fn){
+        MongoClient.connect(url, function(err, db) {
+            var collection = db.collection('users');          
+            collection.update({userId : userId}, {$set : {armdozerId : armdozerId}},{},function(err) {
+                db.close();
+                var result = err===null ? true : false;
+                fn(err,result);
+            }); 
+
+        });        
+    };
+    
     function getOrCreateUserData(userId, db, fn){
         getUserData(userId, db, function(err,user){
             if(user!==null){
@@ -101,6 +113,10 @@ function mongoDao(spec, my) {
         };
 
         return playerData;
+    }
+    
+    function updateUserDate(updateDate,db,fn){
+        
     }
 
     return that;
