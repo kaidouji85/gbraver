@@ -1,9 +1,8 @@
-//TODO : テストコードだけを先攻して作成した
-/*
 describe('serverクラスのテスト',function(){
     var SERVER_PORT = 3003;
     var SERVER_URL = 'http://localhost';
-
+    
+    var testPlayerData = require('./testPlayerData.js');
     var assert = require('chai').assert;
     var io = require('socket.io-client');
     var app = require('http').createServer().listen(SERVER_PORT); 
@@ -13,12 +12,12 @@ describe('serverクラスのテスト',function(){
     var Server;
     
     var userData = {
-        'take' : {
-            userId : 'take',
-            armdozerId : 'landozer'},
-        'uchi' : {
-            userId : 'uchi',
-            armdozerId : 'granBraver'}        
+        'test001@gmail.com' : {
+            userId : 'test001@gmail.com',
+            armdozerId : 'granBraver'},
+        'test002@gmail.com' : {
+            userId : 'test002@gmail.com',
+            armdozerId : 'landozer'}        
     };
     
     before(function(){
@@ -32,6 +31,10 @@ describe('serverクラスのテスト',function(){
         
         Server.onGetUserData(function(userId,fn){
             fn(null,userData[userId]);
+        });
+        Server.onGetPlayerData(function(userId, fn) {
+            var userData = testPlayerData.getPlayerData(userId);
+            fn(null, userData);
         });
     });
     
@@ -47,14 +50,24 @@ describe('serverクラスのテスト',function(){
             });
             
             function selectArmdozer(){
-                client,emit('setArmdozer',{
-                    armdozerId : 'granbraver'
+                client.emit('setArmdozer',{
+                    armdozerId : 'landozer'
                 });
-                client.once('successSetArmdozer',function(){
+                Server.onUpdateUser(updateUserData);
+            }
+
+            function updateUserData(userData, fn) {
+                var expect = {
+                    userId : 'test001@gmail.com',
+                    armdozerId : 'landozer'
+                };
+                assert.deepEqual(expect, userData, '正しくユーザデータ更新関数が呼ばれる');
+                fn(null,true);
+                client.once('successSetArmdozer', function() {
                     done();
                 });
             }
+
         });
     });
 });
-*/

@@ -24,16 +24,37 @@ function server(spec, my) {
      * @param {String} useId
      * @param {Function} callback(err,data)
      */
-    var getUserData;
+    var getPlayerData;
     io.onGetPlayerData = function(fn) {
+        getPlayerData = fn;
+    };
+
+    /**
+     * ユーザ情報取得
+     * この関数の実装は外部で行う
+     * @param {String} useId
+     * @param {Function} callback(err,data)
+     */    
+    var getUserData;
+    io.onGetUserData = function(fn){
         getUserData = fn;
     };
-    
+
+    /**
+     * ユーザ情報更新
+     * この関数の実装は外部で行う
+     * @param {UserData} userData
+     * @param {Function} callback(err,result)
+     */    
+    var updateUser;
+    io.onUpdateUser = function(fn){
+        updateUser = fn;
+    };
 
     io.sockets.on('connection', function(socket) {
         socket.on('auth',function(data){
             var userId = data.userId;
-            getUserData(userId, function(err, data) {
+            getPlayerData(userId, function(err, data) {
                 if(!err){
                     var loginInfo = {
                         userId : userId,
@@ -76,7 +97,7 @@ function server(spec, my) {
             
             function prepareBattle(loginInfo) {
                 var userId = loginInfo.userId;
-                getUserData(userId, function(err, userData) {
+                getPlayerData(userId, function(err, userData) {
                     socket.join(roomId);
                     socket.emit('succesEnterRoom');
                     roomArray[roomId].addUser(userData);
@@ -115,6 +136,22 @@ function server(spec, my) {
                     }
                 }
             });
+        });
+        
+        socket.on('setArmdozer', function(data){
+            socket.get('loginInfo', function(err, loginInfo) {
+                var userId = loginInfo.userId;
+                var armdozerId = data.armdozerId;
+                getUserData(userId,function(err,userData){
+                    var updateData = userData;
+                    updateData.armdozerId = armdozerId;
+                    updateUser(updateData,function(err,result){
+                        if(result === true){
+                            socket.emit('successSetArmdozer',{});
+                        }
+                    });
+                });
+            });            
         });
     });
 
