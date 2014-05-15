@@ -3,7 +3,7 @@ var mongoDao = require('../mongoDao.js');
 var insertData = require('./testData.js').insertData;
 var MongoClient = require('mongodb').MongoClient;
 
-describe('Mongo DBからユーザ情報を取得する', function() {
+describe('Mongo DBからプレイヤー情報を取得する', function() {
     const mongoUrl = 'mongodb://localhost/gbraverTest';
 
     before(function(done) {
@@ -12,16 +12,16 @@ describe('Mongo DBからユーザ情報を取得する', function() {
         });
     });
 
-    it('存在するユーザの情報を取得したのでユーザ情報を取得することができる', function(done) {
+    it('存在するユーザIDを指定したのでプレイヤー情報を取得することができる', function(done) {
         var dao = mongoDao({
             url : mongoUrl
         });
-        dao.getPlayerData('take', function(err, userData) {
-            assertOfUserData(userData);
+        dao.getPlayerData('take', function(err, playerData) {
+            assertOfPlayerData(playerData);
             done();
         });
 
-        function assertOfUserData(userData) {
+        function assertOfPlayerData(playerData) {
             var expect = {
                 userId : 'take',
                 status : {
@@ -53,23 +53,23 @@ describe('Mongo DBからユーザ情報を取得する', function() {
                     }
                 }
             };
-            assert.deepEqual(userData, expect, '正しいユーザ情報を取得出来た');
+            assert.deepEqual(playerData, expect, '正しいプレイヤー情報を取得出来た');
         }
 
     });
 
-    it('存在しないユーザ情報を取得したので、データベースにユーザが新規作成され、新規登録データを取得できる', function(done) {
+    it('存在しないユーザIDを指定したので、データベースにユーザが新規作成され、新規登録データを取得できる', function(done) {
         var dao = mongoDao({
             url : mongoUrl
         });
-        dao.getPlayerData('testuser8585@gmail.com', function(err, userData) {
-            assertOfUserData(userData);
+        dao.getPlayerData('testuser8585@gmail.com', function(err, playerData) {
+            assertOfPlayerData(playerData);
             assertOfMongoDbCollection(mongoUrl, function() {
                 done();
             });
         });
 
-        function assertOfUserData(userData) {
+        function assertOfPlayerData(playerData) {
             var expect = {
                 userId : 'testuser8585@gmail.com',
                 status : {
@@ -101,7 +101,7 @@ describe('Mongo DBからユーザ情報を取得する', function() {
                     }
                 }
             };
-            assert.deepEqual(userData, expect, '正しいユーザ情報を取得出来た');
+            assert.deepEqual(playerData, expect, '正しいプレイヤー情報を取得出来た');
         }
 
         function assertOfMongoDbCollection(mongoUrl, done) {
@@ -116,5 +116,18 @@ describe('Mongo DBからユーザ情報を取得する', function() {
                 });
             });
         }
+    });
+    
+    it('ユーザ情報を取得することができる',function(){
+        var dao = mongoDao({
+            url : mongoUrl
+        });
+        dao.getUserData('uchi',function(err,userData){
+            var expect = {
+                userId : 'uchi',
+                armdozerId : 'landozer'
+            };
+            assert.equal(userData,expect,'ユーザデータが正しく取得できる');
+        });
     });
 });

@@ -17,6 +17,15 @@ function mongoDao(spec, my) {
         });
     };
     
+    that.getUserData = function(userId,fn){
+        MongoClient.connect(url, function(err, db) {
+            getOrCreateUserData(userId,db,function(err,userData){
+                db.close();
+                fn(null,userData);
+            });
+        });        
+    };
+    
     function getOrCreateUserData(userId, db, fn){
         getUserData(userId, db, function(err,user){
             if(user!==null){
