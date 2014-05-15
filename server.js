@@ -46,9 +46,9 @@ function server(spec, my) {
      * @param {UserData} userData
      * @param {Function} callback(err,result)
      */    
-    var updateUser;
-    io.onUpdateUser = function(fn){
-        updateUser = fn;
+    var setArmdozerId;
+    io.onSetArmdozerId = function(fn){
+        setArmdozerId = fn;
     };
 
     io.sockets.on('connection', function(socket) {
@@ -143,9 +143,7 @@ function server(spec, my) {
                 var userId = loginInfo.userId;
                 var armdozerId = data.armdozerId;
                 getUserData(userId,function(err,userData){
-                    var updateData = userData;
-                    updateData.armdozerId = armdozerId;
-                    updateUser(updateData,function(err,result){
+                    setArmdozerId(userId,armdozerId,function(err,result){
                         if(result === true){
                             socket.emit('successSetArmdozer',{});
                         }

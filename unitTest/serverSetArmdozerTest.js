@@ -53,15 +53,12 @@ describe('serverクラスのテスト',function(){
                 client.emit('setArmdozer',{
                     armdozerId : 'landozer'
                 });
-                Server.onUpdateUser(updateUserData);
+                Server.onSetArmdozerId(updateArmdozerId);
             }
 
-            function updateUserData(userData, fn) {
-                var expect = {
-                    userId : 'test001@gmail.com',
-                    armdozerId : 'landozer'
-                };
-                assert.deepEqual(expect, userData, '正しくユーザデータ更新関数が呼ばれる');
+            function updateArmdozerId(userId,armdozerId,fn) {
+                assert.equal('test001@gmail.com',userId,'ユーザIDが正しい');
+                assert.equal('landozer', armdozerId, 'アームドーザIDが更新されている');
                 fn(null,true);
                 client.once('successSetArmdozer', function() {
                     done();
