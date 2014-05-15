@@ -21,8 +21,8 @@ node.js、socket.io、enchant.jsがあれば簡単に出来るだろうという
 ## 導入方法
 1. 必須ソフトウェア  
 導入の前提として、以下のソフトがインストールされている必要があります。  
-* node.js
-* mongodb
+・node.js  
+・mongodb  
 
 2. githubからソースコードのコピー  
 githubからプロジェクトをダウントードします。
