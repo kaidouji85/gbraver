@@ -1,20 +1,17 @@
 function roomSelectScene(spec,my){
     var that = new Scene();
+    that.backgroundColor = 'black';
+    
     var userId = spec.userId;
-    var core = spec.core;
+    var core = enchant.Core.instance;
     var emitEnterRoom;
     var enterRoomButtonArray = new Array();
     var labelEnterRoomWait;
     
     var CNT_MAX_ENTER_ROOM = 5;
     
-    that.backgroundColor = 'black';
-    
-    that.onEnterRoom = function(fn){
-        emitEnterRoom = fn;
-    };
-    
-    that.initSprite = function(){
+    initSprite();
+    function initSprite(){
         //入室ボタン
         for(var i=0; i<CNT_MAX_ENTER_ROOM; i++){
             var button = new Button('ルーム'+i,'blue',40,200);
@@ -37,7 +34,11 @@ function roomSelectScene(spec,my){
         labelEnterRoomWait.visible = false;
         that.addChild(labelEnterRoomWait);
     };
-    
+        
+    that.onEnterRoom = function(fn){
+        emitEnterRoom = fn;
+    };
+
     that.pushEnterRoom = pushEnterRoom;
     function pushEnterRoom(roomId){
         enterRoomButtonArray.forEach(function(button){

@@ -2,6 +2,7 @@ function setArmdozerScene(){
     var that = new Scene();
     that.backgroundColor = "black";
     
+    var core = enchant.Core.instance;
     var MAX_ARMDOZER_BUTTON = 2;
     var armdozerButtonArray = new Array(MAX_ARMDOZER_BUTTON);
     var armdozerIdList = [
