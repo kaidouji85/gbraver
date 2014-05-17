@@ -12,8 +12,9 @@ function game(spec, my) {
     core.PICT_BATTERY_NUMBER = core.PICT_PREFIX+'batteryNumber.png';
         
     core.fps = 60;
-    core.battleScene = new Scene();
+    core.battleScene = new Scene(); //TODO : new Scene()を消したい
     core.roomSelectScene;
+    core.setArmdozerScene;
     preLoad();
     
     function preLoad() {
@@ -28,16 +29,21 @@ function game(spec, my) {
     }
 
     core.changeBattleScene = function(spec){
-        spec.core = core;
-        core.battleScene = new battleScene(spec);
+        spec.core = core;                           //TODO : 削除したい
+        core.battleScene = new battleScene(spec);   //TODO : new消したい
         core.pushScene(core.battleScene);             
     };
 
     core.changeRoomSelectScene = function(spec){
-        spec.core = core;
-        core.roomSelectScene = new roomSelectScene(spec);
+        spec.core = core;                                   //TODO : 削除したい
+        core.roomSelectScene = new roomSelectScene(spec);   //TODO : new消したい
         core.replaceScene(core.roomSelectScene);
         core.roomSelectScene.initSprite();//TODO : initSprite()をchangeRoom()の中で実行したい。
+    };
+    
+    core.changeArmdozerConfigScene = function(){
+        core.setArmdozerScene = setArmdozerScene();
+        core.replaceScene(core.setArmdozerScene);
     };
 
     return core;
