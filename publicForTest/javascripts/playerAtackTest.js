@@ -1,3 +1,4 @@
+//TODO : GameクラスのbattleSceneではなく、battleScene単体でデバッグしたい。
 enchant();
 var gbraverDebug = {};
 var assert;

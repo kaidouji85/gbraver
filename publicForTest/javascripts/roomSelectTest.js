@@ -1,3 +1,4 @@
+//TODO : GameクラスのroomSelectSceneではなく、roomSelectScene単体でデバッグしたい。
 enchant();
 var gbraverDebug = {};
 var assert;
