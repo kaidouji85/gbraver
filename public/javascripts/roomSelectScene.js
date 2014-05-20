@@ -1,8 +1,7 @@
 function roomSelectScene(spec,my){
     var that = new Scene();
     that.backgroundColor = 'black';
-    
-    var userId = spec.userId;
+
     var core = enchant.Core.instance;
     var emitEnterRoom;
     var enterRoomButtonArray = new Array();

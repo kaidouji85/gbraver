@@ -42,6 +42,22 @@ function game(spec, my) {
         core.setArmdozerScene = setArmdozerScene();
         core.replaceScene(core.setArmdozerScene);
     };
+    
+    core.changeTopScene = function(){
+        core.topScene = topScene();
+        core.topScene.onPushSetArmdozer(function(){
+            core.changeSetArmdozerScene();
+        });
+        core.topScene.onPushBattleRoom(function(){
+            core.changeRoomSelectScene();
+        });
+        core.replaceScene(core.topScene);
+    };
+    
+    core.changeSetArmdozerScene = function(){
+        core.setArmdozerScene = setArmdozerScene();
+        core.replaceScene(core.setArmdozerScene);
+    };
 
     return core;
 }

@@ -17,10 +17,7 @@ window.onload = function() {
 
         //ユーザ認証成功
         socket.on('successAuth', function() {
-            Game.changeRoomSelectScene({
-                userId : userId
-            });
-            
+            Game.changeRoomSelectScene();
             Game.roomSelectScene.onEnterRoom(function(data){
                 socket.emit('enterRoom',data);
             });
