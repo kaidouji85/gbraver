@@ -29,10 +29,12 @@ function setArmdozerScene(){
         });
         
         //戻るボタン
+        /*
         prevButton = new Button('戻る','blue',40,200);
         prevButton.x = 50;
         prevButton.y = 250;
         that.addChild(prevButton);
+        */
         
         //アームドーザ選択ラベル
         labelArmmdozerSelect = new Label('アームドーザ選択');

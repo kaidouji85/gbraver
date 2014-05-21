@@ -3,6 +3,8 @@ function game(spec, my) {
      * ゲームコア
      */
     var core = new Core(320, 480);
+    var emitChangeScene = function(scene){};
+    var emitSendMessage = function(message,data){};
     
     core.PICT_PREFIX = location.origin + '/images/';
     core.PICT_ACTIVE_BAR = core.PICT_PREFIX+'activeBar.png';
@@ -36,11 +38,7 @@ function game(spec, my) {
     core.changeRoomSelectScene = function(spec){
         core.roomSelectScene = roomSelectScene(spec);
         core.replaceScene(core.roomSelectScene);
-    };
-    
-    core.changeArmdozerConfigScene = function(){
-        core.setArmdozerScene = setArmdozerScene();
-        core.replaceScene(core.setArmdozerScene);
+        emitChangeScene('selectRoom');
     };
     
     core.changeTopScene = function(){
@@ -52,11 +50,33 @@ function game(spec, my) {
             core.changeRoomSelectScene();
         });
         core.replaceScene(core.topScene);
+        emitChangeScene('top');
     };
     
     core.changeSetArmdozerScene = function(){
         core.setArmdozerScene = setArmdozerScene();
+        core.setArmdozerScene.onSelectArmdozer(function(data){
+            emitSendMessage('setArmdozer',data);
+        });
         core.replaceScene(core.setArmdozerScene);
+        emitChangeScene('setArmdozer');
+    };
+    
+    core.onChangeScene = function(fn){
+        emitChangeScene = fn;
+    };
+    
+    core.onSendMessage = function(fn){
+        emitSendMessage = fn;
+    };
+    
+    core.emitServerResp = function(message,data){
+        switch(message) {
+            case 'successSetArmdozer' :
+                core.changeTopScene();
+                break;
+        }
+
     };
 
     return core;
