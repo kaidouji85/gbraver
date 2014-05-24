@@ -76,9 +76,7 @@ function enterRoomAndGameStart(){
     var Game = game();
     Game.start();
     Game.onload = function(){
-        Game.changeRoomSelectScene({
-            userId : 'test001@gmail.com'
-        });
+        Game.changeRoomSelectScene();
         enterRoom();
     };
     

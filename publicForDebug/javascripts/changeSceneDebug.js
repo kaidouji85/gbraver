@@ -5,7 +5,8 @@ window.onload = function(){
     assert = chai.assert;
     //topToRoomSelect();
     //topToSetArmdozer();
-    setArmdozerToTop();
+    //setArmdozerToTop();
+    roomSelectToBattle();
 };
 
 function topToRoomSelect(){
@@ -55,3 +56,8 @@ function setArmdozerToTop(){
         });
     };      
 }
+
+function roomSelectToBattle(){
+}
+
+

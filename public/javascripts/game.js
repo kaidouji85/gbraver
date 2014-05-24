@@ -35,8 +35,8 @@ function game(spec, my) {
         core.pushScene(core.battleScene);             
     };
 
-    core.changeRoomSelectScene = function(spec){
-        core.roomSelectScene = roomSelectScene(spec);
+    core.changeRoomSelectScene = function(){
+        core.roomSelectScene = roomSelectScene();
         core.replaceScene(core.roomSelectScene);
         emitChangeScene('selectRoom');
     };
