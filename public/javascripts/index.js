@@ -23,50 +23,21 @@ window.onload = function() {
                 socket.emit('enterRoom',data);
             });
         });
-
-        //入室成功
+        
+        Game.onSendMessage(function(message,data){
+            socket.emit(message,data);
+        });
+        
         socket.on('succesEnterRoom', function() {
             console.log('succesEnterRoom');
         });
-
-        //全プレイヤーの入室処理が完了した時に呼び出させる処理
-        socket.on("gameStart", function(data) {
-            var statusArray = {};
-            for (var uid in data) {
-                statusArray[uid] = data[uid].status;
-            }
-            Game.changeBattleScene({
-                userId : userId,
-                statusArray : statusArray
-            });
-            socket.emit('command', {
-                method : 'ready'
-            });
-
-            Game.battleScene.onCommand(function(command) {
-                socket.emit('command', command);
-            });
+                
+        socket.on("gameStart", function(data){
+            Game.emitServerResp('gameStart',data);
         });
-
-        socket.on('resp', function(data) {
-            var phase = data.phase;
-            switch(phase) {
-                case 'wait':
-                    Game.battleScene.doWaitPhase(data);
-                    break;
-                case 'atackCommand':
-                    Game.battleScene.doAtackCommandPhase(data);
-                    break;
-                case 'charge':
-                    Game.battleScene.doChargePhase(data);
-                    break;
-                case 'defenthCommand':
-                    Game.battleScene.doDefenthCommandPhase(data);
-                    break;
-                case 'damage':
-                    Game.battleScene.doDamagePhase(data);
-                    break;
-            }
+        
+        socket.on('resp', function(data){
+            Game.emitServerResp('resp',data);
         });
     };
 };
