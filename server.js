@@ -43,7 +43,8 @@ function server(spec, my) {
     /**
      * ユーザ情報更新
      * この関数の実装は外部で行う
-     * @param {UserData} userData
+     * @param {String} userId
+     * @param {String} arndozerId
      * @param {Function} callback(err,result)
      */    
     var setArmdozerId;

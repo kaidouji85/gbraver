@@ -18,10 +18,7 @@ window.onload = function() {
 
         //ユーザ認証成功
         socket.on('successAuth', function() {
-            Game.changeRoomSelectScene();
-            Game.roomSelectScene.onEnterRoom(function(data){
-                socket.emit('enterRoom',data);
-            });
+            Game.changeTopScene();
         });
         
         Game.onSendMessage(function(message,data){
@@ -31,6 +28,10 @@ window.onload = function() {
         socket.on('succesEnterRoom', function() {
             console.log('succesEnterRoom');
         });
+        
+        socket.on('successSetArmdozer', function(data) {
+            Game.emitServerResp('successSetArmdozer',data);
+        });        
                 
         socket.on("gameStart", function(data){
             Game.emitServerResp('gameStart',data);

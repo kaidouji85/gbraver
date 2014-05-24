@@ -89,6 +89,11 @@ var WsServer = wsServer({
 });
 WsServer.onGetPlayerData(function(userId,fn){
     dao.getPlayerData(userId,function(err,data){
-        fn(null,data);
+        fn(err,data);
+    });
+});
+WsServer.onSetArmdozerId(function(userId,armdozerId,fn){
+    dao.setArmdozerId(userId,armdozerId,function(err,result){
+        fn(err,result);
     });
 });
