@@ -3,6 +3,7 @@ function game(spec, my) {
      * ゲームコア
      */
     var core = new Core(320, 480);
+    var userId = spec.userId;
     var emitChangeScene = function(scene){};
     var emitSendMessage = function(message,data){};
     
@@ -32,11 +33,15 @@ function game(spec, my) {
 
     core.changeBattleScene = function(spec){
         core.battleScene = battleScene(spec);
-        core.pushScene(core.battleScene);             
+        core.pushScene(core.battleScene);
+        emitChangeScene('battle');
     };
 
     core.changeRoomSelectScene = function(){
         core.roomSelectScene = roomSelectScene();
+        core.roomSelectScene.onEnterRoom(function(data){
+            emitSendMessage('enterRoom',data);
+        });
         core.replaceScene(core.roomSelectScene);
         emitChangeScene('selectRoom');
     };
@@ -74,6 +79,19 @@ function game(spec, my) {
         switch(message) {
             case 'successSetArmdozer' :
                 core.changeTopScene();
+                break;
+            case 'gameStart' :
+                var statusArray = {};
+                for (var uid in data) {
+                    statusArray[uid] = data[uid].status;
+                }
+                core.changeBattleScene({
+                    statusArray : statusArray,
+                    userId : userId
+                });
+                emitSendMessage('command',{
+                    method : 'ready'
+                });
                 break;
         }
 

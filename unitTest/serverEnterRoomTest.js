@@ -82,12 +82,75 @@ describe('serverクラスのテスト', function() {
             });
 
             function assertOfGameStart(data, userIdArray) {
-                var expect = {};
-                userIdArray.forEach(function(userId) {
-                    expect[userId] = testPlayerData.getPlayerData(userId);
-                    expect[userId].status.battery = 5;
-                    expect[userId].status.active = 0;
-                });
+                var expect = {
+                    'test001@gmail.com' : {
+                        userId : 'test001@gmail.com',
+                        status : {
+                            name : 'グランブレイバー',
+                            pictName : 'GranBraver.PNG',
+                            active : 0,
+                            battery : 5,
+                            hp : 3200,
+                            speed : 500,
+                            weapons : {
+                                1 : {
+                                    name : 'バスターナックル',
+                                    power : 800
+                                },
+                                2 : {
+                                    name : 'バスターナックル',
+                                    power : 1100
+                                },
+                                3 : {
+                                    name : 'バスターナックル',
+                                    power : 1600
+                                },
+                                4 : {
+                                    name : 'バスターナックル',
+                                    power : 2100
+                                },
+                                5 : {
+                                    name : 'バスターナックル',
+                                    power : 2800
+                                },
+                            }
+                        }
+                    },
+                    'test002@gmail.com' : {
+                        userId : 'test002@gmail.com',
+                        status : {
+                            name : 'ランドーザ',
+                            pictName : 'Landozer.PNG',
+                            hp : 4700,
+                            speed : 300,
+                            active : 0,
+                            battery : 5,
+                            weapons : {
+                                1 : {
+                                    name : 'ブレイクパンチ',
+                                    power : 1200
+                                },
+                                2 : {
+                                    name : 'ブレイクパンチ',
+                                    power : 1700
+                                },
+                                3 : {
+                                    name : 'ブレイクパンチ',
+                                    power : 2300
+                                },
+                                4 : {
+                                    name : 'ブレイクパンチ',
+                                    power : 2900
+                                },
+                                5 : {
+                                    name : 'ブレイクパンチ',
+                                    power : 3800
+                                }
+                            }
+                        }
+                    }
+                }; 
+
                 assert.deepEqual(data, expect, 'gameStartのレスポンスが正しい');
             }
         });

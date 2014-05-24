@@ -2,13 +2,14 @@ enchant();
 window.onload = function() {
     var socket;
     var roomId;
-    var userId;
+    var userId = $("meta[name=userId]").attr('content');;
     var inputs = null;
-    var Game = new game();
+    var Game = new game({
+        userId : userId
+    });
     Game.start();
     Game.onload = function() {
         socket = io.connect(location.origin);
-        userId = $("meta[name=userId]").attr('content');
 
         //ユーザ認証する
         socket.emit('auth', {

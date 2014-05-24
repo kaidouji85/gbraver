@@ -78,7 +78,9 @@ window.onload = function(){
  * プレイヤーが攻撃を選択する
  */
 function firstPlayerAtack_asAtacker(){
-    var Game = game();
+    var Game = game({
+        userId : '1'
+    });
     Game.start();
     Game.onload = function(){
         Game.changeBattleScene({

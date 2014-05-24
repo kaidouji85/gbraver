@@ -78,7 +78,9 @@ window.onload = function(){
  */
 function firstTurnPlayerCharge_asFirstTurnplayer() {
     assert = chai.assert;
-    var Game = game();
+    var Game = game({
+        userId : '1'
+    });
     Game.start();
     Game.onload = function(){
         Game.changeBattleScene({

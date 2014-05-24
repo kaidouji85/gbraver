@@ -75,7 +75,9 @@ window.onload = function(){
 };
 
 function firstTurnPlayerCharge_asSecondTurnplayer() {
-    var Game = game();
+    var Game = game({
+        userId : '2'
+    });
     Game.start();
     Game.onload = function(){
         Game.changeBattleScene({
