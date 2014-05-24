@@ -31,8 +31,20 @@ function game(spec, my) {
         core.preload(core.PICT_BATTERY_NUMBER); 
     }
 
+    /**
+     * 戦闘シーンに切り替える 
+     * @param {Object} spec
+     * {
+     *     userId : String
+     *     statusArray : Array<Status>
+     * }
+     *  
+     */
     core.changeBattleScene = function(spec){
         core.battleScene = battleScene(spec);
+        core.battleScene.onCommand(function(command){
+            emitSendMessage('command',command);
+        });
         core.pushScene(core.battleScene);
         emitChangeScene('battle');
     };
@@ -93,9 +105,32 @@ function game(spec, my) {
                     method : 'ready'
                 });
                 break;
+            case 'resp' :
+                changePhase(data);
+                break;
         }
-
     };
+    
+    function changePhase(data){
+        var phase = data.phase;
+        switch(phase) {
+            case 'wait':
+                core.battleScene.doWaitPhase(data);
+                break;
+            case 'atackCommand':
+                core.battleScene.doAtackCommandPhase(data);
+                break;
+            case 'charge':
+                core.battleScene.doChargePhase(data);
+                break;
+            case 'defenthCommand':
+                core.battleScene.doDefenthCommandPhase(data);
+                break;
+            case 'damage':
+                core.battleScene.doDamagePhase(data);
+                break;
+        }
+    }
 
     return core;
 }

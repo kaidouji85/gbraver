@@ -108,12 +108,12 @@ function firstPlayerAtack_asAtacker(){
                 }
             }
         };
-        Game.battleScene.doWaitPhase(waitPhaseData);
-        Game.battleScene.onCommand(atackCommandPhase);
+        Game.emitServerResp('resp',waitPhaseData);
+        Game.onSendMessage(atackCommandPhase);
     }
     
-    function atackCommandPhase(command){
-        var data = {
+    function atackCommandPhase(message,data){
+        var atackCommandPhaseData = {
             phase : 'atackCommand',
             statusArray : {
                 1 : {
@@ -128,12 +128,12 @@ function firstPlayerAtack_asAtacker(){
                 }
             }
         };
-        Game.battleScene.doAtackCommandPhase(data);
+        Game.emitServerResp('resp',atackCommandPhaseData);
         selectCommand();
     }
     
     function selectCommand(){
-        Game.battleScene.onCommand(defenthCommandPhase);
+        Game.onSendMessage(defenthCommandPhase);
         
         Game.battleScene.tl.delay(60).then(function() {
             Game.battleScene.moveBatteryCommand();
@@ -146,16 +146,17 @@ function firstPlayerAtack_asAtacker(){
         });
     }
     
-    function defenthCommandPhase(command){
+    function defenthCommandPhase(message,data){
         var expect = {
             method : 'atack',
             param : {
                 battery : 3
             }
         };
-        assert.deepEqual(command, expect, '攻撃コマンドフェイズのコマンドが正しい');
+        assert.equal(message,'command','サーバへ送信するメッセージが正しい');
+        assert.deepEqual(data, expect, '攻撃コマンドフェイズのコマンドが正しい');
 
-        var data = {
+        var defenthCommandData = {
             phase : 'defenthCommand',
             statusArray : {
                 1 : {
@@ -170,17 +171,18 @@ function firstPlayerAtack_asAtacker(){
                 }
             }
         };
-        Game.battleScene.doDefenthCommandPhase(data);
-        Game.battleScene.onCommand(damagePhase);
+        Game.emitServerResp('resp',defenthCommandData);
+        Game.onSendMessage(damagePhase);
     }
 
-    function damagePhase(command) {
+    function damagePhase(message,data) {
         var expect = {
             method : 'ok'
         };
-        assert.deepEqual(command, expect, '防御コマンドフェイズのコマンドが正しい');
+        assert.equal(message,'command','サーバへ送信するメッセージが正しい');
+        assert.deepEqual(data, expect, '防御コマンドフェイズのコマンドが正しい');
 
-        var data = {
+        var damagePhaseData = {
             phase : 'damage',
             hit : 1,
             damage : 1600,
@@ -199,17 +201,19 @@ function firstPlayerAtack_asAtacker(){
                 }
             }
         };
-        Game.battleScene.doDamagePhase(data);
-        Game.battleScene.onCommand(waitPhase2);
+        
+        Game.emitServerResp('resp',damagePhaseData);
+        Game.onSendMessage(waitPhase2);
     }
     
-    function waitPhase2(command){
+    function waitPhase2(message,data){
         var expect = {
             method : 'ok'
         };
-        assert.deepEqual(command, expect, 'ウェイトフェイズ2のコマンドが正しい');
+        assert.equal(message,'command','サーバ送信コマンドが正しい');
+        assert.deepEqual(data, expect, 'ウェイトフェイズ2のコマンドが正しい');
 
-        var data = {
+        var waitPhaseData = {
             phase : 'wait',
             atackUserId : '2',
             turn : 14,
@@ -226,8 +230,8 @@ function firstPlayerAtack_asAtacker(){
                 }
             }
         };
-        Game.battleScene.doWaitPhase(data); 
-        Game.battleScene.onCommand(finish); 
+        Game.emitServerResp('resp',waitPhaseData);
+        Game.onSendMessage(finish);
     }
     
     function finish(command){
