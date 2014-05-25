@@ -1,4 +1,3 @@
-//TODO : GameクラスのbattleSceneではなく、battleScene単体でデバッグしたい。
 enchant();
 var gbraverDebug = {};
 var assert;
@@ -105,13 +104,21 @@ function firstTurnPlayerCharge_asSecondTurnplayer() {
                 }
             }
         };
-        Game.battleScene.doWaitPhase(waitPhaseData);
-        Game.battleScene.onCommand(atackCommand);      
+        Game.emitServerResp('resp',waitPhaseData);
+        Game.onSendMessage(assertWaitPhase);
     }
     
-    function atackCommand(command) {
-        console.log(command);
-        var data = {
+    function assertWaitPhase(message,data){
+        var expectData = {
+            method : 'ok'
+        };
+        assert.equal(message, 'command', ',ウェイトフェイズ終了時のサーバ送信メッセージ名が正しい');
+        assert.deepEqual(data, expectData, ',ウェイトフェイズ終了時のサーバ送信データが正しい');
+        atackCommand();
+    }
+    
+    function atackCommand() {
+        var atackCommandData = {
             phase : 'atackCommand',
             statusArray : {
                 1 : {
@@ -126,13 +133,21 @@ function firstTurnPlayerCharge_asSecondTurnplayer() {
                 }
             }
         };
-        Game.battleScene.doAtackCommandPhase(data);
-        Game.battleScene.onCommand(charge);
+        Game.emitServerResp('resp',atackCommandData);
+        Game.onSendMessage(assertAtackCommand);
+    }
+    
+    function assertAtackCommand(message,data){
+        var expectData = {
+            method : 'ok'
+        };
+        assert.equal(message, 'command', ',攻撃コマンドフェイズ終了時のサーバ送信メッセージ名が正しい');
+        assert.deepEqual(data, expectData, ',攻撃コマンドフェイズ終了時のサーバ送信データが正しい');
+        charge();
     }
 
-    function charge(command) {
-        console.log(command);
-        var data = {
+    function charge() {
+        var chargeData = {
             phase : 'charge',
             statusArray : {
                 1 : {
@@ -147,10 +162,18 @@ function firstTurnPlayerCharge_asSecondTurnplayer() {
                 }
             }
         };
-        Game.battleScene.doChargePhase(data);
-        Game.battleScene.onCommand(function(command) {
-            console.log('finish');
-            $('title').text('finish');
-        });
+        Game.emitServerResp('resp',chargeData);
+        Game.onSendMessage(assertCharge);
+    }
+    
+    function assertCharge(message,data){
+        var expectData = {
+            method : 'ok'
+        };
+        assert.equal(message, 'command', ',チャージフェイズ終了時のサーバ送信メッセージ名が正しい');
+        assert.deepEqual(data, expectData, ',チャージフェイズ終了時のサーバ送信データが正しい');
+        console.log('finish');
+        $('title').text('finish');
+       
     }
 }

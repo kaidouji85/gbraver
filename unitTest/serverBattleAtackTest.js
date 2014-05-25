@@ -52,7 +52,6 @@ describe('serverクラスのテスト', function() {
                 }); 
             }
 
-
             function doGameStart_Client1() {
                 client1.emit('command', {
                     method : 'ready'

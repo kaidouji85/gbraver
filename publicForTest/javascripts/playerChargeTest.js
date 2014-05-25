@@ -1,4 +1,3 @@
-//TODO : GameクラスのbattleSceneではなく、battleScene単体でデバッグしたい。
 enchant();
 var gbraverDebug = {};
 var assert;
@@ -109,14 +108,17 @@ function firstTurnPlayerCharge_asFirstTurnplayer() {
             }
         }; 
 
-        Game.battleScene.doWaitPhase(waitPhaseData);
-        Game.battleScene.onCommand(function(command){
-            var expect = {
-                method : 'ok'
-            };
-            assert.deepEqual(command, expect, 'ウェイトフェイズ終了時のコマンド送信が正しい');
-            atackCommandPhase();
-        });
+        Game.emitServerResp('resp',waitPhaseData);
+        Game.onSendMessage(assertWaitPhase);
+    }
+    
+    function assertWaitPhase(message,data){
+        var expect = {
+            method : 'ok'
+        };
+        assert.equal(message, 'command', 'ウェイトフェイズ終了時のサーバ送信メッセージ名が正しい');
+        assert.deepEqual(data, expect, 'ウェイトフェイズ終了時のサーバ送信データが正しい');
+        atackCommandPhase();
     }
     
     function atackCommandPhase() {
@@ -135,24 +137,29 @@ function firstTurnPlayerCharge_asFirstTurnplayer() {
                 }
             }
         }; 
-
-        Game.battleScene.doAtackCommandPhase(atackCommand);
-        Game.battleScene.tl.delay(60).then(function(){
-            Game.battleScene.onCommand(selectCommand);
-            Game.battleScene.charge();
-        });
+        
+        Game.emitServerResp('resp',atackCommand);
+        selectCommand();
     }
 
-    function selectCommand(command) {
+    function selectCommand() {
+        Game.battleScene.tl.delay(60).then(function(){
+            Game.battleScene.charge();  //チャージボタンを押す
+        });
+        Game.onSendMessage(assertAtackCommandPhase);
+    }
+    
+    function assertAtackCommandPhase(message,data){
         var expect = {
             method : 'charge'
         };
-        assert.deepEqual(command, expect, 'チャージ選択時のコマンド送信が正しい');
-        chargePhase();
+        assert.equal(message,'command','チャージ選択時のサーバ送信メッセージ名が正しい');
+        assert.deepEqual(data, expect, 'チャージ選択時のサーバ送信パラメータが正しい');
+        chargePhase();        
     }
 
     function chargePhase() {
-        var charge = {
+        var chargeData = {
             phase : 'charge',
             statusArray : {
                 1 : {
@@ -167,14 +174,17 @@ function firstTurnPlayerCharge_asFirstTurnplayer() {
                 }
             }
         };
-        Game.battleScene.doChargePhase(charge);
-        Game.battleScene.onCommand(function(command) {
-            var expect = {
-                method : 'ok'
-            };
-            assert.deepEqual(command, expect, 'チャージ終了時のコマンド送信が正しい');
-            console.log('finish');
-            $('title').text('finish');
-        });
+        Game.emitServerResp('resp',chargeData);
+        Game.onSendMessage(assertChargePhase);
     } 
+    
+    function assertChargePhase(message,data){
+        var expect = {
+            method : 'ok'
+        };
+        assert.equal(message, 'command', 'チャージ終了時のサーバ送信メッセージ名が正しい');
+        assert.deepEqual(data, expect, 'チャージ終了時のサーバ送信データが正しい');
+        console.log('finish');
+        $('title').text('finish');
+    }
 }
