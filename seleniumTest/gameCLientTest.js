@@ -10,87 +10,45 @@ test.describe('ゲーム画面', function() {
                      withCapabilities(webdriver.Capabilities.chrome()).
                      build();
     });
+    
+    function doClientTest(url,testName){
+        var URL = 'localhost:'+PORT+'/'+url;
+        driver.get(URL);
+        driver.wait(function() {
+            return driver.getTitle().then(function(title) {
+                return testName === title;
+            });
+        }, 1000);
+        
+        driver.wait(function() {
+            return driver.getTitle().then(function(title) {
+                return 'finish' === title;
+            });
+        }, 10000);        
+    }
 
     test.it('プレイヤーがチャージを選択する', function(){
-        var URL = 'localhost:'+PORT+'/playerChargeTest.html';
-        driver.get(URL);
-        driver.wait(function() {
-            return driver.getTitle().then(function(title) {
-                return 'プレイヤーがチャージを選択する' === title;
-            });
-        }, 1000);
-        
-        driver.wait(function() {
-            return driver.getTitle().then(function(title) {
-                return 'finish' === title;
-            });
-        }, 10000);
+        doClientTest('playerChargeTest.html','プレイヤーがチャージを選択する');
     });
-
+    
     test.it('プレイヤーが攻撃を選択する', function(){
-        var URL = 'localhost:'+PORT+'/playerAtackTest.html';
-        driver.get(URL);
-        driver.wait(function() {
-            return driver.getTitle().then(function(title) {
-                return 'プレイヤーが攻撃を選択する' === title;
-            });
-        }, 1000);
-        
-        driver.wait(function() {
-            return driver.getTitle().then(function(title) {
-                return 'finish' === title;
-            });
-        }, 10000);
+        doClientTest('playerAtackTest.html','プレイヤーが攻撃を選択する');
     });
     
     test.it('敵が攻撃を選択する', function(){
-        var URL = 'localhost:'+PORT+'/enemyAtackTest.html';
-        driver.get(URL);
-        driver.wait(function() {
-            return driver.getTitle().then(function(title) {
-                return '敵が攻撃を選択する' === title;
-            });
-        }, 1000);
-       
-        driver.wait(function() {
-            return driver.getTitle().then(function(title) {
-                return 'finish' === title;
-            });
-        }, 10000);
+        doClientTest('enemyAtackTest.html','敵が攻撃を選択する');
     });
 
     test.it('敵がチャージを選択する', function(){
-        var URL = 'localhost:'+PORT+'/enemyChargeTest.html';
-        driver.get(URL);
-        driver.wait(function() {
-            return driver.getTitle().then(function(title) {
-                return '敵がチャージを選択する' === title;
-            });
-        }, 1000);
-       
-        driver.wait(function() {
-            return driver.getTitle().then(function(title) {
-                return 'finish' === title;
-            });
-        }, 10000);
+        doClientTest('enemyChargeTest.html','敵がチャージを選択する');
     });
     
-    test.it('ルームセレクトして戦闘画面に遷移する', function(){
-        var URL = 'localhost:'+PORT+'/roomSelectTest.html';
-        driver.get(URL);
-        driver.wait(function() {
-            return driver.getTitle().then(function(title) {
-                return 'ルームセレクトして戦闘画面に遷移する' === title;
-            });
-        }, 1000);
-       
-        driver.wait(function() {
-            return driver.getTitle().then(function(title) {
-                return 'finish' === title;
-            });
-        }, 10000);
+    test.it('戦闘ルームに入室する', function(){
+        doClientTest('roomSelectTest.html','戦闘ルームに入室する');
     });
+
     test.after(function() {
         driver.quit();
     });
+    
 });
