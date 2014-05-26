@@ -54,6 +54,9 @@ function game(spec, my) {
         core.roomSelectScene.onEnterRoom(function(data){
             emitSendMessage('enterRoom',data);
         });
+        core.roomSelectScene.onPushPrevButton(function(data){
+            core.changeTopScene();
+        });  
         core.replaceScene(core.roomSelectScene);
         emitChangeScene('selectRoom');
     };
@@ -75,6 +78,9 @@ function game(spec, my) {
         core.setArmdozerScene.onSelectArmdozer(function(data){
             emitSendMessage('setArmdozer',data);
         });
+        core.setArmdozerScene.onPushPrevButton(function(data){
+            core.changeTopScene();
+        });        
         core.replaceScene(core.setArmdozerScene);
         emitChangeScene('setArmdozer');
     };

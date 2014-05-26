@@ -73,8 +73,10 @@ window.onload = function(){
     assert = chai.assert;
     //topToRoomSelect();
     //topToSetArmdozer();
-    //setArmdozerToTop();
-    roomSelectToBattle();
+    //setArmdozerToTop_pushLandozerButton();
+    //setArmdozerToTop_pushOrevButton();
+    //roomSelectToBattle();
+    roomSelectToTop();
 };
 
 function topToRoomSelect(){
@@ -109,7 +111,7 @@ function topToSetArmdozer(){
     };    
 }
 
-function setArmdozerToTop(){
+function setArmdozerToTop_pushLandozerButton(){
     var Game = game({
         userId : 'test001@gmail.com'
     });
@@ -126,6 +128,22 @@ function setArmdozerToTop(){
             Game.emitServerResp('successSetArmdozer',{});
         });
     };      
+}
+
+function setArmdozerToTop_pushOrevButton(){
+    var Game = game({
+        userId : 'test001@gmail.com'
+    });
+    Game.start();
+    Game.onload = function(){
+        Game.changeSetArmdozerScene();
+        console.log('戻るボタンを押す');
+        Game.onChangeScene(function(scene) {
+            assert.equal(scene, 'top', 'トップ画面へ遷移する');
+            console.log('finish');
+            $('title').text('finish');
+        });
+    };    
 }
 
 function roomSelectToBattle(){
@@ -158,6 +176,22 @@ function roomSelectToBattle(){
             Game.emitServerResp('gameStart',gameStartData);
         });
     };
+}
+
+function roomSelectToTop(){
+    var Game = game({
+        userId : 'test001@gmail.com'
+    });
+    Game.start();
+    Game.onload = function(){
+        Game.changeRoomSelectScene();
+        console.log('戻るボタンを押す');
+        Game.onChangeScene(function(scene) {
+            assert.equal(scene, 'top', 'トップ画面へ遷移する');
+            console.log('finish');
+            $('title').text('finish');
+        });        
+    };        
 }
 
 

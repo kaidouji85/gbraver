@@ -12,6 +12,7 @@ function setArmdozerScene(){
     var prevButton;
     var labelArmmdozerSelect;
     var emitSelectArmdozer;
+    var emitPushPrevButton;
     
     initSprite();
     function initSprite(){
@@ -29,12 +30,13 @@ function setArmdozerScene(){
         });
         
         //戻るボタン
-        /*
         prevButton = new Button('戻る','blue',40,200);
         prevButton.x = 50;
         prevButton.y = 250;
+        prevButton.addEventListener(Event.TOUCH_END,function(e){
+            pushPrevButton();
+        });
         that.addChild(prevButton);
-        */
         
         //アームドーザ選択ラベル
         labelArmmdozerSelect = new Label('アームドーザ選択');
@@ -48,11 +50,19 @@ function setArmdozerScene(){
         emitSelectArmdozer = fn;
     };
     
+    that.onPushPrevButton = function(fn){
+        emitPushPrevButton = fn;
+    };
+    
     function pushArmdozerButton(i){
         var data = {
             armdozerId : armdozerIdList[i].id
         };
         emitSelectArmdozer(data);
+    }
+    
+    function pushPrevButton(){
+        emitPushPrevButton();
     }
     
     return that;
