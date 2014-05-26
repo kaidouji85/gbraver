@@ -47,6 +47,10 @@ test.describe('ゲーム画面', function() {
         doClientTest('roomSelectTest.html','戦闘ルームに入室する');
     });
 
+    test.it('トップメニューからルーム選択画面へ遷移', function(){
+        doClientTest('topToRoomSelectTest.html','トップメニューからルーム選択画面へ遷移');
+    });
+    
     test.after(function() {
         driver.quit();
     });

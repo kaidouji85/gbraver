@@ -6,7 +6,8 @@ function topScene(){
     var battleRoomButton;
     var setArmdpzerButton;
     var labelMenu;
-    var emitPushSetArmdozer;
+    that.emitPushSetArmdozer = function(){};
+    that.emitPushBattleRoom = function(){};
     
     initSprite();
     function initSprite(){
@@ -15,7 +16,7 @@ function topScene(){
         battleRoomButton.x = 50;
         battleRoomButton.y = 60;
         battleRoomButton.addEventListener(Event.TOUCH_END,function(e){
-            emitPushBattleRoom();
+            that.emitPushBattleRoom();
         });        
         that.addChild(battleRoomButton);
         
@@ -24,7 +25,7 @@ function topScene(){
         setArmdpzerButton.x = 50;
         setArmdpzerButton.y = 120;
         setArmdpzerButton.addEventListener(Event.TOUCH_END,function(e){
-            emitPushSetArmdozer();
+            that.emitPushSetArmdozer();
         });
         that.addChild(setArmdpzerButton);
         
@@ -37,11 +38,11 @@ function topScene(){
     }
     
     that.onPushSetArmdozer = function(fn){
-        emitPushSetArmdozer = fn;
+        that.emitPushSetArmdozer = fn;
     };
     
     that.onPushBattleRoom = function(fn){
-        emitPushBattleRoom = fn;
+        that.emitPushBattleRoom = fn;
     };
     
     return that;

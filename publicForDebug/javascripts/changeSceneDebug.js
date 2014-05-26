@@ -71,29 +71,12 @@ var gameStartData = {
     
 window.onload = function(){
     assert = chai.assert;
-    //topToRoomSelect();
     //topToSetArmdozer();
     //setArmdozerToTop_pushLandozerButton();
     //setArmdozerToTop_pushOrevButton();
     //roomSelectToBattle();
     roomSelectToTop();
 };
-
-function topToRoomSelect(){
-    var Game = game({
-        userId : 'test001@gmail.com'        
-    });
-    Game.start();
-    Game.onload = function(){
-        Game.changeTopScene();
-        console.log('対戦ルーム入室ボタンを押す');
-        Game.onChangeScene(function(scene){
-            assert.equal(scene,'selectRoom','ルーム選択画面へ遷移する');
-            console.log('finish');
-            $('title').text('finish');
-        });
-    };    
-}
 
 function topToSetArmdozer(){
     var Game = game({
