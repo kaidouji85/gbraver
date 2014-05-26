@@ -54,6 +54,7 @@ function setArmdozerScene(){
         emitPushPrevButton = fn;
     };
     
+    that.pushArmdozerButton = pushArmdozerButton;
     function pushArmdozerButton(i){
         var data = {
             armdozerId : armdozerIdList[i].id

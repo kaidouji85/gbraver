@@ -23,7 +23,7 @@ function topToSetArmdozer(){
         });
         
         Game.onChangeScene(function(scene){
-            assert.equal(scene,'setArmdozer','ルーム選択画面へ遷移する');
+            assert.equal(scene,'setArmdozer','アームドーザ選択画面へ遷移する');
             console.log('finish');
             $('title').text('finish');
         });
