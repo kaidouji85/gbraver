@@ -50,7 +50,11 @@ test.describe('ゲーム画面', function() {
     test.it('トップメニューからルーム選択画面へ遷移', function(){
         doClientTest('topToRoomSelectTest.html','トップメニューからルーム選択画面へ遷移');
     });
-    
+
+    test.it('トップメニューからアームドーザ選択画面へ遷移', function(){
+        doClientTest('topToSetArmdozerTest.html','トップメニューからアームドーザ選択画面へ遷移');
+    });
+        
     test.after(function() {
         driver.quit();
     });

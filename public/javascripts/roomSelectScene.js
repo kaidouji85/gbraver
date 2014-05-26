@@ -55,6 +55,7 @@ function roomSelectScene(spec,my){
             button.visible = false;
         });
         labelEnterRoomWait.visible = true;
+        prevButton.visible = false;
         emitEnterRoom({
             roomId : roomId
         });
@@ -64,6 +65,7 @@ function roomSelectScene(spec,my){
         emitPushPrevButton = fn;
     };
     
+    //TODO : テスト用関数　いつか消したい
     function pushPrevButton(){
         emitPushPrevButton();
     }    
