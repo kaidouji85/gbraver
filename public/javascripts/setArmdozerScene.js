@@ -1,10 +1,10 @@
 function setArmdozerScene(){
     var that = new Scene();
     that.backgroundColor = "black";
+    that.armdozerButtonArray = new Array(MAX_ARMDOZER_BUTTON);
     
     var core = enchant.Core.instance;
     var MAX_ARMDOZER_BUTTON = 2;
-    var armdozerButtonArray = new Array(MAX_ARMDOZER_BUTTON);
     var armdozerIdList = [
         {name:'グランブレイバー',id:'granBraver'},
         {name:'ランドーザ',id:'landozer'}
@@ -18,9 +18,9 @@ function setArmdozerScene(){
     function initSprite(){
         //キャラクター選択ボタン
         for(var i=0; i<MAX_ARMDOZER_BUTTON; i++){
-            armdozerButtonArray[i] = new Button(armdozerIdList[i].name,'blue',40,200);
+            that.armdozerButtonArray[i] = new Button(armdozerIdList[i].name,'blue',40,200);
         }
-        armdozerButtonArray.forEach(function(button,i){
+        that.armdozerButtonArray.forEach(function(button,i){
             button.x = 50;
             button.y = 60+60*i;
             button.addEventListener(Event.TOUCH_END,function(e){
