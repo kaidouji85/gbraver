@@ -18,11 +18,7 @@ function setArmdozerToTop_landozer(){
     
     function pushLAndozer(){
         console.log('ランドーザボタンを押す');
-        Game.currentScene.tl.delay(20).then(function() {
-            Game.setArmdozerScene.armdozerButtonArray[1].dispatchEvent(new Event(Event.TOUCH_START));
-        }).delay(20).then(function() {
-            Game.setArmdozerScene.armdozerButtonArray[1].dispatchEvent(new Event(Event.TOUCH_END));
-        });
+        touch(Game.setArmdozerScene.armdozerButtonArray[1]);
 
         Game.onSendMessage(function(message,data){
             //TODO : 「message,dataの検証はsetArmdozerScnenTest.jsで実行済み」というニュアンスのことを書きたい
