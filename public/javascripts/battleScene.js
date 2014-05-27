@@ -94,6 +94,9 @@ function battleScene(spec,my){
         atackIcon.visible = false;
         atackIcon.addEventListener(Event.TOUCH_END,moveBatteryCommand);
         that.addChild(atackIcon);
+        //TODO : atackIconをパブリックメンバにしたい
+        ///TODO : moveBatteryCommand()をプライベートメンバにしたい
+        that.atackIcon = atackIcon;
         
         //チャージアイコン
         chargeIcon = new Button('チャージ','light',ICON_HEIGHT,ICON_WIDTH);
@@ -102,6 +105,9 @@ function battleScene(spec,my){
         chargeIcon.visible = false;
         chargeIcon.addEventListener(Event.TOUCH_END,charge);
         that.addChild(chargeIcon);
+        //TODO : chargeIconをパブリックメンバにしたい
+        ///TODO : charge()をプライベートメンバにしたい        
+        that.chargeIcon = chargeIcon;
         
         //+アイコン
         plusIcon = new Button('+','light',ICON_HEIGHT,ICON_WIDTH);
@@ -110,6 +116,9 @@ function battleScene(spec,my){
         plusIcon.visible = false;
         plusIcon.addEventListener(Event.TOUCH_END,plusBattery);
         that.addChild(plusIcon);
+        //TODO : plusIconをパブリックメンバにしたい
+        ///TODO : plusBattery()をプライベートメンバにしたい
+        that.plusIcon = plusIcon;
         
         //-アイコン
         minusIcon = new Button('-','light',ICON_HEIGHT,ICON_WIDTH);
@@ -126,6 +135,9 @@ function battleScene(spec,my){
         okIcon.visible = false;
         okIcon.addEventListener(Event.TOUCH_END,selectBattery);
         that.addChild(okIcon);
+        //TODO : plusIconをパブリックメンバにしたい
+        ///TODO : plusBattery()をプライベートメンバにしたい        
+        that.okIcon = okIcon;
         
         //戻るアイコン
         prevIcon = new Button('戻る','light',ICON_HEIGHT,ICON_WIDTH);

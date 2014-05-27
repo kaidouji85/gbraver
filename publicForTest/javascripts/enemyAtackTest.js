@@ -165,12 +165,8 @@ function firstPlayerAtack_asDefenther(){
     
     function selectCommnad(){
         Game.onSendMessage(assertDefenthCommand);
-
-        Game.battleScene.tl.delay(60).then(function() {
-            Game.battleScene.plusBattery();
-        }).delay(20).then(function() {
-            Game.battleScene.selectBattery();
-        });
+        touch(Game.battleScene.plusIcon);
+        touch(Game.battleScene.okIcon);
     }
     
     function assertDefenthCommand(message,data){

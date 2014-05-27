@@ -143,9 +143,7 @@ function firstTurnPlayerCharge_asFirstTurnplayer() {
     }
 
     function selectCommand() {
-        Game.battleScene.tl.delay(60).then(function(){
-            Game.battleScene.charge();  //チャージボタンを押す
-        });
+        touch(Game.battleScene.chargeIcon);
         Game.onSendMessage(assertAtackCommandPhase);
     }
     

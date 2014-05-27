@@ -135,16 +135,11 @@ function firstPlayerAtack_asAtacker(){
     }
     
     function selectCommand(){
-        Game.battleScene.tl.delay(60).then(function() {
-            Game.battleScene.moveBatteryCommand();
-        }).delay(20).then(function() {
-            Game.battleScene.plusBattery();
-        }).delay(20).then(function() {
-            Game.battleScene.plusBattery();
-        }).delay(20).then(function() {
-            Game.battleScene.selectBattery();
-        });
-        
+        touch(Game.battleScene.atackIcon);
+        touch(Game.battleScene.plusIcon);
+        touch(Game.battleScene.plusIcon);
+        touch(Game.battleScene.okIcon);
+       
         Game.onSendMessage(assertAtackCommandPhase);
     }
     
