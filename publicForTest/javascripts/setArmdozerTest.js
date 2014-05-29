@@ -18,6 +18,9 @@ function setArmdozer(){
     };
     
     function selectArmdozer(){
+        //console.log('ランドーザを選択する');
+        touch(Game.setArmdozerScene.armdozerButtonArray[1]);
+        
         Game.onSendMessage(function(message,data){
             var expect = {
                 armdozerId : 'landozer'
@@ -27,6 +30,5 @@ function setArmdozer(){
             console.log('finish');
             $('title').text('finish');
         });
-        console.log('ランドーザを選択する');
     }
 }

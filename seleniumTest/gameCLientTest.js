@@ -27,6 +27,10 @@ test.describe('ゲーム画面', function() {
         }, 10000);        
     }
 
+    test.it('アームドーザが選択できる', function(){
+        doClientTest('setArmdozerTest.html','アームドーザが選択できる');
+    });
+    
     test.it('プレイヤーがチャージを選択する', function(){
         doClientTest('playerChargeTest.html','プレイヤーがチャージを選択する');
     });
