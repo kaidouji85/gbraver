@@ -1,33 +1,33 @@
 function topScene(){
     var that = new Scene();
     that.backgroundColor = 'black';
+    that.battleRoomButton;
+    that.setArmdpzerButton;
     
     var core = enchant.Core.instance;
-    var battleRoomButton;
-    var setArmdpzerButton;
     var labelMenu;
-    that.emitPushSetArmdozer = function(){};
-    that.emitPushBattleRoom = function(){};
+    var emitPushSetArmdozer = function(){};
+    var emitPushBattleRoom = function(){};
     
     initSprite();
     function initSprite(){
         //対戦ルーム入室ボタン
-        battleRoomButton = new Button('対戦ルーム入室','blue',40,200);
-        battleRoomButton.x = 50;
-        battleRoomButton.y = 60;
-        battleRoomButton.addEventListener(Event.TOUCH_END,function(e){
-            that.emitPushBattleRoom();
+        that.battleRoomButton = new Button('対戦ルーム入室','blue',40,200);
+        that.battleRoomButton.x = 50;
+        that.battleRoomButton.y = 60;
+        that.battleRoomButton.addEventListener(Event.TOUCH_END,function(e){
+            emitPushBattleRoom();
         });        
-        that.addChild(battleRoomButton);
+        that.addChild(that.battleRoomButton);
         
         //アームドーザ選択ボタン
-        setArmdpzerButton = new Button('アームドーザ選択','blue',40,200);
-        setArmdpzerButton.x = 50;
-        setArmdpzerButton.y = 120;
-        setArmdpzerButton.addEventListener(Event.TOUCH_END,function(e){
-            that.emitPushSetArmdozer();
+        that.setArmdpzerButton = new Button('アームドーザ選択','blue',40,200);
+        that.setArmdpzerButton.x = 50;
+        that.setArmdpzerButton.y = 120;
+        that.setArmdpzerButton.addEventListener(Event.TOUCH_END,function(e){
+            emitPushSetArmdozer();
         });
-        that.addChild(setArmdpzerButton);
+        that.addChild(that.setArmdpzerButton);
         
         //メニューラベル
         labelMenu = new Label('メニュー');
@@ -38,11 +38,11 @@ function topScene(){
     }
     
     that.onPushSetArmdozer = function(fn){
-        that.emitPushSetArmdozer = fn;
+        emitPushSetArmdozer = fn;
     };
     
     that.onPushBattleRoom = function(fn){
-        that.emitPushBattleRoom = fn;
+        emitPushBattleRoom = fn;
     };
     
     return that;

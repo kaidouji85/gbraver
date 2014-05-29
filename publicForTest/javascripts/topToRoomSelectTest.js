@@ -1,3 +1,5 @@
+//TODO : touch()を使いたい
+
 enchant();
 var assert;
 
@@ -18,10 +20,8 @@ function topToRoomSelect(){
     
     function pushBattleRoomButton(){
         //console.log('対戦ルーム入室ボタンを押す');
-        Game.topScene.tl.delay(20).then(function(){
-            Game.topScene.emitPushBattleRoom();
-        });
-        
+        touch(Game.topScene.battleRoomButton);
+
         Game.onChangeScene(function(scene){
             assert.equal(scene,'selectRoom','ルーム選択画面へ遷移する');
             console.log('finish');

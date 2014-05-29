@@ -1,3 +1,5 @@
+//TODO : touchを使いたい
+
 enchant();
 var assert;
 
@@ -18,10 +20,8 @@ function topToSetArmdozer(){
     
     function pushSetArmdozerButton(){
         //console.log('アームドーザ選択ボタンを押す');
-        Game.topScene.tl.delay(20).then(function(){
-            Game.topScene.emitPushSetArmdozer(); 
-        });
-        
+        touch(Game.topScene.setArmdpzerButton);
+       
         Game.onChangeScene(function(scene){
             assert.equal(scene,'setArmdozer','アームドーザ選択画面へ遷移する');
             console.log('finish');

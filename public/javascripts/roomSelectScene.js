@@ -1,10 +1,10 @@
 function roomSelectScene(spec,my){
     var that = new Scene();
     that.backgroundColor = 'black';
-
+    that.enterRoomButtonArray = new Array();
+    
     var core = enchant.Core.instance;
     var emitEnterRoom;
-    var enterRoomButtonArray = new Array();
     var labelEnterRoomWait;
     var prevButton;
     var emitPushPrevButton = function(){};
@@ -16,9 +16,9 @@ function roomSelectScene(spec,my){
         //入室ボタン
         for(var i=0; i<CNT_MAX_ENTER_ROOM; i++){
             var button = new Button('ルーム'+i,'blue',40,200);
-            enterRoomButtonArray.push(button);
+            that.enterRoomButtonArray.push(button);
         }
-        enterRoomButtonArray.forEach(function(button,i){
+        that.enterRoomButtonArray.forEach(function(button,i){
             button.x = 50;
             button.y = 10+60*i;
             button.addEventListener(Event.TOUCH_END,function(e){
@@ -49,9 +49,10 @@ function roomSelectScene(spec,my){
         emitEnterRoom = fn;
     };
 
+    //TODO : pushEnterRoom()をプライベート化したい
     that.pushEnterRoom = pushEnterRoom;
     function pushEnterRoom(roomId){
-        enterRoomButtonArray.forEach(function(button){
+        that.enterRoomButtonArray.forEach(function(button){
             button.visible = false;
         });
         labelEnterRoomWait.visible = true;

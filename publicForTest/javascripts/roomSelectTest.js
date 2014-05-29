@@ -18,9 +18,8 @@ function enterRoomAndGameStart(){
     };
     
     function enterRoom(){
-        Game.roomSelectScene.tl.delay(60).then(function(){
-            Game.roomSelectScene.pushEnterRoom(2);
-        });
+        //ルーム2を押す
+        touch(Game.roomSelectScene.enterRoomButtonArray[2]);
         Game.onSendMessage(assertEnterRoom);
     }
     
