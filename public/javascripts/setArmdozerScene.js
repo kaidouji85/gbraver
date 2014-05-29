@@ -2,6 +2,7 @@ function setArmdozerScene(){
     var that = new Scene();
     that.backgroundColor = "black";
     that.armdozerButtonArray = new Array(MAX_ARMDOZER_BUTTON);
+    that.prevButton;
     
     var core = enchant.Core.instance;
     var MAX_ARMDOZER_BUTTON = 2;
@@ -9,7 +10,6 @@ function setArmdozerScene(){
         {name:'グランブレイバー',id:'granBraver'},
         {name:'ランドーザ',id:'landozer'}
     ];
-    var prevButton;
     var labelArmmdozerSelect;
     var emitSelectArmdozer;
     var emitPushPrevButton;
@@ -30,13 +30,13 @@ function setArmdozerScene(){
         });
         
         //戻るボタン
-        prevButton = new Button('戻る','blue',40,200);
-        prevButton.x = 50;
-        prevButton.y = 250;
-        prevButton.addEventListener(Event.TOUCH_END,function(e){
+        that.prevButton = new Button('戻る','blue',40,200);
+        that.prevButton.x = 50;
+        that.prevButton.y = 250;
+        that.prevButton.addEventListener(Event.TOUCH_END,function(e){
             pushPrevButton();
         });
-        that.addChild(prevButton);
+        that.addChild(that.prevButton);
         
         //アームドーザ選択ラベル
         labelArmmdozerSelect = new Label('アームドーザ選択');

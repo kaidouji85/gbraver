@@ -26,11 +26,13 @@ test.describe('ゲーム画面', function() {
             });
         }, 10000);        
     }
-
+        
+    //setArmdozerScene
     test.it('アームドーザが選択できる', function(){
         doClientTest('setArmdozerTest.html','アームドーザが選択できる');
     });
     
+    //battleScene
     test.it('プレイヤーがチャージを選択する', function(){
         doClientTest('playerChargeTest.html','プレイヤーがチャージを選択する');
     });
@@ -47,10 +49,12 @@ test.describe('ゲーム画面', function() {
         doClientTest('enemyChargeTest.html','敵がチャージを選択する');
     });
     
+    //roomSelectScene
     test.it('戦闘ルームに入室する', function(){
         doClientTest('roomSelectTest.html','戦闘ルームに入室する');
     });
 
+    //changeScene
     test.it('トップメニューからルーム選択画面へ遷移', function(){
         doClientTest('topToRoomSelectTest.html','トップメニューからルーム選択画面へ遷移');
     });
@@ -62,7 +66,11 @@ test.describe('ゲーム画面', function() {
     test.it('アームドーザ選択画面から「ランドーザ」ボタンを押下してトップ画面に遷移', function(){
         doClientTest('setArmdozerToTopTest_landozer.html','アームドーザ選択画面から「ランドーザ」ボタンを押下してトップ画面に遷移');
     });
-            
+    
+    test.it('アームドーザ選択画面から「戻る」ボタンを押下してトップ画面に遷移', function(){
+        doClientTest('setArmdozerToTopTest_prev.html','アームドーザ選択画面から「戻る」ボタンを押下してトップ画面に遷移');
+    });
+    
     test.after(function() {
         driver.quit();
     });
