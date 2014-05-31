@@ -2,7 +2,9 @@ function setArmdozerScene(){
     var that = new Scene();
     that.backgroundColor = "black";
     that.armdozerButtonArray = new Array(MAX_ARMDOZER_BUTTON);
-    that.prevButton;
+    that.prevButton = {};
+    that.onSelectArmdozer  = onSelectArmdozer;
+    that.onPushPrevButton = onPushPrevButton;
     
     var core = enchant.Core.instance;
     var MAX_ARMDOZER_BUTTON = 2;
@@ -11,8 +13,8 @@ function setArmdozerScene(){
         {name:'ランドーザ',id:'landozer'}
     ];
     var labelArmmdozerSelect;
-    var emitSelectArmdozer;
-    var emitPushPrevButton;
+    var emitSelectArmdozer = function(data){};
+    var emitPushPrevButton = function(){};
     
     initSprite();
     function initSprite(){
@@ -46,15 +48,14 @@ function setArmdozerScene(){
         that.addChild(labelArmmdozerSelect);
     }
     
-    that.onSelectArmdozer = function(fn){
+    function onSelectArmdozer(fn){
         emitSelectArmdozer = fn;
     };
     
-    that.onPushPrevButton = function(fn){
+    function onPushPrevButton(fn){
         emitPushPrevButton = fn;
     };
     
-    that.pushArmdozerButton = pushArmdozerButton;
     function pushArmdozerButton(i){
         var data = {
             armdozerId : armdozerIdList[i].id
