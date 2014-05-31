@@ -2,8 +2,10 @@ function roomSelectScene(spec,my){
     var that = new Scene();
     that.backgroundColor = 'black';
     that.enterRoomButtonArray = new Array();
-    that.prevButton;
-        
+    that.prevButton = {};
+    that.onEnterRoom = onEnterRoom;
+    that.onPushPrevButton = onPushPrevButton;
+    
     var core = enchant.Core.instance;
     var emitEnterRoom;
     var labelEnterRoomWait;
@@ -44,13 +46,11 @@ function roomSelectScene(spec,my){
         });
         that.addChild(that.prevButton);
     };
-        
-    that.onEnterRoom = function(fn){
+    
+    function onEnterRoom(fn){
         emitEnterRoom = fn;
     };
 
-    //TODO : pushEnterRoom()をプライベート化したい
-    that.pushEnterRoom = pushEnterRoom;
     function pushEnterRoom(roomId){
         that.enterRoomButtonArray.forEach(function(button){
             button.visible = false;
@@ -62,11 +62,10 @@ function roomSelectScene(spec,my){
         });
     }
     
-    that.onPushPrevButton = function(fn){
+    function onPushPrevButton(fn){
         emitPushPrevButton = fn;
     };
-    
-    //TODO : テスト用関数　いつか消したい
+
     function pushPrevButton(){
         emitPushPrevButton();
     }    
