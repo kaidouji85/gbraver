@@ -73,6 +73,10 @@ test.describe('ゲーム画面', function() {
     
     test.it('ルーム選択画面から戦闘画面に遷移', function(){
         doClientTest('roomSelectToBattleTest.html','ルーム選択画面から戦闘画面に遷移');
+    });
+    
+    test.it('ルーム選択画面から「戻る」ボタンを押してトップ画面へ遷移', function(){
+        doClientTest('roomSelectToTopTest.html','ルーム選択画面から「戻る」ボタンを押してトップ画面へ遷移');
     });    
     
     test.after(function() {

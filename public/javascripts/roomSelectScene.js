@@ -2,11 +2,11 @@ function roomSelectScene(spec,my){
     var that = new Scene();
     that.backgroundColor = 'black';
     that.enterRoomButtonArray = new Array();
-    
+    that.prevButton;
+        
     var core = enchant.Core.instance;
     var emitEnterRoom;
     var labelEnterRoomWait;
-    var prevButton;
     var emitPushPrevButton = function(){};
     
     var CNT_MAX_ENTER_ROOM = 5;
@@ -36,13 +36,13 @@ function roomSelectScene(spec,my){
         that.addChild(labelEnterRoomWait);
         
         //戻るボタン
-        prevButton = new Button('戻る','blue',40,200);
-        prevButton.x = 50;
-        prevButton.y = 340;
-        prevButton.addEventListener(Event.TOUCH_END,function(e){
+        that.prevButton = new Button('戻る','blue',40,200);
+        that.prevButton.x = 50;
+        that.prevButton.y = 340;
+        that.prevButton.addEventListener(Event.TOUCH_END,function(e){
             pushPrevButton();
         });
-        that.addChild(prevButton);
+        that.addChild(that.prevButton);
     };
         
     that.onEnterRoom = function(fn){
@@ -56,7 +56,7 @@ function roomSelectScene(spec,my){
             button.visible = false;
         });
         labelEnterRoomWait.visible = true;
-        prevButton.visible = false;
+        that.prevButton.visible = false;
         emitEnterRoom({
             roomId : roomId
         });
