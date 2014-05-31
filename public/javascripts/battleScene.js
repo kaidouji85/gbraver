@@ -1,6 +1,18 @@
 function battleScene(spec,my){
     var that = new Scene();
     that.backgroundColor = "black";
+    that.atackIcon = {};
+    that.chargeIcon = {};
+    that.plusIcon = {};
+    that.minusIcon = {};
+    that.okIcon = {};
+    that.prevIcon = {};
+    that.doWaitPhase = doWaitPhase;
+    that.doAtackCommandPhase = doAtackCommandPhase;
+    that.doChargePhase = doChargePhase;
+    that.doDefenthCommandPhase = doDefenthCommandPhase;
+    that.doDamagePhase = doDamagePhase;
+    that.onCommand = onCommand;
     
     var statusArray = $.extend(true, {}, spec.statusArray);
     var userId = spec.userId; 
@@ -12,12 +24,6 @@ function battleScene(spec,my){
     var batteryNumberArray = {};
     var damageLabelArray = {};
     var BatteryCommand;
-    var atackIcon;
-    var chargeIcon;
-    var plusIcon;
-    var minusIcon;
-    var okIcon;
-    var prevIcon;
     var emitCommand = function(){};
     var selectMaxBattery = 5;
     var selectMinBattery = 0;
@@ -30,7 +36,6 @@ function battleScene(spec,my){
     var COMMAND_POS_Y = 300;
     
     initSprite();
-    
     function initSprite() {
         for(var uid in statusArray){
             //キャラクタースプライト
@@ -83,72 +88,58 @@ function battleScene(spec,my){
             damageLabelArray[uid].x = uid===userId ? 230 : 20;
             damageLabelArray[uid].y = 210;
             damageLabelArray[uid].visible = false;
-            //damageLabelArray[uid].text = '1000';
             that.addChild(damageLabelArray[uid]);
         }
         
         //攻撃アイコン
-        atackIcon = new Button('攻撃','light',ICON_HEIGHT,ICON_WIDTH);
-        atackIcon.x = COMMAND_POX_X;
-        atackIcon.y = COMMAND_POS_Y;
-        atackIcon.visible = false;
-        atackIcon.addEventListener(Event.TOUCH_END,moveBatteryCommand);
-        that.addChild(atackIcon);
-        //TODO : atackIconをパブリックメンバにしたい
-        ///TODO : moveBatteryCommand()をプライベートメンバにしたい
-        that.atackIcon = atackIcon;
+        that.atackIcon = new Button('攻撃','light',ICON_HEIGHT,ICON_WIDTH);
+        that.atackIcon.x = COMMAND_POX_X;
+        that.atackIcon.y = COMMAND_POS_Y;
+        that.atackIcon.visible = false;
+        that.atackIcon.addEventListener(Event.TOUCH_END,moveBatteryCommand);
+        that.addChild(that.atackIcon);
         
         //チャージアイコン
-        chargeIcon = new Button('チャージ','light',ICON_HEIGHT,ICON_WIDTH);
-        chargeIcon.x = COMMAND_POX_X + ICON_WIDTH + 32;
-        chargeIcon.y = COMMAND_POS_Y;
-        chargeIcon.visible = false;
-        chargeIcon.addEventListener(Event.TOUCH_END,charge);
-        that.addChild(chargeIcon);
-        //TODO : chargeIconをパブリックメンバにしたい
-        ///TODO : charge()をプライベートメンバにしたい        
-        that.chargeIcon = chargeIcon;
+        that.chargeIcon = new Button('チャージ','light',ICON_HEIGHT,ICON_WIDTH);
+        that.chargeIcon.x = COMMAND_POX_X + ICON_WIDTH + 32;
+        that.chargeIcon.y = COMMAND_POS_Y;
+        that.chargeIcon.visible = false;
+        that.chargeIcon.addEventListener(Event.TOUCH_END,charge);
+        that.addChild(that.chargeIcon);
         
         //+アイコン
-        plusIcon = new Button('+','light',ICON_HEIGHT,ICON_WIDTH);
-        plusIcon.x = COMMAND_POX_X;
-        plusIcon.y = COMMAND_POS_Y;
-        plusIcon.visible = false;
-        plusIcon.addEventListener(Event.TOUCH_END,plusBattery);
-        that.addChild(plusIcon);
-        //TODO : plusIconをパブリックメンバにしたい
-        ///TODO : plusBattery()をプライベートメンバにしたい
-        that.plusIcon = plusIcon;
+        that.plusIcon = new Button('+','light',ICON_HEIGHT,ICON_WIDTH);
+        that.plusIcon.x = COMMAND_POX_X;
+        that.plusIcon.y = COMMAND_POS_Y;
+        that.plusIcon.visible = false;
+        that.plusIcon.addEventListener(Event.TOUCH_END,plusBattery);
+        that.addChild(that.plusIcon);
         
         //-アイコン
-        minusIcon = new Button('-','light',ICON_HEIGHT,ICON_WIDTH);
-        minusIcon.x = COMMAND_POX_X + ICON_WIDTH + 32;
-        minusIcon.y = COMMAND_POS_Y;
-        minusIcon.visible = false;
-        minusIcon.addEventListener(Event.TOUCH_END,minusBattery);
-        that.addChild(minusIcon);
+        that.minusIcon = new Button('-','light',ICON_HEIGHT,ICON_WIDTH);
+        that.minusIcon.x = COMMAND_POX_X + ICON_WIDTH + 32;
+        that.minusIcon.y = COMMAND_POS_Y;
+        that.minusIcon.visible = false;
+        that.minusIcon.addEventListener(Event.TOUCH_END,minusBattery);
+        that.addChild(that.minusIcon);
         
         //決定アイコン
-        okIcon = new Button('決定','light',ICON_HEIGHT,ICON_WIDTH);
-        okIcon.x = COMMAND_POX_X;
-        okIcon.y = COMMAND_POS_Y + ICON_HEIGHT + 16;
-        okIcon.visible = false;
-        okIcon.addEventListener(Event.TOUCH_END,selectBattery);
-        that.addChild(okIcon);
-        //TODO : plusIconをパブリックメンバにしたい
-        ///TODO : plusBattery()をプライベートメンバにしたい        
-        that.okIcon = okIcon;
-        
+        that.okIcon = new Button('決定','light',ICON_HEIGHT,ICON_WIDTH);
+        that.okIcon.x = COMMAND_POX_X;
+        that.okIcon.y = COMMAND_POS_Y + ICON_HEIGHT + 16;
+        that.okIcon.visible = false;
+        that.okIcon.addEventListener(Event.TOUCH_END,selectBattery);
+        that.addChild(that.okIcon);
+                
         //戻るアイコン
-        prevIcon = new Button('戻る','light',ICON_HEIGHT,ICON_WIDTH);
-        prevIcon.x = COMMAND_POX_X + ICON_WIDTH + 32;
-        prevIcon.y = COMMAND_POS_Y + ICON_HEIGHT + 16;
-        prevIcon.visible = false;
-        prevIcon.addEventListener(Event.TOUCH_END,prevAtackCommand);
-        that.addChild(prevIcon);
+        that.prevIcon = new Button('戻る','light',ICON_HEIGHT,ICON_WIDTH);
+        that.prevIcon.x = COMMAND_POX_X + ICON_WIDTH + 32;
+        that.prevIcon.y = COMMAND_POS_Y + ICON_HEIGHT + 16;
+        that.prevIcon.visible = false;
+        that.prevIcon.addEventListener(Event.TOUCH_END,prevAtackCommand);
+        that.addChild(that.prevIcon);
     }
     
-    that.doWaitPhase = doWaitPhase;
     function doWaitPhase(data){
         var turn = data.turn;
         atackUserId = data.atackUserId;
@@ -162,7 +153,6 @@ function battleScene(spec,my){
         });
     };
     
-    that.doAtackCommandPhase = doAtackCommandPhase;
     function doAtackCommandPhase(data){
         refreshMertor(data.statusArray);
         if(atackUserId===userId){
@@ -174,7 +164,6 @@ function battleScene(spec,my){
         }
     };
     
-    that.doChargePhase = doChargePhase;
     function doChargePhase(data){
         refreshMertor(data.statusArray);
         that.tl.delay(WAIT_TIME_ACTIVE_RESET).then(function(){
@@ -182,7 +171,6 @@ function battleScene(spec,my){
         });
     };
     
-    that.doDefenthCommandPhase = doDefenthCommandPhase;
     function doDefenthCommandPhase(data){
         refreshMertor(data.statusArray);
         if(atackUserId===userId){
@@ -194,7 +182,6 @@ function battleScene(spec,my){
         }
     };
     
-    that.doDamagePhase = doDamagePhase;
     function doDamagePhase(data){
         var atackBattery = data.atackBattery;
         var defenthBattery = data.defenthBattery;
@@ -252,7 +239,6 @@ function battleScene(spec,my){
         }        
     }
     
-    that.onCommand = onCommand;
     function onCommand(fn) {
         emitCommand = fn;
     };
@@ -265,7 +251,6 @@ function battleScene(spec,my){
         }
     }
 
-    that.moveBatteryCommand = moveBatteryCommand;
     function moveBatteryCommand(){
         setAtackCommandVisible(false);
         viewBatteryCommand();
@@ -273,7 +258,7 @@ function battleScene(spec,my){
     
     function viewBatteryCommand(){
         setBatteryCommandVisible(true);
-        prevIcon.visible = userId===atackUserId ? true : false;
+        that.prevIcon.visible = userId===atackUserId ? true : false;
         batteryNumberArray[userId].visible = true;
         selectMaxBattery = getSelectMaxBattery();
         selectMinBattery = getSelectMinBattery();
@@ -289,7 +274,6 @@ function battleScene(spec,my){
         return userId===atackUserId ? 1 : 0;
     }
     
-    that.plusBattery = plusBattery;
     function plusBattery(){
         var number = batteryNumberArray[userId].frame;
         if(number<selectMaxBattery){
@@ -297,7 +281,6 @@ function battleScene(spec,my){
         }
     };
     
-    that.minusBattery = minusBattery;
     function minusBattery(){
         var number = batteryNumberArray[userId].frame;
         if(selectMinBattery<number){
@@ -305,20 +288,17 @@ function battleScene(spec,my){
         }
     };
     
-    that.prevAtackCommand = prevAtackCommand;
     function prevAtackCommand(){
         setAtackCommandVisible(true);
         setBatteryCommandVisible(false);
         batteryNumberArray[userId].visible = false;        
     };
     
-    that.charge = charge;
     function charge(){
         setAtackCommandVisible(false);
         emitCommand({method:'charge'});
     };
     
-    that.selectBattery = selectBattery;
     function selectBattery(){
         var battery = batteryNumberArray[userId].frame;
         setBatteryCommandVisible(false);
@@ -350,15 +330,15 @@ function battleScene(spec,my){
     }
     
     function setAtackCommandVisible(visible){
-        atackIcon.visible = visible;
-        chargeIcon.visible = visible;
+        that.atackIcon.visible = visible;
+        that.chargeIcon.visible = visible;
     }
     
     function setBatteryCommandVisible(visible){
-        plusIcon.visible = visible;
-        minusIcon.visible = visible;
-        okIcon.visible = visible;
-        prevIcon.visible = visible;
+        that.plusIcon.visible = visible;
+        that.minusIcon.visible = visible;
+        that.okIcon.visible = visible;
+        that.prevIcon.visible = visible;
     }
     
     return that;

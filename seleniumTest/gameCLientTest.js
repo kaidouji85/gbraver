@@ -24,7 +24,7 @@ test.describe('ゲーム画面', function() {
             return driver.getTitle().then(function(title) {
                 return 'finish' === title;
             });
-        }, 10000);        
+        }, 10000);
     }
         
     //setArmdozerScene
