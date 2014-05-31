@@ -1,8 +1,10 @@
 function topScene(){
     var that = new Scene();
     that.backgroundColor = 'black';
-    that.battleRoomButton;
-    that.setArmdpzerButton;
+    that.battleRoomButton = {};
+    that.setArmdpzerButton = {};
+    that.onPushSetArmdozer = onPushSetArmdozer;
+    that.onPushBattleRoom = onPushBattleRoom;
     
     var core = enchant.Core.instance;
     var labelMenu;
@@ -37,13 +39,13 @@ function topScene(){
         that.addChild(labelMenu);
     }
     
-    that.onPushSetArmdozer = function(fn){
+    function onPushSetArmdozer(fn){
         emitPushSetArmdozer = fn;
-    };
-    
-    that.onPushBattleRoom = function(fn){
+    }
+
+    function onPushBattleRoom(fn){
         emitPushBattleRoom = fn;
-    };
+    }
     
     return that;
 }
