@@ -71,6 +71,10 @@ test.describe('ゲーム画面', function() {
         doClientTest('setArmdozerToTopTest_prev.html','アームドーザ選択画面から「戻る」ボタンを押下してトップ画面に遷移');
     });
     
+    test.it('ルーム選択画面から戦闘画面に遷移', function(){
+        doClientTest('roomSelectToBattleTest.html','ルーム選択画面から戦闘画面に遷移');
+    });    
+    
     test.after(function() {
         driver.quit();
     });
