@@ -109,6 +109,29 @@ var battle = function(spec,my){
         statusArray[atackUserId].active = 0;
         atackUserId = null;
     };
+
+    /**
+     * ゲーム終了判定
+     */
+    that.isEnd = function() {
+        for(var i in statusArray){
+            if(statusArray[i].hp <= 0){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 勝利したプレイヤー名を取得
+     */
+    that.getWinPlayer = function() {
+        for(var i in statusArray){
+            if(statusArray[i].hp > 0){
+                return i;
+            }
+        }
+    }
     
     return that;
 };
