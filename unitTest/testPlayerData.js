@@ -3,7 +3,6 @@
 var ce = require('cloneextend');
 var player = {};
 
-//TODO : 関数名をgetPlayerDataに変更したい。
 function getPlayerData(userId){
     if((userId in player)===false){
        return null; 
@@ -76,4 +75,37 @@ player['test002@gmail.com'] = {
         }
     }
 };
+
+player['test003@gmail.com'] = {
+    userId : 'test003@gmail.com',
+    status : {
+        name : '最強ブレイバー',
+        pictName : 'Landozer.PNG',
+        hp : 4700,
+        speed : 1000,
+        weapons : {
+            1 : {
+                name : 'ブレイクパンチ',
+                power : 5000
+            },
+            2 : {
+                name : 'ブレイクパンチ',
+                power : 5000
+            },
+            3 : {
+                name : 'ブレイクパンチ',
+                power : 5000
+            },
+            4 : {
+                name : 'ブレイクパンチ',
+                power : 5000
+            },
+            5 : {
+                name : 'ブレイクパンチ',
+                power : 5000
+            }
+        }
+    }
+};
+
 module.exports.getPlayerData = getPlayerData;

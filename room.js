@@ -5,6 +5,7 @@ const PHASE_ATACK_COMMAND = 'atackCommand';
 const PHASE_DEFENTH_COMMAND = 'defenthCommand';
 const PHASE_DAMAGE = 'damage';
 const PHASE_CHARGE = 'charge';
+const PHASE_GAME_END = 'gameEnd';
 
 function room(){
     var that = {};
@@ -93,9 +94,16 @@ function room(){
             case PHASE_PREPARE:
             case PHASE_DAMAGE:
             case PHASE_CHARGE:
-                ret = Battle.doWaitPhase();
-                ret.phase = PHASE_WAIT;
-                atackUserId = ret.atackUserId;
+                if(Battle.isEnd()===true){
+                    ret = {
+                        winner : Battle.getWinPlayer(),
+                        phase : PHASE_GAME_END
+                    };
+                } else {
+                    ret = Battle.doWaitPhase();
+                    ret.phase = PHASE_WAIT;
+                    atackUserId = ret.atackUserId;
+                }
                 break;
             case PHASE_WAIT:
                 ret = {
