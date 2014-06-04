@@ -118,11 +118,28 @@ function server(spec, my) {
                 var param = data.param;
                 roomArray[roomId].setCommand(userId,method,param);
                 if(roomArray[roomId].isInputFinish()){
-                    var ret = roomArray[roomId].executePhase();
-                    io.sockets.in(roomId).emit('resp', ret);
+                    if(roomArray[roomId].isGameEnd()){
+                        dissolveRoom(roomId);
+                    } else {
+                        var ret = roomArray[roomId].executePhase();
+                        io.sockets.in(roomId).emit('resp', ret);
+                    }
                 }
             });
         });
+
+        function dissolveRoom(roomId){
+            socket.get('loginInfo', function(err, data) {
+                var roomId = data.roomId;
+                roomArray[roomId] = room();
+
+                var clients = io.sockets.clients(roomId);
+                for (var i in clients) {
+                    clients[i].leave(roomId);
+                    clients[i].emit('dissolveRoom');
+                }
+            });
+        }
 
         socket.on('disconnect', function(data) {
             socket.get('loginInfo', function(err, data) {

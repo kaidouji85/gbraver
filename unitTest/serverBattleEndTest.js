@@ -11,6 +11,7 @@ describe('serverクラスのテスト', function() {
     var option;
     var Server;
     var roomId = 1;
+    var complates = {};
 
     before(function() {
         option = {
@@ -92,7 +93,16 @@ describe('serverクラスのテスト', function() {
 
             function doGameEndPhase_Client1(data) {
                 assertOfGameEndPhase(data);
-                done();//TODO : このテストコードは未完成。きりがいいのでコミットした。
+                dissolveRoom_client1();
+            }
+
+            function dissolveRoom_client1(){
+                client1.emit('command', {
+                    method : 'ok'
+                });
+                client1.once('dissolveRoom', function(){
+                    complateCLient(1,done);
+                });
             }
 
             //ユーザ2の挙動
@@ -155,6 +165,16 @@ describe('serverクラスのテスト', function() {
 
             function doGameEndPhase_Client2(data) {
                 assertOfGameEndPhase(data);
+                dissolveRoom_client2();
+            }
+
+            function dissolveRoom_client2(){
+                client2.emit('command', {
+                    method : 'ok'
+                });
+                client2.once('dissolveRoom', function(){
+                    complateCLient(2,done);
+                });
             }
 
             //アサーション
@@ -179,4 +199,19 @@ describe('serverクラスのテスト', function() {
             }
         });
     });
+
+    function complateCLient(index,done) {
+        complates[index] = "";
+        if(isFinishTest()){
+            done();
+        }
+    }
+
+    function isFinishTest() {
+        if(Object.keys(complates).length === 2) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 });

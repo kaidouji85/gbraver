@@ -51,6 +51,7 @@ function room(){
                     inputFlag[userId] = true;
                 }
                 break;
+            case PHASE_GAME_END:
             case PHASE_WAIT:
             case PHASE_DAMAGE:
             case PHASE_CHARGE:
@@ -68,7 +69,6 @@ function room(){
                         atackCommand = 'charge';
                         inputFlag[userId] = true;
                     }
-
                 } else if (method === 'ok') {
                     inputFlag[userId] = true;
                 }
@@ -149,6 +149,14 @@ function room(){
         }
         return statusArray;
     }
+
+    that.isGameEnd = function(){
+        if(phase===PHASE_GAME_END){
+            return true;
+        } else {
+            return false;
+        }
+    };
 
     return that;    
 }
