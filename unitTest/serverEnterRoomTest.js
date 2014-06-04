@@ -7,11 +7,11 @@ describe('serverクラスのテスト', function() {
     var io = require('socket.io-client');
     var app = require('http').createServer().listen(SERVER_PORT); 
     var server = require('../server.js');
+    var testCompleter = require('./testCompleter.js');
     
     var option;
     var Server;
     var roomId = -1;
-    var complates;
     
     before(function(){
         option = {
@@ -54,6 +54,7 @@ describe('serverクラスのテスト', function() {
         });
 
         it('2人が入室したら「gameStart」が返される', function(done) {
+            var tc = testCompleter({done:done});
             var userIds = ['test001@gmail.com', 'test002@gmail.com'];
             var clients = [];
             var gameStartCount = 0;
@@ -73,10 +74,7 @@ describe('serverクラスのテスト', function() {
                     });
                     clients[userId].once('gameStart', function(data) {
                         assertOfGameStart(data, ['test001@gmail.com', 'test002@gmail.com']);
-                        complateCLient(userId);
-                        if (isFinishTest()) {
-                            done();
-                        }
+                        tc.completeClient(userId);
                     });
                 }
             });
@@ -219,6 +217,7 @@ describe('serverクラスのテスト', function() {
 
     describe('戦闘ロジック', function() {
         it('入室して「ready」を送信したらウェイトフェイズの結果が返される', function(done) {
+            var tc = testCompleter({done:done});
             var userIds = ['test001@gmail.com', 'test002@gmail.com'];
             var clients = [];
             var respCount = 0;
@@ -270,10 +269,7 @@ describe('serverクラスのテスト', function() {
                         }
                     };
                     assert.deepEqual(data, expect);
-                    complateCLient(userId);
-                    if (isFinishTest()) {
-                        done();
-                    }
+                    tc.completeClient(userId);
                 }
             });
         });
@@ -370,16 +366,4 @@ describe('serverクラスのテスト', function() {
             }
         });
     });
-   
-    function complateCLient(index) {
-        complates[index] = "";
-    }
-
-    function isFinishTest() {
-        if (Object.keys(complates).length === 2) {
-            return true;
-        } else {
-            return false;
-        }
-    }    
 }); 

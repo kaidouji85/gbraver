@@ -7,11 +7,11 @@ describe('serverクラスのテスト', function() {
     var io = require('socket.io-client');
     var app = require('http').createServer().listen(SERVER_PORT);
     var server = require('../server.js');
+    var testCompleter = require('./testCompleter.js');
 
     var option;
     var Server;
     var roomId = -1;
-    var complates;
 
     before(function() {
         option = {
@@ -39,6 +39,7 @@ describe('serverクラスのテスト', function() {
 
     describe('戦闘ロジック#チャージ', function() {
         it('チャージコマンドを実行してウェイトフェイズに遷移する', function(done) {
+            var tc = testCompleter({done:done});
             //ユーザ1
             var client1 = io.connect(SERVER_URL, option);
             client1.emit('auth',{
@@ -88,10 +89,7 @@ describe('serverクラスのテスト', function() {
 
             function doWaitPhase2_Client1(data) {
                 assertOfWaitPhase2(data);
-                complateCLient('test001@gmail.com');
-                if (isFinishTest()) {
-                    done();
-                }
+                tc.completeClient('test001@gmail.com');
             }
 
             //ユーザ2
@@ -143,10 +141,7 @@ describe('serverクラスのテスト', function() {
 
             function doWaitPhase2_Client2(data) {
                 assertOfWaitPhase2(data);
-                complateCLient('test002@gmail.com');
-                if (isFinishTest()) {
-                    done();
-                }
+                tc.completeClient('test002@gmail.com');
             }
             
             //アサーション
@@ -232,17 +227,4 @@ describe('serverクラスのテスト', function() {
 
         });
     });
-
-    function complateCLient(index) {
-        complates[index] = "";
-    }
-
-    function isFinishTest() {
-        if (Object.keys(complates).length === 2) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
 });

@@ -7,11 +7,11 @@ describe('serverクラスのテスト', function() {
     var io = require('socket.io-client');
     var app = require('http').createServer().listen(SERVER_PORT);
     var server = require('../server.js');
+    var testCompleter = require('./testCompleter.js');
 
     var option;
     var Server;
     var roomId = 1;
-    var complates = {};
 
     before(function() {
         option = {
@@ -33,6 +33,8 @@ describe('serverクラスのテスト', function() {
 
     describe('戦闘ロジック#攻撃・防御を一通り', function() {
         it('HPが0になったのでゲームが終了する', function(done) {
+            var tc = testCompleter({done:done});
+
             //ユーザ1の挙動
             var client1 = io.connect(SERVER_URL, option);
             client1.emit('auth',{
@@ -101,7 +103,7 @@ describe('serverクラスのテスト', function() {
                     method : 'ok'
                 });
                 client1.once('dissolveRoom', function(){
-                    complateCLient(1,done);
+                    tc.completeClient(1);
                 });
             }
 
@@ -173,7 +175,7 @@ describe('serverクラスのテスト', function() {
                     method : 'ok'
                 });
                 client2.once('dissolveRoom', function(){
-                    complateCLient(2,done);
+                    tc.completeClient(2);
                 });
             }
 
@@ -199,19 +201,4 @@ describe('serverクラスのテスト', function() {
             }
         });
     });
-
-    function complateCLient(index,done) {
-        complates[index] = "";
-        if(isFinishTest()){
-            done();
-        }
-    }
-
-    function isFinishTest() {
-        if(Object.keys(complates).length === 2) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 });
