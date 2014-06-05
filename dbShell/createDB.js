@@ -1,4 +1,4 @@
-db.users.remove();
+db.users.remove({});
 db.users.insert({
     userId : 'kaidouji85@gmail.com',
     armdozerId : 'granBraver'
@@ -8,7 +8,7 @@ db.users.insert({
     armdozerId : 'landozer'
 });
 
-db.armdozers.remove();
+db.armdozers.remove({});
 db.armdozers.insert({
     armdozerId : 'granBraver',
     name : 'グランブレイバー',
