@@ -53,14 +53,16 @@ function server(spec, my) {
     };
 
     io.sockets.on('connection', function(socket) {
-        var userId = null;
-        var roomId = null;
+        socket.gbraverInfo = {
+            userId : null,
+            roomId : null
+        };
 
         socket.on('auth',function(data){
             var L_userId = data.userId;
             getPlayerData(L_userId, function(err, data) {
                 if(!err){
-                    userId = L_userId;
+                    socket.gbraverInfo.userId = L_userId;
                     socket.emit('successAuth');
                 } else {
                     var message = L_userId + 'は存在しないユーザです';
@@ -74,7 +76,7 @@ function server(spec, my) {
             isLogin();
 
             function isLogin(loginInfo){
-                if(userId!==null){
+                if(socket.gbraverInfo.userId!==null){
                     isAlreadyEnterRoom();
                 } else {
                     socket.emit('enterRoomError', 'ユーザ認証が完了していません。');
@@ -82,8 +84,8 @@ function server(spec, my) {
             }
             
             function isAlreadyEnterRoom(){
-                if (roomId===null) {
-                    roomId = L_roomId;
+                if (socket.gbraverInfo.roomId===null) {
+                    socket.gbraverInfo.roomId = L_roomId;
                     prepareBattle();
                 } else {
                     socket.emit('enterRoomError', 'このコネクションは既に入室しています。');
@@ -91,13 +93,13 @@ function server(spec, my) {
             }
             
             function prepareBattle() {
-                getPlayerData(userId, function(err, userData) {
-                    socket.join(roomId);
+                getPlayerData(socket.gbraverInfo.userId, function(err, userData) {
+                    socket.join(socket.gbraverInfo.roomId);
                     socket.emit('succesEnterRoom');
-                    roomArray[roomId].addUser(userData);
-                    if (roomArray[roomId].isGameStart()) {
-                        roomArray[roomId].initBattle();
-                        io.sockets. in (roomId).emit('gameStart', roomArray[roomId].getUsers());
+                    roomArray[socket.gbraverInfo.roomId].addUser(userData);
+                    if (roomArray[socket.gbraverInfo.roomId].isGameStart()) {
+                        roomArray[socket.gbraverInfo.roomId].initBattle();
+                        io.sockets. in (socket.gbraverInfo.roomId).emit('gameStart', roomArray[socket.gbraverInfo.roomId].getUsers());
                     }
                 });
             }
@@ -106,13 +108,13 @@ function server(spec, my) {
         socket.on('command', function (data) {
             var method = data.method;
             var param = data.param;
-            roomArray[roomId].setCommand(userId, method, param);
-            if (roomArray[roomId].isInputFinish()) {
-                if (roomArray[roomId].isGameEnd()) {
-                    dissolveRoom(roomId);
+            roomArray[socket.gbraverInfo.roomId].setCommand(socket.gbraverInfo.userId, method, param);
+            if (roomArray[socket.gbraverInfo.roomId].isInputFinish()) {
+                if (roomArray[socket.gbraverInfo.roomId].isGameEnd()) {
+                    dissolveRoom(socket.gbraverInfo.roomId);
                 } else {
-                    var ret = roomArray[roomId].executePhase();
-                    io.sockets.in(roomId).emit('resp', ret);
+                    var ret = roomArray[socket.gbraverInfo.roomId].executePhase();
+                    io.sockets.in(socket.gbraverInfo.roomId).emit('resp', ret);
                 }
             }
         });
@@ -128,10 +130,10 @@ function server(spec, my) {
         }
 
         socket.on('disconnect', function(data) {
-            socket.leave(roomId);
-            var clients = io.sockets.clients(roomId);
+            socket.leave(socket.gbraverInfo.roomId);
+            var clients = io.sockets.clients(socket.gbraverInfo.roomId);
             if (clients.length === 0) {
-                roomArray[roomId] = room();
+                roomArray[socket.gbraverInfo.roomId] = room();
             } else {
                 for (var i in clients) {
                     clients[i].disconnect();
@@ -141,7 +143,7 @@ function server(spec, my) {
 
         socket.on('setArmdozer', function (data) {
             var armdozerId = data.armdozerId;
-            setArmdozerId(userId, armdozerId, function (err, result) {
+            setArmdozerId(socket.gbraverInfo.userId, armdozerId, function (err, result) {
                 if (result === true) {
                     socket.emit('successSetArmdozer', {});
                 }
