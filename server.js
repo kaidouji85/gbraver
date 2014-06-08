@@ -125,19 +125,14 @@ function server(spec, my) {
             var clients = io.sockets.clients(P_roomId);
             for (var i in clients) {
                 clients[i].leave(P_roomId);
+                clients[i].gbraverInfo.roomId = null;
                 clients[i].emit('dissolveRoom');
             }
         }
 
         socket.on('disconnect', function(data) {
-            socket.leave(socket.gbraverInfo.roomId);
-            var clients = io.sockets.clients(socket.gbraverInfo.roomId);
-            if (clients.length === 0) {
-                roomArray[socket.gbraverInfo.roomId] = room();
-            } else {
-                for (var i in clients) {
-                    clients[i].disconnect();
-                }
+            if(socket.gbraverInfo.roomId !== null){
+                dissolveRoom(socket.gbraverInfo.roomId);
             }
         });
 

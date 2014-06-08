@@ -66,8 +66,7 @@ describe('serverクラスのテスト', function() {
 
                 function enterRoom() {
                     clients[userId].emit('enterRoom', {
-                        roomId : roomId,
-                        userId : userId
+                        roomId : roomId
                     });
                     clients[userId].once('gameStart', function(data) {
                         assertOfGameStart(data, ['test001@gmail.com', 'test002@gmail.com']);
@@ -297,12 +296,11 @@ describe('serverクラスのテスト', function() {
             });
             client2.once('successAuth',function(){
                 client2.emit('enterRoom', {
-                    roomId : roomId,
-                    userId : 2
+                    roomId : roomId
                 });
                 client2.once('succesEnterRoom',function(data){
                     client2.once('gameStart', function(data) {
-                        client2.once('disconnect', function() {
+                        client2.once('dissolveRoom', function() {
                             done();
                         });
                     });
@@ -310,7 +308,7 @@ describe('serverクラスのテスト', function() {
             });
         });
         
-        it('ルーム退出後も入室できる', function(done) {
+        it('ルーム退出後も新規ログインユーザで同一ルームへ入室できる', function(done) {
             //ユーザ1
             var client1 = io.connect(SERVER_URL, option);
             client1.emit('auth',{
@@ -334,12 +332,11 @@ describe('serverクラスのテスト', function() {
             });
             client2.once('successAuth',function(){
                 client2.emit('enterRoom', {
-                    roomId : roomId,
-                    userId : 2
+                    roomId : roomId
                 });
                 client2.once('succesEnterRoom',function(data){
                     client2.once('gameStart', function(data) {
-                        client2.once('disconnect', function() {
+                        client2.once('dissolveRoom', function() {
                             doReEnterRoom();
                         });
                     });
@@ -359,6 +356,52 @@ describe('serverクラスのテスト', function() {
                     client3.once('succesEnterRoom',function(data){
                         done();
                     });
+                });
+            }
+        });
+
+        it('ルーム退出後も既存ログインユーザで同一ルームへ入室できる', function(done) {
+            //ユーザ1
+            var client1 = io.connect(SERVER_URL, option);
+            client1.emit('auth',{
+                userId : 'test001@gmail.com'
+            });
+            client1.once('successAuth',function(){
+                client1.emit('enterRoom', {
+                    roomId : roomId
+                });
+                client1.once('succesEnterRoom',function(data){
+                    client1.once('gameStart', function(data) {
+                        client1.disconnect();
+                    });
+                });
+            });
+
+            //ユーザ2
+            var client2 = io.connect(SERVER_URL, option);
+            client2.emit('auth',{
+                userId : 'test002@gmail.com'
+            });
+            client2.once('successAuth',function(){
+                client2.emit('enterRoom', {
+                    roomId : roomId
+                });
+                client2.once('succesEnterRoom',function(data){
+                    client2.once('gameStart', function(data) {
+                        client2.once('dissolveRoom', function() {
+                            doReEnterRoom();
+                        });
+                    });
+                });
+            });
+
+            //ルーム破棄後に再ログインする
+            function doReEnterRoom(){
+                client2.emit('enterRoom', {
+                    roomId: roomId
+                });
+                client2.once('succesEnterRoom', function (data) {
+                    done();
                 });
             }
         });
