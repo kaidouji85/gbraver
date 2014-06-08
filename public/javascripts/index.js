@@ -40,5 +40,9 @@ window.onload = function() {
         socket.on('resp', function(data){
             Game.emitServerResp('resp',data);
         });
+
+        socket.on('dissolveRoom', function(data){
+            Game.emitServerResp('dissolveRoom',data);
+        });
     };
 };
