@@ -77,8 +77,12 @@ test.describe('ゲーム画面', function() {
     
     test.it('ルーム選択画面から「戻る」ボタンを押してトップ画面へ遷移', function(){
         doClientTest('roomSelectToTopTest.html','ルーム選択画面から「戻る」ボタンを押してトップ画面へ遷移');
-    });    
-    
+    });
+
+    test.it('敵を撃破してトップ画面へ戻る', function(){
+        doClientTest('battleToTopTest_win.html','敵を撃破してトップ画面へ戻る');
+    });
+
     test.after(function() {
         driver.quit();
     });

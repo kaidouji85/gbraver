@@ -15,9 +15,9 @@ function game(spec, my) {
     core.PICT_BATTERY_NUMBER = core.PICT_PREFIX+'batteryNumber.png';
         
     core.fps = 60;
-    core.battleScene;
-    core.roomSelectScene;
-    core.setArmdozerScene;
+    core.battleScene = null;
+    core.roomSelectScene = null;
+    core.setArmdozerScene = null;
     preLoad();
     
     function preLoad() {
@@ -38,7 +38,6 @@ function game(spec, my) {
      *     userId : String
      *     statusArray : Array<Status>
      * }
-     *  
      */
     core.changeBattleScene = function(spec){
         core.battleScene = battleScene(spec);
@@ -114,6 +113,10 @@ function game(spec, my) {
             case 'resp' :
                 changePhase(data);
                 break;
+            case 'dissolveRoom':
+                core.battleScene = null;
+                core.changeTopScene();
+                break;
         }
     };
     
@@ -134,6 +137,9 @@ function game(spec, my) {
                 break;
             case 'damage':
                 core.battleScene.doDamagePhase(data);
+                break;
+            case 'gameEnd':
+                core.battleScene.doGameEnd(data);
                 break;
         }
     }

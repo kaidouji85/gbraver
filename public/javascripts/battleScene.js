@@ -13,6 +13,7 @@ function battleScene(spec,my){
     that.doDefenthCommandPhase = doDefenthCommandPhase;
     that.doDamagePhase = doDamagePhase;
     that.onCommand = onCommand;
+    that.doGameEnd = doGameEnd;
     
     var statusArray = $.extend(true, {}, spec.statusArray);
     var userId = spec.userId; 
@@ -339,6 +340,13 @@ function battleScene(spec,my){
         that.minusIcon.visible = visible;
         that.okIcon.visible = visible;
         that.prevIcon.visible = visible;
+    }
+
+    function doGameEnd(data){
+        refreshMertor(data.statusArray);
+        that.tl.delay(60).then(function(){
+            emitCommand({method:'ok'});
+        });
     }
     
     return that;
