@@ -122,13 +122,28 @@ function server(spec, my) {
         function dissolveRoom(P_roomId){
             roomArray[P_roomId] = room();
 
-            var clients = io.sockets.clients(P_roomId);
+            var clients = findClientsSocketByRoomId(P_roomId);
             for (var i in clients) {
                 clients[i].leave(P_roomId);
                 clients[i].gbraverInfo.roomId = null;
                 clients[i].emit('dissolveRoom');
             }
         }
+
+        //TODO : socket.io 1.0ではルームに接続しているコネクションリストがとれなくなった。
+        //       一時的に参考サイトのやり方でしのぐ。
+        //       http://stackoverflow.com/questions/23858604/how-to-get-rooms-clients-list-in-socket-io-1-0
+        function findClientsSocketByRoomId(roomId) {
+            var res = []
+            var room = io.sockets.adapter.rooms[roomId];
+            if (room) {
+                for (var id in room) {
+                    res.push(io.sockets.adapter.nsp.connected[id]);
+                }
+            }
+            return res;
+        }
+
 
         socket.on('disconnect', function(data) {
             if(socket.gbraverInfo.roomId !== null){
