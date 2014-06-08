@@ -70,13 +70,10 @@ gbraverDebug.statusArray = {
 
 window.onload = function(){
     assert = chai.assert;
-    firstPlayerAtack_asDefenther();
+    battleToTop_win();
 };
 
-/**
- * 敵が攻撃を選択する
- */
-function firstPlayerAtack_asDefenther(){
+function battleToTop_win(){
     var Game = game({
         userId : '1'});
     Game.start();
