@@ -20,10 +20,7 @@ describe('serverクラスのテスト', function() {
         Server = server({
             httpServer : app
         });
-        Server.onGetPlayerData(function(userId, fn) {
-            var userData = testPlayerData.getPlayerData(userId);
-            fn(null, userData);
-        });
+        Server.onGetPlayerData(testPlayerData.getPlayerData);
     });
 
     after(function() {

@@ -32,10 +32,7 @@ describe('serverクラスのテスト',function(){
         Server.onGetUserData(function(userId,fn){
             fn(null,userData[userId]);
         });
-        Server.onGetPlayerData(function(userId, fn) {
-            var userData = testPlayerData.getPlayerData(userId);
-            fn(null, userData);
-        });
+        Server.onGetPlayerData(testPlayerData.getPlayerData);
     });
     
     describe('キャラクター選択',function(){

@@ -3,13 +3,13 @@
 var ce = require('cloneextend');
 var player = {};
 
-function getPlayerData(userId){
+function getPlayerData(userId,fn){
     if((userId in player)===false){
-       return null; 
+       fn(new Error('user not exist.'),null);
+    } else {
+        var playerData = ce.clone(player[userId]);
+        fn(null,playerData);
     }
-    
-    var playerData = ce.clone(player[userId]);
-    return playerData;
 }
 
 player['test001@gmail.com'] = {

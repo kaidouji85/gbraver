@@ -22,10 +22,7 @@ describe('serverクラスのテスト', function() {
             httpServer : app
         });
         roomId = -1;
-        Server.onGetPlayerData(function(userId, fn) {
-            var userData = testPlayerData.getPlayerData(userId);
-            fn(null, userData);
-        });        
+        Server.onGetPlayerData(testPlayerData.getPlayerData);
     });
 
     beforeEach(function() {

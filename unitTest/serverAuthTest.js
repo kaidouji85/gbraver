@@ -19,14 +19,7 @@ describe('serverクラスのテスト', function() {
         Server = server({
             httpServer : app
         });
-        Server.onGetPlayerData(function(userId, fn) {
-            var userData = testPlayerData.getPlayerData(userId);
-            if(userData===null){
-                fn(new Error('user not exist.'), null);
-            } else {
-                fn(null, userData);
-            }
-        });        
+        Server.onGetPlayerData(testPlayerData.getPlayerData);
     });
     
     after(function() {
