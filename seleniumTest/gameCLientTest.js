@@ -83,6 +83,10 @@ test.describe('ゲーム画面', function() {
         doClientTest('battleToTopTest_win.html','敵を撃破してトップ画面へ戻る');
     });
 
+    test.it('撃破されてトップ画面へ戻る', function(){
+        doClientTest('battleToTopTest_lose.html','撃破されてトップ画面へ戻る');
+    });
+
     test.after(function() {
         driver.quit();
     });
