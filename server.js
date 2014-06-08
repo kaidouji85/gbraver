@@ -53,51 +53,44 @@ function server(spec, my) {
     };
 
     io.sockets.on('connection', function(socket) {
+        var userId = null;
+        var roomId = null;
+
         socket.on('auth',function(data){
-            var userId = data.userId;
-            getPlayerData(userId, function(err, data) {
+            var L_userId = data.userId;
+            getPlayerData(L_userId, function(err, data) {
                 if(!err){
-                    var loginInfo = {
-                        userId : userId,
-                        roomId : null
-                    };
-                    socket.set('loginInfo', loginInfo, function() {
-                        socket.emit('successAuth');
-                    });
+                    userId = L_userId;
+                    socket.emit('successAuth');
                 } else {
-                    var message = userId + 'は存在しないユーザです';
+                    var message = L_userId + 'は存在しないユーザです';
                     socket.emit('authError',message);
                 }
             });
         });
         
         socket.on('enterRoom', function(data) {
-            var roomId = data.roomId;
-            socket.get('loginInfo', function(err, loginInfo){
-                isLogin(loginInfo);
-            });
-            
+            var L_roomId = data.roomId;
+            isLogin();
+
             function isLogin(loginInfo){
-                if(loginInfo!==null){
-                    isAlreadyEnterRoom(loginInfo);
+                if(userId!==null){
+                    isAlreadyEnterRoom();
                 } else {
                     socket.emit('enterRoomError', 'ユーザ認証が完了していません。');
                 }
             }
             
-            function isAlreadyEnterRoom(loginInfo){
-                if (loginInfo.roomId===null) {
-                    loginInfo.roomId = roomId;
-                    socket.set('loginInfo', loginInfo, function() {
-                        prepareBattle(loginInfo);
-                    });
+            function isAlreadyEnterRoom(){
+                if (roomId===null) {
+                    roomId = L_roomId;
+                    prepareBattle();
                 } else {
                     socket.emit('enterRoomError', 'このコネクションは既に入室しています。');
                 }
             }
             
-            function prepareBattle(loginInfo) {
-                var userId = loginInfo.userId;
+            function prepareBattle() {
                 getPlayerData(userId, function(err, userData) {
                     socket.join(roomId);
                     socket.emit('succesEnterRoom');
@@ -110,62 +103,49 @@ function server(spec, my) {
             }
         });
 
-        socket.on('command', function(data) {
-            socket.get('loginInfo', function(err, loginInfo) {
-                var roomId = loginInfo.roomId;
-                var userId = loginInfo.userId;
-                var method = data.method;
-                var param = data.param;
-                roomArray[roomId].setCommand(userId,method,param);
-                if(roomArray[roomId].isInputFinish()){
-                    if(roomArray[roomId].isGameEnd()){
-                        dissolveRoom(roomId);
-                    } else {
-                        var ret = roomArray[roomId].executePhase();
-                        io.sockets.in(roomId).emit('resp', ret);
-                    }
+        socket.on('command', function (data) {
+            var method = data.method;
+            var param = data.param;
+            roomArray[roomId].setCommand(userId, method, param);
+            if (roomArray[roomId].isInputFinish()) {
+                if (roomArray[roomId].isGameEnd()) {
+                    dissolveRoom(roomId);
+                } else {
+                    var ret = roomArray[roomId].executePhase();
+                    io.sockets.in(roomId).emit('resp', ret);
                 }
-            });
+            }
         });
 
-        function dissolveRoom(roomId){
-            socket.get('loginInfo', function(err, data) {
-                var roomId = data.roomId;
-                roomArray[roomId] = room();
+        function dissolveRoom(P_roomId){
+            roomArray[P_roomId] = room();
 
-                var clients = io.sockets.clients(roomId);
-                for (var i in clients) {
-                    clients[i].leave(roomId);
-                    clients[i].emit('dissolveRoom');
-                }
-            });
+            var clients = io.sockets.clients(P_roomId);
+            for (var i in clients) {
+                clients[i].leave(P_roomId);
+                clients[i].emit('dissolveRoom');
+            }
         }
 
         socket.on('disconnect', function(data) {
-            socket.get('loginInfo', function(err, data) {
-                var roomId = data.roomId;
-                socket.leave(roomId);
-                var clients = io.sockets.clients(roomId);
-                if (clients.length === 0) {
-                    roomArray[roomId] = room();
-                } else {
-                    for (var i in clients) {
-                        clients[i].disconnect();
-                    }
+            socket.leave(roomId);
+            var clients = io.sockets.clients(roomId);
+            if (clients.length === 0) {
+                roomArray[roomId] = room();
+            } else {
+                for (var i in clients) {
+                    clients[i].disconnect();
+                }
+            }
+        });
+
+        socket.on('setArmdozer', function (data) {
+            var armdozerId = data.armdozerId;
+            setArmdozerId(userId, armdozerId, function (err, result) {
+                if (result === true) {
+                    socket.emit('successSetArmdozer', {});
                 }
             });
-        });
-        
-        socket.on('setArmdozer', function(data){
-            socket.get('loginInfo', function(err, loginInfo) {
-                var userId = loginInfo.userId;
-                var armdozerId = data.armdozerId;
-                setArmdozerId(userId, armdozerId, function(err, result) {
-                    if (result === true) {
-                        socket.emit('successSetArmdozer', {});
-                    }
-                });
-            });            
         });
     });
 
