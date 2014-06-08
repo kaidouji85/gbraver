@@ -1,6 +1,6 @@
 describe('serverクラスのテスト', function() {
     var SERVER_PORT = 3001;
-    var SERVER_URL = 'http://localhost'; 
+    var SERVER_URL = 'http://localhost:'+SERVER_PORT;
     
     var testPlayerData = require('./testPlayerData.js');
     var assert = require('chai').assert;
@@ -13,8 +13,7 @@ describe('serverクラスのテスト', function() {
     
     before(function(){
         option = {
-            'force new connection' : true,
-            port : SERVER_PORT
+            'forceNew' : true
         };
         Server = server({
             httpServer : app
@@ -28,24 +27,30 @@ describe('serverクラスのテスト', function() {
     
     describe('認証系テスト',function(){
         it('存在するユーザなので認証に成功する',function(done){
-            var client = io.connect(SERVER_URL, option);
-            client.emit('auth', {
-                userId : 'test001@gmail.com'
+            var client = io(SERVER_URL, option);
+            client.on('connect',function(){
+                client.emit('auth', {
+                    userId : 'test001@gmail.com'
+                });
+                client.on('successAuth', function() {
+                    done();
+                });
             });
-            client.on('successAuth', function() {
-                done();
-            });
+
         });
-        
+
         it('存在しないユーザなので認証に失敗する',function(done){
-            var client = io.connect(SERVER_URL, option);
-            client.emit('auth', {
-                userId : 'nainaiUser@gmail.com'
+            var client = io(SERVER_URL, option);
+            client.on('connect',function(){
+                client.emit('auth', {
+                    userId : 'nainaiUser@gmail.com'
+                });
+                client.on('authError', function(message) {
+                    assert.equal(message,'nainaiUser@gmail.comは存在しないユーザです');
+                    done();
+                });
             });
-            client.on('authError', function(message) {
-                assert.equal(message,'nainaiUser@gmail.comは存在しないユーザです');
-                done();
-            });            
+
         });
     });
 }); 
