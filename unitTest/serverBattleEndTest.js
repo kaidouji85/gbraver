@@ -100,7 +100,19 @@ describe('serverクラスのテスト', function() {
                     method : 'ok'
                 });
                 client1.once('dissolveRoom', function(){
-                    tc.completeClient(1);
+                    //tc.completeClient(1);
+                    reEnterRoom_client1();
+                });
+            }
+
+            function reEnterRoom_client1() {
+                client1.emit('enterRoom', {
+                    roomId : roomId
+                });
+                client1.once('succesEnterRoom', function() {
+                    client1.once('gameStart', function() {
+                        tc.completeClient(1);
+                    });
                 });
             }
 
@@ -172,7 +184,19 @@ describe('serverクラスのテスト', function() {
                     method : 'ok'
                 });
                 client2.once('dissolveRoom', function(){
-                    tc.completeClient(2);
+                    //tc.completeClient(2);
+                    reEnterRoom_client2();
+                });
+            }
+
+            function reEnterRoom_client2() {
+                client2.emit('enterRoom', {
+                    roomId : roomId
+                });
+                client2.once('succesEnterRoom', function() {
+                    client2.once('gameStart', function() {
+                        tc.completeClient(2);
+                    });
                 });
             }
 
