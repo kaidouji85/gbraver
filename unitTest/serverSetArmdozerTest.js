@@ -1,6 +1,7 @@
+//TODO : socket.ioコネクション処理を1.0推奨の非同期方式にする
 describe('serverクラスのテスト',function(){
     var SERVER_PORT = 3003;
-    var SERVER_URL = 'http://localhost';
+    var SERVER_URL = 'http://localhost:'+SERVER_PORT;
     
     var testPlayerData = require('./testPlayerData.js');
     var assert = require('chai').assert;
@@ -22,8 +23,7 @@ describe('serverクラスのテスト',function(){
     
     before(function(){
         option = {
-            'force new connection' : true,
-            port : SERVER_PORT
+            'forceNew' : true
         };
         Server = server({
             httpServer : app
