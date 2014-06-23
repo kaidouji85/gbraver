@@ -57,6 +57,8 @@ function setArmdozerScene(){
     };
     
     function pushArmdozerButton(i){
+        invisibleButton();
+
         var data = {
             armdozerId : armdozerIdList[i].id
         };
@@ -66,6 +68,13 @@ function setArmdozerScene(){
     function pushPrevButton(){
         emitPushPrevButton();
     }
-    
+
+    function invisibleButton(){
+        for(var i=0; i<MAX_ARMDOZER_BUTTON; i++){
+            that.armdozerButtonArray[i].visible = false;
+        }
+        that.prevButton.visible = false;
+    }
+
     return that;
 }
