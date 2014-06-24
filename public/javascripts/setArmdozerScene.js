@@ -13,6 +13,7 @@ function setArmdozerScene(){
         {name:'ランドーザ',id:'landozer'}
     ];
     var labelArmmdozerSelect;
+    var labelWait;
     var emitSelectArmdozer = function(data){};
     var emitPushPrevButton = function(){};
     
@@ -46,6 +47,14 @@ function setArmdozerScene(){
         labelArmmdozerSelect.x = 100;
         labelArmmdozerSelect.y = 30;
         that.addChild(labelArmmdozerSelect);
+
+        //待機中ラベル
+        labelWait = new Label('待機中');
+        labelWait.color = "white";
+        labelWait.x = 10;
+        labelWait.y = 10;
+        labelWait.visible = false;
+        that.addChild(labelWait);
     }
     
     function onSelectArmdozer(fn){
@@ -57,8 +66,7 @@ function setArmdozerScene(){
     };
     
     function pushArmdozerButton(i){
-        invisibleButton();
-
+        setWaitScene();
         var data = {
             armdozerId : armdozerIdList[i].id
         };
@@ -69,11 +77,13 @@ function setArmdozerScene(){
         emitPushPrevButton();
     }
 
-    function invisibleButton(){
+    function setWaitScene(){
         for(var i=0; i<MAX_ARMDOZER_BUTTON; i++){
             that.armdozerButtonArray[i].visible = false;
         }
         that.prevButton.visible = false;
+        labelWait.visible = true;
+        labelArmmdozerSelect.visible = false;
     }
 
     return that;
