@@ -16,8 +16,7 @@ function battleToTop_win(){
         Game.start();
         Game.onload = function(){
             Game.changeBattleScene({
-                statusArray : statusArray,
-                userId : 'saikyou@gmail.com'
+                statusArray : statusArray
             });
             waitPhase();
         };

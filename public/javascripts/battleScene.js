@@ -1,3 +1,4 @@
+//TODO : 自分が出したバッテリーが消えることがあった。原因不明。
 function battleScene(spec,my){
     var that = new Scene();
     that.backgroundColor = "black";

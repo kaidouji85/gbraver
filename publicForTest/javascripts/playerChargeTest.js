@@ -20,8 +20,7 @@ function firstTurnPlayerCharge_asFirstTurnplayer() {
         Game.start();
         Game.onload = function(){
             Game.changeBattleScene({
-                statusArray : statusArray,
-                userId : 'test001@gmail.com'
+                statusArray : statusArray
             });
             waitPhase();
         };

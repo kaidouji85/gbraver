@@ -19,8 +19,7 @@ function firstPlayerAtack_asDefenther(){
         Game.start();
         Game.onload = function(){
             Game.changeBattleScene({
-                statusArray : statusArray,
-                userId : 'test002@gmail.com'
+                statusArray : statusArray
             });
             waitPhase();
         };

@@ -36,10 +36,10 @@ function game(spec, my) {
      * @param {Object} spec
      * {
      *     userId : String
-     *     statusArray : Array<Status>
      * }
      */
     core.changeBattleScene = function(spec){
+        spec.userId = userId;
         core.battleScene = battleScene(spec);
         core.battleScene.onCommand(function(command){
             emitSendMessage('command',command);
@@ -103,8 +103,7 @@ function game(spec, my) {
                     statusArray[uid] = data[uid].status;
                 }
                 core.changeBattleScene({
-                    statusArray : statusArray,
-                    userId : userId
+                    statusArray : statusArray
                 });
                 emitSendMessage('command',{
                     method : 'ready'
