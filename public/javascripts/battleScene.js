@@ -1,4 +1,7 @@
 //TODO : 自分が出したバッテリーが消えることがあった。原因不明。
+//       バッテリーが消える場合でも、visibleはtrueに設定してあった。
+//       frameも範囲外（０から5以外)が指定された訳でもない。
+//       enchant.jsの不具合の可能性が高い。
 function battleScene(spec,my){
     var that = new Scene();
     that.backgroundColor = "black";
