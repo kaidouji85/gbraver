@@ -152,6 +152,7 @@ function firstPlayerAtack_asAtacker(){
         };
         assert.equal(message,'command','攻撃コマンドフェイズのサーバ送信メッセージ名が正しい');
         assert.deepEqual(data, expect, '攻撃コマンドフェイズのサーバ送信データが正しい');
+        assert.equal(Game.currentScene.charaSpriteArray['1'].frame,1,'プレイヤーキャラのポーズが「攻撃」である');
         defenthCommandPhase();
     }
     
@@ -215,6 +216,7 @@ function firstPlayerAtack_asAtacker(){
         };
         assert.equal(message,'command','ウェイトフェイズ2のサーバ送信メッセージ名が正しい');
         assert.deepEqual(data, expect, 'ウェイトフェイズ2のサーバ送信データが正しい');
+        assert.equal(Game.currentScene.charaSpriteArray['1'].frame,0,'プレイヤーキャラのポーズが「立ち」である');
         waitPhase2();
     }
     

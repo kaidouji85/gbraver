@@ -153,6 +153,7 @@ function firstTurnPlayerCharge_asFirstTurnplayer() {
         };
         assert.equal(message,'command','チャージ選択時のサーバ送信メッセージ名が正しい');
         assert.deepEqual(data, expect, 'チャージ選択時のサーバ送信パラメータが正しい');
+        assert.equal(Game.currentScene.charaSpriteArray['1'].frame,1,'プレイヤーキャラのポーズが「攻撃」である');
         chargePhase();        
     }
 
@@ -182,6 +183,7 @@ function firstTurnPlayerCharge_asFirstTurnplayer() {
         };
         assert.equal(message, 'command', 'チャージ終了時のサーバ送信メッセージ名が正しい');
         assert.deepEqual(data, expect, 'チャージ終了時のサーバ送信データが正しい');
+        assert.equal(Game.currentScene.charaSpriteArray['1'].frame,0,'プレイヤーキャラのポーズが「立ち」である');
         console.log('finish');
         $('title').text('finish');
     }

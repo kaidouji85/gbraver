@@ -14,38 +14,41 @@ function battleScene(spec,my){
     that.doDamagePhase = doDamagePhase;
     that.onCommand = onCommand;
     that.doGameEnd = doGameEnd;
-    
+    that.charaSpriteArray = {};
+
     var statusArray = $.extend(true, {}, spec.statusArray);
     var userId = spec.userId; 
     var core = enchant.Core.instance;
-    var charaSpriteArray = {};
     var activeBarArray = {};
     var hpMertorArray = {};
     var batteryMertorArray = {};
     var batteryNumberArray = {};
     var damageLabelArray = {};
-    var BatteryCommand;
     var emitCommand = function(){};
     var selectMaxBattery = 5;
     var selectMinBattery = 0;
-    var atackUserId = -1;
+    var attackUserId = -1;
 
     var WAIT_TIME_ACTIVE_RESET = 30;
     var ICON_WIDTH = 124;
     var ICON_HEIGHT = 40;
     var COMMAND_POX_X = 8;
     var COMMAND_POS_Y = 300;
+    var FRAME_STAND = 0;
+    var FRAME_ATTACK = 1;
+    var FRAME_DAMAGE = 2;
     
     initSprite();
     function initSprite() {
         for(var uid in statusArray){
             //キャラクタースプライト
-            charaSpriteArray[uid] = new Sprite(128, 128);
-            charaSpriteArray[uid].image = core.assets[core.PICT_PREFIX+statusArray[uid].pictName];
-            charaSpriteArray[uid].x = uid===userId ? 192 : 0;
-            charaSpriteArray[uid].y = 80;
-            charaSpriteArray[uid].scaleX = uid===userId ? 1 : -1;
-            that.addChild(charaSpriteArray[uid]);
+            that.charaSpriteArray[uid] = new Sprite(128, 128);
+            that.charaSpriteArray[uid].image = core.assets[core.PICT_PREFIX+statusArray[uid].pictName];
+            that.charaSpriteArray[uid].x = uid===userId ? 192 : 0;
+            that.charaSpriteArray[uid].y = 80;
+            that.charaSpriteArray[uid].scaleX = uid===userId ? 1 : -1;
+            that.charaSpriteArray[uid].frame = FRAME_STAND;
+            that.addChild(that.charaSpriteArray[uid]);
 
             //HPメータ
             hpMertorArray[uid] = hpMertor();
@@ -143,7 +146,7 @@ function battleScene(spec,my){
     
     function doWaitPhase(data){
         var turn = data.turn;
-        atackUserId = data.atackUserId;
+        attackUserId = data.atackUserId;
         for(var uid in statusArray) {
             activeBarArray[uid].plus(turn,120*statusArray[uid].speed/5000);
         }
@@ -156,8 +159,9 @@ function battleScene(spec,my){
     
     function doAtackCommandPhase(data){
         refreshMertor(data.statusArray);
-        if(atackUserId===userId){
-            setAtackCommandVisible(true); 
+        that.charaSpriteArray[attackUserId].frame = FRAME_ATTACK;
+        if(attackUserId===userId){
+            setAtackCommandVisible(true);
         } else {
             that.tl.delay(1).then(function(){
                 emitCommand({method:'ok'});
@@ -168,13 +172,15 @@ function battleScene(spec,my){
     function doChargePhase(data){
         refreshMertor(data.statusArray);
         that.tl.delay(WAIT_TIME_ACTIVE_RESET).then(function(){
+            that.charaSpriteArray[attackUserId].frame = FRAME_STAND;
+            attackUserId = '';
             emitCommand({method:'ok'});
         });
     };
     
     function doDefenthCommandPhase(data){
         refreshMertor(data.statusArray);
-        if(atackUserId===userId){
+        if(attackUserId===userId){
             that.tl.delay(30).then(function(){
                 emitCommand({method:'ok'});
             });
@@ -195,7 +201,8 @@ function battleScene(spec,my){
             that.tl.delay(120).then(function(){
                 invisibleDamage();
                 refreshMertor(data.statusArray);
-                atackUserId = -1;
+                that.charaSpriteArray[attackUserId].frame = FRAME_STAND;
+                attackUserId = '';
                 that.tl.delay(WAIT_TIME_ACTIVE_RESET).then(function(){
                     emitCommand({method:'ok'});
                 });
@@ -206,9 +213,9 @@ function battleScene(spec,my){
     function visibleBatteryNumber(atackBattery,defenthBattery){
         for(var uid in statusArray){
             var battery = batteryMertorArray[uid].getValue();
-            battery -= uid===atackUserId ? atackBattery : defenthBattery;
+            battery -= uid===attackUserId ? atackBattery : defenthBattery;
             batteryMertorArray[uid].setValue(battery);
-            batteryNumberArray[uid].frame = uid===atackUserId ? atackBattery : defenthBattery;
+            batteryNumberArray[uid].frame = uid===attackUserId ? atackBattery : defenthBattery;
             batteryNumberArray[uid].visible = true;
         }
     }
@@ -221,7 +228,7 @@ function battleScene(spec,my){
     
     function visibleDamage(damage){
         for (var uid in statusArray) {
-            if (uid !== atackUserId) {
+            if (uid !== attackUserId) {
                 damageLabelArray[uid].visible = true;
                 damageLabelArray[uid].text = String(damage);
                 statusArray[uid].hp -= damage;
@@ -233,11 +240,11 @@ function battleScene(spec,my){
     
     function invisibleDamage(){
         for (var uid in statusArray) {
-            if (uid !== atackUserId) {
+            if (uid !== attackUserId) {
                 damageLabelArray[uid].visible = false;
                 break;
             }
-        }        
+        }
     }
     
     function onCommand(fn) {
@@ -259,7 +266,7 @@ function battleScene(spec,my){
     
     function viewBatteryCommand(){
         setBatteryCommandVisible(true);
-        that.prevIcon.visible = userId===atackUserId ? true : false;
+        that.prevIcon.visible = userId===attackUserId ? true : false;
         batteryNumberArray[userId].visible = true;
         selectMaxBattery = getSelectMaxBattery();
         selectMinBattery = getSelectMinBattery();
@@ -272,7 +279,7 @@ function battleScene(spec,my){
     }
     
     function getSelectMinBattery(){
-        return userId===atackUserId ? 1 : 0;
+        return userId===attackUserId ? 1 : 0;
     }
     
     function plusBattery(){
@@ -305,7 +312,7 @@ function battleScene(spec,my){
         setBatteryCommandVisible(false);
         batteryNumberArray[userId].visible = false;
         
-        if(atackUserId===userId){
+        if(attackUserId===userId){
             sendAtackCommand(battery);
         } else {
             sendDefenthCommand(battery);
