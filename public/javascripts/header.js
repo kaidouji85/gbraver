@@ -1,6 +1,6 @@
-function writeHeader() {
+function writeHeader(url) {
     $.ajax({
-        url : '/header.html',
+        url : url,
         cache : false,
         async : false,
         success : function(html) {
