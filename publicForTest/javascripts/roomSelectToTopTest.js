@@ -1,24 +1,30 @@
 enchant();
-var assert;
-
-window.onload = function(){
-    assert = chai.assert;
-    roomSelectToTop();
-};
+window.onload = roomSelectToTop;
 
 function roomSelectToTop(){
-    var Game = game({
-        userId : 'test001@gmail.com'
-    });
-    Game.start();
-    Game.onload = function(){
-        Game.changeRoomSelectScene();
+    var assert = chai.assert;
+    var Game;
+    initGame();
+
+    function initGame(){
+        Game = game({
+            userId : 'test001@gmail.com'
+        });
+        Game.start();
+        Game.onload = function(){
+            Game.changeRoomSelectScene();
+            pushChangeButton();
+        };
+    }
+
+    function pushChangeButton(){
         console.log('戻るボタンを押す');
         touch(Game.roomSelectScene.prevButton);
-        Game.onChangeScene(function(scene) {
-            assert.equal(scene, 'top', 'トップ画面へ遷移する');
-            console.log('finish');
-            $('title').text('finish');
-        });        
-    };        
+        Game.onChangeScene(assertOfChangeScene);
+    }
+
+    function assertOfChangeScene(scene){
+        assert.equal(scene, 'top', 'トップ画面へ遷移する');
+        finishTest();
+    }
 }

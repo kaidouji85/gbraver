@@ -1,102 +1,40 @@
 enchant();
-var gbraverDebug = {};
-var assert;
-
-/**
- * テストデータ
- */
-gbraverDebug.statusArray = {
-    2 : {
-        name : 'ランドーザ',
-        pictName : 'Landozer.PNG',
-        hp : 4700,
-        speed : 150,
-        active : 0,
-        battery : 5,
-        weapons : {
-            1 : {
-                name : 'ブレイクパンチ',
-                power : 1200
-            },
-            2 : {
-                name : 'ブレイクパンチ',
-                power : 1700
-            },
-            3 : {
-                name : 'ブレイクパンチ',
-                power : 2300
-            },
-            4 : {
-                name : 'ブレイクパンチ',
-                power : 2900
-            },
-            5 : {
-                name : 'ブレイクパンチ',
-                power : 3800
-            }
-        }
-    },
-    1 : {
-        name : '最強ブレイバー',
-        pictName : 'GranBraver.PNG',
-        hp : 3200,
-        speed : 250,
-        active : 0,
-        battery : 5,
-        weapons : {
-            1 : {
-                name : 'バスターナックル',
-                power : 5000
-            },
-            2 : {
-                name : 'バスターナックル',
-                power : 5000
-            },
-            3 : {
-                name : 'バスターナックル',
-                power : 5000
-            },
-            4 : {
-                name : 'バスターナックル',
-                power : 5000
-            },
-            5 : {
-                name : 'バスターナックル',
-                power : 5000
-            }
-        }
-    }
-};
-
-window.onload = function(){
-    assert = chai.assert;
-    battleToTop_lose();
-};
+window.onload = battleToTop_lose;
 
 function battleToTop_lose(){
-    var Game = game({
-        userId : '2'});
-    Game.start();
-    Game.onload = function(){
-        Game.changeBattleScene({
-            statusArray : gbraverDebug.statusArray,
-            userId : '2'
-        });
-        waitPhase();
+    var assert = chai.assert;
+    var statusArray = {
+        'test002@gmail.com' : getTestPlayerData('test002@gmail.com'),
+        'saikyou@gmail.com' : getTestPlayerData('saikyou@gmail.com')
     };
+    var Game;
+    initGame();
+
+    function initGame(){
+        Game = game({
+            userId : 'test002@gmail.com'});
+        Game.start();
+        Game.onload = function(){
+            Game.changeBattleScene({
+                statusArray : statusArray,
+                userId : 'test002@gmail.com'
+            });
+            waitPhase();
+        };
+    }
 
     function waitPhase(){
         var waitPhaseData = {
             phase : 'wait',
-            atackUserId : '1',
+            atackUserId : 'saikyou@gmail.com',
             turn : 20,
             statusArray : {
-                2 : {
+                'test002@gmail.com' : {
                     hp : 4700,
                     battery : 5,
                     active : 3000
                 },
-                1 : {
+                'saikyou@gmail.com' : {
                     hp : 3200,
                     battery : 5,
                     active : 5000
@@ -114,12 +52,12 @@ function battleToTop_lose(){
         var atackCommandPhaseData = {
             phase : 'atackCommand',
             statusArray : {
-                1 : {
+                'saikyou@gmail.com' : {
                     hp : 3200,
                     battery : 5,
                     active : 5000
                 },
-                2 : {
+                'test002@gmail.com' : {
                     hp : 4700,
                     battery : 5,
                     active : 3000
@@ -137,12 +75,12 @@ function battleToTop_lose(){
         var defenthCommandData = {
             phase : 'defenthCommand',
             statusArray : {
-                1 : {
+                'saikyou@gmail.com' : {
                     hp : 3200,
                     battery : 5,
                     active : 5000
                 },
-                2 : {
+                'test002@gmail.com' : {
                     hp : 4700,
                     battery : 5,
                     active : 3000
@@ -171,12 +109,12 @@ function battleToTop_lose(){
             atackBattery : 3,
             defenthBattery : 2,
             statusArray : {
-                1 : {
+                'saikyou@gmail.com' : {
                     hp : 3200,
                     battery : 2,
                     active : 0
                 },
-                2 : {
+                'test002@gmail.com' : {
                     hp : -300,
                     battery : 3,
                     active : 3000
@@ -193,14 +131,14 @@ function battleToTop_lose(){
     function gameEnd(){
         var gameEndData = {
             phase : 'gameEnd',
-            winner : '1',
+            winner : 'saikyou@gmail.com',
             statusArray : {
-                1 : {
+                'saikyou@gmail.com' : {
                     hp : 3200,
                     battery : 2,
                     active : 0
                 },
-                2 : {
+                'test002@gmail.com' : {
                     hp : -300,
                     battery : 3,
                     active : 3000
@@ -223,8 +161,7 @@ function battleToTop_lose(){
     function doDissolveRoom(){
         Game.onChangeScene(function(scene){
             assert.equal(scene,'top','トップ画面へ遷移する');
-            console.log('finish');
-            $('title').text('finish');
+            finishTest();
         });
         Game.emitServerResp('dissolveRoom',null);
     }

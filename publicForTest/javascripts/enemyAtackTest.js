@@ -175,8 +175,7 @@ function firstPlayerAtack_asDefenther(){
         };
         Game.emitServerResp('resp',data);
         Game.onSendMessage(function(message,command) {
-            console.log('finish');
-            $('title').text('finish');
+            finishTest();
         });
     }
 }

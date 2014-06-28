@@ -1,20 +1,21 @@
 enchant();
-var assert;
-
-window.onload = function(){
-    assert = chai.assert;
-    setArmdozerToTop_landozer();
-};
+window.onload = setArmdozerToTop_landozer;
 
 function setArmdozerToTop_landozer(){
-    var Game = game({
-        userId : 'test001@gmail.com'
-    });
-    Game.start();
-    Game.onload = function(){
-        Game.changeSetArmdozerScene();
-        pushLAndozer();
-    };
+    var assert = chai.assert;
+    var Game;
+    initGame();
+
+    function initGame(){
+        Game = game({
+            userId : 'test001@gmail.com'
+        });
+        Game.start();
+        Game.onload = function(){
+            Game.changeSetArmdozerScene();
+            pushLAndozer();
+        };
+    }
     
     function pushLAndozer(){
         console.log('ランドーザボタンを押す');
@@ -36,8 +37,7 @@ function setArmdozerToTop_landozer(){
     function changeScene() {
         Game.onChangeScene(function (scene) {
             assert.equal(scene, 'top', 'トップ画面へ遷移する');
-            console.log('finish');
-            $('title').text('finish');
+            finishTest();
         });
         Game.emitServerResp('successSetArmdozer', {});
     }

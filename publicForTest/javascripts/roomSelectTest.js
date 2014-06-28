@@ -1,21 +1,21 @@
 enchant();
-var gbraverDebug = {};
-var assert;
-
-window.onload = function(){
-    assert = chai.assert;
-    enterRoomAndGameStart();
-};
+window.onload = enterRoomAndGameStart;
 
 function enterRoomAndGameStart(){
-    var Game = game({
-        userId : 'test001@gmail.com'
-    });
-    Game.start();
-    Game.onload = function(){
-        Game.changeRoomSelectScene();
-        enterRoom();
-    };
+    var assert = chai.assert;
+    var Game;
+    initGame();
+
+    function initGame(){
+        Game = game({
+            userId : 'test001@gmail.com'
+        });
+        Game.start();
+        Game.onload = function(){
+            Game.changeRoomSelectScene();
+            enterRoom();
+        };
+    }
     
     function enterRoom(){
         //ルーム2を押す
@@ -29,7 +29,6 @@ function enterRoomAndGameStart(){
         };
         assert.equal(message, 'enterRoom', '入室処理のサーバ送信メッセージ名が正しい');
         assert.deepEqual(expect, data, '入室処理のサーバ送信データが正しい');
-        console.log('finish');
-        $('title').text('finish');
+        finishTest();
     }
 }

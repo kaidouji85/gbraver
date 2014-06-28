@@ -10,3 +10,11 @@ function touch(target){
         target.dispatchEvent(new Event(Event.TOUCH_END));
     });
 }
+
+/**
+ * 画面系テスト終了時に呼ぶ関数
+ */
+function finishTest(){
+    console.log('finish');
+    $('title').text('finish');
+}

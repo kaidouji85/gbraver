@@ -1,106 +1,44 @@
 enchant();
-var gbraverDebug = {};
-var assert;
-
-/**
- * テストデータ
- */
-gbraverDebug.statusArray = {
-    2 : {
-        name : 'ランドーザ',
-        pictName : 'Landozer.PNG',
-        hp : 4700,
-        speed : 150,
-        active : 0,
-        battery : 5,
-        weapons : {
-            1 : {
-                name : 'ブレイクパンチ',
-                power : 1200
-            },
-            2 : {
-                name : 'ブレイクパンチ',
-                power : 1700
-            },
-            3 : {
-                name : 'ブレイクパンチ',
-                power : 2300
-            },
-            4 : {
-                name : 'ブレイクパンチ',
-                power : 2900
-            },
-            5 : {
-                name : 'ブレイクパンチ',
-                power : 3800
-            }
-        }
-    },
-    1 : {
-        name : 'グランブレイバー',
-        pictName : 'GranBraver.PNG',
-        hp : 3200,
-        speed : 250,
-        active : 0,
-        battery : 5,
-        weapons : {
-            1 : {
-                name : 'バスターナックル',
-                power : 800
-            },
-            2 : {
-                name : 'バスターナックル',
-                power : 1100
-            },
-            3 : {
-                name : 'バスターナックル',
-                power : 1600
-            },
-            4 : {
-                name : 'バスターナックル',
-                power : 2100
-            },
-            5 : {
-                name : 'バスターナックル',
-                power : 2800
-            },
-        }
-    }
-};
-
-window.onload = function(){
-    firstTurnPlayerCharge_asFirstTurnplayer();
-};
+window.onload = firstTurnPlayerCharge_asFirstTurnplayer;
 
 /**
  * 先攻プレイヤーがチャージを選択する　＃先攻プレイヤー視点
  */
 function firstTurnPlayerCharge_asFirstTurnplayer() {
-    assert = chai.assert;
-    var Game = game({
-        userId : '1'
-    });
-    Game.start();
-    Game.onload = function(){
-        Game.changeBattleScene({
-            statusArray : gbraverDebug.statusArray,
-            userId : '1'            
-        });
-        waitPhase();
+    var assert = chai.assert;
+    var statusArray = {
+        'test002@gmail.com' : getTestPlayerData('test002@gmail.com'),
+        'test001@gmail.com' : getTestPlayerData('test001@gmail.com')
     };
+    var Game;
+    initGame();
+
+    function initGame(){
+        Game = game({
+            userId : 'test001@gmail.com'
+        });
+        Game.start();
+        Game.onload = function(){
+            Game.changeBattleScene({
+                statusArray : statusArray,
+                userId : 'test001@gmail.com'
+            });
+            waitPhase();
+        };
+    }
 
     function waitPhase() {
         var waitPhaseData = {
             phase : 'wait',
-            atackUserId : '1',
+            atackUserId : 'test001@gmail.com',
             turn : 20,
             statusArray : {
-                2 : {
+                'test002@gmail.com' : {
                     hp : 4700,
                     battery : 5,
                     active : 3000
                 },
-                1 : {
+                'test001@gmail.com' : {
                     hp : 3200,
                     battery : 5,
                     active : 5000
@@ -125,12 +63,12 @@ function firstTurnPlayerCharge_asFirstTurnplayer() {
         var atackCommand = {
             phase : 'atackCommand',
             statusArray : {
-                1 : {
+                'test001@gmail.com' : {
                     hp : 3200,
                     battery : 5,
                     active : 5000
                 },
-                2 : {
+                'test002@gmail.com' : {
                     hp : 4700,
                     battery : 5,
                     active : 3000
@@ -153,7 +91,7 @@ function firstTurnPlayerCharge_asFirstTurnplayer() {
         };
         assert.equal(message,'command','チャージ選択時のサーバ送信メッセージ名が正しい');
         assert.deepEqual(data, expect, 'チャージ選択時のサーバ送信パラメータが正しい');
-        assert.equal(Game.currentScene.charaSpriteArray['1'].frame,1,'プレイヤーキャラのポーズが「攻撃」である');
+        assert.equal(Game.currentScene.charaSpriteArray['test001@gmail.com'].frame,1,'プレイヤーキャラのポーズが「攻撃」である');
         chargePhase();        
     }
 
@@ -161,12 +99,12 @@ function firstTurnPlayerCharge_asFirstTurnplayer() {
         var chargeData = {
             phase : 'charge',
             statusArray : {
-                1 : {
+                'test001@gmail.com' : {
                     hp : 3200,
                     battery : 5,
                     active : 0
                 },
-                2 : {
+                'test002@gmail.com' : {
                     hp : 4700,
                     battery : 5,
                     active : 3000
@@ -183,8 +121,7 @@ function firstTurnPlayerCharge_asFirstTurnplayer() {
         };
         assert.equal(message, 'command', 'チャージ終了時のサーバ送信メッセージ名が正しい');
         assert.deepEqual(data, expect, 'チャージ終了時のサーバ送信データが正しい');
-        assert.equal(Game.currentScene.charaSpriteArray['1'].frame,0,'プレイヤーキャラのポーズが「立ち」である');
-        console.log('finish');
-        $('title').text('finish');
+        assert.equal(Game.currentScene.charaSpriteArray['test001@gmail.com'].frame,0,'プレイヤーキャラのポーズが「立ち」である');
+        finishTest();
     }
 }
