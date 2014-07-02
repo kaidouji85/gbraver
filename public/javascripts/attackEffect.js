@@ -2,7 +2,7 @@ function attackEffect(spec,my){
     var that = new Group();
     var attackParticleImage = spec.attackParticleImage;
     var particle;
-    var PARTICLE_NUM = 100;
+    var PARTICLE_NUM = 40;
 
     that.play = play;
     initParticle();
@@ -20,6 +20,8 @@ function attackEffect(spec,my){
     function play(){
         for(var i=1; i<=PARTICLE_NUM; i++){
             var deg = Math.random()*360;
+            particle[i].x = 0;
+            particle[i].y = 0;
             particle[i].play(deg);
         }
 
