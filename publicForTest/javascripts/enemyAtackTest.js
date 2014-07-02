@@ -151,6 +151,7 @@ function firstPlayerAtack_asDefenther(){
         assert.equal(message, 'command', 'サーバ送信メッセージ名が正しい');
         assert.deepEqual(data, expectData, 'ウェイトフェイズ2のコマンドが正しい');
         assert.equal(Game.currentScene.charaSpriteArray['test001@gmail.com'].frame,0,'敵キャラのポーズが「立ち」である');
+        assert.equal(Game.currentScene.charaSpriteArray['test002@gmail.com'].frame,0,'プレイヤーキャラのポーズが「立ち」である');
         waitPhase2();      
     }
 

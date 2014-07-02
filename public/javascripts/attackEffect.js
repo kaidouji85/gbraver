@@ -29,7 +29,7 @@ function attackEffect(spec,my){
 }
 
 function attackEffectPArticle(spec, my){
-    var that = new Sprite(10, 1);
+    var that = new Sprite(32, 3);
     var attackParticleImage = spec.attackParticleImage;
     that.image = attackParticleImage;
     that.play = play;
@@ -39,16 +39,14 @@ function attackEffectPArticle(spec, my){
 
     function play(deg){
         var rad = deg*(Math.PI/180);
-        var speed = 10 + Math.random()*30;
+        var speed = 100 + Math.random()*10;
         var dx = speed * Math.cos(rad);
         var dy = speed * Math.sin(rad);
-        var time = 15;
+        var time = 20;
         that.opacity = 0.8
         that.visible = true;
         that.rotation = deg;
-        var easing = enchant.Easing.SIN_EASEIN;
         that.tl.moveBy(dx,dy,time)
-            .and().scaleBy(3,time)
             .and().fadeTo(0,time);
     }
 

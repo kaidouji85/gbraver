@@ -32,6 +32,7 @@ function battleScene(spec,my){
     var selectMaxBattery = 5;
     var selectMinBattery = 0;
     var attackUserId = -1;
+    var AttackEffect;
 
     var WAIT_TIME_ACTIVE_RESET = 30;
     var ICON_WIDTH = 124;
@@ -146,6 +147,13 @@ function battleScene(spec,my){
         that.prevIcon.visible = false;
         that.prevIcon.addEventListener(Event.TOUCH_END,prevAtackCommand);
         that.addChild(that.prevIcon);
+
+        //攻撃エフェクト
+        AttackEffect = attackEffect({
+            attackParticleImage : core.assets[core.PICT_ATTTACK_PARTICLE]
+        });
+        that.visible = false;
+        that.addChild(AttackEffect);
     }
     
     function doWaitPhase(data){
@@ -199,19 +207,26 @@ function battleScene(spec,my){
         var damage = data.damage;
         
         visibleBatteryNumber(atackBattery,defenthBattery);
-        that.tl.delay(120).then(function(){
+        that.tl.delay(120).then(viewDamage);
+
+        function viewDamage(){
             invisibleBatteryNumber();
             visibleDamage(damage);
-            that.tl.delay(120).then(function(){
-                invisibleDamage();
-                refreshMertor(data.statusArray);
-                that.charaSpriteArray[attackUserId].frame = FRAME_STAND;
-                attackUserId = '';
-                that.tl.delay(WAIT_TIME_ACTIVE_RESET).then(function(){
-                    emitCommand({method:'ok'});
-                });
+            visibleAttackEffect();
+            setDamagePoseToDefender();
+            that.tl.delay(120).then(setMotionStand);
+        }
+
+        function setMotionStand(){
+            refreshMertor(data.statusArray);
+            invisibleDamage();
+            setStandPoseToAttackerAndDefender();
+            AttackEffect.visible = false;
+            attackUserId = '';
+            that.tl.delay(WAIT_TIME_ACTIVE_RESET).then(function(){
+                emitCommand({method:'ok'});
             });
-        });
+        }
     };
     
     function visibleBatteryNumber(atackBattery,defenthBattery){
@@ -241,7 +256,29 @@ function battleScene(spec,my){
             }
         }
     }
-    
+
+    function visibleAttackEffect(){
+        AttackEffect.visible = true;
+        AttackEffect.play();
+        AttackEffect.x = userId===attackUserId ? 64 : 256;
+        AttackEffect.y = 148;
+    }
+
+    function setDamagePoseToDefender(){
+        for(var i in that.charaSpriteArray){
+            if(i!=attackUserId){
+                that.charaSpriteArray[i].frame = FRAME_DAMAGE;
+                break;
+            }
+        }
+    }
+
+    function setStandPoseToAttackerAndDefender(){
+        for(var i in that.charaSpriteArray){
+            that.charaSpriteArray[i].frame = FRAME_STAND;
+        }
+    }
+
     function invisibleDamage(){
         for (var uid in statusArray) {
             if (uid !== attackUserId) {
@@ -275,7 +312,6 @@ function battleScene(spec,my){
         selectMaxBattery = getSelectMaxBattery();
         selectMinBattery = getSelectMinBattery();
         batteryNumberArray[userId].frame = batteryMertorArray[userId].getValue()>0 ? 1 : 0;
-        
     }
     
     function getSelectMaxBattery(){

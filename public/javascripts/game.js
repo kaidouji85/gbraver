@@ -13,6 +13,7 @@ function game(spec, my) {
     core.PICT_BATTERY_GAUGE = core.PICT_PREFIX+'batteryGauge.png';
     core.PICT_BATTERY_BACK = core.PICT_PREFIX+'batteryBack.png';
     core.PICT_BATTERY_NUMBER = core.PICT_PREFIX+'batteryNumber.png';
+    core.PICT_ATTTACK_PARTICLE = core.PICT_PREFIX+'attackParticle.png';
         
     core.fps = 60;
     core.battleScene = null;
@@ -28,7 +29,8 @@ function game(spec, my) {
         core.preload(core.PICT_ACTIVE_BAR_BACK);
         core.preload(core.PICT_BATTERY_GAUGE);
         core.preload(core.PICT_BATTERY_BACK);
-        core.preload(core.PICT_BATTERY_NUMBER); 
+        core.preload(core.PICT_BATTERY_NUMBER);
+        core.preload(core.PICT_ATTTACK_PARTICLE);
     }
 
     /**
