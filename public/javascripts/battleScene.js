@@ -32,7 +32,6 @@ function battleScene(spec,my){
     var selectMaxBattery = 5;
     var selectMinBattery = 0;
     var attackUserId = -1;
-    var AttackEffect;
 
     var WAIT_TIME_ACTIVE_RESET = 30;
     var ICON_WIDTH = 124;
@@ -47,12 +46,11 @@ function battleScene(spec,my){
     function initSprite() {
         for(var uid in statusArray){
             //キャラクタースプライト
-            that.charaSpriteArray[uid] = new Sprite(128, 128);
-            that.charaSpriteArray[uid].image = core.assets[core.PICT_PREFIX+statusArray[uid].pictName];
-            that.charaSpriteArray[uid].x = uid===userId ? 192 : 0;
-            that.charaSpriteArray[uid].y = 80;
-            that.charaSpriteArray[uid].scaleX = uid===userId ? 1 : -1;
-            that.charaSpriteArray[uid].frame = FRAME_STAND;
+            var spec = {
+                pict : core.assets[core.PICT_PREFIX+statusArray[uid].pictName],
+                direction : uid===userId ? 'right' : 'left'
+            };
+            that.charaSpriteArray[uid] = new ArmdozerSprite(spec);
             that.addChild(that.charaSpriteArray[uid]);
 
             //HPメータ
@@ -147,13 +145,6 @@ function battleScene(spec,my){
         that.prevIcon.visible = false;
         that.prevIcon.addEventListener(Event.TOUCH_END,prevAtackCommand);
         that.addChild(that.prevIcon);
-
-        //攻撃エフェクト
-        AttackEffect = attackEffect({
-            attackParticleImage : core.assets[core.PICT_ATTTACK_PARTICLE]
-        });
-        that.visible = false;
-        that.addChild(AttackEffect);
     }
     
     function doWaitPhase(data){
@@ -205,88 +196,86 @@ function battleScene(spec,my){
         var atackBattery = data.atackBattery;
         var defenthBattery = data.defenthBattery;
         var damage = data.damage;
-        
-        visibleBatteryNumber(atackBattery,defenthBattery);
-        that.tl.delay(120).then(viewDamage);
+
+        that.tl.then(viewBattery)
+            .delay(120).then(startAttackMotion)
+            .delay(30).then(viewDamage)
+            .delay(120).then(endAnime);
+
+        function viewBattery(){
+            visibleBatteryNumber(atackBattery,defenthBattery);
+        }
+
+        function startAttackMotion(){
+            invisibleBatteryNumber();
+            playAttackHitAnime();
+        }
 
         function viewDamage(){
-            invisibleBatteryNumber();
             visibleDamage(damage);
-            visibleAttackEffect();
-            setDamagePoseToDefender();
-            that.tl.delay(120).then(setMotionStand);
         }
 
-        function setMotionStand(){
+        function endAnime(){
             refreshMertor(data.statusArray);
             invisibleDamage();
-            setStandPoseToAttackerAndDefender();
-            AttackEffect.visible = false;
+            doStand();
             attackUserId = '';
-            that.tl.delay(WAIT_TIME_ACTIVE_RESET).then(function(){
-                emitCommand({method:'ok'});
-            });
+            emitCommand({method:'ok'});
+        }
+
+        function visibleBatteryNumber(atackBattery,defenthBattery){
+            for(var uid in statusArray){
+                var battery = batteryMertorArray[uid].getValue();
+                battery -= uid===attackUserId ? atackBattery : defenthBattery;
+                batteryMertorArray[uid].setValue(battery);
+                batteryNumberArray[uid].frame = uid===attackUserId ? atackBattery : defenthBattery;
+                batteryNumberArray[uid].visible = true;
+            }
+        }
+
+        function invisibleBatteryNumber(){
+            for (var uid in batteryNumberArray) {
+                batteryNumberArray[uid].visible = false;
+            }
+        }
+
+        function visibleDamage(damage){
+            for (var uid in statusArray) {
+                if (uid !== attackUserId) {
+                    damageLabelArray[uid].visible = true;
+                    damageLabelArray[uid].text = String(damage);
+                    statusArray[uid].hp -= damage;
+                    hpMertorArray[uid].setValue(statusArray[uid].hp);
+                    break;
+                }
+            }
+        }
+
+        function playAttackHitAnime() {
+            for(var uid in that.charaSpriteArray){
+                if(uid===attackUserId){
+                    that.charaSpriteArray[uid].doAttackMotion();
+                } else {
+                    that.charaSpriteArray[uid].doHitMotion();
+                }
+            }
+        }
+
+        function doStand() {
+            for(var uid in that.charaSpriteArray){
+                that.charaSpriteArray[uid].doStandMotion();
+            }
+        }
+
+        function invisibleDamage(){
+            for (var uid in statusArray) {
+                if (uid !== attackUserId) {
+                    damageLabelArray[uid].visible = false;
+                    break;
+                }
+            }
         }
     };
-    
-    function visibleBatteryNumber(atackBattery,defenthBattery){
-        for(var uid in statusArray){
-            var battery = batteryMertorArray[uid].getValue();
-            battery -= uid===attackUserId ? atackBattery : defenthBattery;
-            batteryMertorArray[uid].setValue(battery);
-            batteryNumberArray[uid].frame = uid===attackUserId ? atackBattery : defenthBattery;
-            batteryNumberArray[uid].visible = true;
-        }
-    }
-    
-    function invisibleBatteryNumber(){
-        for (var uid in batteryNumberArray) {
-            batteryNumberArray[uid].visible = false;
-        }
-    }
-    
-    function visibleDamage(damage){
-        for (var uid in statusArray) {
-            if (uid !== attackUserId) {
-                damageLabelArray[uid].visible = true;
-                damageLabelArray[uid].text = String(damage);
-                statusArray[uid].hp -= damage;
-                hpMertorArray[uid].setValue(statusArray[uid].hp);
-                break;
-            }
-        }
-    }
-
-    function visibleAttackEffect(){
-        AttackEffect.visible = true;
-        AttackEffect.play();
-        AttackEffect.x = userId===attackUserId ? 64 : 256;
-        AttackEffect.y = 148;
-    }
-
-    function setDamagePoseToDefender(){
-        for(var i in that.charaSpriteArray){
-            if(i!=attackUserId){
-                that.charaSpriteArray[i].frame = FRAME_DAMAGE;
-                break;
-            }
-        }
-    }
-
-    function setStandPoseToAttackerAndDefender(){
-        for(var i in that.charaSpriteArray){
-            that.charaSpriteArray[i].frame = FRAME_STAND;
-        }
-    }
-
-    function invisibleDamage(){
-        for (var uid in statusArray) {
-            if (uid !== attackUserId) {
-                damageLabelArray[uid].visible = false;
-                break;
-            }
-        }
-    }
     
     function onCommand(fn) {
         emitCommand = fn;
