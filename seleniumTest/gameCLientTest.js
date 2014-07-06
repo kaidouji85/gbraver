@@ -51,9 +51,12 @@ test.describe('ゲーム画面', function() {
 
     //attackHitAnime
     test.it('プレイヤー側攻撃ヒットアニメが例外なく再生される', function(){
-        doClientTest('attackHitAnimeTest.html','プレイヤー側攻撃ヒットアニメが例外なく再生される');
+        doClientTest('playerAttackHitAnimeTest.html','プレイヤー側攻撃ヒットアニメが例外なく再生される');
     });
 
+    test.it('敵側攻撃ヒットアニメが例外なく再生される', function(){
+        doClientTest('enemyAttackHitAnimeTest.html','敵側攻撃ヒットアニメが例外なく再生される');
+    });
 
     //roomSelectScene
     test.it('戦闘ルームに入室する', function(){
