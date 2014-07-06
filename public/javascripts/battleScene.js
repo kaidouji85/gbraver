@@ -21,7 +21,7 @@ function battleScene(spec,my){
     that.charaSpriteArray = {};
 
     var statusArray = $.extend(true, {}, spec.statusArray);
-    var userId = spec.userId; 
+    var userId = spec.userId;
     var core = enchant.Core.instance;
     var activeBarArray = {};
     var hpMertorArray = {};
