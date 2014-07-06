@@ -11,6 +11,15 @@ function battleScene(spec,my){
     that.minusIcon = {};
     that.okIcon = {};
     that.prevIcon = {};
+    that.charaSpriteArray = {};
+    that.statusArray = $.extend(true, {}, spec.statusArray);
+    that.userId = spec.userId;
+    that.activeBarArray = {};
+    that.hpMertorArray = {};
+    that.batteryMertorArray = {};
+    that.batteryNumberArray = {};
+    that.damageLabelArray = {};
+
     that.doWaitPhase = doWaitPhase;
     that.doAtackCommandPhase = doAtackCommandPhase;
     that.doChargePhase = doChargePhase;
@@ -18,20 +27,16 @@ function battleScene(spec,my){
     that.doDamagePhase = doDamagePhase;
     that.onCommand = onCommand;
     that.doGameEnd = doGameEnd;
-    that.charaSpriteArray = {};
+    that.refreshMertor = refreshMertor;
 
-    var statusArray = $.extend(true, {}, spec.statusArray);
-    var userId = spec.userId;
     var core = enchant.Core.instance;
-    var activeBarArray = {};
-    var hpMertorArray = {};
-    var batteryMertorArray = {};
-    var batteryNumberArray = {};
-    var damageLabelArray = {};
     var emitCommand = function(){};
     var selectMaxBattery = 5;
     var selectMinBattery = 0;
     var attackUserId = -1;
+    var AttackAnime = attackAnime({
+        battleScene : that
+    });
 
     var WAIT_TIME_ACTIVE_RESET = 30;
     var ICON_WIDTH = 124;
@@ -44,58 +49,58 @@ function battleScene(spec,my){
     
     initSprite();
     function initSprite() {
-        for(var uid in statusArray){
+        for(var uid in that.statusArray){
             //キャラクタースプライト
             var spec = {
-                pict : core.assets[core.PICT_PREFIX+statusArray[uid].pictName],
-                direction : uid===userId ? 'right' : 'left'
+                pict : core.assets[core.PICT_PREFIX+that.statusArray[uid].pictName],
+                direction : uid===that.userId ? 'right' : 'left'
             };
             that.charaSpriteArray[uid] = new ArmdozerSprite(spec);
             that.addChild(that.charaSpriteArray[uid]);
 
             //HPメータ
-            hpMertorArray[uid] = hpMertor();
-            hpMertorArray[uid].y = 4;
-            hpMertorArray[uid].x = uid===userId ? 190 : 10;
-            hpMertorArray[uid].setValue(statusArray[uid].hp);
-            that.addChild(hpMertorArray[uid]);
+            that.hpMertorArray[uid] = hpMertor();
+            that.hpMertorArray[uid].y = 4;
+            that.hpMertorArray[uid].x = uid===that.userId ? 190 : 10;
+            that.hpMertorArray[uid].setValue(that.statusArray[uid].hp);
+            that.addChild(that.hpMertorArray[uid]);
             
             //アクティブゲージ
-            activeBarArray[uid] = customBar({
+            that.activeBarArray[uid] = customBar({
                 barImage : core.assets[core.PICT_ACTIVE_BAR],
                 backImage : core.assets[core.PICT_ACTIVE_BAR_BACK],
                 maxValue : 120,
-                direction : uid===userId ? 'right' : 'left'
+                direction : uid===that.userId ? 'right' : 'left'
             });
-            activeBarArray[uid].x = uid===userId ? 190 : 130;
-            activeBarArray[uid].y = 22;
-            that.addChild(activeBarArray[uid]);
+            that.activeBarArray[uid].x = uid===that.userId ? 190 : 130;
+            that.activeBarArray[uid].y = 22;
+            that.addChild(that.activeBarArray[uid]);
            
             //バッテリーメータ
-            batteryMertorArray[uid] = new batteryMertor({
+            that.batteryMertorArray[uid] = new batteryMertor({
                 gaugeImage : core.assets[core.PICT_BATTERY_GAUGE],
                 backImage : core.assets[core.PICT_BATTERY_BACK],
-                direction : uid===userId ? 'right' : 'left'
+                direction : uid===that.userId ? 'right' : 'left'
             });
-            batteryMertorArray[uid].x = uid===userId ? 190 : 10;
-            batteryMertorArray[uid].y = 43;
-            batteryMertorArray[uid].setValue(5);
-            that.addChild(batteryMertorArray[uid]);
+            that.batteryMertorArray[uid].x = uid===that.userId ? 190 : 10;
+            that.batteryMertorArray[uid].y = 43;
+            that.batteryMertorArray[uid].setValue(5);
+            that.addChild(that.batteryMertorArray[uid]);
             
             //出したバッテリー
-            batteryNumberArray[uid] = new Sprite(64,64);
-            batteryNumberArray[uid].image = core.assets[core.PICT_BATTERY_NUMBER];
-            batteryNumberArray[uid].x = uid===userId ? 226 : 30;
-            batteryNumberArray[uid].y = 110;
-            batteryNumberArray[uid].visible = false;
-            that.addChild(batteryNumberArray[uid]);
+            that.batteryNumberArray[uid] = new Sprite(64,64);
+            that.batteryNumberArray[uid].image = core.assets[core.PICT_BATTERY_NUMBER];
+            that.batteryNumberArray[uid].x = uid===that.userId ? 226 : 30;
+            that.batteryNumberArray[uid].y = 110;
+            that.batteryNumberArray[uid].visible = false;
+            that.addChild(that.batteryNumberArray[uid]);
             
             //ダメージラベル
-            damageLabelArray[uid] = new MutableText(0,0);
-            damageLabelArray[uid].x = uid===userId ? 230 : 20;
-            damageLabelArray[uid].y = 210;
-            damageLabelArray[uid].visible = false;
-            that.addChild(damageLabelArray[uid]);
+            that.damageLabelArray[uid] = new MutableText(0,0);
+            that.damageLabelArray[uid].x = uid===that.userId ? 230 : 20;
+            that.damageLabelArray[uid].y = 210;
+            that.damageLabelArray[uid].visible = false;
+            that.addChild(that.damageLabelArray[uid]);
         }
         
         //攻撃アイコン
@@ -150,8 +155,8 @@ function battleScene(spec,my){
     function doWaitPhase(data){
         var turn = data.turn;
         attackUserId = data.atackUserId;
-        for(var uid in statusArray) {
-            activeBarArray[uid].plus(turn,120*statusArray[uid].speed/5000);
+        for(var uid in that.statusArray) {
+            that.activeBarArray[uid].plus(turn,120*that.statusArray[uid].speed/5000);
         }
         
         that.tl.delay(turn).then(function(){
@@ -163,7 +168,7 @@ function battleScene(spec,my){
     function doAtackCommandPhase(data){
         refreshMertor(data.statusArray);
         that.charaSpriteArray[attackUserId].frame = FRAME_ATTACK;
-        if(attackUserId===userId){
+        if(attackUserId===that.userId){
             setAtackCommandVisible(true);
         } else {
             that.tl.delay(1).then(function(){
@@ -183,7 +188,7 @@ function battleScene(spec,my){
     
     function doDefenthCommandPhase(data){
         refreshMertor(data.statusArray);
-        if(attackUserId===userId){
+        if(attackUserId===that.userId){
             that.tl.delay(30).then(function(){
                 emitCommand({method:'ok'});
             });
@@ -193,88 +198,10 @@ function battleScene(spec,my){
     };
     
     function doDamagePhase(data){
-        var atackBattery = data.atackBattery;
-        var defenthBattery = data.defenthBattery;
-        var damage = data.damage;
-
-        that.tl.then(viewBattery)
-            .delay(120).then(startAttackMotion)
-            .delay(30).then(viewDamage)
-            .delay(120).then(endAnime);
-
-        function viewBattery(){
-            visibleBatteryNumber(atackBattery,defenthBattery);
-        }
-
-        function startAttackMotion(){
-            invisibleBatteryNumber();
-            playAttackHitAnime();
-        }
-
-        function viewDamage(){
-            visibleDamage(damage);
-        }
-
-        function endAnime(){
-            refreshMertor(data.statusArray);
-            invisibleDamage();
-            doStand();
-            attackUserId = '';
+        data.attackUserId = attackUserId;
+        AttackAnime.play(data,function(){
             emitCommand({method:'ok'});
-        }
-
-        function visibleBatteryNumber(atackBattery,defenthBattery){
-            for(var uid in statusArray){
-                var battery = batteryMertorArray[uid].getValue();
-                battery -= uid===attackUserId ? atackBattery : defenthBattery;
-                batteryMertorArray[uid].setValue(battery);
-                batteryNumberArray[uid].frame = uid===attackUserId ? atackBattery : defenthBattery;
-                batteryNumberArray[uid].visible = true;
-            }
-        }
-
-        function invisibleBatteryNumber(){
-            for (var uid in batteryNumberArray) {
-                batteryNumberArray[uid].visible = false;
-            }
-        }
-
-        function visibleDamage(damage){
-            for (var uid in statusArray) {
-                if (uid !== attackUserId) {
-                    damageLabelArray[uid].visible = true;
-                    damageLabelArray[uid].text = String(damage);
-                    statusArray[uid].hp -= damage;
-                    hpMertorArray[uid].setValue(statusArray[uid].hp);
-                    break;
-                }
-            }
-        }
-
-        function playAttackHitAnime() {
-            for(var uid in that.charaSpriteArray){
-                if(uid===attackUserId){
-                    that.charaSpriteArray[uid].doAttackMotion();
-                } else {
-                    that.charaSpriteArray[uid].doHitMotion();
-                }
-            }
-        }
-
-        function doStand() {
-            for(var uid in that.charaSpriteArray){
-                that.charaSpriteArray[uid].doStandMotion();
-            }
-        }
-
-        function invisibleDamage(){
-            for (var uid in statusArray) {
-                if (uid !== attackUserId) {
-                    damageLabelArray[uid].visible = false;
-                    break;
-                }
-            }
-        }
+        });
     };
     
     function onCommand(fn) {
@@ -283,9 +210,9 @@ function battleScene(spec,my){
     
     function refreshMertor(statusArray){
         for(var uid in statusArray){
-            hpMertorArray[uid].setValue(statusArray[uid].hp);
-            batteryMertorArray[uid].setValue(statusArray[uid].battery);
-            activeBarArray[uid].setValue(120*statusArray[uid].active/5000);
+            that.hpMertorArray[uid].setValue(statusArray[uid].hp);
+            that.batteryMertorArray[uid].setValue(statusArray[uid].battery);
+            that.activeBarArray[uid].setValue(120*statusArray[uid].active/5000);
         }
     }
 
@@ -296,39 +223,39 @@ function battleScene(spec,my){
     
     function viewBatteryCommand(){
         setBatteryCommandVisible(true);
-        that.prevIcon.visible = userId===attackUserId ? true : false;
-        batteryNumberArray[userId].visible = true;
+        that.prevIcon.visible = that.userId===attackUserId ? true : false;
+        that.batteryNumberArray[that.userId].visible = true;
         selectMaxBattery = getSelectMaxBattery();
         selectMinBattery = getSelectMinBattery();
-        batteryNumberArray[userId].frame = batteryMertorArray[userId].getValue()>0 ? 1 : 0;
+        that.batteryNumberArray[that.userId].frame = that.batteryMertorArray[that.userId].getValue()>0 ? 1 : 0;
     }
     
     function getSelectMaxBattery(){
-        return batteryMertorArray[userId].getValue();;
+        return that.batteryMertorArray[that.userId].getValue();;
     }
     
     function getSelectMinBattery(){
-        return userId===attackUserId ? 1 : 0;
+        return that.userId===attackUserId ? 1 : 0;
     }
     
     function plusBattery(){
-        var number = batteryNumberArray[userId].frame;
+        var number = that.batteryNumberArray[that.userId].frame;
         if(number<selectMaxBattery){
-            batteryNumberArray[userId].frame ++;    
+            that.batteryNumberArray[that.userId].frame ++;    
         }
     };
     
     function minusBattery(){
-        var number = batteryNumberArray[userId].frame;
+        var number = that.batteryNumberArray[that.userId].frame;
         if(selectMinBattery<number){
-            batteryNumberArray[userId].frame --;    
+            that.batteryNumberArray[that.userId].frame --;    
         }
     };
     
     function prevAtackCommand(){
         setAtackCommandVisible(true);
         setBatteryCommandVisible(false);
-        batteryNumberArray[userId].visible = false;        
+        that.batteryNumberArray[that.userId].visible = false;        
     };
     
     function charge(){
@@ -337,11 +264,11 @@ function battleScene(spec,my){
     };
     
     function selectBattery(){
-        var battery = batteryNumberArray[userId].frame;
+        var battery = that.batteryNumberArray[that.userId].frame;
         setBatteryCommandVisible(false);
-        batteryNumberArray[userId].visible = false;
+        that.batteryNumberArray[that.userId].visible = false;
         
-        if(attackUserId===userId){
+        if(attackUserId===that.userId){
             sendAtackCommand(battery);
         } else {
             sendDefenthCommand(battery);
