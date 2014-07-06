@@ -13,6 +13,9 @@ function gameBase(spec,my){
     core.ICON_HEIGHT = 40;
     core.COMMAND_POX_X = 8;
     core.COMMAND_POS_Y = 300;
+    core.FRAME_STAND = 0;
+    core.FRAME_ATTACK = 1;
+    core.FRAME_DAMAGE = 2;
 
     core.fps = 60;
     core.battleScene = null;

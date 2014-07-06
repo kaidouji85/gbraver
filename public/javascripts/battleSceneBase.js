@@ -18,6 +18,14 @@ function battleSceneBase(spec,my){
     that.batteryNumberArray = {};
     that.damageLabelArray = {};
 
+    that.refreshMertor = function(statusArray){
+        for(var uid in statusArray){
+            that.hpMertorArray[uid].setValue(statusArray[uid].hp);
+            that.batteryMertorArray[uid].setValue(statusArray[uid].battery);
+            that.activeBarArray[uid].setValue(120*statusArray[uid].active/5000);
+        }
+    }
+
     initSprite();
     function initSprite() {
         for(var uid in that.statusArray){
