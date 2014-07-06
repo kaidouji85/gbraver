@@ -3,31 +3,7 @@
 //       frameも範囲外（０から5以外)が指定された訳でもない。
 //       enchant.jsの不具合の可能性が高い。
 function battleScene(spec,my){
-    var that = new Scene();
-    that.backgroundColor = "black";
-    that.atackIcon = {};
-    that.chargeIcon = {};
-    that.plusIcon = {};
-    that.minusIcon = {};
-    that.okIcon = {};
-    that.prevIcon = {};
-    that.charaSpriteArray = {};
-    that.statusArray = $.extend(true, {}, spec.statusArray);
-    that.userId = spec.userId;
-    that.activeBarArray = {};
-    that.hpMertorArray = {};
-    that.batteryMertorArray = {};
-    that.batteryNumberArray = {};
-    that.damageLabelArray = {};
-
-    that.doWaitPhase = doWaitPhase;
-    that.doAtackCommandPhase = doAtackCommandPhase;
-    that.doChargePhase = doChargePhase;
-    that.doDefenthCommandPhase = doDefenthCommandPhase;
-    that.doDamagePhase = doDamagePhase;
-    that.onCommand = onCommand;
-    that.doGameEnd = doGameEnd;
-    that.refreshMertor = refreshMertor;
+    var that = battleSceneBase(spec,my);
 
     var core = enchant.Core.instance;
     var emitCommand = function(){};
@@ -46,111 +22,21 @@ function battleScene(spec,my){
     var FRAME_STAND = 0;
     var FRAME_ATTACK = 1;
     var FRAME_DAMAGE = 2;
-    
-    initSprite();
-    function initSprite() {
-        for(var uid in that.statusArray){
-            //キャラクタースプライト
-            var spec = {
-                pict : core.assets[core.PICT_PREFIX+that.statusArray[uid].pictName],
-                direction : uid===that.userId ? 'right' : 'left'
-            };
-            that.charaSpriteArray[uid] = new ArmdozerSprite(spec);
-            that.addChild(that.charaSpriteArray[uid]);
 
-            //HPメータ
-            that.hpMertorArray[uid] = hpMertor();
-            that.hpMertorArray[uid].y = 4;
-            that.hpMertorArray[uid].x = uid===that.userId ? 190 : 10;
-            that.hpMertorArray[uid].setValue(that.statusArray[uid].hp);
-            that.addChild(that.hpMertorArray[uid]);
-            
-            //アクティブゲージ
-            that.activeBarArray[uid] = customBar({
-                barImage : core.assets[core.PICT_ACTIVE_BAR],
-                backImage : core.assets[core.PICT_ACTIVE_BAR_BACK],
-                maxValue : 120,
-                direction : uid===that.userId ? 'right' : 'left'
-            });
-            that.activeBarArray[uid].x = uid===that.userId ? 190 : 130;
-            that.activeBarArray[uid].y = 22;
-            that.addChild(that.activeBarArray[uid]);
-           
-            //バッテリーメータ
-            that.batteryMertorArray[uid] = new batteryMertor({
-                gaugeImage : core.assets[core.PICT_BATTERY_GAUGE],
-                backImage : core.assets[core.PICT_BATTERY_BACK],
-                direction : uid===that.userId ? 'right' : 'left'
-            });
-            that.batteryMertorArray[uid].x = uid===that.userId ? 190 : 10;
-            that.batteryMertorArray[uid].y = 43;
-            that.batteryMertorArray[uid].setValue(5);
-            that.addChild(that.batteryMertorArray[uid]);
-            
-            //出したバッテリー
-            that.batteryNumberArray[uid] = new Sprite(64,64);
-            that.batteryNumberArray[uid].image = core.assets[core.PICT_BATTERY_NUMBER];
-            that.batteryNumberArray[uid].x = uid===that.userId ? 226 : 30;
-            that.batteryNumberArray[uid].y = 110;
-            that.batteryNumberArray[uid].visible = false;
-            that.addChild(that.batteryNumberArray[uid]);
-            
-            //ダメージラベル
-            that.damageLabelArray[uid] = new MutableText(0,0);
-            that.damageLabelArray[uid].x = uid===that.userId ? 230 : 20;
-            that.damageLabelArray[uid].y = 210;
-            that.damageLabelArray[uid].visible = false;
-            that.addChild(that.damageLabelArray[uid]);
-        }
-        
-        //攻撃アイコン
-        that.atackIcon = new Button('攻撃','light',ICON_HEIGHT,ICON_WIDTH);
-        that.atackIcon.x = COMMAND_POX_X;
-        that.atackIcon.y = COMMAND_POS_Y;
-        that.atackIcon.visible = false;
-        that.atackIcon.addEventListener(Event.TOUCH_END,moveBatteryCommand);
-        that.addChild(that.atackIcon);
-        
-        //チャージアイコン
-        that.chargeIcon = new Button('チャージ','light',ICON_HEIGHT,ICON_WIDTH);
-        that.chargeIcon.x = COMMAND_POX_X + ICON_WIDTH + 32;
-        that.chargeIcon.y = COMMAND_POS_Y;
-        that.chargeIcon.visible = false;
-        that.chargeIcon.addEventListener(Event.TOUCH_END,charge);
-        that.addChild(that.chargeIcon);
-        
-        //+アイコン
-        that.plusIcon = new Button('+','light',ICON_HEIGHT,ICON_WIDTH);
-        that.plusIcon.x = COMMAND_POX_X;
-        that.plusIcon.y = COMMAND_POS_Y;
-        that.plusIcon.visible = false;
-        that.plusIcon.addEventListener(Event.TOUCH_END,plusBattery);
-        that.addChild(that.plusIcon);
-        
-        //-アイコン
-        that.minusIcon = new Button('-','light',ICON_HEIGHT,ICON_WIDTH);
-        that.minusIcon.x = COMMAND_POX_X + ICON_WIDTH + 32;
-        that.minusIcon.y = COMMAND_POS_Y;
-        that.minusIcon.visible = false;
-        that.minusIcon.addEventListener(Event.TOUCH_END,minusBattery);
-        that.addChild(that.minusIcon);
-        
-        //決定アイコン
-        that.okIcon = new Button('決定','light',ICON_HEIGHT,ICON_WIDTH);
-        that.okIcon.x = COMMAND_POX_X;
-        that.okIcon.y = COMMAND_POS_Y + ICON_HEIGHT + 16;
-        that.okIcon.visible = false;
-        that.okIcon.addEventListener(Event.TOUCH_END,selectBattery);
-        that.addChild(that.okIcon);
-                
-        //戻るアイコン
-        that.prevIcon = new Button('戻る','light',ICON_HEIGHT,ICON_WIDTH);
-        that.prevIcon.x = COMMAND_POX_X + ICON_WIDTH + 32;
-        that.prevIcon.y = COMMAND_POS_Y + ICON_HEIGHT + 16;
-        that.prevIcon.visible = false;
-        that.prevIcon.addEventListener(Event.TOUCH_END,prevAtackCommand);
-        that.addChild(that.prevIcon);
-    }
+    that.doWaitPhase = doWaitPhase;
+    that.doAtackCommandPhase = doAtackCommandPhase;
+    that.doChargePhase = doChargePhase;
+    that.doDefenthCommandPhase = doDefenthCommandPhase;
+    that.doDamagePhase = doDamagePhase;
+    that.onCommand = onCommand;
+    that.doGameEnd = doGameEnd;
+    that.refreshMertor = refreshMertor;
+    that.atackIcon.addEventListener(Event.TOUCH_END,moveBatteryCommand);
+    that.chargeIcon.addEventListener(Event.TOUCH_END,charge);
+    that.plusIcon.addEventListener(Event.TOUCH_END,plusBattery);
+    that.minusIcon.addEventListener(Event.TOUCH_END,minusBattery);
+    that.okIcon.addEventListener(Event.TOUCH_END,selectBattery);
+    that.prevIcon.addEventListener(Event.TOUCH_END,prevAtackCommand);
     
     function doWaitPhase(data){
         var turn = data.turn;
