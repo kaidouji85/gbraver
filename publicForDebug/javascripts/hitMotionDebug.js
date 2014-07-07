@@ -31,6 +31,7 @@ function hitMotionDebug(){
     //enemy.doHitMotion();
 
     //敵の攻撃
+    /*
     core.rootScene.addChild(player);
     core.rootScene.addChild(enemy);
     player.doHitMotion();
@@ -39,5 +40,14 @@ function hitMotionDebug(){
         player.doStandMotion();
         enemy.doStandMotion();
     });
+    */
+
+    //プレイヤー攻撃ミス
+    core.rootScene.addChild(enemy);
+    core.rootScene.addChild(player);
+    player.doAttackMotion();
+    enemy.doAvoidMotion();
+
+
 
 }

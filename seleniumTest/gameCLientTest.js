@@ -58,6 +58,14 @@ test.describe('ゲーム画面', function() {
         doClientTest('enemyAttackHitAnimeTest.html','敵側攻撃ヒットアニメが例外なく再生される');
     });
 
+    test.it('プレイヤー側攻撃ミスアニメが例外なく再生される', function(){
+        doClientTest('playerAttackMissAnimeTest.html','プレイヤー側攻撃ミスアニメが例外なく再生される');
+    });
+
+    test.it('敵側攻撃ミスアニメが例外なく再生される', function(){
+        doClientTest('enemyAttackMissAnimeTest.html','敵側攻撃ミスアニメが例外なく再生される');
+    });
+
     //roomSelectScene
     test.it('戦闘ルームに入室する', function(){
         doClientTest('roomSelectTest.html','戦闘ルームに入室する');

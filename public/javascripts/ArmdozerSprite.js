@@ -17,6 +17,7 @@ function ArmdozerSprite(spec,my) {
     that.doAttackMotion = doAttackMotion;
     that.doHitMotion = doHitMotion;
     that.doStandMotion = doStandMotion;
+    that.doAvoidMotion = doAvoidMotion;
     init();
 
     function init() {
@@ -48,6 +49,11 @@ function ArmdozerSprite(spec,my) {
         that.x = direction===DIRECTION_RIGHT ? DEFAULT_X_FOR_DIRECTION_RIGHT : DEFAULT_X_FOR_DIRECTION_LEFT;
         that.y = direction===DIRECTION_RIGHT ? DEFAULT_Y_FOR_DIRECTION_RIGHT : DEFAULT_Y_FOR_DIRECTION_LEFT;
         that.frame = MOTION_STAND;
+    }
+
+    function doAvoidMotion(){
+        that.tl.delay(30)
+            .moveBy(30*that.scaleX,30,5);
     }
 
     return that;

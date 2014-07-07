@@ -16,6 +16,10 @@ function gameBase(spec,my){
     core.FRAME_STAND = 0;
     core.FRAME_ATTACK = 1;
     core.FRAME_DAMAGE = 2;
+    core.ATACK_HIT = 1;
+    core.ATACK_MISS = 2;
+    core.ATACK_GUARD = 3;
+    core.ATACK_CRITICAL = 4;
 
     core.fps = 60;
     core.battleScene = null;
