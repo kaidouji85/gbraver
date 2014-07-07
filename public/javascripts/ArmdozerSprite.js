@@ -52,8 +52,9 @@ function ArmdozerSprite(spec,my) {
     }
 
     function doAvoidMotion(){
-        that.tl.delay(30)
-            .moveBy(30*that.scaleX,30,5);
+        that.tl.delay(31)
+            .moveBy(50*that.scaleX,50,5)
+            .moveBy(-50*that.scaleX,-50,5);
     }
 
     return that;
