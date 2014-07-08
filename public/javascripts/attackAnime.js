@@ -46,7 +46,9 @@ function attackAnime(spec,my){
             for (var uid in battleScene.statusArray) {
                 if (uid !== attackUserId) {
                     battleScene.damageLabelArray[uid].visible = true;
-                    battleScene.damageLabelArray[uid].text = String(damage);
+                    battleScene.damageLabelArray[uid].text = getDamageText(damage,hit);
+                    battleScene.subDamageLabelArray[uid].visible = true;
+                    battleScene.subDamageLabelArray[uid].text = getSubDamageText(hit);
                     battleScene.hpMertorArray[uid].setValue(damagedStatusArray[uid].hp);
                     break;
                 }
@@ -57,10 +59,37 @@ function attackAnime(spec,my){
                 battleScene.charaSpriteArray[uid].doStandMotion();
                 if (uid !== attackUserId) {
                     battleScene.damageLabelArray[uid].visible = false;
+                    battleScene.subDamageLabelArray[uid].visible = false;
                 }
             }
             fn();
         });
+    }
+
+    function getDamageText(damage,hit){
+        var text = String(damage);
+        if(hit===core.ATACK_MISS){
+            text = '';
+        }
+        return text;
+    }
+
+    function getSubDamageText(hit) {
+        var text = '';
+        switch(hit){
+            case core.ATACK_HIT:
+                break;
+            case core.ATACK_MISS:
+                text = 'MISS';
+                break;
+            case core.ATACK_GUARD:
+                text = 'GUARD';
+                break;
+            case core.ATACK_CRITICAL:
+                text = 'CRITICAL';
+                break;
+        }
+        return text;
     }
 
     return that;
