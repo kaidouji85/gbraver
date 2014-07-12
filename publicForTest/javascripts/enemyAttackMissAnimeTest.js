@@ -5,6 +5,7 @@ enchant.ENV.SOUND_ENABLED_ON_MOBILE_SAFARI = false;
 window.onload = attackHitAnimeTest;
 
 function attackHitAnimeTest(){
+    var assert = chai.assert;
     var statusArray = {
         'test002@gmail.com' : getTestPlayerData('test002@gmail.com'),
         'test001@gmail.com' : getTestPlayerData('test001@gmail.com')
@@ -42,12 +43,12 @@ function attackHitAnimeTest(){
             attackUserId : 'test001@gmail.com',
             hit : 2,
             damage : 0,
-            atackBattery : 3,
+            atackBattery : 1,
             defenthBattery : 2,
             statusArray : {
                 'test001@gmail.com' : {
                     hp : 3200,
-                    battery : 2,
+                    battery : 4,
                     active : 0
                 },
                 'test002@gmail.com' : {
@@ -64,6 +65,20 @@ function attackHitAnimeTest(){
     }
 
     function assertAnimeEnd(){
+        var playerHp = testScene.hpMertorArray['test002@gmail.com'].getValue();
+        var playerBattery = testScene.batteryMertorArray['test002@gmail.com'].getValue();
+        var playerFrame = testScene.charaSpriteArray['test002@gmail.com'].frame;
+        var enemyFrame = testScene.charaSpriteArray['test001@gmail.com'].frame;
+        var enemyActive = testScene.activeBarArray['test001@gmail.com'].getValue();
+        var enemyBattery = testScene.batteryMertorArray['test001@gmail.com'].getValue();
+
+        assert.equal(playerHp,4700,'プレイヤーのHPが減っていない');
+        assert.equal(playerBattery,3,"プレイヤーのバッテリーが正しい");
+        assert.equal(playerFrame,testGame.FRAME_STAND,"プレイヤーのモーションが「立ち」である");
+        assert.equal(enemyActive,0,"敵のアクティブゲージが0である");
+        assert.equal(enemyBattery,4,"敵のバッテリーが正しい");
+        assert.equal(enemyFrame,testGame.FRAME_STAND,"敵のモーションが「立ち」である");
+
         finishTest();
     }
 }

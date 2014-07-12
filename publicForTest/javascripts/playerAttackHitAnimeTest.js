@@ -5,6 +5,7 @@ enchant.ENV.SOUND_ENABLED_ON_MOBILE_SAFARI = false;
 window.onload = attackHitAnimeTest;
 
 function attackHitAnimeTest(){
+    var assert = chai.assert;
     var statusArray = {
         'test002@gmail.com' : getTestPlayerData('test002@gmail.com'),
         'test001@gmail.com' : getTestPlayerData('test001@gmail.com')
@@ -64,6 +65,20 @@ function attackHitAnimeTest(){
     }
 
     function assertAnimeEnd(){
+        var playerActive = testScene.activeBarArray['test001@gmail.com'].getValue();
+        var playerBattery = testScene.batteryMertorArray['test001@gmail.com'].getValue();
+        var playerFrame = testScene.charaSpriteArray['test001@gmail.com'].frame;
+        var enemyHp = testScene.hpMertorArray['test002@gmail.com'].getValue();
+        var enemyBattery = testScene.batteryMertorArray['test002@gmail.com'].getValue();
+        var enemyFrame = testScene.charaSpriteArray['test002@gmail.com'].frame;
+
+        assert.equal(playerActive,0,"プレイヤーのアクティブゲージが0である");
+        assert.equal(playerBattery,2,"プレイヤーのバッテリーが正しい");
+        assert.equal(playerFrame,testGame.FRAME_STAND,"プレイヤーのモーションが「立ち」である");
+        assert.equal(enemyHp,3100,'敵のHPが減っている');
+        assert.equal(enemyBattery,3,"敵のバッテリーが正しい");
+        assert.equal(enemyFrame,testGame.FRAME_STAND,"敵のモーションが「立ち」である");
+
         finishTest();
     }
 }

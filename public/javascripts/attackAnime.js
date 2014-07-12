@@ -62,6 +62,7 @@ function attackAnime(spec,my){
                     battleScene.subDamageLabelArray[uid].visible = false;
                 }
             }
+        }).delay(10).then(function(){
             fn();
         });
     }

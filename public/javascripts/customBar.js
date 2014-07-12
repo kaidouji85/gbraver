@@ -20,6 +20,7 @@ function customBar(spec, my) {
     
     that.plus = MainBar.plus;
     that.setValue = MainBar.setValue;
+    that.getValue = MainBar.getValue;
     
     return that;
 };
@@ -56,6 +57,10 @@ function mainBar(spec, my) {
         }
         that.value = value;        
     };
+
+    that.getValue = function(){
+        return that.value;
+    }
 
     return that;
 }
