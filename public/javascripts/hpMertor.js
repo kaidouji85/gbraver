@@ -3,7 +3,7 @@ function hpMertor(spec,my){
     var hp = 0;
 
     that.setValue = function(value){
-        hp = value;
+        hp = value>=0 ? value : 0;
         setHpMertor(hp);
     };
 
