@@ -70,13 +70,25 @@ test.describe('ゲーム画面', function() {
         doClientTest('playerAttackCriticalAnimeTest.html','プレイヤー側攻撃クリティカルアニメが例外なく再生される');
     });
 
+    test.it('敵側攻撃クリティカルアニメが例外なく再生される', function(){
+        doClientTest('enemyAttackCriticalAnimeTest.html','敵側攻撃クリティカルアニメが例外なく再生される');
+    });
+
     test.it('プレイヤー側攻撃防御アニメが例外なく再生される', function(){
         doClientTest('playerAttackDefenseAnimeTest.html','プレイヤー側攻撃防御アニメが例外なく再生される');
+    });
+
+    test.it('敵側攻撃防御アニメが例外なく再生される', function(){
+        doClientTest('enemyAttackDefenseAnimeTest.html','敵側攻撃防御アニメが例外なく再生される');
     });
 
     //myTurnAnime
     test.it('プレイヤー側マイターンアニメが例外なく再生される', function(){
         doClientTest('playerTurnAnimeTest.html','プレイヤー側マイターンアニメが例外なく再生される');
+    });
+
+    test.it('敵側マイターンアニメが例外なく再生される', function(){
+        doClientTest('enemyTurnAnimeTest.html','敵側マイターンアニメが例外なく再生される');
     });
 
     //roomSelectScene

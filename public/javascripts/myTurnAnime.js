@@ -7,7 +7,7 @@ function myTurnAnime(spec,my){
 
         battleScene.tl.then(function(){
             battleScene.charaSpriteArray[attackUserId].doMyTurnMotion();
-        }).delay(60).then(fn);
+        }).delay(15).then(fn);
     }
 
     return that;

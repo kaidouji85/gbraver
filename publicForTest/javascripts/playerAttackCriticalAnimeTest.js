@@ -51,7 +51,7 @@ function attackCriticalAnimeTest(){
                     active : 0
                 },
                 'test002@gmail.com' : {
-                    hp : 4700,
+                    hp : 1100,
                     battery : 5,
                     active : 3000
                 }

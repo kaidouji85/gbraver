@@ -13,12 +13,11 @@ function battleScene(spec,my){
     var AttackAnime = attackAnime({
         battleScene : that
     });
+    var MyTurnAnime = myTurnAnime({
+        battleScene : that
+    });
 
     var WAIT_TIME_ACTIVE_RESET = 30;
-    var ICON_WIDTH = 124;
-    var ICON_HEIGHT = 40;
-    var COMMAND_POX_X = 8;
-    var COMMAND_POS_Y = 300;
     var FRAME_STAND = 0;
     var FRAME_ATTACK = 1;
     var FRAME_DAMAGE = 2;
@@ -52,15 +51,16 @@ function battleScene(spec,my){
     };
     
     function doAtackCommandPhase(data){
-        refreshMertor(data.statusArray);
-        that.charaSpriteArray[attackUserId].frame = FRAME_ATTACK;
-        if(attackUserId===that.userId){
-            setAtackCommandVisible(true);
-        } else {
-            that.tl.delay(1).then(function(){
-                emitCommand({method:'ok'});
-            });
-        }
+        data.attackUserId = attackUserId;
+        MyTurnAnime.play(data,function(){
+            if(attackUserId===that.userId){
+                setAtackCommandVisible(true);
+            } else {
+                that.tl.delay(1).then(function(){
+                    emitCommand({method:'ok'});
+                });
+            }
+        });
     };
     
     function doChargePhase(data){

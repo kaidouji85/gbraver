@@ -58,8 +58,8 @@ function ArmdozerSprite(spec,my) {
 
     function doMyTurnMotion(){
         that.frame = core.FRAME_ATTACK;
-        that.tl.moveBy(-60*that.scaleX,0,10)
-            .moveBy(60*that.scaleX,0,10);
+        that.tl.moveBy(-50*that.scaleX,0,5)
+            .moveBy(50*that.scaleX,0,5);
     }
 
     return that;

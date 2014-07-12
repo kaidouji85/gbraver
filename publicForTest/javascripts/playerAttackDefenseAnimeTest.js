@@ -51,7 +51,7 @@ function attackDefenseAnimeTest(){
                     active : 0
                 },
                 'test002@gmail.com' : {
-                    hp : 4700,
+                    hp : 4100,
                     battery : 2,
                     active : 3000
                 }
