@@ -35,8 +35,24 @@ function mongoDao(spec, my) {
                 fn(err,result);
             }); 
 
-        });        
+        });
     };
+
+    that.getCharacterList = function(fn){
+        MongoClient.connect(url, function(err, db) {
+            var characterList = new Array();
+            var characterName;
+            var collection = db.collection('armdozers');
+            collection.find().toArray(function(err,result){
+                for(var i in result){
+                    characterName = result[i].armdozerId;
+                    characterList.push(characterName)
+                }
+                fn(null,characterList);
+            });
+
+        });
+    }
     
     function getOrCreateUserData(userId, db, fn){
         getUserData(userId, db, function(err,user){
