@@ -52,6 +52,16 @@ function server(spec, my) {
         setArmdozerId = fn;
     };
 
+    /**
+     * アームドーザリスト取得関数
+     * この関数の実装は外部で行う
+     * @param {Function} callback(err,result)
+     */
+    var getCharacterList;
+    io.onGetCharacterList = function(fn){
+        getCharacterList = fn;
+    }
+
     io.sockets.on('connection', function(socket) {
         socket.gbraverInfo = {
             userId : null,
@@ -157,6 +167,12 @@ function server(spec, my) {
                 if (result === true) {
                     socket.emit('successSetArmdozer', {});
                 }
+            });
+        });
+
+        socket.on('getCharacterList', function(){
+            getCharacterList(function(err,data){
+                socket.emit('successGetCharacterList',data);
             });
         });
     });
