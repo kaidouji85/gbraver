@@ -41,12 +41,15 @@ function mongoDao(spec, my) {
     that.getCharacterList = function(fn){
         MongoClient.connect(url, function(err, db) {
             var characterList = new Array();
-            var characterName;
+            var characterRecord;
             var collection = db.collection('armdozers');
             collection.find().toArray(function(err,result){
                 for(var i in result){
-                    characterName = result[i].armdozerId;
-                    characterList.push(characterName)
+                    characterRecord = {
+                        id : result[i].armdozerId,
+                        name : result[i].name
+                    };
+                    characterList.push(characterRecord)
                 }
                 fn(null,characterList);
             });

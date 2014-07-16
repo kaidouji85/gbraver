@@ -18,8 +18,8 @@ describe('serverクラスのテスト', function() {
         Server.onGetPlayerData(testPlayerData.getPlayerData);
         Server.onGetCharacterList(function(fn){
             var characterList = [
-                'granBraver',
-                'landozer'
+                {name:'グランブレイバー',id:'granBraver'},
+                {name:'ランドーザ',id:'landozer'}
             ];
             fn(null,characterList);
         });
@@ -42,8 +42,8 @@ describe('serverクラスのテスト', function() {
             client.emit('getCharacterList');
             client.once('successGetCharacterList',function(data){
                 var expect = [
-                    'granBraver',
-                    'landozer'
+                    {name:'グランブレイバー',id:'granBraver'},
+                    {name:'ランドーザ',id:'landozer'}
                 ];
                 assert.deepEqual(data,expect,'キャラクターリストが取得できる。');
                 done();

@@ -18,8 +18,8 @@ describe('Mongo DBからキャラクターリストを取得する', function() 
         });
         dao.getCharacterList(function(err,characterList){
             var expect = [
-                'granBraver',
-                'landozer'
+                {name:'グランブレイバー',id:'granBraver'},
+                {name:'ランドーザ',id:'landozer'}
             ];
             assert.deepEqual(characterList,expect,'キャラクターリストが正しく取得できる');
             done();
