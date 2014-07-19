@@ -87,16 +87,6 @@ var wsServer = require('./server.js');
 var WsServer = wsServer({
     httpServer:server
 });
-WsServer.onGetPlayerData(function(userId,fn){
-    dao.getPlayerData(userId,function(err,data){
-        fn(err,data);
-    });
-});
-
-WsServer.onSetArmdozerId(function(userId,armdozerId,fn){
-    dao.setArmdozerId(userId,armdozerId,function(err,result){
-        fn(err,result);
-    });
-});
-
+WsServer.onGetPlayerData(dao.getPlayerData);
+WsServer.onSetArmdozerId(dao.setArmdozerId);
 WsServer.onGetCharacterList(dao.getCharacterList);
