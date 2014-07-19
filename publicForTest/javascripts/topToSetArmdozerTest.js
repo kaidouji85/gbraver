@@ -19,8 +19,41 @@ function topToSetArmdozer(){
     
     function pushSetArmdozerButton(){
         //console.log('アームドーザ選択ボタンを押す');
-        touch(Game.topScene.setArmdpzerButton);
+        touch(Game.currentScene.setArmdpzerButton);
+        Game.onSendMessage(asertOfMessage);
+    }
+
+    function asertOfMessage(message,data) {
+        assert.equal(message, 'getCharacterList', 'サーバ送信メッセージが正しい');
+        assert.equal(data, null, 'サーバ送信データが正しい');
+        assert.equal(Game.currentScene.battleRoomButton.visible,false,'対戦ルーム入室ボタンが表示されない');
+        assert.equal(Game.currentScene.setArmdpzerButton.visible,false,'アームドーザ選択ボタンが表示されない');
+        Game.currentScene.tl.delay(60).then(function(){
+            doServerResp();
+        });
+    }
+
+    function doServerResp(){
+        var serverResp = [
+            {
+                name:'グランブレイバー',
+                id : 'granBraver'
+            },
+            {
+                name:'ランドーザ',
+                id:'landozer'
+            },
+            {
+                name:'ゼロブレイバー',
+                id:'zeroBraver'
+            },
+            {
+                name:'バトルドーザ',
+                id:'battleDozer'
+            }
+        ]
         Game.onChangeScene(assertOfChangeScene);
+        Game.emitServerResp('successGetCharacterList',serverResp);
     }
 
     function assertOfChangeScene(scene){

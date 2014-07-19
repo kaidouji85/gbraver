@@ -17,7 +17,7 @@ function setArmdozerScene(spec,my){
     initSprite();
     function initSprite(){
         //キャラクター選択ボタン
-        for(var i=0; i<MAX_ARMDOZER_BUTTON; i++){
+        for(var i=0; i<MAX_ARMDOZER_BUTTON && i<armdozerIdList.length; i++){
             that.armdozerButtonArray[i] = new Button(armdozerIdList[i].name,'blue',40,200);
         }
         that.armdozerButtonArray.forEach(function(button,i){
@@ -75,7 +75,7 @@ function setArmdozerScene(spec,my){
     }
 
     function setWaitScene(){
-        for(var i=0; i<MAX_ARMDOZER_BUTTON; i++){
+        for(var i=0; i<MAX_ARMDOZER_BUTTON && i<armdozerIdList.length; i++){
             that.armdozerButtonArray[i].visible = false;
         }
         that.prevButton.visible = false;

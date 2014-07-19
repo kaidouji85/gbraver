@@ -8,6 +8,7 @@ function topScene(){
     
     var core = enchant.Core.instance;
     var labelMenu;
+    var labelWait;
     var emitPushSetArmdozer = function(){};
     var emitPushBattleRoom = function(){};
     
@@ -27,6 +28,10 @@ function topScene(){
         that.setArmdpzerButton.x = 50;
         that.setArmdpzerButton.y = 120;
         that.setArmdpzerButton.addEventListener(Event.TOUCH_END,function(e){
+            labelMenu.visible = false;
+            that.battleRoomButton.visible = false;
+            that.setArmdpzerButton.visible = false;
+            labelWait.visible = true;
             emitPushSetArmdozer();
         });
         that.addChild(that.setArmdpzerButton);
@@ -37,6 +42,14 @@ function topScene(){
         labelMenu.x = 130;
         labelMenu.y = 10;        
         that.addChild(labelMenu);
+
+        //待機中ラベル
+        labelWait = new Label('待機中');
+        labelWait.color = "white";
+        labelWait.x = 10;
+        labelWait.y = 10;
+        labelWait.visible = false;
+        that.addChild(labelWait);
     }
     
     function onPushSetArmdozer(fn){

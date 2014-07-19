@@ -4,6 +4,19 @@ window.onload = setArmdozerToTop_landozer;
 function setArmdozerToTop_landozer(){
     var assert = chai.assert;
     var Game;
+    var armdozerIdList = [
+        {
+            name:'グランブレイバー',
+            id : 'granBraver'
+        },
+        {
+            name:'ランドーザ',
+            id:'landozer'
+        }
+    ];
+    var data = {
+        armdozerIdList :armdozerIdList
+    }
     initGame();
 
     function initGame(){
@@ -12,7 +25,7 @@ function setArmdozerToTop_landozer(){
         });
         Game.start();
         Game.onload = function(){
-            Game.changeSetArmdozerScene();
+            Game.changeSetArmdozerScene(data);
             pushLAndozer();
         };
     }

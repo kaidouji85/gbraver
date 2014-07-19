@@ -7,13 +7,26 @@ window.onload = function(){
 };
 
 function setArmdozerToTop_pushPrevButton(){
-    var Game;
-    Game = game({
+    var Game = game({
         userId : 'test001@gmail.com'
     });
+    var armdozerIdList = [
+        {
+            name:'グランブレイバー',
+            id : 'granBraver'
+        },
+        {
+            name:'ランドーザ',
+            id:'landozer'
+        }
+    ];
+    var data = {
+        armdozerIdList :armdozerIdList
+    }
+
     Game.start();
     Game.onload = function(){
-        Game.changeSetArmdozerScene();
+        Game.changeSetArmdozerScene(data);
         pushPrevButton();
     }
 
