@@ -1,22 +1,19 @@
-function setArmdozerScene(){
+function setArmdozerScene(spec,my){
     var that = new Scene();
+    var core = enchant.Core.instance;
+    var MAX_ARMDOZER_BUTTON = 4;
+    var armdozerIdList = spec.armdozerIdList;
+    var labelArmmdozerSelect;
+    var labelWait;
+    var emitSelectArmdozer = function(data){};
+    var emitPushPrevButton = function(){};
+
     that.backgroundColor = "black";
     that.armdozerButtonArray = new Array(MAX_ARMDOZER_BUTTON);
     that.prevButton = {};
     that.onSelectArmdozer  = onSelectArmdozer;
     that.onPushPrevButton = onPushPrevButton;
-    
-    var core = enchant.Core.instance;
-    var MAX_ARMDOZER_BUTTON = 2;
-    var armdozerIdList = [
-        {name:'グランブレイバー',id:'granBraver'},
-        {name:'ランドーザ',id:'landozer'}
-    ];
-    var labelArmmdozerSelect;
-    var labelWait;
-    var emitSelectArmdozer = function(data){};
-    var emitPushPrevButton = function(){};
-    
+
     initSprite();
     function initSprite(){
         //キャラクター選択ボタン
@@ -35,7 +32,7 @@ function setArmdozerScene(){
         //戻るボタン
         that.prevButton = new Button('戻る','blue',40,200);
         that.prevButton.x = 50;
-        that.prevButton.y = 250;
+        that.prevButton.y = 400;
         that.prevButton.addEventListener(Event.TOUCH_END,function(e){
             pushPrevButton();
         });
