@@ -7,10 +7,13 @@ exports.gameMain = function(req, res) {
     res.render('gameMain', {
         userId : userId
     });
-}; 
-
-/*
-exports.selectRoom = function(req, res){
-  res.render('selectRoom', {});
 };
-*/
+
+exports.testClient = function(req, res){
+    var testCode = req.query.code;
+    console.log('test dayon');
+    console.log(testCode);//test
+    res.render('testClient', {
+        testCode : testCode
+    });
+}

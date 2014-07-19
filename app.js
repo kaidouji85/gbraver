@@ -75,7 +75,9 @@ app.get('/auth/google/return', function (req, res, next) {
         }
     })(req, res, next);
 });
-
+if('development' == app.get('env')){
+    app.get('/testClient',routes.testClient);
+}
 
 //httpサーバ
 var server = http.createServer(app).listen(app.get('port'), function() {
