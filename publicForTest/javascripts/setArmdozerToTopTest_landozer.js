@@ -24,7 +24,11 @@ function setArmdozerToTop_landozer(){
     }
 
     function assertLoading(message,data){
-        //TODO : 「message,dataの検証はsetArmdozerScnenTest.jsで実行済み」というニュアンスのことを書きたい
+        var expectData = {
+            armdozerId : 'landozer'
+        };
+        assert.equal(message,'setArmdozer','messageが正しい');
+        assert.deepEqual(data,expectData,'dataが正しい');
         assert.equal(Game.currentScene.armdozerButtonArray[0].visible,false,'アームドーザ選択ボタン0が非表示である');
         assert.equal(Game.currentScene.armdozerButtonArray[1].visible,false,'アームドーザ選択ボタン1が非表示である');
         assert.equal(Game.currentScene.prevButton.visible,false,'戻るボタンが非表示である');

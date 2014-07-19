@@ -8,20 +8,18 @@ window.onload = function(){
 
 function setArmdozerToTop_pushPrevButton(){
     var Game;
-    initGame();
-
-    function initGame(){
-        Game = game({
-            userId : 'test001@gmail.com'
-        });
-        Game.start();
-        Game.onload = pushPrevButton;
+    Game = game({
+        userId : 'test001@gmail.com'
+    });
+    Game.start();
+    Game.onload = function(){
+        Game.changeSetArmdozerScene();
+        pushPrevButton();
     }
 
     function pushPrevButton(){
-        Game.changeSetArmdozerScene();
         //console.log('戻るボタンを押す');
-        touch(Game.setArmdozerScene.prevButton);
+        touch(Game.currentScene.prevButton);
         Game.onChangeScene(assertOfChangeScene);
     }
 
