@@ -92,8 +92,11 @@ WsServer.onGetPlayerData(function(userId,fn){
         fn(err,data);
     });
 });
+
 WsServer.onSetArmdozerId(function(userId,armdozerId,fn){
     dao.setArmdozerId(userId,armdozerId,function(err,result){
         fn(err,result);
     });
 });
+
+WsServer.onGetCharacterList(dao.getCharacterList);
