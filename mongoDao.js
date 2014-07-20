@@ -39,7 +39,7 @@ function mongoDao(spec, my) {
     };
 
     that.getCharacterList = function(fn){
-        MongoClient.connect(url, function(err, db) {
+        MongoClient.connect(url, function(err, db){
             var characterList = new Array();
             var characterRecord;
             var collection = db.collection('armdozers');
@@ -51,9 +51,20 @@ function mongoDao(spec, my) {
                     };
                     characterList.push(characterRecord)
                 }
+                db.close();
                 fn(null,characterList);
             });
 
+        });
+    }
+
+    that.getCharacterInfo = function(armdozerId,fn){
+        MongoClient.connect(url, function(err, db){
+            var characterInfo = null;
+            getArmdozerData(armdozerId,db,function(err,result){
+                characterInfo = createArmdozerData(result);
+                fn(null,characterInfo);
+            });
         });
     }
     
@@ -133,9 +144,38 @@ function mongoDao(spec, my) {
 
         return playerData;
     }
-    
-    function updateUserDate(updateDate,db,fn){
-        
+
+    function createArmdozerData(armdozer){
+        var armdozerData = {
+            armdozerId : armdozer.armdozerId,
+            name : armdozer.name,
+            pictName : armdozer.pictName,
+            hp : armdozer.hp,
+            speed : armdozer.speed,
+            weapons : {
+                1 : {
+                    name : armdozer.weapons['1'].name,
+                    power : armdozer.weapons['1'].power
+                },
+                2 : {
+                    name : armdozer.weapons['2'].name,
+                    power : armdozer.weapons['2'].power
+                },
+                3 : {
+                    name : armdozer.weapons['3'].name,
+                    power : armdozer.weapons['3'].power
+                },
+                4 : {
+                    name : armdozer.weapons['4'].name,
+                    power : armdozer.weapons['4'].power
+                },
+                5 : {
+                    name : armdozer.weapons['5'].name,
+                    power : armdozer.weapons['5'].power
+                }
+            }
+        };
+        return armdozerData;
     }
 
     return that;

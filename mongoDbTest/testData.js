@@ -42,7 +42,7 @@ var granBraver = {
         5 : {
             name : 'バスターナックル',
             power : 2800
-        },
+        }
     }
 };
 
