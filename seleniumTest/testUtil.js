@@ -2,15 +2,17 @@ module.exports = testUtil;
 
 function testUtil(spec,my) {
     var that = {};
+    var baseUrl = spec.baseUrl;
     var webdriver = spec.webdriver;
 
     that.doClientTest =doClientTest;
 
-    function doClientTest(url, testName, driver) {
+    function doClientTest(testCode) {
+        var url = baseUrl+'/testClient?code='+testCode;
         webdriver.get(url);
         webdriver.wait(function () {
             return webdriver.getTitle().then(function (title) {
-                return testName === title;
+                return testCode === title;
             });
         }, 1000);
 

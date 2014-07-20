@@ -1,7 +1,7 @@
 enchant();
-window.onload = setArmdozer;
+window.onload = selectArmdozer;
 
-function setArmdozer(){
+function selectArmdozer(){
     var assert = chai.assert;
     var armdozerIdList = [
         {
