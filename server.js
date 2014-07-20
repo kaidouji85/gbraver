@@ -34,7 +34,7 @@ function server(spec, my) {
      * この関数の実装は外部で行う
      * @param {String} useId
      * @param {Function} callback(err,data)
-     */    
+     */
     var getUserData;
     io.onGetUserData = function(fn){
         getUserData = fn;
@@ -46,7 +46,7 @@ function server(spec, my) {
      * @param {String} userId
      * @param {String} arndozerId
      * @param {Function} callback(err,result)
-     */    
+     */
     var setArmdozerId;
     io.onSetArmdozerId = function(fn){
         setArmdozerId = fn;
@@ -60,6 +60,17 @@ function server(spec, my) {
     var getCharacterList;
     io.onGetCharacterList = function(fn){
         getCharacterList = fn;
+    }
+
+    /**
+     * アームドーザ情報取得関す
+     * この関数の実装は外部で行う
+     * @param {String} armdozerId
+     * @param {FUnction} callback(err,result)
+     */
+    var getCharacterInfo;
+    io.onGetCharacterInfo = function(fn){
+        getCharacterInfo = fn;
     }
 
     io.sockets.on('connection', function(socket) {
@@ -80,7 +91,7 @@ function server(spec, my) {
                 }
             });
         });
-        
+
         socket.on('enterRoom', function(data) {
             var L_roomId = data.roomId;
             isLogin();
@@ -92,7 +103,7 @@ function server(spec, my) {
                     socket.emit('enterRoomError', 'ユーザ認証が完了していません。');
                 }
             }
-            
+
             function isAlreadyEnterRoom(){
                 if (socket.gbraverInfo.roomId===null) {
                     socket.gbraverInfo.roomId = L_roomId;
@@ -101,7 +112,7 @@ function server(spec, my) {
                     socket.emit('enterRoomError', 'このコネクションは既に入室しています。');
                 }
             }
-            
+
             function prepareBattle() {
                 getPlayerData(socket.gbraverInfo.userId, function(err, userData) {
                     socket.join(socket.gbraverInfo.roomId);
@@ -173,6 +184,13 @@ function server(spec, my) {
         socket.on('getCharacterList', function(){
             getCharacterList(function(err,data){
                 socket.emit('successGetCharacterList',data);
+            });
+        });
+
+        socket.on('getCharacterInfo',function(data){
+            var armdozerId = data.armdozerId;
+            getCharacterInfo(armdozerId,function(err,result){
+                socket.emit('successGetCharacterInfo',result);
             });
         });
     });
