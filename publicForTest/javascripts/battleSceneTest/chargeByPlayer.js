@@ -1,9 +1,9 @@
 enchant();
+//TODO : モバイル環境でTouch to Start から先に進まない不具合を回避するために追加
+//       http://make-muda.weblike.jp/2014/04/1283/
+enchant.ENV.SOUND_ENABLED_ON_MOBILE_SAFARI = false;
 window.onload = chargeByPlayer;
 
-/**
- * 先攻プレイヤーがチャージを選択する　＃先攻プレイヤー視点
- */
 function chargeByPlayer() {
     var assert = chai.assert;
     var statusArray = {
@@ -80,7 +80,7 @@ function chargeByPlayer() {
     }
 
     function selectCommand() {
-        touch(Game.battleScene.chargeIcon);
+        touch(Game.currentScene.chargeIcon);
         Game.onSendMessage(assertAtackCommandPhase);
     }
     

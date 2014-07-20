@@ -72,10 +72,10 @@ function attackByPlayer(){
     }
     
     function selectCommand(){
-        touch(Game.battleScene.atackIcon);
-        touch(Game.battleScene.plusIcon);
-        touch(Game.battleScene.plusIcon);
-        touch(Game.battleScene.okIcon);
+        touch(Game.currentScene.atackIcon);
+        touch(Game.currentScene.plusIcon);
+        touch(Game.currentScene.plusIcon);
+        touch(Game.currentScene.okIcon);
        
         Game.onSendMessage(assertAtackCommandPhase);
     }
