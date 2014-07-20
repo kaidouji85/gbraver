@@ -33,8 +33,7 @@ function mongoDao(spec, my) {
                 db.close();
                 var result = err===null ? true : false;
                 fn(err,result);
-            }); 
-
+            });
         });
     };
 
@@ -63,6 +62,8 @@ function mongoDao(spec, my) {
             var characterInfo = null;
             getArmdozerData(armdozerId,db,function(err,result){
                 characterInfo = createArmdozerData(result);
+                characterInfo.armdozerId = armdozerId;
+                db.close();
                 fn(null,characterInfo);
             });
         });
@@ -112,34 +113,7 @@ function mongoDao(spec, my) {
     function createPlayerData(user,armdozer) {
         var playerData = {
             userId : user.userId,
-            status : {
-                name : armdozer.name,
-                pictName : armdozer.pictName,
-                hp : armdozer.hp,
-                speed : armdozer.speed,
-                weapons : {
-                    1 : {
-                        name : armdozer.weapons['1'].name,
-                        power : armdozer.weapons['1'].power
-                    },
-                    2 : {
-                        name : armdozer.weapons['2'].name,
-                        power : armdozer.weapons['2'].power
-                    },
-                    3 : {
-                        name : armdozer.weapons['3'].name,
-                        power : armdozer.weapons['3'].power
-                    },
-                    4 : {
-                        name : armdozer.weapons['4'].name,
-                        power : armdozer.weapons['4'].power
-                    },
-                    5 : {
-                        name : armdozer.weapons['5'].name,
-                        power : armdozer.weapons['5'].power
-                    }
-                }
-            }
+            status : createArmdozerData(armdozer)
         };
 
         return playerData;
@@ -147,7 +121,6 @@ function mongoDao(spec, my) {
 
     function createArmdozerData(armdozer){
         var armdozerData = {
-            armdozerId : armdozer.armdozerId,
             name : armdozer.name,
             pictName : armdozer.pictName,
             hp : armdozer.hp,
