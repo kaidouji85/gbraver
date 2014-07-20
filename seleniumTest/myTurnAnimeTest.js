@@ -7,7 +7,7 @@ var testUtil = require('./testUtil.js');
 var util;
 var driver;
 
-test.describe('攻撃アニメ', function() {
+test.describe('マイターンアニメ', function() {
     test.before(function() {
         driver = new webdriver.Builder().
             withCapabilities(webdriver.Capabilities.chrome()).
