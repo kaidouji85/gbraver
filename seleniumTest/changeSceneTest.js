@@ -21,13 +21,7 @@ test.describe('シーン遷移', function() {
     test.after(function() {
         driver.quit();
     });
-
-    //roomSelectScene
-    test.it('戦闘ルームに入室する', function(){
-        util.doClientTest('/javascripts/changeSceneTest/roomSelectTest.js');
-    });
-
-    //changeScene
+    
     test.it('トップメニューからルーム選択画面へ遷移', function(){
         util.doClientTest('/javascripts/changeSceneTest/topToRoomSelectTest.js');
     });
