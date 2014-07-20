@@ -23,6 +23,6 @@ test.describe('アームドーザ選択画面', function() {
     });
 
     test.it('アームドーザが選択できる', function(){
-        util.doClientTest('/javascripts/setArmdozerTest/selectArmdozer.js');
+        util.doClientTest('/javascripts/setArmdozerSceneTest/selectArmdozer.js');
     });
 });

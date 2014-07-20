@@ -1,7 +1,10 @@
 enchant();
-window.onload = firstTurnPlayerCharge_asSecondTurnplayer;
+window.onload = chargeByPlayer;
 
-function firstTurnPlayerCharge_asSecondTurnplayer() {
+/**
+ * 先攻プレイヤーがチャージを選択する　＃先攻プレイヤー視点
+ */
+function chargeByPlayer() {
     var assert = chai.assert;
     var statusArray = {
         'test002@gmail.com' : getTestPlayerData('test002@gmail.com'),
@@ -12,7 +15,7 @@ function firstTurnPlayerCharge_asSecondTurnplayer() {
 
     function initGame(){
         Game = game({
-            userId : 'test002@gmail.com'
+            userId : 'test001@gmail.com'
         });
         Game.start();
         Game.onload = function(){
@@ -22,8 +25,8 @@ function firstTurnPlayerCharge_asSecondTurnplayer() {
             waitPhase();
         };
     }
-    
-    function waitPhase(){
+
+    function waitPhase() {
         var waitPhaseData = {
             phase : 'wait',
             atackUserId : 'test001@gmail.com',
@@ -40,22 +43,23 @@ function firstTurnPlayerCharge_asSecondTurnplayer() {
                     active : 5000
                 }
             }
-        };
+        }; 
+
         Game.emitServerResp('resp',waitPhaseData);
         Game.onSendMessage(assertWaitPhase);
     }
     
     function assertWaitPhase(message,data){
-        var expectData = {
+        var expect = {
             method : 'ok'
         };
-        assert.equal(message, 'command', ',ウェイトフェイズ終了時のサーバ送信メッセージ名が正しい');
-        assert.deepEqual(data, expectData, ',ウェイトフェイズ終了時のサーバ送信データが正しい');
-        atackCommand();
+        assert.equal(message, 'command', 'ウェイトフェイズ終了時のサーバ送信メッセージ名が正しい');
+        assert.deepEqual(data, expect, 'ウェイトフェイズ終了時のサーバ送信データが正しい');
+        atackCommandPhase();
     }
     
-    function atackCommand() {
-        var atackCommandData = {
+    function atackCommandPhase() {
+        var atackCommand = {
             phase : 'atackCommand',
             statusArray : {
                 'test001@gmail.com' : {
@@ -69,22 +73,28 @@ function firstTurnPlayerCharge_asSecondTurnplayer() {
                     active : 3000
                 }
             }
-        };
-        Game.emitServerResp('resp',atackCommandData);
-        Game.onSendMessage(assertAtackCommand);
-    }
-    
-    function assertAtackCommand(message,data){
-        var expectData = {
-            method : 'ok'
-        };
-        assert.equal(message, 'command', ',攻撃コマンドフェイズ終了時のサーバ送信メッセージ名が正しい');
-        assert.deepEqual(data, expectData, ',攻撃コマンドフェイズ終了時のサーバ送信データが正しい');
-        assert.equal(Game.currentScene.charaSpriteArray['test001@gmail.com'].frame,1,'敵キャラのポーズが「攻撃」である');
-        charge();
+        }; 
+        
+        Game.emitServerResp('resp',atackCommand);
+        selectCommand();
     }
 
-    function charge() {
+    function selectCommand() {
+        touch(Game.battleScene.chargeIcon);
+        Game.onSendMessage(assertAtackCommandPhase);
+    }
+    
+    function assertAtackCommandPhase(message,data){
+        var expect = {
+            method : 'charge'
+        };
+        assert.equal(message,'command','チャージ選択時のサーバ送信メッセージ名が正しい');
+        assert.deepEqual(data, expect, 'チャージ選択時のサーバ送信パラメータが正しい');
+        assert.equal(Game.currentScene.charaSpriteArray['test001@gmail.com'].frame,1,'プレイヤーキャラのポーズが「攻撃」である');
+        chargePhase();        
+    }
+
+    function chargePhase() {
         var chargeData = {
             phase : 'charge',
             statusArray : {
@@ -101,16 +111,16 @@ function firstTurnPlayerCharge_asSecondTurnplayer() {
             }
         };
         Game.emitServerResp('resp',chargeData);
-        Game.onSendMessage(assertCharge);
-    }
+        Game.onSendMessage(assertChargePhase);
+    } 
     
-    function assertCharge(message,data){
-        var expectData = {
+    function assertChargePhase(message,data){
+        var expect = {
             method : 'ok'
         };
-        assert.equal(message, 'command', ',チャージフェイズ終了時のサーバ送信メッセージ名が正しい');
-        assert.deepEqual(data, expectData, ',チャージフェイズ終了時のサーバ送信データが正しい');
-        assert.equal(Game.currentScene.charaSpriteArray['test001@gmail.com'].frame,0,'敵キャラのポーズが「立ち」である');
+        assert.equal(message, 'command', 'チャージ終了時のサーバ送信メッセージ名が正しい');
+        assert.deepEqual(data, expect, 'チャージ終了時のサーバ送信データが正しい');
+        assert.equal(Game.currentScene.charaSpriteArray['test001@gmail.com'].frame,0,'プレイヤーキャラのポーズが「立ち」である');
         finishTest();
     }
 }

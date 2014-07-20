@@ -1,13 +1,7 @@
 enchant();
-//TODO : モバイル環境でTouch to Start から先に進まない不具合を回避するために追加
-//       http://make-muda.weblike.jp/2014/04/1283/
-enchant.ENV.SOUND_ENABLED_ON_MOBILE_SAFARI = false;
-window.onload = firstPlayerAtack_asAtacker;
+window.onload = attackByEnemy;
 
-/**
- * プレイヤーが攻撃を選択する
- */
-function firstPlayerAtack_asAtacker(){
+function attackByEnemy(){
     var assert = chai.assert;
     var statusArray = {
         'test002@gmail.com' : getTestPlayerData('test002@gmail.com'),
@@ -18,8 +12,7 @@ function firstPlayerAtack_asAtacker(){
 
     function initGame(){
         Game = game({
-            userId : 'test001@gmail.com'
-        });
+            userId : 'test002@gmail.com'});
         Game.start();
         Game.onload = function(){
             Game.changeBattleScene({
@@ -28,7 +21,7 @@ function firstPlayerAtack_asAtacker(){
             waitPhase();
         };
     }
-
+    
     function waitPhase(){
         var waitPhaseData = {
             phase : 'wait',
@@ -49,13 +42,13 @@ function firstPlayerAtack_asAtacker(){
         };
         Game.emitServerResp('resp',waitPhaseData);
         Game.onSendMessage(function(message,data){
-            //message,dataはplayerChargeTestで確認済み
+            //message、dataはenemyChargeTestで確認済み
             atackCommandPhase();
         });
     }
     
     function atackCommandPhase(){
-        var atackCommandPhaseData = {
+        var data = {
             phase : 'atackCommand',
             statusArray : {
                 'test001@gmail.com' : {
@@ -70,34 +63,23 @@ function firstPlayerAtack_asAtacker(){
                 }
             }
         };
-        Game.emitServerResp('resp',atackCommandPhaseData);
-        selectCommand();
-    }
-    
-    function selectCommand(){
-        touch(Game.battleScene.atackIcon);
-        touch(Game.battleScene.plusIcon);
-        touch(Game.battleScene.plusIcon);
-        touch(Game.battleScene.okIcon);
-       
+        Game.emitServerResp('resp',data);
         Game.onSendMessage(assertAtackCommandPhase);
     }
     
     function assertAtackCommandPhase(message,data){
-        var expect = {
-            method : 'atack',
-            param : {
-                battery : 3
-            }
+        var expectData = {
+            method : 'ok'
         };
-        assert.equal(message,'command','攻撃コマンドフェイズのサーバ送信メッセージ名が正しい');
-        assert.deepEqual(data, expect, '攻撃コマンドフェイズのサーバ送信データが正しい');
-        assert.equal(Game.currentScene.charaSpriteArray['test001@gmail.com'].frame,1,'プレイヤーキャラのポーズが「攻撃」である');
+        assert.equal(message, 'command', '攻撃コマンドフェイズ終了時のサーバ送信メッセージ名が正しい');
+        assert.deepEqual(data, expectData, '攻撃コマンドフェイズ終了時のサーバ送信データが正しい');
+        assert.equal(Game.currentScene.charaSpriteArray['test001@gmail.com'].frame,1,'敵キャラのポーズが「攻撃」である');
         defenthCommandPhase();
+      
     }
-    
-    function defenthCommandPhase(){
-        var defenthCommandData = {
+
+    function defenthCommandPhase() {
+        var data = {
             phase : 'defenthCommand',
             statusArray : {
                 'test001@gmail.com' : {
@@ -112,19 +94,28 @@ function firstPlayerAtack_asAtacker(){
                 }
             }
         };
-        Game.emitServerResp('resp',defenthCommandData);
-        Game.onSendMessage(assertDefenthCommandPhase);
+        Game.emitServerResp('resp',data);
+        selectCommnad();
     }
     
-    function assertDefenthCommandPhase(message,data){
-        var expect = {
-            method : 'ok'
+    function selectCommnad(){
+        Game.onSendMessage(assertDefenthCommand);
+        touch(Game.battleScene.plusIcon);
+        touch(Game.battleScene.okIcon);
+    }
+    
+    function assertDefenthCommand(message,data){
+        var expectData = {
+            method : 'defenth',
+            param : {
+                battery : 2
+            }
         };
         assert.equal(message,'command','防御コマンドフェイズのサーバ送信メッセージ名が正しい');
-        assert.deepEqual(data, expect, '防御コマンドフェイズのサーバ送信データが正しい');
+        assert.deepEqual(data, expectData, '防御コマンドフェイズのサーバ送信データが正しい');    
         damagePhase();
     }
-
+    
     function damagePhase() {
         var damagePhaseData = {
             phase : 'damage',
@@ -151,18 +142,18 @@ function firstPlayerAtack_asAtacker(){
     }
     
     function assertDamagePhase(message,data){
-        var expect = {
+        var expectData = {
             method : 'ok'
         };
-        assert.equal(message,'command','ウェイトフェイズ2のサーバ送信メッセージ名が正しい');
-        assert.deepEqual(data, expect, 'ウェイトフェイズ2のサーバ送信データが正しい');
-        assert.equal(Game.currentScene.charaSpriteArray['test001@gmail.com'].frame,0,'プレイヤーキャラのポーズが「立ち」である');
-        assert.equal(Game.currentScene.charaSpriteArray['test002@gmail.com'].frame,0,'敵キャラのポーズが「立ち」である');
-        waitPhase2();
+        assert.equal(message, 'command', 'サーバ送信メッセージ名が正しい');
+        assert.deepEqual(data, expectData, 'ウェイトフェイズ2のコマンドが正しい');
+        assert.equal(Game.currentScene.charaSpriteArray['test001@gmail.com'].frame,0,'敵キャラのポーズが「立ち」である');
+        assert.equal(Game.currentScene.charaSpriteArray['test002@gmail.com'].frame,0,'プレイヤーキャラのポーズが「立ち」である');
+        waitPhase2();      
     }
-    
+
     function waitPhase2(){
-        var waitPhaseData = {
+        var data = {
             phase : 'wait',
             atackUserId : 'test002@gmail.com',
             turn : 14,
@@ -179,11 +170,9 @@ function firstPlayerAtack_asAtacker(){
                 }
             }
         };
-        Game.emitServerResp('resp',waitPhaseData);
-        Game.onSendMessage(finish);
-    }
-    
-    function finish(message,data){
-        finishTest();
+        Game.emitServerResp('resp',data);
+        Game.onSendMessage(function(message,command) {
+            finishTest();
+        });
     }
 }
