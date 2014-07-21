@@ -73,8 +73,8 @@ db.armdozers.insert({
     armdozerId : 'zeroBraver',
     name : 'ゼロブレイバー',
     pictName : 'ZeroBraver.PNG',
-    hp : 2100,
-    speed : 150,
+    hp : 1800,
+    speed : 140,
     weapons : {
         1 : {
             name : 'バスターナックル',
