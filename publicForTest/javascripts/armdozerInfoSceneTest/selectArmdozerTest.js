@@ -44,10 +44,10 @@ function selectArmdozer(){
             armdozerInfo : armdozerInfo
         })
         Game.replaceScene(testScene);
-        selectArmdozer();
+        pushOkButton();
     };
 
-    function selectArmdozer(){
+    function pushOkButton(){
         touch(testScene.okButton);
         testScene.onPushOkButton(assertOfSelectArmdozer);
     }

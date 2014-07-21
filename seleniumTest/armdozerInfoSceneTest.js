@@ -22,7 +22,11 @@ test.describe('アームドーザ情報画面', function() {
         driver.quit();
     });
 
-    test.it('アームドーザ情報を表示して決定ボタンを押す', function(){
-        util.doClientTest('/javascripts/armdozerInfoSceneTest/selectArmdozer.js');
+    test.it('決定ボタンを押したら表示中のアームドーザのIDをコールバック関数に返す', function(){
+        util.doClientTest('/javascripts/armdozerInfoSceneTest/selectArmdozerTest.js');
+    });
+
+    test.it('戻るボタンを押したらコールバック関数が呼ばれる', function(){
+        util.doClientTest('/javascripts/armdozerInfoSceneTest/selectArmdozerTest.js');
     });
 });
