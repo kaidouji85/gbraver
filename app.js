@@ -92,3 +92,4 @@ var WsServer = wsServer({
 WsServer.onGetPlayerData(dao.getPlayerData);
 WsServer.onSetArmdozerId(dao.setArmdozerId);
 WsServer.onGetCharacterList(dao.getCharacterList);
+WsServer.onGetCharacterInfo(dao.getCharacterInfo);

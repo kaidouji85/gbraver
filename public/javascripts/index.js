@@ -52,5 +52,9 @@ window.onload = function() {
         socket.on('successGetCharacterList',function(data){
             Game.emitServerResp('successGetCharacterList',data);
         });
+
+        socket.on('successGetCharacterInfo',function(data){
+            Game.emitServerResp('successGetCharacterInfo',data);
+        });
     };
 };
