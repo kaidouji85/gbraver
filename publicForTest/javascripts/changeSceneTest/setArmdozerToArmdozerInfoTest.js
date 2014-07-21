@@ -1,7 +1,7 @@
 enchant();
-window.onload = setArmdozerToTop_landozer;
+window.onload = setArmdozerToArmdozerInfoTest;
 
-function setArmdozerToTop_landozer(){
+function setArmdozerToArmdozerInfoTest(){
     var assert = chai.assert;
     var Game;
     var armdozerIdList = [
@@ -40,7 +40,7 @@ function setArmdozerToTop_landozer(){
         var expectData = {
             armdozerId : 'landozer'
         };
-        assert.equal(message,'setArmdozer','messageが正しい');
+        assert.equal(message,'getCharacterInfo','messageが正しい');
         assert.deepEqual(data,expectData,'dataが正しい');
         assert.equal(Game.currentScene.armdozerButtonArray[0].visible,false,'アームドーザ選択ボタン0が非表示である');
         assert.equal(Game.currentScene.armdozerButtonArray[1].visible,false,'アームドーザ選択ボタン1が非表示である');
@@ -53,9 +53,37 @@ function setArmdozerToTop_landozer(){
 
     function changeScene() {
         Game.onChangeScene(function (scene) {
-            assert.equal(scene, 'top', 'トップ画面へ遷移する');
+            assert.equal(scene, 'armdozerInfo', 'アームドーザ情報画面へ遷移する');
             finishTest();
         });
-        Game.emitServerResp('successSetArmdozer', {});
+        Game.emitServerResp('successGetCharacterInfo', {
+            armdozerId : 'granBraver',
+            name : 'グランブレイバー',
+            pictName : 'GranBraver.PNG',
+            hp : 3000,
+            speed : 110,
+            weapons : {
+                1 : {
+                    name : 'バスターナックル',
+                    power : 1000
+                },
+                2 : {
+                    name : 'バスターナックル',
+                    power : 1200
+                },
+                3 : {
+                    name : 'バスターナックル',
+                    power : 1500
+                },
+                4 : {
+                    name : 'バスターナックル',
+                    power : 1700
+                },
+                5 : {
+                    name : 'バスターナックル',
+                    power : 2000
+                }
+            }
+        });
     }
 }

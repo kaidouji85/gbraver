@@ -27,6 +27,6 @@ test.describe('アームドーザ情報画面', function() {
     });
 
     test.it('戻るボタンを押したらコールバック関数が呼ばれる', function(){
-        util.doClientTest('/javascripts/armdozerInfoSceneTest/selectArmdozerTest.js');
+        util.doClientTest('/javascripts/armdozerInfoSceneTest/pushPrevButtonTest.js');
     });
 });

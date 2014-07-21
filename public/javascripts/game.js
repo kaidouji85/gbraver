@@ -40,7 +40,6 @@ function game(spec, my) {
         core.topScene = topScene();
         core.topScene.onPushSetArmdozer(function(){
             emitSendMessage('getCharacterList',null);
-            //core.changeSetArmdozerScene();
         });
         core.topScene.onPushBattleRoom(function(){
             core.changeRoomSelectScene();
@@ -52,7 +51,7 @@ function game(spec, my) {
     core.changeSetArmdozerScene = function(data){
         core.setArmdozerScene = setArmdozerScene(data);
         core.setArmdozerScene.onSelectArmdozer(function(data){
-            emitSendMessage('setArmdozer',data);
+            emitSendMessage('getCharacterInfo',data);
         });
         core.setArmdozerScene.onPushPrevButton(function(data){
             core.changeTopScene();
@@ -60,7 +59,16 @@ function game(spec, my) {
         core.replaceScene(core.setArmdozerScene);
         emitChangeScene('setArmdozer');
     };
-    
+
+    core.changeArmdozerInfoScene = function(data){
+        var scene = armdozerInfoScene({
+            armdozerInfo : data
+        });
+        core.pushScene(scene);
+        emitChangeScene('armdozerInfo');
+
+    }
+
     core.onChangeScene = function(fn){
         emitChangeScene = fn;
     };
@@ -97,6 +105,9 @@ function game(spec, my) {
                 core.changeSetArmdozerScene({
                     armdozerIdList : data
                 });
+                break;
+            case 'successGetCharacterInfo':
+                core.changeArmdozerInfoScene(data);
                 break;
         }
     };

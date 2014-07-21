@@ -30,8 +30,8 @@ test.describe('シーン遷移', function() {
         util.doClientTest('/javascripts/changeSceneTest/topToSetArmdozerTest.js');
     });
 
-    test.it('アームドーザ選択画面から「ランドーザ」ボタンを押下してトップ画面に遷移', function(){
-        util.doClientTest('/javascripts/changeSceneTest/setArmdozerToTopTest_landozer.js');
+    test.it('アームドーザ選択画面から「ランドーザ」ボタンを押下してアームドーザ情報画面に遷移', function(){
+        util.doClientTest('/javascripts/changeSceneTest/setArmdozerToArmdozerInfoTest.js');
     });
 
     test.it('アームドーザ選択画面から「戻る」ボタンを押下してトップ画面に遷移', function(){
