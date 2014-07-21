@@ -72,7 +72,7 @@ db.armdozers.insert({
 db.armdozers.insert({
     armdozerId : 'zeroBraver',
     name : 'ゼロブレイバー',
-    pictName : 'GranBraver.PNG',
+    pictName : 'ZeroBraver.PNG',
     hp : 2100,
     speed : 150,
     weapons : {
