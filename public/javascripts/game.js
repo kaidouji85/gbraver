@@ -67,7 +67,7 @@ function game(spec, my) {
         scene.onPushOkButton(function(data){
             emitSendMessage('setArmdozer',data);
         });
-        core.pushScene(scene);
+        core.replaceScene(scene);
         emitChangeScene('armdozerInfo');
 
     }
@@ -83,8 +83,7 @@ function game(spec, my) {
     core.emitServerResp = function(message,data){
         switch(message) {
             case 'successSetArmdozer' :
-                core.popScene();
-                emitChangeScene('setArmdozer');
+                emitSendMessage('getCharacterList');
                 break;
             case 'gameStart' :
                 var statusArray = {};

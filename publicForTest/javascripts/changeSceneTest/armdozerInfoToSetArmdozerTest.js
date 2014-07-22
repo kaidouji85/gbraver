@@ -4,19 +4,6 @@ window.onload = setArmdozerToArmdozerInfoTest;
 function setArmdozerToArmdozerInfoTest(){
     var assert = chai.assert;
     var Game;
-    var armdozerIdList = [
-        {
-            name:'グランブレイバー',
-            id : 'granBraver'
-        },
-        {
-            name:'ランドーザ',
-            id:'landozer'
-        }
-    ];
-    var setArmdozerData = {
-        armdozerIdList :armdozerIdList
-    }
     var armdozerInfo = {
         armdozerId : 'granBraver',
         name : 'グランブレイバー',
@@ -54,7 +41,6 @@ function setArmdozerToArmdozerInfoTest(){
         });
         Game.start();
         Game.onload = function(){
-            Game.changeSetArmdozerScene(setArmdozerData);
             Game.changeArmdozerInfoScene(armdozerInfo);
             pushOkButton();
         };
@@ -75,10 +61,29 @@ function setArmdozerToArmdozerInfoTest(){
     }
 
     function doServerResp(){
-        Game.onChangeScene(function(scene){
-            assert.equal(scene, 'setArmdozer', 'アームドーザセット画面へ遷移する');
-            finishTest();
+        Game.onSendMessage(function(message,data){
+            assert.equal(message,'getCharacterList','サーバ送信メッセージが正しい');
+            assert.equal(data,null,'サーバ送信データが正しい');
         });
         Game.emitServerResp('successSetArmdozer',null);
+        changeSetArndozerScene();
+    }
+
+    function changeSetArndozerScene(){
+        var data = [
+            {
+                name:'グランブレイバー',
+                id : 'granBraver'
+            },
+            {
+                name:'ランドーザ',
+                id:'landozer'
+            }
+        ];
+        Game.onChangeScene(function(scene){
+            assert.equal(scene,'setArmdozer','アームドーザ選択画面に遷移する');
+            finishTest();
+        })
+        Game.emitServerResp('successGetCharacterList',data);
     }
 }
