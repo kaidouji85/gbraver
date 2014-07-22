@@ -53,4 +53,8 @@ test.describe('シーン遷移', function() {
     test.it('撃破されてトップ画面へ戻る', function(){
         util.doClientTest('/javascripts/changeSceneTest/battleToTopTest_lose.js');
     });
+
+    test.it('アームドーザ情報画面から「決定」を押してアームドーザ選択画面へ遷移する', function(){
+        util.doClientTest('/javascripts/changeSceneTest/armdozerInfoToSetArmdozerTest.js');
+    });
 });

@@ -64,6 +64,9 @@ function game(spec, my) {
         var scene = armdozerInfoScene({
             armdozerInfo : data
         });
+        scene.onPushOkButton(function(data){
+            emitSendMessage('setArmdozer',data);
+        });
         core.pushScene(scene);
         emitChangeScene('armdozerInfo');
 
@@ -80,7 +83,8 @@ function game(spec, my) {
     core.emitServerResp = function(message,data){
         switch(message) {
             case 'successSetArmdozer' :
-                core.changeTopScene();
+                core.popScene();
+                emitChangeScene('setArmdozer');
                 break;
             case 'gameStart' :
                 var statusArray = {};
