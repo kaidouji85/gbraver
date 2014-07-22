@@ -57,4 +57,8 @@ test.describe('シーン遷移', function() {
     test.it('アームドーザ情報画面から「決定」を押してアームドーザ選択画面へ遷移する', function(){
         util.doClientTest('/javascripts/changeSceneTest/armdozerInfoToSetArmdozerTest.js');
     });
+
+    test.it('アームドーザ情報画面から「戻る」を押してアームドーザ選択画面へ遷移する', function(){
+        util.doClientTest('/javascripts/changeSceneTest/armdozerInfoToSetArmdozerForPushPrevButtonTest.js');
+    });
 });

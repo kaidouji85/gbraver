@@ -55,7 +55,7 @@ function game(spec, my) {
         });
         core.setArmdozerScene.onPushPrevButton(function(data){
             core.changeTopScene();
-        });        
+        });
         core.replaceScene(core.setArmdozerScene);
         emitChangeScene('setArmdozer');
     };
@@ -67,6 +67,9 @@ function game(spec, my) {
         scene.onPushOkButton(function(data){
             emitSendMessage('setArmdozer',data);
         });
+        scene.onPushPrevButton(function(){
+            emitSendMessage('getCharacterList');
+        })
         core.replaceScene(scene);
         emitChangeScene('armdozerInfo');
 
