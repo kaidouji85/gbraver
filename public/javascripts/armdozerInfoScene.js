@@ -114,11 +114,8 @@ function armdozerInfoScene(spec,my){
     }
 
     function getPowerLabelValue(weapons){
-        var text = '';
-        for(var i=1; i<=5; i++){
-            text += weapons[i].power + '<br>';
-        }
-        return text;
+        //TODO : 攻撃力は基本固定値にしたが、内部的にはバッテリーごとの攻撃力差を残す
+        return weapons['1'].power;
     }
 
     function setWaitScene(){
