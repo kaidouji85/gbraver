@@ -22,19 +22,19 @@ db.armdozers.insert({
         },
         2 : {
             name : 'バスターナックル',
-            power : 1200
+            power : 1000
         },
         3 : {
             name : 'バスターナックル',
-            power : 1500
+            power : 1000
         },
         4 : {
             name : 'バスターナックル',
-            power : 1700
+            power : 1000
         },
         5 : {
             name : 'バスターナックル',
-            power : 2000
+            power : 1000
         }
     }      
 });
@@ -52,19 +52,19 @@ db.armdozers.insert({
         },
         2 : {
             name : 'ブレイクパンチ',
-            power : 1700
+            power : 1500
         },
         3 : {
             name : 'ブレイクパンチ',
-            power : 2000
+            power : 1500
         },
         4 : {
             name : 'ブレイクパンチ',
-            power : 2200
+            power : 1500
         },
         5 : {
             name : 'ブレイクパンチ',
-            power : 2500
+            power : 1500
         }
     }       
 });
@@ -82,19 +82,19 @@ db.armdozers.insert({
         },
         2 : {
             name : 'バスターナックル',
-            power : 1200
+            power : 1000
         },
         3 : {
             name : 'バスターナックル',
-            power : 1500
+            power : 1000
         },
         4 : {
             name : 'バスターナックル',
-            power : 1700
+            power : 1000
         },
         5 : {
             name : 'バスターナックル',
-            power : 2000
+            power : 1000
         }
     }
 });
