@@ -104,10 +104,12 @@ function armdozerInfoScene(spec,my){
         var data = {
             armdozerId : armdozerId
         };
+        setWaitScene();
         emitPushOkButton(data);
     }
 
     function prevArmdoerList(){
+        setWaitScene();
         emitPrevButton();
     }
 
@@ -117,6 +119,11 @@ function armdozerInfoScene(spec,my){
             text += weapons[i].power + '<br>';
         }
         return text;
+    }
+
+    function setWaitScene(){
+        that.okButton.visible = false;
+        that.prevButton.visible = false;
     }
 
     return that;

@@ -57,6 +57,12 @@ function selectArmdozer(){
             armdozerId : 'granBraver'
         };
         assert.deepEqual(data,expect,'決定ボタンを押した時のデータが正しい');
+        assertOfWaitScene();
+    }
+
+    function assertOfWaitScene(){
+        assert.equal(Game.currentScene.okButton.visible,false,'「決定」ボタンが無効である');
+        assert.equal(Game.currentScene.prevButton.visible,false,'「戻る」ボタンが無効である');
         finishTest();
     }
 }
