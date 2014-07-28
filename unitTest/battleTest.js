@@ -217,13 +217,13 @@ describe('Battleクラスのテスト', function() {
             
             var retWaitPhase = Battle.doWaitPhase();
             var retAtack = Battle.atack({
-                atackBattery : 3,
+                atackBattery : 2,
                 defenthBattery : 1
             });
             var statusArray = Battle.getStatusArray();
             assert.equal(retAtack.hit,Battle.ATACK_HIT,'攻撃ヒット判定になる');
-            assert.equal(retAtack.damage,1600,'ダメージが通常通りになる');
-            assert.equal(statusArray[2].hp,3100,'HPが減っている');
+            assert.equal(retAtack.damage,1100,'ダメージが通常通りになる');
+            assert.equal(statusArray[2].hp,3600,'HPが減っている');
         });
         
          it('攻撃・防御側が同じバッテリーを出したので防御判定になりダメージが半減される',function(){
@@ -361,13 +361,13 @@ describe('Battleクラスのテスト', function() {
             
             var retWaitPhase = Battle.doWaitPhase();
             var retAtack = Battle.atack({
-                atackBattery : 5,
+                atackBattery : 1,
                 defenthBattery : 0
             });
             var statusArray = Battle.getStatusArray();
             assert.equal(retAtack.hit,Battle.ATACK_CRITICAL,'クリィカルヒットになる');
-            assert.equal(retAtack.damage,2800*2,'ダメージが2倍になる');
-            assert.equal(statusArray[2].hp,-900,'HPが減っている');
+            assert.equal(retAtack.damage,800*2,'ダメージが2倍になる');
+            assert.equal(statusArray[2].hp,3100,'HPが減っている');
         });
         
         it('攻撃後にアクティブゲージが0になっている',function(){
@@ -461,6 +461,54 @@ describe('Battleクラスのテスト', function() {
             var statusArray = Battle.getStatusArray();
             assert.equal(statusArray[1].battery,2,'攻撃側バッテリーが減る');
             assert.equal(statusArray[2].battery,4,'防御側バッテリーが減る');
+        });
+
+        it('攻撃側が相手よりも2多くバッテリーを出したのでダメージボーナスがある',function(){
+            var testData = {};
+            testData[1] = {
+                name : 'グランブレイバー',
+                pictName : 'GranBraver.PNG',
+                hp : 3200,
+                speed : 230,
+                active : 0,
+                battery : 5,
+                weapons : {
+                    1 : {name : 'バスターナックル',power : 800},
+                    2 : {name : 'バスターナックル',power : 1100},
+                    3 : {name : 'バスターナックル',power : 1600},
+                    4 : {name : 'バスターナックル',power : 2100},
+                    5 : {name : 'バスターナックル',power : 2800}
+                }
+            };
+            testData[2] = {
+                name : 'ランドーザ',
+                pictName : 'Landozer.PNG',
+                hp : 4700,
+                speed : 150,
+                active : 0,
+                battery : 5,
+                weapons : {
+                    1 : {name:'ブレイクパンチ',power:1200},
+                    2 : {name:'ブレイクパンチ',power:1700},
+                    3 : {name:'ブレイクパンチ',power:2300},
+                    4 : {name:'ブレイクパンチ',power:2900},
+                    5 : {name:'ブレイクパンチ',power:3800}
+                }
+            };
+
+            var Battle = battle({
+                statusArray : testData
+            });
+
+            Battle.doWaitPhase();
+            var retAtack = Battle.atack({
+                atackBattery : 3,
+                defenthBattery : 1
+            });
+            var statusArray = Battle.getStatusArray();
+            assert.equal(retAtack.hit,Battle.ATACK_HIT,'攻撃ヒット判定になる');
+            assert.equal(retAtack.damage,1700,'ダメージに+100ボーナスが入る');
+            assert.equal(statusArray[2].hp,3000,'HPが減っている');
         });
     });
     
