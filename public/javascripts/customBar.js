@@ -45,7 +45,6 @@ function mainBar(spec, my) {
 
     that.addEventListener('enterframe', function(e) {
         if (turn > 0) {
-            //that.value += speed;
             that.setValue(that.value + speed);
             turn--;
         }
@@ -54,6 +53,8 @@ function mainBar(spec, my) {
     that.setValue = function(value){
         if(maxValue<value) {
            value=maxValue; 
+        } else if(value<0){
+            value = 0;
         }
         that.value = value;        
     };
