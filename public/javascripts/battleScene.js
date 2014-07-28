@@ -39,9 +39,11 @@ function battleScene(spec,my){
     
     function doWaitPhase(data){
         var turn = data.turn;
+        var plusValue;
         attackUserId = data.atackUserId;
-        for(var uid in that.statusArray) {
-            that.activeBarArray[uid].plus(turn,120*that.statusArray[uid].speed/5000);
+        for(var uid in data.statusArray) {
+            plusValue = (120*data.statusArray[uid].active/5000 - that.activeBarArray[uid].getValue())/turn;
+            that.activeBarArray[uid].plus(turn,plusValue);
         }
         
         that.tl.delay(turn).then(function(){
