@@ -44,7 +44,7 @@ db.armdozers.insert({
     name : 'ランドーザ',
     pictName : 'Landozer.PNG',
     hp : 3100,
-    speed : 90,
+    speed : 95,
     weapons : {
         1 : {
             name : 'ブレイクパンチ',
