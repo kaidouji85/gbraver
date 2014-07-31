@@ -15,6 +15,7 @@ function armdozerInfoScene(spec,my){
     that.okButton = {};
     that.powerLabel = {};
     that.powerValueLabel = {};
+    that.labelWait = {};
     that.onPushOkButton = onPushOkButton;
     that.onPushPrevButton = onPushPrevButton;
 
@@ -89,6 +90,14 @@ function armdozerInfoScene(spec,my){
         that.prevButton.x = core.COMMAND_POX_X + core.ICON_WIDTH + 32;
         that.prevButton.y = core.COMMAND_POS_Y;
         that.addChild(that.prevButton);
+
+        //待機中ラベル
+        that.labelWait = new Label('待機中');
+        that.labelWait.color = "white";
+        that.labelWait.x = 10;
+        that.labelWait.y = 10;
+        that.labelWait.visible = false;
+        that.addChild(that.labelWait);
     }
 
     function onPushOkButton(fn){
@@ -119,8 +128,17 @@ function armdozerInfoScene(spec,my){
     }
 
     function setWaitScene(){
+        that.armdozerPict.visible = false;
+        that.armdozerNameLabel.visible = false;
+        that.hpLabel.visible = false;
+        that.hpValueLabel.visible = false;
+        that.powerLabel.visible = false;
+        that.speedLabel.visible = false;
+        that.powerValueLabel.visible = false;
+        that.speedValueLabel.visible = false;
         that.okButton.visible = false;
         that.prevButton.visible = false;
+        that.labelWait.visible = true;
     }
 
     return that;

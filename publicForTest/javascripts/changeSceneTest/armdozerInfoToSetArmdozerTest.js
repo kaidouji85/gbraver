@@ -57,7 +57,9 @@ function setArmdozerToArmdozerInfoTest(){
         };
         assert.equal(message,'setArmdozer','サーバ送信メッセージが正しい');
         assert.deepEqual(data,expectData,'サーバ送信データが正しい');
-        doServerResp();
+        Game.currentScene.tl.delay(60).then(function(){
+            doServerResp();
+        });
     }
 
     function doServerResp(){
