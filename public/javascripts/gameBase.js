@@ -8,6 +8,7 @@ function gameBase(spec,my){
     core.PICT_BATTERY_BACK = core.PICT_PREFIX+'batteryBack.png';
     core.PICT_BATTERY_NUMBER = core.PICT_PREFIX+'batteryNumber.png';
     core.PICT_ATTTACK_PARTICLE = core.PICT_PREFIX+'attackParticle.png';
+    core.PICT_HIT_EFFECT = core.PICT_PREFIX+'hitEffect.png';
     core.WAIT_TIME_ACTIVE_RESET = 30;
     core.ICON_WIDTH = 124;
     core.ICON_HEIGHT = 40;
@@ -38,6 +39,7 @@ function gameBase(spec,my){
         core.preload(core.PICT_BATTERY_BACK);
         core.preload(core.PICT_BATTERY_NUMBER);
         core.preload(core.PICT_ATTTACK_PARTICLE);
+        core.preload(core.PICT_HIT_EFFECT);
     }
     return core;
 }

@@ -23,23 +23,14 @@ function attackAnime(spec,my){
         }).delay(120).then(function(){
             for(var uid in battleScene.statusArray){
                 battleScene.batteryNumberArray[uid].visible = false;
-                switch(hit){
-                    case core.ATACK_HIT:
-                        uid===attackUserId ?
-                            battleScene.charaSpriteArray[uid].doAttackMotion() : battleScene.charaSpriteArray[uid].doHitMotion();
-                        break;
-                    case core.ATACK_GUARD:
-                        uid===attackUserId ?
-                            battleScene.charaSpriteArray[uid].doAttackMotion() : battleScene.charaSpriteArray[uid].doHitMotion();
-                        break;
-                    case core.ATACK_CRITICAL:
-                        uid===attackUserId ?
-                            battleScene.charaSpriteArray[uid].doAttackMotion() : battleScene.charaSpriteArray[uid].doHitMotion();
-                        break;
-                    case core.ATACK_MISS:
-                        uid===attackUserId ?
-                            battleScene.charaSpriteArray[uid].doAttackMotion() : battleScene.charaSpriteArray[uid].doAvoidMotion();
-                        break;
+                if(uid===attackUserId){
+                    battleScene.charaSpriteArray[uid].doAttackMotion();
+                } else {
+                    if( hit===core.ATACK_MISS){
+                        battleScene.charaSpriteArray[uid].doAvoidMotion();
+                    } else {
+                        battleScene.charaSpriteArray[uid].doHitMotion();
+                    }
                 }
             }
         }).delay(30).then(function(){

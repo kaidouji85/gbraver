@@ -18,6 +18,7 @@ function battleSceneBase(spec,my){
     that.batteryNumberArray = {};
     that.damageLabelArray = {};
     that.subDamageLabelArray = {};
+    that.hitEffect = {};
 
     that.refreshMertor = function(statusArray){
         for(var uid in statusArray){
@@ -88,6 +89,15 @@ function battleSceneBase(spec,my){
             that.subDamageLabelArray[uid].y = 210;
             that.subDamageLabelArray[uid].visible = false;
             that.addChild(that.subDamageLabelArray[uid]);
+
+            //攻撃エフェクト
+            that.hitEffect[uid] = new Sprite(256,256);
+            that.hitEffect[uid].image = core.assets[core.PICT_HIT_EFFECT];
+            that.hitEffect[uid].x = uid===that.userId ? 128 : -64;
+            that.hitEffect[uid].y = 16;
+            that.hitEffect[uid].frame = 0;
+            that.hitEffect[uid].visible = false;
+            that.addChild(that.hitEffect[uid]);
         }
 
         //攻撃アイコン
