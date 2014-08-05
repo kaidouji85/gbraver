@@ -91,12 +91,11 @@ function battleSceneBase(spec,my){
             that.addChild(that.subDamageLabelArray[uid]);
 
             //攻撃エフェクト
-            that.hitEffect[uid] = new Sprite(256,256);
-            that.hitEffect[uid].image = core.assets[core.PICT_HIT_EFFECT];
+            that.hitEffect[uid] = hitEffect({
+                pict : core.assets[core.PICT_HIT_EFFECT]
+            });
             that.hitEffect[uid].x = uid===that.userId ? 128 : -64;
             that.hitEffect[uid].y = 16;
-            that.hitEffect[uid].frame = 0;
-            that.hitEffect[uid].visible = false;
             that.addChild(that.hitEffect[uid]);
         }
 
