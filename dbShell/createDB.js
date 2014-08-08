@@ -43,28 +43,28 @@ db.armdozers.insert({
     armdozerId : 'landozer',
     name : 'ランドーザ',
     pictName : 'Landozer.PNG',
-    hp : 3100,
+    hp : 3500,
     speed : 95,
     weapons : {
         1 : {
             name : 'ブレイクパンチ',
-            power : 1200
+            power : 900
         },
         2 : {
             name : 'ブレイクパンチ',
-            power : 1200
+            power : 900
         },
         3 : {
             name : 'ブレイクパンチ',
-            power : 1200
+            power : 900
         },
         4 : {
             name : 'ブレイクパンチ',
-            power : 1200
+            power : 900
         },
         5 : {
             name : 'ブレイクパンチ',
-            power : 1200
+            power : 900
         }
     }       
 });
@@ -78,23 +78,23 @@ db.armdozers.insert({
     weapons : {
         1 : {
             name : 'バスターナックル',
-            power : 1000
+            power : 1100
         },
         2 : {
             name : 'バスターナックル',
-            power : 1000
+            power : 1100
         },
         3 : {
             name : 'バスターナックル',
-            power : 1000
+            power : 1100
         },
         4 : {
             name : 'バスターナックル',
-            power : 1000
+            power : 1100
         },
         5 : {
             name : 'バスターナックル',
-            power : 1000
+            power : 1100
         }
     }
 });
