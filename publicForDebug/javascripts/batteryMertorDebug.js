@@ -29,7 +29,6 @@ window.onload = function() {
         BatteryMertorL.x = 40;
         BatteryMertorL.y = 80;
         BatteryMertorL.setValue(4);
-        core.rootScene.addChild(BatteryMertorL);        
-        
+        core.rootScene.addChild(BatteryMertorL);
     };
 };
