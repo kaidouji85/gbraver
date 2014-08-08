@@ -43,5 +43,14 @@ window.onload = function() {
         dl5.y = 240;
         dl5.setDamage(43213);
         core.currentScene.addChild(dl5);
+
+        var dl6 = damageLabel({
+            pict : core.assets[core.PICT_DAMAGE]
+        });
+        dl6.x = 100;
+        dl6.y = 0;
+        dl6.setDamage(43213);
+        dl6.setVisible(false);
+        core.currentScene.addChild(dl6);
     }
 }

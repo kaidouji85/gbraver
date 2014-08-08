@@ -38,7 +38,7 @@ function attackAnime(spec,my){
             for (var uid in battleScene.statusArray) {
                 if (uid !== attackUserId) {
                     battleScene.damageLabelArray[uid].visible = true;
-                    battleScene.damageLabelArray[uid].text = getDamageText(damage,hit);
+                    battleScene.damageLabelArray[uid].setDamage(damage);
                     battleScene.subDamageLabelArray[uid].visible = true;
                     battleScene.subDamageLabelArray[uid].text = getSubDamageText(hit);
                     battleScene.hpMertorArray[uid].setValue(damagedStatusArray[uid].hp);
@@ -50,7 +50,7 @@ function attackAnime(spec,my){
             for (var uid in battleScene.statusArray) {
                 battleScene.charaSpriteArray[uid].doStandMotion();
                 if (uid !== attackUserId) {
-                    battleScene.damageLabelArray[uid].visible = false;
+                    battleScene.damageLabelArray[uid].setVisible(false);
                     battleScene.subDamageLabelArray[uid].visible = false;
                 }
             }

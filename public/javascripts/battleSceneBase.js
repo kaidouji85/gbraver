@@ -77,10 +77,12 @@ function battleSceneBase(spec,my){
             that.addChild(that.batteryNumberArray[uid]);
 
             //ダメージラベル
-            that.damageLabelArray[uid] = new MutableText(0,0);
-            that.damageLabelArray[uid].x = uid===that.userId ? 180 : 20;
+            that.damageLabelArray[uid] = damageLabel({
+                pict : core.assets[core.PICT_DAMAGE]
+            });
+            that.damageLabelArray[uid].x = uid===that.userId ? 240 : 80;
             that.damageLabelArray[uid].y = 210;
-            that.damageLabelArray[uid].visible = false;
+            that.damageLabelArray[uid].setVisible(false);
             that.addChild(that.damageLabelArray[uid]);
 
             //サブダメーララベル

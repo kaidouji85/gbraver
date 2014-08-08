@@ -32,5 +32,11 @@ function damageLabel(spec,my){
         }
     }
 
+    that.setVisible = function(visible){
+        for(var i=0; i<MAX_NUMBER_SPRITE; i++){
+            numberSpriteArray[i].visible = visible;
+        }
+    }
+
     return that;
 }

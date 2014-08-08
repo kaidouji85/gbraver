@@ -21,8 +21,6 @@ function ArmdozerSprite(spec,my) {
 
     function init() {
         that.image = pict;
-        that.originX = SPRITE_WIDTH/2;
-        that.originY = SPRITE_HEIGHT/2;
         that.scaleX = direction===DIRECTION_RIGHT ? 1 : -1;
         doStandMotion();
     }
