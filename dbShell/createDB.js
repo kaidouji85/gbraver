@@ -48,23 +48,23 @@ db.armdozers.insert({
     weapons : {
         1 : {
             name : 'ブレイクパンチ',
-            power : 900
+            power : 1000
         },
         2 : {
             name : 'ブレイクパンチ',
-            power : 900
+            power : 1000
         },
         3 : {
             name : 'ブレイクパンチ',
-            power : 900
+            power : 1000
         },
         4 : {
             name : 'ブレイクパンチ',
-            power : 900
+            power : 1000
         },
         5 : {
             name : 'ブレイクパンチ',
-            power : 900
+            power : 1000
         }
     }       
 });
