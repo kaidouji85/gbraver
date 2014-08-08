@@ -79,14 +79,14 @@ function battleSceneBase(spec,my){
             //ダメージラベル
             that.damageLabelArray[uid] = new MutableText(0,0);
             that.damageLabelArray[uid].x = uid===that.userId ? 180 : 20;
-            that.damageLabelArray[uid].y = 240;
+            that.damageLabelArray[uid].y = 210;
             that.damageLabelArray[uid].visible = false;
             that.addChild(that.damageLabelArray[uid]);
 
             //サブダメーララベル
             that.subDamageLabelArray[uid] = new MutableText(0,0);
             that.subDamageLabelArray[uid].x = uid===that.userId ? 180 : 20;
-            that.subDamageLabelArray[uid].y = 210;
+            that.subDamageLabelArray[uid].y = 240;
             that.subDamageLabelArray[uid].visible = false;
             that.addChild(that.subDamageLabelArray[uid]);
 
