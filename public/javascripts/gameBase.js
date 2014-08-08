@@ -10,6 +10,7 @@ function gameBase(spec,my){
     core.PICT_ATTTACK_PARTICLE = core.PICT_PREFIX+'attackParticle.png';
     core.PICT_HIT_EFFECT = core.PICT_PREFIX+'hitEffect.png';
     core.PICT_DAMAGE = core.PICT_PREFIX+'damage.png';
+    core.PICT_HIT_TEXT = core.PICT_PREFIX+'hitText.png';
     core.WAIT_TIME_ACTIVE_RESET = 30;
     core.ICON_WIDTH = 124;
     core.ICON_HEIGHT = 40;
@@ -42,6 +43,7 @@ function gameBase(spec,my){
         core.preload(core.PICT_ATTTACK_PARTICLE);
         core.preload(core.PICT_HIT_EFFECT);
         core.preload(core.PICT_DAMAGE);
+        core.preload(core.PICT_HIT_TEXT);
     }
     return core;
 }

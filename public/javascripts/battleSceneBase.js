@@ -85,9 +85,10 @@ function battleSceneBase(spec,my){
             that.damageLabelArray[uid].setVisible(false);
             that.addChild(that.damageLabelArray[uid]);
 
-            //サブダメーララベル
-            that.subDamageLabelArray[uid] = new MutableText(0,0);
-            that.subDamageLabelArray[uid].x = uid===that.userId ? 180 : 20;
+            //ヒット種別
+            that.subDamageLabelArray[uid] = new Sprite(128,24);
+            that.subDamageLabelArray[uid].image = core.assets[core.PICT_HIT_TEXT];
+            that.subDamageLabelArray[uid].x = uid===that.userId ? 176 : 16;
             that.subDamageLabelArray[uid].y = 240;
             that.subDamageLabelArray[uid].visible = false;
             that.addChild(that.subDamageLabelArray[uid]);

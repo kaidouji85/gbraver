@@ -39,9 +39,18 @@ function attackAnime(spec,my){
                 if (uid !== attackUserId) {
                     battleScene.damageLabelArray[uid].visible = true;
                     battleScene.damageLabelArray[uid].setDamage(damage);
-                    battleScene.subDamageLabelArray[uid].visible = true;
-                    battleScene.subDamageLabelArray[uid].text = getSubDamageText(hit);
+                    if(hit!==core.ATACK_HIT){
+                        battleScene.subDamageLabelArray[uid].visible = true;
+                        if(hit === core.ATACK_MISS){
+                            battleScene.subDamageLabelArray[uid].frame = 0;
+                        } else if(hit === core.ATACK_GUARD){
+                            battleScene.subDamageLabelArray[uid].frame = 1;
+                        } else{
+                            battleScene.subDamageLabelArray[uid].frame = 2;
+                        }
+                    }
                     battleScene.hpMertorArray[uid].setValue(damagedStatusArray[uid].hp);
+
                     break;
                 }
             }
@@ -58,32 +67,5 @@ function attackAnime(spec,my){
             fn();
         });
     }
-
-    function getDamageText(damage,hit){
-        var text = String(damage);
-        if(hit===core.ATACK_MISS){
-            text = '';
-        }
-        return text;
-    }
-
-    function getSubDamageText(hit) {
-        var text = '';
-        switch(hit){
-            case core.ATACK_HIT:
-                break;
-            case core.ATACK_MISS:
-                text = 'MISS';
-                break;
-            case core.ATACK_GUARD:
-                text = 'GUARD';
-                break;
-            case core.ATACK_CRITICAL:
-                text = 'CRITICAL';
-                break;
-        }
-        return text;
-    }
-
     return that;
 }
