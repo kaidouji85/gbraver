@@ -123,7 +123,7 @@ function battleScene(spec,my){
     }
     
     function getSelectMinBattery(){
-        return that.userId===attackUserId ? 1 : 0;
+        return that.userId===attackUserId ? 0 : 0;
     }
     
     function plusBattery(){
