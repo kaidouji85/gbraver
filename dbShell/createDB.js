@@ -78,23 +78,23 @@ db.armdozers.insert({
     weapons : {
         1 : {
             name : 'バスターナックル',
-            power : 1100
+            power : 1200
         },
         2 : {
             name : 'バスターナックル',
-            power : 1100
+            power : 1200
         },
         3 : {
             name : 'バスターナックル',
-            power : 1100
+            power : 1200
         },
         4 : {
             name : 'バスターナックル',
-            power : 1100
+            power : 1200
         },
         5 : {
             name : 'バスターナックル',
-            power : 1100
+            power : 1200
         }
     }
 });
