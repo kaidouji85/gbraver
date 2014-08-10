@@ -68,6 +68,7 @@ var battle = function(spec,my){
         var atackBattery = command.atackBattery;
         var defenthBattery = command.defenthBattery;
         var damage = 0;
+        var defenseUserId = getDefenseUserId();
 
         overHeatFlagArray[atackUserId] = false;
         if(atackBattery===0){
@@ -91,19 +92,10 @@ var battle = function(spec,my){
             }
         }
 
-        var defenthUserId = null;
-        for (var uid in statusArray) {
-            if (uid !== atackUserId) {
-                defenthUserId = uid;
-                break;
-            }
-        }
-
         statusArray[atackUserId].battery -= atackBattery;
         statusArray[atackUserId].active = 0;
-        statusArray[defenthUserId].hp -= damage;
-        statusArray[defenthUserId].battery -= defenthBattery;
-
+        statusArray[defenseUserId].hp -= damage;
+        statusArray[defenseUserId].battery -= defenthBattery;
         atackUserId = null;
 
         var ret = {
@@ -112,6 +104,17 @@ var battle = function(spec,my){
         };
         return ret;
     };
+
+    function getDefenseUserId(){
+        var defenseUserId = null;
+        for (var uid in statusArray) {
+            if (uid !== atackUserId) {
+                defenseUserId = uid;
+                break;
+            }
+        }
+        return defenseUserId;
+    }
     
     /**
      * チャージ 
