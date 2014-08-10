@@ -67,16 +67,21 @@ var battle = function(spec,my){
         var hit = 0;
         var atackBattery = command.atackBattery;
         var defenthBattery = command.defenthBattery;
-        var damage = statusArray[atackUserId].weapons[atackBattery].power;
+        var damage = 0;
 
         overHeatFlagArray[atackUserId] = false;
-        if (atackBattery < defenthBattery) {
+        if(atackBattery===0){
+            damage = 0;
+            hit = that.ATACK_MISS;
+        } else if (atackBattery < defenthBattery) {
             damage = 0;
             hit = that.ATACK_MISS;
         } else if (atackBattery === defenthBattery) {
+            damage = statusArray[atackUserId].weapons[atackBattery].power;
             damage = damage / 2;
             hit = that.ATACK_GUARD;
         } else {
+            damage = statusArray[atackUserId].weapons[atackBattery].power;
             damage = damage + 100 * (atackBattery - 1 - defenthBattery);
             if (defenthBattery === 0) {
                 damage = damage * 2;
