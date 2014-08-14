@@ -25,12 +25,13 @@ function selectArmdozer(){
         }
     ];
     var Game = gameBase();
-    var testScene = setArmdozerScene({
-        armdozerIdList : armdozerIdList
-    });
+    var testScene;
 
     Game.start();
     Game.onload = function(){
+        testScene = setArmdozerScene({
+            armdozerIdList : armdozerIdList
+        });
         Game.replaceScene(testScene);
         assertOfArmdozerList();
     };

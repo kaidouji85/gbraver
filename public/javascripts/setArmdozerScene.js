@@ -8,7 +8,8 @@ function setArmdozerScene(spec,my){
     var emitSelectArmdozer = function(data){};
     var emitPushPrevButton = function(){};
 
-    that.backgroundColor = "black";
+    that.backgroundColor = 'black';
+    that.background = {};
     that.armdozerButtonArray = new Array(MAX_ARMDOZER_BUTTON);
     that.prevButton = {};
     that.onSelectArmdozer  = onSelectArmdozer;
@@ -16,6 +17,11 @@ function setArmdozerScene(spec,my){
 
     initSprite();
     function initSprite(){
+        //背景
+        that.background = new Sprite(320,320);
+        that.background.image = core.assets[core.PICT_SYSTEM_BACKGROUND];
+        that.addChild(that.background);
+
         //キャラクター選択ボタン
         for(var i=0; i<MAX_ARMDOZER_BUTTON && i<armdozerIdList.length; i++){
             that.armdozerButtonArray[i] = new Button(armdozerIdList[i].name,'blue',40,200);
@@ -33,6 +39,7 @@ function setArmdozerScene(spec,my){
         that.prevButton = new Button('戻る','blue',40,200);
         that.prevButton.x = 50;
         that.prevButton.y = 400;
+        that.prevButton.visible = true;
         that.prevButton.addEventListener(Event.TOUCH_END,function(e){
             pushPrevButton();
         });
