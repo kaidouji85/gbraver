@@ -24,6 +24,10 @@ function gameBase(spec,my){
     core.ATACK_MISS = 2;
     core.ATACK_GUARD = 3;
     core.ATACK_CRITICAL = 4;
+    core.SYSTEM_BG_WIDTH = 320;
+    core.SYSTEM_BG_HEIGHT = 480;
+    core.BUTTON_WIDTH = 96;
+    core.BUTTON_HEIGHT = 24;
 
     core.fps = 60;
     core.battleScene = null;

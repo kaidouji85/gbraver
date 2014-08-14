@@ -18,17 +18,17 @@ function setArmdozerScene(spec,my){
     initSprite();
     function initSprite(){
         //背景
-        that.background = new Sprite(320,320);
+        that.background = new Sprite(core.SYSTEM_BG_WIDTH,core.SYSTEM_BG_HEIGHT);
         that.background.image = core.assets[core.PICT_SYSTEM_BACKGROUND];
         that.addChild(that.background);
 
         //キャラクター選択ボタン
         for(var i=0; i<MAX_ARMDOZER_BUTTON && i<armdozerIdList.length; i++){
-            that.armdozerButtonArray[i] = new Button(armdozerIdList[i].name,'blue',40,200);
+            that.armdozerButtonArray[i] = new Button(armdozerIdList[i].name,'blue',24,150);
         }
         that.armdozerButtonArray.forEach(function(button,i){
-            button.x = 50;
-            button.y = 60+60*i;
+            button.x = 85;
+            button.y = 200+40*i;
             button.addEventListener(Event.TOUCH_END,function(e){
                 pushArmdozerButton(i);
             }); 
@@ -36,9 +36,9 @@ function setArmdozerScene(spec,my){
         });
         
         //戻るボタン
-        that.prevButton = new Button('戻る','blue',40,200);
-        that.prevButton.x = 50;
-        that.prevButton.y = 400;
+        that.prevButton = new Button('戻る','blue',core.BUTTON_HEIGHT,core.BUTTON_WIDTH);
+        that.prevButton.x = 112;
+        that.prevButton.y = 380;
         that.prevButton.visible = true;
         that.prevButton.addEventListener(Event.TOUCH_END,function(e){
             pushPrevButton();
