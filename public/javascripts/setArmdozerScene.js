@@ -18,9 +18,9 @@ function setArmdozerScene(spec,my){
     initSprite();
     function initSprite(){
         //背景
-        that.background = new Sprite(core.SYSTEM_BG_WIDTH,core.SYSTEM_BG_HEIGHT);
-        that.background.image = core.assets[core.PICT_SYSTEM_BACKGROUND];
-        that.addChild(that.background);
+        //that.background = new Sprite(core.SYSTEM_BG_WIDTH,core.SYSTEM_BG_HEIGHT);
+        //that.background.image = core.assets[core.PICT_SYSTEM_BACKGROUND];
+        //that.addChild(that.background);
 
         //キャラクター選択ボタン
         for(var i=0; i<MAX_ARMDOZER_BUTTON && i<armdozerIdList.length; i++){
