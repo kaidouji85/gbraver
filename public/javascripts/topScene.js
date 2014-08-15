@@ -1,6 +1,6 @@
 function topScene(){
     var that = new Scene();
-    that.backgroundColor = 'black';
+    that.background = {};
     that.battleRoomButton = {};
     that.setArmdpzerButton = {};
     that.onPushSetArmdozer = onPushSetArmdozer;
@@ -14,23 +14,34 @@ function topScene(){
     
     initSprite();
     function initSprite(){
+        //背景
+        that.background = new Sprite(core.SYSTEM_BG_WIDTH,core.SYSTEM_BG_HEIGHT);
+        that.background.image = core.assets[core.PICT_SYSTEM_BACKGROUND];
+        that.addChild(that.background);
+
         //対戦ルーム入室ボタン
-        that.battleRoomButton = new Button('対戦ルーム入室','blue',40,200);
-        that.battleRoomButton.x = 50;
-        that.battleRoomButton.y = 60;
+        that.battleRoomButton = pictButton({
+            text : '対戦ルーム入室',
+            pict : core.assets[core.PICT_BULUE_BUTTON]
+        });
+        that.battleRoomButton.x = 16;
+        that.battleRoomButton.y = 300;
         that.battleRoomButton.addEventListener(Event.TOUCH_END,function(e){
             emitPushBattleRoom();
         });        
         that.addChild(that.battleRoomButton);
         
         //アームドーザ選択ボタン
-        that.setArmdpzerButton = new Button('アームドーザ選択','blue',40,200);
-        that.setArmdpzerButton.x = 50;
-        that.setArmdpzerButton.y = 120;
+        that.setArmdpzerButton = pictButton({
+            text : 'アームドーザ選択',
+            pict : core.assets[core.PICT_BULUE_BUTTON]
+        });
+        that.setArmdpzerButton.x = 176;
+        that.setArmdpzerButton.y = 300;
         that.setArmdpzerButton.addEventListener(Event.TOUCH_END,function(e){
             labelMenu.visible = false;
-            that.battleRoomButton.visible = false;
-            that.setArmdpzerButton.visible = false;
+            that.battleRoomButton.setVisible(false);
+            that.setArmdpzerButton.setVisible(false);
             labelWait.visible = true;
             emitPushSetArmdozer();
         });

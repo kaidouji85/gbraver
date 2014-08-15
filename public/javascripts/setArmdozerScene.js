@@ -39,7 +39,6 @@ function setArmdozerScene(spec,my){
         });
         
         //戻るボタン
-        //that.prevButton = new Button('戻る','blue',core.BUTTON_HEIGHT,core.BUTTON_WIDTH);
         that.prevButton = pictButton({
             text : '戻る',
             pict : core.assets[core.PICT_BULUE_BUTTON]
