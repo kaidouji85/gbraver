@@ -2,6 +2,7 @@ function pictButton(spec,my){
     var that = new Group();
     var text = spec.text;
     var pict = spec.pict;
+    var visible = true;
     var COLOR_WHITE = '#FFFFFF';
     var COLOR_GRAY = '#708090';
     var BUTTON_WIDTH = 128;
@@ -16,6 +17,16 @@ function pictButton(spec,my){
     buttonLabel.x = (BUTTON_WIDTH - buttonLabel._boundWidth)/2;
     buttonLabel.y = (BUTTON_HEIGHT - buttonLabel._boundHeight)/2;
     that.addChild(buttonLabel);
+
+    that.setVisible = function(value){
+        visible = value;
+        buttonSprite.visible = visible;
+        buttonLabel.visible = visible;
+    }
+
+    that.getVisible = function() {
+        return visible;
+    }
 
     that.addEventListener(Event.TOUCH_START,function(){
         buttonLabel.color = COLOR_GRAY;
