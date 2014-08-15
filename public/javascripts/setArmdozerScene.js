@@ -18,26 +18,33 @@ function setArmdozerScene(spec,my){
     initSprite();
     function initSprite(){
         //背景
-        //that.background = new Sprite(core.SYSTEM_BG_WIDTH,core.SYSTEM_BG_HEIGHT);
-        //that.background.image = core.assets[core.PICT_SYSTEM_BACKGROUND];
-        //that.addChild(that.background);
+        that.background = new Sprite(core.SYSTEM_BG_WIDTH,core.SYSTEM_BG_HEIGHT);
+        that.background.image = core.assets[core.PICT_SYSTEM_BACKGROUND];
+        that.addChild(that.background);
 
         //キャラクター選択ボタン
         for(var i=0; i<MAX_ARMDOZER_BUTTON && i<armdozerIdList.length; i++){
-            that.armdozerButtonArray[i] = new Button(armdozerIdList[i].name,'blue',24,150);
+            that.armdozerButtonArray[i] = pictButton({
+                text : armdozerIdList[i].name,
+                pict : core.assets[core.PICT_BULUE_BUTTON]
+            });
         }
         that.armdozerButtonArray.forEach(function(button,i){
-            button.x = 85;
+            button.x = 96;
             button.y = 200+40*i;
             button.addEventListener(Event.TOUCH_END,function(e){
                 pushArmdozerButton(i);
-            }); 
+            });
             that.addChild(button);
         });
         
         //戻るボタン
-        that.prevButton = new Button('戻る','blue',core.BUTTON_HEIGHT,core.BUTTON_WIDTH);
-        that.prevButton.x = 112;
+        //that.prevButton = new Button('戻る','blue',core.BUTTON_HEIGHT,core.BUTTON_WIDTH);
+        that.prevButton = pictButton({
+            text : '戻る',
+            pict : core.assets[core.PICT_BULUE_BUTTON]
+        });
+        that.prevButton.x = 96;
         that.prevButton.y = 380;
         that.prevButton.visible = true;
         that.prevButton.addEventListener(Event.TOUCH_END,function(e){
@@ -83,9 +90,9 @@ function setArmdozerScene(spec,my){
 
     function setWaitScene(){
         for(var i=0; i<MAX_ARMDOZER_BUTTON && i<armdozerIdList.length; i++){
-            that.armdozerButtonArray[i].visible = false;
+            that.armdozerButtonArray[i].setVisible(false);
         }
-        that.prevButton.visible = false;
+        that.prevButton.setVisible(false);
         labelWait.visible = true;
         labelArmmdozerSelect.visible = false;
     }

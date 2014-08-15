@@ -28,6 +28,10 @@ function pictButton(spec,my){
         return visible;
     }
 
+    that.getText = function() {
+        return buttonLabel.text;
+    }
+
     that.addEventListener(Event.TOUCH_START,function(){
         buttonLabel.color = COLOR_GRAY;
         buttonSprite.frame = 1;

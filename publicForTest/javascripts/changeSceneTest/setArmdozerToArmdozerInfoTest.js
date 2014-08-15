@@ -42,9 +42,9 @@ function setArmdozerToArmdozerInfoTest(){
         };
         assert.equal(message,'getCharacterInfo','messageが正しい');
         assert.deepEqual(data,expectData,'dataが正しい');
-        assert.equal(Game.currentScene.armdozerButtonArray[0].visible,false,'アームドーザ選択ボタン0が非表示である');
-        assert.equal(Game.currentScene.armdozerButtonArray[1].visible,false,'アームドーザ選択ボタン1が非表示である');
-        assert.equal(Game.currentScene.prevButton.visible,false,'戻るボタンが非表示である');
+        assert.equal(Game.currentScene.armdozerButtonArray[0].getVisible(),false,'アームドーザ選択ボタン0が非表示である');
+        assert.equal(Game.currentScene.armdozerButtonArray[1].getVisible(),false,'アームドーザ選択ボタン1が非表示である');
+        assert.equal(Game.currentScene.prevButton.getVisible(),false,'戻るボタンが非表示である');
 
         Game.currentScene.tl.delay(60).then(function(){
             changeScene();

@@ -37,10 +37,10 @@ function selectArmdozer(){
     };
 
     function assertOfArmdozerList(){
-        assert.equal(testScene.armdozerButtonArray[0].text,'グランブレイバー','ボタン0のテキストが正しい');
-        assert.equal(testScene.armdozerButtonArray[1].text,'ランドーザ','ボタン1のテキストが正しい');
-        assert.equal(testScene.armdozerButtonArray[2].text,'ゼロブレイバー','ボタン2のテキストが正しい');
-        assert.equal(testScene.armdozerButtonArray[3].text,'バトルドーザ','ボタン3のテキストが正しい');
+        assert.equal(testScene.armdozerButtonArray[0].getText(),'グランブレイバー','ボタン0のテキストが正しい');
+        assert.equal(testScene.armdozerButtonArray[1].getText(),'ランドーザ','ボタン1のテキストが正しい');
+        assert.equal(testScene.armdozerButtonArray[2].getText(),'ゼロブレイバー','ボタン2のテキストが正しい');
+        assert.equal(testScene.armdozerButtonArray[3].getText(),'バトルドーザ','ボタン3のテキストが正しい');
         selectArmdozer();
     }
 
