@@ -119,10 +119,13 @@ function battleSceneBase(spec,my){
         }
 
         //攻撃アイコン
-        that.atackIcon = new Button('攻撃','light',core.ICON_HEIGHT,core.ICON_WIDTH);
+        that.atackIcon = pictButton({
+            text : '攻撃',
+            pict : core.assets[core.PICT_BULUE_BUTTON]
+        });
         that.atackIcon.x = core.COMMAND_POX_X;
         that.atackIcon.y = core.COMMAND_POS_Y;
-        that.atackIcon.visible = false;
+        that.atackIcon.setVisible(false);
         that.addChild(that.atackIcon);
 
         //チャージアイコン

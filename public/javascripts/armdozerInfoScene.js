@@ -93,7 +93,6 @@ function armdozerInfoScene(spec,my){
         that.addChild(that.okButton);
 
         //戻るボタン
-        //that.prevButton = new Button('戻る','blue',core.ICON_HEIGHT,core.ICON_WIDTH);
         that.prevButton = pictButton({
             text : '戻る',
             pict : core.assets[core.PICT_BULUE_BUTTON]

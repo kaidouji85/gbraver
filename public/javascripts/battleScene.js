@@ -182,7 +182,7 @@ function battleScene(spec,my){
     }
     
     function setAtackCommandVisible(visible){
-        that.atackIcon.visible = visible;
+        that.atackIcon.setVisible(visible);
         that.chargeIcon.visible = visible;
     }
     
