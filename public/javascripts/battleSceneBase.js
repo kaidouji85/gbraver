@@ -1,7 +1,10 @@
 function battleSceneBase(spec,my){
     var that = new Scene();
     var core = enchant.Core.instance;
-
+    var COMMAND_X_1 = 16;
+    var COMMAND_X_2 = 176;
+    var COMMAND_Y_1 = 300;
+    var COMMAND_Y_2 = 350;
     that.statusArray = $.extend(true, {}, spec.statusArray);
     that.userId = spec.userId;
     that.backgroundColor = "black";
@@ -123,8 +126,8 @@ function battleSceneBase(spec,my){
             text : '攻撃',
             pict : core.assets[core.PICT_BULUE_BUTTON]
         });
-        that.atackIcon.x = core.COMMAND_POX_X;
-        that.atackIcon.y = core.COMMAND_POS_Y;
+        that.atackIcon.x = COMMAND_X_1;
+        that.atackIcon.y = COMMAND_Y_1;
         that.atackIcon.setVisible(false);
         that.addChild(that.atackIcon);
 
@@ -133,8 +136,8 @@ function battleSceneBase(spec,my){
             text : 'チャージ',
             pict : core.assets[core.PICT_BULUE_BUTTON]
         });
-        that.chargeIcon.x = core.COMMAND_POX_X + core.ICON_WIDTH + 32;
-        that.chargeIcon.y = core.COMMAND_POS_Y;
+        that.chargeIcon.x = COMMAND_X_2;
+        that.chargeIcon.y = COMMAND_Y_1;
         that.chargeIcon.setVisible(false);
         that.addChild(that.chargeIcon);
 
@@ -143,8 +146,8 @@ function battleSceneBase(spec,my){
             text : '+',
             pict : core.assets[core.PICT_BULUE_BUTTON]
         });
-        that.plusIcon.x = core.COMMAND_POX_X;
-        that.plusIcon.y = core.COMMAND_POS_Y;
+        that.plusIcon.x = COMMAND_X_1;
+        that.plusIcon.y = COMMAND_Y_1;
         that.plusIcon.setVisible(false);
         that.addChild(that.plusIcon);
 
@@ -153,8 +156,8 @@ function battleSceneBase(spec,my){
             text : '-',
             pict : core.assets[core.PICT_BULUE_BUTTON]
         });
-        that.minusIcon.x = core.COMMAND_POX_X + core.ICON_WIDTH + 32;
-        that.minusIcon.y = core.COMMAND_POS_Y;
+        that.minusIcon.x = COMMAND_X_2;
+        that.minusIcon.y = COMMAND_Y_1;
         that.minusIcon.setVisible(false);
         that.addChild(that.minusIcon);
 
@@ -163,8 +166,8 @@ function battleSceneBase(spec,my){
             text : '決定',
             pict : core.assets[core.PICT_BULUE_BUTTON]
         });
-        that.okIcon.x = core.COMMAND_POX_X;
-        that.okIcon.y = core.COMMAND_POS_Y + core.ICON_HEIGHT + 16;
+        that.okIcon.x = COMMAND_X_1;
+        that.okIcon.y = COMMAND_Y_2;
         that.okIcon.setVisible(false);
         that.addChild(that.okIcon);
 
@@ -173,8 +176,8 @@ function battleSceneBase(spec,my){
             text : '戻る',
             pict : core.assets[core.PICT_BULUE_BUTTON]
         });
-        that.prevIcon.x = core.COMMAND_POX_X + core.ICON_WIDTH + 32;
-        that.prevIcon.y = core.COMMAND_POS_Y + core.ICON_HEIGHT + 16;
+        that.prevIcon.x = COMMAND_X_2;
+        that.prevIcon.y = COMMAND_Y_2;
         that.prevIcon.setVisible(false);
         that.addChild(that.prevIcon);
     }

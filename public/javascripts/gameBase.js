@@ -18,7 +18,7 @@ function gameBase(spec,my){
     core.WAIT_TIME_ACTIVE_RESET = 30;
     core.ICON_WIDTH = 124;
     core.ICON_HEIGHT = 40;
-    core.COMMAND_POX_X = 8;
+    //core.COMMAND_POX_X = 16;
     core.COMMAND_POS_Y = 300;
     core.FRAME_STAND = 0;
     core.FRAME_ATTACK = 1;
