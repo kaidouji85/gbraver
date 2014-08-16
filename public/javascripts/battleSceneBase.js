@@ -5,6 +5,8 @@ function battleSceneBase(spec,my){
     that.statusArray = $.extend(true, {}, spec.statusArray);
     that.userId = spec.userId;
     that.backgroundColor = "black";
+    that.sky = {};
+    that.ground = {};
     that.atackIcon = {};
     that.chargeIcon = {};
     that.plusIcon = {};
@@ -30,6 +32,20 @@ function battleSceneBase(spec,my){
 
     initSprite();
     function initSprite() {
+        //背景(空)
+        that.sky = new Sprite(320,220);
+        that.sky.image = core.assets[core.PICT_BG_SKY];
+        that.sky.x = 0;
+        that.sky.y = 0;
+        that.addChild(that.sky);
+
+        //背景(地面)
+        that.ground = new Sprite(320,320);
+        that.ground.image = core.assets[core.PICT_BG_GROUND];
+        that.ground.x = 0;
+        that.ground.y = 220;
+        that.addChild(that.ground);
+
         for(var uid in that.statusArray){
             //キャラクタースプライト
             var spec = {
@@ -41,7 +57,7 @@ function battleSceneBase(spec,my){
 
             //HPメータ
             that.hpMertorArray[uid] = hpMertor();
-            that.hpMertorArray[uid].y = 4;
+            that.hpMertorArray[uid].y = 24;
             that.hpMertorArray[uid].x = uid===that.userId ? 190 : 10;
             that.hpMertorArray[uid].setValue(that.statusArray[uid].hp);
             that.addChild(that.hpMertorArray[uid]);
@@ -54,7 +70,7 @@ function battleSceneBase(spec,my){
                 direction : uid===that.userId ? 'right' : 'left'
             });
             that.activeBarArray[uid].x = uid===that.userId ? 190 : 130;
-            that.activeBarArray[uid].y = 22;
+            that.activeBarArray[uid].y = 42;
             that.addChild(that.activeBarArray[uid]);
 
             //バッテリーメータ
@@ -64,7 +80,7 @@ function battleSceneBase(spec,my){
                 direction : uid===that.userId ? 'right' : 'left'
             });
             that.batteryMertorArray[uid].x = uid===that.userId ? 190 : 10;
-            that.batteryMertorArray[uid].y = 43;
+            that.batteryMertorArray[uid].y = 63;
             that.batteryMertorArray[uid].setValue(5);
             that.addChild(that.batteryMertorArray[uid]);
 
@@ -72,7 +88,7 @@ function battleSceneBase(spec,my){
             that.batteryNumberArray[uid] = new Sprite(64,64);
             that.batteryNumberArray[uid].image = core.assets[core.PICT_BATTERY_NUMBER];
             that.batteryNumberArray[uid].x = uid===that.userId ? 226 : 30;
-            that.batteryNumberArray[uid].y = 110;
+            that.batteryNumberArray[uid].y = 170;
             that.batteryNumberArray[uid].visible = false;
             that.addChild(that.batteryNumberArray[uid]);
 
@@ -81,7 +97,7 @@ function battleSceneBase(spec,my){
                 pict : core.assets[core.PICT_DAMAGE]
             });
             that.damageLabelArray[uid].x = uid===that.userId ? 240 : 80;
-            that.damageLabelArray[uid].y = 210;
+            that.damageLabelArray[uid].y = 270;
             that.damageLabelArray[uid].setVisible(false);
             that.addChild(that.damageLabelArray[uid]);
 
@@ -89,7 +105,7 @@ function battleSceneBase(spec,my){
             that.subDamageLabelArray[uid] = new Sprite(128,24);
             that.subDamageLabelArray[uid].image = core.assets[core.PICT_HIT_TEXT];
             that.subDamageLabelArray[uid].x = uid===that.userId ? 176 : 16;
-            that.subDamageLabelArray[uid].y = 240;
+            that.subDamageLabelArray[uid].y = 300;
             that.subDamageLabelArray[uid].visible = false;
             that.addChild(that.subDamageLabelArray[uid]);
 
@@ -98,7 +114,7 @@ function battleSceneBase(spec,my){
                 pict : core.assets[core.PICT_HIT_EFFECT]
             });
             that.hitEffect[uid].x = uid===that.userId ? 128 : -64;
-            that.hitEffect[uid].y = 16;
+            that.hitEffect[uid].y = 76;
             that.addChild(that.hitEffect[uid]);
         }
 
