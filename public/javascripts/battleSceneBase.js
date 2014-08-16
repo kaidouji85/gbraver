@@ -149,24 +149,33 @@ function battleSceneBase(spec,my){
         that.addChild(that.plusIcon);
 
         //-アイコン
-        that.minusIcon = new Button('-','light',core.ICON_HEIGHT,core.ICON_WIDTH);
+        that.minusIcon = pictButton({
+            text : '-',
+            pict : core.assets[core.PICT_BULUE_BUTTON]
+        });
         that.minusIcon.x = core.COMMAND_POX_X + core.ICON_WIDTH + 32;
         that.minusIcon.y = core.COMMAND_POS_Y;
-        that.minusIcon.visible = false;
+        that.minusIcon.setVisible(false);
         that.addChild(that.minusIcon);
 
         //決定アイコン
-        that.okIcon = new Button('決定','light',core.ICON_HEIGHT,core.ICON_WIDTH);
+        that.okIcon = pictButton({
+            text : '決定',
+            pict : core.assets[core.PICT_BULUE_BUTTON]
+        });
         that.okIcon.x = core.COMMAND_POX_X;
         that.okIcon.y = core.COMMAND_POS_Y + core.ICON_HEIGHT + 16;
-        that.okIcon.visible = false;
+        that.okIcon.setVisible(false);
         that.addChild(that.okIcon);
 
         //戻るアイコン
-        that.prevIcon = new Button('戻る','light',core.ICON_HEIGHT,core.ICON_WIDTH);
+        that.prevIcon = pictButton({
+            text : '戻る',
+            pict : core.assets[core.PICT_BULUE_BUTTON]
+        });
         that.prevIcon.x = core.COMMAND_POX_X + core.ICON_WIDTH + 32;
         that.prevIcon.y = core.COMMAND_POS_Y + core.ICON_HEIGHT + 16;
-        that.prevIcon.visible = false;
+        that.prevIcon.setVisible(false);
         that.addChild(that.prevIcon);
     }
 

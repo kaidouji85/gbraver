@@ -111,7 +111,8 @@ function battleScene(spec,my){
     
     function viewBatteryCommand(){
         setBatteryCommandVisible(true);
-        that.prevIcon.visible = that.userId===attackUserId ? true : false;
+        var visible = that.userId===attackUserId ? true : false;
+        that.prevIcon.setVisible(visible);
         that.batteryNumberArray[that.userId].visible = true;
         selectMaxBattery = getSelectMaxBattery();
         selectMinBattery = getSelectMinBattery();
@@ -188,9 +189,9 @@ function battleScene(spec,my){
     
     function setBatteryCommandVisible(visible){
         that.plusIcon.setVisible(visible);
-        that.minusIcon.visible = visible;
-        that.okIcon.visible = visible;
-        that.prevIcon.visible = visible;
+        that.minusIcon.setVisible(visible);
+        that.okIcon.setVisible(visible);
+        that.prevIcon.setVisible(visible);
     }
 
     function doGameEnd(data){
