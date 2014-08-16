@@ -129,10 +129,13 @@ function battleSceneBase(spec,my){
         that.addChild(that.atackIcon);
 
         //チャージアイコン
-        that.chargeIcon = new Button('チャージ','light',core.ICON_HEIGHT,core.ICON_WIDTH);
+        that.chargeIcon = pictButton({
+            text : 'チャージ',
+            pict : core.assets[core.PICT_BULUE_BUTTON]
+        });
         that.chargeIcon.x = core.COMMAND_POX_X + core.ICON_WIDTH + 32;
         that.chargeIcon.y = core.COMMAND_POS_Y;
-        that.chargeIcon.visible = false;
+        that.chargeIcon.setVisible(false);
         that.addChild(that.chargeIcon);
 
         //+アイコン
