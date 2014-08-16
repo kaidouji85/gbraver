@@ -5,7 +5,7 @@ function armdozerInfoScene(spec,my){
     var emitPushOkButton = function(armdozerId){};
     var emitPrevButton = function(){};
 
-    that.backgroundColor = "black";
+    that.background = {};
     that.armdozerPict = {};
     that.armdozerNameLabel = {};
     that.hpLabel = {};
@@ -21,6 +21,11 @@ function armdozerInfoScene(spec,my){
 
     initSprite();
     function initSprite(){
+        //背景
+        that.background = new Sprite(core.SYSTEM_BG_WIDTH,core.SYSTEM_BG_HEIGHT);
+        that.background.image = core.assets[core.PICT_SYSTEM_BACKGROUND];
+        that.addChild(that.background);
+
         //アームドーザ画像
         that.armdozerPict = new Sprite(128,128);
         that.armdozerPict.image = core.assets[core.PICT_PREFIX+armdozerInfo.pictName];
@@ -78,17 +83,24 @@ function armdozerInfoScene(spec,my){
         that.addChild(that.speedValueLabel);
 
         //決定ボタン
-        that.okButton = new Button('決定','blue',core.ICON_HEIGHT,core.ICON_WIDTH);
+        that.okButton = pictButton({
+            text : '決定',
+            pict : core.assets[core.PICT_BULUE_BUTTON]
+        });
         that.okButton.addEventListener(Event.TOUCH_END,selectArmdozer);
-        that.okButton.x = core.COMMAND_POX_X;
-        that.okButton.y = core.COMMAND_POS_Y;
+        that.okButton.x = 16;
+        that.okButton.y = 300;
         that.addChild(that.okButton);
 
         //戻るボタン
-        that.prevButton = new Button('戻る','blue',core.ICON_HEIGHT,core.ICON_WIDTH);
+        //that.prevButton = new Button('戻る','blue',core.ICON_HEIGHT,core.ICON_WIDTH);
+        that.prevButton = pictButton({
+            text : '戻る',
+            pict : core.assets[core.PICT_BULUE_BUTTON]
+        });
         that.prevButton.addEventListener(Event.TOUCH_END,prevArmdoerList);
-        that.prevButton.x = core.COMMAND_POX_X + core.ICON_WIDTH + 32;
-        that.prevButton.y = core.COMMAND_POS_Y;
+        that.prevButton.x = 176;
+        that.prevButton.y = 300;
         that.addChild(that.prevButton);
 
         //待機中ラベル
@@ -136,8 +148,8 @@ function armdozerInfoScene(spec,my){
         that.speedLabel.visible = false;
         that.powerValueLabel.visible = false;
         that.speedValueLabel.visible = false;
-        that.okButton.visible = false;
-        that.prevButton.visible = false;
+        that.okButton.setVisible(false);
+        that.prevButton.setVisible(false);
         that.labelWait.visible = true;
     }
 

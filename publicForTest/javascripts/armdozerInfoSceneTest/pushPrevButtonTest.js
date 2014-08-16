@@ -55,8 +55,8 @@ function pushPrevButtonTest(){
     }
 
     function assertOfWaitScene(){
-        assert.equal(Game.currentScene.okButton.visible,false,'「決定」ボタンが無効である');
-        assert.equal(Game.currentScene.prevButton.visible,false,'「戻る」ボタンが無効である');
+        assert.equal(Game.currentScene.okButton.getVisible(),false,'「決定」ボタンが無効である');
+        assert.equal(Game.currentScene.prevButton.getVisible(),false,'「戻る」ボタンが無効である');
         finishTest();
     }
 }
