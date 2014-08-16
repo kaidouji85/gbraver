@@ -139,10 +139,13 @@ function battleSceneBase(spec,my){
         that.addChild(that.chargeIcon);
 
         //+アイコン
-        that.plusIcon = new Button('+','light',core.ICON_HEIGHT,core.ICON_WIDTH);
+        that.plusIcon = pictButton({
+            text : '+',
+            pict : core.assets[core.PICT_BULUE_BUTTON]
+        });
         that.plusIcon.x = core.COMMAND_POX_X;
         that.plusIcon.y = core.COMMAND_POS_Y;
-        that.plusIcon.visible = false;
+        that.plusIcon.setVisible(false);
         that.addChild(that.plusIcon);
 
         //-アイコン

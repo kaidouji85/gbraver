@@ -187,7 +187,7 @@ function battleScene(spec,my){
     }
     
     function setBatteryCommandVisible(visible){
-        that.plusIcon.visible = visible;
+        that.plusIcon.setVisible(visible);
         that.minusIcon.visible = visible;
         that.okIcon.visible = visible;
         that.prevIcon.visible = visible;
