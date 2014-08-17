@@ -1,6 +1,5 @@
 function gameBase(spec,my){
     var core = new Core(320, 480);
-
     core.PICT_PREFIX = location.origin + '/images/';
     core.PICT_ACTIVE_BAR = core.PICT_PREFIX+'activeBar.png';
     core.PICT_ACTIVE_BAR_BACK = core.PICT_PREFIX+'activeBack.png';
