@@ -38,7 +38,7 @@ function battleSceneBase(spec,my){
         //背景(空)
         that.sky = scrollBackGround({
             pict : core.assets[core.PICT_BG_SKY],
-            speed : 0.1,
+            speed : 1,
             height : 220
         });
         that.sky.x = 0;
@@ -48,7 +48,7 @@ function battleSceneBase(spec,my){
         //背景(地面)
         that.ground = scrollBackGround({
             pict : core.assets[core.PICT_BG_GROUND],
-            speed : 0.4,
+            speed : 2,
             height : 320
         });
         that.ground.x = 0;

@@ -10,14 +10,14 @@ window.onload = function() {
 function scrollBackGroundDebug(){
     var sky = scrollBackGround({
         pict : Game.assets[Game.PICT_BG_SKY],
-        speed : 0.1,
+        speed : 1,
         height : 220
     });
     Game.currentScene.addChild(sky);
 
     var ground = scrollBackGround({
         pict : Game.assets[Game.PICT_BG_GROUND],
-        speed : 0.6,
+        speed : 2,
         height : 320
     });
     ground.y = 220;
