@@ -23,6 +23,6 @@ test.describe('入室画面', function() {
     });
 
     test.it('戦闘ルームに入室する', function(){
-        util.doClientTest('/javascripts/changeSceneTest/roomSelectTest.js');
+        util.doClientTest('/javascripts/roomSelectTest/roomSelectTest.js');
     });
 });
