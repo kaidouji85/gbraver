@@ -1,6 +1,7 @@
 function roomSelectScene(spec,my){
     var that = new Scene();
     that.backgroundColor = 'black';
+    that.background = {};
     that.enterRoomButtonArray = new Array();
     that.prevButton = {};
     that.onEnterRoom = onEnterRoom;
@@ -15,14 +16,22 @@ function roomSelectScene(spec,my){
     
     initSprite();
     function initSprite(){
+        //背景
+        that.background = new Sprite(core.SYSTEM_BG_WIDTH,core.SYSTEM_BG_HEIGHT);
+        that.background.image = core.assets[core.PICT_SYSTEM_BACKGROUND];
+        that.addChild(that.background);
+
         //入室ボタン
         for(var i=0; i<CNT_MAX_ENTER_ROOM; i++){
-            var button = new Button('ルーム'+i,'blue',40,200);
+            var button = pictButton({
+                text : 'ルーム'+i,
+                pict : core.assets[core.PICT_BULUE_BUTTON]
+            });
             that.enterRoomButtonArray.push(button);
         }
         that.enterRoomButtonArray.forEach(function(button,i){
-            button.x = 50;
-            button.y = 10+60*i;
+            button.x = 96;
+            button.y = 164+50*i;
             button.addEventListener(Event.TOUCH_END,function(e){
                 pushEnterRoom(i);
             });            
@@ -38,9 +47,12 @@ function roomSelectScene(spec,my){
         that.addChild(labelEnterRoomWait);
         
         //戻るボタン
-        that.prevButton = new Button('戻る','blue',40,200);
-        that.prevButton.x = 50;
-        that.prevButton.y = 340;
+        that.prevButton = pictButton({
+            text : '戻る',
+            pict : core.assets[core.PICT_BULUE_BUTTON]
+        });
+        that.prevButton.x = 96;
+        that.prevButton.y = 420;
         that.prevButton.addEventListener(Event.TOUCH_END,function(e){
             pushPrevButton();
         });
@@ -53,10 +65,10 @@ function roomSelectScene(spec,my){
 
     function pushEnterRoom(roomId){
         that.enterRoomButtonArray.forEach(function(button){
-            button.visible = false;
+            button.setVisible(false);
         });
         labelEnterRoomWait.visible = true;
-        that.prevButton.visible = false;
+        that.prevButton.setVisible(false);
         emitEnterRoom({
             roomId : roomId
         });
