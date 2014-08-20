@@ -25,4 +25,8 @@ test.describe('入室画面', function() {
     test.it('戦闘ルームに入室する', function(){
         util.doClientTest('/javascripts/roomSelectTest/roomSelectTest.js');
     });
+
+    test.it('入室後に退室する', function(){
+        util.doClientTest('/javascripts/roomSelectTest/leaveRoomTest.js');
+    });
 });

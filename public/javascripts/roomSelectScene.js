@@ -6,11 +6,16 @@ function roomSelectScene(spec,my){
     that.prevButton = {};
     that.onEnterRoom = onEnterRoom;
     that.onPushPrevButton = onPushPrevButton;
+    that.emitSuccesEnterRoom = emitSuccesEnterRoom;
+    that.onLeaveRoom = onLeaveRoom;
+    that.emitSuccesLeaveRoom = emitSuccesLeaveRoom;
+    that.leaveRoomButton = {};
     
     var core = enchant.Core.instance;
     var emitEnterRoom;
     var labelEnterRoomWait;
     var emitPushPrevButton = function(){};
+    var emitLeaveRoom = function(){};
     
     var CNT_MAX_ENTER_ROOM = 5;
     
@@ -57,6 +62,17 @@ function roomSelectScene(spec,my){
             pushPrevButton();
         });
         that.addChild(that.prevButton);
+
+        //退室ボタン
+        that.leaveRoomButton = pictButton({
+            text : '退室',
+            pict : core.assets[core.PICT_BULUE_BUTTON]
+        });
+        that.leaveRoomButton.x = 96;
+        that.leaveRoomButton.y = 420;
+        that.leaveRoomButton.setVisible(false);
+        that.leaveRoomButton.addEventListener(Event.TOUCH_END,pushLeaveRoomButton);
+        that.addChild(that.leaveRoomButton);
     };
     
     function onEnterRoom(fn){
@@ -80,7 +96,28 @@ function roomSelectScene(spec,my){
 
     function pushPrevButton(){
         emitPushPrevButton();
-    }    
+    }
+
+    function emitSuccesEnterRoom() {
+        that.leaveRoomButton.setVisible(true);
+    }
+
+    function pushLeaveRoomButton(e) {
+        that.leaveRoomButton.setVisible(false);
+        emitLeaveRoom();
+    }
+
+    function onLeaveRoom(fn) {
+        emitLeaveRoom = fn;
+    }
+
+    function emitSuccesLeaveRoom() {
+        that.prevButton.setVisible(true);
+        labelEnterRoomWait.visible = false;
+        that.enterRoomButtonArray.forEach(function(button){
+            button.setVisible(true);
+        });
+    }
    
     return that;
 }

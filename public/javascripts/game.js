@@ -31,7 +31,10 @@ function game(spec, my) {
         });
         core.roomSelectScene.onPushPrevButton(function(data){
             core.changeTopScene();
-        });  
+        });
+        core.roomSelectScene.onLeaveRoom(function(){
+            emitSendMessage('leaveRoom',null);
+        });
         core.replaceScene(core.roomSelectScene);
         emitChangeScene('selectRoom');
     };
@@ -114,6 +117,12 @@ function game(spec, my) {
                 break;
             case 'successGetCharacterInfo':
                 core.changeArmdozerInfoScene(data);
+                break;
+            case 'succesEnterRoom':
+                core.roomSelectScene.emitSuccesEnterRoom();
+                break;
+            case 'successLeaveRoom':
+                core.roomSelectScene.emitSuccesLeaveRoom();
                 break;
         }
     };
