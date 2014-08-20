@@ -94,17 +94,17 @@ function server(spec, my) {
 
         socket.on('enterRoom', function(data) {
             var L_roomId = data.roomId;
-            isLogin();
+            login();
 
-            function isLogin(loginInfo){
+            function login(loginInfo){
                 if(socket.gbraverInfo.userId!==null){
-                    isAlreadyEnterRoom();
+                    enterRoom();
                 } else {
                     socket.emit('enterRoomError', 'ユーザ認証が完了していません。');
                 }
             }
 
-            function isAlreadyEnterRoom(){
+            function enterRoom(){
                 if (socket.gbraverInfo.roomId===null) {
                     socket.gbraverInfo.roomId = L_roomId;
                     prepareBattle();
