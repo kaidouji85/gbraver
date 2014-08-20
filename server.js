@@ -165,7 +165,6 @@ function server(spec, my) {
             return res;
         }
 
-
         socket.on('disconnect', function(data) {
             if(socket.gbraverInfo.roomId !== null){
                 dissolveRoom(socket.gbraverInfo.roomId);
@@ -192,6 +191,11 @@ function server(spec, my) {
             getCharacterInfo(armdozerId,function(err,result){
                 socket.emit('successGetCharacterInfo',result);
             });
+        });
+
+        socket.on('leaveRoom',function(){
+            dissolveRoom(socket.gbraverInfo.roomId);
+            socket.emit('successLeaveRoom');
         });
     });
 
