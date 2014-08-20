@@ -30,7 +30,7 @@ window.onload = function() {
         });
         
         socket.on('succesEnterRoom', function() {
-            console.log('succesEnterRoom');
+            Game.emitServerResp('succesEnterRoom');
         });
         
         socket.on('successSetArmdozer', function(data) {
@@ -55,6 +55,10 @@ window.onload = function() {
 
         socket.on('successGetCharacterInfo',function(data){
             Game.emitServerResp('successGetCharacterInfo',data);
+        });
+
+        socket.on('successLeaveRoom',function(){
+            Game.emitServerResp('successLeaveRoom',null);
         });
     };
 };

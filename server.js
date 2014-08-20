@@ -194,7 +194,8 @@ function server(spec, my) {
         });
 
         socket.on('leaveRoom',function(){
-            dissolveRoom(socket.gbraverInfo.roomId);
+            roomArray[socket.gbraverInfo.roomId] = room();
+            socket.gbraverInfo.roomId = null;
             socket.emit('successLeaveRoom');
         });
     });
