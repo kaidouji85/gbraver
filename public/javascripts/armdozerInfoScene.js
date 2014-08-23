@@ -15,7 +15,7 @@ function armdozerInfoScene(spec,my){
     that.okButton = {};
     that.powerLabel = {};
     that.powerValueLabel = {};
-    that.labelWait = {};
+    that.mesWindow = {};
     that.onPushOkButton = onPushOkButton;
     that.onPushPrevButton = onPushPrevButton;
 
@@ -102,13 +102,15 @@ function armdozerInfoScene(spec,my){
         that.prevButton.y = 300;
         that.addChild(that.prevButton);
 
-        //待機中ラベル
-        that.labelWait = new Label('待機中');
-        that.labelWait.color = "white";
-        that.labelWait.x = 10;
-        that.labelWait.y = 10;
-        that.labelWait.visible = false;
-        that.addChild(that.labelWait);
+        //メッセージウインドウ
+        that.mesWindow = messageWindow({
+            pict : core.assets[core.PICT_MESSAGE_WINDOW]
+        });
+        that.mesWindow.x = 0;
+        that.mesWindow.y = core.MESSAGE_WINDOW_Y;
+        that.mesWindow.setVisible(false);
+        that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
+        that.addChild(that.mesWindow);
     }
 
     function onPushOkButton(fn){
@@ -149,7 +151,7 @@ function armdozerInfoScene(spec,my){
         that.speedValueLabel.visible = false;
         that.okButton.setVisible(false);
         that.prevButton.setVisible(false);
-        that.labelWait.visible = true;
+        that.mesWindow.setVisible(true);
     }
 
     return that;

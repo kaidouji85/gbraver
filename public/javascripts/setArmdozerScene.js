@@ -4,7 +4,6 @@ function setArmdozerScene(spec,my){
     var MAX_ARMDOZER_BUTTON = 4;
     var armdozerIdList = spec.armdozerIdList;
     var labelArmmdozerSelect;
-    var labelWait;
     var emitSelectArmdozer = function(data){};
     var emitPushPrevButton = function(){};
 
@@ -12,6 +11,7 @@ function setArmdozerScene(spec,my){
     that.background = {};
     that.armdozerButtonArray = new Array(MAX_ARMDOZER_BUTTON);
     that.prevButton = {};
+    that.mesWindow = {};
     that.onSelectArmdozer  = onSelectArmdozer;
     that.onPushPrevButton = onPushPrevButton;
 
@@ -58,13 +58,15 @@ function setArmdozerScene(spec,my){
         labelArmmdozerSelect.y = 30;
         that.addChild(labelArmmdozerSelect);
 
-        //待機中ラベル
-        labelWait = new Label('待機中');
-        labelWait.color = "white";
-        labelWait.x = 10;
-        labelWait.y = 10;
-        labelWait.visible = false;
-        that.addChild(labelWait);
+        //メッセージウインドウ
+        that.mesWindow = messageWindow({
+            pict : core.assets[core.PICT_MESSAGE_WINDOW]
+        });
+        that.mesWindow.x = 0;
+        that.mesWindow.y = core.MESSAGE_WINDOW_Y;
+        that.mesWindow.setVisible(false);
+        that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
+        that.addChild(that.mesWindow);
     }
     
     function onSelectArmdozer(fn){
@@ -92,7 +94,7 @@ function setArmdozerScene(spec,my){
             that.armdozerButtonArray[i].setVisible(false);
         }
         that.prevButton.setVisible(false);
-        labelWait.visible = true;
+        that.mesWindow.setVisible(true);
         labelArmmdozerSelect.visible = false;
     }
 

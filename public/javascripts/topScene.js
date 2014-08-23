@@ -59,7 +59,7 @@ function topScene(){
             pict : core.assets[core.PICT_MESSAGE_WINDOW]
         });
         that.mesWindow.x = 0;
-        that.mesWindow.y = core.COMMAND_POS_Y;
+        that.mesWindow.y = core.MESSAGE_WINDOW_Y;
         that.mesWindow.setVisible(false);
         that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
         that.addChild(that.mesWindow);
