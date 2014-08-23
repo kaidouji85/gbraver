@@ -14,10 +14,10 @@ function gameBase(spec,my){
     core.PICT_BULUE_BUTTON = core.PICT_PREFIX+'buttonBlue.png';
     core.PICT_BG_GROUND = core.PICT_PREFIX+'bgGround.png';
     core.PICT_BG_SKY = core.PICT_PREFIX+'bgSky.png';
+    core.PICT_MESSAGE_WINDOW = core.PICT_PREFIX+'messageWindow.png';
     core.WAIT_TIME_ACTIVE_RESET = 30;
     core.ICON_WIDTH = 124;
     core.ICON_HEIGHT = 40;
-    //core.COMMAND_POX_X = 16;
     core.COMMAND_POS_Y = 300;
     core.FRAME_STAND = 0;
     core.FRAME_ATTACK = 1;
@@ -55,6 +55,7 @@ function gameBase(spec,my){
         core.preload(core.PICT_BULUE_BUTTON);
         core.preload(core.PICT_BG_GROUND);
         core.preload(core.PICT_BG_SKY);
+        core.preload(core.PICT_MESSAGE_WINDOW);
     }
     return core;
 }
