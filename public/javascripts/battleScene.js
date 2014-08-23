@@ -50,13 +50,24 @@ function battleScene(spec,my){
         that.tl.delay(turn).then(function(){
             refreshMertor(data.statusArray);
             that.mesWindow.setVisible(true);
-            that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
+            if(attackUserId === that.userId){
+                that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
+            } else {
+                that.mesWindow.setText(core.MESSAGE_WAIT_COMMAND);
+            }
+
             emitCommand({method:'ok'});            
         });
     }
     
     function doAtackCommandPhase(data){
-        that.mesWindow.setVisible(false);
+        if(that.userId === attackUserId){
+            that.mesWindow.setVisible(false);
+        } else {
+            that.mesWindow.setVisible(true);
+            that.mesWindow.setText(core.MESSAGE_WAIT_COMMAND);
+        }
+
         data.attackUserId = attackUserId;
         MyTurnAnime.play(data,endMyTurnAnime);
 

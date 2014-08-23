@@ -45,16 +45,18 @@ function chargeByEnemy() {
             }
         };
         Game.emitServerResp('resp',waitPhaseData);
-        Game.onSendMessage(assertWaitPhase);
+        Game.onSendMessage(sendCommandForWaitPhase);
     }
     
-    function assertWaitPhase(message,data){
+    function sendCommandForWaitPhase(message,data){
         var expectData = {
             method : 'ok'
         };
         assert.equal(message, 'command', ',ウェイトフェイズ終了時のサーバ送信メッセージ名が正しい');
         assert.deepEqual(data, expectData, ',ウェイトフェイズ終了時のサーバ送信データが正しい');
-        atackCommand();
+        assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
+        assert.equal(Game.currentScene.mesWindow.getText(),'対戦相手がコマンドを選択中......','メッセージが正しい');
+        Game.currentScene.tl.delay(30).then(atackCommand);
     }
     
     function atackCommand() {
@@ -74,10 +76,12 @@ function chargeByEnemy() {
             }
         };
         Game.emitServerResp('resp',atackCommandData);
-        Game.onSendMessage(assertAtackCommand);
+        assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
+        assert.equal(Game.currentScene.mesWindow.getText(),'対戦相手がコマンドを選択中......','メッセージが正しい');
+        Game.onSendMessage(sendCommandForAttackCommandPhase);
     }
     
-    function assertAtackCommand(message,data){
+    function sendCommandForAttackCommandPhase(message,data){
         var expectData = {
             method : 'ok'
         };
@@ -106,21 +110,19 @@ function chargeByEnemy() {
             }
         };
         Game.emitServerResp('resp',chargeData);
-        assertOfMessageWindow();
+        assert.equal(Game.currentScene.mesWindow.getVisible(),false,'メッセージウインドウが表示されない');
+        Game.onSendMessage(sendCommandForChargePhase);
     }
 
-    function assertOfMessageWindow() {
-        assert.equal(Game.currentScene.mesWindow.getVisible(),false,'メッセージウインドウが表示されない');
-        Game.onSendMessage(assertCharge);
-    }
-    
-    function assertCharge(message,data){
+    function sendCommandForChargePhase(message,data){
         var expectData = {
             method : 'ok'
         };
         assert.equal(message, 'command', ',チャージフェイズ終了時のサーバ送信メッセージ名が正しい');
         assert.deepEqual(data, expectData, ',チャージフェイズ終了時のサーバ送信データが正しい');
         assert.equal(Game.currentScene.charaSpriteArray['test001@gmail.com'].frame,0,'敵キャラのポーズが「立ち」である');
+        assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
+        assert.equal(Game.currentScene.mesWindow.getText(),'通信待機中','メッセージが正しい');
         finishTest();
     }
 }

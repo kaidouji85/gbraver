@@ -188,7 +188,7 @@ function attackByPlayer(){
         assert.equal(Game.currentScene.mesWindow.getVisible(),false,'メッセージウインドウが表示されない');
         Game.onSendMessage(function(){
             assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
-            assert.equal(Game.currentScene.mesWindow.getText(),'通信待機中','メッセージが正しい');
+            assert.equal(Game.currentScene.mesWindow.getText(),'対戦相手がコマンドを選択中......','メッセージが正しい');
             finishTest();
         });
     }

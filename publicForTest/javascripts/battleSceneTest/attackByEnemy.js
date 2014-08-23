@@ -47,7 +47,7 @@ function attackByEnemy(){
         Game.onSendMessage(function(message,data){
             //message、dataはenemyChargeTestで確認済み
             assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
-            assert.equal(Game.currentScene.mesWindow.getText(),'通信待機中','メッセージが正しい');
+            assert.equal(Game.currentScene.mesWindow.getText(),'対戦相手がコマンドを選択中......','メッセージが正しい');
             Game.currentScene.tl.delay(30).then(atackCommandPhase);
         });
     }
@@ -69,7 +69,8 @@ function attackByEnemy(){
             }
         };
         Game.emitServerResp('resp',data);
-        assert.equal(Game.currentScene.mesWindow.getVisible(),false,'メッセージウインドウが表示されない');
+        assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
+        assert.equal(Game.currentScene.mesWindow.getText(),'対戦相手がコマンドを選択中......','メッセージが正しい');
         Game.onSendMessage(sendCommandForAttackCommand);
     }
     
