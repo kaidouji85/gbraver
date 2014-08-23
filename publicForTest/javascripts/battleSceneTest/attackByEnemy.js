@@ -46,7 +46,9 @@ function attackByEnemy(){
         Game.emitServerResp('resp',waitPhaseData);
         Game.onSendMessage(function(message,data){
             //message、dataはenemyChargeTestで確認済み
-            atackCommandPhase();
+            assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
+            assert.equal(Game.currentScene.mesWindow.getText(),'通信待機中','メッセージが正しい');
+            Game.currentScene.tl.delay(30).then(atackCommandPhase);
         });
     }
     
@@ -67,10 +69,11 @@ function attackByEnemy(){
             }
         };
         Game.emitServerResp('resp',data);
-        Game.onSendMessage(assertAtackCommandPhase);
+        assert.equal(Game.currentScene.mesWindow.getVisible(),false,'メッセージウインドウが表示されない');
+        Game.onSendMessage(sendCommandForAttackCommand);
     }
     
-    function assertAtackCommandPhase(message,data){
+    function sendCommandForAttackCommand(message,data){
         var expectData = {
             method : 'ok'
         };
@@ -99,21 +102,17 @@ function attackByEnemy(){
             }
         };
         Game.emitServerResp('resp',data);
-        assertOfMessageWindow();
-    }
-
-    function assertOfMessageWindow(){
         assert.equal(Game.currentScene.mesWindow.getVisible(),false,'メッセージウインドウが表示されない');
         selectCommnad();
     }
     
     function selectCommnad(){
-        Game.onSendMessage(assertDefenthCommand);
+        Game.onSendMessage(sendCommandForDefenseCommand);
         touch(Game.currentScene.plusIcon);
         touch(Game.currentScene.okIcon);
     }
     
-    function assertDefenthCommand(message,data){
+    function sendCommandForDefenseCommand(message,data){
         var expectData = {
             method : 'defenth',
             param : {
@@ -121,8 +120,10 @@ function attackByEnemy(){
             }
         };
         assert.equal(message,'command','防御コマンドフェイズのサーバ送信メッセージ名が正しい');
-        assert.deepEqual(data, expectData, '防御コマンドフェイズのサーバ送信データが正しい');    
-        damagePhase();
+        assert.deepEqual(data, expectData, '防御コマンドフェイズのサーバ送信データが正しい');
+        assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
+        assert.equal(Game.currentScene.mesWindow.getText(),'通信待機中','メッセージが正しい');
+        Game.currentScene.tl.delay(30).then(damagePhase);
     }
     
     function damagePhase() {
@@ -147,10 +148,11 @@ function attackByEnemy(){
         };
         
         Game.emitServerResp('resp',damagePhaseData);
-        Game.onSendMessage(assertDamagePhase);
+        assert.equal(Game.currentScene.mesWindow.getVisible(),false,'メッセージウインドウが表示されない');
+        Game.onSendMessage(sendCommandForDamagePhase);
     }
     
-    function assertDamagePhase(message,data){
+    function sendCommandForDamagePhase(message,data){
         var expectData = {
             method : 'ok'
         };
@@ -158,7 +160,9 @@ function attackByEnemy(){
         assert.deepEqual(data, expectData, 'ウェイトフェイズ2のコマンドが正しい');
         assert.equal(Game.currentScene.charaSpriteArray['test001@gmail.com'].frame,0,'敵キャラのポーズが「立ち」である');
         assert.equal(Game.currentScene.charaSpriteArray['test002@gmail.com'].frame,0,'プレイヤーキャラのポーズが「立ち」である');
-        waitPhase2();      
+        assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
+        assert.equal(Game.currentScene.mesWindow.getText(),'通信待機中','メッセージが正しい');
+        Game.currentScene.tl.delay(30).then(waitPhase2);
     }
 
     function waitPhase2(){
@@ -181,6 +185,8 @@ function attackByEnemy(){
         };
         Game.emitServerResp('resp',data);
         Game.onSendMessage(function(message,command) {
+            assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
+            assert.equal(Game.currentScene.mesWindow.getText(),'通信待機中','メッセージが正しい');
             finishTest();
         });
     }

@@ -175,6 +175,8 @@ function battleScene(spec,my){
             that.mesWindow.setText(core.MESSAGE_WAIT_COMMAND);
             sendAtackCommand(battery);
         } else {
+            that.mesWindow.setVisible(true);
+            that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
             sendDefenthCommand(battery);
         }
     };
