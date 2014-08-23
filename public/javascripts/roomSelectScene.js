@@ -4,16 +4,16 @@ function roomSelectScene(spec,my){
     that.background = {};
     that.enterRoomButtonArray = new Array();
     that.prevButton = {};
+    that.leaveRoomButton = {};
+    that.mesWindow = {};
     that.onEnterRoom = onEnterRoom;
     that.onPushPrevButton = onPushPrevButton;
     that.emitSuccesEnterRoom = emitSuccesEnterRoom;
     that.onLeaveRoom = onLeaveRoom;
     that.emitSuccesLeaveRoom = emitSuccesLeaveRoom;
-    that.leaveRoomButton = {};
     
     var core = enchant.Core.instance;
     var emitEnterRoom;
-    var labelEnterRoomWait;
     var emitPushPrevButton = function(){};
     var emitLeaveRoom = function(){};
     
@@ -41,15 +41,7 @@ function roomSelectScene(spec,my){
                 pushEnterRoom(i);
             });            
             that.addChild(button);
-        });    
-       
-        //入室中
-        labelEnterRoomWait = new Label('待機中');
-        labelEnterRoomWait.color = "white";
-        labelEnterRoomWait.x = 10;
-        labelEnterRoomWait.y = 10;
-        labelEnterRoomWait.visible = false;
-        that.addChild(labelEnterRoomWait);
+        });
         
         //戻るボタン
         that.prevButton = pictButton({
@@ -73,6 +65,15 @@ function roomSelectScene(spec,my){
         that.leaveRoomButton.setVisible(false);
         that.leaveRoomButton.addEventListener(Event.TOUCH_END,pushLeaveRoomButton);
         that.addChild(that.leaveRoomButton);
+
+        //メッセージウインドウ
+        that.mesWindow = messageWindow({
+            pict : core.assets[core.PICT_MESSAGE_WINDOW]
+        });
+        that.mesWindow.x = 0;
+        that.mesWindow.y = core.MESSAGE_WINDOW_Y;
+        that.mesWindow.setVisible(false);
+        that.addChild(that.mesWindow);
     };
     
     function onEnterRoom(fn){
@@ -83,7 +84,8 @@ function roomSelectScene(spec,my){
         that.enterRoomButtonArray.forEach(function(button){
             button.setVisible(false);
         });
-        labelEnterRoomWait.visible = true;
+        that.mesWindow.setVisible(true);
+        that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
         that.prevButton.setVisible(false);
         emitEnterRoom({
             roomId : roomId
@@ -99,6 +101,7 @@ function roomSelectScene(spec,my){
     }
 
     function emitSuccesEnterRoom() {
+        that.mesWindow.setText(core.MESSAGE_WAIT_ENTERROOM);
         that.leaveRoomButton.setVisible(true);
     }
 
@@ -113,7 +116,7 @@ function roomSelectScene(spec,my){
 
     function emitSuccesLeaveRoom() {
         that.prevButton.setVisible(true);
-        labelEnterRoomWait.visible = false;
+        that.mesWindow.setVisible(false);
         that.enterRoomButtonArray.forEach(function(button){
             button.setVisible(true);
         });
