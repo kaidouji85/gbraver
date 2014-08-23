@@ -30,6 +30,7 @@ function gameBase(spec,my){
     core.SYSTEM_BG_HEIGHT = 480;
     core.BUTTON_WIDTH = 96;
     core.BUTTON_HEIGHT = 24;
+    core.MESSAGE_WAIT_COMMUNICATE = '通信待機中';
 
     core.fps = 60;
     core.battleScene = null;

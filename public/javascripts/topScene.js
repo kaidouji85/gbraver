@@ -3,12 +3,12 @@ function topScene(){
     that.background = {};
     that.battleRoomButton = {};
     that.setArmdpzerButton = {};
+    that.mesWindow = {};
     that.onPushSetArmdozer = onPushSetArmdozer;
     that.onPushBattleRoom = onPushBattleRoom;
     
     var core = enchant.Core.instance;
     var labelMenu;
-    var labelWait;
     var emitPushSetArmdozer = function(){};
     var emitPushBattleRoom = function(){};
     
@@ -42,7 +42,7 @@ function topScene(){
             labelMenu.visible = false;
             that.battleRoomButton.setVisible(false);
             that.setArmdpzerButton.setVisible(false);
-            labelWait.visible = true;
+            that.mesWindow.setVisible(true);
             emitPushSetArmdozer();
         });
         that.addChild(that.setArmdpzerButton);
@@ -54,13 +54,15 @@ function topScene(){
         labelMenu.y = 10;        
         that.addChild(labelMenu);
 
-        //待機中ラベル
-        labelWait = new Label('待機中');
-        labelWait.color = "white";
-        labelWait.x = 10;
-        labelWait.y = 10;
-        labelWait.visible = false;
-        that.addChild(labelWait);
+        //メッセージウインドウ
+        that.mesWindow = messageWindow({
+            pict : core.assets[core.PICT_MESSAGE_WINDOW]
+        });
+        that.mesWindow.x = 0;
+        that.mesWindow.y = core.COMMAND_POS_Y;
+        that.mesWindow.setVisible(false);
+        that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
+        that.addChild(that.mesWindow);
     }
     
     function onPushSetArmdozer(fn){
