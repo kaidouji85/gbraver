@@ -193,7 +193,7 @@ function battleSceneBase(spec,my){
             pict : core.assets[core.PICT_MESSAGE_WINDOW]
         });
         that.mesWindow.x = 0;
-        that.mesWindow.y = 180;
+        that.mesWindow.y = COMMAND_Y_1;
         that.mesWindow.setVisible(false);
         that.addChild(that.mesWindow);
     }

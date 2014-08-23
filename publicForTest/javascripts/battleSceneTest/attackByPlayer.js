@@ -121,6 +121,8 @@ function attackByPlayer(){
         };
         assert.equal(message,'command','防御コマンドフェイズのサーバ送信メッセージ名が正しい');
         assert.deepEqual(data, expect, '防御コマンドフェイズのサーバ送信データが正しい');
+        assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
+        assert.equal(Game.currentScene.mesWindow.getText(),'対戦相手がコマンドを選択中......','メッセージが正しい');
         Game.currentScene.tl.delay(30).then(damagePhase);
     }
 

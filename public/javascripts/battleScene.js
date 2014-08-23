@@ -21,6 +21,7 @@ function battleScene(spec,my){
     var FRAME_STAND = 0;
     var FRAME_ATTACK = 1;
     var FRAME_DAMAGE = 2;
+    var MESSAGE_WAIT_COMMAND = '対戦相手がコマンドを選択中......';
 
     that.doWaitPhase = doWaitPhase;
     that.doAtackCommandPhase = doAtackCommandPhase;
@@ -59,6 +60,8 @@ function battleScene(spec,my){
                 setAtackCommandVisible(true);
             } else {
                 that.tl.delay(1).then(function(){
+                    that.mesWindow.setVisible(true);
+                    that.mesWindow.setText(MESSAGE_WAIT_COMMAND);
                     emitCommand({method:'ok'});
                 });
             }
@@ -81,6 +84,7 @@ function battleScene(spec,my){
                 emitCommand({method:'ok'});
             });
         } else {
+            that.mesWindow.setVisible(false);
             viewBatteryCommand();
         }
     };
@@ -160,7 +164,7 @@ function battleScene(spec,my){
         
         if(attackUserId===that.userId){
             that.mesWindow.setVisible(true);
-            that.mesWindow.setText('対戦相手がコマンドを選択中......');
+            that.mesWindow.setText(MESSAGE_WAIT_COMMAND);
             sendAtackCommand(battery);
         } else {
             sendDefenthCommand(battery);
