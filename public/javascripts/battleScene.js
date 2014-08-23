@@ -79,6 +79,8 @@ function battleScene(spec,my){
         that.tl.delay(WAIT_TIME_ACTIVE_RESET).then(function(){
             that.charaSpriteArray[attackUserId].frame = FRAME_STAND;
             attackUserId = '';
+            that.mesWindow.setVisible(true);
+            that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
             emitCommand({method:'ok'});
         });
     };
@@ -162,6 +164,8 @@ function battleScene(spec,my){
     
     function charge(){
         setAtackCommandVisible(false);
+        that.mesWindow.setVisible(true);
+        that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
         emitCommand({method:'charge'});
     };
     
