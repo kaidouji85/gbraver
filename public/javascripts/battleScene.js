@@ -70,6 +70,7 @@ function battleScene(spec,my){
     
     function doChargePhase(data){
         refreshMertor(data.statusArray);
+        that.mesWindow.setVisible(false);
         that.tl.delay(WAIT_TIME_ACTIVE_RESET).then(function(){
             that.charaSpriteArray[attackUserId].frame = FRAME_STAND;
             attackUserId = '';
