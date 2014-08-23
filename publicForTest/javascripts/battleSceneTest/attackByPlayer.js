@@ -47,7 +47,9 @@ function attackByPlayer(){
         Game.emitServerResp('resp',waitPhaseData);
         Game.onSendMessage(function(message,data){
             //message,dataはplayerChargeTestで確認済み
-            atackCommandPhase();
+            assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
+            assert.equal(Game.currentScene.mesWindow.getText(),'通信待機中','メッセージが正しい');
+            Game.currentScene.tl.delay(30).then(atackCommandPhase);
         });
     }
     
@@ -68,6 +70,7 @@ function attackByPlayer(){
             }
         };
         Game.emitServerResp('resp',atackCommandPhaseData);
+        assert.equal(Game.currentScene.mesWindow.getVisible(),false,'メッセージウインドウが表示されない');
         selectCommand();
     }
     
@@ -76,11 +79,10 @@ function attackByPlayer(){
         touch(Game.currentScene.plusIcon);
         touch(Game.currentScene.plusIcon);
         touch(Game.currentScene.okIcon);
-       
-        Game.onSendMessage(assertAtackCommandPhase);
+        Game.onSendMessage(sendCommandForAttackCommand);
     }
     
-    function assertAtackCommandPhase(message,data){
+    function sendCommandForAttackCommand(message,data){
         var expect = {
             method : 'atack',
             param : {
@@ -112,10 +114,10 @@ function attackByPlayer(){
             }
         };
         Game.emitServerResp('resp',defenthCommandData);
-        Game.onSendMessage(assertDefenthCommandPhase);
+        Game.onSendMessage(sendCommandForDefenthCommandPhase);
     }
     
-    function assertDefenthCommandPhase(message,data){
+    function sendCommandForDefenthCommandPhase(message,data){
         var expect = {
             method : 'ok'
         };
@@ -147,15 +149,11 @@ function attackByPlayer(){
             }
         };
         Game.emitServerResp('resp',damagePhaseData);
-        assertOfMessageWindow();
-    }
-
-    function assertOfMessageWindow(){
         assert.equal(Game.currentScene.mesWindow.getVisible(),false,'メッセージウインドウが表示されない');
-        Game.onSendMessage(assertDamagePhase);
+        Game.onSendMessage(sendCommandForDamagePhase);
     }
     
-    function assertDamagePhase(message,data){
+    function sendCommandForDamagePhase(message,data){
         var expect = {
             method : 'ok'
         };
@@ -163,7 +161,9 @@ function attackByPlayer(){
         assert.deepEqual(data, expect, 'ウェイトフェイズ2のサーバ送信データが正しい');
         assert.equal(Game.currentScene.charaSpriteArray['test001@gmail.com'].frame,0,'プレイヤーキャラのポーズが「立ち」である');
         assert.equal(Game.currentScene.charaSpriteArray['test002@gmail.com'].frame,0,'敵キャラのポーズが「立ち」である');
-        waitPhase2();
+        assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
+        assert.equal(Game.currentScene.mesWindow.getText(),'通信待機中','メッセージが正しい');
+        Game.currentScene.tl.delay(30).then(waitPhase2);
     }
     
     function waitPhase2(){
@@ -185,10 +185,13 @@ function attackByPlayer(){
             }
         };
         Game.emitServerResp('resp',waitPhaseData);
-        Game.onSendMessage(finish);
+        assert.equal(Game.currentScene.mesWindow.getVisible(),false,'メッセージウインドウが表示されない');
+        Game.onSendMessage(function(){
+            assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
+            assert.equal(Game.currentScene.mesWindow.getText(),'通信待機中','メッセージが正しい');
+            finishTest();
+        });
     }
-    
-    function finish(message,data){
-        finishTest();
-    }
+
+
 }

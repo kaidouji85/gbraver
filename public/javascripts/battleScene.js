@@ -40,6 +40,7 @@ function battleScene(spec,my){
     function doWaitPhase(data){
         var turn = data.turn;
         var plusValue;
+        that.mesWindow.setVisible(false);
         attackUserId = data.atackUserId;
         for(var uid in data.statusArray) {
             plusValue = (120*data.statusArray[uid].active/5000 - that.activeBarArray[uid].getValue())/turn;
@@ -48,13 +49,18 @@ function battleScene(spec,my){
         
         that.tl.delay(turn).then(function(){
             refreshMertor(data.statusArray);
+            that.mesWindow.setVisible(true);
+            that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
             emitCommand({method:'ok'});            
         });
-    };
+    }
     
     function doAtackCommandPhase(data){
+        that.mesWindow.setVisible(false);
         data.attackUserId = attackUserId;
-        MyTurnAnime.play(data,function(){
+        MyTurnAnime.play(data,endMyTurnAnime);
+
+        function endMyTurnAnime() {
             if(attackUserId===that.userId){
                 setAtackCommandVisible(true);
             } else {
@@ -64,8 +70,8 @@ function battleScene(spec,my){
                     emitCommand({method:'ok'});
                 });
             }
-        });
-    };
+        }
+    }
     
     function doChargePhase(data){
         refreshMertor(data.statusArray);
@@ -93,6 +99,8 @@ function battleScene(spec,my){
         that.mesWindow.setVisible(false);
         data.attackUserId = attackUserId;
         AttackAnime.play(data,function(){
+            that.mesWindow.setVisible(true);
+            that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
             emitCommand({method:'ok'});
         });
     };
