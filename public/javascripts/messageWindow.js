@@ -1,6 +1,6 @@
 function messageWindow(spec,my){
     var SPRITE_WIDTH = 320;
-    var SPRITE_HEIGHT = 77;
+    var SPRITE_HEIGHT = 96;
     var COLOR_WHITE = '#FFFFFF';
 
     var that = new Group();
@@ -12,7 +12,7 @@ function messageWindow(spec,my){
     init();
     function init(){
         windowSprite.image = pict;
-        windowSprite.opacity = 1;
+        windowSprite.opacity = 0.8;
         that.addChild(windowSprite);
 
         messageLabel.color = COLOR_WHITE;
