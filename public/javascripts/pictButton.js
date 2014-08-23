@@ -4,13 +4,14 @@ function pictButton(spec,my){
     var pict = spec.pict;
     var visible = true;
     var COLOR_WHITE = '#FFFFFF';
-    var COLOR_GRAY = '#708090';
+    var COLOR_GRAY = '#FAFAFA';
     var BUTTON_WIDTH = 128;
     var BUTTON_HEIGHT = 32;
     var buttonSprite = new Sprite(BUTTON_WIDTH,BUTTON_HEIGHT);
     var buttonLabel = new Label(text);
 
     buttonSprite.image = pict;
+    buttonSprite.opacity = 0.8;
     that.addChild(buttonSprite);
 
     buttonLabel.color = COLOR_WHITE;

@@ -16,13 +16,13 @@ function messageWindow(spec,my){
         that.addChild(windowSprite);
 
         messageLabel.color = COLOR_WHITE;
-        messageLabel.y = (SPRITE_HEIGHT - messageLabel._boundHeight)/2;
         that.addChild(messageLabel);
     }
 
     that.setText = function(text){
         messageLabel.text = text;
         messageLabel.x = (SPRITE_WIDTH - messageLabel._boundWidth)/2;
+        messageLabel.y = (SPRITE_HEIGHT - messageLabel._boundHeight)/2;
     }
 
     that.getText = function(){
