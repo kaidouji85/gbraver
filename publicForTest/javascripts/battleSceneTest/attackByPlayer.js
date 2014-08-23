@@ -90,7 +90,9 @@ function attackByPlayer(){
         assert.equal(message,'command','攻撃コマンドフェイズのサーバ送信メッセージ名が正しい');
         assert.deepEqual(data, expect, '攻撃コマンドフェイズのサーバ送信データが正しい');
         assert.equal(Game.currentScene.charaSpriteArray['test001@gmail.com'].frame,1,'プレイヤーキャラのポーズが「攻撃」である');
-        defenthCommandPhase();
+        assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
+        assert.equal(Game.currentScene.mesWindow.getText(),'対戦相手がコマンドを選択中......','メッセージが正しい');
+        Game.currentScene.tl.delay(30).then(defenthCommandPhase);
     }
     
     function defenthCommandPhase(){
@@ -119,7 +121,7 @@ function attackByPlayer(){
         };
         assert.equal(message,'command','防御コマンドフェイズのサーバ送信メッセージ名が正しい');
         assert.deepEqual(data, expect, '防御コマンドフェイズのサーバ送信データが正しい');
-        damagePhase();
+        Game.currentScene.tl.delay(30).then(damagePhase);
     }
 
     function damagePhase() {
@@ -142,8 +144,12 @@ function attackByPlayer(){
                 }
             }
         };
-        
         Game.emitServerResp('resp',damagePhaseData);
+        assertOfMessageWindow();
+    }
+
+    function assertOfMessageWindow(){
+        assert.equal(Game.currentScene.mesWindow.getVisible(),false,'メッセージウインドウが表示されない');
         Game.onSendMessage(assertDamagePhase);
     }
     

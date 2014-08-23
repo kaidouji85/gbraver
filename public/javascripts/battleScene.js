@@ -86,6 +86,7 @@ function battleScene(spec,my){
     };
     
     function doDamagePhase(data){
+        that.mesWindow.setVisible(false);
         data.attackUserId = attackUserId;
         AttackAnime.play(data,function(){
             emitCommand({method:'ok'});
@@ -158,6 +159,8 @@ function battleScene(spec,my){
         that.batteryNumberArray[that.userId].visible = false;
         
         if(attackUserId===that.userId){
+            that.mesWindow.setVisible(true);
+            that.mesWindow.setText('対戦相手がコマンドを選択中......');
             sendAtackCommand(battery);
         } else {
             sendDefenthCommand(battery);

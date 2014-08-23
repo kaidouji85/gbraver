@@ -24,6 +24,7 @@ function battleSceneBase(spec,my){
     that.damageLabelArray = {};
     that.subDamageLabelArray = {};
     that.hitEffect = {};
+    that.mesWindow = {};
 
     that.refreshMertor = function(statusArray){
         for(var uid in statusArray){
@@ -186,6 +187,15 @@ function battleSceneBase(spec,my){
         that.prevIcon.y = COMMAND_Y_2;
         that.prevIcon.setVisible(false);
         that.addChild(that.prevIcon);
+
+        //メッセージウインドウ
+        that.mesWindow = messageWindow({
+            pict : core.assets[core.PICT_MESSAGE_WINDOW]
+        });
+        that.mesWindow.x = 0;
+        that.mesWindow.y = 180;
+        that.mesWindow.setVisible(false);
+        that.addChild(that.mesWindow);
     }
 
     return that;

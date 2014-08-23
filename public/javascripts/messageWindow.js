@@ -7,11 +7,12 @@ function messageWindow(spec,my){
     var pict = spec.pict;
     var windowSprite = new Sprite(SPRITE_WIDTH,SPRITE_HEIGHT);
     var messageLabel = new Label('');
+    var visible = true;
 
     init();
     function init(){
         windowSprite.image = pict;
-        windowSprite.opacity = 0.7;
+        windowSprite.opacity = 1;
         that.addChild(windowSprite);
 
         messageLabel.color = COLOR_WHITE;
@@ -24,9 +25,18 @@ function messageWindow(spec,my){
         messageLabel.x = (SPRITE_WIDTH - messageLabel._boundWidth)/2;
     }
 
-    that.setVisible = function(visible){
+    that.getText = function(){
+        return messageLabel.text;
+    }
+
+    that.setVisible = function(value){
+        visible = value;
         windowSprite.visible = visible;
         messageLabel.visible = visible;
+    }
+
+    that.getVisible = function() {
+        return visible;
     }
 
     return that;
