@@ -20,10 +20,10 @@ function enterRoomAndGameStart(){
     function enterRoom(){
         //ルーム2を押す
         touch(Game.roomSelectScene.enterRoomButtonArray[2]);
-        Game.onSendMessage(assertEnterRoom);
+        Game.onSendMessage(sendEnterRoomCommand);
     }
 
-    function assertEnterRoom(message,data){
+    function sendEnterRoomCommand(message,data){
         var expect = {
             roomId : 2
         };
@@ -34,7 +34,17 @@ function enterRoomAndGameStart(){
         assert.equal(Game.currentScene.enterRoomButtonArray[0].getVisible(),false,'ルーム2ボタンが非表示');
         assert.equal(Game.currentScene.enterRoomButtonArray[0].getVisible(),false,'ルーム3ボタンが非表示');
         assert.equal(Game.currentScene.enterRoomButtonArray[0].getVisible(),false,'ルーム4ボタンが非表示');
+        assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
+        assert.equal(Game.currentScene.mesWindow.getText(),'通信待機中','メッセージが正しい');
         assert.equal(Game.currentScene.prevButton.getVisible(),false,'戻るボタンが非表示');
+        Game.currentScene.tl.delay(30).then(successEnterRoom);
+    }
+
+    function successEnterRoom() {
+        Game.emitServerResp('succesEnterRoom',{});
+        assert.equal(Game.currentScene.leaveRoomButton.getVisible(),true,'退出ボタンが表示されている');
+        assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
+        assert.equal(Game.currentScene.mesWindow.getText(),'プレイヤーの入室待ち','メッセージが正しい');
         finishTest();
     }
 }

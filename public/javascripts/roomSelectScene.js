@@ -106,6 +106,8 @@ function roomSelectScene(spec,my){
     }
 
     function pushLeaveRoomButton(e) {
+        that.mesWindow.setVisible(true);
+        that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
         that.leaveRoomButton.setVisible(false);
         emitLeaveRoom();
     }

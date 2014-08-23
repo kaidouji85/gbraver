@@ -25,8 +25,14 @@ function roomSelectToBattle(){
         };
         assert.equal(message,'enterRoom','メッセージが正しい');
         assert.deepEqual(data,expectData,'入室メッセージのパラメータが正しい');
+        successEnterRoom();
+    }
+
+    function successEnterRoom(){
+        Game.emitServerResp('succesEnterRoom',{});
         gameStart();
     }
+
 
     function gameStart() {
         //TODO : データ構造が気持ち悪い。ユーザIDが重複しまくってる。サーバ側の修正も必要だから一筋縄ではいかない。
