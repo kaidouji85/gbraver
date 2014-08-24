@@ -40,16 +40,16 @@ function battleSceneBase(spec,my){
         that.sky = scrollBackGround({
             pict : core.assets[core.PICT_BG_SKY],
             speed : 1,
-            height : 220
+            height : 240
         });
         that.sky.x = 0;
-        that.sky.y = 0;
+        that.sky.y = -20;
         that.addChild(that.sky);
 
         //背景(地面)
         that.ground = scrollBackGround({
             pict : core.assets[core.PICT_BG_GROUND],
-            speed : 2,
+            speed : 0,
             height : 320
         });
         that.ground.x = 0;
