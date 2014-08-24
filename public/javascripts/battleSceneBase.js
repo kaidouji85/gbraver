@@ -37,6 +37,7 @@ function battleSceneBase(spec,my){
     initSprite();
     function initSprite() {
         //背景(空)
+        /*
         that.sky = scrollBackGround({
             pict : core.assets[core.PICT_BG_SKY],
             speed : 1,
@@ -45,15 +46,16 @@ function battleSceneBase(spec,my){
         that.sky.x = 0;
         that.sky.y = -20;
         that.addChild(that.sky);
+        */
 
         //背景(地面)
         that.ground = scrollBackGround({
             pict : core.assets[core.PICT_BG_GROUND],
             speed : 0,
-            height : 320
+            height : 480
         });
         that.ground.x = 0;
-        that.ground.y = 220;
+        that.ground.y = 0;
         that.addChild(that.ground);
 
         for(var uid in that.statusArray){
