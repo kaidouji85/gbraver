@@ -8,13 +8,6 @@ window.onload = function() {
 }
 
 function scrollBackGroundDebug(){
-    var sky = scrollBackGround({
-        pict : Game.assets[Game.PICT_BG_SKY],
-        speed : 1,
-        height : 220
-    });
-    Game.currentScene.addChild(sky);
-
     var ground = scrollBackGround({
         pict : Game.assets[Game.PICT_BG_GROUND],
         speed : 2,

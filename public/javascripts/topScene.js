@@ -16,7 +16,7 @@ function topScene(){
     function initSprite(){
         //背景
         that.background = new Sprite(core.SYSTEM_BG_WIDTH,core.SYSTEM_BG_HEIGHT);
-        that.background.image = core.assets[core.PICT_SYSTEM_BACKGROUND];
+        that.background.image = core.assets[core.PICT_BG_GROUND];
         that.addChild(that.background);
 
         //対戦ルーム入室ボタン
