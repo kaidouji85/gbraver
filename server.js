@@ -81,10 +81,13 @@ function server(spec, my) {
 
         socket.on('auth',function(data){
             var L_userId = data.userId;
-            getPlayerData(L_userId, function(err, data) {
+            getPlayerData(L_userId, function(err, userData) {
                 if(!err){
+                    var sendData = {
+                        armdozerPict : userData.status.pictName
+                    };
                     socket.gbraverInfo.userId = L_userId;
-                    socket.emit('successAuth');
+                    socket.emit('successAuth',sendData);
                 } else {
                     var message = L_userId + 'は存在しないユーザです';
                     socket.emit('authError',message);

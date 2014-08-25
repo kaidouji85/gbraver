@@ -32,7 +32,11 @@ describe('serverクラスのテスト', function() {
                 client.emit('auth', {
                     userId : 'test001@gmail.com'
                 });
-                client.on('successAuth', function() {
+                client.on('successAuth', function(data) {
+                    var expect = {
+                        armdozerPict : 'GranBraver.PNG'
+                    };
+                    assert.deepEqual(data,expect,'選択しているアームドーザの画像名が正しい');
                     done();
                 });
             });
