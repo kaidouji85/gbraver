@@ -4,6 +4,7 @@ function game(spec, my) {
      */
     var core = gameBase();
     var userId = spec.userId;
+    var armdozerPict = spec.armdozerPict;
     var emitChangeScene = function(scene){};
     var emitSendMessage = function(message,data){};
 
@@ -40,7 +41,9 @@ function game(spec, my) {
     };
     
     core.changeTopScene = function(){
-        core.topScene = topScene();
+        core.topScene = topScene({
+            armdozerPict : armdozerPict
+        });
         core.topScene.onPushSetArmdozer(function(){
             emitSendMessage('getCharacterList',null);
         });

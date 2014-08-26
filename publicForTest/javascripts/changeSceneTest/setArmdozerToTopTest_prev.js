@@ -8,7 +8,8 @@ window.onload = function(){
 
 function setArmdozerToTop_pushPrevButton(){
     var Game = game({
-        userId : 'test001@gmail.com'
+        userId : 'test001@gmail.com',
+        armdozerPict : 'GranBraver.PNG'
     });
     var armdozerIdList = [
         {

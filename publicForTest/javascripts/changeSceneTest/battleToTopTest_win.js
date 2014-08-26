@@ -12,7 +12,8 @@ function battleToTop_win(){
 
     function initGame(){
         Game = game({
-            userId : 'saikyou@gmail.com'});
+            userId : 'saikyou@gmail.com',
+            armdozerPict : 'GranBraver.PNG'});
         Game.start();
         Game.onload = function(){
             Game.changeBattleScene({

@@ -4,61 +4,65 @@ enchant();
 enchant.ENV.SOUND_ENABLED_ON_MOBILE_SAFARI = false;
 
 window.onload = function() {
-    var socket;
+    var socket = io.connect(location.origin);
     var roomId;
     var userId = $("meta[name=userId]").attr('content');;
     var inputs = null;
-    var Game = new game({
+    var Game;
+
+    //ユーザ認証する
+    socket.emit('auth', {
         userId : userId
     });
-    Game.start();
-    Game.onload = function() {
-        socket = io.connect(location.origin);
 
-        //ユーザ認証する
-        socket.emit('auth', {
-            userId : userId
+    //ユーザ認証成功
+    socket.on('successAuth', function(data) {
+        Game = new game({
+            userId : userId,
+            armdozerPict : data.armdozerPict
         });
+        initGame();
+    });
 
-        //ユーザ認証成功
-        socket.on('successAuth', function() {
+    function initGame(){
+        Game.start();
+        Game.onload = function() {
             Game.changeTopScene();
-        });
-        
-        Game.onSendMessage(function(message,data){
-            socket.emit(message,data);
-        });
-        
-        socket.on('succesEnterRoom', function() {
-            Game.emitServerResp('succesEnterRoom');
-        });
-        
-        socket.on('successSetArmdozer', function(data) {
-            Game.emitServerResp('successSetArmdozer',data);
-        });        
-                
-        socket.on("gameStart", function(data){
-            Game.emitServerResp('gameStart',data);
-        });
-        
-        socket.on('resp', function(data){
-            Game.emitServerResp('resp',data);
-        });
+            Game.onSendMessage(function(message,data){
+                socket.emit(message,data);
+            });
 
-        socket.on('dissolveRoom', function(data){
-            Game.emitServerResp('dissolveRoom',data);
-        });
+            socket.on('succesEnterRoom', function() {
+                Game.emitServerResp('succesEnterRoom');
+            });
 
-        socket.on('successGetCharacterList',function(data){
-            Game.emitServerResp('successGetCharacterList',data);
-        });
+            socket.on('successSetArmdozer', function(data) {
+                Game.emitServerResp('successSetArmdozer',data);
+            });
 
-        socket.on('successGetCharacterInfo',function(data){
-            Game.emitServerResp('successGetCharacterInfo',data);
-        });
+            socket.on("gameStart", function(data){
+                Game.emitServerResp('gameStart',data);
+            });
 
-        socket.on('successLeaveRoom',function(){
-            Game.emitServerResp('successLeaveRoom',null);
-        });
-    };
+            socket.on('resp', function(data){
+                Game.emitServerResp('resp',data);
+            });
+
+            socket.on('dissolveRoom', function(data){
+                Game.emitServerResp('dissolveRoom',data);
+            });
+
+            socket.on('successGetCharacterList',function(data){
+                Game.emitServerResp('successGetCharacterList',data);
+            });
+
+            socket.on('successGetCharacterInfo',function(data){
+                Game.emitServerResp('successGetCharacterInfo',data);
+            });
+
+            socket.on('successLeaveRoom',function(){
+                Game.emitServerResp('successLeaveRoom',null);
+            });
+        };
+    }
 };
