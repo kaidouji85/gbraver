@@ -37,7 +37,8 @@ function setArmdozerToArmdozerInfoTest(){
 
     function initGame(){
         Game = game({
-            userId : 'test001@gmail.com'
+            userId : 'test001@gmail.com',
+            armdozerPict : 'Landozer.PNG'
         });
         Game.start();
         Game.onload = function(){
@@ -82,10 +83,13 @@ function setArmdozerToArmdozerInfoTest(){
                 id:'landozer'
             }
         ];
-        Game.onChangeScene(function(scene){
-            assert.equal(scene,'setArmdozer','アームドーザ選択画面に遷移する');
-            finishTest();
-        })
+        Game.onChangeScene(assertOfChangeScene)
         Game.emitServerResp('successGetCharacterList',data);
+    }
+
+    function assertOfChangeScene(scene) {
+        assert.equal(scene,'setArmdozer','アームドーザ選択画面に遷移する');
+        assert.equal(Game.getArmdozerPict(),'GranBraver.PNG','アームドーザ画像がグランブレイバーに変更されている');
+        finishTest();
     }
 }

@@ -66,12 +66,13 @@ function game(spec, my) {
         emitChangeScene('setArmdozer');
     };
 
-    core.changeArmdozerInfoScene = function(data){
+    core.changeArmdozerInfoScene = function(respData){
         var scene = armdozerInfoScene({
-            armdozerInfo : data
+            armdozerInfo : respData
         });
-        scene.onPushOkButton(function(data){
-            emitSendMessage('setArmdozer',data);
+        scene.onPushOkButton(function(sendData){
+            armdozerPict = respData.pictName;
+            emitSendMessage('setArmdozer',sendData);
         });
         scene.onPushPrevButton(function(){
             emitSendMessage('getCharacterList');
@@ -129,6 +130,10 @@ function game(spec, my) {
                 break;
         }
     };
+
+    core.getArmdozerPict = function() {
+        return armdozerPict;
+    }
     
     function changePhase(data){
         var phase = data.phase;
