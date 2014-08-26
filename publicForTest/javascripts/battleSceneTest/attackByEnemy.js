@@ -15,7 +15,9 @@ function attackByEnemy(){
 
     function initGame(){
         Game = game({
-            userId : 'test002@gmail.com'});
+            userId : 'test002@gmail.com',
+            armdozerPict : 'Landozer.PNG'
+        });
         Game.start();
         Game.onload = function(){
             Game.changeBattleScene({

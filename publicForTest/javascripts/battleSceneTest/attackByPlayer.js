@@ -15,7 +15,8 @@ function attackByPlayer(){
 
     function initGame(){
         Game = game({
-            userId : 'test001@gmail.com'
+            userId : 'test001@gmail.com',
+            armdozerPict : 'GranBraver.PNG'
         });
         Game.start();
         Game.onload = function(){
