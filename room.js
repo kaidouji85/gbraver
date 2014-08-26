@@ -158,6 +158,14 @@ function room(){
         }
     };
 
+    that.getUserIdList = function(){
+        var userIdList = new Array();
+        for(var uid in users){
+            userIdList.push(uid);
+        }
+        return userIdList;
+    }
+
     return that;    
 }
 

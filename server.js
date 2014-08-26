@@ -201,6 +201,14 @@ function server(spec, my) {
             socket.gbraverInfo.roomId = null;
             socket.emit('successLeaveRoom');
         });
+
+        socket.on('getRoomInfo',function(){
+            var roomInfo = {};
+            for(var i = 0; i < 5; i++){
+                roomInfo[i] = roomArray[i].getUserIdList();
+            }
+            socket.emit('successGetRoomInfo',roomInfo);
+        });
     });
 
     return io;
