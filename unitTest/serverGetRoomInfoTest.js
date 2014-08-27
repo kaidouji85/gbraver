@@ -169,7 +169,7 @@ describe('serverクラスのテスト', function() {
             function assertGetRoomInfo(data) {
                 var expect = {
                     '0' : [],
-                    '1' : ['test002@gmail.com',],
+                    '1' : ['test002@gmail.com'],
                     '2' : ['test003@gmail.com'],
                     '3' : [],
                     '4' : []
