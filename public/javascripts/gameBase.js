@@ -13,6 +13,7 @@ function gameBase(spec,my){
     core.PICT_BULUE_BUTTON = core.PICT_PREFIX+'buttonBlue.png';
     core.PICT_BG_GROUND = core.PICT_PREFIX+'bgGround.png';
     core.PICT_MESSAGE_WINDOW = core.PICT_PREFIX+'messageWindow.png';
+    core.PICT_WINDOW = core.PICT_PREFIX+'window.png';
     core.WAIT_TIME_ACTIVE_RESET = 30;
     core.ICON_WIDTH = 124;
     core.ICON_HEIGHT = 40;
@@ -56,6 +57,7 @@ function gameBase(spec,my){
         core.preload(core.PICT_BULUE_BUTTON);
         core.preload(core.PICT_BG_GROUND);
         core.preload(core.PICT_MESSAGE_WINDOW);
+        core.preload(core.PICT_WINDOW);
     }
     return core;
 }
