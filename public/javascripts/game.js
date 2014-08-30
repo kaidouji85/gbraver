@@ -48,7 +48,7 @@ function game(spec, my) {
             emitSendMessage('getCharacterList',null);
         });
         core.topScene.onPushBattleRoom(function(){
-            core.changeRoomSelectScene();
+            emitSendMessage('getRoomInfo',null);
         });
         core.replaceScene(core.topScene);
         emitChangeScene('top');
@@ -127,6 +127,9 @@ function game(spec, my) {
                 break;
             case 'successLeaveRoom':
                 core.roomSelectScene.emitSuccesLeaveRoom();
+                break;
+            case 'successGetRoomInfo':
+                core.changeRoomSelectScene(); //TODO : ルーム情報を渡す処理を追加する。
                 break;
         }
     };

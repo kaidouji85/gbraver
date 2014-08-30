@@ -63,6 +63,10 @@ window.onload = function() {
             socket.on('successLeaveRoom',function(){
                 Game.emitServerResp('successLeaveRoom',null);
             });
+
+            socket.on('successGetRoomInfo',function(data){
+                Game.emitServerResp('successGetRoomInfo',data);
+            });
         };
     }
 };

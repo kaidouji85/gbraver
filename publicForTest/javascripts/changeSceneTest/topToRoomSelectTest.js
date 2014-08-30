@@ -21,7 +21,27 @@ function topToRoomSelect(){
     function pushBattleRoomButton(){
         //console.log('対戦ルーム入室ボタンを押す');
         touch(Game.topScene.battleRoomButton);
+        Game.onSendMessage(sendGetRoomInfo);
+    }
+
+    function sendGetRoomInfo(message,data) {
+        assert.equal(message,'getRoomInfo','サーバ送信メッセージが正しい');
+        assert.equal(data,null,'サーバ送信データが正しい');
+        assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
+        assert.equal(Game.currentScene.mesWindow.getText(),'ルーム情報取得中','メッセージが正しい');
+        Game.currentScene.tl.delay(30).then(respSuccessGetRoomInfo);
+    }
+
+    function respSuccessGetRoomInfo() {
+        var data = {
+            '0' : [],
+            '1' : [],
+            '2' : [],
+            '3' : [],
+            '4' : []
+        };
         Game.onChangeScene(assertOfChangeScene);
+        Game.emitServerResp('successGetRoomInfo',data);
     }
 
     function assertOfChangeScene(scene){
