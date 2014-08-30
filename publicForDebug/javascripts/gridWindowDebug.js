@@ -4,10 +4,10 @@ var Game;
 window.onload = function() {
     Game = gameBase();
     Game.start();
-    Game.onload = scrollBackGroundDebug;
+    Game.onload = gridWindowDebug;
 }
 
-function scrollBackGroundDebug(){
+function gridWindowDebug(){
     var testWindow1 = gridWindow({
         pict : Game.assets[Game.PICT_WINDOW],
         width : 16,
