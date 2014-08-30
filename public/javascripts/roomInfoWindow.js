@@ -14,6 +14,7 @@ function roomInfoWindow(spec,my) {
     var roomNameLabel = new Label();
     var statusLabel = new Label();
     var usersLabel = new Label();
+    var visible=true;
 
     init();
     function init() {
@@ -43,6 +44,10 @@ function roomInfoWindow(spec,my) {
         statusLabel.text = status;
     }
 
+    that.getStatus = function() {
+        return statusLabel.text;
+    }
+
     that.setUsers = function(users) {
         var usersText = '';
         if(users.length === 0){
@@ -53,6 +58,22 @@ function roomInfoWindow(spec,my) {
             usersText += '<br>';
         }
         usersLabel.text = usersText;
+    }
+
+    that.getUsers = function() {
+        return usersLabel.text;
+    }
+
+    that.setVisible = function(value){
+        visible = value;
+        baseWindow.setVisible(value);
+        roomNameLabel.visible = value;
+        statusLabel.visible = value;
+        usersLabel.visible = value;
+    }
+
+    that.getVisible = function() {
+        return visible;
     }
 
     return that;

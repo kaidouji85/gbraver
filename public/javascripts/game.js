@@ -25,8 +25,10 @@ function game(spec, my) {
         emitChangeScene('battle');
     };
 
-    core.changeRoomSelectScene = function(){
-        core.roomSelectScene = roomSelectScene();
+    core.changeRoomSelectScene = function(roomInfo){
+        core.roomSelectScene = roomSelectScene({
+            roomInfo : roomInfo
+        });
         core.roomSelectScene.onEnterRoom(function(data){
             emitSendMessage('enterRoom',data);
         });
@@ -129,7 +131,7 @@ function game(spec, my) {
                 core.roomSelectScene.emitSuccesLeaveRoom();
                 break;
             case 'successGetRoomInfo':
-                core.changeRoomSelectScene(); //TODO : ルーム情報を渡す処理を追加する。
+                core.changeRoomSelectScene(data);
                 break;
         }
     };

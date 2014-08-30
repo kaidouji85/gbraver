@@ -1,5 +1,6 @@
 function roomSelectScene(spec,my){
     var that = new Scene();
+    var roomInfo = spec.roomInfo;
     that.backgroundColor = 'black';
     that.background = {};
     that.enterRoomButtonArray = new Array();
@@ -28,20 +29,31 @@ function roomSelectScene(spec,my){
 
         //入室ボタン
         for(var i=0; i<CNT_MAX_ENTER_ROOM; i++){
-            var button = pictButton({
-                text : 'ルーム'+i,
-                pict : core.assets[core.PICT_BULUE_BUTTON]
+            var button = roomInfoWindow({
+                pict : core.assets[core.PICT_WINDOW]
             });
             that.enterRoomButtonArray.push(button);
         }
         that.enterRoomButtonArray.forEach(function(button,i){
-            button.x = 96;
-            button.y = 164+50*i;
+            var usersNum = roomInfo[i].length;
+            button.x = 16;
+            button.y = 8 + 72*i;
+            button.setRoomName('ルーム'+i);
+            button.setUsers(roomInfo[i]);
+            if(usersNum === 1) {
+                button.setStatus('対戦相手募集中');
+            } else if(usersNum === 2){
+                button.setStatus('対戦中');
+            } else {
+                button.setStatus('空き');
+            }
             button.addEventListener(Event.TOUCH_END,function(e){
                 pushEnterRoom(i);
-            });            
+            });
             that.addChild(button);
+
         });
+
         
         //戻るボタン
         that.prevButton = pictButton({

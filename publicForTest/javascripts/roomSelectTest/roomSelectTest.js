@@ -11,10 +11,35 @@ function enterRoomAndGameStart(){
             userId : 'test001@gmail.com'
         });
         Game.start();
-        Game.onload = function(){
-            Game.changeRoomSelectScene();
-            enterRoom();
+        Game.onload = initRoomSelectScene;
+    }
+
+    function initRoomSelectScene() {
+        var roomInfo = {
+            '0' : [],
+            '1' : ['test001@gmail.com','test002@gmail.com'],
+            '2' : ['test003@gmail.com'],
+            '3' : [],
+            '4' : []
         };
+        Game.changeRoomSelectScene(roomInfo);
+        assertOfRoomInfoWindow();
+
+    }
+
+    function assertOfRoomInfoWindow() {
+        assert.equal(Game.currentScene.enterRoomButtonArray[0].getStatus(),'空き','ルーム0のステータスが正しい');
+        assert.equal(Game.currentScene.enterRoomButtonArray[0].getUsers(),'None','ルーム0の入室ユーザが正しい');
+        assert.equal(Game.currentScene.enterRoomButtonArray[1].getStatus(),'対戦中','ルーム1のステータスが正しい');
+        assert.equal(Game.currentScene.enterRoomButtonArray[1].getUsers(),
+            'test001@gmail.com<br>test002@gmail.com<br>','ルーム1の入室ユーザが正しい');
+        assert.equal(Game.currentScene.enterRoomButtonArray[2].getStatus(),'対戦相手募集中','ルーム2のステータスが正しい');
+        assert.equal(Game.currentScene.enterRoomButtonArray[2].getUsers(),'test003@gmail.com<br>','ルーム2の入室ユーザが正しい');
+        assert.equal(Game.currentScene.enterRoomButtonArray[3].getStatus(),'空き','ルーム3のステータスが正しい');
+        assert.equal(Game.currentScene.enterRoomButtonArray[3].getUsers(),'None','ルーム3の入室ユーザが正しい');
+        assert.equal(Game.currentScene.enterRoomButtonArray[4].getStatus(),'空き','ルーム4のステータスが正しい');
+        assert.equal(Game.currentScene.enterRoomButtonArray[4].getUsers(),'None','ルーム4の入室ユーザが正しい');
+        enterRoom();
     }
 
     function enterRoom(){

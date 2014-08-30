@@ -13,7 +13,14 @@ function roomSelectToTop(){
         });
         Game.start();
         Game.onload = function(){
-            Game.changeRoomSelectScene();
+            var roomInfo = {
+                '0' : [],
+                '1' : [],
+                '2' : ['test002@gmail.com'],
+                '3' : [],
+                '4' : []
+            };
+            Game.changeRoomSelectScene(roomInfo);
             pushChangeButton();
         };
     }
