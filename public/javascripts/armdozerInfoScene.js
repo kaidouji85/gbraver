@@ -104,7 +104,7 @@ function armdozerInfoScene(spec,my){
 
         //メッセージウインドウ
         that.mesWindow = messageWindow({
-            pict : core.assets[core.PICT_MESSAGE_WINDOW]
+            pict : core.assets[core.PICT_WINDOW]
         });
         that.mesWindow.x = 0;
         that.mesWindow.y = core.MESSAGE_WINDOW_Y;

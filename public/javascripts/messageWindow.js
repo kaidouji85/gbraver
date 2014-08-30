@@ -5,16 +5,17 @@ function messageWindow(spec,my){
 
     var that = new Group();
     var pict = spec.pict;
-    var windowSprite = new Sprite(SPRITE_WIDTH,SPRITE_HEIGHT);
+    var windowSprite = gridWindow({
+        pict : pict,
+        width : SPRITE_WIDTH/16,
+        height : SPRITE_HEIGHT/16
+    });
     var messageLabel = new Label('');
     var visible = true;
 
     init();
     function init(){
-        windowSprite.image = pict;
-        windowSprite.opacity = 0.8;
         that.addChild(windowSprite);
-
         messageLabel.color = COLOR_WHITE;
         that.addChild(messageLabel);
     }
@@ -31,7 +32,7 @@ function messageWindow(spec,my){
 
     that.setVisible = function(value){
         visible = value;
-        windowSprite.visible = visible;
+        windowSprite.setVisible(visible);
         messageLabel.visible = visible;
     }
 
