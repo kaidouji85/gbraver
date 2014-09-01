@@ -3,7 +3,6 @@ function setArmdozerScene(spec,my){
     var core = enchant.Core.instance;
     var MAX_ARMDOZER_BUTTON = 4;
     var armdozerIdList = spec.armdozerIdList;
-    var labelArmmdozerSelect;
     var emitSelectArmdozer = function(data){};
     var emitPushPrevButton = function(){};
 
@@ -12,6 +11,7 @@ function setArmdozerScene(spec,my){
     that.armdozerButtonArray = new Array(MAX_ARMDOZER_BUTTON);
     that.prevButton = {};
     that.mesWindow = {};
+    that.title = {};
     that.onSelectArmdozer  = onSelectArmdozer;
     that.onPushPrevButton = onPushPrevButton;
 
@@ -50,13 +50,13 @@ function setArmdozerScene(spec,my){
             pushPrevButton();
         });
         that.addChild(that.prevButton);
-        
-        //アームドーザ選択ラベル
-        labelArmmdozerSelect = new Label('アームドーザ選択');
-        labelArmmdozerSelect.color = 'white';
-        labelArmmdozerSelect.x = 100;
-        labelArmmdozerSelect.y = 30;
-        that.addChild(labelArmmdozerSelect);
+
+        //画面タイトル
+        that.title = titleWindow({
+            pict : core.assets[core.PICT_WINDOW],
+            text : 'アームドーザ選択'
+        });
+        that.addChild(that.title);
 
         //メッセージウインドウ
         that.mesWindow = messageWindow({
@@ -95,7 +95,6 @@ function setArmdozerScene(spec,my){
         }
         that.prevButton.setVisible(false);
         that.mesWindow.setVisible(true);
-        labelArmmdozerSelect.visible = false;
     }
 
     return that;

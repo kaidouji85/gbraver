@@ -7,6 +7,7 @@ function roomSelectScene(spec,my){
     that.prevButton = {};
     that.leaveRoomButton = {};
     that.mesWindow = {};
+    that.title = {};
     that.onEnterRoom = onEnterRoom;
     that.onPushPrevButton = onPushPrevButton;
     that.emitSuccesEnterRoom = emitSuccesEnterRoom;
@@ -37,7 +38,7 @@ function roomSelectScene(spec,my){
         that.enterRoomButtonArray.forEach(function(button,i){
             var usersNum = roomInfo[i].length;
             button.x = 16;
-            button.y = 8 + 72*i;
+            button.y = 56 + 72*i;
             button.setRoomName('ルーム'+i);
             button.setUsers(roomInfo[i]);
             if(usersNum === 1) {
@@ -54,14 +55,13 @@ function roomSelectScene(spec,my){
 
         });
 
-        
         //戻るボタン
         that.prevButton = pictButton({
             text : '戻る',
             pict : core.assets[core.PICT_BULUE_BUTTON]
         });
         that.prevButton.x = 96;
-        that.prevButton.y = 420;
+        that.prevButton.y = 436;
         that.prevButton.addEventListener(Event.TOUCH_END,function(e){
             pushPrevButton();
         });
@@ -73,10 +73,17 @@ function roomSelectScene(spec,my){
             pict : core.assets[core.PICT_BULUE_BUTTON]
         });
         that.leaveRoomButton.x = 96;
-        that.leaveRoomButton.y = 420;
+        that.leaveRoomButton.y = 436;
         that.leaveRoomButton.setVisible(false);
         that.leaveRoomButton.addEventListener(Event.TOUCH_END,pushLeaveRoomButton);
         that.addChild(that.leaveRoomButton);
+
+        //画面タイトル
+        that.title = titleWindow({
+            pict : core.assets[core.PICT_WINDOW],
+            text : 'ルーム選択'
+        });
+        that.addChild(that.title);
 
         //メッセージウインドウ
         that.mesWindow = messageWindow({
