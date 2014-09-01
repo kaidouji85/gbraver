@@ -29,6 +29,7 @@ function topToRoomSelect(){
         assert.equal(data,null,'サーバ送信データが正しい');
         assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
         assert.equal(Game.currentScene.mesWindow.getText(),'ルーム情報取得中','メッセージが正しい');
+        assert.equal(Game.currentScene.title.getVisible(),false,'画面タイトルが非表示である');
         Game.currentScene.tl.delay(30).then(respSuccessGetRoomInfo);
     }
 

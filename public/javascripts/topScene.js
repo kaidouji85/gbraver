@@ -6,11 +6,11 @@ function topScene(spec,my){
     that.setArmdpzerButton = {};
     that.mesWindow = {};
     that.selectArmdozerSprite = {};
+    that.tile = {};
     that.onPushSetArmdozer = onPushSetArmdozer;
     that.onPushBattleRoom = onPushBattleRoom;
     
     var core = enchant.Core.instance;
-    var labelMenu;
     var emitPushSetArmdozer = function(){};
     var emitPushBattleRoom = function(){};
     
@@ -36,7 +36,7 @@ function topScene(spec,my){
         that.battleRoomButton.x = 16;
         that.battleRoomButton.y = 300;
         that.battleRoomButton.addEventListener(Event.TOUCH_END,function(e){
-            labelMenu.visible = false;
+            that.title.setVisible(false);
             that.battleRoomButton.setVisible(false);
             that.setArmdpzerButton.setVisible(false);
             that.mesWindow.setText(core.MESSAGE_GET_ROOMINFO);
@@ -53,7 +53,7 @@ function topScene(spec,my){
         that.setArmdpzerButton.x = 176;
         that.setArmdpzerButton.y = 300;
         that.setArmdpzerButton.addEventListener(Event.TOUCH_END,function(e){
-            labelMenu.visible = false;
+            that.title.setVisible(false);
             that.battleRoomButton.setVisible(false);
             that.setArmdpzerButton.setVisible(false);
             that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
@@ -61,13 +61,13 @@ function topScene(spec,my){
             emitPushSetArmdozer();
         });
         that.addChild(that.setArmdpzerButton);
-        
-        //メニューラベル
-        labelMenu = new Label('メニュー');
-        labelMenu.color = 'white';
-        labelMenu.x = 130;
-        labelMenu.y = 10;        
-        that.addChild(labelMenu);
+
+        //画面タイトル
+        that.title = titleWindow({
+            pict : core.assets[core.PICT_WINDOW],
+            text : 'メニュー'
+        });
+        that.addChild(that.title);
 
         //メッセージウインドウ
         that.mesWindow = messageWindow({
