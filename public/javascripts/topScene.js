@@ -36,7 +36,6 @@ function topScene(spec,my){
         that.battleRoomButton.x = 16;
         that.battleRoomButton.y = 300;
         that.battleRoomButton.addEventListener(Event.TOUCH_END,function(e){
-            that.title.setVisible(false);
             that.battleRoomButton.setVisible(false);
             that.setArmdpzerButton.setVisible(false);
             that.mesWindow.setText(core.MESSAGE_GET_ROOMINFO);
@@ -53,7 +52,6 @@ function topScene(spec,my){
         that.setArmdpzerButton.x = 176;
         that.setArmdpzerButton.y = 300;
         that.setArmdpzerButton.addEventListener(Event.TOUCH_END,function(e){
-            that.title.setVisible(false);
             that.battleRoomButton.setVisible(false);
             that.setArmdpzerButton.setVisible(false);
             that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);

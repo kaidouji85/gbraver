@@ -29,7 +29,7 @@ function topToSetArmdozer(){
         assert.equal(data, null, 'サーバ送信データが正しい');
         assert.equal(Game.currentScene.battleRoomButton.getVisible(),false,'対戦ルーム入室ボタンが表示されない');
         assert.equal(Game.currentScene.setArmdpzerButton.getVisible(),false,'アームドーザ選択ボタンが表示されない');
-        assert.equal(Game.currentScene.title.getVisible(),false,'タイトルが非表示である。');
+        assert.equal(Game.currentScene.title.getVisible(),true,'画面タイトルが表示される。');
         Game.currentScene.tl.delay(60).then(function(){
             doServerResp();
         });
