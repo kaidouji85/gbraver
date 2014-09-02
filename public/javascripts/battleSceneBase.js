@@ -1,10 +1,10 @@
 function battleSceneBase(spec,my){
     var that = new Scene();
     var core = enchant.Core.instance;
-    var COMMAND_X_1 = 16;
-    var COMMAND_X_2 = 176;
+    var COMMAND_X_1 = 8;
+    var COMMAND_X_2 = 168;
     var COMMAND_Y_1 = 300;
-    var COMMAND_Y_2 = 350;
+    var COMMAND_Y_2 = 364;
     that.statusArray = $.extend(true, {}, spec.statusArray);
     that.userId = spec.userId;
     that.backgroundColor = "black";
@@ -121,7 +121,7 @@ function battleSceneBase(spec,my){
         //攻撃アイコン
         that.atackIcon = pictButton({
             text : '攻撃',
-            pict : core.assets[core.PICT_BULUE_BUTTON]
+            pict : core.assets[core.PICT_WINDOW]
         });
         that.atackIcon.x = COMMAND_X_1;
         that.atackIcon.y = COMMAND_Y_1;
@@ -131,7 +131,7 @@ function battleSceneBase(spec,my){
         //チャージアイコン
         that.chargeIcon = pictButton({
             text : 'チャージ',
-            pict : core.assets[core.PICT_BULUE_BUTTON]
+            pict : core.assets[core.PICT_WINDOW]
         });
         that.chargeIcon.x = COMMAND_X_2;
         that.chargeIcon.y = COMMAND_Y_1;
@@ -141,7 +141,7 @@ function battleSceneBase(spec,my){
         //+アイコン
         that.plusIcon = pictButton({
             text : '+',
-            pict : core.assets[core.PICT_BULUE_BUTTON]
+            pict : core.assets[core.PICT_WINDOW]
         });
         that.plusIcon.x = COMMAND_X_1;
         that.plusIcon.y = COMMAND_Y_1;
@@ -151,7 +151,7 @@ function battleSceneBase(spec,my){
         //-アイコン
         that.minusIcon = pictButton({
             text : '-',
-            pict : core.assets[core.PICT_BULUE_BUTTON]
+            pict : core.assets[core.PICT_WINDOW]
         });
         that.minusIcon.x = COMMAND_X_2;
         that.minusIcon.y = COMMAND_Y_1;
@@ -161,7 +161,7 @@ function battleSceneBase(spec,my){
         //決定アイコン
         that.okIcon = pictButton({
             text : '決定',
-            pict : core.assets[core.PICT_BULUE_BUTTON]
+            pict : core.assets[core.PICT_WINDOW]
         });
         that.okIcon.x = COMMAND_X_1;
         that.okIcon.y = COMMAND_Y_2;
@@ -171,7 +171,7 @@ function battleSceneBase(spec,my){
         //戻るアイコン
         that.prevIcon = pictButton({
             text : '戻る',
-            pict : core.assets[core.PICT_BULUE_BUTTON]
+            pict : core.assets[core.PICT_WINDOW]
         });
         that.prevIcon.x = COMMAND_X_2;
         that.prevIcon.y = COMMAND_Y_2;

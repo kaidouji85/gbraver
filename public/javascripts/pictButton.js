@@ -5,23 +5,24 @@ function pictButton(spec,my){
     var visible = true;
     var COLOR_WHITE = '#FFFFFF';
     var COLOR_GRAY = '#FAFAFA';
-    var BUTTON_WIDTH = 128;
-    var BUTTON_HEIGHT = 32;
-    var buttonSprite = new Sprite(BUTTON_WIDTH,BUTTON_HEIGHT);
+    var BUTTON_WIDTH = 9;
+    var BUTTON_HEIGHT = 3;
+    var buttonWindow = gridWindow({
+        pict : pict,
+        width : BUTTON_WIDTH,
+        height : BUTTON_HEIGHT
+    });
     var buttonLabel = new Label(text);
 
-    buttonSprite.image = pict;
-    buttonSprite.opacity = 0.8;
-    that.addChild(buttonSprite);
-
+    that.addChild(buttonWindow);
     buttonLabel.color = COLOR_WHITE;
-    buttonLabel.x = (BUTTON_WIDTH - buttonLabel._boundWidth)/2;
-    buttonLabel.y = (BUTTON_HEIGHT - buttonLabel._boundHeight)/2;
+    buttonLabel.x = (BUTTON_WIDTH*16 - buttonLabel._boundWidth)/2;
+    buttonLabel.y = (BUTTON_HEIGHT*16 - buttonLabel._boundHeight)/2;
     that.addChild(buttonLabel);
 
     that.setVisible = function(value){
         visible = value;
-        buttonSprite.visible = visible;
+        buttonWindow.setVisible(visible);
         buttonLabel.visible = visible;
     }
 
@@ -35,12 +36,12 @@ function pictButton(spec,my){
 
     that.addEventListener(Event.TOUCH_START,function(){
         buttonLabel.color = COLOR_GRAY;
-        buttonSprite.frame = 1;
+        //TODO : buttonWindowを明るくする
     });
 
     that.addEventListener(Event.TOUCH_END,function(){
         buttonLabel.color = COLOR_WHITE;
-        buttonSprite.frame = 0;
+        //TODO : buttonWindowを暗くする
     });
 
     return that;

@@ -26,12 +26,12 @@ function setArmdozerScene(spec,my){
         for(var i=0; i<MAX_ARMDOZER_BUTTON && i<armdozerIdList.length; i++){
             that.armdozerButtonArray[i] = pictButton({
                 text : armdozerIdList[i].name,
-                pict : core.assets[core.PICT_BULUE_BUTTON]
+                pict : core.assets[core.PICT_WINDOW]
             });
         }
         that.armdozerButtonArray.forEach(function(button,i){
-            button.x = 96;
-            button.y = 200+40*i;
+            button.x = 88;
+            button.y = 80+64*i;
             button.addEventListener(Event.TOUCH_END,function(e){
                 pushArmdozerButton(i);
             });
@@ -41,10 +41,10 @@ function setArmdozerScene(spec,my){
         //戻るボタン
         that.prevButton = pictButton({
             text : '戻る',
-            pict : core.assets[core.PICT_BULUE_BUTTON]
+            pict : core.assets[core.PICT_WINDOW]
         });
-        that.prevButton.x = 96;
-        that.prevButton.y = 380;
+        that.prevButton.x = 88;
+        that.prevButton.y = 416;
         that.prevButton.visible = true;
         that.prevButton.addEventListener(Event.TOUCH_END,function(e){
             pushPrevButton();

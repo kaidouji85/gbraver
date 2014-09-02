@@ -58,10 +58,10 @@ function roomSelectScene(spec,my){
         //戻るボタン
         that.prevButton = pictButton({
             text : '戻る',
-            pict : core.assets[core.PICT_BULUE_BUTTON]
+            pict : core.assets[core.PICT_WINDOW]
         });
-        that.prevButton.x = 96;
-        that.prevButton.y = 436;
+        that.prevButton.x = 88;
+        that.prevButton.y = 426;
         that.prevButton.addEventListener(Event.TOUCH_END,function(e){
             pushPrevButton();
         });
@@ -70,10 +70,10 @@ function roomSelectScene(spec,my){
         //退室ボタン
         that.leaveRoomButton = pictButton({
             text : '退室',
-            pict : core.assets[core.PICT_BULUE_BUTTON]
+            pict : core.assets[core.PICT_WINDOW]
         });
-        that.leaveRoomButton.x = 96;
-        that.leaveRoomButton.y = 436;
+        that.leaveRoomButton.x = 88;
+        that.leaveRoomButton.y = 426;
         that.leaveRoomButton.setVisible(false);
         that.leaveRoomButton.addEventListener(Event.TOUCH_END,pushLeaveRoomButton);
         that.addChild(that.leaveRoomButton);

@@ -97,21 +97,21 @@ function armdozerInfoScene(spec,my){
         //決定ボタン
         that.okButton = pictButton({
             text : '決定',
-            pict : core.assets[core.PICT_BULUE_BUTTON]
+            pict : core.assets[core.PICT_WINDOW]
         });
         that.okButton.addEventListener(Event.TOUCH_END,selectArmdozer);
-        that.okButton.x = 16;
-        that.okButton.y = 300;
+        that.okButton.x = 88;
+        that.okButton.y = 324;
         that.addChild(that.okButton);
 
         //戻るボタン
         that.prevButton = pictButton({
             text : '戻る',
-            pict : core.assets[core.PICT_BULUE_BUTTON]
+            pict : core.assets[core.PICT_WINDOW]
         });
         that.prevButton.addEventListener(Event.TOUCH_END,prevArmdoerList);
-        that.prevButton.x = 176;
-        that.prevButton.y = 300;
+        that.prevButton.x = 88;
+        that.prevButton.y = 388;
         that.addChild(that.prevButton);
 
         //画面タイトル

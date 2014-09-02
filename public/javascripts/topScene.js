@@ -31,9 +31,9 @@ function topScene(spec,my){
         //対戦ルーム入室ボタン
         that.battleRoomButton = pictButton({
             text : '対戦ルーム入室',
-            pict : core.assets[core.PICT_BULUE_BUTTON]
+            pict : core.assets[core.PICT_WINDOW]
         });
-        that.battleRoomButton.x = 16;
+        that.battleRoomButton.x = 88;
         that.battleRoomButton.y = 300;
         that.battleRoomButton.addEventListener(Event.TOUCH_END,function(e){
             that.battleRoomButton.setVisible(false);
@@ -47,10 +47,10 @@ function topScene(spec,my){
         //アームドーザ選択ボタン
         that.setArmdpzerButton = pictButton({
             text : 'アームドーザ選択',
-            pict : core.assets[core.PICT_BULUE_BUTTON]
+            pict : core.assets[core.PICT_WINDOW]
         });
-        that.setArmdpzerButton.x = 176;
-        that.setArmdpzerButton.y = 300;
+        that.setArmdpzerButton.x = 88;
+        that.setArmdpzerButton.y = 364;
         that.setArmdpzerButton.addEventListener(Event.TOUCH_END,function(e){
             that.battleRoomButton.setVisible(false);
             that.setArmdpzerButton.setVisible(false);

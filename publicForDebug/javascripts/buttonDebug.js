@@ -14,9 +14,9 @@ window.onload = function() {
 function buttonDebug() {
     var testButton1 = pictButton({
         text : 'テストボタン',
-        pict : Game.assets[Game.PICT_BULUE_BUTTON]
+        pict : Game.assets[Game.PICT_WINDOW]
     });
-    testButton1.x = 100;
+    testButton1.x = 8;
     testButton1.y = 50;
     testButton1.addEventListener(Event.TOUCH_END,function(e){
         alert('test1');
@@ -24,12 +24,13 @@ function buttonDebug() {
     assert.equal(testButton1.getVisible(),true,'getVisible()が正しい');
     Game.currentScene.addChild(testButton1);
 
+
     var testButton2 = pictButton({
         text : 'ぼたん',
-        pict : Game.assets[Game.PICT_BULUE_BUTTON]
+        pict : Game.assets[Game.PICT_WINDOW]
     });
-    testButton2.x = 100;
-    testButton2.y = 90;
+    testButton2.x = 168;
+    testButton2.y = 50;
     testButton2.addEventListener(Event.TOUCH_END,function(e){
         alert('test2');
     })
