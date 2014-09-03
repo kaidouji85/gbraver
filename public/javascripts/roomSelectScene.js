@@ -8,11 +8,13 @@ function roomSelectScene(spec,my){
     that.leaveRoomButton = {};
     that.mesWindow = {};
     that.title = {};
+    that.okButton = {};
     that.onEnterRoom = onEnterRoom;
     that.onPushPrevButton = onPushPrevButton;
     that.emitSuccesEnterRoom = emitSuccesEnterRoom;
     that.onLeaveRoom = onLeaveRoom;
     that.emitSuccesLeaveRoom = emitSuccesLeaveRoom;
+    that.emitEnterRoomError = emitEnterRoomError;
     
     var core = enchant.Core.instance;
     var emitEnterRoom;
@@ -78,6 +80,17 @@ function roomSelectScene(spec,my){
         that.leaveRoomButton.addEventListener(Event.TOUCH_END,pushLeaveRoomButton);
         that.addChild(that.leaveRoomButton);
 
+        //OKボタン
+        that.okButton = pictButton({
+            text : 'OK',
+            pict : core.assets[core.PICT_WINDOW]
+        });
+        that.okButton.x = 88;
+        that.okButton.y = 426;
+        that.okButton.setVisible(false);
+        that.okButton.addEventListener(Event.TOUCH_END,pushOkButton);
+        that.addChild(that.okButton);
+
         //画面タイトル
         that.title = titleWindow({
             pict : core.assets[core.PICT_WINDOW],
@@ -141,6 +154,26 @@ function roomSelectScene(spec,my){
         that.enterRoomButtonArray.forEach(function(button){
             button.setVisible(true);
         });
+    }
+
+    function emitEnterRoomError(message){
+        that.mesWindow.setVisible(true);
+        that.mesWindow.setText(message);
+        that.prevButton.setVisible(false);
+        that.leaveRoomButton.setVisible(false);
+        that.enterRoomButtonArray.forEach(function(button){
+            button.setVisible(false);
+        });
+        that.okButton.setVisible(true);
+    }
+
+    function pushOkButton() {
+        that.mesWindow.setVisible(false);
+        that.okButton.setVisible(false);
+        that.enterRoomButtonArray.forEach(function(button){
+            button.setVisible(true);
+        });
+        that.prevButton.setVisible(true);
     }
    
     return that;

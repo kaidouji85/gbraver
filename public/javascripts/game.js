@@ -133,6 +133,9 @@ function game(spec, my) {
             case 'successGetRoomInfo':
                 core.changeRoomSelectScene(data);
                 break;
+            case 'enterRoomError':
+                core.roomSelectScene.emitEnterRoomError(data);
+                break;
         }
     };
 
