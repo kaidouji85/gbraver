@@ -112,7 +112,7 @@ function server(spec, my) {
                 if(userNum < 2){
                     enterRoom();
                 } else {
-                    socket.emit('enterRoomError', '3人以上入室できません。');
+                    socket.emit('enterRoomError', '対戦中のルームには入室できません。');
                 }
             }
 

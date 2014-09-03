@@ -260,7 +260,7 @@ describe('serverクラスのテスト', function() {
             }
 
             function assertOfError(message) {
-                assert.equal(message,'3人以上入室できません。','エラーメッセージが正しい');
+                assert.equal(message,'対戦中のルームには入室できません。','エラーメッセージが正しい');
                 done();
             }
 
