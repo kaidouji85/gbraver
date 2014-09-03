@@ -97,13 +97,22 @@ function server(spec, my) {
 
         socket.on('enterRoom', function(data) {
             var L_roomId = data.roomId;
-            login();
+            checkAlreadyLogin();
 
-            function login(loginInfo){
+            function checkAlreadyLogin(){
                 if(socket.gbraverInfo.userId!==null){
-                    enterRoom();
+                    checkRoomUsersCapacity();
                 } else {
                     socket.emit('enterRoomError', 'ユーザ認証が完了していません。');
+                }
+            }
+
+            function checkRoomUsersCapacity(){
+                var userNum = roomArray[L_roomId].getUserIdList().length;
+                if(userNum < 2){
+                    enterRoom();
+                } else {
+                    socket.emit('enterRoomError', '3人以上入室できません。');
                 }
             }
 

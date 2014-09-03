@@ -108,7 +108,7 @@ describe('serverクラスのテスト', function() {
                                 5 : {
                                     name : 'バスターナックル',
                                     power : 2800
-                                },
+                                }
                             }
                         }
                     },
@@ -210,10 +210,65 @@ describe('serverクラスのテスト', function() {
             }); 
 
         });
+
+        it('3人入室するとエラーが出る',function(done){
+            var client1 = io.connect(SERVER_URL, option);
+            var client2 = io.connect(SERVER_URL, option);
+            var client3 = io.connect(SERVER_URL, option);
+
+            authClient1();
+            function authClient1(){
+                client1.emit('auth',{
+                    userId : 'test001@gmail.com'
+                });
+                client1.once('successAuth',enterRoomClient1);
+            }
+
+            function enterRoomClient1(){
+                client1.emit('enterRoom',{
+                    roomId : roomId
+                });
+                client1.once('succesEnterRoom',authClient2);
+            }
+
+            function authClient2(){
+                client2.emit('auth',{
+                    userId : 'test002@gmail.com'
+                });
+                client2.once('successAuth',enterRoomClient2);
+            }
+
+            function enterRoomClient2(){
+                client2.emit('enterRoom',{
+                    roomId : roomId
+                });
+                client2.once('succesEnterRoom',authClient3);
+            }
+
+            function authClient3(){
+                client3.emit('auth',{
+                    userId : 'test003@gmail.com'
+                });
+                client3.once('successAuth',enterRoomClient3);
+            }
+
+            function enterRoomClient3() {
+                client3.emit('enterRoom',{
+                    roomId : roomId
+                });
+                client3.once('enterRoomError',assertOfError);
+            }
+
+            function assertOfError(message) {
+                assert.equal(message,'3人以上入室できません。','エラーメッセージが正しい');
+                done();
+            }
+
+        });
     });
 
 
-    describe('戦闘ロジック', function() {
+    describe('ゲーム開始処理', function() {
         it('入室して「ready」を送信したらウェイトフェイズの結果が返される', function(done) {
             var tc = testCompleter({done:done});
             var userIds = ['test001@gmail.com', 'test002@gmail.com'];
