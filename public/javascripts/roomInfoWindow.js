@@ -6,6 +6,7 @@ function roomInfoWindow(spec,my) {
 
     var that = new Group();
     var pict = spec.pict;
+    var subPict = spec.subPict;
     var baseWindow = gridWindow({
         pict : pict,
         width : GRID_WIDTH,
@@ -75,6 +76,14 @@ function roomInfoWindow(spec,my) {
     that.getVisible = function() {
         return visible;
     }
+
+    that.addEventListener(Event.TOUCH_START,function(){
+        baseWindow.setPict(subPict);
+    });
+
+    that.addEventListener(Event.TOUCH_END,function(){
+        baseWindow.setPict(pict);
+    });
 
     return that;
 }

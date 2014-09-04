@@ -33,7 +33,8 @@ function roomSelectScene(spec,my){
         //入室ボタン
         for(var i=0; i<CNT_MAX_ENTER_ROOM; i++){
             var button = roomInfoWindow({
-                pict : core.assets[core.PICT_WINDOW]
+                pict : core.assets[core.PICT_WINDOW],
+                subPict : core.assets[core.PICT_ACTIVE_WINDOW]
             });
             that.enterRoomButtonArray.push(button);
         }

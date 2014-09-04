@@ -9,7 +9,8 @@ window.onload = function() {
 
 function roomInfoWindowDebug(){
     var testRoomInfoWindow1 = roomInfoWindow({
-        pict : Game.assets[Game.PICT_WINDOW]
+        pict : Game.assets[Game.PICT_WINDOW],
+        subPict : Game.assets[Game.PICT_ACTIVE_WINDOW]
     });
     testRoomInfoWindow1.x = 16;
     testRoomInfoWindow1.y = 8;
@@ -22,7 +23,8 @@ function roomInfoWindowDebug(){
     Game.currentScene.addChild(testRoomInfoWindow1);
 
     var testRoomInfoWindow2 = roomInfoWindow({
-        pict : Game.assets[Game.PICT_WINDOW]
+        pict : Game.assets[Game.PICT_WINDOW],
+        subPict : Game.assets[Game.PICT_ACTIVE_WINDOW]
     });
     testRoomInfoWindow2.x = 16;
     testRoomInfoWindow2.y = 80;
@@ -32,7 +34,8 @@ function roomInfoWindowDebug(){
     Game.currentScene.addChild(testRoomInfoWindow2);
 
     var testRoomInfoWindow3 = roomInfoWindow({
-        pict : Game.assets[Game.PICT_WINDOW]
+        pict : Game.assets[Game.PICT_WINDOW],
+        subPict : Game.assets[Game.PICT_ACTIVE_WINDOW]
     });
     testRoomInfoWindow3.x = 16;
     testRoomInfoWindow3.y = 152;
@@ -41,7 +44,8 @@ function roomInfoWindowDebug(){
     Game.currentScene.addChild(testRoomInfoWindow3);
 
     var testRoomInfoWindow4 = roomInfoWindow({
-        pict : Game.assets[Game.PICT_WINDOW]
+        pict : Game.assets[Game.PICT_WINDOW],
+        subPict : Game.assets[Game.PICT_ACTIVE_WINDOW]
     });
     testRoomInfoWindow4.x = 16;
     testRoomInfoWindow4.y = 224;
@@ -50,7 +54,8 @@ function roomInfoWindowDebug(){
     Game.currentScene.addChild(testRoomInfoWindow4);
 
     var testRoomInfoWindow5 = roomInfoWindow({
-        pict : Game.assets[Game.PICT_WINDOW]
+        pict : Game.assets[Game.PICT_WINDOW],
+        subPict : Game.assets[Game.PICT_ACTIVE_WINDOW]
     });
     testRoomInfoWindow5.x = 16;
     testRoomInfoWindow5.y = 296;
