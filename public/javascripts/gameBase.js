@@ -12,6 +12,7 @@ function gameBase(spec,my){
     core.PICT_HIT_TEXT = core.PICT_PREFIX+'hitText.png';
     core.PICT_BG_GROUND = core.PICT_PREFIX+'bgGround.png';
     core.PICT_WINDOW = core.PICT_PREFIX+'window.png';
+    core.PICT_ACTIVE_WINDOW = core.PICT_PREFIX+'activeWindow.png';
     core.WAIT_TIME_ACTIVE_RESET = 30;
     core.ICON_WIDTH = 124;
     core.ICON_HEIGHT = 40;
@@ -55,6 +56,7 @@ function gameBase(spec,my){
         core.preload(core.PICT_HIT_TEXT);
         core.preload(core.PICT_BG_GROUND);
         core.preload(core.PICT_WINDOW);
+        core.preload(core.PICT_ACTIVE_WINDOW);
     }
     return core;
 }

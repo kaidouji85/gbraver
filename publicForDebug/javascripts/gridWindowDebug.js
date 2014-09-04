@@ -28,5 +28,15 @@ function gridWindowDebug(){
     testWindow2.setVisible(true);
     Game.currentScene.addChild(testWindow2);
 
+    var testWindow3 = gridWindow({
+        pict : Game.assets[Game.PICT_WINDOW],
+        width : 3,
+        height : 3
+    });
+    testWindow3.x = 100;
+    testWindow3.y = 200;
+    testWindow3.setPict(Game.assets[Game.PICT_ACTIVE_WINDOW]);
+    Game.currentScene.addChild(testWindow3);
+
     Game.currentScene.backgroundColor = 'black';
 }

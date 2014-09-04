@@ -91,5 +91,11 @@ function gridWindow(spec,my){
         }
     }
 
+    that.setPict = function(pictData) {
+        for(var i=0; i<that.childNodes.length; i++){
+            that.childNodes[i].image = pictData;
+        }
+    }
+
     return that;
 }
