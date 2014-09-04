@@ -2,6 +2,7 @@ function pictButton(spec,my){
     var that = new Group();
     var text = spec.text;
     var pict = spec.pict;
+    var subPict = spec.subPict;
     var visible = true;
     var COLOR_WHITE = '#FFFFFF';
     var COLOR_GRAY = '#FAFAFA';
@@ -36,12 +37,12 @@ function pictButton(spec,my){
 
     that.addEventListener(Event.TOUCH_START,function(){
         buttonLabel.color = COLOR_GRAY;
-        //TODO : buttonWindowを明るくする
+        buttonWindow.setPict(subPict);
     });
 
     that.addEventListener(Event.TOUCH_END,function(){
         buttonLabel.color = COLOR_WHITE;
-        //TODO : buttonWindowを暗くする
+        buttonWindow.setPict(pict);
     });
 
     return that;

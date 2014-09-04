@@ -60,7 +60,8 @@ function roomSelectScene(spec,my){
         //戻るボタン
         that.prevButton = pictButton({
             text : '戻る',
-            pict : core.assets[core.PICT_WINDOW]
+            pict : core.assets[core.PICT_WINDOW],
+            subPict : core.assets[core.PICT_ACTIVE_WINDOW]
         });
         that.prevButton.x = 88;
         that.prevButton.y = 426;
@@ -72,7 +73,8 @@ function roomSelectScene(spec,my){
         //退室ボタン
         that.leaveRoomButton = pictButton({
             text : '退室',
-            pict : core.assets[core.PICT_WINDOW]
+            pict : core.assets[core.PICT_WINDOW],
+            subPict : core.assets[core.PICT_ACTIVE_WINDOW]
         });
         that.leaveRoomButton.x = 88;
         that.leaveRoomButton.y = 426;
@@ -83,7 +85,8 @@ function roomSelectScene(spec,my){
         //OKボタン
         that.okButton = pictButton({
             text : 'OK',
-            pict : core.assets[core.PICT_WINDOW]
+            pict : core.assets[core.PICT_WINDOW],
+            subPict : core.assets[core.PICT_ACTIVE_WINDOW]
         });
         that.okButton.x = 88;
         that.okButton.y = 426;

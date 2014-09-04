@@ -14,7 +14,8 @@ window.onload = function() {
 function buttonDebug() {
     var testButton1 = pictButton({
         text : 'テストボタン',
-        pict : Game.assets[Game.PICT_WINDOW]
+        pict : Game.assets[Game.PICT_WINDOW],
+        subPict : Game.assets[Game.PICT_ACTIVE_WINDOW]
     });
     testButton1.x = 8;
     testButton1.y = 50;
@@ -27,7 +28,8 @@ function buttonDebug() {
 
     var testButton2 = pictButton({
         text : 'ぼたん',
-        pict : Game.assets[Game.PICT_WINDOW]
+        pict : Game.assets[Game.PICT_WINDOW],
+        subPict : Game.assets[Game.PICT_ACTIVE_WINDOW]
     });
     testButton2.x = 168;
     testButton2.y = 50;
