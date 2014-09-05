@@ -1,1 +1,1 @@
-web: BASE_URL="http://gbraver.herokuapp.com" node app.js
+web: BASE_URL="http://gbraver-beta.herokuapp.com"  node app.js
