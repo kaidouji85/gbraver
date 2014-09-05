@@ -18,7 +18,7 @@ node.js、socket.io、enchant.jsがあれば簡単に出来るだろうという
 <http://www.slideshare.net/yuusuketakeuchi96/g-33989023>
 
 
-## 導入方法
+## ローカル環境への導入
 (1)必須ソフトウェア  
 導入の前提として、以下のソフトがインストールされている必要があります。  
 ・node.js  
@@ -37,16 +37,31 @@ githubからプロジェクトをダウントードします。
 (4)データベースの初期化  
 以下コマンドで、データベースを初期化します。  
 
-`mongodb mongo ホスト名/gbraver createDB.js`
+`mongodb mongo ホスト名/gbraver dbShell/createDB.js`
+
+(5)起動バッチの作成
+起動バッチとしてstartup.shを作成します。
+以下に示すテンプレート通りに作成して下さい。
+
+`
+#!/bin/sh
+
+GOOGLE_CLIENT_ID="GoogleOAuth2.0のClient ID"
+GOOGLE_CLIENT_SECRET="GoogleOAuth2.0のGOOGLE CLIENT SECRET"
+
+export GOOGLE_CLIENT_ID
+export GOOGLE_CLIENT_SECRET
+
+node app.js
+`
+
+## ローカル環境の起動方法
+'./startup.sh'
+または
+'npm start'
 
 
-## 起動方法
-以下コマンドで、node.jsを起動します。なお、Gブレイバーはデフォルトで3000番ポートを利用するので、被らないようにして下さい。
-
-`BASE_URL="http://ホスト名" node app.js`
-
-
-## テスト実行方法
+## ローカルでのテスト実行方法
 テストの実行コマンドは以下の通りです。
 
 ユニットテスト  
@@ -59,11 +74,33 @@ Seleniumテスト
 `NODE_MAIL_ADDRESS="テスト用Googleアカウント"  NODE_PASSWORD="テスト用Googleアカウントパスワード" mocha seleniumTest/ -R spec`
 
 
-## ゲームのプレイ動画
+##herokuへのデプロイ方法
+(1)前提条件
+・heorokuコマンドが使える
 
+(2)herokuインスタンスの用意
+herokuインスタンスを用意します。アドオンでMongoHqを追加して下さい。
+
+(3)環境変数の登録
+herokuに環境変数を登録します。ここでは環境変数登録バッチのテンプレートを示します。
+
+`
+#!/bin/sh
+
+herokuAppName="herokuアプリ名"
+heroku config:add BASE_URL="herokuアプリのURL" --app $herokuAppName
+heroku config:add GOOGLE_CLIENT_ID="GoogleOAuth2.0のClient ID" --app $herokuAppName
+heroku config:add GOOGLE_CLIENT_SECRET="GoogleOAuth2.0のGOOGLE CLIENT SECRET" --app $herokuAppName
+`
+
+(4)herokuへデプロイ
+`git push heroku`
+
+
+## ゲームのプレイ動画
 <https://www.youtube.com/watch?v=yX4XXKsnl4A>
 
 
 ## その他
 中の人のブログです。 毎日プログラム  <http://blog.livedoor.jp/kaidouji85/>    
-α版公開サイト <http://gbraver.herokuapp.com/>    
+α版公開サイト <http://gbraver.herokuapp.com/>
