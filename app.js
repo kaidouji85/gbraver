@@ -1,8 +1,8 @@
 //定数
 var PORT = process.env.PORT || 3000;
 var BASE_URL = process.env.BASE_URL || 'http://localhost:'+PORT;
-var GOOGLE_CLIENT_ID = "87026478700-7rks1i5m08d9u01foqdglmgfveiemeju.apps.googleusercontent.com";
-var GOOGLE_CLIENT_SECRET = "YBAHPiJpTHMuXJcS5UvWR2q_";
+var GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+var GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 
 /**
  * Module dependencies.
