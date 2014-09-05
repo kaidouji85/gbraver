@@ -33,6 +33,9 @@ test.describe('ログイン', function() {
         driver.findElement(webdriver.By.name('Passwd')).sendKeys(NODE_PASSWORD);
         driver.findElement(webdriver.By.name('signIn')).click();
 
+        //TODO : 承認OK動作を自動化できていない
+        //       現状では、本テストは実施できない
+
         driver.wait(function() {
             return driver.getTitle().then(function(title) {
                 return 'Gブレイバー' === title;

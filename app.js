@@ -1,6 +1,8 @@
 //定数
 var PORT = process.env.PORT || 3000;
 var BASE_URL = process.env.BASE_URL || 'http://localhost:'+PORT;
+var GOOGLE_CLIENT_ID = "87026478700-7rks1i5m08d9u01foqdglmgfveiemeju.apps.googleusercontent.com";
+var GOOGLE_CLIENT_SECRET = "YBAHPiJpTHMuXJcS5UvWR2q_";
 
 /**
  * Module dependencies.
@@ -41,7 +43,7 @@ var mongoUri = process.env.MONGOHQ_URL || 'mongodb://localhost/gbraver';
 var dao = mongoDao({url : mongoUri});
 
 //Google認証
-var GoogleStrategy = require('passport-google').Strategy;
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 passport.serializeUser(function(user, done) {
     done(null, user);
 });
@@ -51,19 +53,34 @@ passport.deserializeUser(function(obj, done) {
 });
 
 passport.use(new GoogleStrategy({
-    returnURL : BASE_URL+'/auth/google/return',
-    realm : BASE_URL 
-},function(identifier, profile, done) {
-    done(null, profile);
-}));
+        clientID: GOOGLE_CLIENT_ID,
+        clientSecret: GOOGLE_CLIENT_SECRET,
+        callbackURL: BASE_URL+"/auth/google/callback"
+    },
+    function(accessToken, refreshToken, profile, done) {
+        process.nextTick(function () {
+            return done(null, profile);
+        });
+    }
+));
 
 //ルーティング
 app.get('/', routes.index);
 app.get('/users', user.list);
 app.get('/gameMain', routes.gameMain);
-//app.get('/selectRoom',routes.selectRoom);
-app.get('/auth/google', passport.authenticate('google'));
-app.get('/auth/google/return', function (req, res, next) {
+
+app.get('/auth/google',
+    passport.authenticate('google', {
+        scope: [
+            'https://www.googleapis.com/auth/userinfo.profile',
+            'https://www.googleapis.com/auth/userinfo.email'] }),
+    function(req, res){
+        // The request will be redirected to Google for authentication, so this
+        // function will not be called.
+    }
+);
+
+app.get('/auth/google/callback', function (req, res, next) {
     passport.authenticate('google', function (err, user) {
         req.session.gbraver = {
             user : user
@@ -75,6 +92,7 @@ app.get('/auth/google/return', function (req, res, next) {
         }
     })(req, res, next);
 });
+
 if('development' == app.get('env')){
     app.get('/testClient',routes.testClient);
 }
