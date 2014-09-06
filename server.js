@@ -1,5 +1,6 @@
 var battle = require('./battle.js');
 var room = require('./room.js');
+var enemyRoutine = require('./enemyRoutine.js');
 /**
  * ゲームサーバ
  * @param spec {Object}
@@ -78,7 +79,8 @@ function server(spec, my) {
         socket.gbraverInfo = {
             userId : null,
             roomId : null,
-            singlePlayRoom : null
+            singlePlayRoom : null,
+            enemyRoutine : null
         };
 
         socket.on('auth',function(data){
@@ -140,6 +142,30 @@ function server(spec, my) {
             }
         });
 
+        socket.on('startSinglePlay',function(data){
+            var enemyId = data.enemyId;
+            socket.gbraverInfo.singlePlayRoom = room();
+            socket.gbraverInfo.enemyRoutine = enemyRoutine();
+
+            getPlayerData(socket.gbraverInfo.userId, function(err, userData) {
+                socket.gbraverInfo.singlePlayRoom.addUser(userData);
+                getCharacterInfo(enemyId, function (err, armdozerData) {
+                    enterRoomByNPC(armdozerData);
+                });
+            });
+
+            function enterRoomByNPC(armdozerData){
+                var enemyUserData = {
+                    userId: NONE_PLAYER_CHARACTOR_NAME,
+                    status: armdozerData
+                };
+                socket.gbraverInfo.singlePlayRoom.addUser(enemyUserData);
+                socket.gbraverInfo.singlePlayRoom.initBattle();
+                socket.gbraverInfo.enemyRoutine.setRespData(null);
+                socket.emit('gameStart',socket.gbraverInfo.singlePlayRoom.getUsers());
+            }
+        });
+
         socket.on('command', function (data) {
             var method = data.method;
             var param = data.param;
@@ -164,15 +190,13 @@ function server(spec, my) {
         }
 
         function commandForSinglePlay(method,param){
+            var enemyCommand = socket.gbraverInfo.enemyRoutine.getCommand();
+            socket.gbraverInfo.singlePlayRoom.setCommand(NONE_PLAYER_CHARACTOR_NAME,enemyCommand.method,enemyCommand.param);
             socket.gbraverInfo.singlePlayRoom.setCommand(socket.gbraverInfo.userId,method,param);
-            //TODO : 敵思考ルーチンは別モジュール化する
-            if(method === 'ready'){
-                socket.gbraverInfo.singlePlayRoom.setCommand(NONE_PLAYER_CHARACTOR_NAME,'ready',null);
-            }
-            if(socket.gbraverInfo.singlePlayRoom.isInputFinish()){
-                var ret = socket.gbraverInfo.singlePlayRoom.executePhase();
-                socket.emit('resp',ret);
-            }
+
+            var ret = socket.gbraverInfo.singlePlayRoom.executePhase();
+            socket.gbraverInfo.enemyRoutine.setRespData(ret);
+            socket.emit('resp',ret);
         }
 
         function dissolveRoom(P_roomId){
@@ -240,28 +264,6 @@ function server(spec, my) {
                 roomInfo[i] = roomArray[i].getUserIdList();
             }
             socket.emit('successGetRoomInfo',roomInfo);
-        });
-
-        socket.on('startSinglePlay',function(data){
-            var enemyId = data.enemyId;
-            socket.gbraverInfo.singlePlayRoom = room();
-
-            getPlayerData(socket.gbraverInfo.userId, function(err, userData) {
-                socket.gbraverInfo.singlePlayRoom.addUser(userData);
-                getCharacterInfo(enemyId, function (err, armdozerData) {
-                    enterRoomByNPC(armdozerData);
-                });
-            });
-
-            function enterRoomByNPC(armdozerData){
-                var enemyUserData = {
-                    userId: NONE_PLAYER_CHARACTOR_NAME,
-                    status: armdozerData
-                };
-                socket.gbraverInfo.singlePlayRoom.addUser(enemyUserData);
-                socket.gbraverInfo.singlePlayRoom.initBattle();
-                socket.emit('gameStart',socket.gbraverInfo.singlePlayRoom.getUsers());
-            }
         });
     });
 
