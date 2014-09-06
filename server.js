@@ -76,7 +76,8 @@ function server(spec, my) {
     io.sockets.on('connection', function(socket) {
         socket.gbraverInfo = {
             userId : null,
-            roomId : null
+            roomId : null,
+            singlePlayRoom : null
         };
 
         socket.on('auth',function(data){
@@ -132,7 +133,7 @@ function server(spec, my) {
                     roomArray[socket.gbraverInfo.roomId].addUser(userData);
                     if (roomArray[socket.gbraverInfo.roomId].isGameStart()) {
                         roomArray[socket.gbraverInfo.roomId].initBattle();
-                        io.sockets. in (socket.gbraverInfo.roomId).emit('gameStart', roomArray[socket.gbraverInfo.roomId].getUsers());
+                        io.sockets.in(socket.gbraverInfo.roomId).emit('gameStart', roomArray[socket.gbraverInfo.roomId].getUsers());
                     }
                 });
             }
@@ -217,6 +218,28 @@ function server(spec, my) {
                 roomInfo[i] = roomArray[i].getUserIdList();
             }
             socket.emit('successGetRoomInfo',roomInfo);
+        });
+
+        socket.on('startSinglePlay',function(data){
+            var enemyId = data.enemyId;
+            socket.gbraverInfo.singlePlayRoom = room();
+
+            getPlayerData(socket.gbraverInfo.userId, function(err, userData) {
+                socket.gbraverInfo.singlePlayRoom.addUser(userData);
+                getEnemyData();
+            });
+
+            function getEnemyData() {
+                getCharacterInfo(enemyId, function (err, armdozerData) {
+                    var enemyUserData = {
+                        userId: 'nonePlayerCharacter',
+                        status: armdozerData
+                    };
+                    socket.gbraverInfo.singlePlayRoom.addUser(enemyUserData);
+                    socket.gbraverInfo.singlePlayRoom.initBattle();
+                    socket.emit('gameStart',socket.gbraverInfo.singlePlayRoom.getUsers());
+                });
+            }
         });
     });
 
