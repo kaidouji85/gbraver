@@ -8,6 +8,7 @@ var room = require('./room.js');
  * @param my {Object}
  */
 function server(spec, my) {
+    var NONE_PLAYER_CHARACTOR_NAME = 'nonePlayerCharacter';
     var app = spec.httpServer;
     var logLevel = spec.logLevel || 1;
     var io = require('socket.io').listen(app, {
@@ -142,6 +143,15 @@ function server(spec, my) {
         socket.on('command', function (data) {
             var method = data.method;
             var param = data.param;
+
+            if(socket.gbraverInfo.roomId !== null){
+                commandForTwoPlay(method, param);
+            } else if(socket.gbraverInfo.singlePlayRoom !== null) {
+                commandForSinglePlay(method,param);
+            }
+        });
+
+        function commandForTwoPlay(method,param) {
             roomArray[socket.gbraverInfo.roomId].setCommand(socket.gbraverInfo.userId, method, param);
             if (roomArray[socket.gbraverInfo.roomId].isInputFinish()) {
                 if (roomArray[socket.gbraverInfo.roomId].isGameEnd()) {
@@ -151,7 +161,19 @@ function server(spec, my) {
                     io.sockets.in(socket.gbraverInfo.roomId).emit('resp', ret);
                 }
             }
-        });
+        }
+
+        function commandForSinglePlay(method,param){
+            socket.gbraverInfo.singlePlayRoom.setCommand(socket.gbraverInfo.userId,method,param);
+            //TODO : 敵思考ルーチンは別モジュール化する
+            if(method === 'ready'){
+                socket.gbraverInfo.singlePlayRoom.setCommand(NONE_PLAYER_CHARACTOR_NAME,'ready',null);
+            }
+            if(socket.gbraverInfo.singlePlayRoom.isInputFinish()){
+                var ret = socket.gbraverInfo.singlePlayRoom.executePhase();
+                socket.emit('resp',ret);
+            }
+        }
 
         function dissolveRoom(P_roomId){
             roomArray[P_roomId] = room();
@@ -168,7 +190,7 @@ function server(spec, my) {
         //       一時的に参考サイトのやり方でしのぐ。
         //       http://stackoverflow.com/questions/23858604/how-to-get-rooms-clients-list-in-socket-io-1-0
         function findClientsSocketByRoomId(roomId) {
-            var res = []
+            var res = [];
             var room = io.sockets.adapter.rooms[roomId];
             if (room) {
                 for (var id in room) {
@@ -233,7 +255,7 @@ function server(spec, my) {
 
             function enterRoomByNPC(armdozerData){
                 var enemyUserData = {
-                    userId: 'nonePlayerCharacter',
+                    userId: NONE_PLAYER_CHARACTOR_NAME,
                     status: armdozerData
                 };
                 socket.gbraverInfo.singlePlayRoom.addUser(enemyUserData);
