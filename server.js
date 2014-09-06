@@ -226,19 +226,19 @@ function server(spec, my) {
 
             getPlayerData(socket.gbraverInfo.userId, function(err, userData) {
                 socket.gbraverInfo.singlePlayRoom.addUser(userData);
-                getEnemyData();
+                getCharacterInfo(enemyId, function (err, armdozerData) {
+                    enterRoomByNPC(armdozerData);
+                });
             });
 
-            function getEnemyData() {
-                getCharacterInfo(enemyId, function (err, armdozerData) {
-                    var enemyUserData = {
-                        userId: 'nonePlayerCharacter',
-                        status: armdozerData
-                    };
-                    socket.gbraverInfo.singlePlayRoom.addUser(enemyUserData);
-                    socket.gbraverInfo.singlePlayRoom.initBattle();
-                    socket.emit('gameStart',socket.gbraverInfo.singlePlayRoom.getUsers());
-                });
+            function enterRoomByNPC(armdozerData){
+                var enemyUserData = {
+                    userId: 'nonePlayerCharacter',
+                    status: armdozerData
+                };
+                socket.gbraverInfo.singlePlayRoom.addUser(enemyUserData);
+                socket.gbraverInfo.singlePlayRoom.initBattle();
+                socket.emit('gameStart',socket.gbraverInfo.singlePlayRoom.getUsers());
             }
         });
     });
