@@ -43,17 +43,16 @@ githubからプロジェクトをダウントードします。
 起動バッチとしてstartup.shを作成します。
 以下に示すテンプレート通りに作成して下さい。
 
-`
-#!/bin/sh
+    #!/bin/sh
 
-GOOGLE_CLIENT_ID="GoogleOAuth2.0のClient ID"
-GOOGLE_CLIENT_SECRET="GoogleOAuth2.0のGOOGLE CLIENT SECRET"
+    GOOGLE_CLIENT_ID="GoogleOAuth2.0のClient ID"
+    GOOGLE_CLIENT_SECRET="GoogleOAuth2.0のGOOGLE CLIENT SECRET"
 
-export GOOGLE_CLIENT_ID
-export GOOGLE_CLIENT_SECRET
+    export GOOGLE_CLIENT_ID
+    export GOOGLE_CLIENT_SECRET
 
-node app.js
-`
+    node app.js
+
 
 ## ローカル環境の起動方法
 './startup.sh'
@@ -84,14 +83,13 @@ herokuインスタンスを用意します。アドオンでMongoHqを追加し�
 (3)環境変数の登録
 herokuに環境変数を登録します。ここでは環境変数登録バッチのテンプレートを示します。
 
-`
-#!/bin/sh
+    #!/bin/sh
 
-herokuAppName="herokuアプリ名"
-heroku config:add BASE_URL="herokuアプリのURL" --app $herokuAppName
-heroku config:add GOOGLE_CLIENT_ID="GoogleOAuth2.0のClient ID" --app $herokuAppName
-heroku config:add GOOGLE_CLIENT_SECRET="GoogleOAuth2.0のGOOGLE CLIENT SECRET" --app $herokuAppName
-`
+    herokuAppName="herokuアプリ名"
+    heroku config:add BASE_URL="herokuアプリのURL" --app $herokuAppName
+    heroku config:add GOOGLE_CLIENT_ID="GoogleOAuth2.0のClient ID" --app $herokuAppName
+    heroku config:add GOOGLE_CLIENT_SECRET="GoogleOAuth2.0のGOOGLE CLIENT SECRET" --app $herokuAppName
+
 
 (4)herokuへデプロイ
 `git push heroku`
