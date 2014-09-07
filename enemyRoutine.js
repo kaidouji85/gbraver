@@ -8,12 +8,18 @@ function enemyRoutine(spec,my){
 
     that.getCommand = function() {
         var command = {
-            method : null,
+            method : 'ok',
             param : null
         };
 
         if(respData===null){
             command.method = 'ready';
+        } else if(respData.phase === 'defenthCommand') {
+            //TODO : ここに思考ルーチンを追加する
+            command.method = 'defenth';
+            command.param = {
+                battery : 0
+            };
         }
 
         return command;

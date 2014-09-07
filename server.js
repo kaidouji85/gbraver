@@ -193,10 +193,13 @@ function server(spec, my) {
             var enemyCommand = socket.gbraverInfo.enemyRoutine.getCommand();
             socket.gbraverInfo.singlePlayRoom.setCommand(NONE_PLAYER_CHARACTOR_NAME,enemyCommand.method,enemyCommand.param);
             socket.gbraverInfo.singlePlayRoom.setCommand(socket.gbraverInfo.userId,method,param);
-
-            var ret = socket.gbraverInfo.singlePlayRoom.executePhase();
-            socket.gbraverInfo.enemyRoutine.setRespData(ret);
-            socket.emit('resp',ret);
+            if(socket.gbraverInfo.singlePlayRoom.isInputFinish()){
+                var ret = socket.gbraverInfo.singlePlayRoom.executePhase();
+                socket.gbraverInfo.enemyRoutine.setRespData(ret);
+                socket.emit('resp',ret);
+            } else {
+                console.log('enemy routine error.');
+            }
         }
 
         function dissolveRoom(P_roomId){

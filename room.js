@@ -55,7 +55,7 @@ function room(){
             case PHASE_WAIT:
             case PHASE_DAMAGE:
             case PHASE_CHARGE:
-                if (method == 'ok') {
+                if (method === 'ok') {
                     inputFlag[userId] = true;
                 }   
                 break;
