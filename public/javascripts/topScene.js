@@ -6,13 +6,16 @@ function topScene(spec,my){
     that.setArmdpzerButton = {};
     that.mesWindow = {};
     that.selectArmdozerSprite = {};
+    that.singlePlayButton = {};
     that.tile = {};
     that.onPushSetArmdozer = onPushSetArmdozer;
     that.onPushBattleRoom = onPushBattleRoom;
+    that.onPushSinglePlay = onPushSinglePlay;
     
     var core = enchant.Core.instance;
     var emitPushSetArmdozer = function(){};
     var emitPushBattleRoom = function(){};
+    var emitPushSinglePlay = function(){};
     
     initSprite();
     function initSprite(){
@@ -39,6 +42,7 @@ function topScene(spec,my){
         that.battleRoomButton.addEventListener(Event.TOUCH_END,function(e){
             that.battleRoomButton.setVisible(false);
             that.setArmdpzerButton.setVisible(false);
+            that.singlePlayButton.setVisible(false);
             that.mesWindow.setText(core.MESSAGE_GET_ROOMINFO);
             that.mesWindow.setVisible(true);
             emitPushBattleRoom();
@@ -56,11 +60,31 @@ function topScene(spec,my){
         that.setArmdpzerButton.addEventListener(Event.TOUCH_END,function(e){
             that.battleRoomButton.setVisible(false);
             that.setArmdpzerButton.setVisible(false);
+            that.singlePlayButton.setVisible(false);
             that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
             that.mesWindow.setVisible(true);
             emitPushSetArmdozer();
         });
         that.addChild(that.setArmdpzerButton);
+
+        //シングルプレイボタン
+        that.singlePlayButton = pictButton({
+            text : 'シングルプレイ',
+            pict : core.assets[core.PICT_WINDOW],
+            subPict : core.assets[core.PICT_ACTIVE_WINDOW]
+        });
+        that.singlePlayButton.x = 88;
+        that.singlePlayButton.y = 428;
+        that.singlePlayButton.addEventListener(Event.TOUCH_END,function(){
+            that.battleRoomButton.setVisible(false);
+            that.setArmdpzerButton.setVisible(false);
+            that.singlePlayButton.setVisible(false);
+            that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
+            that.mesWindow.setVisible(true);
+            emitPushSinglePlay();
+        });
+        that.addChild(that.singlePlayButton);
+
 
         //画面タイトル
         that.title = titleWindow({
@@ -85,6 +109,10 @@ function topScene(spec,my){
 
     function onPushBattleRoom(fn){
         emitPushBattleRoom = fn;
+    }
+
+    function onPushSinglePlay(fn){
+        emitPushSinglePlay = fn;
     }
     
     return that;

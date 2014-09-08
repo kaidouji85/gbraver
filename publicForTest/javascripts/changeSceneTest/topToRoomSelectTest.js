@@ -27,6 +27,9 @@ function topToRoomSelect(){
     function sendGetRoomInfo(message,data) {
         assert.equal(message,'getRoomInfo','サーバ送信メッセージが正しい');
         assert.equal(data,null,'サーバ送信データが正しい');
+        assert.equal(Game.currentScene.battleRoomButton.getVisible(),false,'対戦ルーム入室ボタンが表示されない');
+        assert.equal(Game.currentScene.setArmdpzerButton.getVisible(),false,'アームドーザ選択ボタンが表示されない');
+        assert.equal(Game.currentScene.singlePlayButton.getVisible(),false,'シングルプレイボタンが表示されない');
         assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
         assert.equal(Game.currentScene.mesWindow.getText(),'ルーム情報取得中','メッセージが正しい');
         assert.equal(Game.currentScene.title.getVisible(),true,'画面タイトルが表示される');
