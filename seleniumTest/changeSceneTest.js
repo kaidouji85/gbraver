@@ -61,4 +61,8 @@ test.describe('シーン遷移', function() {
     test.it('アームドーザ情報画面から「戻る」を押してアームドーザ選択画面へ遷移する', function(){
         util.doClientTest('/javascripts/changeSceneTest/armdozerInfoToSetArmdozerForPushPrevButtonTest.js');
     });
+
+    test.it('トップ画面からシングルプレイボタンを押して戦闘画面へ遷移', function(){
+        util.doClientTest('/javascripts/changeSceneTest/topToSinglePlayTest.js');
+    });
 });
