@@ -1,6 +1,7 @@
 var battle = require('./battle.js');
 var room = require('./room.js');
-var enemyRoutine = require('./enemyRoutine.js');
+var enemyRoutineBase = require('./enemyRoutineBase.js');
+
 /**
  * ゲームサーバ
  * @param spec {Object}
@@ -91,7 +92,7 @@ function server(spec, my) {
             userId : null,
             roomId : null,
             singlePlayRoom : null,
-            enemyRoutine : null
+            enemyRoutineBase : null
         };
 
         socket.on('auth',function(data){
@@ -158,7 +159,7 @@ function server(spec, my) {
             var routineId = data.routineId;
             var attackRoutine = getAttackRoutine(routineId);
             socket.gbraverInfo.singlePlayRoom = room();
-            socket.gbraverInfo.enemyRoutine = enemyRoutine({
+            socket.gbraverInfo.enemyRoutineBase = enemyRoutineBase({
                 attackRoutine : attackRoutine
             });
 
@@ -176,7 +177,7 @@ function server(spec, my) {
                 };
                 socket.gbraverInfo.singlePlayRoom.addUser(enemyUserData);
                 socket.gbraverInfo.singlePlayRoom.initBattle();
-                socket.gbraverInfo.enemyRoutine.setRespData(null);
+                socket.gbraverInfo.enemyRoutineBase.setRespData(null);
                 socket.emit('gameStart',socket.gbraverInfo.singlePlayRoom.getUsers());
             }
         });
@@ -205,17 +206,17 @@ function server(spec, my) {
         }
 
         function commandForSinglePlay(method,param){
-            var enemyCommand = socket.gbraverInfo.enemyRoutine.getCommand();
+            var enemyCommand = socket.gbraverInfo.enemyRoutineBase.getCommand();
             socket.gbraverInfo.singlePlayRoom.setCommand(NONE_PLAYER_CHARACTOR_NAME,enemyCommand.method,enemyCommand.param);
             socket.gbraverInfo.singlePlayRoom.setCommand(socket.gbraverInfo.userId,method,param);
             if(socket.gbraverInfo.singlePlayRoom.isInputFinish()){
                 if(!socket.gbraverInfo.singlePlayRoom.isGameEnd()){
                     var ret = socket.gbraverInfo.singlePlayRoom.executePhase();
-                    socket.gbraverInfo.enemyRoutine.setRespData(ret);
+                    socket.gbraverInfo.enemyRoutineBase.setRespData(ret);
                     socket.emit('resp',ret);
                 } else {
                     socket.gbraverInfo.singlePlayRoom = null;
-                    socket.gbraverInfo.enemyRoutine = null;
+                    socket.gbraverInfo.enemyRoutineBase = null;
                     socket.emit('dissolveRoom');
                 }
             } else {
