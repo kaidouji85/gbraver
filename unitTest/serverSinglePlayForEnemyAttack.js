@@ -22,7 +22,8 @@ describe('serverクラスのテスト', function() {
         });
         testServer.onGetPlayerData(testPlayerData.getPlayerData);
         testServer.onGetCharacterInfo(function(armdozerId,fn){
-            var landozer = {
+            var charList = {};
+            var granBraver = {
                 name : 'グランブレイバー',
                 pictName : 'GranBraver.PNG',
                 hp : 3200,
@@ -50,8 +51,20 @@ describe('serverクラスのテスト', function() {
                     }
                 }
             };
-            fn(null,landozer);
+            charList['granBraver'] = granBraver;
+            fn(null,charList[armdozerId]);
         });
+        /*
+         testServer.onGetAttackRoutine(function(routineId,fn){
+         var attackRoutine = function() {
+         var command = {
+
+         };
+         return command;
+         }
+         fn(null,attackRoutine);
+         });
+         */
     });
 
     afterEach(function() {

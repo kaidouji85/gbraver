@@ -22,6 +22,7 @@ describe('serverクラスのテスト', function() {
         });
         testServer.onGetPlayerData(testPlayerData.getPlayerData);
         testServer.onGetCharacterInfo(function(armdozerId,fn){
+            var charaList = {};
             var landozer = {
                 name : 'ランドーザ',
                 pictName : 'Landozer.PNG',
@@ -50,7 +51,8 @@ describe('serverクラスのテスト', function() {
                     }
                 }
             };
-            fn(null,landozer);
+            charaList['landozer'] = landozer;
+            fn(null,charaList[armdozerId]);
         });
     });
 
