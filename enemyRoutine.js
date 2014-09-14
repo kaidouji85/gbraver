@@ -1,5 +1,6 @@
 function enemyRoutine(spec,my){
     var that = {};
+    var attackRoutine = spec.attackRoutine;
     var NONE_PLAYER_CHARACTER = 'nonePlayerCharacter';
     var respData = null;
     var attackUserId = null;
@@ -25,11 +26,7 @@ function enemyRoutine(spec,my){
                 battery : 0
             };
         } else if(respData.phase === 'atackCommand' && attackUserId === NONE_PLAYER_CHARACTER) {
-            //TODO : ここに思考ルーチンを追加する
-            command.method = 'atack';
-            command.param = {
-                battery : 0
-            };
+            command = attackRoutine(respData.statusArray);
         }
 
         return command;

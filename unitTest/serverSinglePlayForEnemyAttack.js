@@ -54,17 +54,20 @@ describe('serverクラスのテスト', function() {
             charList['granBraver'] = granBraver;
             fn(null,charList[armdozerId]);
         });
-        /*
-         testServer.onGetAttackRoutine(function(routineId,fn){
-         var attackRoutine = function() {
-         var command = {
-
-         };
-         return command;
-         }
-         fn(null,attackRoutine);
-         });
-         */
+        testServer.onGetAttackRoutine(function(routineId) {
+            var attackRoutineList = {};
+            var zero = function (statusArray) {
+                var command = {
+                    method : 'atack',
+                    param : {
+                        battery : 0
+                    }
+                };
+                return command;
+            }
+            attackRoutineList['zero'] = zero;
+            return attackRoutineList[routineId];
+        });
     });
 
     afterEach(function() {
@@ -85,7 +88,8 @@ describe('serverクラスのテスト', function() {
 
             function startSinglePlay() {
                 client.emit('startSinglePlay',{
-                    enemyId : 'granBraver'
+                    enemyId : 'granBraver',
+                    routineId : 'zero'
                 });
                 client.once('gameStart',gameStart);
             }

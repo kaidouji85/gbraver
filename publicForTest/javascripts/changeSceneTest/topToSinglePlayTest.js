@@ -26,7 +26,8 @@ function topToSetArmdozer(){
 
     function asertOfMessage(message,data) {
         var expectData = {
-            enemyId : 'landozer'
+            enemyId : 'landozer',
+            routineId : 'zero'
         };
         assert.equal(message, 'startSinglePlay', 'サーバ送信メッセージが正しい');
         assert.deepEqual(data, expectData, 'サーバ送信データが正しい');

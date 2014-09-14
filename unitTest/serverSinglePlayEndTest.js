@@ -54,6 +54,20 @@ describe('serverクラスのテスト', function() {
             charaList['landozer'] = landozer;
             fn(null,charaList[armdozerId]);
         });
+        testServer.onGetAttackRoutine(function(routineId) {
+            var attackRoutineList = {};
+            var zero = function (statusArray) {
+                var command = {
+                    method : 'atack',
+                    param : {
+                        battery : 0
+                    }
+                };
+                return command;
+            }
+            attackRoutineList['zero'] = zero;
+            return attackRoutineList[routineId];
+        });
     });
 
     afterEach(function() {
@@ -74,7 +88,8 @@ describe('serverクラスのテスト', function() {
 
             function startSinglePlay() {
                 client.emit('startSinglePlay',{
-                    enemyId : 'landozer'
+                    enemyId : 'landozer',
+                    routineId : 'zero'
                 });
                 client.once('gameStart',gameStart);
             }

@@ -65,7 +65,7 @@ function server(spec, my) {
     }
 
     /**
-     * アームドーザ情報取得関す
+     * アームドーザ情報取得関数
      * この関数の実装は外部で行う
      * @param {String} armdozerId
      * @param {FUnction} callback(err,result)
@@ -73,6 +73,17 @@ function server(spec, my) {
     var getCharacterInfo;
     io.onGetCharacterInfo = function(fn){
         getCharacterInfo = fn;
+    }
+
+    /**
+     * CPU攻撃思ルーチン取得関数
+     * この関数の実装は外部で行う
+     * @param {String} routineId
+     * @return attackRoutineFunction
+     */
+    var getAttackRoutine;
+    io.onGetAttackRoutine = function(fn){
+        getAttackRoutine = fn;
     }
 
     io.sockets.on('connection', function(socket) {
@@ -144,8 +155,12 @@ function server(spec, my) {
 
         socket.on('startSinglePlay',function(data){
             var enemyId = data.enemyId;
+            var routineId = data.routineId;
+            var attackRoutine = getAttackRoutine(routineId);
             socket.gbraverInfo.singlePlayRoom = room();
-            socket.gbraverInfo.enemyRoutine = enemyRoutine();
+            socket.gbraverInfo.enemyRoutine = enemyRoutine({
+                attackRoutine : attackRoutine
+            });
 
             getPlayerData(socket.gbraverInfo.userId, function(err, userData) {
                 socket.gbraverInfo.singlePlayRoom.addUser(userData);

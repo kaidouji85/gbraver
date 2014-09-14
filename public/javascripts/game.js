@@ -53,7 +53,10 @@ function game(spec, my) {
             emitSendMessage('getRoomInfo',null);
         });
         core.topScene.onPushSinglePlay(function(){
-            emitSendMessage('startSinglePlay',{enemyId:'landozer'});
+            emitSendMessage('startSinglePlay',{
+                enemyId:'landozer',
+                routineId : 'zero'
+            });
         });
         core.replaceScene(core.topScene);
         emitChangeScene('top');

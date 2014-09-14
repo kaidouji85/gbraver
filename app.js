@@ -17,9 +17,9 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
-var ce = require('cloneextend');
 var mongoDao = require('./mongoDao.js');
 var passport = require('passport');
+var enemyRoutineDefine = require('./enemyRoutineDefine.js');
 var app = express();
 
 // all environments
@@ -116,3 +116,4 @@ WsServer.onGetPlayerData(dao.getPlayerData);
 WsServer.onSetArmdozerId(dao.setArmdozerId);
 WsServer.onGetCharacterList(dao.getCharacterList);
 WsServer.onGetCharacterInfo(dao.getCharacterInfo);
+WsServer.onGetAttackRoutine(enemyRoutineDefine.getAttackRoutine);
