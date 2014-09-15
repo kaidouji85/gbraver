@@ -33,7 +33,7 @@ describe('serverクラスのテスト', function() {
     });
 
     describe(' 一人用モード戦闘',function(){
-        it('プレイヤーが終了する',function(done){
+        it('プレイヤーが攻撃してゲームが終了する',function(done){
             var client = io(SERVER_URL, option);
             client.on('connect',doAuth);
 
