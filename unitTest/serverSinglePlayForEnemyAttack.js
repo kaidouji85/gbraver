@@ -4,6 +4,7 @@ describe('serverクラスのテスト', function() {
     var SERVER_URL = 'http://localhost:'+SERVER_PORT;
 
     var testPlayerData = require('./testPlayerData.js');
+    var testArmdozerData = require('./testArmdozerData.js');
     var assert = require('chai').assert;
     var io = require('socket.io-client');
     var http = require('http');
@@ -21,39 +22,7 @@ describe('serverクラスのテスト', function() {
             httpServer : app
         });
         testServer.onGetPlayerData(testPlayerData.getPlayerData);
-        testServer.onGetCharacterInfo(function(armdozerId,fn){
-            var charList = {};
-            var granBraver = {
-                name : 'グランブレイバー',
-                pictName : 'GranBraver.PNG',
-                hp : 3200,
-                speed : 500,
-                weapons : {
-                    1 : {
-                        name : 'バスターナックル',
-                        power : 800
-                    },
-                    2 : {
-                        name : 'バスターナックル',
-                        power : 1100
-                    },
-                    3 : {
-                        name : 'バスターナックル',
-                        power : 1600
-                    },
-                    4 : {
-                        name : 'バスターナックル',
-                        power : 2100
-                    },
-                    5 : {
-                        name : 'バスターナックル',
-                        power : 2800
-                    }
-                }
-            };
-            charList['granBraver'] = granBraver;
-            fn(null,charList[armdozerId]);
-        });
+        testServer.onGetCharacterInfo(testArmdozerData.getCharacter);
         testServer.onGetAttackRoutine(function(routineId) {
             var attackRoutineList = {};
             var zero = function (statusArray) {
