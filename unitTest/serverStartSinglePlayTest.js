@@ -5,6 +5,7 @@ describe('serverクラスのテスト', function() {
 
     var testPlayerData = require('./testPlayerData.js');
     var testArmdozerData = require('./testArmdozerData.js');
+    var testEnemyRoutineDefine = require('./testEnemyRoutineDefine.js');
     var assert = require('chai').assert;
     var io = require('socket.io-client');
     var http = require('http');
@@ -23,34 +24,8 @@ describe('serverクラスのテスト', function() {
         });
         testServer.onGetPlayerData(testPlayerData.getPlayerData);
         testServer.onGetCharacterInfo(testArmdozerData.getCharacter);
-        testServer.onGetAttackRoutine(function(routineId) {
-            var attackRoutineList = {};
-            var zero = function (statusArray) {
-                var command = {
-                    method : 'atack',
-                    param : {
-                        battery : 0
-                    }
-                };
-                return command;
-            }
-            attackRoutineList['zero'] = zero;
-            return attackRoutineList[routineId];
-        });
-        testServer.onGetDefenseRoutine(function(routineId) {
-            var attackRoutineList = {};
-            var zero = function (statusArray) {
-                var command = {
-                    method : 'defenth',
-                    param : {
-                        battery : 0
-                    }
-                };
-                return command;
-            }
-            attackRoutineList['zero'] = zero;
-            return attackRoutineList[routineId];
-        });
+        testServer.onGetAttackRoutine(testEnemyRoutineDefine.getAttackRoutine);
+        testServer.onGetDefenseRoutine(testEnemyRoutineDefine.getDefenseRoutine);
     });
 
     afterEach(function() {
