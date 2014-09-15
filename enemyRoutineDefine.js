@@ -1,21 +1,61 @@
 var attackRouitneList = {};
 var defenseRoutineList = {};
 
-attackRouitneList['zero'] = function(statusArray) {
+var ROUTINE_ID_ZERO = 'zero';
+var ROUTINE_ID_ATTACK_3 = 'attack3'
+
+//*******************************
+// 0攻撃 0防御
+//*******************************
+attackRouitneList[ROUTINE_ID_ZERO] = function(statusArray) {
+    return getAttackCommand(0);
+}
+
+defenseRoutineList[ROUTINE_ID_ZERO] = function(statusArray) {
+    return getDefenseCommand(0);
+}
+
+//*******************************
+// 3攻撃 1防御
+//*******************************
+attackRouitneList[ROUTINE_ID_ATTACK_3] = function(statusArray) {
+    var command = getChargeCommand();
+    if(statusArray.nonePlayerCharacter.battery >= 3){
+        command = getAttackCommand(3);
+    }
+    return command;
+}
+
+defenseRoutineList[ROUTINE_ID_ATTACK_3] = function(statusArray) {
+    var command = getDefenseCommand(0);
+    if(statusArray.nonePlayerCharacter.battery >= 1){
+        command = getDefenseCommand(1);
+    }
+    return command;
+}
+
+function getAttackCommand(attackBattery){
     var command = {
         method : 'atack',
         param : {
-            battery : 0
+            battery : attackBattery
         }
     };
     return command;
 }
 
-defenseRoutineList['zero'] = function(statusArray) {
+function getChargeCommand() {
+    var command = {
+        method : 'charge'
+    }
+    return command;
+}
+
+function getDefenseCommand(defenseBattery){
     var command = {
         method : 'defenth',
         param : {
-            battery : 0
+            battery : defenseBattery
         }
     };
     return command;

@@ -55,7 +55,7 @@ function game(spec, my) {
         core.topScene.onPushSinglePlay(function(){
             emitSendMessage('startSinglePlay',{
                 enemyId:'landozer',
-                routineId : 'zero'
+                routineId : 'attack3'
             });
         });
         core.replaceScene(core.topScene);
