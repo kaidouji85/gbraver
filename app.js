@@ -117,3 +117,4 @@ WsServer.onSetArmdozerId(dao.setArmdozerId);
 WsServer.onGetCharacterList(dao.getCharacterList);
 WsServer.onGetCharacterInfo(dao.getCharacterInfo);
 WsServer.onGetAttackRoutine(enemyRoutineDefine.getAttackRoutine);
+WsServer.onGetDefenseRoutine(enemyRoutineDefine.getDefenseRoutine);

@@ -66,6 +66,20 @@ describe('serverクラスのテスト', function() {
             attackRoutineList['zero'] = zero;
             return attackRoutineList[routineId];
         });
+        testServer.onGetDefenseRoutine(function(routineId) {
+            var attackRoutineList = {};
+            var zero = function (statusArray) {
+                var command = {
+                    method : 'defenth',
+                    param : {
+                        battery : 0
+                    }
+                };
+                return command;
+            }
+            attackRoutineList['zero'] = zero;
+            return attackRoutineList[routineId];
+        });
     });
 
     afterEach(function() {

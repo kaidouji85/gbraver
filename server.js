@@ -87,6 +87,17 @@ function server(spec, my) {
         getAttackRoutine = fn;
     }
 
+    /**
+     * CPU防御思ルーチン取得関数
+     * この関数の実装は外部で行う
+     * @param {String} routineId
+     * @return defenseRoutineFunction
+     */
+    var getDefenseRoutine;
+    io.onGetDefenseRoutine = function(fn){
+        getDefenseRoutine = fn;
+    }
+
     io.sockets.on('connection', function(socket) {
         socket.gbraverInfo = {
             userId : null,
@@ -158,9 +169,11 @@ function server(spec, my) {
             var enemyId = data.enemyId;
             var routineId = data.routineId;
             var attackRoutine = getAttackRoutine(routineId);
+            var defenseRoutine = getDefenseRoutine(routineId);
             socket.gbraverInfo.singlePlayRoom = room();
             socket.gbraverInfo.enemyRoutineBase = enemyRoutineBase({
-                attackRoutine : attackRoutine
+                attackRoutine : attackRoutine,
+                defenseRoutine : defenseRoutine
             });
 
             getPlayerData(socket.gbraverInfo.userId, function(err, userData) {
