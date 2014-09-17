@@ -4,17 +4,11 @@ var BASE_URL = process.env.BASE_URL || 'http://localhost:'+PORT;
 var GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 var GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 
-//test add start
-console.log(GOOGLE_CLIENT_ID);
-console.log(GOOGLE_CLIENT_SECRET);
-//test add end
-
 /**
  * Module dependencies.
  */
 var express = require('express');
 var routes = require('./routes');
-var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
 var mongoDao = require('./mongoDao.js');
@@ -71,7 +65,6 @@ passport.use(new GoogleStrategy({
 
 //ルーティング
 app.get('/', routes.index);
-app.get('/users', user.list);
 app.get('/gameMain', routes.gameMain);
 
 app.get('/auth/google',
