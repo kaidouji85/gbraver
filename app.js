@@ -8,6 +8,11 @@ var GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
  * Module dependencies.
  */
 var express = require('express');
+var bodyParser = require('body-parser');
+var multer = require('multer');
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
+var methodOverride = require('method-override');
 var routes = require('./routes');
 var http = require('http');
 var path = require('path');
@@ -20,20 +25,21 @@ var app = express();
 app.set('port', PORT);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
-app.use(express.favicon());
-app.use(express.logger('dev'));
-app.use(express.bodyParser());
-app.use(express.methodOverride());
+//app.use(express.favicon());  //TODO : とりあえず放置
+//app.use(express.logger('dev'));　//TODO : とりあえず放置
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(multer());
+app.use(methodOverride());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.cookieParser('your secret here'));
-app.use(express.session());
-app.use(app.router);
+app.use(cookieParser());
+app.use(session({secret: 'kaidouji85'}));
 app.use(passport.initialize());
 app.use(passport.session());
 
 // development only
 if ('development' == app.get('env')) {
-    app.use(express.errorHandler());
+    //app.use(express.errorHandler());  //TODO : とりあえず放置
     app.use(express.static(path.join(__dirname, 'publicForDebug')));
     app.use(express.static(path.join(__dirname, 'publicForTest')));
 }
@@ -41,7 +47,7 @@ if ('development' == app.get('env')) {
 var mongoUri = process.env.MONGOHQ_URL || 'mongodb://localhost/gbraver';
 var dao = mongoDao({url : mongoUri});
 
-//Google認証
+//google OAuth2
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 passport.serializeUser(function(user, done) {
     done(null, user);
@@ -95,15 +101,15 @@ if('development' == app.get('env')){
     app.get('/testClient',routes.testClient);
 }
 
-//httpサーバ
-var server = http.createServer(app).listen(app.get('port'), function() {
+//http server
+var server = app.listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
 });
 
-//WebsocketServer
+//socket.io server
 var wsServer = require('./server.js');
 var WsServer = wsServer({
-    httpServer:server
+    httpServer : server
 });
 WsServer.onGetPlayerData(dao.getPlayerData);
 WsServer.onSetArmdozerId(dao.setArmdozerId);
