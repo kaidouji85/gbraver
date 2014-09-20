@@ -1,4 +1,4 @@
-//定数
+//const
 var PORT = process.env.PORT || 3000;
 var BASE_URL = process.env.BASE_URL || 'http://localhost:'+PORT;
 var GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
@@ -13,8 +13,9 @@ var multer = require('multer');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var methodOverride = require('method-override');
+var morgan = require('morgan');
+var errorhandler = require('errorhandler')
 var routes = require('./routes');
-var http = require('http');
 var path = require('path');
 var mongoDao = require('./mongoDao.js');
 var passport = require('passport');
@@ -25,8 +26,7 @@ var app = express();
 app.set('port', PORT);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
-//app.use(express.favicon());  //TODO : とりあえず放置
-//app.use(express.logger('dev'));　//TODO : とりあえず放置
+app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(multer());
@@ -39,10 +39,11 @@ app.use(passport.session());
 
 // development only
 if ('development' == app.get('env')) {
-    //app.use(express.errorHandler());  //TODO : とりあえず放置
+    app.use(errorhandler());
     app.use(express.static(path.join(__dirname, 'publicForDebug')));
     app.use(express.static(path.join(__dirname, 'publicForTest')));
 }
+
 //DB
 var mongoUri = process.env.MONGOHQ_URL || 'mongodb://localhost/gbraver';
 var dao = mongoDao({url : mongoUri});
@@ -52,11 +53,9 @@ var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 passport.serializeUser(function(user, done) {
     done(null, user);
 });
-
 passport.deserializeUser(function(obj, done) {
     done(null, obj);
 });
-
 passport.use(new GoogleStrategy({
         clientID: GOOGLE_CLIENT_ID,
         clientSecret: GOOGLE_CLIENT_SECRET,
@@ -69,10 +68,9 @@ passport.use(new GoogleStrategy({
     }
 ));
 
-//ルーティング
+//routing
 app.get('/', routes.index);
 app.get('/gameMain', routes.gameMain);
-
 app.get('/auth/google',
     passport.authenticate('google', {
         scope: [
@@ -83,7 +81,6 @@ app.get('/auth/google',
         // function will not be called.
     }
 );
-
 app.get('/auth/google/callback', function (req, res, next) {
     passport.authenticate('google', function (err, user) {
         req.session.gbraver = {
@@ -96,7 +93,6 @@ app.get('/auth/google/callback', function (req, res, next) {
         }
     })(req, res, next);
 });
-
 if('development' == app.get('env')){
     app.get('/testClient',routes.testClient);
 }
