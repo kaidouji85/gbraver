@@ -149,6 +149,21 @@ var battle = function(spec,my){
             }
         }
     }
+
+    /**
+     * パイロットスキル発動
+     */
+    that.doPilotSkill = function() {
+        //atackUserId
+        var type = statusArray[atackUserId].skill.type;
+        if(type === 'recover') {
+            var recoverHp = statusArray[atackUserId].skill.hp;
+            var recoverBattery = statusArray[atackUserId].skill.battery;
+            statusArray[atackUserId].hp += recoverHp;
+            statusArray[atackUserId].battery += recoverBattery;
+            statusArray[atackUserId].skillPoint -= 1;
+        }
+    }
     
     return that;
 };
