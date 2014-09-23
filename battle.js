@@ -16,6 +16,7 @@ var battle = function(spec,my){
     that.ATACK_MISS = 2;
     that.ATACK_GUARD = 3;
     that.ATACK_CRITICAL = 4;
+    that.MAX_BATTERY = 5;
 
     for(var uid in statusArray){
         overHeatFlagArray[uid] = false;
@@ -49,7 +50,7 @@ var battle = function(spec,my){
             for(var uid in statusArray){
                 if(statusArray[uid].active >= that.MAX_ACTIVE){
                     atackUserId = uid;
-                    if(statusArray[uid].battery < 5) {
+                    if(statusArray[uid].battery < that.MAX_BATTERY) {
                         statusArray[uid].battery ++;
                     }
                     ret.atackUserId = uid;
@@ -121,7 +122,7 @@ var battle = function(spec,my){
      */
     that.charge = function(){
         var overHeatFlag = overHeatFlagArray[atackUserId];
-        statusArray[atackUserId].battery = 5;
+        statusArray[atackUserId].battery = that.MAX_BATTERY;
         statusArray[atackUserId].active = overHeatFlag ? -that.MAX_ACTIVE : 0;
         overHeatFlagArray[atackUserId] = true;
         atackUserId = null;
@@ -154,14 +155,13 @@ var battle = function(spec,my){
      * パイロットスキル発動
      */
     that.doPilotSkill = function() {
-        //atackUserId
         var type = statusArray[atackUserId].skill.type;
-        if(type === 'recover') {
-            var recoverHp = statusArray[atackUserId].skill.hp;
-            var recoverBattery = statusArray[atackUserId].skill.battery;
-            statusArray[atackUserId].hp += recoverHp;
-            statusArray[atackUserId].battery += recoverBattery;
+        if(type === 'quickCharge') {
+            statusArray[atackUserId].battery += statusArray[atackUserId].skill.battery;
             statusArray[atackUserId].skillPoint -= 1;
+            if(statusArray[atackUserId].battery > that.MAX_BATTERY) {
+                statusArray[atackUserId].battery = that.MAX_BATTERY;
+            }
         }
     }
     
