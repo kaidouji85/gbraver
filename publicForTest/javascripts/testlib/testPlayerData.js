@@ -8,6 +8,7 @@ function getTestPlayerData(userId){
         speed: 250,
         active: 0,
         battery: 5,
+        skillPoint : 1,
         weapons: {
             1: {
                 name: 'バスターナックル',
@@ -40,6 +41,7 @@ function getTestPlayerData(userId){
         speed: 150,
         active: 0,
         battery: 5,
+        skillPoint : 1,
         weapons: {
             1: {
                 name: 'ブレイクパンチ',
@@ -72,6 +74,7 @@ function getTestPlayerData(userId){
         speed : 250,
         active : 0,
         battery : 5,
+        skillPoint : 1,
         weapons : {
             1 : {
                 name : 'バスターナックル',
