@@ -58,12 +58,14 @@ describe('serverクラスのテスト', function() {
                         'nonePlayerCharacter' : {
                             hp : 3200,
                             battery : 5,
-                            active : 5000
+                            active : 5000,
+                            skillPoint : 1
                         },
                         'test002@gmail.com' : {
                             hp : 4700,
                             battery : 5,
-                            active : 3000
+                            active : 3000,
+                            skillPoint : 1
                         }
                     };
                     assert.deepEqual(expect,statusArray,'現在のステータスが敵攻撃思考ルーチンに渡される');

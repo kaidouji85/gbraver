@@ -68,12 +68,14 @@ describe('serverクラスのテスト', function() {
                         'test001@gmail.com' : {
                             hp : 3200,
                             battery : 5,
-                            active : 5000
+                            active : 5000,
+                            skillPoint : 1
                         },
                         'nonePlayerCharacter' : {
                             hp : 4700,
                             battery : 5,
-                            active : 3000
+                            active : 3000,
+                            skillPoint : 1
                         }
                     }
                 };
@@ -95,12 +97,14 @@ describe('serverクラスのテスト', function() {
                         'test001@gmail.com' : {
                             hp : 3200,
                             battery : 5,
-                            active : 5000
+                            active : 5000,
+                            skillPoint : 1
                         },
                         'nonePlayerCharacter' : {
                             hp : 4700,
                             battery : 5,
-                            active : 3000
+                            active : 3000,
+                            skillPoint : 1
                         }
                     }
                 };
@@ -125,12 +129,14 @@ describe('serverクラスのテスト', function() {
                         'test001@gmail.com' : {
                             hp : 3200,
                             battery : 5,
-                            active : 5000
+                            active : 5000,
+                            skillPoint : 1
                         },
                         'nonePlayerCharacter' : {
                             hp : 4700,
                             battery : 5,
-                            active : 3000
+                            active : 3000,
+                            skillPoint : 1
                         }
                     }
                 };
@@ -157,12 +163,14 @@ describe('serverクラスのテスト', function() {
                         'test001@gmail.com' : {
                             hp : 3200,
                             battery : 2,
-                            active : 0
+                            active : 0,
+                            skillPoint : 1
                         },
                         'nonePlayerCharacter' : {
                             hp : 1100,
                             battery : 5,
-                            active : 3000
+                            active : 3000,
+                            skillPoint : 1
                         }
                     }
                 };
@@ -186,12 +194,14 @@ describe('serverクラスのテスト', function() {
                         'test001@gmail.com' : {
                             hp : 3200,
                             battery : 2,
-                            active : 3500
+                            active : 3500,
+                            skillPoint : 1
                         },
                         'nonePlayerCharacter' : {
                             hp : 1100,
                             battery : 5,
-                            active : 5100
+                            active : 5100,
+                            skillPoint : 1
                         }
                     }
                 };

@@ -209,12 +209,14 @@ describe('serverクラスのテスト', function() {
                         'test003@gmail.com' : {
                             hp : 4700,
                             battery : 2,
-                            active : 0
+                            active : 0,
+                            skillPoint : 1
                         },
                         'test002@gmail.com' : {
                             hp : -300,
                             battery : 3,
-                            active : 1500
+                            active : 1500,
+                            skillPoint : 1
                         }
                     }
                 };

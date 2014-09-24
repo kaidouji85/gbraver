@@ -147,6 +147,7 @@ function room(){
             statusArray[i].hp = nowStatus[i].hp;
             statusArray[i].active = nowStatus[i].active;
             statusArray[i].battery = nowStatus[i].battery;
+            statusArray[i].skillPoint = nowStatus[i].skillPoint;
         }
         return statusArray;
     }
