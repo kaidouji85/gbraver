@@ -38,6 +38,7 @@ function room(){
             var status = users[i].status;
             status.active = 0;
             status.battery = 5;
+            status.skillPoint = 1;
             statusArray[userId] = status;
         }
         Battle = battle({statusArray : statusArray});

@@ -86,6 +86,7 @@ describe('serverクラスのテスト', function() {
                             pictName : 'GranBraver.PNG',
                             active : 0,
                             battery : 5,
+                            skillPoint : 1,
                             hp : 3200,
                             speed : 500,
                             weapons : {
@@ -121,6 +122,7 @@ describe('serverクラスのテスト', function() {
                             speed : 300,
                             active : 0,
                             battery : 5,
+                            skillPoint : 1,
                             weapons : {
                                 1 : {
                                     name : 'ブレイクパンチ',
@@ -145,7 +147,7 @@ describe('serverクラスのテスト', function() {
                             }
                         }
                     }
-                }; 
+                };
 
                 assert.deepEqual(data, expect, 'gameStartのレスポンスが正しい');
             }

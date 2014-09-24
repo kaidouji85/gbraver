@@ -63,6 +63,7 @@ describe('serverクラスのテスト', function() {
                             battery : 5,
                             hp : 3200,
                             speed : 500,
+                            skillPoint : 1,
                             weapons : {
                                 1 : {
                                     name : 'バスターナックル',
@@ -96,6 +97,7 @@ describe('serverクラスのテスト', function() {
                             speed : 300,
                             active : 0,
                             battery : 5,
+                            skillPoint : 1,
                             weapons : {
                                 1 : {
                                     name : 'ブレイクパンチ',

@@ -1021,7 +1021,7 @@ describe('Battleクラスのテスト', function() {
                 speed : 150,
                 active : 0,
                 battery : 5,
-                pilotSKillPoint : 1,
+                skillPoint : 1,
                 weapons : {
                     1 : {name:'ブレイクパンチ',power:1200},
                     2 : {name:'ブレイクパンチ',power:1700},
