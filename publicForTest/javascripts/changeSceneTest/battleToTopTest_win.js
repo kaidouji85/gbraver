@@ -32,12 +32,14 @@ function battleToTop_win(){
                 'test002@gmail.com' : {
                     hp : 4700,
                     battery : 5,
-                    active : 3000
+                    active : 3000,
+                    skillPoint : 1
                 },
                 'saikyou@gmail.com' : {
                     hp : 3200,
                     battery : 5,
-                    active : 5000
+                    active : 5000,
+                    skillPoint : 1
                 }
             }
         };
@@ -55,12 +57,14 @@ function battleToTop_win(){
                 'saikyou@gmail.com' : {
                     hp : 3200,
                     battery : 5,
-                    active : 5000
+                    active : 5000,
+                    skillPoint : 1
                 },
                 'test002@gmail.com' : {
                     hp : 4700,
                     battery : 5,
-                    active : 3000
+                    active : 3000,
+                    skillPoint : 1
                 }
             }
         };
@@ -87,12 +91,14 @@ function battleToTop_win(){
                 'saikyou@gmail.com' : {
                     hp : 3200,
                     battery : 5,
-                    active : 5000
+                    active : 5000,
+                    skillPoint : 1
                 },
                 'test002@gmail.com' : {
                     hp : 4700,
                     battery : 5,
-                    active : 3000
+                    active : 3000,
+                    skillPoint : 1
                 }
             }
         };
@@ -114,12 +120,14 @@ function battleToTop_win(){
                 'saikyou@gmail.com' : {
                     hp : 3200,
                     battery : 2,
-                    active : 0
+                    active : 0,
+                    skillPoint : 1
                 },
                 'test002@gmail.com' : {
                     hp : -300,
                     battery : 3,
-                    active : 3000
+                    active : 3000,
+                    skillPoint : 1
                 }
             }
         };
@@ -138,12 +146,14 @@ function battleToTop_win(){
                 'saikyou@gmail.com' : {
                     hp : 3200,
                     battery : 2,
-                    active : 0
+                    active : 0,
+                    skillPoint : 1
                 },
                 'test002@gmail.com' : {
                     hp : -300,
                     battery : 3,
-                    active : 3000
+                    active : 3000,
+                    skillPoint : 1
                 }
             }
         };

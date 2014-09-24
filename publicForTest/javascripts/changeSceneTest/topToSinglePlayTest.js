@@ -51,6 +51,7 @@ function topToSetArmdozer(){
                     pictName : 'GranBraver.PNG',
                     active : 0,
                     battery : 5,
+                    skillPoint : 1,
                     hp : 3200,
                     speed : 500,
                     weapons : {
@@ -86,6 +87,7 @@ function topToSetArmdozer(){
                     speed : 300,
                     active : 0,
                     battery : 5,
+                    skillPoint : 1,
                     weapons : {
                         1 : {
                             name : 'ブレイクパンチ',
