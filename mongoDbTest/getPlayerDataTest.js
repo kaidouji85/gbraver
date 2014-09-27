@@ -49,7 +49,11 @@ describe('Mongo DBからプレイヤー情報を取得する', function() {
                         5 : {
                             name : 'バスターナックル',
                             power : 2800
-                        },
+                        }
+                    },
+                    skill : {
+                        type : 'quickCharge',
+                        battery : 3
                     }
                 }
             };
@@ -97,7 +101,11 @@ describe('Mongo DBからプレイヤー情報を取得する', function() {
                         5 : {
                             name : 'バスターナックル',
                             power : 2800
-                        },
+                        }
+                    },
+                    skill : {
+                        type : 'quickCharge',
+                        battery : 3
                     }
                 }
             };

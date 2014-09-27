@@ -113,10 +113,21 @@ function mongoDao(spec, my) {
     function createPlayerData(user,armdozer) {
         var playerData = {
             userId : user.userId,
-            status : createArmdozerData(armdozer)
+            status : createStatusData(armdozer)
         };
 
         return playerData;
+    }
+
+    function createStatusData(armdozer) {
+        var statusData = createArmdozerData(armdozer);
+        //TODO : skillをDBから取得するようにする
+        var skill = {
+            type : 'quickCharge',
+            battery : 3
+        };
+        statusData.skill = skill;
+        return statusData;
     }
 
     function createArmdozerData(armdozer){
