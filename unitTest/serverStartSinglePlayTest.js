@@ -85,6 +85,10 @@ describe('serverクラスのテスト', function() {
                                     name : 'バスターナックル',
                                     power : 2800
                                 }
+                            },
+                            skill : {
+                                type : 'quickCharge',
+                                battery : 3
                             }
                         }
                     },

@@ -40,6 +40,10 @@ player['test001@gmail.com'] = {
                 name : 'バスターナックル',
                 power : 2800
             }
+        },
+        skill : {
+            type : 'quickCharge',
+            battery : 3
         }
     }
 };
@@ -72,6 +76,10 @@ player['test002@gmail.com'] = {
                 name : 'ブレイクパンチ',
                 power : 3800
             }
+        },
+        skill : {
+            type : 'quickCharge',
+            battery : 3
         }
     }
 };
@@ -104,6 +112,10 @@ player['test003@gmail.com'] = {
                 name : 'ブレイクパンチ',
                 power : 5000
             }
+        },
+        skill : {
+            type : 'quickCharge',
+            battery : 3
         }
     }
 };

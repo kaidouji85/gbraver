@@ -110,6 +110,10 @@ describe('serverクラスのテスト', function() {
                                     name : 'バスターナックル',
                                     power : 2800
                                 }
+                            },
+                            skill : {
+                                type : 'quickCharge',
+                                battery : 3
                             }
                         }
                     },
@@ -144,6 +148,10 @@ describe('serverクラスのテスト', function() {
                                     name : 'ブレイクパンチ',
                                     power : 3800
                                 }
+                            },
+                            skill : {
+                                type : 'quickCharge',
+                                battery : 3
                             }
                         }
                     }

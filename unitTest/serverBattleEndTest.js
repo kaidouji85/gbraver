@@ -14,7 +14,7 @@ describe('serverクラスのテスト', function() {
     var Server;
     var roomId = 1;
 
-    before(function() {
+    beforeEach(function() {
         option = {
             'forceNew' : true
         };
@@ -24,7 +24,7 @@ describe('serverクラスのテスト', function() {
         Server.onGetPlayerData(testPlayerData.getPlayerData);
     });
 
-    after(function() {
+    afterEach(function() {
         app.close();
     });
 
