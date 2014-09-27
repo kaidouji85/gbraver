@@ -114,7 +114,7 @@ player['test004@gmail.com'] = {
         name : 'グランブレイバー(クイックチャージ)',
         pictName : 'GranBraver.PNG',
         hp : 3200,
-        speed : 500,
+        speed : 1000,
         weapons : {
             1 : {
                 name : 'バスターナックル',

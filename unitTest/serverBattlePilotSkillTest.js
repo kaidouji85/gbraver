@@ -101,63 +101,137 @@ describe('serverクラスのテスト', function() {
             }
 
             //***************************
-            // ウェイトフェイズ
+            // ウェイトフェイズ1
             //***************************
-            function assertOfWaitPhase1(data) {
+            function doWaitPhase1_Client1(data) {
+                client1.emit('command', {
+                    method : 'ok'
+                });
+                client1.once('resp', doAtackCommandPhase1_Client1);
+            }
+
+            function doWaitPhase1_Client2(data) {
+                client2.emit('command', {
+                    method : 'ok'
+                });
+                client2.once('resp', doAtackCommandPhase1_Client2);
+            }
+
+            //***************************
+            // アタックコマンドフェイズ1
+            //***************************
+            function doAtackCommandPhase1_Client1(data) {
+                client1.emit('command', {
+                    method : 'atack',
+                    param : {
+                        battery : 3
+                    }
+                });
+                client1.once('resp', doDefenseCommandPhase1_client1);
+            }
+
+            function doAtackCommandPhase1_Client2(data) {
+                client2.emit('command', {
+                    method : 'ok'
+                });
+                client2.once('resp', doDefenseCommandPhase1_client2);
+            }
+
+            //***************************
+            // ディフェンスコマンドフェイズ1
+            //***************************
+            function doDefenseCommandPhase1_client1(data) {
+                client1.emit('command', {
+                    method : 'ok'
+                });
+                client1.once('resp', doDamgePhase1_client1);
+            }
+
+            function doDefenseCommandPhase1_client2(data) {
+                client2.emit('command', {
+                    method : 'defenth',
+                    param : {
+                        battery : 2
+                    }
+                });
+                client2.once('resp', doDamgePhase1_client2);
+            }
+
+            //***************************
+            // ダメージフェイズ1
+            //***************************
+            function doDamgePhase1_client1(data) {
+                client1.emit('command', {
+                    method : 'ok'
+                });
+                client1.once('resp', doWaitPhase2_client1);
+            }
+
+            function doDamgePhase1_client2(data) {
+                client2.emit('command', {
+                    method : 'ok'
+                });
+                client2.once('resp', doWaitPhase2_client2);
+            }
+
+            //***************************
+            // ウェイトフェイズ2
+            //***************************
+            function assertOfWaitPhase2(data) {
                 var expect = {
                     phase : 'wait',
                     atackUserId : 'test004@gmail.com',
-                    turn : 10,
+                    turn : 5,
                     statusArray : {
                         'test004@gmail.com' : {
                             hp : 3200,
-                            battery : 5,
+                            battery : 3,
                             active : 5000,
                             skillPoint : 1
                         },
                         'test002@gmail.com' : {
-                            hp : 4700,
-                            battery : 5,
+                            hp : 3100,
+                            battery : 3,
                             active : 3000,
                             skillPoint : 1
                         }
                     }
                 };
-                assert.deepEqual(data, expect, 'ウェイトフェイズ#1のレスポンスオブジェクトが正しい');
+                assert.deepEqual(expect,data,'ウェイトフェイズ2のデータが正しい');
             }
 
-            function doWaitPhase1_Client1(data) {
-                assertOfWaitPhase1(data);
+            function doWaitPhase2_client1(data) {
+                assertOfWaitPhase2(data);
                 client1.emit('command', {
                     method : 'ok'
                 });
-                client1.once('resp', doAtackCommandPhase_Client1);
+                client1.once('resp', doAttackCommandPhase2_client1);
             }
 
-            function doWaitPhase1_Client2(data) {
-                assertOfWaitPhase1(data);
+            function doWaitPhase2_client2(data) {
+                assertOfWaitPhase2(data);
                 client2.emit('command', {
                     method : 'ok'
                 });
-                client2.once('resp', doAtackCommandPhase_Client2);
+                client2.once('resp', doAttackCommandPhase2_client2);
             }
 
             //***************************
-            // アタックコマンドフェイズ
+            // アタックコマンドフェイズ1
             //***************************
-            function assertOfAtackCommandPhase(data) {
+            function assertOfAtackCommandPhase2(data) {
                 var expect = {
                     phase : 'atackCommand',
                     statusArray : {
                         'test004@gmail.com' : {
                             hp : 3200,
-                            battery : 5,
+                            battery : 3,
                             active : 5000,
                             skillPoint : 1
                         },
                         'test002@gmail.com' : {
-                            hp : 4700,
-                            battery : 5,
+                            hp : 3100,
+                            battery : 3,
                             active : 3000,
                             skillPoint : 1
                         }
@@ -166,16 +240,16 @@ describe('serverクラスのテスト', function() {
                 assert.deepEqual(data, expect, 'アタックコマンドフェイズのレスポンスオブジェクトが正しい');
             }
 
-            function doAtackCommandPhase_Client1(data) {
-                assertOfAtackCommandPhase(data);
+            function doAttackCommandPhase2_client1(data) {
+                assertOfAtackCommandPhase2(data);
                 client1.emit('command', {
                     method : 'pilotSkill'
                 });
                 client1.once('resp', doPilotSkillPhase_client1);
             }
 
-            function doAtackCommandPhase_Client2(data) {
-                assertOfAtackCommandPhase(data);
+            function doAttackCommandPhase2_client2(data) {
+                assertOfAtackCommandPhase2(data);
                 client2.emit('command', {
                     method : 'ok'
                 });
@@ -196,8 +270,8 @@ describe('serverクラスのテスト', function() {
                             skillPoint : 0
                         },
                         'test002@gmail.com' : {
-                            hp : 4700,
-                            battery : 5,
+                            hp : 3100,
+                            battery : 3,
                             active : 3000,
                             skillPoint : 1
                         }
@@ -211,7 +285,7 @@ describe('serverクラスのテスト', function() {
                 client1.emit('command', {
                     method : 'ok'
                 });
-                client1.once('resp', doAttackCommandPhase2_client1);
+                client1.once('resp', doAttackCommandPhase3_client1);
             }
 
             function doPilotSkillPhase_client2(data) {
@@ -219,13 +293,13 @@ describe('serverクラスのテスト', function() {
                 client2.emit('command', {
                     method : 'ok'
                 });
-                client2.once('resp', doAttackCommandPhase2_client2);
+                client2.once('resp', doAttackCommandPhase3_client2);
             }
 
             //***************************
-            // アタックコマンドフェイズ2
+            // アタックコマンドフェイズ3
             //***************************
-            function assertOfAttackCommandPhase2(data) {
+            function assertOfAttackCommandPhase3(data) {
                 var expect = {
                     phase: 'atackCommand',
                     statusArray: {
@@ -236,8 +310,8 @@ describe('serverクラスのテスト', function() {
                             skillPoint: 0
                         },
                         'test002@gmail.com': {
-                            hp: 4700,
-                            battery: 5,
+                            hp: 3100,
+                            battery: 3,
                             active: 3000,
                             skillPoint: 1
                         }
@@ -246,13 +320,13 @@ describe('serverクラスのテスト', function() {
                 assert.deepEqual(expect,data,"アタックコマンドフェイズ2のデータが正しい");
             }
 
-            function doAttackCommandPhase2_client1(data) {
-                assertOfAttackCommandPhase2(data);
+            function doAttackCommandPhase3_client1(data) {
+                assertOfAttackCommandPhase3(data);
                 tc.completeClient('test004@gmail.com');
             }
 
-            function doAttackCommandPhase2_client2(data) {
-                assertOfAttackCommandPhase2(data);
+            function doAttackCommandPhase3_client2(data) {
+                assertOfAttackCommandPhase3(data);
                 tc.completeClient('test002@gmail.com');
             }
         });
