@@ -39,7 +39,7 @@ player['test001@gmail.com'] = {
             5 : {
                 name : 'バスターナックル',
                 power : 2800
-            },
+            }
         }
     }
 };
