@@ -14,38 +14,54 @@ describe('serverクラスのテスト', function() {
     var Server;
     var roomId = -1;
 
-    before(function() {
+    beforeEach(function() {
         option = {
             'forceNew' : true
         };
         Server = server({
             httpServer : app
         });
-        roomId = -1;
+        roomId = 0;
         Server.onGetPlayerData(testPlayerData.getPlayerData);
     });
 
-    beforeEach(function() {
-        roomId++;
-        complates = {};
-    });
-
-    after(function() {
+    afterEach(function() {
         app.close();
     });
 
     describe('戦闘ロジック#チャージ', function() {
         it('チャージコマンドを実行してウェイトフェイズに遷移する', function(done) {
-            var tc = testCompleter({done:done});
-            //ユーザ1
             var client1 = io.connect(SERVER_URL, option);
-            client1.emit('auth',{
-                userId : 'test001@gmail.com'
-            });
-            client1.once('successAuth',function(){
-                enterRoom_Client1();
-            });
-            
+            var client2 = io.connect(SERVER_URL, option);
+            var tc = testCompleter({done:done});
+
+            //***************************
+            // ユーザ認証
+            //***************************
+            doAuth_client1();
+            doAuth_client2();
+
+            function doAuth_client1() {
+                client1.emit('auth',{
+                    userId : 'test001@gmail.com'
+                });
+                client1.once('successAuth',function(){
+                    enterRoom_Client1();
+                });
+            }
+
+            function doAuth_client2() {
+                client2.emit('auth',{
+                    userId : 'test002@gmail.com'
+                });
+                client1.once('successAuth',function(){
+                    enterRoom_Client2();
+                });
+            }
+
+            //***************************
+            // 入室 - ゲームスタート
+            //***************************
             function enterRoom_Client1(){
                 client1.emit('enterRoom', {
                     roomId : roomId
@@ -60,44 +76,6 @@ describe('serverクラスのテスト', function() {
                 });
             }
 
-            function doWaitPhase1_Client1(data) {
-                assertOfWaitPhase1(data);
-                client1.emit('command', {
-                    method : 'ok'
-                });
-                client1.once('resp', doAtackCommandPhase_Client1);
-            }
-
-            function doAtackCommandPhase_Client1(data) {
-                assertOfAtackCommandPhase(data);
-                client1.emit('command', {
-                    method : 'charge'
-                });
-                client1.once('resp', doChargePhase_Client1);
-            }
-
-            function doChargePhase_Client1(data) {
-                assertOfChargePhase(data);
-                client1.emit('command', {
-                    method : 'ok'
-                });
-                client1.once('resp', doWaitPhase2_Client1);
-            }
-
-            function doWaitPhase2_Client1(data) {
-                assertOfWaitPhase2(data);
-                tc.completeClient('test001@gmail.com');
-            }
-
-            //ユーザ2
-            var client2 = io.connect(SERVER_URL, option);
-            client2.emit('auth',{
-                userId : 'test002@gmail.com'
-            });
-            client1.once('successAuth',function(){
-                enterRoom_Client2();
-            });
-            
             function enterRoom_Client2(){
                 client2.emit('enterRoom', {
                     roomId : roomId
@@ -112,38 +90,11 @@ describe('serverクラスのテスト', function() {
                 });
             }
 
-            function doWaitPhase1_Client2(data) {
-                assertOfWaitPhase1(data);
-                client2.emit('command', {
-                    method : 'ok'
-                });
-                client2.once('resp', doAtackCommandPhase_Client2);
-            }
-
-            function doAtackCommandPhase_Client2(data) {
-                assertOfAtackCommandPhase(data);
-                client2.emit('command', {
-                    method : 'ok'
-                });
-                client2.once('resp', doChargePhase_Client2);
-            }
-
-            function doChargePhase_Client2(data) {
-                assertOfChargePhase(data);
-                client2.emit('command', {
-                    method : 'ok'
-                });
-                client2.once('resp', doWaitPhase2_Client2);
-            }
-
-            function doWaitPhase2_Client2(data) {
-                assertOfWaitPhase2(data);
-                tc.completeClient('test002@gmail.com');
-            }
-            
-            //アサーション
+            //***************************
+            // ウェイトフェイズ1
+            //***************************
             function assertOfWaitPhase1(data) {
-                expect = {
+                var expect = {
                     phase : 'wait',
                     atackUserId : 'test001@gmail.com',
                     turn : 10,
@@ -165,8 +116,27 @@ describe('serverクラスのテスト', function() {
                 assert.deepEqual(data, expect, 'ウェイトフェイズのレスポンスオブジェクトが正しい');
             }
 
+            function doWaitPhase1_Client1(data) {
+                assertOfWaitPhase1(data);
+                client1.emit('command', {
+                    method : 'ok'
+                });
+                client1.once('resp', doAtackCommandPhase_Client1);
+            }
+
+            function doWaitPhase1_Client2(data) {
+                assertOfWaitPhase1(data);
+                client2.emit('command', {
+                    method : 'ok'
+                });
+                client2.once('resp', doAtackCommandPhase_Client2);
+            }
+
+            //***************************
+            // アタックコマンドフェイズ
+            //***************************
             function assertOfAtackCommandPhase(data) {
-                expect = {
+                var expect = {
                     phase : 'atackCommand',
                     statusArray : {
                         'test001@gmail.com' : {
@@ -186,8 +156,27 @@ describe('serverクラスのテスト', function() {
                 assert.deepEqual(data, expect, 'アタックコマンドフェイズのレスポンスオブジェクトが正しい');
             }
 
+            function doAtackCommandPhase_Client1(data) {
+                assertOfAtackCommandPhase(data);
+                client1.emit('command', {
+                    method : 'charge'
+                });
+                client1.once('resp', doChargePhase_Client1);
+            }
+
+            function doAtackCommandPhase_Client2(data) {
+                assertOfAtackCommandPhase(data);
+                client2.emit('command', {
+                    method : 'ok'
+                });
+                client2.once('resp', doChargePhase_Client2);
+            }
+
+            //***************************
+            // ディフェンスコマンドフェイズ
+            //***************************
             function assertOfChargePhase(data) {
-                expect = {
+                var expect = {
                     phase : 'charge',
                     statusArray : {
                         'test001@gmail.com' : {
@@ -207,8 +196,27 @@ describe('serverクラスのテスト', function() {
                 assert.deepEqual(data, expect, 'チャージフェイズのレスポンスオブジェクトが正しい');
             }
 
+            function doChargePhase_Client1(data) {
+                assertOfChargePhase(data);
+                client1.emit('command', {
+                    method : 'ok'
+                });
+                client1.once('resp', doWaitPhase2_Client1);
+            }
+
+            function doChargePhase_Client2(data) {
+                assertOfChargePhase(data);
+                client2.emit('command', {
+                    method : 'ok'
+                });
+                client2.once('resp', doWaitPhase2_Client2);
+            }
+
+            //***************************
+            // ディフェンスコマンドフェイズ
+            //***************************
             function assertOfWaitPhase2(data) {
-                expect = {
+                var expect = {
                     phase : 'wait',
                     atackUserId : 'test002@gmail.com',
                     turn : 7,
@@ -230,6 +238,15 @@ describe('serverクラスのテスト', function() {
                 assert.deepEqual(data, expect, 'ウェイトフェイズに戻る');
             }
 
+            function doWaitPhase2_Client1(data) {
+                assertOfWaitPhase2(data);
+                tc.completeClient('test001@gmail.com');
+            }
+
+            function doWaitPhase2_Client2(data) {
+                assertOfWaitPhase2(data);
+                tc.completeClient('test002@gmail.com');
+            }
         });
     });
 });
