@@ -108,4 +108,40 @@ player['test003@gmail.com'] = {
     }
 };
 
+player['test004@gmail.com'] = {
+    userId : 'test004@gmail.com',
+    status : {
+        name : 'グランブレイバー(クイックチャージ)',
+        pictName : 'GranBraver.PNG',
+        hp : 3200,
+        speed : 500,
+        weapons : {
+            1 : {
+                name : 'バスターナックル',
+                power : 800
+            },
+            2 : {
+                name : 'バスターナックル',
+                power : 1100
+            },
+            3 : {
+                name : 'バスターナックル',
+                power : 1600
+            },
+            4 : {
+                name : 'バスターナックル',
+                power : 2100
+            },
+            5 : {
+                name : 'バスターナックル',
+                power : 2800
+            }
+        },
+        skill : {
+            type : 'quickCharge',
+            battery : 3
+        }
+    }
+};
+
 module.exports.getPlayerData = getPlayerData;

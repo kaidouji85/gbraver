@@ -100,7 +100,6 @@ describe('serverクラスのテスト', function() {
                     method : 'ok'
                 });
                 client1.once('dissolveRoom', function(){
-                    //tc.completeClient(1);
                     reEnterRoom_client1();
                 });
             }
@@ -184,7 +183,6 @@ describe('serverクラスのテスト', function() {
                     method : 'ok'
                 });
                 client2.once('dissolveRoom', function(){
-                    //tc.completeClient(2);
                     reEnterRoom_client2();
                 });
             }

@@ -6,6 +6,7 @@ const PHASE_DEFENTH_COMMAND = 'defenthCommand';
 const PHASE_DAMAGE = 'damage';
 const PHASE_CHARGE = 'charge';
 const PHASE_GAME_END = 'gameEnd';
+const PHASE_PILOT_SKILL = 'pilotSkill';
 
 function room(){
     var that = {};
@@ -55,6 +56,7 @@ function room(){
             case PHASE_GAME_END:
             case PHASE_WAIT:
             case PHASE_DAMAGE:
+            case PHASE_PILOT_SKILL:
             case PHASE_CHARGE:
                 if (method === 'ok') {
                     inputFlag[userId] = true;
@@ -62,12 +64,15 @@ function room(){
                 break;
             case PHASE_ATACK_COMMAND:
                 if (atackUserId==userId) {
-                    if(method==='atack'){
+                    if(method === 'atack'){
                         atackCommand = 'atack';
                         atackBattery = param.battery;
                         inputFlag[userId] = true;
-                    } else if(method==='charge') {
+                    } else if(method ==='charge') {
                         atackCommand = 'charge';
+                        inputFlag[userId] = true;
+                    } else if(method === 'pilotSkill'){
+                        atackCommand = 'pilotSkill';
                         inputFlag[userId] = true;
                     }
                 } else if (method === 'ok') {
@@ -106,6 +111,7 @@ function room(){
                     atackUserId = ret.atackUserId;
                 }
                 break;
+            case PHASE_PILOT_SKILL:
             case PHASE_WAIT:
                 ret = {
                     phase : PHASE_ATACK_COMMAND
@@ -120,6 +126,11 @@ function room(){
                     Battle.charge();
                     ret = {
                         phase : PHASE_CHARGE
+                    };
+                } else if (atackCommand==='pilotSkill') {
+                    Battle.doPilotSkill();
+                    ret = {
+                        phase : PHASE_PILOT_SKILL
                     };
                 }
                 break;
