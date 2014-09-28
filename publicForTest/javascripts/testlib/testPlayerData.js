@@ -30,6 +30,10 @@ function getTestPlayerData(userId){
                 name: 'バスターナックル',
                 power: 2800
             }
+        },
+        skill : {
+            type : 'quickCharge',
+            battery : 3
         }
     };
 
@@ -63,6 +67,10 @@ function getTestPlayerData(userId){
                 name: 'ブレイクパンチ',
                 power: 3800
             }
+        },
+        skill : {
+            type : 'quickCharge',
+            battery : 3
         }
     };
 
@@ -96,6 +104,10 @@ function getTestPlayerData(userId){
                 name : 'バスターナックル',
                 power : 5000
             }
+        },
+        skill : {
+            type : 'quickCharge',
+            battery : 3
         }
     };
 

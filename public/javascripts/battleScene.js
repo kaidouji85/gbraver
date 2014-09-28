@@ -32,6 +32,7 @@ function battleScene(spec,my){
     that.refreshMertor = refreshMertor;
     that.atackIcon.addEventListener(Event.TOUCH_END,moveBatteryCommand);
     that.chargeIcon.addEventListener(Event.TOUCH_END,charge);
+    that.skillIcon.addEventListener(Event.TOUCH_END,pilotSkill);
     that.plusIcon.addEventListener(Event.TOUCH_END,plusBattery);
     that.minusIcon.addEventListener(Event.TOUCH_END,minusBattery);
     that.okIcon.addEventListener(Event.TOUCH_END,selectBattery);
@@ -179,6 +180,13 @@ function battleScene(spec,my){
         that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
         emitCommand({method:'charge'});
     };
+
+    function pilotSkill(){
+        setAtackCommandVisible(false);
+        that.mesWindow.setVisible(true);
+        that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
+        emitCommand({method:'pilotSkill'});
+    }
     
     function selectBattery(){
         var battery = that.batteryNumberArray[that.userId].frame;
@@ -217,6 +225,7 @@ function battleScene(spec,my){
     function setAtackCommandVisible(visible){
         that.atackIcon.setVisible(visible);
         that.chargeIcon.setVisible(visible);
+        that.skillIcon.setVisible(visible);
     }
     
     function setBatteryCommandVisible(visible){

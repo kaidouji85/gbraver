@@ -16,6 +16,7 @@ function battleSceneBase(spec,my){
     that.minusIcon = {};
     that.okIcon = {};
     that.prevIcon = {};
+    that.skillIcon = {};
     that.charaSpriteArray = {};
     that.hpMertorArray = {};
     that.activeBarArray = {};
@@ -139,6 +140,17 @@ function battleSceneBase(spec,my){
         that.chargeIcon.y = COMMAND_Y_1;
         that.chargeIcon.setVisible(false);
         that.addChild(that.chargeIcon);
+
+        //パイロットスキルアイコン
+        that.skillIcon = pictButton({
+            text : 'スキル',
+            pict : core.assets[core.PICT_WINDOW],
+            subPict : core.assets[core.PICT_ACTIVE_WINDOW]
+        });
+        that.skillIcon.x = COMMAND_X_1;
+        that.skillIcon.y = COMMAND_Y_2;
+        that.skillIcon.setVisible(false);
+        that.addChild(that.skillIcon);
 
         //+アイコン
         that.plusIcon = pictButton({
