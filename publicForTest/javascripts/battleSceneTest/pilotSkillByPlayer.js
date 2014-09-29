@@ -72,23 +72,87 @@ function attackByPlayer(){
             }
         };
         Game.emitServerResp('resp',atackCommandPhaseData);
-        assert.equal(Game.currentScene.mesWindow.getVisible(),false,'メッセージウインドウが表示されない');
+        Game.currentScene.tl.delay(40).then(assertOfAttackCommandPhase);
+    }
+
+    function assertOfAttackCommandPhase() {
+        assert.equal(Game.currentScene.skillIcon.getVisible(),true,'スキルアイコンが表示される');
         selectCommand();
     }
 
+
     function selectCommand(){
         touch(Game.currentScene.skillIcon);
-        Game.onSendMessage(sendCommandForPilotSkill);
+        Game.onSendMessage(sendCommandForAttackCommand);
     }
 
-    function sendCommandForPilotSkill(message,data){
+    function sendCommandForAttackCommand(message,data){
         var expect = {
             method : 'pilotSkill'
         };
         assert.equal(message,'command','パイロットスキル発動のサーバ送信メッセージ名が正しい');
         assert.deepEqual(expect,data,'パイロットスキル発動のサーバ送信データが正しい');
+        pilotSkillPhase();
     }
 
+    function pilotSkillPhase() {
+        var pilotSkillData = {
+            phase : 'pilotSkill',
+            statusArray : {
+                'test001@gmail.com' : {
+                    hp : 3200,
+                    battery : 5,
+                    active : 5000,
+                    skillPoint : 0
+                },
+                'test002@gmail.com' : {
+                    hp : 4700,
+                    battery : 5,
+                    active : 3000,
+                    skillPoint : 1
+                }
+            }
+        };
+        Game.emitServerResp('resp',pilotSkillData);
+        Game.onSendMessage(sendCommandForPilotSkill);
+    }
 
+    function sendCommandForPilotSkill(message,data) {
+        var expect = {
+            method : 'ok'
+        };
+        assert.equal(message,'command','パイロットスキル発動のサーバ送信メッセージ名が正しい');
+        assert.deepEqual(expect,data,'パイロットスキル発動のサーバ送信データが正しい');
+        assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
+        assert.equal(Game.currentScene.mesWindow.getText(),'通信待機中','メッセージが正しい');
+        Game.currentScene.tl.delay(30).then(attackCommandPhase2);
+    }
+
+    function attackCommandPhase2() {
+        var attackCommandPhase2Data = {
+            phase : 'atackCommand',
+            statusArray : {
+                'test001@gmail.com' : {
+                    hp : 3200,
+                    battery : 5,
+                    active : 5000,
+                    skillPoint : 0
+                },
+                'test002@gmail.com' : {
+                    hp : 4700,
+                    battery : 5,
+                    active : 3000,
+                    skillPoint : 1
+                }
+            }
+        };
+        Game.emitServerResp('resp',attackCommandPhase2Data);
+        Game.currentScene.tl.delay(40).then(assertOfAttackCommand2);
+    }
+
+    function assertOfAttackCommand2(){
+        assert.equal(Game.currentScene.skillIcon.getVisible(),false,'スキルアイコンが表示されない');
+        finishTest();
+    }
 
 }

@@ -10,6 +10,7 @@ function battleScene(spec,my){
     var selectMaxBattery = 5;
     var selectMinBattery = 0;
     var attackUserId = -1;
+    var skillPoint = 1;
     var AttackAnime = attackAnime({
         battleScene : that
     });
@@ -29,6 +30,7 @@ function battleScene(spec,my){
     that.doDamagePhase = doDamagePhase;
     that.onCommand = onCommand;
     that.doGameEnd = doGameEnd;
+    that.doPilotSkill = doPilotSkill;
     that.refreshMertor = refreshMertor;
     that.atackIcon.addEventListener(Event.TOUCH_END,moveBatteryCommand);
     that.chargeIcon.addEventListener(Event.TOUCH_END,charge);
@@ -118,6 +120,18 @@ function battleScene(spec,my){
             emitCommand({method:'ok'});
         });
     };
+
+    function doPilotSkill(data){
+        that.mesWindow.setVisible(false);
+        refreshMertor(data.statusArray);
+        skillPoint = data.statusArray[that.userId].skillPoint;
+        //TODO パイロットスキル発動アニメを作る
+        that.tl.delay(20).then(function(){
+            that.mesWindow.setVisible(true);
+            that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
+            emitCommand({method:'ok'});
+        });
+    }
     
     function onCommand(fn) {
         emitCommand = fn;
@@ -225,7 +239,11 @@ function battleScene(spec,my){
     function setAtackCommandVisible(visible){
         that.atackIcon.setVisible(visible);
         that.chargeIcon.setVisible(visible);
-        that.skillIcon.setVisible(visible);
+        if(skillPoint > 0 && visible===true){
+            that.skillIcon.setVisible(true);
+        } else {
+            that.skillIcon.setVisible(false);
+        }
     }
     
     function setBatteryCommandVisible(visible){

@@ -170,6 +170,9 @@ function game(spec, my) {
             case 'gameEnd':
                 core.battleScene.doGameEnd(data);
                 break;
+            case 'pilotSkill':
+                core.battleScene.doPilotSkill(data);
+                break;
         }
     }
 

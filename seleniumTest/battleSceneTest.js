@@ -30,6 +30,10 @@ test.describe('戦闘画面', function() {
         util.doClientTest('/javascripts/battleSceneTest/attackByPlayer.js');
     });
 
+    test.it('プレイヤーがパイロットスキルを発動する', function(){
+        util.doClientTest('/javascripts/battleSceneTest/pilotSkillByPlayer.js');
+    });
+
     test.it('敵がチャージを選択する', function(){
         util.doClientTest('/javascripts/battleSceneTest/chargeByEnemy.js');
     });
