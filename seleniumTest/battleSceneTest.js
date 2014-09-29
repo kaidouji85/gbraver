@@ -41,4 +41,8 @@ test.describe('戦闘画面', function() {
     test.it('敵が攻撃を選択する', function(){
         util.doClientTest('/javascripts/battleSceneTest/attackByEnemy.js');
     });
+
+    test.it('敵がパイロットスキルを発動する', function(){
+        util.doClientTest('/javascripts/battleSceneTest/pilotSkillByEnemy.js');
+    });
 });
