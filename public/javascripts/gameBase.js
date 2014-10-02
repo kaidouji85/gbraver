@@ -34,7 +34,7 @@ function gameBase(spec,my){
     core.MESSAGE_GET_ROOMINFO = 'ルーム情報取得中';
     core.MESSAGE_WINDOW_Y = 180;
 
-    core.fps = 60;
+    core.fps = 40;
     core.battleScene = null;
     core.roomSelectScene = null;
     core.setArmdozerScene = null;
