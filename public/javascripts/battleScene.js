@@ -128,7 +128,7 @@ function battleScene(spec,my){
         that.tl.then(function(){
             that.pilotSpriteArray[attackUserId].visible = true;
             that.mesWindow.setVisible(true);
-            that.mesWindow.setText('やぁぁぁぁて、やるぜ！！<br>なんてね。');
+            that.mesWindow.setText('やぁぁぁぁて、やるぜ！！    ……なんてね。');
         }).delay(180).then(function(){
             that.pilotSpriteArray[attackUserId].visible = false;
             that.mesWindow.setVisible(true);
