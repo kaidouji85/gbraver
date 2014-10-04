@@ -8,7 +8,8 @@ function roomSelectToBattle(){
 
     function initGame(){
         Game = game({
-            userId : 'test001@gmail.com'
+            userId : 'test001@gmail.com',
+            armdozerPict : 'GranBraver.PNG'
         });
         Game.start();
         Game.onload = function(){
@@ -58,13 +59,12 @@ function roomSelectToBattle(){
     }
 
     function successLeaveRoom() {
+        Game.onChangeScene(moveTopScene);
         Game.emitServerResp('successLeaveRoom',null);
-        assert.equal(Game.currentScene.prevButton.getVisible(),true,'戻るボタンが表示されている');
-        assert.equal(Game.currentScene.enterRoomButtonArray[0].getVisible(),true,'ルーム0ボタンが表示されている');
-        assert.equal(Game.currentScene.enterRoomButtonArray[1].getVisible(),true,'ルーム1ボタンが表示されている');
-        assert.equal(Game.currentScene.enterRoomButtonArray[2].getVisible(),true,'ルーム2ボタンが表示されている');
-        assert.equal(Game.currentScene.enterRoomButtonArray[3].getVisible(),true,'ルーム3ボタンが表示されている');
-        assert.equal(Game.currentScene.enterRoomButtonArray[4].getVisible(),true,'ルーム4ボタンが表示されている');
-        Game.currentScene.tl.delay(30).then(finishTest);
+    }
+
+    function moveTopScene(scene) {
+        assert.equal(scene,'top','トップシーンに遷移する');
+        finishTest();
     }
 }

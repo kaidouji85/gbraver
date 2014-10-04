@@ -42,6 +42,10 @@ test.describe('シーン遷移', function() {
         util.doClientTest('/javascripts/changeSceneTest/roomSelectToBattleTest.js');
     });
 
+    test.it('入室後に退室してトップ画面に遷移', function(){
+        util.doClientTest('/javascripts/changeSceneTest/leaveRoomTest.js');
+    });
+
     test.it('ルーム選択画面から「戻る」ボタンを押してトップ画面へ遷移', function(){
         util.doClientTest('/javascripts/changeSceneTest/roomSelectToTopTest.js');
     });

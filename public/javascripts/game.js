@@ -134,7 +134,7 @@ function game(spec, my) {
                 core.roomSelectScene.emitSuccesEnterRoom();
                 break;
             case 'successLeaveRoom':
-                core.roomSelectScene.emitSuccesLeaveRoom();
+                core.changeTopScene();
                 break;
             case 'successGetRoomInfo':
                 core.changeRoomSelectScene(data);
