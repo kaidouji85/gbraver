@@ -39,7 +39,7 @@ function playerTurnAnimeTest(){
 
     function playAnime(){
         var myTurnAnimeParam = {
-            attackUserId : 'test001@gmail.com'
+            atackUserId : 'test001@gmail.com'
         }
         MyTurnAnime = myTurnAnime({
             battleScene : testScene

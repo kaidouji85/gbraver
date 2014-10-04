@@ -3,7 +3,7 @@ function myTurnAnime(spec,my){
     var battleScene = spec.battleScene;
 
     that.play = function(data,fn){
-        var attackUserId = data.attackUserId;
+        var attackUserId = data.atackUserId;
 
         battleScene.tl.then(function(){
             battleScene.charaSpriteArray[attackUserId].doMyTurnMotion();

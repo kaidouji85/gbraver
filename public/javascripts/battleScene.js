@@ -49,41 +49,31 @@ function battleScene(spec,my){
             plusValue = (120*data.statusArray[uid].active/5000 - that.activeBarArray[uid].getValue())/turn;
             that.activeBarArray[uid].plus(turn,plusValue);
         }
-        
+
         that.tl.delay(turn).then(function(){
             refreshMertor(data.statusArray);
-            that.mesWindow.setVisible(true);
-            if(attackUserId === that.userId){
-                that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
-            } else {
-                that.mesWindow.setText(core.MESSAGE_WAIT_COMMAND);
-            }
-
-            emitCommand({method:'ok'});            
+            MyTurnAnime.play(data,function(){
+                that.mesWindow.setVisible(true);
+                if(attackUserId === that.userId) {
+                    that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
+                } else {
+                    that.mesWindow.setText(core.MESSAGE_WAIT_COMMAND);
+                }
+                emitCommand({method:'ok'});
+            });
         });
     }
     
     function doAtackCommandPhase(data){
         if(that.userId === attackUserId){
             that.mesWindow.setVisible(false);
+            setAtackCommandVisible(true);
         } else {
-            that.mesWindow.setVisible(true);
-            that.mesWindow.setText(core.MESSAGE_WAIT_COMMAND);
-        }
-
-        data.attackUserId = attackUserId;
-        MyTurnAnime.play(data,endMyTurnAnime);
-
-        function endMyTurnAnime() {
-            if(attackUserId===that.userId){
-                setAtackCommandVisible(true);
-            } else {
-                that.tl.delay(1).then(function(){
-                    that.mesWindow.setVisible(true);
-                    that.mesWindow.setText(core.MESSAGE_WAIT_COMMAND);
-                    emitCommand({method:'ok'});
-                });
-            }
+            that.tl.delay(1).then(function(){
+                that.mesWindow.setVisible(true);
+                that.mesWindow.setText(core.MESSAGE_WAIT_COMMAND);
+                emitCommand({method:'ok'});
+            });
         }
     }
     
@@ -132,7 +122,12 @@ function battleScene(spec,my){
         }).delay(180).then(function(){
             that.pilotSpriteArray[attackUserId].visible = false;
             that.mesWindow.setVisible(true);
-            that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
+            if(attackUserId === that.userId){
+                that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
+            } else {
+                that.mesWindow.setText(core.MESSAGE_WAIT_COMMAND);
+            }
+
             emitCommand({method:'ok'});
         });
     }

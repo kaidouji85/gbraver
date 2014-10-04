@@ -75,7 +75,6 @@ function attackByPlayer(){
             }
         };
         Game.emitServerResp('resp',atackCommandPhaseData);
-        assert.equal(Game.currentScene.mesWindow.getVisible(),false,'メッセージウインドウが表示されない');
         selectCommand();
     }
     

@@ -115,7 +115,7 @@ function attackByPlayer(){
         assert.equal(message,'command','パイロットスキル発動のサーバ送信メッセージ名が正しい');
         assert.deepEqual(expect,data,'パイロットスキル発動のサーバ送信データが正しい');
         assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
-        assert.equal(Game.currentScene.mesWindow.getText(),'通信待機中','メッセージが正しい');
+        assert.equal(Game.currentScene.mesWindow.getText(),'対戦相手がコマンドを選択中......','メッセージが正しい');
         Game.currentScene.tl.delay(30).then(attackCommandPhase2);
     }
 
@@ -138,13 +138,13 @@ function attackByPlayer(){
             }
         };
         Game.emitServerResp('resp',attackCommandPhase2Data);
-        Game.currentScene.tl.delay(40).then(assertOfAttackCommand2);
+        Game.onSendMessage(assertOfAttackCommand2);
     }
 
     function assertOfAttackCommand2(){
         assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
         assert.equal(Game.currentScene.mesWindow.getText(),'対戦相手がコマンドを選択中......','メッセージが正しい');
-        Game.onSendMessage(finishTest);
+        finishTest();
     }
 
 }
