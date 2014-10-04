@@ -122,11 +122,15 @@ function battleScene(spec,my){
     };
 
     function doPilotSkill(data){
-        that.mesWindow.setVisible(false);
         refreshMertor(data.statusArray);
         skillPoint = data.statusArray[that.userId].skillPoint;
-        //TODO パイロットスキル発動アニメを作る
-        that.tl.delay(20).then(function(){
+
+        that.tl.then(function(){
+            that.pilotSpriteArray[attackUserId].visible = true;
+            that.mesWindow.setVisible(true);
+            that.mesWindow.setText('やぁぁぁぁて、やるぜ！！<br>なんてね。');
+        }).delay(180).then(function(){
+            that.pilotSpriteArray[attackUserId].visible = false;
             that.mesWindow.setVisible(true);
             that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
             emitCommand({method:'ok'});

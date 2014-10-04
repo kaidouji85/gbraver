@@ -92,7 +92,7 @@ function attackByPlayer(){
         };
         assert.equal(message,'command','パイロットスキル発動のサーバ送信メッセージ名が正しい');
         assert.deepEqual(expect,data,'パイロットスキル発動のサーバ送信データが正しい');
-        pilotSkillPhase();
+        Game.currentScene.tl.delay(30).then(pilotSkillPhase);
     }
 
     function pilotSkillPhase() {

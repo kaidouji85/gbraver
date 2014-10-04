@@ -24,6 +24,7 @@ function battleSceneBase(spec,my){
     that.batteryNumberArray = {};
     that.damageLabelArray = {};
     that.subDamageLabelArray = {};
+    that.pilotSpriteArray = {};
     that.hitEffect = {};
     that.mesWindow = {};
 
@@ -117,6 +118,15 @@ function battleSceneBase(spec,my){
             that.hitEffect[uid].x = uid===that.userId ? 128 : -64;
             that.hitEffect[uid].y = 76;
             that.addChild(that.hitEffect[uid]);
+
+            //パイロット
+            that.pilotSpriteArray[uid] = new Sprite(256,256);
+            that.pilotSpriteArray[uid].image = core.assets[core.PICT_PREFIX+'kyoko.png'];//TODO : サーバから取得したキャラクター名を入れる
+            that.pilotSpriteArray[uid].x = uid===that.userId ? 64 : 0;
+            that.pilotSpriteArray[uid].y = 80;
+            that.pilotSpriteArray[uid].scaleX = uid===that.userId ? 1 : -1;
+            that.pilotSpriteArray[uid].visible = false;
+            that.addChild(that.pilotSpriteArray[uid]);
         }
 
         //攻撃アイコン
