@@ -25,9 +25,9 @@ function topScene(spec,my){
         that.addChild(that.background);
 
         //選択中アームドーザ
-        that.selectArmdozerSprite = new Sprite(128,128);
+        that.selectArmdozerSprite = new Sprite(160,160);
         that.selectArmdozerSprite.image = core.assets[core.PICT_PREFIX+armdozerPict];
-        that.selectArmdozerSprite.x = (320 - 128)/2;
+        that.selectArmdozerSprite.x = (320 - 160)/2;
         that.selectArmdozerSprite.y = 140;
         that.addChild(that.selectArmdozerSprite);
 

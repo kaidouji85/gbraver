@@ -85,12 +85,14 @@ function battleSceneBase(spec,my){
             that.batteryMertorArray[uid].y = 63;
             that.batteryMertorArray[uid].setValue(5);
             that.addChild(that.batteryMertorArray[uid]);
+        }
 
+        for(var uid in that.statusArray){
             //出したバッテリー
             that.batteryNumberArray[uid] = new Sprite(64,64);
             that.batteryNumberArray[uid].image = core.assets[core.PICT_BATTERY_NUMBER];
             that.batteryNumberArray[uid].x = uid===that.userId ? 226 : 30;
-            that.batteryNumberArray[uid].y = 170;
+            that.batteryNumberArray[uid].y = 150;
             that.batteryNumberArray[uid].visible = false;
             that.addChild(that.batteryNumberArray[uid]);
 
@@ -116,7 +118,7 @@ function battleSceneBase(spec,my){
                 pict : core.assets[core.PICT_HIT_EFFECT]
             });
             that.hitEffect[uid].x = uid===that.userId ? 128 : -64;
-            that.hitEffect[uid].y = 76;
+            that.hitEffect[uid].y = 56;
             that.addChild(that.hitEffect[uid]);
 
             //パイロット

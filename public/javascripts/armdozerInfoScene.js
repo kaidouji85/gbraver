@@ -32,66 +32,66 @@ function armdozerInfoScene(spec,my){
         that.infoWindow = gridWindow({
             pict : core.assets[core.PICT_WINDOW],
             width : 18,
-            height : 10
+            height : 12
         });
         that.infoWindow.x = 16;
         that.infoWindow.y = 70;
         that.addChild(that.infoWindow);
 
         //アームドーザ画像
-        that.armdozerPict = new Sprite(128,128);
+        that.armdozerPict = new Sprite(160,160);
         that.armdozerPict.image = core.assets[core.PICT_PREFIX+armdozerInfo.pictName];
-        that.armdozerPict.x = 20;
+        that.armdozerPict.x = 10;
         that.armdozerPict.y = 90;
         that.addChild(that.armdozerPict);
 
         //アームドーザ名ラベル
         that.armdozerNameLabel = new Label(armdozerInfo.name);
         that.armdozerNameLabel.color = "white";
-        that.armdozerNameLabel.x = 150;
+        that.armdozerNameLabel.x = 160;
         that.armdozerNameLabel.y = 100;
         that.addChild(that.armdozerNameLabel);
 
         //HPラベル
         that.hpLabel = new Label('HP');
         that.hpLabel.color = "white";
-        that.hpLabel.x = 150;
-        that.hpLabel.y = 120;
+        that.hpLabel.x = 160;
+        that.hpLabel.y = 140;
         that.addChild(that.hpLabel);
 
         //HPバリューラベル
         that.hpValueLabel = new Label(armdozerInfo.hp);
         that.hpValueLabel.color = "white";
-        that.hpValueLabel.x = 220;
-        that.hpValueLabel.y = 120;
+        that.hpValueLabel.x = 230;
+        that.hpValueLabel.y = 140;
         that.addChild(that.hpValueLabel);
 
         //攻撃力ラベル
         that.powerLabel = new Label('POWER');
         that.powerLabel.color = 'white';
-        that.powerLabel.x = 150;
-        that.powerLabel.y = 140;
+        that.powerLabel.x = 160;
+        that.powerLabel.y = 160;
         that.addChild(that.powerLabel);
 
         //攻撃力バリューラベル
         that.powerValueLabel = new Label(getPowerLabelValue(armdozerInfo.weapons));
         that.powerValueLabel.color = 'white';
-        that.powerValueLabel.x = 220;
-        that.powerValueLabel.y = 140;
+        that.powerValueLabel.x = 230;
+        that.powerValueLabel.y = 160;
         that.addChild(that.powerValueLabel);
 
         //機動力ラベル
         that.speedLabel = new Label('SPEED');
         that.speedLabel.color = "white";
-        that.speedLabel.x = 150;
-        that.speedLabel.y = 160;
+        that.speedLabel.x = 160;
+        that.speedLabel.y = 180;
         that.addChild(that.speedLabel);
 
         //機動力バリューラベル
         that.speedValueLabel = new Label(armdozerInfo.speed);
         that.speedValueLabel.color = "white";
-        that.speedValueLabel.x = 220;
-        that.speedValueLabel.y = 160;
+        that.speedValueLabel.x = 230;
+        that.speedValueLabel.y = 180;
         that.addChild(that.speedValueLabel);
 
         //決定ボタン
