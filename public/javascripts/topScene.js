@@ -28,7 +28,7 @@ function topScene(spec,my){
         that.selectArmdozerSprite = new Sprite(160,160);
         that.selectArmdozerSprite.image = core.assets[core.PICT_PREFIX+armdozerPict];
         that.selectArmdozerSprite.x = (320 - 160)/2;
-        that.selectArmdozerSprite.y = 140;
+        that.selectArmdozerSprite.y = 110;
         that.addChild(that.selectArmdozerSprite);
 
         //対戦ルーム入室ボタン

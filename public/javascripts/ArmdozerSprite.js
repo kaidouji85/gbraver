@@ -27,7 +27,7 @@ function ArmdozerSprite(spec,my) {
 
     function doAttackMotion(){
         that.frame = core.FRAME_ATTACK;
-        that.tl.moveBy(-80*that.scaleX,0,8)
+        that.tl.moveBy(-60*that.scaleX,0,8)
             .delay(20)
             .moveBy(-50*that.scaleX,0,5)
             .moveBy(50*that.scaleX,0,5);
