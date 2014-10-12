@@ -5,7 +5,7 @@ describe('serverクラスのテスト', function() {
     var testPlayerData = require('./testPlayerData.js');
     var assert = require('chai').assert;
     var io = require('socket.io-client');
-    var app = require('http').createServer().listen(SERVER_PORT);
+    var app;
     var server = require('../server.js');
     var armdozerList = {};
     armdozerList['granBraver'] = {
@@ -38,10 +38,11 @@ describe('serverクラスのテスト', function() {
         }
     };
 
-    before(function() {
+    beforeEach(function() {
         option = {
             'forceNew' : true
         };
+        app = require('http').createServer().listen(SERVER_PORT);
         Server = server({
             httpServer : app
         });
@@ -51,7 +52,7 @@ describe('serverクラスのテスト', function() {
         });
     });
 
-    after(function() {
+    afterEach(function() {
         app.close();
     });
 

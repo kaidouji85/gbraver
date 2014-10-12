@@ -6,7 +6,7 @@ describe('serverクラスのテスト',function(){
     var testPlayerData = require('./testPlayerData.js');
     var assert = require('chai').assert;
     var io = require('socket.io-client');
-    var app = require('http').createServer().listen(SERVER_PORT); 
+    var app;
     var server = require('../server.js');
     
     var option;
@@ -21,10 +21,11 @@ describe('serverクラスのテスト',function(){
             armdozerId : 'landozer'}        
     };
     
-    before(function(){
+    beforeEach(function(){
         option = {
             'forceNew' : true
         };
+        app = require('http').createServer().listen(SERVER_PORT);
         Server = server({
             httpServer : app
         });
@@ -33,6 +34,10 @@ describe('serverクラスのテスト',function(){
             fn(null,userData[userId]);
         });
         Server.onGetPlayerData(testPlayerData.getPlayerData);
+    });
+
+    afterEach(function() {
+        app.close();
     });
     
     describe('キャラクター選択',function(){
