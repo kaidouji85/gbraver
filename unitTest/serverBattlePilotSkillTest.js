@@ -1,6 +1,6 @@
 //TODO : socket.ioコネクション処理を1.0推奨の非同期方式にする
 describe('serverクラスのテスト', function() {
-    var SERVER_PORT = 4032;
+    var SERVER_PORT = process.env.PORT || 3000;
     var SERVER_URL = 'http://localhost:'+SERVER_PORT;
 
     var testPlayerData = require('./testPlayerData.js');

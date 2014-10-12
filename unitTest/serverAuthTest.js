@@ -1,5 +1,5 @@
 describe('serverクラスのテスト', function() {
-    var SERVER_PORT = 3001;
+    var SERVER_PORT = process.env.PORT || 3000;
     var SERVER_URL = 'http://localhost:'+SERVER_PORT;
     
     var testPlayerData = require('./testPlayerData.js');
