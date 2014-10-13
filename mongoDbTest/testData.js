@@ -76,15 +76,48 @@ var landozer = {
     }
 };
 
+/**
+ * パイロットデータ
+ */
+var kyoko = {
+    id : 'kyoko',
+    name : '恭子',
+    pict : 'kyoko.png',
+    shout : 'やぁぁぁぁて、やるぜ！！    ……なんてね。',
+    type : 'quickCharge',
+    battery : 3
+};
+
+var akane = {
+    id : 'akane',
+    name: '茜',
+    pict: 'akane.png',
+    shout: 'まだまだ、勝負はこれからよ。',
+    type: 'quickCharge',
+    battery: 3
+};
+
+var iori = {
+    id : 'iori',
+    name : '伊織',
+    pict : 'iori.png',
+    shout : 'この一撃に、全てを掛ける！！',
+    type : 'quickCharge',
+    battery : 3
+};
+
 var userData = [take,uchi];
 var armdozerData = [granBraver,landozer];
+var pilotData = [kyoko,akane,iori];
 
 function insertData(mongoUrl,fnc) {
     MongoClient.connect(mongoUrl, function(err, db) {
         insertUserData(userData,db,function(err,result){
             insertArmdozerData(armdozerData,db,function(err,result){
-                db.close();
-                fnc(null,true);
+                insertPilotData(pilotData,db,function(err,result){
+                    db.close();
+                    fnc(null,true);
+                });
             });
         });
     });
@@ -103,6 +136,15 @@ function insertArmdozerData(armdozerData,db,fnc) {
     var collection = db.collection('armdozers');
     collection.remove({}, {}, function(err, deletes) {
         collection.insert(armdozerData, function(err, data) {
+            fnc(null, true);
+        });
+    });
+}
+
+function insertPilotData(pilotData,db,fnc) {
+    var collection = db.collection('pilots');
+    collection.remove({}, {}, function(err, deletes) {
+        collection.insert(pilotData, function(err, data) {
             fnc(null, true);
         });
     });

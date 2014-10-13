@@ -68,6 +68,29 @@ function mongoDao(spec, my) {
             });
         });
     }
+
+    that.getPilotList = function(fn){
+        MongoClient.connect(url, function(err, db){
+            var pilotList = {};
+            var pilot = null;
+            var collection = db.collection('pilots');
+            collection.find({}).toArray(function(err,result){
+                for(var i in result){
+                    //TODO : パイロットスキルに応じてpilotオブジェクトの作り方を変える
+                    pilot = {
+                        name : result[i].name,
+                        shout : result[i].shout,
+                        pict : result[i].pict,
+                        type : result[i].type,
+                        battery : result[i].battery
+                    };
+                    pilotList[result[i].id] = pilot;
+                }
+                db.close();
+                fn(null,pilotList);
+            });
+        });
+    }
     
     function getOrCreateUserData(userId, db, fn){
         getUserData(userId, db, function(err,user){
