@@ -98,6 +98,16 @@ function server(spec, my) {
         getDefenseRoutine = fn;
     }
 
+    /**
+     * パイロットリスト取得関数
+     * この関数の実装は外部で行う
+     * @return pilotList
+     */
+    var getPilotList;
+    io.onGetPilotList = function(fn){
+        getPilotList = fn;
+    }
+
     io.sockets.on('connection', function(socket) {
         socket.gbraverInfo = {
             userId : null,
@@ -302,6 +312,12 @@ function server(spec, my) {
                 roomInfo[i] = roomArray[i].getUserIdList();
             }
             socket.emit('successGetRoomInfo',roomInfo);
+        });
+
+        socket.on('getPilotList',function(){
+            getPilotList(function(err,data){
+                socket.emit('successGetPilotData',data);
+            });
         });
     });
 
