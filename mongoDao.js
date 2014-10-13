@@ -71,20 +71,21 @@ function mongoDao(spec, my) {
 
     that.getPilotList = function(fn){
         MongoClient.connect(url, function(err, db){
-            var pilotList = {};
+            var pilotList = new Array();
             var pilot = null;
             var collection = db.collection('pilots');
             collection.find({}).toArray(function(err,result){
                 for(var i in result){
                     //TODO : パイロットスキルに応じてpilotオブジェクトの作り方を変える
                     pilot = {
+                        id : result[i].id,
                         name : result[i].name,
                         shout : result[i].shout,
                         pict : result[i].pict,
                         type : result[i].type,
                         battery : result[i].battery
                     };
-                    pilotList[result[i].id] = pilot;
+                    pilotList.push(pilot);
                 }
                 db.close();
                 fn(null,pilotList);
