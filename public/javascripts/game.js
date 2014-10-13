@@ -5,6 +5,7 @@ function game(spec, my) {
     var core = gameBase();
     var userId = spec.userId;
     var armdozerPict = spec.armdozerPict;
+    var pilotList = spec.pilotList;
     var emitChangeScene = function(scene){};
     var emitSendMessage = function(message,data){};
 
@@ -94,7 +95,9 @@ function game(spec, my) {
     }
 
     core.changeSelectPilotScene = function() {
-        var scene = selectPilotScene();
+        var scene = selectPilotScene({
+            pilotList : pilotList
+        });
         core.replaceScene(scene);
         emitChangeScene('selectPilot');
     }
