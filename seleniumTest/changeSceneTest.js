@@ -69,4 +69,8 @@ test.describe('シーン遷移', function() {
     test.it('トップ画面からシングルプレイボタンを押して戦闘画面へ遷移', function(){
         util.doClientTest('/javascripts/changeSceneTest/topToSinglePlayTest.js');
     });
+
+    test.it('トップ画面からパイロット選択画面へ遷移', function(){
+        util.doClientTest('/javascripts/changeSceneTest/topToSelectPilotTest.js');
+    });
 });

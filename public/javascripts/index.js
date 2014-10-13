@@ -5,9 +5,7 @@ enchant.ENV.SOUND_ENABLED_ON_MOBILE_SAFARI = false;
 
 window.onload = function() {
     var socket = io.connect(location.origin);
-    var roomId;
-    var userId = $("meta[name=userId]").attr('content');;
-    var inputs = null;
+    var userId = $("meta[name=userId]").attr('content');
     var Game;
 
     //ユーザ認証する

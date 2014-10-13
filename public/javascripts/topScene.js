@@ -7,15 +7,18 @@ function topScene(spec,my){
     that.mesWindow = {};
     that.selectArmdozerSprite = {};
     that.singlePlayButton = {};
+    that.selectPilotButton = {};
     that.tile = {};
     that.onPushSetArmdozer = onPushSetArmdozer;
     that.onPushBattleRoom = onPushBattleRoom;
     that.onPushSinglePlay = onPushSinglePlay;
+    that.onPushSelectPilotButton = onPushSelectPilotButton;
     
     var core = enchant.Core.instance;
     var emitPushSetArmdozer = function(){};
     var emitPushBattleRoom = function(){};
     var emitPushSinglePlay = function(){};
+    var emitPushSelectPilotButton = function(){};
     
     initSprite();
     function initSprite(){
@@ -31,60 +34,75 @@ function topScene(spec,my){
         that.selectArmdozerSprite.y = 110;
         that.addChild(that.selectArmdozerSprite);
 
-        //対戦ルーム入室ボタン
-        that.battleRoomButton = pictButton({
-            text : '対戦ルーム入室',
-            pict : core.assets[core.PICT_WINDOW],
-            subPict : core.assets[core.PICT_ACTIVE_WINDOW]
-        });
-        that.battleRoomButton.x = 88;
-        that.battleRoomButton.y = 300;
-        that.battleRoomButton.addEventListener(Event.TOUCH_END,function(e){
-            that.battleRoomButton.setVisible(false);
-            that.setArmdpzerButton.setVisible(false);
-            that.singlePlayButton.setVisible(false);
-            that.mesWindow.setText(core.MESSAGE_GET_ROOMINFO);
-            that.mesWindow.setVisible(true);
-            emitPushBattleRoom();
-        });        
-        that.addChild(that.battleRoomButton);
-        
-        //アームドーザ選択ボタン
-        that.setArmdpzerButton = pictButton({
-            text : 'アームドーザ選択',
-            pict : core.assets[core.PICT_WINDOW],
-            subPict : core.assets[core.PICT_ACTIVE_WINDOW]
-        });
-        that.setArmdpzerButton.x = 88;
-        that.setArmdpzerButton.y = 364;
-        that.setArmdpzerButton.addEventListener(Event.TOUCH_END,function(e){
-            that.battleRoomButton.setVisible(false);
-            that.setArmdpzerButton.setVisible(false);
-            that.singlePlayButton.setVisible(false);
-            that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
-            that.mesWindow.setVisible(true);
-            emitPushSetArmdozer();
-        });
-        that.addChild(that.setArmdpzerButton);
-
         //シングルプレイボタン
         that.singlePlayButton = pictButton({
             text : 'シングルプレイ',
             pict : core.assets[core.PICT_WINDOW],
             subPict : core.assets[core.PICT_ACTIVE_WINDOW]
         });
-        that.singlePlayButton.x = 88;
-        that.singlePlayButton.y = 428;
+        that.singlePlayButton.x = 8;
+        that.singlePlayButton.y = 300;
         that.singlePlayButton.addEventListener(Event.TOUCH_END,function(){
             that.battleRoomButton.setVisible(false);
             that.setArmdpzerButton.setVisible(false);
             that.singlePlayButton.setVisible(false);
+            that.selectPilotButton.setVisible(false);
             that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
             that.mesWindow.setVisible(true);
             emitPushSinglePlay();
         });
         that.addChild(that.singlePlayButton);
 
+        //対戦ルーム入室ボタン
+        that.battleRoomButton = pictButton({
+            text : '対戦ルーム',
+            pict : core.assets[core.PICT_WINDOW],
+            subPict : core.assets[core.PICT_ACTIVE_WINDOW]
+        });
+        that.battleRoomButton.x = 168;
+        that.battleRoomButton.y = 300;
+        that.battleRoomButton.addEventListener(Event.TOUCH_END,function(e){
+            that.battleRoomButton.setVisible(false);
+            that.setArmdpzerButton.setVisible(false);
+            that.singlePlayButton.setVisible(false);
+            that.selectPilotButton.setVisible(false);
+            that.mesWindow.setText(core.MESSAGE_GET_ROOMINFO);
+            that.mesWindow.setVisible(true);
+            emitPushBattleRoom();
+        });
+        that.addChild(that.battleRoomButton);
+
+        //アームドーザ選択ボタン
+        that.setArmdpzerButton = pictButton({
+            text : 'アームドーザ選択',
+            pict : core.assets[core.PICT_WINDOW],
+            subPict : core.assets[core.PICT_ACTIVE_WINDOW]
+        });
+        that.setArmdpzerButton.x = 8;
+        that.setArmdpzerButton.y = 364;
+        that.setArmdpzerButton.addEventListener(Event.TOUCH_END,function(e){
+            that.battleRoomButton.setVisible(false);
+            that.setArmdpzerButton.setVisible(false);
+            that.singlePlayButton.setVisible(false);
+            that.selectPilotButton.setVisible(false);
+            that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
+            that.mesWindow.setVisible(true);
+            emitPushSetArmdozer();
+        });
+        that.addChild(that.setArmdpzerButton);
+
+        //パイロット選択ボタン
+        that.selectPilotButton = pictButton({
+            text : 'パイロット選択',
+            pict : core.assets[core.PICT_WINDOW],
+            subPict : core.assets[core.PICT_ACTIVE_WINDOW]
+        });
+        that.selectPilotButton.x = 168;
+        that.selectPilotButton.y = 364;
+        that.selectPilotButton.addEventListener(Event.TOUCH_END,function(e){
+            emitPushSelectPilotButton();
+        });
+        that.addChild(that.selectPilotButton);
 
         //画面タイトル
         that.title = titleWindow({
@@ -113,6 +131,10 @@ function topScene(spec,my){
 
     function onPushSinglePlay(fn){
         emitPushSinglePlay = fn;
+    }
+
+    function onPushSelectPilotButton(fn){
+        emitPushSelectPilotButton = fn;
     }
     
     return that;

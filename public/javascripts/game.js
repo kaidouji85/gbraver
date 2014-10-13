@@ -58,6 +58,9 @@ function game(spec, my) {
                 routineId : 'attack3'
             });
         });
+        core.topScene.onPushSelectPilotButton(function(){
+            core.changeSelectPilotScene();
+        });
         core.replaceScene(core.topScene);
         emitChangeScene('top');
     };
@@ -88,6 +91,12 @@ function game(spec, my) {
         core.replaceScene(scene);
         emitChangeScene('armdozerInfo');
 
+    }
+
+    core.changeSelectPilotScene = function() {
+        var scene = selectPilotScene();
+        core.replaceScene(scene);
+        emitChangeScene('selectPilot');
     }
 
     core.onChangeScene = function(fn){
