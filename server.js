@@ -316,7 +316,7 @@ function server(spec, my) {
 
         socket.on('getPilotList',function(){
             getPilotList(function(err,data){
-                socket.emit('successGetPilotData',data);
+                socket.emit('successGetPilotList',data);
             });
         });
     });

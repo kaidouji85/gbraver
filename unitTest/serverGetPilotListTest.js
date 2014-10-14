@@ -46,7 +46,7 @@ describe('serverクラスのテスト', function() {
 
             function getPilotData() {
                 client.emit('getPilotList',{});
-                client.once('successGetPilotData',assertOfPilotData);
+                client.once('successGetPilotList',assertOfPilotData);
             }
 
             function assertOfPilotData(data){
