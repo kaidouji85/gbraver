@@ -25,4 +25,8 @@ test.describe('パイロット選択画面', function() {
     test.it('戻るボタンが押せる', function(){
         util.doClientTest('/javascripts/selectPilotSceneTest/pushPrevButtonTest.js');
     });
+
+    test.it('パイロットボタンを押して詳細情報を表示する', function(){
+        util.doClientTest('/javascripts/selectPilotSceneTest/pushPilotButtonTest.js');
+    });
 });
