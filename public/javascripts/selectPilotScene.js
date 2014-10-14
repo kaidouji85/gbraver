@@ -4,9 +4,11 @@ function selectPilotScene(spec,my) {
     var that = new Scene();
     var core = enchant.Core.instance;
     var pilotList = spec.pilotList;
+    var emitPushButton = function(){};
 
     that.background = {};
     that.tile = {};
+    that.prevButton = {};
     that.pilotButtonArray = new Array(MAX_PILOT);
 
     initSprite();
@@ -33,9 +35,26 @@ function selectPilotScene(spec,my) {
             });
             //TODO : ボタン位置は後で調整する
             that.pilotButtonArray[pid].x = 12;
-            that.pilotButtonArray[pid].y = 200 + 80*pid;
+            that.pilotButtonArray[pid].y = 200 + 60*pid;
             that.addChild(that.pilotButtonArray[pid]);
         }
+
+        //戻るボタン
+        that.prevButton = pictButton({
+            text : '戻る',
+            pict : core.assets[core.PICT_WINDOW],
+            subPict : core.assets[core.PICT_ACTIVE_WINDOW]
+        });
+        that.prevButton.addEventListener(Event.TOUCH_END,function(){
+            emitPushButton();
+        });
+        that.prevButton.x = 12;
+        that.prevButton.y = 420;
+        that.addChild(that.prevButton);
+    }
+
+    that.onPushPrevButton = function(fn){
+        emitPushButton = fn;
     }
 
     return that;

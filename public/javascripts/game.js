@@ -98,6 +98,9 @@ function game(spec, my) {
         var scene = selectPilotScene({
             pilotList : pilotList
         });
+        scene.onPushPrevButton(function(){
+            core.changeTopScene();
+        });
         core.replaceScene(scene);
         emitChangeScene('selectPilot');
     }

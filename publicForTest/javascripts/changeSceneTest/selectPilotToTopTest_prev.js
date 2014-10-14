@@ -1,13 +1,9 @@
 enchant();
-//TODO : モバイル環境でTouch to Start から先に進まない不具合を回避するために追加
-//       http://make-muda.weblike.jp/2014/04/1283/
-enchant.ENV.SOUND_ENABLED_ON_MOBILE_SAFARI = false;
-window.onload = selectArmdozer;
+window.onload = topToRoomSelect;
 
-function selectArmdozer(){
+function topToRoomSelect(){
     var assert = chai.assert;
-    var Game = gameBase();
-    var testScene;
+    var Game;
     var pilotList = [
         {
             id : 'kyoko',
@@ -34,13 +30,28 @@ function selectArmdozer(){
             battery: 3
         }
     ];
+    initGame();
 
-    Game.start();
-    Game.onload = function(){
-        testScene = selectPilotScene({
+    function initGame(){
+        Game = game({
+            userId : 'test001@gmail.com',
+            armdozerPict : 'GranBraver.PNG',
             pilotList : pilotList
         });
-        Game.replaceScene(testScene);
-        finishTest();   //TODO : ボタン生成チェックは後で書く
-    };
+        Game.start();
+        Game.onload = function(){
+            Game.changeSelectPilotScene();
+            pushPrevtButton();
+        };
+    }
+
+    function pushPrevtButton(){
+        Game.onChangeScene(assertOfChangeScene);
+        touch(Game.currentScene.prevButton);
+    }
+
+    function assertOfChangeScene(scene) {
+        assert.equal(scene,'top','トップシーンに遷移する');
+        finishTest();
+    }
 }

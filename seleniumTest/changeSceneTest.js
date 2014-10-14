@@ -73,4 +73,8 @@ test.describe('シーン遷移', function() {
     test.it('トップ画面からパイロット選択画面へ遷移', function(){
         util.doClientTest('/javascripts/changeSceneTest/topToSelectPilotTest.js');
     });
+
+    test.it('パイロット選択画面からトップ画面へ遷移', function(){
+        util.doClientTest('/javascripts/changeSceneTest/selectPilotToTopTest_prev.js');
+    });
 });
