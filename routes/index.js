@@ -11,9 +11,17 @@ exports.gameMain = function(req, res) {
 
 exports.testClient = function(req, res){
     var testCode = req.query.code;
-    console.log('test dayon');
-    console.log(testCode);//test
     res.render('testClient', {
         testCode : testCode
+    });
+}
+//TODO : テストフォルダからモジュール持ってきてるのが気持ち悪い
+var testGlob = require('../seleniumTest/testGlob.js');
+exports.testList = function(req, res){
+    var tg = testGlob();
+    var testList = tg.glob('publicForTest/javascripts');
+    res.render('testList',{
+        title : 'テスト一覧 (total'+testList.length + ')',
+        testList : testList
     });
 }

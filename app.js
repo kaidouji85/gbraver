@@ -95,6 +95,7 @@ app.get('/auth/google/callback', function (req, res, next) {
 });
 if('development' == app.get('env')){
     app.get('/testClient',routes.testClient);
+    app.get('/testList',routes.testList);
 }
 
 //http server
