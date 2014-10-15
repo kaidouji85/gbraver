@@ -69,9 +69,11 @@ githubからプロジェクトをダウントードします。
 DAOテスト  
 `mocha mongoDbTest/ -R spec`
 
-Seleniumテスト  
+画面系テスト  
 `NODE_MAIL_ADDRESS="テスト用Googleアカウント"  NODE_PASSWORD="テスト用Googleアカウントパスワード" mocha seleniumTest/ -R spec`
 
+- 画面系テストはpublicForDebug配下に置かれた、*Test.jsが実行されます。
+- ホスト名:ポート/testList でテスト一覧が出ます
 
 ##herokuへのデプロイ方法
 (1)前提条件
