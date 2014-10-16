@@ -110,7 +110,15 @@ function mongoDao(spec, my) {
         collection.findOne({
             userId : userId
         }, function(err, data) {
-            fn(null, data);
+            var userData = null;
+            if(data!==null){
+                userData = {
+                    userId : data.userId,
+                    armdozerId : data.armdozerId,
+                    pilotId : data.pilotId
+                };
+            }
+            fn(null, userData);
         });
     }
     
@@ -118,7 +126,8 @@ function mongoDao(spec, my) {
         var collection = db.collection('users');
         var userData = {
             userId : userId,
-            armdozerId : 'granBraver'
+            armdozerId : 'granBraver',
+            pilotId : 'kyoko'
         };
         collection.insert(userData, function(err, data) {
             fn(null, userData);

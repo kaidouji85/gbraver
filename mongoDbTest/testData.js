@@ -5,12 +5,14 @@ var MongoClient = require('mongodb').MongoClient;
  */
 var take = {
     userId : 'take',
-    armdozerId : 'granBraver'
+    armdozerId : 'granBraver',
+    pilotId : 'kyoko'
 };
 
 var uchi = {
     userId : 'uchi',
-    armdozerId : 'landozer'
+    armdozerId : 'landozer',
+    pilotId : 'akane'
 };
 
 /**

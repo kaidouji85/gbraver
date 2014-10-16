@@ -120,22 +120,10 @@ describe('Mongo DBからプレイヤー情報を取得する', function() {
                 }, function(err, user) {
                     assert.equal(user.userId, 'testuser8585@gmail.com', '新規ユーザが追加されている');
                     assert.equal(user.armdozerId, 'granBraver', '新規ユーザはデフォルト選択キャラクターがranBraverになっている');
+                    assert.equal(user.pilotId, 'kyoko', '新規ユーザはデフォルト選択パイロットがkyokoになっている');
                     done();
                 });
             });
         }
-    });
-    
-    it('ユーザ情報を取得することができる',function(){
-        var dao = mongoDao({
-            url : mongoUrl
-        });
-        dao.getUserData('uchi',function(err,userData){
-            var expect = {
-                userId : 'uchi',
-                armdozerId : 'landozer'
-            };
-            assert.equal(userData,expect,'ユーザデータが正しく取得できる');
-        });
     });
 });
