@@ -8,10 +8,13 @@ function mongoDao(spec, my) {
         MongoClient.connect(url, function(err, db) {
             getOrCreateUserData(userId,db,function(err,user){
                 var armdozerId = user.armdozerId;
+                var pilotId = user.pilotId;
                 getArmdozerData(armdozerId,db,function(err,armdozer){
-                    var playerData = createPlayerData(user,armdozer);
-                    db.close();
-                    fn(null,playerData);
+                    getPilotData(pilotId,db,function(err,pilot){
+                        var playerData = createPlayerData(user,armdozer,pilot);
+                        db.close();
+                        fn(null,playerData);
+                    });
                 });
             });
         });
@@ -76,15 +79,7 @@ function mongoDao(spec, my) {
             var collection = db.collection('pilots');
             collection.find({}).toArray(function(err,result){
                 for(var i in result){
-                    //TODO : パイロットスキルに応じてpilotオブジェクトの作り方を変える
-                    pilot = {
-                        id : result[i].id,
-                        name : result[i].name,
-                        shout : result[i].shout,
-                        pict : result[i].pict,
-                        type : result[i].type,
-                        battery : result[i].battery
-                    };
+                    pilot = createPilotData(result[i]);
                     pilotList.push(pilot);
                 }
                 db.close();
@@ -95,21 +90,9 @@ function mongoDao(spec, my) {
 
     that.getPilotData = function(pilotId,fn){
         MongoClient.connect(url, function(err, db){
-            var collection = db.collection('pilots');
-            collection.findOne({
-                id:pilotId
-            },function(err,data){
-                //TODO : スキルに応じてpiotObjectの作り方を変える
-                var pilotData = {
-                    id : data.id,
-                    name : data.name,
-                    pict : data.pict,
-                    shout : data.shout,
-                    type : data.type,
-                    battery : data.battery
-                };
+            getPilotData(pilotId,db,function(err,data){
+                fn(err,data);
                 db.close();
-                fn(null,pilotData);
             });
         });
     }
@@ -162,21 +145,32 @@ function mongoDao(spec, my) {
         }, function(err, data) {
             fn(null, data);
         });
-    }    
+    }
 
-    function createPlayerData(user,armdozer) {
+    function getPilotData(pilotId, db, fn){
+        var collection = db.collection('pilots');
+        collection.findOne({
+            id:pilotId
+        },function(err,data){
+            var pilotData = createPilotData(data);
+            fn(null,pilotData);
+        });
+    }
+
+    function createPlayerData(user,armdozer,pilot) {
         var playerData = {
             userId : user.userId,
-            status : createStatusData(armdozer)
+            status : createStatusData(armdozer,pilot)
         };
 
         return playerData;
     }
 
-    function createStatusData(armdozer) {
+    function createStatusData(armdozer,pilot) {
         var statusData = createArmdozerData(armdozer);
         //TODO : skillをDBから取得するようにする
         var skill = {
+            pilotPict : pilot.pict,
             type : 'quickCharge',
             battery : 3
         };
@@ -214,6 +208,19 @@ function mongoDao(spec, my) {
             }
         };
         return armdozerData;
+    }
+
+    function createPilotData(data){
+        //TODO : スキルに応じてpiotObjectの作り方を変える
+        var pilotData = {
+            id : data.id,
+            name : data.name,
+            pict : data.pict,
+            shout : data.shout,
+            type : data.type,
+            battery : data.battery
+        };
+        return pilotData;
     }
 
     return that;

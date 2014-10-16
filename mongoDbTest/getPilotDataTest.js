@@ -30,7 +30,5 @@ describe('パイロットリストを取得することができる',function(){
             assert.deepEqual(err,null,'errorオブジェクトがnullである');
             done();
         }
-
     });
-
 });

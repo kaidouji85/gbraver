@@ -52,6 +52,7 @@ describe('Mongo DBからプレイヤー情報を取得する', function() {
                         }
                     },
                     skill : {
+                        pilotPict : 'kyoko.png',
                         type : 'quickCharge',
                         battery : 3
                     }
@@ -104,6 +105,7 @@ describe('Mongo DBからプレイヤー情報を取得する', function() {
                         }
                     },
                     skill : {
+                        pilotPict : 'kyoko.png',
                         type : 'quickCharge',
                         battery : 3
                     }
