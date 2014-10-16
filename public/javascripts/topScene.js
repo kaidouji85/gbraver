@@ -33,15 +33,24 @@ function topScene(spec,my){
         //選択中アームドーザ
         that.selectArmdozerSprite = new Sprite(160,160);
         that.selectArmdozerSprite.image = core.assets[core.PICT_PREFIX+armdozerPict];
-        that.selectArmdozerSprite.x = 10;
+        that.selectArmdozerSprite.x = (320-160)/2;
         that.selectArmdozerSprite.y = 110;
         that.addChild(that.selectArmdozerSprite);
 
         //選択中パイロット
-        that.pilotSprite = new Sprite(256,256);
-        that.pilotSprite.image = core.assets[core.PICT_PREFIX+pilotPict];
-        that.pilotSprite.x = 100;
-        that.pilotSprite.y = 50;
+        var pilotWindow = gridWindow({
+            pict : core.assets[core.PICT_WINDOW],
+            width : 5,
+            height : 5
+        });
+        pilotWindow.x = 230;
+        pilotWindow.y = 100;
+        that.addChild(pilotWindow);
+
+        that.pilotSprite = new Sprite(80,80);
+        that.pilotSprite.image = createFaceIcon(core.assets[core.PICT_PREFIX+pilotPict]);
+        that.pilotSprite.x = 230;
+        that.pilotSprite.y = 100;
         that.addChild(that.pilotSprite);
 
         //シングルプレイボタン
@@ -145,6 +154,15 @@ function topScene(spec,my){
 
     function onPushSelectPilotButton(fn){
         emitPushSelectPilotButton = fn;
+    }
+
+    //TODO : パイロットセレクトシーンにある同名関数と共通化したい
+    function createFaceIcon(image) {
+        var widthMargin = 64;
+        var size = 128;
+        var faceIcon = new Surface(80,80);
+        faceIcon.draw(image,widthMargin,0,size,size,6,6,68,68);
+        return faceIcon;
     }
     
     return that;
