@@ -42,6 +42,7 @@ player['test001@gmail.com'] = {
             }
         },
         skill : {
+            pilotPict : 'kyoko.png',
             type : 'quickCharge',
             battery : 3
         }
@@ -78,6 +79,7 @@ player['test002@gmail.com'] = {
             }
         },
         skill : {
+            pilotPict : 'akane.png',
             type : 'quickCharge',
             battery : 3
         }
@@ -114,6 +116,7 @@ player['test003@gmail.com'] = {
             }
         },
         skill : {
+            pilotPict : 'kyoko.png',
             type : 'quickCharge',
             battery : 3
         }
@@ -150,6 +153,7 @@ player['test004@gmail.com'] = {
             }
         },
         skill : {
+            pilotPict : 'akane.png',
             type : 'quickCharge',
             battery : 3
         }

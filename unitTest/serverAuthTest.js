@@ -35,7 +35,8 @@ describe('serverクラスのテスト', function() {
                 });
                 client.on('successAuth', function(data) {
                     var expect = {
-                        armdozerPict : 'GranBraver.PNG'
+                        armdozerPict : 'GranBraver.PNG',
+                        pilotPict : 'kyoko.png'
                     };
                     assert.deepEqual(data,expect,'選択しているアームドーザの画像名が正しい');
                     done();

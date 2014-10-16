@@ -121,7 +121,8 @@ function server(spec, my) {
             getPlayerData(L_userId, function(err, userData) {
                 if(!err){
                     var sendData = {
-                        armdozerPict : userData.status.pictName
+                        armdozerPict : userData.status.pictName,
+                        pilotPict : userData.status.skill.pilotPict
                     };
                     socket.gbraverInfo.userId = L_userId;
                     socket.emit('successAuth',sendData);

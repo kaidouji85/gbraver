@@ -87,6 +87,7 @@ describe('serverクラスのテスト', function() {
                                 }
                             },
                             skill : {
+                                pilotPict : 'kyoko.png',
                                 type : 'quickCharge',
                                 battery : 3
                             }

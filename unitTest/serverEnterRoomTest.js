@@ -113,6 +113,7 @@ describe('serverクラスのテスト', function() {
                                 }
                             },
                             skill : {
+                                pilotPict : 'kyoko.png',
                                 type : 'quickCharge',
                                 battery : 3
                             }
@@ -151,6 +152,7 @@ describe('serverクラスのテスト', function() {
                                 }
                             },
                             skill : {
+                                pilotPict : 'akane.png',
                                 type : 'quickCharge',
                                 battery : 3
                             }
