@@ -92,6 +92,27 @@ function mongoDao(spec, my) {
             });
         });
     }
+
+    that.getPilotData = function(pilotId,fn){
+        MongoClient.connect(url, function(err, db){
+            var collection = db.collection('pilots');
+            collection.findOne({
+                id:pilotId
+            },function(err,data){
+                //TODO : スキルに応じてpiotObjectの作り方を変える
+                var pilotData = {
+                    id : data.id,
+                    name : data.name,
+                    pict : data.pict,
+                    shout : data.shout,
+                    type : data.type,
+                    battery : data.battery
+                };
+                db.close();
+                fn(null,pilotData);
+            });
+        });
+    }
     
     function getOrCreateUserData(userId, db, fn){
         getUserData(userId, db, function(err,user){
