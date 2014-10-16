@@ -9,7 +9,8 @@ function topToRoomSelect(){
     function initGame(){
         Game = game({
             userId : 'test001@gmail.com',
-            armdozerPict : 'GranBraver.PNG'
+            armdozerPict : 'GranBraver.PNG',
+            pilotPict : 'kyoko.png'
         });
         Game.start();
         Game.onload = function(){

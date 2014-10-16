@@ -36,6 +36,7 @@ function topToRoomSelect(){
         Game = game({
             userId : 'test001@gmail.com',
             armdozerPict : 'GranBraver.PNG',
+            pilotPict : 'kyoko.png',
             pilotList : pilotList
         });
         Game.start();

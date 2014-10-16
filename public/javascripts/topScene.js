@@ -1,6 +1,8 @@
 function topScene(spec,my){
     var that = new Scene();
     var armdozerPict = spec.armdozerPict;
+    var pilotPict = spec.pilotPict;
+
     that.background = {};
     that.battleRoomButton = {};
     that.setArmdpzerButton = {};
@@ -9,6 +11,7 @@ function topScene(spec,my){
     that.singlePlayButton = {};
     that.selectPilotButton = {};
     that.tile = {};
+    that.pilotSprite = {};
     that.onPushSetArmdozer = onPushSetArmdozer;
     that.onPushBattleRoom = onPushBattleRoom;
     that.onPushSinglePlay = onPushSinglePlay;
@@ -30,9 +33,16 @@ function topScene(spec,my){
         //選択中アームドーザ
         that.selectArmdozerSprite = new Sprite(160,160);
         that.selectArmdozerSprite.image = core.assets[core.PICT_PREFIX+armdozerPict];
-        that.selectArmdozerSprite.x = (320 - 160)/2;
+        that.selectArmdozerSprite.x = 10;
         that.selectArmdozerSprite.y = 110;
         that.addChild(that.selectArmdozerSprite);
+
+        //選択中パイロット
+        that.pilotSprite = new Sprite(256,256);
+        that.pilotSprite.image = core.assets[core.PICT_PREFIX+pilotPict];
+        that.pilotSprite.x = 100;
+        that.pilotSprite.y = 50;
+        that.addChild(that.pilotSprite);
 
         //シングルプレイボタン
         that.singlePlayButton = pictButton({

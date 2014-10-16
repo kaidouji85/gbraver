@@ -7,6 +7,7 @@ window.onload = function() {
     var socket = io.connect(location.origin);
     var userId = $("meta[name=userId]").attr('content');
     var armdozerPict;
+    var pilotPict;
     var pilotList;
     var Game;
 
@@ -18,6 +19,7 @@ window.onload = function() {
     //ユーザ認証成功
     socket.on('successAuth', function(data) {
         armdozerPict = data.armdozerPict;
+        pilotPict = data.pilotPict;
         getPilotList();
     });
 
@@ -35,6 +37,7 @@ window.onload = function() {
         Game = new game({
             userId : userId,
             armdozerPict : armdozerPict,
+            pilotPict : pilotPict,
             pilotList : pilotList
         });
         Game.start();

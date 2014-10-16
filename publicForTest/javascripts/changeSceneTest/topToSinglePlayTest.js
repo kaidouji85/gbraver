@@ -9,7 +9,8 @@ function topToSetArmdozer(){
     function initGame(){
         Game = game({
             userId : 'test001@gmail.com',
-            armdozerPict : 'GranBraver.PNG'
+            armdozerPict : 'GranBraver.PNG',
+            pilotPict : 'kyoko.png'
         });
         Game.start();
         Game.onload = function(){
@@ -19,7 +20,6 @@ function topToSetArmdozer(){
     }
 
     function pushSinglePlayButton(){
-        //console.log('アームドーザ選択ボタンを押す');
         touch(Game.currentScene.singlePlayButton);
         Game.onSendMessage(asertOfMessage);
     }
