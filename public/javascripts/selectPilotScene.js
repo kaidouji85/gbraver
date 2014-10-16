@@ -51,12 +51,10 @@ function selectPilotScene(spec,my) {
             that.pilotButtonBaseArray[pid].y = 300;
             that.addChild(that.pilotButtonBaseArray[pid]);
 
-            that.miniPilotPictArray[pid] = new Sprite(256,256);
-            that.miniPilotPictArray[pid].image = core.assets[core.PICT_PREFIX + 'kyoko.png'];
-            that.miniPilotPictArray[pid].x = -70 + 100*pid;
-            that.miniPilotPictArray[pid].y = 210;
-            that.miniPilotPictArray[pid].scaleX = 0.3;
-            that.miniPilotPictArray[pid].scaleY = 0.3;
+            that.miniPilotPictArray[pid] = new Sprite(80,80);
+            that.miniPilotPictArray[pid].image = createFaceIcon(core.assets[core.PICT_PREFIX + pilotList[pid].pict]);
+            that.miniPilotPictArray[pid].x = 20 + 100*pid;
+            that.miniPilotPictArray[pid].y = 300;
             that.addChild(that.miniPilotPictArray[pid]);
         }
 
@@ -76,6 +74,14 @@ function selectPilotScene(spec,my) {
 
     that.onPushPrevButton = function(fn){
         emitPushButton = fn;
+    }
+
+    function createFaceIcon(image) {
+        var widthMargin = 64;
+        var size = 128;
+        var faceIcon = new Surface(80,80);
+        faceIcon.draw(image,widthMargin,0,size,size,6,6,68,68);
+        return faceIcon;
     }
 
     return that;

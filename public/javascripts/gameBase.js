@@ -46,6 +46,8 @@ function gameBase(spec,my){
         core.preload(core.PICT_PREFIX+'Landozer.PNG');
         core.preload(core.PICT_PREFIX+'ZeroBraver.PNG');
         core.preload(core.PICT_PREFIX+'kyoko.png');
+        core.preload(core.PICT_PREFIX+'akane.png');
+        core.preload(core.PICT_PREFIX+'iori.png');
         core.preload(core.PICT_ACTIVE_BAR);
         core.preload(core.PICT_ACTIVE_BAR_BACK);
         core.preload(core.PICT_BATTERY_GAUGE);
