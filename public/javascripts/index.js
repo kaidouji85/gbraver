@@ -86,6 +86,10 @@ window.onload = function() {
             socket.on('enterRoomError',function(data){
                 Game.emitServerResp('enterRoomError',data);
             });
+
+            socket.on('successSetPilot',function(data){
+                Game.emitServerResp('successSetPilot',data);
+            });
         };
     }
 };

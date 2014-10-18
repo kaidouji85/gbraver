@@ -104,6 +104,13 @@ function game(spec, my) {
         scene.onPushPrevButton(function(){
             core.changeTopScene();
         });
+        scene.onPushOkButton(function(l_pilotId,l_pilotPict){
+            var data = {
+                pilotId : l_pilotId
+            };
+            emitSendMessage('setPilot',data);
+            pilotPict = l_pilotPict;
+        });
         core.replaceScene(scene);
         emitChangeScene('selectPilot');
     }
@@ -160,11 +167,18 @@ function game(spec, my) {
             case 'enterRoomError':
                 core.roomSelectScene.emitEnterRoomError(data);
                 break;
+            case 'successSetPilot':
+                core.changeTopScene();
+                break;
         }
     };
 
     core.getArmdozerPict = function() {
         return armdozerPict;
+    }
+
+    core.getPilotPict = function(){
+        return pilotPict;
     }
     
     function changePhase(data){
