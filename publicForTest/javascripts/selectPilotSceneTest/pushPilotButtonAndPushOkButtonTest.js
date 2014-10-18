@@ -2,9 +2,9 @@ enchant();
 //TODO : モバイル環境でTouch to Start から先に進まない不具合を回避するために追加
 //       http://make-muda.weblike.jp/2014/04/1283/
 enchant.ENV.SOUND_ENABLED_ON_MOBILE_SAFARI = false;
-window.onload = doTest;
+window.onload = selectArmdozer;
 
-function doTest(){
+function selectArmdozer(){
     var assert = chai.assert;
     var Game = gameBase();
     var testScene;
@@ -42,8 +42,13 @@ function doTest(){
             pilotList : pilotList
         });
         Game.replaceScene(testScene);
-        Game.currentScene.tl.delay(30).then(pushOkButton);
+        Game.currentScene.tl.delay(30).then(pushIoriButton);
     };
+
+    function pushIoriButton(){
+        touch(Game.currentScene.pilotButtonArray[2]);
+        Game.currentScene.tl.delay(30).then(pushOkButton);
+    }
 
     function pushOkButton(){
         Game.currentScene.onPushOkButton(assertOfPushOkButton);
@@ -51,8 +56,8 @@ function doTest(){
     }
 
     function assertOfPushOkButton(pilotId,pilotPict){
-        assert.equal(pilotId,'akane','元々選択していたパイロットIDが渡される');
-        assert.equal(pilotPict,'akane.png','元々選択していたパイロットの画像名が渡される');
+        assert.equal(pilotId,'iori','選択したパイロットIDが渡される');
+        assert.equal(pilotPict,'iori.png','選択したパイロットの画像名が渡される');
         assert.equal(Game.currentScene.okButton.getVisible(),false,'OKボタンが非表示');
         assert.equal(Game.currentScene.prevButton.getVisible(),false,'戻るボタンが非表示');
         assert.equal(Game.currentScene.pilotButtonArray[0].getVisible(),false,'パイロットアイコン0が非表示');

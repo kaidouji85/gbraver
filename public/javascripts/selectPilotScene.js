@@ -7,7 +7,7 @@ function selectPilotScene(spec,my) {
     var pilotList = spec.pilotList;
     var selectPilotId = null;
     var emitPushButton = function(){};
-    var emitPushOkButton = function(pilotId){};
+    var emitPushOkButton = function(pilotId,pilotPict){};
 
     that.background = {};
     that.tile = {};
@@ -50,9 +50,11 @@ function selectPilotScene(spec,my) {
             button.x = 20 + 100*pid;
             button.y = 320;
             button.addEventListener(Event.TOUCH_END,function(){
-
                 pushPilotButton(pid);
             })
+            if(pilotList[pid].pict === pilotPict){
+                selectPilotId = pilotList[pid].id;
+            }
             that.addChild( button);
         });
 
@@ -82,7 +84,7 @@ function selectPilotScene(spec,my) {
         that.okButton.addEventListener(Event.TOUCH_END,function(){
             invisibleButton();
             that.mesWindow.setVisible(true);
-            emitPushOkButton(selectPilotId);
+            emitPushOkButton(selectPilotId,pilotPict);
         });
         that.okButton.x = 168;
         that.okButton.y = 420;

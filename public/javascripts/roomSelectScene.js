@@ -107,7 +107,7 @@ function roomSelectScene(spec,my){
             pict : core.assets[core.PICT_WINDOW]
         });
         that.mesWindow.x = 0;
-        that.mesWindow.y = core.MESSAGE_WINDOW_Y;
+        that.mesWindow.y = 180;
         that.mesWindow.setVisible(false);
         that.addChild(that.mesWindow);
     };
