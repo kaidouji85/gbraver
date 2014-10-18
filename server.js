@@ -108,6 +108,18 @@ function server(spec, my) {
         getPilotList = fn;
     }
 
+    /**
+     * パイロット選択関数
+     * この関数の実装は外部で行う
+     * @param {String} userId
+     * @param {String} pilotId
+     * @param {Function} callback(err,result)
+     */
+    var setPilotId;
+    io.onSetPilotId = function(fn){
+        setPilotId = fn;
+    }
+
     io.sockets.on('connection', function(socket) {
         socket.gbraverInfo = {
             userId : null,
@@ -318,6 +330,14 @@ function server(spec, my) {
         socket.on('getPilotList',function(){
             getPilotList(function(err,data){
                 socket.emit('successGetPilotList',data);
+            });
+        });
+
+        socket.on('setPilot',function(data){
+            var userId = socket.gbraverInfo.userId;
+            var pilotId = data.pilotId;
+            setPilotId(userId,pilotId,function(err,result){
+                socket.emit('successSetPilot',true);
             });
         });
     });
