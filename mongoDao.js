@@ -96,6 +96,17 @@ function mongoDao(spec, my) {
             });
         });
     }
+
+    that.setPilotId = function(userId,pilotId,fn){
+        MongoClient.connect(url, function(err, db){
+            var collection = db.collection('users');
+            collection.update({userId : userId}, {$set : {pilotId : pilotId}},{},function(err) {
+                db.close();
+                var result = err===null ? true : false;
+                fn(err,result);
+            });
+        });
+    }
     
     function getOrCreateUserData(userId, db, fn){
         getUserData(userId, db, function(err,user){

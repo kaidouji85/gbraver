@@ -115,3 +115,4 @@ WsServer.onGetCharacterInfo(dao.getCharacterInfo);
 WsServer.onGetAttackRoutine(enemyRoutineDefine.getAttackRoutine);
 WsServer.onGetDefenseRoutine(enemyRoutineDefine.getDefenseRoutine);
 WsServer.onGetPilotList(dao.getPilotList);
+WsServer.onSetPilotId(dao.setPilotId);
