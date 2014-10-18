@@ -38,11 +38,17 @@ function selectArmdozer(){
     Game.start();
     Game.onload = function(){
         testScene = selectPilotScene({
+            pilotPict : 'akane.png',
             pilotList : pilotList
         });
         Game.replaceScene(testScene);
         //TODO : アサーション事項は後で書く
-        Game.currentScene.tl.delay(30).then(finishTest);
+        Game.currentScene.tl.delay(30).then(pushKyokoButton);
     };
+
+    function pushKyokoButton(){
+        touch(Game.currentScene.pilotButtonArray[0]);
+        Game.currentScene.tl.delay(30).then(finishTest);
+    }
 
 }

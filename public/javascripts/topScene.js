@@ -38,17 +38,10 @@ function topScene(spec,my){
         that.addChild(that.selectArmdozerSprite);
 
         //選択中パイロット
-        var pilotWindow = gridWindow({
-            pict : core.assets[core.PICT_WINDOW],
-            width : 5,
-            height : 5
+        that.pilotSprite = pilotIcon({
+            windowPict : core.assets[core.PICT_WINDOW],
+            pilotPict : core.assets[core.PICT_PREFIX + pilotPict]
         });
-        pilotWindow.x = 230;
-        pilotWindow.y = 100;
-        that.addChild(pilotWindow);
-
-        that.pilotSprite = new Sprite(80,80);
-        that.pilotSprite.image = createFaceIcon(core.assets[core.PICT_PREFIX+pilotPict]);
         that.pilotSprite.x = 230;
         that.pilotSprite.y = 100;
         that.addChild(that.pilotSprite);

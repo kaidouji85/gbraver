@@ -3,15 +3,15 @@ function selectPilotScene(spec,my) {
 
     var that = new Scene();
     var core = enchant.Core.instance;
+    var pilotPict = spec.pilotPict;
     var pilotList = spec.pilotList;
     var emitPushButton = function(){};
 
     that.background = {};
     that.tile = {};
     that.prevButton = {};
+    that.selectPilotSprite = {};
     that.pilotButtonArray = new Array(MAX_PILOT);
-    that.pilotButtonBaseArray = new Array(MAX_PILOT);
-    that.miniPilotPictArray = new Array(MAX_PILOT);
 
     initSprite();
     function initSprite(){
@@ -20,6 +20,13 @@ function selectPilotScene(spec,my) {
         that.background.image = core.assets[core.PICT_BG_GROUND];
         that.addChild(that.background);
 
+        //選択中のパイロット画像
+        that.selectPilotSprite = new Sprite(256,256);
+        that.selectPilotSprite.x = 32;
+        that.selectPilotSprite.y = 40;
+        that.selectPilotSprite.image = core.assets[core.PICT_PREFIX+pilotPict];
+        that.addChild(that.selectPilotSprite);
+
         //画面タイトル
         that.title = titleWindow({
             pict : core.assets[core.PICT_WINDOW],
@@ -27,36 +34,26 @@ function selectPilotScene(spec,my) {
         });
         that.addChild(that.title);
 
-
+        //パイロットボタン
         for(var pid=0; pid<MAX_PILOT; pid++) {
-            //パイロットボタン
-            /*
-            that.pilotButtonArray[pid] = pictButton({
-                text : pilotList[pid].name,
-                pict : core.assets[core.PICT_WINDOW],
-                subPict : core.assets[core.PICT_ACTIVE_WINDOW]
+            that.pilotButtonArray[pid] = pilotIcon({
+                windowPict : core.assets[core.PICT_WINDOW],
+                pilotPict : core.assets[core.PICT_PREFIX + pilotList[pid].pict]
             });
-            //TODO : ボタン位置は後で調整する
-            that.pilotButtonArray[pid].x = 12;
-            that.pilotButtonArray[pid].y = 200 + 60*pid;
-            that.addChild(that.pilotButtonArray[pid]);
-            */
-
-            that.pilotButtonBaseArray[pid] = gridWindow({
-                pict : core.assets[core.PICT_WINDOW],
-                width : 5,
-                height : 5
-            });
-            that.pilotButtonBaseArray[pid].x = 20 + 100*pid;
-            that.pilotButtonBaseArray[pid].y = 300;
-            that.addChild(that.pilotButtonBaseArray[pid]);
-
-            that.miniPilotPictArray[pid] = new Sprite(80,80);
-            that.miniPilotPictArray[pid].image = createFaceIcon(core.assets[core.PICT_PREFIX + pilotList[pid].pict]);
-            that.miniPilotPictArray[pid].x = 20 + 100*pid;
-            that.miniPilotPictArray[pid].y = 300;
-            that.addChild(that.miniPilotPictArray[pid]);
         }
+
+        that.pilotButtonArray.forEach(function(button,pid){
+            button.x = 20 + 100*pid;
+            button.y = 320;
+            button.addEventListener(Event.TOUCH_END,function(){
+                pushPilotButton(pid);
+            })
+            that.addChild( button);
+        });
+
+        pilotList.forEach(function(){
+
+        });
 
         //戻るボタン
         that.prevButton = pictButton({
@@ -76,12 +73,9 @@ function selectPilotScene(spec,my) {
         emitPushButton = fn;
     }
 
-    function createFaceIcon(image) {
-        var widthMargin = 64;
-        var size = 128;
-        var faceIcon = new Surface(80,80);
-        faceIcon.draw(image,widthMargin,0,size,size,6,6,68,68);
-        return faceIcon;
+    function pushPilotButton(pid){
+        pilotPict = pilotList[pid].pict;
+        that.selectPilotSprite.image = core.assets[core.PICT_PREFIX+pilotPict];
     }
 
     return that;
