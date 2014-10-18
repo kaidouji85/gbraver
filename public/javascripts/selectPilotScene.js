@@ -71,7 +71,7 @@ function selectPilotScene(spec,my) {
         that.prevButton.addEventListener(Event.TOUCH_END,function(){
             emitPushButton();
         });
-        that.prevButton.x = 8;
+        that.prevButton.x = 168;
         that.prevButton.y = 420;
         that.addChild(that.prevButton);
 
@@ -86,7 +86,7 @@ function selectPilotScene(spec,my) {
             that.mesWindow.setVisible(true);
             emitPushOkButton(selectPilotId,pilotPict);
         });
-        that.okButton.x = 168;
+        that.okButton.x = 8;
         that.okButton.y = 420;
         that.addChild(that.okButton);
 
