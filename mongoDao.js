@@ -182,6 +182,7 @@ function mongoDao(spec, my) {
         //TODO : skillをDBから取得するようにする
         var skill = {
             pilotPict : pilot.pict,
+            shout : pilot.shout,
             type : 'quickCharge',
             battery : 3
         };
