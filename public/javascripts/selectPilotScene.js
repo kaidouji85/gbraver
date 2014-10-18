@@ -5,12 +5,16 @@ function selectPilotScene(spec,my) {
     var core = enchant.Core.instance;
     var pilotPict = spec.pilotPict;
     var pilotList = spec.pilotList;
+    var selectPilotId = null;
     var emitPushButton = function(){};
+    var emitPushOkButton = function(pilotId){};
 
     that.background = {};
     that.tile = {};
     that.prevButton = {};
+    that.okButton = {};
     that.selectPilotSprite = {};
+    that.mesWindow = {};
     that.pilotButtonArray = new Array(MAX_PILOT);
 
     initSprite();
@@ -46,13 +50,14 @@ function selectPilotScene(spec,my) {
             button.x = 20 + 100*pid;
             button.y = 320;
             button.addEventListener(Event.TOUCH_END,function(){
+
                 pushPilotButton(pid);
             })
             that.addChild( button);
         });
 
         pilotList.forEach(function(){
-
+            emitPushOkButton();
         });
 
         //戻るボタン
@@ -64,18 +69,56 @@ function selectPilotScene(spec,my) {
         that.prevButton.addEventListener(Event.TOUCH_END,function(){
             emitPushButton();
         });
-        that.prevButton.x = 12;
+        that.prevButton.x = 8;
         that.prevButton.y = 420;
         that.addChild(that.prevButton);
+
+        //決定ボタン
+        that.okButton = pictButton({
+            text : '決定',
+            pict : core.assets[core.PICT_WINDOW],
+            subPict : core.assets[core.PICT_ACTIVE_WINDOW]
+        });
+        that.okButton.addEventListener(Event.TOUCH_END,function(){
+            invisibleButton();
+            that.mesWindow.setVisible(true);
+            emitPushOkButton(selectPilotId);
+        });
+        that.okButton.x = 168;
+        that.okButton.y = 420;
+        that.addChild(that.okButton);
+
+        //メッセージウインドウ
+        that.mesWindow = messageWindow({
+            pict : core.assets[core.PICT_WINDOW]
+        });
+        that.mesWindow.x = 0;
+        that.mesWindow.y = core.MESSAGE_WINDOW_Y;
+        that.mesWindow.setVisible(false);
+        that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
+        that.addChild(that.mesWindow);
     }
 
     that.onPushPrevButton = function(fn){
         emitPushButton = fn;
     }
 
-    function pushPilotButton(pid){
+    that.onPushOkButton = function(fn){
+        emitPushOkButton = fn;
+    }
+
+    function pushPilotButton(pid) {
         pilotPict = pilotList[pid].pict;
-        that.selectPilotSprite.image = core.assets[core.PICT_PREFIX+pilotPict];
+        selectPilotId = pilotList[pid].id;
+        that.selectPilotSprite.image = core.assets[core.PICT_PREFIX + pilotPict];
+    }
+
+    function invisibleButton(){
+        that.okButton.setVisible(false);
+        that.prevButton.setVisible(false);
+        for(var i in that.pilotButtonArray){
+            that.pilotButtonArray[i].setVisible(false);
+        }
     }
 
     return that;

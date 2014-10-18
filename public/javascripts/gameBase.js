@@ -32,7 +32,7 @@ function gameBase(spec,my){
     core.MESSAGE_WAIT_ENTERROOM = 'プレイヤーの入室待ち';
     core.MESSAGE_WAIT_COMMAND = '対戦相手がコマンドを選択中......';
     core.MESSAGE_GET_ROOMINFO = 'ルーム情報取得中';
-    core.MESSAGE_WINDOW_Y = 180;
+    core.MESSAGE_WINDOW_Y = 300;
 
     core.fps = 40;
     core.battleScene = null;
