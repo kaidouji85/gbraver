@@ -32,6 +32,7 @@ function getTestPlayerData(userId){
             }
         },
         skill : {
+            pilotPict : 'akane.png',
             type : 'quickCharge',
             battery : 3
         }
@@ -69,6 +70,7 @@ function getTestPlayerData(userId){
             }
         },
         skill : {
+            pilotPict : 'akane.png',
             type : 'quickCharge',
             battery : 3
         }
@@ -106,6 +108,7 @@ function getTestPlayerData(userId){
             }
         },
         skill : {
+            pilotPict : 'iori.png',
             type : 'quickCharge',
             battery : 3
         }
