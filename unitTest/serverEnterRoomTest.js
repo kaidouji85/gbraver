@@ -114,6 +114,7 @@ describe('serverクラスのテスト', function() {
                             },
                             skill : {
                                 pilotPict : 'kyoko.png',
+                                shout : 'やぁぁぁぁて、やるぜ！！    ……なんてね。',
                                 type : 'quickCharge',
                                 battery : 3
                             }
@@ -153,6 +154,7 @@ describe('serverクラスのテスト', function() {
                             },
                             skill : {
                                 pilotPict : 'akane.png',
+                                shout : 'まだまだ、勝負はこれからよ。',
                                 type : 'quickCharge',
                                 battery : 3
                             }

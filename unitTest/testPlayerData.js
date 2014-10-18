@@ -43,6 +43,7 @@ player['test001@gmail.com'] = {
         },
         skill : {
             pilotPict : 'kyoko.png',
+            shout : 'やぁぁぁぁて、やるぜ！！    ……なんてね。',
             type : 'quickCharge',
             battery : 3
         }
@@ -80,6 +81,7 @@ player['test002@gmail.com'] = {
         },
         skill : {
             pilotPict : 'akane.png',
+            shout : 'まだまだ、勝負はこれからよ。',
             type : 'quickCharge',
             battery : 3
         }
@@ -117,6 +119,7 @@ player['test003@gmail.com'] = {
         },
         skill : {
             pilotPict : 'kyoko.png',
+            shout : 'やぁぁぁぁて、やるぜ！！    ……なんてね。',
             type : 'quickCharge',
             battery : 3
         }
@@ -154,6 +157,7 @@ player['test004@gmail.com'] = {
         },
         skill : {
             pilotPict : 'akane.png',
+            shout : 'まだまだ、勝負はこれからよ。',
             type : 'quickCharge',
             battery : 3
         }
