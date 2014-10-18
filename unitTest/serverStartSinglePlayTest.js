@@ -125,6 +125,12 @@ describe('serverクラスのテスト', function() {
                                     name : 'ブレイクパンチ',
                                     power : 3800
                                 }
+                            },
+                            skill : {
+                                pilotPict : 'kyoko.png',
+                                shout : 'やぁぁぁぁて、やるぜ！！    ……なんてね。',
+                                type : 'quickCharge',
+                                battery : 3
                             }
                         }
                     }

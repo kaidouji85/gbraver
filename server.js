@@ -202,6 +202,13 @@ function server(spec, my) {
             getPlayerData(socket.gbraverInfo.userId, function(err, userData) {
                 socket.gbraverInfo.singlePlayRoom.addUser(userData);
                 getCharacterInfo(enemyId, function (err, armdozerData) {
+                    //TODO : パイロットデータはデータベースから持ってくるようにしたい。
+                    armdozerData.skill = {
+                        pilotPict : 'kyoko.png',
+                        shout : 'やぁぁぁぁて、やるぜ！！    ……なんてね。',
+                        type : 'quickCharge',
+                        battery : 3
+                    };
                     enterRoomByNPC(armdozerData);
                 });
             });
