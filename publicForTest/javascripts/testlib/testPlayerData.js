@@ -33,6 +33,7 @@ function getTestPlayerData(userId){
         },
         skill : {
             pilotPict : 'akane.png',
+            shout : 'まだまだ、勝負はこれからよ。',
             type : 'quickCharge',
             battery : 3
         }
@@ -71,6 +72,7 @@ function getTestPlayerData(userId){
         },
         skill : {
             pilotPict : 'akane.png',
+            shout : 'まだまだ、勝負はこれからよ。',
             type : 'quickCharge',
             battery : 3
         }
@@ -109,6 +111,7 @@ function getTestPlayerData(userId){
         },
         skill : {
             pilotPict : 'iori.png',
+            shout: 'この一撃に、全てを掛ける！！',
             type : 'quickCharge',
             battery : 3
         }
