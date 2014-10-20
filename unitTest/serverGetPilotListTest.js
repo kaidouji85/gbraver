@@ -24,7 +24,7 @@ describe('serverクラスのテスト', function() {
             httpServer : app
         });
         testServer.onGetPlayerData(testPlayerData.getPlayerData);
-        testServer.onGetCharacterInfo(testArmdozerData.getCharacter);
+        testServer.onGetCharacterInfo(testArmdozerData.getArmdozerData);
         testServer.onGetPilotList(testPilotData.getPilotList);
     });
 

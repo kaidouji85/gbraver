@@ -76,6 +76,17 @@ function server(spec, my) {
         getCharacterInfo = fn;
     }
 
+
+    /**
+     * アームドーザリスト取得関数
+     * この関数の実装は外部で行う
+     * @param {Function} callback(err,result)
+     */
+    var getArmdozerList;
+    io.onGetArmdozerList = function(fn){
+        getArmdozerList = fn;
+    }
+
     /**
      * CPU攻撃思ルーチン取得関数
      * この関数の実装は外部で行う
@@ -317,6 +328,12 @@ function server(spec, my) {
             var armdozerId = data.armdozerId;
             getCharacterInfo(armdozerId,function(err,result){
                 socket.emit('successGetCharacterInfo',result);
+            });
+        });
+
+        socket.on('getArmdozerList',function(data){
+            getArmdozerList(function(err,result){
+                socket.emit('successGetArmdozerList',result);
             });
         });
 

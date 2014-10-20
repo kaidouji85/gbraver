@@ -1,3 +1,4 @@
+var ce = require('cloneextend');
 var armdozerList = {};
 
 armdozerList['landozer'] = {
@@ -58,6 +59,18 @@ armdozerList['granBraver'] = {
     }
 };
 
-module.exports.getCharacter = function(armdozerId,fn) {
-    fn(null,armdozerList[armdozerId]);
+
+module.exports.getArmdozerData = function(armdozerId,fn) {
+    var armdozerData = ce.clone(armdozerList[armdozerId]);
+    fn(null,armdozerData);
+}
+
+module.exports.getArmdozerList = function(fn){
+    var list = new Array();
+    var data = null;
+    for(var i in armdozerList){
+        data = ce.clone(armdozerList[i]);
+        list.push(data);
+    }
+    fn(null,list);
 }
