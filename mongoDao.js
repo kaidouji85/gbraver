@@ -40,6 +40,24 @@ function mongoDao(spec, my) {
         });
     };
 
+    that.getArmdozerList = function(fn){
+        MongoClient.connect(url, function(err, db){
+            var characterList = new Array();
+            var characterRecord;
+            var collection = db.collection('armdozers');
+            collection.find().toArray(function(err,result){
+                for(var i in result){
+                    characterRecord = createArmdozerData(result[i]);
+                    characterRecord.armdozerId = result[i].armdozerId;
+                    characterList.push(characterRecord)
+                }
+                db.close();
+                fn(null,characterList);
+            });
+        });
+    }
+
+    //TODO : 削除予定
     that.getCharacterList = function(fn){
         MongoClient.connect(url, function(err, db){
             var characterList = new Array();
@@ -60,6 +78,7 @@ function mongoDao(spec, my) {
         });
     }
 
+    //TODO : 削除予定
     that.getCharacterInfo = function(armdozerId,fn){
         MongoClient.connect(url, function(err, db){
             var characterInfo = null;

@@ -2,7 +2,7 @@ var ce = require('cloneextend');
 var armdozerList = {};
 
 armdozerList['landozer'] = {
-    id : 'landozer',
+    armdozerId : 'landozer',
     name : 'ランドーザ',
     pictName : 'Landozer.PNG',
     hp : 4700,
@@ -32,7 +32,7 @@ armdozerList['landozer'] = {
 };
 
 armdozerList['granBraver'] = {
-    id : 'granBraver',
+    armdozerId : 'granBraver',
     name : 'グランブレイバー',
     pictName : 'GranBraver.PNG',
     hp : 3200,
@@ -64,7 +64,7 @@ armdozerList['granBraver'] = {
 
 module.exports.getArmdozerData = function(armdozerId,fn) {
     var armdozerData = ce.clone(armdozerList[armdozerId]);
-    delete armdozerData.id;
+    delete armdozerData.armdozerId;
     fn(null,armdozerData);
 }
 

@@ -116,3 +116,4 @@ gameServer.onGetAttackRoutine(enemyRoutineDefine.getAttackRoutine);
 gameServer.onGetDefenseRoutine(enemyRoutineDefine.getDefenseRoutine);
 gameServer.onGetPilotList(dao.getPilotList);
 gameServer.onSetPilotId(dao.setPilotId);
+gameServer.onGetArmdozerList(dao.getArmdozerList);

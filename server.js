@@ -55,6 +55,7 @@ function server(spec, my) {
         setArmdozerId = fn;
     };
 
+    //TODO : 削除予定
     /**
      * アームドーザリスト取得関数
      * この関数の実装は外部で行う
@@ -65,6 +66,7 @@ function server(spec, my) {
         getCharacterList = fn;
     }
 
+    //TODO : 削除予定
     /**
      * アームドーザ情報取得関数
      * この関数の実装は外部で行う
@@ -212,7 +214,7 @@ function server(spec, my) {
 
             getPlayerData(socket.gbraverInfo.userId, function(err, userData) {
                 socket.gbraverInfo.singlePlayRoom.addUser(userData);
-                getCharacterInfo(enemyId, function (err, armdozerData) {
+                getCharacterInfo(enemyId, function (err, armdozerData) { //TODO : onGetArmdozerDataと置き換える
                     //TODO : パイロットデータはデータベースから持ってくるようにしたい。
                     armdozerData.skill = {
                         pilotPict : 'kyoko.png',
@@ -318,12 +320,14 @@ function server(spec, my) {
             });
         });
 
+        //TODO : 削除予定
         socket.on('getCharacterList', function(){
             getCharacterList(function(err,data){
                 socket.emit('successGetCharacterList',data);
             });
         });
 
+        //TODO : 削除予定
         socket.on('getCharacterInfo',function(data){
             var armdozerId = data.armdozerId;
             getCharacterInfo(armdozerId,function(err,result){
