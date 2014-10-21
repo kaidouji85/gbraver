@@ -37,6 +37,7 @@ describe('serverクラスのテスト', function() {
             client.once('successGetArmdozerList',function(data){
                 var expect = [
                     {
+                        id : 'landozer',
                         name : 'ランドーザ',
                         pictName : 'Landozer.PNG',
                         hp : 4700,
@@ -65,6 +66,7 @@ describe('serverクラスのテスト', function() {
                         }
                     },
                     {
+                        id : 'granBraver',
                         name : 'グランブレイバー',
                         pictName : 'GranBraver.PNG',
                         hp : 3200,
