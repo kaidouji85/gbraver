@@ -99,20 +99,20 @@ if('development' == app.get('env')){
 }
 
 //http server
-var server = app.listen(app.get('port'), function(){
+var httpServer = app.listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
 });
 
 //socket.io server
-var wsServer = require('./server.js');
-var WsServer = wsServer({
-    httpServer : server
+var server = require('./server.js');
+var gameServer = server({
+    httpServer : httpServer
 });
-WsServer.onGetPlayerData(dao.getPlayerData);
-WsServer.onSetArmdozerId(dao.setArmdozerId);
-WsServer.onGetCharacterList(dao.getCharacterList);
-WsServer.onGetCharacterInfo(dao.getCharacterInfo);
-WsServer.onGetAttackRoutine(enemyRoutineDefine.getAttackRoutine);
-WsServer.onGetDefenseRoutine(enemyRoutineDefine.getDefenseRoutine);
-WsServer.onGetPilotList(dao.getPilotList);
-WsServer.onSetPilotId(dao.setPilotId);
+gameServer.onGetPlayerData(dao.getPlayerData);
+gameServer.onSetArmdozerId(dao.setArmdozerId);
+gameServer.onGetCharacterList(dao.getCharacterList);
+gameServer.onGetCharacterInfo(dao.getCharacterInfo);
+gameServer.onGetAttackRoutine(enemyRoutineDefine.getAttackRoutine);
+gameServer.onGetDefenseRoutine(enemyRoutineDefine.getDefenseRoutine);
+gameServer.onGetPilotList(dao.getPilotList);
+gameServer.onSetPilotId(dao.setPilotId);
