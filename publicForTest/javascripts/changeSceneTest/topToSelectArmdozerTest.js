@@ -1,7 +1,7 @@
 enchant();
-window.onload = topToRoomSelect;
+window.onload = doTest;
 
-function topToRoomSelect(){
+function doTest(){
     var assert = chai.assert;
     var Game;
     var pilotList = getPilotList();
@@ -12,22 +12,23 @@ function topToRoomSelect(){
             userId : 'test001@gmail.com',
             armdozerPict : 'GranBraver.PNG',
             pilotPict : 'kyoko.png',
-            pilotList : pilotList
+            pilotList : pilotList,
+            armdozerList : getArmdozerList()
         });
         Game.start();
         Game.onload = function(){
             Game.changeTopScene();
-            pushSelectPilotButton();
+            pushSelectArmdozerButton();
         };
     }
 
-    function pushSelectPilotButton(){
+    function pushSelectArmdozerButton(){
         Game.onChangeScene(assertOfChangeScene);
-        touch(Game.topScene.selectPilotButton);
+        touch(Game.topScene.selectArmdozerButton);
     }
 
     function assertOfChangeScene(scene) {
-        assert.equal(scene,'selectPilot','パイロット選択シーンに遷移する');
+        assert.equal(scene,'selectArmdozer','パイロット選択シーンに遷移する');
         finishTest();
     }
 }

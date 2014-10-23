@@ -12,17 +12,18 @@ function doTest(){
             userId : 'test001@gmail.com',
             armdozerPict : 'GranBraver.PNG',
             pilotPict : 'kyoko.png',
-            pilotList : pilotList
+            pilotList : pilotList,
+            armdozerList : getArmdozerList()
         });
         Game.start();
         Game.onload = function(){
-            Game.changeSelectPilotScene();
-            pushIoriButton();
+            Game.changeSelectArmdozerScene();
+            pushLandozerButton();
         };
     }
 
-    function pushIoriButton(){
-        touch(Game.currentScene.pilotButtonArray[2]);
+    function pushLandozerButton(){
+        touch(Game.currentScene.armdozerButtonArray[1]);
         Game.currentScene.tl.delay(30).then(pushOkButton);
     }
 
@@ -33,21 +34,21 @@ function doTest(){
 
     function assertOfSendMessage(message,data){
         var expectData = {
-            pilotId : 'iori'
+            armdozerId : 'landozer'
         };
-        assert.equal(message,'setPilot','サーバ送信メッセージが正しい');
+        assert.equal(message,'setArmdozer','サーバ送信メッセージが正しい');
         assert.deepEqual(data,expectData,'サーバ送信データが正しい');
         Game.currentScene.tl.delay(30).then(emitServeResp);
     }
 
     function emitServeResp(){
         Game.onChangeScene(assertOfChangeScene);
-        Game.emitServerResp('successSetPilot',true);
+        Game.emitServerResp('successSetArmdozer',true);
     }
 
     function assertOfChangeScene(scene){
         assert.equal(scene,'top','トップシーンに遷移する');
-        assert.equal(Game.getPilotPict(),'iori.png','パイロット画像名が正しい');
+        assert.equal(Game.getArmdozerPict(),'Landozer.PNG','選択画像が変わる');
         finishTest();
     }
 

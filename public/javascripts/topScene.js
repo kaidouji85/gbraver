@@ -5,23 +5,23 @@ function topScene(spec,my){
 
     that.background = {};
     that.battleRoomButton = {};
-    that.setArmdpzerButton = {};
+    that.selectArmdozerButton = {};
     that.mesWindow = {};
     that.selectArmdozerSprite = {};
     that.singlePlayButton = {};
     that.selectPilotButton = {};
     that.tile = {};
     that.pilotSprite = {};
-    that.onPushSetArmdozer = onPushSetArmdozer;
     that.onPushBattleRoom = onPushBattleRoom;
     that.onPushSinglePlay = onPushSinglePlay;
     that.onPushSelectPilotButton = onPushSelectPilotButton;
+    that.onPushSelectArmdozerButton = onPushSelectArmdozerButton;
     
     var core = enchant.Core.instance;
-    var emitPushSetArmdozer = function(){};
     var emitPushBattleRoom = function(){};
     var emitPushSinglePlay = function(){};
     var emitPushSelectPilotButton = function(){};
+    var emitPushSelectArmdozerButton = function(){};
     
     initSprite();
     function initSprite(){
@@ -56,7 +56,7 @@ function topScene(spec,my){
         that.singlePlayButton.y = 300;
         that.singlePlayButton.addEventListener(Event.TOUCH_END,function(){
             that.battleRoomButton.setVisible(false);
-            that.setArmdpzerButton.setVisible(false);
+            that.selectArmdozerButton.setVisible(false);
             that.singlePlayButton.setVisible(false);
             that.selectPilotButton.setVisible(false);
             that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
@@ -75,7 +75,7 @@ function topScene(spec,my){
         that.battleRoomButton.y = 300;
         that.battleRoomButton.addEventListener(Event.TOUCH_END,function(e){
             that.battleRoomButton.setVisible(false);
-            that.setArmdpzerButton.setVisible(false);
+            that.selectArmdozerButton.setVisible(false);
             that.singlePlayButton.setVisible(false);
             that.selectPilotButton.setVisible(false);
             that.mesWindow.setText(core.MESSAGE_GET_ROOMINFO);
@@ -85,23 +85,17 @@ function topScene(spec,my){
         that.addChild(that.battleRoomButton);
 
         //アームドーザ選択ボタン
-        that.setArmdpzerButton = pictButton({
+        that.selectArmdozerButton = pictButton({
             text : 'アームドーザ選択',
             pict : core.assets[core.PICT_WINDOW],
             subPict : core.assets[core.PICT_ACTIVE_WINDOW]
         });
-        that.setArmdpzerButton.x = 8;
-        that.setArmdpzerButton.y = 364;
-        that.setArmdpzerButton.addEventListener(Event.TOUCH_END,function(e){
-            that.battleRoomButton.setVisible(false);
-            that.setArmdpzerButton.setVisible(false);
-            that.singlePlayButton.setVisible(false);
-            that.selectPilotButton.setVisible(false);
-            that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
-            that.mesWindow.setVisible(true);
-            emitPushSetArmdozer();
+        that.selectArmdozerButton.x = 8;
+        that.selectArmdozerButton.y = 364;
+        that.selectArmdozerButton.addEventListener(Event.TOUCH_END,function(e){
+            emitPushSelectArmdozerButton();
         });
-        that.addChild(that.setArmdpzerButton);
+        that.addChild(that.selectArmdozerButton);
 
         //パイロット選択ボタン
         that.selectPilotButton = pictButton({
@@ -132,10 +126,6 @@ function topScene(spec,my){
         that.mesWindow.setVisible(false);
         that.addChild(that.mesWindow);
     }
-    
-    function onPushSetArmdozer(fn){
-        emitPushSetArmdozer = fn;
-    }
 
     function onPushBattleRoom(fn){
         emitPushBattleRoom = fn;
@@ -149,13 +139,8 @@ function topScene(spec,my){
         emitPushSelectPilotButton = fn;
     }
 
-    //TODO : パイロットセレクトシーンにある同名関数と共通化したい
-    function createFaceIcon(image) {
-        var widthMargin = 64;
-        var size = 128;
-        var faceIcon = new Surface(80,80);
-        faceIcon.draw(image,widthMargin,0,size,size,6,6,68,68);
-        return faceIcon;
+    function onPushSelectArmdozerButton(fn){
+        emitPushSelectArmdozerButton = fn;
     }
     
     return that;

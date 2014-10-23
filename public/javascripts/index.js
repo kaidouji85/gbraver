@@ -7,6 +7,7 @@ window.onload = function() {
     var socket = io.connect(location.origin);
     var userId = $("meta[name=userId]").attr('content');
     var armdozerPict;
+    var armdozerList;
     var pilotPict;
     var pilotList;
     var Game;
@@ -30,6 +31,16 @@ window.onload = function() {
 
     function successGetPilotList(data) {
         pilotList = data;
+        getArmdozerList();
+    }
+
+    function getArmdozerList(){
+        socket.emit('getArmdozerList');
+        socket.once('successGetArmdozerList',successGetArmdozerList);
+    }
+
+    function successGetArmdozerList(data){
+        armdozerList = data;
         initGame();
     }
 
@@ -37,6 +48,7 @@ window.onload = function() {
         Game = new game({
             userId : userId,
             armdozerPict : armdozerPict,
+            armdozerList : armdozerList,
             pilotPict : pilotPict,
             pilotList : pilotList
         });

@@ -7,6 +7,7 @@ function game(spec, my) {
     var armdozerPict = spec.armdozerPict;
     var pilotPict = spec.pilotPict;
     var pilotList = spec.pilotList;
+    var armdozerList = spec.armdozerList;
     var emitChangeScene = function(scene){};
     var emitSendMessage = function(message,data){};
 
@@ -49,8 +50,8 @@ function game(spec, my) {
             armdozerPict : armdozerPict,
             pilotPict : pilotPict
         });
-        core.topScene.onPushSetArmdozer(function(){
-            emitSendMessage('getCharacterList',null);
+        core.topScene.onPushSelectArmdozerButton(function(){
+            core.changeSelectArmdozerScene();
         });
         core.topScene.onPushBattleRoom(function(){
             emitSendMessage('getRoomInfo',null);
@@ -115,6 +116,25 @@ function game(spec, my) {
         emitChangeScene('selectPilot');
     }
 
+    core.changeSelectArmdozerScene = function(){
+        var scene = selectArmdozerScene({
+            armdozerList : armdozerList,
+            selectArmdozerId : getArmdozerIdByPictName(armdozerPict)
+        });
+        scene.onPushOkButton(function(armdozerId){
+            var sendData = {
+                armdozerId : armdozerId
+            };
+            armdozerPict = getArmdozerPictByArmdozerId(armdozerId);
+            emitSendMessage('setArmdozer',sendData);
+        });
+        scene.onPushPrevButton(function(){
+            core.changeTopScene();
+        });
+        core.replaceScene(scene);
+        emitChangeScene('selectArmdozer');
+    }
+
     core.onChangeScene = function(fn){
         emitChangeScene = fn;
     };
@@ -126,7 +146,7 @@ function game(spec, my) {
     core.emitServerResp = function(message,data){
         switch(message) {
             case 'successSetArmdozer' :
-                emitSendMessage('getCharacterList');
+                core.changeTopScene();
                 break;
             case 'gameStart' :
                 var statusArray = {};
@@ -180,7 +200,7 @@ function game(spec, my) {
     core.getPilotPict = function(){
         return pilotPict;
     }
-    
+
     function changePhase(data){
         var phase = data.phase;
         switch(phase) {
@@ -205,6 +225,22 @@ function game(spec, my) {
             case 'pilotSkill':
                 core.battleScene.doPilotSkill(data);
                 break;
+        }
+    }
+
+    function getArmdozerIdByPictName(pictName){
+        for(var i in armdozerList){
+            if(armdozerList[i].pictName === pictName) {
+                return armdozerList[i].armdozerId;
+            }
+        }
+    }
+
+    function getArmdozerPictByArmdozerId(armdozerId){
+        for(var i in armdozerList){
+            if(armdozerList[i].armdozerId === armdozerId) {
+                return armdozerList[i].pictName;
+            }
         }
     }
 
