@@ -5,7 +5,8 @@ function selectArmdozerScene(spec,my){
     var core = enchant.Core.instance;
     var armdozerList = spec.armdozerList;
     var selectArmdozerId = spec.selectArmdozerId;
-    var emitPushOkButton = function(){};
+    var emitPushOkButton = function(armdozerId){};
+    var emitPushPrevButton = function(){}
     that.background = {};
     that.tile = {};
     that.infoWindow = {};
@@ -125,7 +126,9 @@ function selectArmdozerScene(spec,my){
             pict : core.assets[core.PICT_WINDOW],
             subPict : core.assets[core.PICT_ACTIVE_WINDOW]
         });
-        //that.prevButton.addEventListener(Event.TOUCH_END,prevArmdoerList);
+        that.prevButton.addEventListener(Event.TOUCH_END,function(){
+            emitPushPrevButton();
+        });
         that.prevButton.x = 168;
         that.prevButton.y = 420;
         that.addChild(that.prevButton);
@@ -146,6 +149,10 @@ function selectArmdozerScene(spec,my){
     that.onPushOkButton = function(fn){
         emitPushOkButton = fn;
     };
+
+    that.onPushPrevButton = function(fn){
+        emitPushPrevButton = fn;
+    }
 
     function getArmdozerData(id){
         for(var aid=0; aid<armdozerList.length; aid++){
