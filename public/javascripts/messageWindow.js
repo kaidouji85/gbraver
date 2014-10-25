@@ -5,10 +5,12 @@ function messageWindow(spec,my){
 
     var that = new Group();
     var pict = spec.pict;
+    var width = spec.width || SPRITE_WIDTH;
+    var height = spec.height || SPRITE_HEIGHT;
     var windowSprite = gridWindow({
         pict : pict,
-        width : SPRITE_WIDTH/16,
-        height : SPRITE_HEIGHT/16
+        width : width/16,
+        height : height/16
     });
     var messageLabel = new Label('');
     var visible = true;
@@ -22,8 +24,8 @@ function messageWindow(spec,my){
 
     that.setText = function(text){
         messageLabel.text = text;
-        messageLabel.x = (SPRITE_WIDTH - messageLabel._boundWidth)/2;
-        messageLabel.y = (SPRITE_HEIGHT - messageLabel._boundHeight)/2;
+        messageLabel.x = (width - messageLabel._boundWidth)/2;
+        messageLabel.y = (height - messageLabel._boundHeight)/2;
     }
 
     that.getText = function(){

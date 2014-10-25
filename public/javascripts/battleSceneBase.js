@@ -207,7 +207,8 @@ function battleSceneBase(spec,my){
 
         //メッセージウインドウ
         that.mesWindow = messageWindow({
-            pict : core.assets[core.PICT_WINDOW]
+            pict : core.assets[core.PICT_WINDOW],
+            height :144
         });
         that.mesWindow.x = 0;
         that.mesWindow.y = 336;
