@@ -2,9 +2,9 @@ function ArmdozerSprite(spec,my) {
     var SPRITE_WIDTH = 160;
     var SPRITE_HEIGHT = 160;
     var DEFAULT_X_FOR_DIRECTION_RIGHT = 170;
-    var DEFAULT_Y_FOR_DIRECTION_RIGHT = 110;
+    var DEFAULT_Y_FOR_DIRECTION_RIGHT = 150;
     var DEFAULT_X_FOR_DIRECTION_LEFT = -10;
-    var DEFAULT_Y_FOR_DIRECTION_LEFT = 110;
+    var DEFAULT_Y_FOR_DIRECTION_LEFT = 150;
     var DIRECTION_RIGHT = 'right';
 
     var that = new Sprite(SPRITE_WIDTH,SPRITE_HEIGHT);

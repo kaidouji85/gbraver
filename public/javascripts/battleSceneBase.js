@@ -3,8 +3,8 @@ function battleSceneBase(spec,my){
     var core = enchant.Core.instance;
     var COMMAND_X_1 = 8;
     var COMMAND_X_2 = 168;
-    var COMMAND_Y_1 = 300;
-    var COMMAND_Y_2 = 364;
+    var COMMAND_Y_1 = 350;
+    var COMMAND_Y_2 = 414;
     that.statusArray = $.extend(true, {}, spec.statusArray);
     that.userId = spec.userId;
     that.backgroundColor = "black";
@@ -39,13 +39,10 @@ function battleSceneBase(spec,my){
     initSprite();
     function initSprite() {
         //背景(地面)
-        that.ground = scrollBackGround({
-            pict : core.assets[core.PICT_BG_GROUND],
-            speed : 0,
-            height : 480
-        });
+        that.ground = new Sprite(320,256);
+        that.ground.image = core.assets[core.PICT_BG_GROUND];
         that.ground.x = 0;
-        that.ground.y = 0;
+        that.ground.y = 80;
         that.addChild(that.ground);
 
         for(var uid in that.statusArray){
@@ -59,7 +56,7 @@ function battleSceneBase(spec,my){
 
             //HPメータ
             that.hpMertorArray[uid] = hpMertor();
-            that.hpMertorArray[uid].y = 24;
+            that.hpMertorArray[uid].y = 10;
             that.hpMertorArray[uid].x = uid===that.userId ? 190 : 10;
             that.hpMertorArray[uid].setValue(that.statusArray[uid].hp);
             that.addChild(that.hpMertorArray[uid]);
@@ -72,7 +69,7 @@ function battleSceneBase(spec,my){
                 direction : uid===that.userId ? 'right' : 'left'
             });
             that.activeBarArray[uid].x = uid===that.userId ? 190 : 130;
-            that.activeBarArray[uid].y = 42;
+            that.activeBarArray[uid].y = 30;
             that.addChild(that.activeBarArray[uid]);
 
             //バッテリーメータ
@@ -82,7 +79,7 @@ function battleSceneBase(spec,my){
                 direction : uid===that.userId ? 'right' : 'left'
             });
             that.batteryMertorArray[uid].x = uid===that.userId ? 190 : 10;
-            that.batteryMertorArray[uid].y = 63;
+            that.batteryMertorArray[uid].y = 50;
             that.batteryMertorArray[uid].setValue(5);
             that.addChild(that.batteryMertorArray[uid]);
         }
@@ -92,7 +89,7 @@ function battleSceneBase(spec,my){
             that.batteryNumberArray[uid] = new Sprite(64,64);
             that.batteryNumberArray[uid].image = core.assets[core.PICT_BATTERY_NUMBER];
             that.batteryNumberArray[uid].x = uid===that.userId ? 226 : 30;
-            that.batteryNumberArray[uid].y = 150;
+            that.batteryNumberArray[uid].y = 190;
             that.batteryNumberArray[uid].visible = false;
             that.addChild(that.batteryNumberArray[uid]);
 
@@ -118,7 +115,7 @@ function battleSceneBase(spec,my){
                 pict : core.assets[core.PICT_HIT_EFFECT]
             });
             that.hitEffect[uid].x = uid===that.userId ? 128 : -64;
-            that.hitEffect[uid].y = 56;
+            that.hitEffect[uid].y = 96;
             that.addChild(that.hitEffect[uid]);
 
             //パイロット
@@ -213,7 +210,7 @@ function battleSceneBase(spec,my){
             pict : core.assets[core.PICT_WINDOW]
         });
         that.mesWindow.x = 0;
-        that.mesWindow.y = COMMAND_Y_1;
+        that.mesWindow.y = 336;
         that.mesWindow.setVisible(false);
         that.addChild(that.mesWindow);
     }

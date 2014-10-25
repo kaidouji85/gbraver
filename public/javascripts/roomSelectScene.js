@@ -27,7 +27,7 @@ function roomSelectScene(spec,my){
     function initSprite(){
         //背景
         that.background = new Sprite(core.SYSTEM_BG_WIDTH,core.SYSTEM_BG_HEIGHT);
-        that.background.image = core.assets[core.PICT_BG_GROUND];
+        that.background.image = core.assets[core.PICT_BG_GROUND2];
         that.addChild(that.background);
 
         //入室ボタン

@@ -11,6 +11,7 @@ function gameBase(spec,my){
     core.PICT_DAMAGE = core.PICT_PREFIX+'damage.png';
     core.PICT_HIT_TEXT = core.PICT_PREFIX+'hitText.png';
     core.PICT_BG_GROUND = core.PICT_PREFIX+'bgGround.png';
+    core.PICT_BG_GROUND2 = core.PICT_PREFIX+'bgGround2.png';
     core.PICT_WINDOW = core.PICT_PREFIX+'window.png';
     core.PICT_ACTIVE_WINDOW = core.PICT_PREFIX+'activeWindow.png';
     core.WAIT_TIME_ACTIVE_RESET = 30;
@@ -58,6 +59,7 @@ function gameBase(spec,my){
         core.preload(core.PICT_DAMAGE);
         core.preload(core.PICT_HIT_TEXT);
         core.preload(core.PICT_BG_GROUND);
+        core.preload(core.PICT_BG_GROUND2);
         core.preload(core.PICT_WINDOW);
         core.preload(core.PICT_ACTIVE_WINDOW);
     }
