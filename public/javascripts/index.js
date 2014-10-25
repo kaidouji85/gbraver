@@ -102,6 +102,12 @@ window.onload = function() {
             socket.on('successSetPilot',function(data){
                 Game.emitServerResp('successSetPilot',data);
             });
+
+            socket.on('reconnecting',function(){
+                console.log('reconnecting');
+                window.location = location.origin;
+            });
+
         };
     }
 };
