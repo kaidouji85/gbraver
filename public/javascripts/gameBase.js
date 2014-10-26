@@ -26,7 +26,7 @@ function gameBase(spec,my){
     core.ATACK_GUARD = 3;
     core.ATACK_CRITICAL = 4;
     core.SYSTEM_BG_WIDTH = 320;
-    core.SYSTEM_BG_HEIGHT = 480;
+    core.SYSTEM_BG_HEIGHT = 288;
     core.BUTTON_WIDTH = 96;
     core.BUTTON_HEIGHT = 24;
     core.MESSAGE_WAIT_COMMUNICATE = '通信待機中';

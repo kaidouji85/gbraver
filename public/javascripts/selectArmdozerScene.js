@@ -7,6 +7,8 @@ function selectArmdozerScene(spec,my){
     var selectArmdozerId = spec.selectArmdozerId;
     var emitPushOkButton = function(armdozerId){};
     var emitPushPrevButton = function(){}
+
+    that.backgroundColor = "black";
     that.background = {};
     that.tile = {};
     that.infoWindow = {};

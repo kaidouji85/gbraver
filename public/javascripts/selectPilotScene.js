@@ -9,6 +9,7 @@ function selectPilotScene(spec,my) {
     var emitPushButton = function(){};
     var emitPushOkButton = function(pilotId,pilotPict){};
 
+    that.backgroundColor = "black";
     that.background = {};
     that.tile = {};
     that.prevButton = {};
@@ -27,7 +28,7 @@ function selectPilotScene(spec,my) {
         //選択中のパイロット画像
         that.selectPilotSprite = new Sprite(256,256);
         that.selectPilotSprite.x = 32;
-        that.selectPilotSprite.y = 40;
+        that.selectPilotSprite.y = 32;
         that.selectPilotSprite.image = core.assets[core.PICT_PREFIX+pilotPict];
         that.addChild(that.selectPilotSprite);
 

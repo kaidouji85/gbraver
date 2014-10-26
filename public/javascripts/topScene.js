@@ -3,6 +3,7 @@ function topScene(spec,my){
     var armdozerPict = spec.armdozerPict;
     var pilotPict = spec.pilotPict;
 
+    that.backgroundColor = "black";
     that.background = {};
     that.battleRoomButton = {};
     that.selectArmdozerButton = {};
