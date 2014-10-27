@@ -41,11 +41,14 @@ function mongoDao(spec, my) {
     };
 
     that.getArmdozerList = function(fn){
+        console.log(getTime()+' start');//test
         MongoClient.connect(url, function(err, db){
+            console.log(getTime()+' connect');//test
             var characterList = new Array();
             var characterRecord;
             var collection = db.collection('armdozers');
             collection.find().toArray(function(err,result){
+                console.log(getTime()+' find');//test
                 for(var i in result){
                     characterRecord = createArmdozerData(result[i]);
                     characterRecord.armdozerId = result[i].armdozerId;
@@ -53,6 +56,7 @@ function mongoDao(spec, my) {
                 }
                 db.close();
                 fn(null,characterList);
+                console.log(getTime()+' end');//test
             });
         });
     }
@@ -252,6 +256,12 @@ function mongoDao(spec, my) {
             battery : data.battery
         };
         return pilotData;
+    }
+
+    //fo debug
+    function getTime(){
+        var time = new Date();
+        return time.getHours()+':'+time.getMinutes()+':'+time.getSeconds()+':'+time.getMilliseconds();
     }
 
     return that;
