@@ -120,6 +120,6 @@ window.onload = function() {
 
     function getTime(){
         var time = new Date();
-        return time.getHours()+':'+time.getMinutes()+':'+time.getSeconds();
+        return time.getHours()+':'+time.getMinutes()+':'+time.getSeconds()+':'+time.getMilliseconds();
     }
 };
