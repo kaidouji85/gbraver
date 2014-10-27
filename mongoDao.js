@@ -41,7 +41,7 @@ function mongoDao(spec, my) {
     };
 
     that.getArmdozerList = function(fn){
-        console.log(getTime()+' start');//test
+        console.log(getTime()+' start getArmdozerList');//test
         MongoClient.connect(url, function(err, db){
             console.log(getTime()+' connect');//test
             var characterList = new Array();
@@ -56,7 +56,7 @@ function mongoDao(spec, my) {
                 }
                 db.close();
                 fn(null,characterList);
-                console.log(getTime()+' end');//test
+                console.log(getTime()+' end getArmdozerList');//test
             });
         });
     }

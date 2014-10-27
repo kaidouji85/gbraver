@@ -23,20 +23,8 @@ window.onload = function() {
         console.log(getTime()+' successAuth');//test
         armdozerPict = data.armdozerPict;
         pilotPict = data.pilotPict;
-        getPilotList();
-    });
-
-    function getPilotList(){
-        console.log(getTime()+' getPilotList');//test
-        socket.emit('getPilotList');
-        socket.once('successGetPilotList',successGetPilotList);
-    }
-
-    function successGetPilotList(data) {
-        console.log(getTime()+' successGetPilotList');//test
-        pilotList = data;
         getArmdozerList();
-    }
+    });
 
     function getArmdozerList(){
         console.log(getTime()+' getArmdozerList');//test
@@ -47,6 +35,18 @@ window.onload = function() {
     function successGetArmdozerList(data){
         console.log(getTime()+' successGetArmdozerList');//test
         armdozerList = data;
+        getPilotList();
+    }
+
+    function getPilotList(){
+        console.log(getTime()+' getPilotList');//test
+        socket.emit('getPilotList');
+        socket.once('successGetPilotList',successGetPilotList);
+    }
+
+    function successGetPilotList(data) {
+        console.log(getTime()+' successGetPilotList');//test
+        pilotList = data;
         initGame();
     }
 
