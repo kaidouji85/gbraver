@@ -41,22 +41,10 @@ function mongoDao(spec, my) {
     };
 
     that.getArmdozerList = function(fn){
-        console.log(getTime()+' start getArmdozerList');//test
         MongoClient.connect(url, function(err, db){
-            console.log(getTime()+' connect');//test
-            var characterList = new Array();
-            var characterRecord;
-            var collection = db.collection('armdozers');
-            collection.find().toArray(function(err,result){
-                console.log(getTime()+' find');//test
-                for(var i in result){
-                    characterRecord = createArmdozerData(result[i]);
-                    characterRecord.armdozerId = result[i].armdozerId;
-                    characterList.push(characterRecord)
-                }
+            getArmdozerList(db,function(err,armdozerList){
                 db.close();
-                fn(null,characterList);
-                console.log(getTime()+' end getArmdozerList');//test
+                fn(null,armdozerList);
             });
         });
     }
@@ -97,14 +85,7 @@ function mongoDao(spec, my) {
 
     that.getPilotList = function(fn){
         MongoClient.connect(url, function(err, db){
-            var pilotList = new Array();
-            var pilot = null;
-            var collection = db.collection('pilots');
-            collection.find({}).toArray(function(err,result){
-                for(var i in result){
-                    pilot = createPilotData(result[i]);
-                    pilotList.push(pilot);
-                }
+            getPilotList(db,function(err,pilotList){
                 db.close();
                 fn(null,pilotList);
             });
@@ -127,6 +108,21 @@ function mongoDao(spec, my) {
                 db.close();
                 var result = err===null ? true : false;
                 fn(err,result);
+            });
+        });
+    }
+
+    that.getMasterData = function(fn){
+        MongoClient.connect(url, function(err, db){
+            getPilotList(db,function(err,pilotList){
+                getArmdozerList(db,function(err,armdozerList){
+                    var data = {
+                        pilotList : pilotList,
+                        armdozerList :armdozerList
+                    };
+                    db.close();
+                    fn(null,data);
+                })
             });
         });
     }
@@ -211,6 +207,33 @@ function mongoDao(spec, my) {
         };
         statusData.skill = skill;
         return statusData;
+    }
+
+    function getPilotList(db,fn){
+        var pilotList = new Array();
+        var pilot = null;
+        var collection = db.collection('pilots');
+        collection.find({}).toArray(function(err,result){
+            for(var i in result){
+                pilot = createPilotData(result[i]);
+                pilotList.push(pilot);
+            }
+            fn(null,pilotList);
+        });
+    }
+
+    function getArmdozerList(db,fn){
+        var characterList = new Array();
+        var characterRecord;
+        var collection = db.collection('armdozers');
+        collection.find().toArray(function(err,result){
+            for(var i in result){
+                characterRecord = createArmdozerData(result[i]);
+                characterRecord.armdozerId = result[i].armdozerId;
+                characterList.push(characterRecord)
+            }
+            fn(null,characterList);
+        });
     }
 
     function createArmdozerData(armdozer){

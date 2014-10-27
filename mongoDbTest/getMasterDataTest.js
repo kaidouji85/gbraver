@@ -3,7 +3,7 @@ var mongoDao = require('../mongoDao.js');
 var insertData = require('./testData.js').insertData;
 var MongoClient = require('mongodb').MongoClient;
 
-describe('Mongo DBからアームドーザリストを取得する', function() {
+describe('Mongo DBからマスタデータを取得', function() {
     const mongoUrl = 'mongodb://localhost/gbraverTest';
 
     before(function(done) {
@@ -12,12 +12,15 @@ describe('Mongo DBからアームドーザリストを取得する', function() 
         });
     });
 
-    it('キャラクターリストを取得することができる',function(done){
+    it('マスターデータが取得できる', function(done) {
         var dao = mongoDao({
             url : mongoUrl
         });
-        dao.getArmdozerList(function(err,armdozerList){
-            var expect = [
+        dao.getMasterData(assertOfMasterData);
+
+        function assertOfMasterData(err, masterData) {
+            var expect = {};
+            expect.armdozerList = [
                 {
                     armdozerId : 'granBraver',
                     name : 'グランブレイバー',
@@ -77,8 +80,36 @@ describe('Mongo DBからアームドーザリストを取得する', function() 
                     }
                 }
             ];
-            assert.deepEqual(armdozerList,expect,'アームドーザリストが正しく取得できる');
+            expect.pilotList = [
+                {
+                    id : 'kyoko',
+                    name : '恭子',
+                    pict : 'kyoko.png',
+                    shout : 'やぁぁぁぁて、やるぜ！！    ……なんてね。',
+                    type : 'quickCharge',
+                    battery : 3
+                },
+                {
+                    id : 'akane',
+                    name : '茜',
+                    pict : 'akane.png',
+                    shout : 'まだまだ、勝負はこれからよ。',
+                    type : 'quickCharge',
+                    battery : 3
+                },
+                {
+                    id : 'iori',
+                    name: '伊織',
+                    pict: 'iori.png',
+                    shout: 'この一撃に、全てを掛ける！！',
+                    type: 'quickCharge',
+                    battery: 3
+                }
+            ];
+            assert.equal(err,null,'エラーが出ない');
+            assert.deepEqual(masterData, expect, 'マスターデータが取得できた');
             done();
-        });
+        }
+
     });
 });
