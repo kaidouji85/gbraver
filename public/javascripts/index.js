@@ -16,35 +16,42 @@ window.onload = function() {
     socket.emit('auth', {
         userId : userId
     });
+    console.log(getTime()+' emit auth');//test
 
     //ユーザ認証成功
     socket.on('successAuth', function(data) {
+        console.log(getTime()+' successAuth');//test
         armdozerPict = data.armdozerPict;
         pilotPict = data.pilotPict;
         getPilotList();
     });
 
     function getPilotList(){
+        console.log(getTime()+' getPilotList');//test
         socket.emit('getPilotList');
         socket.once('successGetPilotList',successGetPilotList);
     }
 
     function successGetPilotList(data) {
+        console.log(getTime()+' successGetPilotList');//test
         pilotList = data;
         getArmdozerList();
     }
 
     function getArmdozerList(){
+        console.log(getTime()+' getArmdozerList');//test
         socket.emit('getArmdozerList');
         socket.once('successGetArmdozerList',successGetArmdozerList);
     }
 
     function successGetArmdozerList(data){
+        console.log(getTime()+' successGetArmdozerList');//test
         armdozerList = data;
         initGame();
     }
 
     function initGame(){
+        console.log(getTime()+' initGame');//test
         Game = new game({
             userId : userId,
             armdozerPict : armdozerPict,
@@ -109,5 +116,10 @@ window.onload = function() {
             });
 
         };
+    }
+
+    function getTime(){
+        var time = new Date();
+        return time.getHours()+':'+time.getMinutes()+':'+time.getSeconds();
     }
 };
