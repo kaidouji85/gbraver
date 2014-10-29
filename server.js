@@ -133,6 +133,16 @@ function server(spec, my) {
         setPilotId = fn;
     }
 
+    /**
+     * マスタデータ取得関数
+     * この関数の実装は外部で行う
+     * @param {Function} callback(err,masterData)
+     */
+    var getMasterData;
+    io.onGetMasterData = function(fn){
+        getMasterData = fn;
+    }
+
     io.sockets.on('connection', function(socket) {
         socket.gbraverInfo = {
             userId : null,
@@ -366,6 +376,12 @@ function server(spec, my) {
             var pilotId = data.pilotId;
             setPilotId(userId,pilotId,function(err,result){
                 socket.emit('successSetPilot',true);
+            });
+        });
+
+        socket.on('getMasterData',function(data){
+            getMasterData(function(err,data){
+                socket.emit('successGetMasterData',data);
             });
         });
     });

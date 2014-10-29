@@ -23,30 +23,17 @@ window.onload = function() {
         console.log(getTime()+' successAuth');//test
         armdozerPict = data.armdozerPict;
         pilotPict = data.pilotPict;
-        getArmdozerList();
+        getMasterData();
     });
 
-    function getArmdozerList(){
-        console.log(getTime()+' getArmdozerList');//test
-        socket.emit('getArmdozerList');
-        socket.once('successGetArmdozerList',successGetArmdozerList);
+    function getMasterData(){
+        socket.emit('getMasterData');
+        socket.once('successGetMasterData',successGetMasterData);
     }
 
-    function successGetArmdozerList(data){
-        console.log(getTime()+' successGetArmdozerList');//test
-        armdozerList = data;
-        getPilotList();
-    }
-
-    function getPilotList(){
-        console.log(getTime()+' getPilotList');//test
-        socket.emit('getPilotList');
-        socket.once('successGetPilotList',successGetPilotList);
-    }
-
-    function successGetPilotList(data) {
-        console.log(getTime()+' successGetPilotList');//test
-        pilotList = data;
+    function successGetMasterData(masterData){
+        pilotList = masterData.pilotList;
+        armdozerList = masterData.armdozerList;
         initGame();
     }
 
