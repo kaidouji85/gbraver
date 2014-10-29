@@ -74,7 +74,6 @@ describe('serverクラスのテスト', function() {
             }
 
             function pilotSkillPhase(data) {
-                console.log(data);//test
                 client.emit('command',{
                     method : 'ok'
                 });

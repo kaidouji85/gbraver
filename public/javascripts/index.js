@@ -16,31 +16,31 @@ window.onload = function() {
     socket.emit('auth', {
         userId : userId
     });
-    console.log(getTime()+' emit auth');//test
+    //console.log(getTime()+' emit auth');//test
 
     //ユーザ認証成功
     socket.on('successAuth', function(data) {
-        console.log(getTime()+' successAuth');//test
+        //console.log(getTime()+' successAuth');//test
         armdozerPict = data.armdozerPict;
         pilotPict = data.pilotPict;
         getMasterData();
     });
 
     function getMasterData(){
-        console.log(getTime()+' getMasterData');//test
+        //console.log(getTime()+' getMasterData');//test
         socket.emit('getMasterData');
         socket.once('successGetMasterData',successGetMasterData);
     }
 
     function successGetMasterData(masterData){
-        console.log(getTime()+' successGetMasterData');//test
+        //console.log(getTime()+' successGetMasterData');//test
         pilotList = masterData.pilotList;
         armdozerList = masterData.armdozerList;
         initGame();
     }
 
     function initGame(){
-        console.log(getTime()+' initGame');//test
+        //console.log(getTime()+' initGame');//test
         Game = new game({
             userId : userId,
             armdozerPict : armdozerPict,
