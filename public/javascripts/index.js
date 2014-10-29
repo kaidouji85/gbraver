@@ -27,11 +27,13 @@ window.onload = function() {
     });
 
     function getMasterData(){
+        console.log(getTime()+' getMasterData');//test
         socket.emit('getMasterData');
         socket.once('successGetMasterData',successGetMasterData);
     }
 
     function successGetMasterData(masterData){
+        console.log(getTime()+' successGetMasterData');//test
         pilotList = masterData.pilotList;
         armdozerList = masterData.armdozerList;
         initGame();
