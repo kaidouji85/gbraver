@@ -199,14 +199,11 @@ function mongoDao(spec, my) {
 
     function createStatusData(armdozer,pilot) {
         var statusData = createArmdozerData(armdozer);
-        //TODO : skillをDBから取得するようにする
-        var skill = {
-            pilotPict : pilot.pict,
-            shout : pilot.shout,
-            type : 'quickCharge',
-            battery : 3
-        };
-        statusData.skill = skill;
+        pilot.pilotPict = pilot.pict;
+        delete pilot.id;
+        delete pilot.name;
+        delete pilot.pict;
+        statusData.skill = pilot;
         return statusData;
     }
 

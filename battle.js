@@ -19,9 +19,12 @@ var battle = function(spec,my){
     that.ATACK_CRITICAL = 4;
     that.MAX_BATTERY = 5;
 
-    for(var uid in statusArray){
-        overHeatFlagArray[uid] = false;
-        maxHpArray[uid] = statusArray[uid].hp;
+    init();
+    function init() {
+        for(var uid in statusArray){
+            overHeatFlagArray[uid] = false;
+            maxHpArray[uid] = statusArray[uid].hp;
+        }
     }
     
     that.getStatusArray = function() {
@@ -165,9 +168,9 @@ var battle = function(spec,my){
                 statusArray[atackUserId].battery = that.MAX_BATTERY;
             }
         } else if(type === 'recoverHp') {
-            statusArray[atackUserId].hp += maxHpArray[uid] * statusArray[atackUserId].skill.value;
-            if(statusArray[atackUserId].hp > maxHpArray[uid]){
-                statusArray[atackUserId].hp = maxHpArray[uid];
+            statusArray[atackUserId].hp += maxHpArray[atackUserId] * statusArray[atackUserId].skill.value;
+            if(statusArray[atackUserId].hp > maxHpArray[atackUserId]){
+                statusArray[atackUserId].hp = maxHpArray[atackUserId];
             }
         }
     }
