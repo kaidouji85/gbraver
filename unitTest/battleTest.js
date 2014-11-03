@@ -971,7 +971,7 @@ describe('Battleクラスのテスト', function() {
                 speed : 150,
                 active : 0,
                 battery : 5,
-                pilotSKillPoint : 1,
+                skillPoint : 1,
                 weapons : {
                     1 : {name:'ブレイクパンチ',power:1200},
                     2 : {name:'ブレイクパンチ',power:1700},
@@ -1041,5 +1041,66 @@ describe('Battleクラスのテスト', function() {
             assert.equal(statusArray['test001@gmail.com'].skillPoint,0,'test001@gmail.comのスキルポイントが-1される。');
             assert.equal(statusArray['test002@gmail.com'].battery,5,'test002@gmail.comのバッテリーが回復しない。');
         });
+    });
+
+    it('HP回復スキルで最大HPの50%分回復する',function(){
+        var testData = {};
+        testData['test001@gmail.com'] = {
+            name : 'グランブレイバー',
+            pictName : 'GranBraver.PNG',
+            hp : 3000,
+            speed : 110,
+            active : 0,
+            battery : 5,
+            skillPoint : 1,
+            weapons : {
+                1 : {name : 'バスターナックル',power : 2200},
+                2 : {name : 'バスターナックル',power : 2200},
+                3 : {name : 'バスターナックル',power : 2200},
+                4 : {name : 'バスターナックル',power : 2200},
+                5 : {name : 'バスターナックル',power : 2200}
+            }
+        };
+        testData['test002@gmail.com'] = {
+            name : 'ランドーザ',
+            pictName : 'Landozer.PNG',
+            hp : 3500,
+            speed : 100,
+            active : 0,
+            battery : 5,
+            skillPoint : 1,
+            weapons : {
+                1 : {name:'ブレイクパンチ',power:1700},
+                2 : {name:'ブレイクパンチ',power:1700},
+                3 : {name:'ブレイクパンチ',power:1700},
+                4 : {name:'ブレイクパンチ',power:1700},
+                5 : {name:'ブレイクパンチ',power:1700}
+            },
+            skill : {
+                type : 'recoverHp',
+                value : 0.5
+            }
+        };
+
+        var Battle = battle({
+            statusArray : testData
+        });
+
+        //グランブレイバーが2200ダメージを与える
+        Battle.doWaitPhase();
+        Battle.getStatusArray();
+        Battle.atack({
+            atackBattery : 2,
+            defenthBattery : 1
+        });
+
+        //ランドーザがスキルを使いHPを回復
+        Battle.doWaitPhase();
+        Battle.doPilotSkill();
+        Battle.getStatusArray();
+
+        var statusArray = Battle.getStatusArray();
+        assert.equal(statusArray['test002@gmail.com'].hp,3050,'test002@gmail.comのHPが1750回復する。');
+        assert.equal(statusArray['test002@gmail.com'].skillPoint,0,'test002@gmail.comのスキルポイントが-1される。');
     });
 }); 

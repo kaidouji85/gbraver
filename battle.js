@@ -10,6 +10,7 @@ var battle = function(spec,my){
     var statusArray = ce.clone(spec.statusArray);
     var atackUserId = null;
     var overHeatFlagArray = {};
+    var maxHpArray = {};
 
     that.MAX_ACTIVE = 5000;
     that.ATACK_HIT = 1;
@@ -20,6 +21,7 @@ var battle = function(spec,my){
 
     for(var uid in statusArray){
         overHeatFlagArray[uid] = false;
+        maxHpArray[uid] = statusArray[uid].hp;
     }
     
     that.getStatusArray = function() {
@@ -156,12 +158,14 @@ var battle = function(spec,my){
      */
     that.doPilotSkill = function() {
         var type = statusArray[atackUserId].skill.type;
+        statusArray[atackUserId].skillPoint -= 1;
         if(type === 'quickCharge') {
             statusArray[atackUserId].battery += statusArray[atackUserId].skill.battery;
-            statusArray[atackUserId].skillPoint -= 1;
             if(statusArray[atackUserId].battery > that.MAX_BATTERY) {
                 statusArray[atackUserId].battery = that.MAX_BATTERY;
             }
+        } else if(type === 'recoverHp') {
+            statusArray[atackUserId].hp += maxHpArray[uid] * statusArray[atackUserId].skill.value;
         }
     }
     
