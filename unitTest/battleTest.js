@@ -1103,4 +1103,65 @@ describe('Battleクラスのテスト', function() {
         assert.equal(statusArray['test002@gmail.com'].hp,3050,'test002@gmail.comのHPが1750回復する。');
         assert.equal(statusArray['test002@gmail.com'].skillPoint,0,'test002@gmail.comのスキルポイントが-1される。');
     });
+
+    it('HP回復スキルでは最大HP以上は回復しない',function(){
+        var testData = {};
+        testData['test001@gmail.com'] = {
+            name : 'グランブレイバー',
+            pictName : 'GranBraver.PNG',
+            hp : 3000,
+            speed : 110,
+            active : 0,
+            battery : 5,
+            skillPoint : 1,
+            weapons : {
+                1 : {name : 'バスターナックル',power : 1000},
+                2 : {name : 'バスターナックル',power : 1000},
+                3 : {name : 'バスターナックル',power : 1000},
+                4 : {name : 'バスターナックル',power : 1000},
+                5 : {name : 'バスターナックル',power : 1000}
+            }
+        };
+        testData['test002@gmail.com'] = {
+            name : 'ランドーザ',
+            pictName : 'Landozer.PNG',
+            hp : 3500,
+            speed : 100,
+            active : 0,
+            battery : 5,
+            skillPoint : 1,
+            weapons : {
+                1 : {name:'ブレイクパンチ',power:1700},
+                2 : {name:'ブレイクパンチ',power:1700},
+                3 : {name:'ブレイクパンチ',power:1700},
+                4 : {name:'ブレイクパンチ',power:1700},
+                5 : {name:'ブレイクパンチ',power:1700}
+            },
+            skill : {
+                type : 'recoverHp',
+                value : 0.5
+            }
+        };
+
+        var Battle = battle({
+            statusArray : testData
+        });
+
+        //グランブレイバーが1000ダメージを与える
+        Battle.doWaitPhase();
+        Battle.getStatusArray();
+        Battle.atack({
+            atackBattery : 2,
+            defenthBattery : 1
+        });
+
+        //ランドーザがスキルを使いHPを回復
+        Battle.doWaitPhase();
+        Battle.doPilotSkill();
+        Battle.getStatusArray();
+
+        var statusArray = Battle.getStatusArray();
+        assert.equal(statusArray['test002@gmail.com'].hp,3500,'test002@gmail.comは最大HPまでしか回復しない。');
+        assert.equal(statusArray['test002@gmail.com'].skillPoint,0,'test002@gmail.comのスキルポイントが-1される。');
+    });
 }); 

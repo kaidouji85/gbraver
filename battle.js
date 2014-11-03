@@ -166,6 +166,9 @@ var battle = function(spec,my){
             }
         } else if(type === 'recoverHp') {
             statusArray[atackUserId].hp += maxHpArray[uid] * statusArray[atackUserId].skill.value;
+            if(statusArray[atackUserId].hp > maxHpArray[uid]){
+                statusArray[atackUserId].hp = maxHpArray[uid];
+            }
         }
     }
     
