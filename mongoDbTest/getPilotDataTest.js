@@ -23,8 +23,8 @@ describe('パイロットリストを取得することができる',function(){
                 name : '茜',
                 pict : 'akane.png',
                 shout : 'まだまだ、勝負はこれからよ。',
-                type : 'quickCharge',
-                battery : 3
+                type : 'recoverHp',
+                value : 0.5
             };
             assert.deepEqual(data,expect,'パイロットデータが正しい');
             assert.deepEqual(err,null,'errorオブジェクトがnullである');

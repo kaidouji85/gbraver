@@ -106,8 +106,8 @@ db.pilots.insert({
     name : '茜',
     pict : 'akane.png',
     shout : 'まだまだ、勝負はこれからよ。',
-    type : 'quickCharge',
-    battery : 3
+    type : 'recoverHp',
+    value : 0.5
 });
 
 db.pilots.insert({

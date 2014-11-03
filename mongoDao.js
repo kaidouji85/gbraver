@@ -1,4 +1,5 @@
 var MongoClient = require('mongodb').MongoClient;
+var ce = require('cloneextend');
 
 function mongoDao(spec, my) {
     var that = {};
@@ -269,15 +270,8 @@ function mongoDao(spec, my) {
     }
 
     function createPilotData(data){
-        //TODO : スキルに応じてpiotObjectの作り方を変える
-        var pilotData = {
-            id : data.id,
-            name : data.name,
-            pict : data.pict,
-            shout : data.shout,
-            type : data.type,
-            battery : data.battery
-        };
+        var pilotData = ce.clone(data);
+        delete pilotData._id;
         return pilotData;
     }
 
