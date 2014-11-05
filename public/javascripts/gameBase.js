@@ -27,14 +27,14 @@ function gameBase(spec,my){
     core.ATACK_GUARD = 3;
     core.ATACK_CRITICAL = 4;
     core.SYSTEM_BG_WIDTH = 320;
-    core.SYSTEM_BG_HEIGHT = 288;
+    core.SYSTEM_BG_HEIGHT = 480;
     core.BUTTON_WIDTH = 96;
     core.BUTTON_HEIGHT = 24;
     core.MESSAGE_WAIT_COMMUNICATE = '通信待機中';
     core.MESSAGE_WAIT_ENTERROOM = 'プレイヤーの入室待ち';
     core.MESSAGE_WAIT_COMMAND = '対戦相手がコマンドを選択中......';
     core.MESSAGE_GET_ROOMINFO = 'ルーム情報取得中';
-    core.MESSAGE_WINDOW_Y = 300;
+    core.MESSAGE_WINDOW_Y = 196;
 
     core.fps = 40;
     core.battleScene = null;

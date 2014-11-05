@@ -13,6 +13,7 @@ function topScene(spec,my){
     that.selectPilotButton = {};
     that.tile = {};
     that.pilotSprite = {};
+    that.commandWindow = {};
     that.onPushBattleRoom = onPushBattleRoom;
     that.onPushSinglePlay = onPushSinglePlay;
     that.onPushSelectPilotButton = onPushSelectPilotButton;
@@ -30,6 +31,16 @@ function topScene(spec,my){
         that.background = new Sprite(core.SYSTEM_BG_WIDTH,core.SYSTEM_BG_HEIGHT);
         that.background.image = core.assets[core.PICT_BG_GROUND2];
         that.addChild(that.background);
+
+        //コマンドウインドウ
+        that.commandWindow =  gridWindow({
+            pict : core.assets[core.PICT_DARK_WINDOW],
+            width : 20,
+            height : 14
+        });
+        that.commandWindow.x = 0;
+        that.commandWindow.y = 284;
+        that.addChild(that.commandWindow);
 
         //選択中アームドーザ
         that.selectArmdozerSprite = new Sprite(160,160);
