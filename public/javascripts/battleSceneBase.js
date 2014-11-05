@@ -3,8 +3,8 @@ function battleSceneBase(spec,my){
     var core = enchant.Core.instance;
     var COMMAND_X_1 = 8;
     var COMMAND_X_2 = 168;
-    var COMMAND_Y_1 = 350;
-    var COMMAND_Y_2 = 414;
+    var COMMAND_Y_1 = 358;
+    var COMMAND_Y_2 = 422;
     that.statusArray = $.extend(true, {}, spec.statusArray);
     that.userId = spec.userId;
     that.backgroundColor = "black";
@@ -27,6 +27,8 @@ function battleSceneBase(spec,my){
     that.pilotSpriteArray = {};
     that.hitEffect = {};
     that.mesWindow = {};
+    that.mertorWindowArray = {};
+    that.commandWindow = {};
 
     that.refreshMertor = function(statusArray){
         for(var uid in statusArray){
@@ -45,6 +47,16 @@ function battleSceneBase(spec,my){
         that.ground.y = 80;
         that.addChild(that.ground);
 
+        //コマンドウインドウ
+        that.commandWindow =  gridWindow({
+            pict : core.assets[core.PICT_DARK_WINDOW],
+            width : 20,
+            height : 9
+        });
+        that.commandWindow.x = 0;
+        that.commandWindow.y = 336;
+        that.addChild(that.commandWindow);
+
         for(var uid in that.statusArray){
             //キャラクタースプライト
             var spec = {
@@ -53,6 +65,16 @@ function battleSceneBase(spec,my){
             };
             that.charaSpriteArray[uid] = new ArmdozerSprite(spec);
             that.addChild(that.charaSpriteArray[uid]);
+
+            //ウインドウ
+            that.mertorWindowArray[uid] = gridWindow({
+                pict : core.assets[core.PICT_DARK_WINDOW],
+                width : 10,
+                height : 5
+            });
+            that.mertorWindowArray[uid].x = uid===that.userId ? 160 : 0;
+            that.mertorWindowArray[uid].y = 0;
+            that.addChild(that.mertorWindowArray[uid]);
 
             //HPメータ
             that.hpMertorArray[uid] = hpMertor();
@@ -207,7 +229,7 @@ function battleSceneBase(spec,my){
 
         //メッセージウインドウ
         that.mesWindow = messageWindow({
-            pict : core.assets[core.PICT_WINDOW],
+            pict : core.assets[core.PICT_DARK_WINDOW],
             height :144
         });
         that.mesWindow.x = 0;
