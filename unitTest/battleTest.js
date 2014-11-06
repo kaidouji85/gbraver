@@ -1220,4 +1220,126 @@ describe('Battleクラスのテスト', function() {
         assert.equal(statusArray['test002@gmail.com'].active,-5000,'test002@gmail.comのアクティブゲージが-5000になる');
         assert.equal(statusArray['test001@gmail.com'].skillPoint,0,'test001@gmail.comのスキルポイントが-1される。');
     });
+
+    it('2回目攻撃以降はスタン攻撃スキルは無効(1回目に攻撃ミス)',function(){
+        var testData = {};
+        testData['test001@gmail.com'] = {
+            name : 'グランブレイバー',
+            pictName : 'GranBraver.PNG',
+            hp : 3000,
+            speed : 1000,
+            active : 0,
+            battery : 5,
+            skillPoint : 1,
+            weapons : {
+                1 : {name : 'バスターナックル',power : 2200},
+                2 : {name : 'バスターナックル',power : 2200},
+                3 : {name : 'バスターナックル',power : 2200},
+                4 : {name : 'バスターナックル',power : 2200},
+                5 : {name : 'バスターナックル',power : 2200}
+            },
+            skill : {
+                type : 'stunAttack'
+            }
+        };
+        testData['test002@gmail.com'] = {
+            name : 'ランドーザ',
+            pictName : 'Landozer.PNG',
+            hp : 3500,
+            speed : 100,
+            active : 0,
+            battery : 5,
+            skillPoint : 1,
+            weapons : {
+                1 : {name:'ブレイクパンチ',power:1700},
+                2 : {name:'ブレイクパンチ',power:1700},
+                3 : {name:'ブレイクパンチ',power:1700},
+                4 : {name:'ブレイクパンチ',power:1700},
+                5 : {name:'ブレイクパンチ',power:1700}
+            }
+        };
+
+        var Battle = battle({
+            statusArray : testData
+        });
+
+        //グランブレイバーがスタン攻撃スキルを発動
+        Battle.doWaitPhase();
+        Battle.doPilotSkill();
+        Battle.atack({
+            atackBattery : 1,
+            defenthBattery : 2
+        });
+
+        //もう一度グランブレイバーが攻撃
+        Battle.doWaitPhase();
+        Battle.atack({
+            atackBattery : 1,
+            defenthBattery : 1
+        });
+
+        var statusArray = Battle.getStatusArray();
+        assert.equal(statusArray['test002@gmail.com'].active,1000,'test002@gmail.comのアクティブゲージが減らない');
+    });
+
+    it('2回目攻撃以降はスタン攻撃スキルは無効(1回目に攻撃ヒット)',function(){
+        var testData = {};
+        testData['test001@gmail.com'] = {
+            name : 'グランブレイバー',
+            pictName : 'GranBraver.PNG',
+            hp : 3000,
+            speed : 1000,
+            active : 0,
+            battery : 5,
+            skillPoint : 1,
+            weapons : {
+                1 : {name : 'バスターナックル',power : 2200},
+                2 : {name : 'バスターナックル',power : 2200},
+                3 : {name : 'バスターナックル',power : 2200},
+                4 : {name : 'バスターナックル',power : 2200},
+                5 : {name : 'バスターナックル',power : 2200}
+            },
+            skill : {
+                type : 'stunAttack'
+            }
+        };
+        testData['test002@gmail.com'] = {
+            name : 'ランドーザ',
+            pictName : 'Landozer.PNG',
+            hp : 3500,
+            speed : 100,
+            active : 0,
+            battery : 5,
+            skillPoint : 1,
+            weapons : {
+                1 : {name:'ブレイクパンチ',power:1700},
+                2 : {name:'ブレイクパンチ',power:1700},
+                3 : {name:'ブレイクパンチ',power:1700},
+                4 : {name:'ブレイクパンチ',power:1700},
+                5 : {name:'ブレイクパンチ',power:1700}
+            }
+        };
+
+        var Battle = battle({
+            statusArray : testData
+        });
+
+        //グランブレイバーがスタン攻撃スキルを発動
+        Battle.doWaitPhase();
+        Battle.doPilotSkill();
+        Battle.atack({
+            atackBattery : 2,
+            defenthBattery : 1
+        });
+
+        //もう一度グランブレイバーが攻撃
+        Battle.doWaitPhase();
+        Battle.atack({
+            atackBattery : 1,
+            defenthBattery : 1
+        });
+
+        var statusArray = Battle.getStatusArray();
+        assert.equal(statusArray['test002@gmail.com'].active,-4500,'test002@gmail.comのアクティブゲージが減らない');
+    });
 }); 
