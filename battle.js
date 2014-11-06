@@ -11,6 +11,7 @@ var battle = function(spec,my){
     var atackUserId = null;
     var overHeatFlagArray = {};
     var maxHpArray = {};
+    var stunAttackArray = {};
 
     that.MAX_ACTIVE = 5000;
     that.ATACK_HIT = 1;
@@ -24,6 +25,7 @@ var battle = function(spec,my){
         for(var uid in statusArray){
             overHeatFlagArray[uid] = false;
             maxHpArray[uid] = statusArray[uid].hp;
+            stunAttackArray[uid] = false;
         }
     }
     
@@ -102,6 +104,10 @@ var battle = function(spec,my){
         statusArray[atackUserId].active = 0;
         statusArray[defenseUserId].hp -= damage;
         statusArray[defenseUserId].battery -= defenthBattery;
+        if(stunAttackArray[atackUserId] && hit!==that.ATACK_MISS){
+            statusArray[defenseUserId].active = -that.MAX_ACTIVE;
+            stunAttackArray[atackUserId] = false;
+        }
         atackUserId = null;
 
         var ret = {
@@ -172,6 +178,8 @@ var battle = function(spec,my){
             if(statusArray[atackUserId].hp > maxHpArray[atackUserId]){
                 statusArray[atackUserId].hp = maxHpArray[atackUserId];
             }
+        }else if(type === 'stunAttack'){
+            stunAttackArray[atackUserId] = true;
         }
     }
     

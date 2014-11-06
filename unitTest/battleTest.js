@@ -1164,4 +1164,60 @@ describe('Battleクラスのテスト', function() {
         assert.equal(statusArray['test002@gmail.com'].hp,3500,'test002@gmail.comは最大HPまでしか回復しない。');
         assert.equal(statusArray['test002@gmail.com'].skillPoint,0,'test002@gmail.comのスキルポイントが-1される。');
     });
+
+    it('スタンスキルを使い、攻撃ヒット時にアクティブゲージが-5000になる',function(){
+        var testData = {};
+        testData['test001@gmail.com'] = {
+            name : 'グランブレイバー',
+            pictName : 'GranBraver.PNG',
+            hp : 3000,
+            speed : 1000,
+            active : 0,
+            battery : 5,
+            skillPoint : 1,
+            weapons : {
+                1 : {name : 'バスターナックル',power : 2200},
+                2 : {name : 'バスターナックル',power : 2200},
+                3 : {name : 'バスターナックル',power : 2200},
+                4 : {name : 'バスターナックル',power : 2200},
+                5 : {name : 'バスターナックル',power : 2200}
+            },
+            skill : {
+                type : 'stunAttack'
+            }
+        };
+        testData['test002@gmail.com'] = {
+            name : 'ランドーザ',
+            pictName : 'Landozer.PNG',
+            hp : 3500,
+            speed : 100,
+            active : 0,
+            battery : 5,
+            skillPoint : 1,
+            weapons : {
+                1 : {name:'ブレイクパンチ',power:1700},
+                2 : {name:'ブレイクパンチ',power:1700},
+                3 : {name:'ブレイクパンチ',power:1700},
+                4 : {name:'ブレイクパンチ',power:1700},
+                5 : {name:'ブレイクパンチ',power:1700}
+            }
+        };
+
+        var Battle = battle({
+            statusArray : testData
+        });
+
+        //グランブレイバーがスタン攻撃スキルを発動
+        Battle.doWaitPhase();
+        Battle.doPilotSkill();
+        Battle.atack({
+            atackBattery : 2,
+            defenthBattery : 1
+        });
+
+        var statusArray = Battle.getStatusArray();
+        assert.equal(statusArray['test002@gmail.com'].hp,1300,'test002@gmail.comが2200ダメージを受ける');
+        assert.equal(statusArray['test002@gmail.com'].active,-5000,'test002@gmail.comのアクティブゲージが-5000になる');
+        assert.equal(statusArray['test001@gmail.com'].skillPoint,0,'test001@gmail.comのスキルポイントが-1される。');
+    });
 }); 
