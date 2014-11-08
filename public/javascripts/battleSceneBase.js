@@ -68,7 +68,7 @@ function battleSceneBase(spec,my){
 
             //ウインドウ
             that.mertorWindowArray[uid] = gridWindow({
-                pict : core.assets[core.PICT_DARK_WINDOW],
+                pict : core.assets[core.PICT_BLACK_WINDOW],
                 width : 10,
                 height : 5
             });
@@ -79,7 +79,7 @@ function battleSceneBase(spec,my){
             //HPメータ
             that.hpMertorArray[uid] = hpMertor();
             that.hpMertorArray[uid].y = 10;
-            that.hpMertorArray[uid].x = uid===that.userId ? 190 : 10;
+            that.hpMertorArray[uid].x = uid===that.userId ? 170 : 10;
             that.hpMertorArray[uid].setValue(that.statusArray[uid].hp);
             that.addChild(that.hpMertorArray[uid]);
 
@@ -90,7 +90,7 @@ function battleSceneBase(spec,my){
                 maxValue : 120,
                 direction : uid===that.userId ? 'right' : 'left'
             });
-            that.activeBarArray[uid].x = uid===that.userId ? 190 : 130;
+            that.activeBarArray[uid].x = uid===that.userId ? 170 : 130;
             that.activeBarArray[uid].y = 30;
             that.addChild(that.activeBarArray[uid]);
 
@@ -100,7 +100,7 @@ function battleSceneBase(spec,my){
                 backImage : core.assets[core.PICT_BATTERY_BACK],
                 direction : uid===that.userId ? 'right' : 'left'
             });
-            that.batteryMertorArray[uid].x = uid===that.userId ? 190 : 10;
+            that.batteryMertorArray[uid].x = uid===that.userId ? 170 : 10;
             that.batteryMertorArray[uid].y = 50;
             that.batteryMertorArray[uid].setValue(5);
             that.addChild(that.batteryMertorArray[uid]);
@@ -229,11 +229,10 @@ function battleSceneBase(spec,my){
 
         //メッセージウインドウ
         that.mesWindow = messageWindow({
-            pict : core.assets[core.PICT_DARK_WINDOW],
-            height :144
+            pict : core.assets[core.PICT_WINDOW]
         });
         that.mesWindow.x = 0;
-        that.mesWindow.y = 336;
+        that.mesWindow.y = 328;
         that.mesWindow.setVisible(false);
         that.addChild(that.mesWindow);
     }

@@ -15,6 +15,7 @@ function gameBase(spec,my){
     core.PICT_WINDOW = core.PICT_PREFIX+'window.png';
     core.PICT_ACTIVE_WINDOW = core.PICT_PREFIX+'activeWindow.png';
     core.PICT_DARK_WINDOW = core.PICT_PREFIX+'darkWindow.png';
+    core.PICT_BLACK_WINDOW = core.PICT_PREFIX+'blackWindow.png';
     core.WAIT_TIME_ACTIVE_RESET = 30;
     core.ICON_WIDTH = 124;
     core.ICON_HEIGHT = 40;
@@ -34,7 +35,7 @@ function gameBase(spec,my){
     core.MESSAGE_WAIT_ENTERROOM = 'プレイヤーの入室待ち';
     core.MESSAGE_WAIT_COMMAND = '対戦相手がコマンドを選択中......';
     core.MESSAGE_GET_ROOMINFO = 'ルーム情報取得中';
-    core.MESSAGE_WINDOW_Y = 224;
+    core.MESSAGE_WINDOW_Y = 276;
 
     core.fps = 40;
     core.battleScene = null;
@@ -64,6 +65,7 @@ function gameBase(spec,my){
         core.preload(core.PICT_WINDOW);
         core.preload(core.PICT_ACTIVE_WINDOW);
         core.preload(core.PICT_DARK_WINDOW);
+        core.preload(core.PICT_BLACK_WINDOW);
     }
     return core;
 }
