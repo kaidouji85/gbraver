@@ -105,8 +105,8 @@ var battle = function(spec,my){
         statusArray[defenseUserId].hp -= damage;
         statusArray[defenseUserId].battery -= defenthBattery;
         if(stunAttackArray[atackUserId]){
-            if(hit!==that.ATACK_MISS) {
-                statusArray[defenseUserId].active = -that.MAX_ACTIVE;
+            if(hit===that.ATACK_HIT || hit===that.ATACK_CRITICAL) {
+                statusArray[defenseUserId].active = -that.MAX_ACTIVE/2;
             }
             stunAttackArray[atackUserId] = false;
         }
