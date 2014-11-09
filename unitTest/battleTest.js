@@ -1454,4 +1454,182 @@ describe('Battleクラスのテスト', function() {
         var statusArray = Battle.getStatusArray();
         assert.equal(statusArray['test002@gmail.com'].active,-2000,'test002@gmail.comのアクティブゲージが減らない');
     });
+
+    it('ガードブレイクスキルで防御しても通常通りダメージを受ける',function(){
+        var testData = {};
+        testData['test001@gmail.com'] = {
+            name : 'グランブレイバー',
+            pictName : 'GranBraver.PNG',
+            hp : 3000,
+            speed : 1000,
+            active : 0,
+            battery : 5,
+            skillPoint : 1,
+            weapons : {
+                1 : {name : 'バスターナックル',power : 2200},
+                2 : {name : 'バスターナックル',power : 2200},
+                3 : {name : 'バスターナックル',power : 2200},
+                4 : {name : 'バスターナックル',power : 2200},
+                5 : {name : 'バスターナックル',power : 2200}
+            },
+            skill : {
+                type : 'guardBreak'
+            }
+        };
+        testData['test002@gmail.com'] = {
+            name : 'ランドーザ',
+            pictName : 'Landozer.PNG',
+            hp : 3500,
+            speed : 100,
+            active : 0,
+            battery : 5,
+            skillPoint : 1,
+            weapons : {
+                1 : {name:'ブレイクパンチ',power:1700},
+                2 : {name:'ブレイクパンチ',power:1700},
+                3 : {name:'ブレイクパンチ',power:1700},
+                4 : {name:'ブレイクパンチ',power:1700},
+                5 : {name:'ブレイクパンチ',power:1700}
+            }
+        };
+
+        var Battle = battle({
+            statusArray : testData
+        });
+
+        //グランブレイバーがガードブレイクスキルを発動
+        Battle.doWaitPhase();
+        Battle.doPilotSkill();
+        Battle.atack({
+            atackBattery : 1,
+            defenthBattery : 1
+        });
+
+        var statusArray = Battle.getStatusArray();
+        assert.equal(statusArray['test002@gmail.com'].hp,1300,'test002@gmail.comが2200ダメージを受ける');
+        assert.equal(statusArray['test001@gmail.com'].skillPoint,0,'test001@gmail.comのスキルポイントが-1される。');
+    });
+
+    it('2回目以降はガードブレイクスキルが無効(1回目は攻撃ヒット)',function(){
+        var testData = {};
+        testData['test001@gmail.com'] = {
+            name : 'グランブレイバー',
+            pictName : 'GranBraver.PNG',
+            hp : 3000,
+            speed : 1000,
+            active : 0,
+            battery : 5,
+            skillPoint : 1,
+            weapons : {
+                1 : {name : 'バスターナックル',power : 2200},
+                2 : {name : 'バスターナックル',power : 2200},
+                3 : {name : 'バスターナックル',power : 2200},
+                4 : {name : 'バスターナックル',power : 2200},
+                5 : {name : 'バスターナックル',power : 2200}
+            },
+            skill : {
+                type : 'guardBreak'
+            }
+        };
+        testData['test002@gmail.com'] = {
+            name : 'ランドーザ',
+            pictName : 'Landozer.PNG',
+            hp : 3500,
+            speed : 100,
+            active : 0,
+            battery : 5,
+            skillPoint : 1,
+            weapons : {
+                1 : {name:'ブレイクパンチ',power:1700},
+                2 : {name:'ブレイクパンチ',power:1700},
+                3 : {name:'ブレイクパンチ',power:1700},
+                4 : {name:'ブレイクパンチ',power:1700},
+                5 : {name:'ブレイクパンチ',power:1700}
+            }
+        };
+
+        var Battle = battle({
+            statusArray : testData
+        });
+
+        //グランブレイバーがガードブレイクスキルを発動
+        //ランドーザが2200ダメージを受ける
+        Battle.doWaitPhase();
+        Battle.doPilotSkill();
+        Battle.atack({
+            atackBattery : 1,
+            defenthBattery : 1
+        });
+
+        //グランブレイバー2回目の攻撃
+        Battle.doWaitPhase();
+        Battle.atack({
+            atackBattery : 1,
+            defenthBattery : 1
+        });
+
+        var statusArray = Battle.getStatusArray();
+        assert.equal(statusArray['test002@gmail.com'].hp,200,'test002@gmail.comが1100ダメージを受ける');
+    });
+
+    it('2回目以降はガードブレイクスキルが無効(1回目は攻撃ミス)',function(){
+        var testData = {};
+        testData['test001@gmail.com'] = {
+            name : 'グランブレイバー',
+            pictName : 'GranBraver.PNG',
+            hp : 3000,
+            speed : 1000,
+            active : 0,
+            battery : 5,
+            skillPoint : 1,
+            weapons : {
+                1 : {name : 'バスターナックル',power : 2200},
+                2 : {name : 'バスターナックル',power : 2200},
+                3 : {name : 'バスターナックル',power : 2200},
+                4 : {name : 'バスターナックル',power : 2200},
+                5 : {name : 'バスターナックル',power : 2200}
+            },
+            skill : {
+                type : 'guardBreak'
+            }
+        };
+        testData['test002@gmail.com'] = {
+            name : 'ランドーザ',
+            pictName : 'Landozer.PNG',
+            hp : 3500,
+            speed : 100,
+            active : 0,
+            battery : 5,
+            skillPoint : 1,
+            weapons : {
+                1 : {name:'ブレイクパンチ',power:1700},
+                2 : {name:'ブレイクパンチ',power:1700},
+                3 : {name:'ブレイクパンチ',power:1700},
+                4 : {name:'ブレイクパンチ',power:1700},
+                5 : {name:'ブレイクパンチ',power:1700}
+            }
+        };
+
+        var Battle = battle({
+            statusArray : testData
+        });
+
+        //グランブレイバーがガードブレイクスキルを発動
+        Battle.doWaitPhase();
+        Battle.doPilotSkill();
+        Battle.atack({
+            atackBattery : 1,
+            defenthBattery : 2
+        });
+
+        //グランブレイバー2回目の攻撃
+        Battle.doWaitPhase();
+        Battle.atack({
+            atackBattery : 1,
+            defenthBattery : 1
+        });
+
+        var statusArray = Battle.getStatusArray();
+        assert.equal(statusArray['test002@gmail.com'].hp,2400,'test002@gmail.comが1100ダメージを受ける');
+    });
 }); 

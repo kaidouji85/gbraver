@@ -12,6 +12,7 @@ var battle = function(spec,my){
     var overHeatFlagArray = {};
     var maxHpArray = {};
     var stunAttackArray = {};
+    var guardBreakArray = {};
 
     that.MAX_ACTIVE = 5000;
     that.ATACK_HIT = 1;
@@ -26,6 +27,7 @@ var battle = function(spec,my){
             overHeatFlagArray[uid] = false;
             maxHpArray[uid] = statusArray[uid].hp;
             stunAttackArray[uid] = false;
+            guardBreakArray[uid] = false;
         }
     }
     
@@ -87,7 +89,9 @@ var battle = function(spec,my){
             hit = that.ATACK_MISS;
         } else if (atackBattery === defenthBattery) {
             damage = statusArray[atackUserId].weapons[atackBattery].power;
-            damage = damage / 2;
+            if(guardBreakArray[atackUserId]===false){
+                damage = damage / 2;
+            }
             hit = that.ATACK_GUARD;
         } else {
             damage = statusArray[atackUserId].weapons[atackBattery].power;
@@ -98,18 +102,18 @@ var battle = function(spec,my){
             } else {
                 hit = that.ATACK_HIT;
             }
+
+            if(stunAttackArray[atackUserId]){
+                statusArray[defenseUserId].active = -that.MAX_ACTIVE/2;
+            }
         }
 
         statusArray[atackUserId].battery -= atackBattery;
         statusArray[atackUserId].active = 0;
         statusArray[defenseUserId].hp -= damage;
         statusArray[defenseUserId].battery -= defenthBattery;
-        if(stunAttackArray[atackUserId]){
-            if(hit===that.ATACK_HIT || hit===that.ATACK_CRITICAL) {
-                statusArray[defenseUserId].active = -that.MAX_ACTIVE/2;
-            }
-            stunAttackArray[atackUserId] = false;
-        }
+        stunAttackArray[atackUserId] = false;
+        guardBreakArray[atackUserId] = false;
         atackUserId = null;
 
         var ret = {
@@ -182,6 +186,8 @@ var battle = function(spec,my){
             }
         }else if(type === 'stunAttack'){
             stunAttackArray[atackUserId] = true;
+        } else if(type === 'guardBreak') {
+            guardBreakArray[atackUserId] = true;
         }
     }
     
