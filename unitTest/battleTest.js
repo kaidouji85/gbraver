@@ -1500,7 +1500,7 @@ describe('Battleクラスのテスト', function() {
         //グランブレイバーがガードブレイクスキルを発動
         Battle.doWaitPhase();
         Battle.doPilotSkill();
-        Battle.atack({
+        var attackResult = Battle.atack({
             atackBattery : 1,
             defenthBattery : 1
         });
@@ -1508,6 +1508,7 @@ describe('Battleクラスのテスト', function() {
         var statusArray = Battle.getStatusArray();
         assert.equal(statusArray['test002@gmail.com'].hp,1300,'test002@gmail.comが2200ダメージを受ける');
         assert.equal(statusArray['test001@gmail.com'].skillPoint,0,'test001@gmail.comのスキルポイントが-1される。');
+        assert.equal(attackResult.hit,1,'通常ヒット判定になる');
     });
 
     it('2回目以降はガードブレイクスキルが無効(1回目は攻撃ヒット)',function(){

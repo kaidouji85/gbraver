@@ -89,10 +89,12 @@ var battle = function(spec,my){
             hit = that.ATACK_MISS;
         } else if (atackBattery === defenthBattery) {
             damage = statusArray[atackUserId].weapons[atackBattery].power;
-            if(guardBreakArray[atackUserId]===false){
+            if(guardBreakArray[atackUserId]===true){
+                hit = that.ATACK_HIT;
+            }else {
                 damage = damage / 2;
+                hit = that.ATACK_GUARD;
             }
-            hit = that.ATACK_GUARD;
         } else {
             damage = statusArray[atackUserId].weapons[atackBattery].power;
             damage = damage + 100 * (atackBattery - 1 - defenthBattery);

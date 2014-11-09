@@ -115,5 +115,5 @@ db.pilots.insert({
     name: '伊織',
     pict: 'iori.png',
     shout: 'この一撃に、全てを掛ける！！',
-    type: 'stunAttack'
+    type: 'guardBreak'
 });
