@@ -48,11 +48,8 @@ function battleSceneBase(spec,my){
         that.addChild(that.ground);
 
         //コマンドウインドウ
-        that.commandWindow =  gridWindow({
-            pict : core.assets[core.PICT_DARK_WINDOW],
-            width : 20,
-            height : 9
-        });
+        that.commandWindow =  new Sprite(320,144);
+        that.commandWindow.image = core.assets[core.PICT_COMMAND_WINDOW];
         that.commandWindow.x = 0;
         that.commandWindow.y = 336;
         that.addChild(that.commandWindow);
@@ -232,7 +229,7 @@ function battleSceneBase(spec,my){
             pict : core.assets[core.PICT_WINDOW]
         });
         that.mesWindow.x = 0;
-        that.mesWindow.y = 328;
+        that.mesWindow.y = 336;
         that.mesWindow.setVisible(false);
         that.addChild(that.mesWindow);
     }

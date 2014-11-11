@@ -16,7 +16,6 @@ function selectPilotScene(spec,my) {
     that.okButton = {};
     that.selectPilotSprite = {};
     that.mesWindow = {};
-    that.commandWindow = {};
     that.pilotButtonArray = new Array(MAX_PILOT);
 
     initSprite();
@@ -39,16 +38,6 @@ function selectPilotScene(spec,my) {
             text : 'パイロット選択'
         });
         that.addChild(that.title);
-
-        //コマンドウインドウ
-        that.commandWindow =  gridWindow({
-            pict : core.assets[core.PICT_DARK_WINDOW],
-            width : 20,
-            height : 14
-        });
-        that.commandWindow.x = 0;
-        that.commandWindow.y = 284;
-        that.addChild(that.commandWindow);
 
         //パイロットボタン
         for(var pid=0; pid<MAX_PILOT; pid++) {

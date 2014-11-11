@@ -14,8 +14,8 @@ function gameBase(spec,my){
     core.PICT_BG_GROUND2 = core.PICT_PREFIX+'bgGround2.png';
     core.PICT_WINDOW = core.PICT_PREFIX+'window.png';
     core.PICT_ACTIVE_WINDOW = core.PICT_PREFIX+'activeWindow.png';
-    core.PICT_DARK_WINDOW = core.PICT_PREFIX+'darkWindow.png';
     core.PICT_BLACK_WINDOW = core.PICT_PREFIX+'blackWindow.png';
+    core.PICT_COMMAND_WINDOW = core.PICT_PREFIX+'commandWindow.png';
     core.WAIT_TIME_ACTIVE_RESET = 30;
     core.ICON_WIDTH = 124;
     core.ICON_HEIGHT = 40;
@@ -64,8 +64,8 @@ function gameBase(spec,my){
         core.preload(core.PICT_BG_GROUND2);
         core.preload(core.PICT_WINDOW);
         core.preload(core.PICT_ACTIVE_WINDOW);
-        core.preload(core.PICT_DARK_WINDOW);
         core.preload(core.PICT_BLACK_WINDOW);
+        core.preload(core.PICT_COMMAND_WINDOW);
     }
     return core;
 }
