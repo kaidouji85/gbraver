@@ -39,7 +39,7 @@ function selectArmdozer(){
     Game.onload = function(){
         testScene = selectPilotScene({
             pilotList : pilotList,
-            pilotPict : 'iori.png'
+            selectPilotId : 'iori'
         });
         Game.replaceScene(testScene);
         pushPrevButton();

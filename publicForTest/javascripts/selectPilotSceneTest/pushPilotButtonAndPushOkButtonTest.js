@@ -38,7 +38,7 @@ function selectArmdozer(){
     Game.start();
     Game.onload = function(){
         testScene = selectPilotScene({
-            pilotPict : 'akane.png',
+            selectPilotId : 'akane',
             pilotList : pilotList
         });
         Game.replaceScene(testScene);
@@ -55,9 +55,8 @@ function selectArmdozer(){
         touch(Game.currentScene.okButton);
     }
 
-    function assertOfPushOkButton(pilotId,pilotPict){
+    function assertOfPushOkButton(pilotId){
         assert.equal(pilotId,'iori','選択したパイロットIDが渡される');
-        assert.equal(pilotPict,'iori.png','選択したパイロットの画像名が渡される');
         assert.equal(Game.currentScene.okButton.getVisible(),false,'OKボタンが非表示');
         assert.equal(Game.currentScene.prevButton.getVisible(),false,'戻るボタンが非表示');
         assert.equal(Game.currentScene.pilotButtonArray[0].getVisible(),false,'パイロットアイコン0が非表示');

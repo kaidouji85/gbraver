@@ -38,7 +38,7 @@ function selectArmdozer(){
     Game.start();
     Game.onload = function(){
         testScene = selectPilotScene({
-            pilotPict : 'akane.png',
+            selectPilotId : 'akane',
             pilotList : pilotList
         });
         Game.replaceScene(testScene);

@@ -3,19 +3,12 @@ function selectPilotScene(spec,my) {
 
     var that = new Scene();
     var core = enchant.Core.instance;
-    var pilotPict = spec.pilotPict;
     var pilotList = spec.pilotList;
-    var selectPilotId = null;
+    var selectPilotId = spec.selectPilotId;
     var emitPushButton = function(){};
     var emitPushOkButton = function(pilotId,pilotPict){};
 
     that.backgroundColor = "black";
-    that.background = {};
-    that.tile = {};
-    that.prevButton = {};
-    that.okButton = {};
-    that.selectPilotSprite = {};
-    that.mesWindow = {};
     that.pilotButtonArray = new Array(MAX_PILOT);
 
     initSprite();
@@ -27,10 +20,33 @@ function selectPilotScene(spec,my) {
 
         //選択中のパイロット画像
         that.selectPilotSprite = new Sprite(256,256);
-        that.selectPilotSprite.x = 32;
-        that.selectPilotSprite.y = 32;
-        that.selectPilotSprite.image = core.assets[core.PICT_PREFIX+pilotPict];
+        that.selectPilotSprite.x = -64;
+        that.selectPilotSprite.y = 48;
         that.addChild(that.selectPilotSprite);
+
+        //パイロット情報ウインドウ
+        that.infoWindow = gridWindow({
+            pict : core.assets[core.PICT_WINDOW],
+            width : 10,
+            height : 8
+        });
+        that.infoWindow.x = 150;
+        that.infoWindow.y = 120;
+        that.addChild(that.infoWindow);
+
+        //パイロット名ラベル
+        that.pilotLabel = new Label("登志脳京子");
+        that.pilotLabel.color = "white";
+        that.pilotLabel.x = 170;
+        that.pilotLabel.y = 140;
+        that.addChild(that.pilotLabel);
+
+        //スキルラベル
+        that.skillLabel = new Label("クイックチャージ");
+        that.skillLabel.color = "white";
+        that.skillLabel.x = 170;
+        that.skillLabel.y = 160;
+        that.addChild(that.skillLabel);
 
         //画面タイトル
         that.title = titleWindow({
@@ -51,11 +67,10 @@ function selectPilotScene(spec,my) {
             button.x = 20 + 100*pid;
             button.y = 320;
             button.addEventListener(Event.TOUCH_END,function(){
-                pushPilotButton(pid);
-            })
-            if(pilotList[pid].pict === pilotPict){
-                selectPilotId = pilotList[pid].id;
-            }
+                var pilotId = pilotList[pid].id;
+                selectPilotId = pilotId;
+                pushPilotButton(pilotId);
+            });
             that.addChild( button);
         });
 
@@ -85,7 +100,7 @@ function selectPilotScene(spec,my) {
         that.okButton.addEventListener(Event.TOUCH_END,function(){
             invisibleButton();
             that.mesWindow.setVisible(true);
-            emitPushOkButton(selectPilotId,pilotPict);
+            emitPushOkButton(selectPilotId);
         });
         that.okButton.x = 8;
         that.okButton.y = 420;
@@ -100,6 +115,8 @@ function selectPilotScene(spec,my) {
         that.mesWindow.setVisible(false);
         that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
         that.addChild(that.mesWindow);
+
+        refreshInformation(selectPilotId);
     }
 
     that.onPushPrevButton = function(fn){
@@ -111,9 +128,7 @@ function selectPilotScene(spec,my) {
     }
 
     function pushPilotButton(pid) {
-        pilotPict = pilotList[pid].pict;
-        selectPilotId = pilotList[pid].id;
-        that.selectPilotSprite.image = core.assets[core.PICT_PREFIX + pilotPict];
+        refreshInformation(pid);
     }
 
     function invisibleButton(){
@@ -121,6 +136,21 @@ function selectPilotScene(spec,my) {
         that.prevButton.setVisible(false);
         for(var i in that.pilotButtonArray){
             that.pilotButtonArray[i].setVisible(false);
+        }
+    }
+
+    function refreshInformation(id){
+        var pilotData = getPilotData(id);
+        that.pilotLabel.text = pilotData.name;
+        that.skillLabel.text = pilotData.type;
+        that.selectPilotSprite.image = core.assets[core.PICT_PREFIX+pilotData.pict];
+    }
+
+    function getPilotData(id){
+        for(var pid=0; pid<pilotList.length; pid++){
+            if(pilotList[pid].id === id){
+                return pilotList[pid];
+            }
         }
     }
 

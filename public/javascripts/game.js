@@ -100,17 +100,17 @@ function game(spec, my) {
     core.changeSelectPilotScene = function() {
         var scene = selectPilotScene({
             pilotList : pilotList,
-            pilotPict : pilotPict
+            selectPilotId : getPilotIdByPictName(pilotPict)
         });
         scene.onPushPrevButton(function(){
             core.changeTopScene();
         });
-        scene.onPushOkButton(function(l_pilotId,l_pilotPict){
+        scene.onPushOkButton(function(l_pilotId){
             var data = {
                 pilotId : l_pilotId
             };
             emitSendMessage('setPilot',data);
-            pilotPict = l_pilotPict;
+            pilotPict = getPilotPictByPilotId(l_pilotId);
         });
         core.replaceScene(scene);
         emitChangeScene('selectPilot');
@@ -240,6 +240,22 @@ function game(spec, my) {
         for(var i in armdozerList){
             if(armdozerList[i].armdozerId === armdozerId) {
                 return armdozerList[i].pictName;
+            }
+        }
+    }
+
+    function getPilotIdByPictName(pictName){
+        for(var i in pilotList){
+            if(pilotList[i].pict === pictName){
+                return pilotList[i].id;
+            }
+        }
+    }
+
+    function getPilotPictByPilotId(pilotId){
+        for(var i in pilotList){
+            if(pilotList[i].id === pilotId){
+                return pilotList[i].pict;
             }
         }
     }
