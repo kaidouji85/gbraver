@@ -11,13 +11,6 @@ function game(spec, my) {
     var emitChangeScene = function(scene){};
     var emitSendMessage = function(message,data){};
 
-    /**
-     * 戦闘シーンに切り替える 
-     * @param {Object} spec
-     * {
-     *     userId : String
-     * }
-     */
     core.changeBattleScene = function(spec){
         spec.userId = userId;
         core.battleScene = battleScene(spec);
@@ -80,22 +73,6 @@ function game(spec, my) {
         core.replaceScene(core.setArmdozerScene);
         emitChangeScene('setArmdozer');
     };
-
-    core.changeArmdozerInfoScene = function(respData){
-        var scene = armdozerInfoScene({
-            armdozerInfo : respData
-        });
-        scene.onPushOkButton(function(sendData){
-            armdozerPict = respData.pictName;
-            emitSendMessage('setArmdozer',sendData);
-        });
-        scene.onPushPrevButton(function(){
-            emitSendMessage('getCharacterList');
-        })
-        core.replaceScene(scene);
-        emitChangeScene('armdozerInfo');
-
-    }
 
     core.changeSelectPilotScene = function() {
         var scene = selectPilotScene({

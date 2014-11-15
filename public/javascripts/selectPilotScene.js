@@ -20,32 +20,32 @@ function selectPilotScene(spec,my) {
 
         //選択中のパイロット画像
         that.selectPilotSprite = new Sprite(256,256);
-        that.selectPilotSprite.x = -64;
+        that.selectPilotSprite.x = 32;
         that.selectPilotSprite.y = 48;
         that.addChild(that.selectPilotSprite);
 
         //パイロット情報ウインドウ
         that.infoWindow = gridWindow({
             pict : core.assets[core.PICT_WINDOW],
-            width : 10,
-            height : 8
+            width : 18,
+            height : 4
         });
-        that.infoWindow.x = 150;
-        that.infoWindow.y = 120;
+        that.infoWindow.x = (320-18*16)/2;
+        that.infoWindow.y = 240;
         that.addChild(that.infoWindow);
 
         //パイロット名ラベル
-        that.pilotLabel = new Label("登志脳京子");
+        that.pilotLabel = new Label();
         that.pilotLabel.color = "white";
-        that.pilotLabel.x = 170;
-        that.pilotLabel.y = 140;
+        that.pilotLabel.x = 38;
+        that.pilotLabel.y = 252;
         that.addChild(that.pilotLabel);
 
         //スキルラベル
-        that.skillLabel = new Label("クイックチャージ");
+        that.skillLabel = new Label();
         that.skillLabel.color = "white";
-        that.skillLabel.x = 170;
-        that.skillLabel.y = 160;
+        that.skillLabel.x = 38;
+        that.skillLabel.y = 270;
         that.addChild(that.skillLabel);
 
         //画面タイトル
@@ -142,7 +142,7 @@ function selectPilotScene(spec,my) {
     function refreshInformation(id){
         var pilotData = getPilotData(id);
         that.pilotLabel.text = pilotData.name;
-        that.skillLabel.text = pilotData.type;
+        that.skillLabel.text = getSkillDescription(pilotData);
         that.selectPilotSprite.image = core.assets[core.PICT_PREFIX+pilotData.pict];
     }
 
@@ -152,6 +152,25 @@ function selectPilotScene(spec,my) {
                 return pilotList[pid];
             }
         }
+    }
+
+    function getSkillDescription(pilotData){
+        var ret = "";
+        switch(pilotData.type){
+            case 'quickCharge' :
+                ret = 'バッテリーを'+pilotData.battery+'回復する';
+                break;
+            case 'recoverHp':
+                ret = 'HPを'+pilotData.value*100+'%回復する'
+                break;
+            case 'guardBreak':
+                ret = 'ガードを無効化する';
+                break;
+            default :
+                ret = '不明スキル';
+                break;
+        }
+        return ret;
     }
 
     return that;
