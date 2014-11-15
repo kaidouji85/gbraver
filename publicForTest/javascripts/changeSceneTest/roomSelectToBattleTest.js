@@ -8,7 +8,11 @@ function roomSelectToBattle(){
 
     function initGame(){
         Game = game({
-            userId : 'test001@gmail.com'
+            userId : 'test001@gmail.com',
+            armdozerPict : 'GranBraver.PNG',
+            pilotPict : 'kyoko.png',
+            armdozerList : getArmdozerList(),
+            pilotList : getPilotList()
         });
         Game.start();
         Game.onload = function(){

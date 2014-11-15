@@ -14,7 +14,9 @@ function battleToTop_win(){
         Game = game({
             userId : 'saikyou@gmail.com',
             armdozerPict : 'GranBraver.PNG',
-            pilotPict : 'kyoko.png'});
+            pilotPict : 'kyoko.png',
+            armdozerList : getArmdozerList(),
+            pilotList : getPilotList()});
         Game.start();
         Game.onload = function(){
             Game.changeBattleScene({

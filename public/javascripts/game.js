@@ -40,8 +40,10 @@ function game(spec, my) {
     
     core.changeTopScene = function(){
         core.topScene = topScene({
-            armdozerPict : armdozerPict,
-            pilotPict : pilotPict
+            armdozerId : getArmdozerIdByPictName(armdozerPict),
+            pilotId : getPilotIdByPictName(pilotPict),
+            armdozerList : armdozerList,
+            pilotList : pilotList
         });
         core.topScene.onPushSelectArmdozerButton(function(){
             core.changeSelectArmdozerScene();
@@ -205,6 +207,7 @@ function game(spec, my) {
         }
     }
 
+    //TODO : 削除予定
     function getArmdozerIdByPictName(pictName){
         for(var i in armdozerList){
             if(armdozerList[i].pictName === pictName) {
@@ -213,6 +216,7 @@ function game(spec, my) {
         }
     }
 
+    //TODO : 削除予定
     function getArmdozerPictByArmdozerId(armdozerId){
         for(var i in armdozerList){
             if(armdozerList[i].armdozerId === armdozerId) {
@@ -221,6 +225,7 @@ function game(spec, my) {
         }
     }
 
+    //TODO : 削除予定
     function getPilotIdByPictName(pictName){
         for(var i in pilotList){
             if(pilotList[i].pict === pictName){
@@ -229,6 +234,7 @@ function game(spec, my) {
         }
     }
 
+    //TODO : 削除予定
     function getPilotPictByPilotId(pilotId){
         for(var i in pilotList){
             if(pilotList[i].id === pilotId){

@@ -1,18 +1,11 @@
 function topScene(spec,my){
     var that = new Scene();
-    var armdozerPict = spec.armdozerPict;
-    var pilotPict = spec.pilotPict;
+    var armdozerId = spec.armdozerId;
+    var pilotId = spec.pilotId;
+    var armdozerList = spec.armdozerList;
+    var pilotList = spec.pilotList;
 
     that.backgroundColor = "black";
-    that.background = {};
-    that.battleRoomButton = {};
-    that.selectArmdozerButton = {};
-    that.mesWindow = {};
-    that.selectArmdozerSprite = {};
-    that.singlePlayButton = {};
-    that.selectPilotButton = {};
-    that.tile = {};
-    that.pilotSprite = {};
     that.onPushBattleRoom = onPushBattleRoom;
     that.onPushSinglePlay = onPushSinglePlay;
     that.onPushSelectPilotButton = onPushSelectPilotButton;
@@ -33,7 +26,7 @@ function topScene(spec,my){
 
         //選択中アームドーザ
         that.selectArmdozerSprite = new Sprite(160,160);
-        that.selectArmdozerSprite.image = core.assets[core.PICT_PREFIX+armdozerPict];
+        that.selectArmdozerSprite.image = core.assets[core.PICT_PREFIX+getArmdozerPictByArmdozerId(armdozerId)];
         that.selectArmdozerSprite.x = (320-160)/2;
         that.selectArmdozerSprite.y = 110;
         that.addChild(that.selectArmdozerSprite);
@@ -41,7 +34,7 @@ function topScene(spec,my){
         //選択中パイロット
         that.pilotSprite = pilotIcon({
             windowPict : core.assets[core.PICT_WINDOW],
-            pilotPict : core.assets[core.PICT_PREFIX + pilotPict]
+            pilotPict : core.assets[core.PICT_PREFIX + getPilotPictByPilotId(pilotId)]
         });
         that.pilotSprite.x = 230;
         that.pilotSprite.y = 100;
@@ -142,6 +135,22 @@ function topScene(spec,my){
 
     function onPushSelectArmdozerButton(fn){
         emitPushSelectArmdozerButton = fn;
+    }
+
+    function getArmdozerPictByArmdozerId(armdozerId){
+        for(var i in armdozerList){
+            if(armdozerList[i].armdozerId === armdozerId) {
+                return armdozerList[i].pictName;
+            }
+        }
+    }
+
+    function getPilotPictByPilotId(pilotId){
+        for(var i in pilotList){
+            if(pilotList[i].id === pilotId){
+                return pilotList[i].pict;
+            }
+        }
     }
     
     return that;

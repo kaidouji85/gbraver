@@ -12,7 +12,8 @@ function doTest(){
             userId : 'test001@gmail.com',
             armdozerPict : 'GranBraver.PNG',
             pilotPict : 'kyoko.png',
-            pilotList : pilotList
+            pilotList : pilotList,
+            armdozerList : getArmdozerList()
         });
         Game.start();
         Game.onload = function(){
