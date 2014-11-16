@@ -6,10 +6,8 @@ enchant.ENV.SOUND_ENABLED_ON_MOBILE_SAFARI = false;
 window.onload = function() {
     var socket = io.connect(location.origin);
     var userId = $("meta[name=userId]").attr('content');
-    var armdozerPict;
-    var armdozerList;
-    var pilotPict;
-    var pilotList;
+    var masterData;
+    var userData;
     var Game;
 
     //ユーザ認証する
@@ -21,8 +19,7 @@ window.onload = function() {
     //ユーザ認証成功
     socket.on('successAuth', function(data) {
         //console.log(getTime()+' successAuth');//test
-        armdozerPict = data.armdozerPict;
-        pilotPict = data.pilotPict;
+        userData = data;
         getMasterData();
     });
 
@@ -32,10 +29,9 @@ window.onload = function() {
         socket.once('successGetMasterData',successGetMasterData);
     }
 
-    function successGetMasterData(masterData){
+    function successGetMasterData(data){
         //console.log(getTime()+' successGetMasterData');//test
-        pilotList = masterData.pilotList;
-        armdozerList = masterData.armdozerList;
+        masterData = data;
         initGame();
     }
 
@@ -43,10 +39,10 @@ window.onload = function() {
         //console.log(getTime()+' initGame');//test
         Game = new game({
             userId : userId,
-            armdozerPict : armdozerPict,
-            armdozerList : armdozerList,
-            pilotPict : pilotPict,
-            pilotList : pilotList
+            armdozerId : userData.armdozerId,
+            pilotId : userData.pilotId,
+            armdozerList : masterData.armdozerList,
+            pilotList : masterData.pilotList
         });
         Game.start();
         Game.onload = function() {

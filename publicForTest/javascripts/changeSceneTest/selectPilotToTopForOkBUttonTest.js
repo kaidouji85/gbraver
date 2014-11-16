@@ -10,8 +10,8 @@ function doTest(){
     function initGame(){
         Game = game({
             userId : 'test001@gmail.com',
-            armdozerPict : 'GranBraver.PNG',
-            pilotPict : 'kyoko.png',
+            armdozerId : 'granBraver',
+            pilotId : 'kyoko',
             pilotList : pilotList,
             armdozerList : getArmdozerList()
         });
@@ -48,7 +48,7 @@ function doTest(){
 
     function assertOfChangeScene(scene){
         assert.equal(scene,'top','トップシーンに遷移する');
-        assert.equal(Game.getPilotPict(),'iori.png','パイロット画像名が正しい');
+        assert.equal(Game.getPilotId(),'iori','パイロット画像名が正しい');
         finishTest();
     }
 

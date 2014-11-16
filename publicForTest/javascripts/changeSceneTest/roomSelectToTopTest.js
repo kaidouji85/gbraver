@@ -9,8 +9,8 @@ function roomSelectToTop(){
     function initGame(){
         Game = game({
             userId : 'test001@gmail.com',
-            armdozerPict : 'GranBraver.PNG',
-            pilotPict : 'kyoko.png',
+            armdozerId : 'granBraver',
+            pilotId : 'kyoko',
             armdozerList : getArmdozerList(),
             pilotList : getPilotList()
         });

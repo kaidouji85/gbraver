@@ -108,13 +108,11 @@ var server = require('./server.js');
 var gameServer = server({
     httpServer : httpServer
 });
+gameServer.onGetUserData(dao.getUserData);
 gameServer.onGetPlayerData(dao.getPlayerData);
 gameServer.onSetArmdozerId(dao.setArmdozerId);
-gameServer.onGetCharacterList(dao.getCharacterList);
 gameServer.onGetCharacterInfo(dao.getCharacterInfo);
 gameServer.onGetAttackRoutine(enemyRoutineDefine.getAttackRoutine);
 gameServer.onGetDefenseRoutine(enemyRoutineDefine.getDefenseRoutine);
-gameServer.onGetPilotList(dao.getPilotList);
 gameServer.onSetPilotId(dao.setPilotId);
-gameServer.onGetArmdozerList(dao.getArmdozerList);
 gameServer.onGetMasterData(dao.getMasterData);

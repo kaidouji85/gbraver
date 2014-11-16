@@ -4,8 +4,8 @@ function game(spec, my) {
      */
     var core = gameBase();
     var userId = spec.userId;
-    var armdozerPict = spec.armdozerPict;
-    var pilotPict = spec.pilotPict;
+    var armdozerId = spec.armdozerId;
+    var pilotId = spec.pilotId;
     var pilotList = spec.pilotList;
     var armdozerList = spec.armdozerList;
     var emitChangeScene = function(scene){};
@@ -40,8 +40,8 @@ function game(spec, my) {
     
     core.changeTopScene = function(){
         core.topScene = topScene({
-            armdozerId : getArmdozerIdByPictName(armdozerPict),
-            pilotId : getPilotIdByPictName(pilotPict),
+            armdozerId : armdozerId,
+            pilotId : pilotId,
             armdozerList : armdozerList,
             pilotList : pilotList
         });
@@ -67,7 +67,7 @@ function game(spec, my) {
     core.changeSelectPilotScene = function() {
         var scene = selectPilotScene({
             pilotList : pilotList,
-            selectPilotId : getPilotIdByPictName(pilotPict)
+            selectPilotId : pilotId
         });
         scene.onPushPrevButton(function(){
             core.changeTopScene();
@@ -77,7 +77,7 @@ function game(spec, my) {
                 pilotId : l_pilotId
             };
             emitSendMessage('setPilot',data);
-            pilotPict = getPilotPictByPilotId(l_pilotId);
+            pilotId = l_pilotId;
         });
         core.replaceScene(scene);
         emitChangeScene('selectPilot');
@@ -86,14 +86,14 @@ function game(spec, my) {
     core.changeSelectArmdozerScene = function(){
         var scene = selectArmdozerScene({
             armdozerList : armdozerList,
-            selectArmdozerId : getArmdozerIdByPictName(armdozerPict)
+            selectArmdozerId : armdozerId
         });
-        scene.onPushOkButton(function(armdozerId){
+        scene.onPushOkButton(function(l_armdozerId){
             var sendData = {
-                armdozerId : armdozerId
+                armdozerId : l_armdozerId
             };
-            armdozerPict = getArmdozerPictByArmdozerId(armdozerId);
             emitSendMessage('setArmdozer',sendData);
+            armdozerId = l_armdozerId;
         });
         scene.onPushPrevButton(function(){
             core.changeTopScene();
@@ -152,12 +152,12 @@ function game(spec, my) {
         }
     };
 
-    core.getArmdozerPict = function() {
-        return armdozerPict;
+    core.getArmdozerId = function() {
+        return armdozerId;
     }
 
-    core.getPilotPict = function(){
-        return pilotPict;
+    core.getPilotId = function(){
+        return pilotId;
     }
 
     function changePhase(data){

@@ -13,8 +13,8 @@ function battleToTop_win(){
     function initGame(){
         Game = game({
             userId : 'saikyou@gmail.com',
-            armdozerPict : 'GranBraver.PNG',
-            pilotPict : 'kyoko.png',
+            armdozerId : 'granBraver',
+            pilotId : 'kyoko',
             armdozerList : getArmdozerList(),
             pilotList : getPilotList()});
         Game.start();

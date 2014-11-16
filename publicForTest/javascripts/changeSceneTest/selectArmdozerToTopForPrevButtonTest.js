@@ -10,8 +10,8 @@ function doTest(){
     function initGame(){
         Game = game({
             userId : 'test001@gmail.com',
-            armdozerPict : 'GranBraver.PNG',
-            pilotPict : 'kyoko.png',
+            armdozerId : 'granBraver',
+            pilotId : 'kyoko',
             pilotList : pilotList,
             armdozerList : getArmdozerList()
         });
@@ -29,7 +29,7 @@ function doTest(){
 
     function assertOfChangeScene(scene){
         assert.equal(scene,'top','トップシーンに遷移する');
-        assert.equal(Game.getArmdozerPict(),'GranBraver.PNG','選択画像が変わらない');
+        assert.equal(Game.getArmdozerId(),'granBraver','選択画像が変わらない');
         finishTest();
     }
 

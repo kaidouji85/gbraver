@@ -57,17 +57,6 @@ function server(spec, my) {
 
     //TODO : 削除予定
     /**
-     * アームドーザリスト取得関数
-     * この関数の実装は外部で行う
-     * @param {Function} callback(err,result)
-     */
-    var getCharacterList;
-    io.onGetCharacterList = function(fn){
-        getCharacterList = fn;
-    }
-
-    //TODO : 削除予定
-    /**
      * アームドーザ情報取得関数
      * この関数の実装は外部で行う
      * @param {String} armdozerId
@@ -76,17 +65,6 @@ function server(spec, my) {
     var getCharacterInfo;
     io.onGetCharacterInfo = function(fn){
         getCharacterInfo = fn;
-    }
-
-
-    /**
-     * アームドーザリスト取得関数
-     * この関数の実装は外部で行う
-     * @param {Function} callback(err,result)
-     */
-    var getArmdozerList;
-    io.onGetArmdozerList = function(fn){
-        getArmdozerList = fn;
     }
 
     /**
@@ -109,17 +87,6 @@ function server(spec, my) {
     var getDefenseRoutine;
     io.onGetDefenseRoutine = function(fn){
         getDefenseRoutine = fn;
-    }
-
-    //TODO : 削除予定
-    /**
-     * パイロットリスト取得関数
-     * この関数の実装は外部で行う
-     * @return pilotList
-     */
-    var getPilotList;
-    io.onGetPilotList = function(fn){
-        getPilotList = fn;
     }
 
     /**
