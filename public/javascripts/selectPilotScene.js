@@ -56,18 +56,18 @@ function selectPilotScene(spec,my) {
         that.addChild(that.title);
 
         //パイロットボタン
-        for(var pid=0; pid<MAX_PILOT; pid++) {
-            that.pilotButtonArray[pid] = pilotIcon({
+        for(var i=0; i<MAX_PILOT; i++) {
+            that.pilotButtonArray[i] = pilotIcon({
                 windowPict : core.assets[core.PICT_WINDOW],
-                pilotPict : core.assets[core.PICT_PREFIX + pilotList[pid].pict]
+                pilotPict : core.assets[core.PICT_PREFIX + pilotList[i].pict]
             });
         }
 
-        that.pilotButtonArray.forEach(function(button,pid){
-            button.x = 20 + 100*pid;
+        that.pilotButtonArray.forEach(function(button,i){
+            button.x = 20 + 100*i;
             button.y = 320;
             button.addEventListener(Event.TOUCH_END,function(){
-                var pilotId = pilotList[pid].id;
+                var pilotId = pilotList[i].id;
                 selectPilotId = pilotId;
                 pushPilotButton(pilotId);
             });
@@ -127,8 +127,8 @@ function selectPilotScene(spec,my) {
         emitPushOkButton = fn;
     }
 
-    function pushPilotButton(pid) {
-        refreshInformation(pid);
+    function pushPilotButton(pilotId) {
+        refreshInformation(pilotId);
     }
 
     function invisibleButton(){
@@ -139,17 +139,17 @@ function selectPilotScene(spec,my) {
         }
     }
 
-    function refreshInformation(id){
-        var pilotData = getPilotData(id);
+    function refreshInformation(pilotId){
+        var pilotData = getPilotData(pilotId);
         that.pilotLabel.text = pilotData.name;
         that.skillLabel.text = getSkillDescription(pilotData);
         that.selectPilotSprite.image = core.assets[core.PICT_PREFIX+pilotData.pict];
     }
 
-    function getPilotData(id){
-        for(var pid=0; pid<pilotList.length; pid++){
-            if(pilotList[pid].id === id){
-                return pilotList[pid];
+    function getPilotData(pilotId){
+        for(var i=0; i<pilotList.length; i++){
+            if(pilotList[i].id === pilotId){
+                return pilotList[i];
             }
         }
     }

@@ -30,17 +30,17 @@ function selectArmdozerScene(spec,my){
         that.addChild(that.title);
 
         //アームドーザボタン
-        for(var aid=0; aid<MAX_ARMDOZER; aid++) {
-            that.armdozerButtonArray[aid] = armdozerIcon({
+        for(var i=0; i<MAX_ARMDOZER; i++) {
+            that.armdozerButtonArray[i] = armdozerIcon({
                 windowPict : core.assets[core.PICT_WINDOW],
-                armdozerPict : core.assets[core.PICT_PREFIX + armdozerList[aid].pictName]
+                armdozerPict : core.assets[core.PICT_PREFIX + armdozerList[i].pictName]
             });
         }
-        that.armdozerButtonArray.forEach(function(button,aid){
-            button.x = 20 + 100*aid;
+        that.armdozerButtonArray.forEach(function(button,i){
+            button.x = 20 + 100*i;
             button.y = 320;
             button.addEventListener(Event.TOUCH_END,function(){
-                var armdozerId = armdozerList[aid].armdozerId;
+                var armdozerId = armdozerList[i].armdozerId;
                 selectArmdozerId = armdozerId;
                 refreshInformation(armdozerId);
             });
@@ -156,16 +156,16 @@ function selectArmdozerScene(spec,my){
         emitPushPrevButton = fn;
     }
 
-    function getArmdozerData(id){
-        for(var aid=0; aid<armdozerList.length; aid++){
-            if(armdozerList[aid].armdozerId === id){
-                return armdozerList[aid];
+    function getArmdozerData(armdozerId){
+        for(var i=0; i<armdozerList.length; i++){
+            if(armdozerList[i].armdozerId === armdozerId){
+                return armdozerList[i];
             }
         }
     }
 
-    function refreshInformation(id){
-        var armdozerData = getArmdozerData(id);
+    function refreshInformation(armdozerId){
+        var armdozerData = getArmdozerData(armdozerId);
         that.selectArmdozerSprite.image = core.assets[core.PICT_PREFIX+armdozerData.pictName];
         that.armdozerNameLabel.text = armdozerData.name;
         that.hpValueLabel.text = armdozerData.hp;
