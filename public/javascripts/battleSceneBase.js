@@ -139,7 +139,7 @@ function battleSceneBase(spec,my){
 
             //パイロット
             that.pilotSpriteArray[uid] = new Sprite(256,256);
-            that.pilotSpriteArray[uid].image = core.assets[core.PICT_PREFIX+that.statusArray[uid].skill.pilotPict];
+            that.pilotSpriteArray[uid].image = core.assets[core.PICT_PREFIX+that.statusArray[uid].skill.pict];
             that.pilotSpriteArray[uid].x = uid===that.userId ? 128 : -64;
             that.pilotSpriteArray[uid].y = 80;
             that.pilotSpriteArray[uid].scaleX = uid===that.userId ? 1 : -1;
