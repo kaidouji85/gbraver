@@ -164,7 +164,8 @@ function mongoDao(spec, my) {
             armdozerId : 'granBraver',
             pilotId : 'kyoko'
         };
-        collection.insert(userData, function(err, data) {
+        var insertData = ce.clone(userData);
+        collection.insert(insertData, function(err, data) {
             fn(null, userData);
         });   
     }

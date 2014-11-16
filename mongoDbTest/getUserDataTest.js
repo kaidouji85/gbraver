@@ -26,4 +26,19 @@ describe('Mongo DBからユーザ情報を取得する', function() {
             done();
         });
     });
+
+    it('存在しないユーザを指定した場合、ユーザ新規作成する',function(done){
+        var dao = mongoDao({
+            url : mongoUrl
+        });
+        dao.getUserData('nainaiuser',function(err,userData){
+            var expect = {
+                userId : 'nainaiuser',
+                armdozerId : 'granBraver',
+                pilotId : 'kyoko'
+            };
+            assert.deepEqual(userData,expect,'ユーザデータが正しく取得できる');
+            done();
+        });
+    });
 });

@@ -5,9 +5,10 @@ describe('serverクラスのテスト', function() {
     var testPlayerData = require('./testPlayerData.js');
     var assert = require('chai').assert;
     var io = require('socket.io-client');
-    var app;
     var server = require('../server.js');
-    
+    var dbMock = require('./dbMock.js')();
+
+    var app;
     var option;
     var Server;
     
@@ -19,7 +20,7 @@ describe('serverクラスのテスト', function() {
         Server = server({
             httpServer : app
         });
-        Server.onGetPlayerData(testPlayerData.getPlayerData);
+        Server.onGetUserData(dbMock.getUserData);
     });
     
     afterEach(function() {
@@ -35,28 +36,13 @@ describe('serverクラスのテスト', function() {
                 });
                 client.on('successAuth', function(data) {
                     var expect = {
-                        armdozerPict : 'GranBraver.PNG',
-                        pilotPict : 'kyoko.png'
+                        armdozerId : 'granBraver',
+                        pilotId : 'kyoko'
                     };
                     assert.deepEqual(data,expect,'選択しているアームドーザの画像名が正しい');
                     done();
                 });
             });
-
-        });
-
-        it('存在しないユーザなので認証に失敗する',function(done){
-            var client = io(SERVER_URL, option);
-            client.on('connect',function(){
-                client.emit('auth', {
-                    userId : 'nainaiUser@gmail.com'
-                });
-                client.on('authError', function(message) {
-                    assert.equal(message,'nainaiUser@gmail.comは存在しないユーザです');
-                    done();
-                });
-            });
-
         });
     });
 }); 
