@@ -1,8 +1,7 @@
 describe('serverクラスのテスト', function() {
     var SERVER_PORT = process.env.PORT || 3000;
     var SERVER_URL = 'http://localhost:'+SERVER_PORT;
-    
-    var testPlayerData = require('./testPlayerData.js');
+
     var assert = require('chai').assert;
     var io = require('socket.io-client');
     var server = require('../server.js');
@@ -11,6 +10,7 @@ describe('serverクラスのテスト', function() {
     var app;
     var option;
     var Server;
+    var dbMockInst;
     
     beforeEach(function(){
         option = {

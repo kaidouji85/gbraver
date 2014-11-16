@@ -2,25 +2,16 @@
 describe('serverクラスのテスト',function(){
     var SERVER_PORT = process.env.PORT || 3000;
     var SERVER_URL = 'http://localhost:'+SERVER_PORT;
-    
-    var testPlayerData = require('./testPlayerData.js');
+
     var assert = require('chai').assert;
     var io = require('socket.io-client');
-    var app;
     var server = require('../server.js');
-    
+    var dbMock = require('./dbMock.js')();
+
+    var app;
     var option;
     var Server;
-    
-    var userData = {
-        'test001@gmail.com' : {
-            userId : 'test001@gmail.com',
-            armdozerId : 'granBraver'},
-        'test002@gmail.com' : {
-            userId : 'test002@gmail.com',
-            armdozerId : 'landozer'}        
-    };
-    
+
     beforeEach(function(){
         option = {
             'forceNew' : true
@@ -29,11 +20,8 @@ describe('serverクラスのテスト',function(){
         Server = server({
             httpServer : app
         });
-        
-        Server.onGetUserData(function(userId,fn){
-            fn(null,userData[userId]);
-        });
-        Server.onGetPlayerData(testPlayerData.getPlayerData);
+        Server.onGetUserData(dbMock.getUserData);
+        Server.onGetPlayerData(dbMock.getPlayerData);
     });
 
     afterEach(function() {

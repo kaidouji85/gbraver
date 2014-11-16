@@ -75,14 +75,6 @@ window.onload = function() {
                 Game.emitServerResp('dissolveRoom',data);
             });
 
-            socket.on('successGetCharacterList',function(data){
-                Game.emitServerResp('successGetCharacterList',data);
-            });
-
-            socket.on('successGetCharacterInfo',function(data){
-                Game.emitServerResp('successGetCharacterInfo',data);
-            });
-
             socket.on('successLeaveRoom',function(){
                 Game.emitServerResp('successLeaveRoom',null);
             });

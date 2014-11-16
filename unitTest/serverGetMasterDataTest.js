@@ -3,14 +3,10 @@ describe('serverクラスのテスト', function() {
     var SERVER_PORT = process.env.PORT || 3000;
     var SERVER_URL = 'http://localhost:'+SERVER_PORT;
 
-    var testPlayerData = require('./testPlayerData.js');
-    var testArmdozerData = require('./testArmdozerData.js');
-    var testEnemyRoutineDefine = require('./testEnemyRoutineDefine.js');
-    var testPilotData = require('./testPilotData.js');
-    var testMasterData = require('./testMasterData.js');
     var assert = require('chai').assert;
     var io = require('socket.io-client');
     var http = require('http');
+    var dbMock = require('./dbMock.js')();
 
     var app;
     var server = require('../server.js');
@@ -24,8 +20,8 @@ describe('serverクラスのテスト', function() {
         testServer = server({
             httpServer : app
         });
-        testServer.onGetPlayerData(testPlayerData.getPlayerData);
-        testServer.onGetMasterData(testMasterData.getMasterData);
+        testServer.onGetUserData(dbMock.getUserData);
+        testServer.onGetMasterData(dbMock.getMasterData);
     });
 
     afterEach(function() {
@@ -53,11 +49,11 @@ describe('serverクラスのテスト', function() {
                 var expect = {};
                 expect.armdozerList = [
                     {
-                        armdozerId : 'granBraver',
+                        id : 'granBraver',
                         name : 'グランブレイバー',
                         pictName : 'GranBraver.PNG',
                         hp : 3200,
-                        speed : 230,
+                        speed : 500,
                         weapons : {
                             1 : {
                                 name : 'バスターナックル',
@@ -82,11 +78,11 @@ describe('serverクラスのテスト', function() {
                         }
                     },
                     {
-                        armdozerId : 'landozer',
+                        id : 'landozer',
                         name : 'ランドーザ',
                         pictName : 'Landozer.PNG',
                         hp : 4700,
-                        speed : 150,
+                        speed : 300,
                         weapons : {
                             1 : {
                                 name : 'ブレイクパンチ',
@@ -109,6 +105,64 @@ describe('serverクラスのテスト', function() {
                                 power : 3800
                             }
                         }
+                    },
+                    {
+                        id : 'saikyouBraver',
+                        name: '最強ブレイバー',
+                        pictName: 'Landozer.PNG',
+                        hp: 4700,
+                        speed: 1000,
+                        weapons: {
+                            1: {
+                                name: 'ブレイクパンチ',
+                                power: 5000
+                            },
+                            2: {
+                                name: 'ブレイクパンチ',
+                                power: 5000
+                            },
+                            3: {
+                                name: 'ブレイクパンチ',
+                                power: 5000
+                            },
+                            4: {
+                                name: 'ブレイクパンチ',
+                                power: 5000
+                            },
+                            5: {
+                                name: 'ブレイクパンチ',
+                                power: 5000
+                            }
+                        }
+                    },
+                    {
+                        id : 'granBraverForQuickCharge',
+                        name : 'グランブレイバー(クイックチャージ)',
+                        pictName : 'GranBraver.PNG',
+                        hp : 3200,
+                        speed : 1000,
+                        weapons : {
+                            1 : {
+                                name : 'バスターナックル',
+                                power : 800
+                            },
+                            2 : {
+                                name : 'バスターナックル',
+                                power : 1100
+                            },
+                            3 : {
+                                name : 'バスターナックル',
+                                power : 1600
+                            },
+                            4 : {
+                                name : 'バスターナックル',
+                                power : 2100
+                            },
+                            5 : {
+                                name : 'バスターナックル',
+                                power : 2800
+                            }
+                        }
                     }
                 ];
                 expect.pilotList = [
@@ -125,16 +179,15 @@ describe('serverクラスのテスト', function() {
                         name : '茜',
                         pict : 'akane.png',
                         shout : 'まだまだ、勝負はこれからよ。',
-                        type : 'quickCharge',
-                        battery : 3
+                        type : 'recoverHp',
+                        value : 0.5
                     },
                     {
                         id : 'iori',
                         name: '伊織',
                         pict: 'iori.png',
                         shout: 'この一撃に、全てを掛ける！！',
-                        type: 'quickCharge',
-                        battery: 3
+                        type: 'guardBreak'
                     }
                 ];
                 assert.deepEqual(expect,data,'マスターデータが正しい');

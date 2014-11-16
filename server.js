@@ -111,6 +111,7 @@ function server(spec, my) {
         getDefenseRoutine = fn;
     }
 
+    //TODO : 削除予定
     /**
      * パイロットリスト取得関数
      * この関数の実装は外部で行う
@@ -222,7 +223,8 @@ function server(spec, my) {
                 getCharacterInfo(enemyId, function (err, armdozerData) { //TODO : onGetArmdozerDataと置き換える
                     //TODO : パイロットデータはデータベースから持ってくるようにしたい。
                     armdozerData.skill = {
-                        pilotPict : 'kyoko.png',
+                        name : '恭子',
+                        pict : 'kyoko.png',
                         shout : 'やぁぁぁぁて、やるぜ！！    ……なんてね。',
                         type : 'quickCharge',
                         battery : 3
@@ -325,27 +327,6 @@ function server(spec, my) {
             });
         });
 
-        //TODO : 削除予定
-        socket.on('getCharacterList', function(){
-            getCharacterList(function(err,data){
-                socket.emit('successGetCharacterList',data);
-            });
-        });
-
-        //TODO : 削除予定
-        socket.on('getCharacterInfo',function(data){
-            var armdozerId = data.armdozerId;
-            getCharacterInfo(armdozerId,function(err,result){
-                socket.emit('successGetCharacterInfo',result);
-            });
-        });
-
-        socket.on('getArmdozerList',function(data){
-            getArmdozerList(function(err,result){
-                socket.emit('successGetArmdozerList',result);
-            });
-        });
-
         socket.on('leaveRoom',function(){
             roomArray[socket.gbraverInfo.roomId] = room();
             socket.gbraverInfo.roomId = null;
@@ -358,12 +339,6 @@ function server(spec, my) {
                 roomInfo[i] = roomArray[i].getUserIdList();
             }
             socket.emit('successGetRoomInfo',roomInfo);
-        });
-
-        socket.on('getPilotList',function(){
-            getPilotList(function(err,data){
-                socket.emit('successGetPilotList',data);
-            });
         });
 
         socket.on('setPilot',function(data){

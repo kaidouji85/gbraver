@@ -3,13 +3,13 @@ describe('serverクラスのテスト', function() {
     var SERVER_PORT = process.env.PORT || 3000;
     var SERVER_URL = 'http://localhost:'+SERVER_PORT;
 
-    var testPlayerData = require('./testPlayerData.js');
     var assert = require('chai').assert;
     var io = require('socket.io-client');
     var http = require('http');
+    var server = require('../server.js');
+    var dbMock = require('./dbMock.js')();
 
     var app;
-    var server = require('../server.js');
     var testServer;
     var option = {
         'forceNew' : true
@@ -20,7 +20,8 @@ describe('serverクラスのテスト', function() {
         testServer = server({
             httpServer : app
         });
-        testServer.onGetPlayerData(testPlayerData.getPlayerData);
+        testServer.onGetUserData(dbMock.getUserData);
+        testServer.onGetPlayerData(dbMock.getPlayerData);
     });
 
     afterEach(function() {

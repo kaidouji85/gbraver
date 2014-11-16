@@ -2,13 +2,13 @@
 describe('serverクラスのテスト', function() {
     var SERVER_PORT = process.env.PORT || 3000;
     var SERVER_URL = 'http://localhost:'+SERVER_PORT;
-    
-    var testPlayerData = require('./testPlayerData.js');
+
     var assert = require('chai').assert;
     var io = require('socket.io-client');
     var app;
     var server = require('../server.js');
     var testCompleter = require('./testCompleter.js');
+    var dbMock = require('./dbMock.js')();
     
     var option;
     var Server;
@@ -23,7 +23,8 @@ describe('serverクラスのテスト', function() {
             httpServer : app
         });
         roomId = -1;
-        Server.onGetPlayerData(testPlayerData.getPlayerData);
+        Server.onGetUserData(dbMock.getUserData);
+        Server.onGetPlayerData(dbMock.getPlayerData);
     });
 
     beforeEach(function() {
@@ -113,7 +114,8 @@ describe('serverクラスのテスト', function() {
                                 }
                             },
                             skill : {
-                                pilotPict : 'kyoko.png',
+                                name : '恭子',
+                                pict : 'kyoko.png',
                                 shout : 'やぁぁぁぁて、やるぜ！！    ……なんてね。',
                                 type : 'quickCharge',
                                 battery : 3
@@ -153,10 +155,11 @@ describe('serverクラスのテスト', function() {
                                 }
                             },
                             skill : {
-                                pilotPict : 'akane.png',
+                                name : '茜',
+                                pict : 'akane.png',
                                 shout : 'まだまだ、勝負はこれからよ。',
-                                type : 'quickCharge',
-                                battery : 3
+                                type : 'recoverHp',
+                                value : 0.5
                             }
                         }
                     }

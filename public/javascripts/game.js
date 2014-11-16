@@ -63,18 +63,6 @@ function game(spec, my) {
         core.replaceScene(core.topScene);
         emitChangeScene('top');
     };
-    
-    core.changeSetArmdozerScene = function(data){
-        core.setArmdozerScene = setArmdozerScene(data);
-        core.setArmdozerScene.onSelectArmdozer(function(data){
-            emitSendMessage('getCharacterInfo',data);
-        });
-        core.setArmdozerScene.onPushPrevButton(function(data){
-            core.changeTopScene();
-        });
-        core.replaceScene(core.setArmdozerScene);
-        emitChangeScene('setArmdozer');
-    };
 
     core.changeSelectPilotScene = function() {
         var scene = selectPilotScene({
@@ -145,14 +133,6 @@ function game(spec, my) {
             case 'dissolveRoom':
                 core.battleScene = null;
                 core.changeTopScene();
-                break;
-            case 'successGetCharacterList' :
-                core.changeSetArmdozerScene({
-                    armdozerIdList : data
-                });
-                break;
-            case 'successGetCharacterInfo':
-                core.changeArmdozerInfoScene(data);
                 break;
             case 'succesEnterRoom':
                 core.roomSelectScene.emitSuccesEnterRoom();
