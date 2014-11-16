@@ -187,41 +187,5 @@ function game(spec, my) {
         }
     }
 
-    //TODO : 削除予定
-    function getArmdozerIdByPictName(pictName){
-        for(var i in armdozerList){
-            if(armdozerList[i].pictName === pictName) {
-                return armdozerList[i].armdozerId;
-            }
-        }
-    }
-
-    //TODO : 削除予定
-    function getArmdozerPictByArmdozerId(armdozerId){
-        for(var i in armdozerList){
-            if(armdozerList[i].armdozerId === armdozerId) {
-                return armdozerList[i].pictName;
-            }
-        }
-    }
-
-    //TODO : 削除予定
-    function getPilotIdByPictName(pictName){
-        for(var i in pilotList){
-            if(pilotList[i].pict === pictName){
-                return pilotList[i].id;
-            }
-        }
-    }
-
-    //TODO : 削除予定
-    function getPilotPictByPilotId(pilotId){
-        for(var i in pilotList){
-            if(pilotList[i].id === pilotId){
-                return pilotList[i].pict;
-            }
-        }
-    }
-
     return core;
 }
