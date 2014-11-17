@@ -3,6 +3,7 @@ window.onload = roomSelectToBattle;
 
 function roomSelectToBattle(){
     var assert = chai.assert;
+    var testDataInst = testData();
     var Game;
     initGame();
 
@@ -11,8 +12,8 @@ function roomSelectToBattle(){
             userId : 'test001@gmail.com',
             armdozerPict : 'GranBraver.PNG',
             pilotPict : 'kyoko.png',
-            armdozerList : getArmdozerList(),
-            pilotList : getPilotList()
+            armdozerList : testDataInst.getMasterData().armdozerList,
+            pilotList : testDataInst.getMasterData().pilotList
         });
         Game.start();
         Game.onload = function(){
@@ -50,11 +51,11 @@ function roomSelectToBattle(){
         var gameStartData = {
             'test001@gmail.com' : {
                 userId : 'test001@gmail.com',
-                status : getTestPlayerData('test001@gmail.com')
+                status : testDataInst.getPlayerData('test001@gmail.com').status
             },
             'test002@gmail.com' : {
                 userId : 'test002@gmail.com',
-                status : getTestPlayerData('test002@gmail.com')
+                status : testDataInst.getPlayerData('test002@gmail.com').status
             }
         };
         Game.onChangeScene(assertChangeScene);

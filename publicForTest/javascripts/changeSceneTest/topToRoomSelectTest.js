@@ -3,6 +3,7 @@ window.onload = topToRoomSelect;
 
 function topToRoomSelect(){
     var assert = chai.assert;
+    var testDataInst = testData();
     var Game;
     initGame();
 
@@ -11,8 +12,8 @@ function topToRoomSelect(){
             userId : 'test001@gmail.com',
             armdozerId : 'granBraver',
             pilotId : 'kyoko',
-            armdozerList : getArmdozerList(),
-            pilotList : getPilotList()
+            armdozerList : testDataInst.getMasterData().armdozerList,
+            pilotList : testDataInst.getMasterData().pilotList
         });
         Game.start();
         Game.onload = function(){

@@ -6,15 +6,15 @@ window.onload = doTest;
 
 function doTest(){
     var assert = chai.assert;
+    var testDataInst = testData();
     var Game = gameBase();
     var testScene;
-    var armdozerList = getArmdozerList();
 
     Game.start();
     Game.onload = function(){
         testScene = selectArmdozerScene({
             selectArmdozerId : 'granBraver',
-            armdozerList : armdozerList
+            armdozerList : testDataInst.getMasterData().armdozerList
         });
         Game.replaceScene(testScene);
         Game.currentScene.tl.delay(30).then(pushArmdozerButton);

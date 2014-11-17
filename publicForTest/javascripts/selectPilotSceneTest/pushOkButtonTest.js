@@ -6,40 +6,15 @@ window.onload = doTest;
 
 function doTest(){
     var assert = chai.assert;
+    var testDataInst = testData();
     var Game = gameBase();
     var testScene;
-    var pilotList = [
-        {
-            id : 'kyoko',
-            name : '恭子',
-            pict : 'kyoko.png',
-            shout : 'やぁぁぁぁて、やるぜ！！    ……なんてね。',
-            type : 'quickCharge',
-            battery : 3
-        },
-        {
-            id : 'akane',
-            name : '茜',
-            pict : 'akane.png',
-            shout : 'まだまだ、勝負はこれからよ。',
-            type : 'recoverHp',
-            value : 0.5
-        },
-        {
-            id : 'iori',
-            name: '伊織',
-            pict: 'iori.png',
-            shout: 'この一撃に、全てを掛ける！！',
-            type: 'quickCharge',
-            battery: 3
-        }
-    ];
 
     Game.start();
     Game.onload = function(){
         testScene = selectPilotScene({
             selectPilotId : 'akane',
-            pilotList : pilotList
+            pilotList : testDataInst.getMasterData().pilotList
         });
         Game.replaceScene(testScene);
         Game.currentScene.tl.delay(30).then(pushOkButton);

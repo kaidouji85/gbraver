@@ -3,6 +3,7 @@ window.onload = topToSetArmdozer;
 
 function topToSetArmdozer(){
     var assert = chai.assert;
+    var testDataInst = testData();
     var Game;
     initGame();
 
@@ -11,8 +12,8 @@ function topToSetArmdozer(){
             userId : 'test001@gmail.com',
             armdozerId : 'granBraver',
             pilotId : 'kyoko',
-            armdozerList : getArmdozerList(),
-            pilotList : getPilotList()
+            armdozerList : testDataInst.getMasterData().armdozerList,
+            pilotList : testDataInst.getMasterData().pilotList
         });
         Game.start();
         Game.onload = function(){
@@ -49,11 +50,11 @@ function topToSetArmdozer(){
         var serverResp = {
             'test001@gmail.com' : {
                 userId : 'test001@gmail.com',
-                status : getTestPlayerData('test001@gmail.com')
+                status : testDataInst.getPlayerData('test001@gmail.com').status
             },
             'nonePlayerCharacter' : {
                 userId : 'nonePlayerCharacter',
-                status : getTestPlayerData('test002@gmail.com')
+                status : testDataInst.getPlayerData('test002@gmail.com').status
             }
         };
         Game.onChangeScene(assertOfChangeScene);

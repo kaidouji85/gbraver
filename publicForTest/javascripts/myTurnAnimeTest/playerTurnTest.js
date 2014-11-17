@@ -5,9 +5,10 @@ enchant.ENV.SOUND_ENABLED_ON_MOBILE_SAFARI = false;
 window.onload = playerTurnAnimeTest;
 
 function playerTurnAnimeTest(){
+    var testDataInst = testData();
     var statusArray = {
-        'test002@gmail.com' : getTestPlayerData('test002@gmail.com'),
-        'test001@gmail.com' : getTestPlayerData('test001@gmail.com')
+        'test002@gmail.com' : testDataInst.getPlayerData('test002@gmail.com').status,
+        'test001@gmail.com' : testDataInst.getPlayerData('test001@gmail.com').status
     };
     var testGame = gameBase();
     var testScene;

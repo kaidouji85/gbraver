@@ -3,9 +3,10 @@ window.onload = battleToTop_win;
 
 function battleToTop_win(){
     var assert = chai.assert;
+    var testDataInst = testData();
     var statusArray = {
-        'test002@gmail.com' : getTestPlayerData('test002@gmail.com'),
-        'saikyou@gmail.com' : getTestPlayerData('saikyou@gmail.com')
+        'test002@gmail.com' : testDataInst.getPlayerData('test002@gmail.com').status,
+        'saikyou@gmail.com' : testDataInst.getPlayerData('saikyou@gmail.com').status
     };
     var Game;
     initGame();
@@ -15,8 +16,9 @@ function battleToTop_win(){
             userId : 'saikyou@gmail.com',
             armdozerId : 'granBraver',
             pilotId : 'kyoko',
-            armdozerList : getArmdozerList(),
-            pilotList : getPilotList()});
+            armdozerList : testDataInst.getMasterData().armdozerList,
+            pilotList : testDataInst.getMasterData().pilotList
+        });
         Game.start();
         Game.onload = function(){
             Game.changeBattleScene({

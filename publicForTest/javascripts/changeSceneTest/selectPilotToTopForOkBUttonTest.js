@@ -3,8 +3,8 @@ window.onload = doTest;
 
 function doTest(){
     var assert = chai.assert;
+    var testDataInst = testData();
     var Game;
-    var pilotList = getPilotList();
     initGame();
 
     function initGame(){
@@ -12,8 +12,8 @@ function doTest(){
             userId : 'test001@gmail.com',
             armdozerId : 'granBraver',
             pilotId : 'kyoko',
-            pilotList : pilotList,
-            armdozerList : getArmdozerList()
+            armdozerList : testDataInst.getMasterData().armdozerList,
+            pilotList : testDataInst.getMasterData().pilotList
         });
         Game.start();
         Game.onload = function(){
