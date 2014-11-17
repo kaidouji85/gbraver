@@ -12,7 +12,7 @@ describe('Mongo DBからキャラクター情報を取得する', function() {
         });
     });
 
-    it('キャラクターリストを取得することができる',function(done){
+    it('キャラクター情報を取得することができる',function(done){
         var dao = mongoDao({
             url : mongoUrl
         });

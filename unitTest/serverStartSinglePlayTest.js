@@ -23,7 +23,7 @@ describe('serverクラスのテスト', function() {
         });
         testServer.onGetUserData(dbMock.getUserData);
         testServer.onGetPlayerData(dbMock.getPlayerData);
-        testServer.onGetCharacterInfo(dbMock.getArmdozerData);
+        testServer.onGetEnemyData(dbMock.getEnemyData);
         testServer.onGetAttackRoutine(testEnemyRoutineDefine.getAttackRoutine);
         testServer.onGetDefenseRoutine(testEnemyRoutineDefine.getDefenseRoutine);
     });
@@ -98,7 +98,6 @@ describe('serverクラスのテスト', function() {
                     'nonePlayerCharacter' : {
                         userId : 'nonePlayerCharacter',
                         status : {
-                            armdozerId : 'landozer',
                             name : 'ランドーザ',
                             pictName : 'Landozer.PNG',
                             hp : 4700,

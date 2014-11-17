@@ -179,15 +179,7 @@ function dbMock(spec,my){
 
     that.getPlayerData = function(userId,cb){
         var userData = searchUser(userId);
-        var armdozerData = searchArmdozer(userData.armdozerId);
-        var pilotData = searchPilot(userData.pilotId);
-        var playerData = {
-            userId : userId,
-            status : armdozerData
-        };
-        playerData.status.skill = pilotData;
-        delete playerData.status.armdozerId;
-        delete playerData.status.skill.id;
+        var playerData = createUnitData(userData.userId, userData.armdozerId, userData.pilotId);
         cb(null,playerData);
     }
 
@@ -202,6 +194,11 @@ function dbMock(spec,my){
             pilotList : pilotArray
         };
         cb(null,masterData);
+    }
+
+    that.getEnemyData = function(armdozerId,pilotId,cb){
+        var enemyData = createUnitData('nonePlayerCharacter', armdozerId, pilotId);
+        cb(null,enemyData);
     }
 
     function searchUser(userId){
@@ -226,6 +223,19 @@ function dbMock(spec,my){
                 return ce.clone(pilotArray[i]);
             }
         }
+    }
+
+    function createUnitData(userId,armdozerId,pilotId){
+        var armdozerData = searchArmdozer(armdozerId);
+        var pilotData = searchPilot(pilotId);
+        var unitData = {
+            userId : userId,
+            status : armdozerData
+        };
+        unitData.status.skill = pilotData;
+        delete unitData.status.armdozerId;
+        delete unitData.status.skill.id;
+        return unitData;
     }
 
     return that;

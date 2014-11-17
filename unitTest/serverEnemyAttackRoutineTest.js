@@ -24,6 +24,7 @@ describe('serverクラスのテスト', function() {
         testServer.onGetUserData(dbMock.getUserData);
         testServer.onGetPlayerData(dbMock.getPlayerData);
         testServer.onGetCharacterInfo(dbMock.getArmdozerData);
+        testServer.onGetEnemyData(dbMock.getEnemyData);
         testServer.onGetDefenseRoutine(testEnemyRoutineDefine.getDefenseRoutine);
     });
 

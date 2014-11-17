@@ -112,6 +112,7 @@ gameServer.onGetUserData(dao.getUserData);
 gameServer.onGetPlayerData(dao.getPlayerData);
 gameServer.onSetArmdozerId(dao.setArmdozerId);
 gameServer.onGetCharacterInfo(dao.getCharacterInfo);
+gameServer.onGetEnemyData(dao.getEnemyData);
 gameServer.onGetAttackRoutine(enemyRoutineDefine.getAttackRoutine);
 gameServer.onGetDefenseRoutine(enemyRoutineDefine.getDefenseRoutine);
 gameServer.onSetPilotId(dao.setPilotId);

@@ -12,7 +12,7 @@ function mongoDao(spec, my) {
                 var pilotId = user.pilotId;
                 getArmdozerData(armdozerId,db,function(err,armdozer){
                     getPilotData(pilotId,db,function(err,pilot){
-                        var playerData = createPlayerData(user,armdozer,pilot);
+                        var playerData = createPlayerData(user.userId,armdozer,pilot);
                         db.close();
                         fn(null,playerData);
                     });
@@ -41,36 +41,6 @@ function mongoDao(spec, my) {
         });
     };
 
-    that.getArmdozerList = function(fn){
-        MongoClient.connect(url, function(err, db){
-            getArmdozerList(db,function(err,armdozerList){
-                db.close();
-                fn(null,armdozerList);
-            });
-        });
-    }
-
-    //TODO : 削除予定
-    that.getCharacterList = function(fn){
-        MongoClient.connect(url, function(err, db){
-            var characterList = new Array();
-            var characterRecord;
-            var collection = db.collection('armdozers');
-            collection.find().toArray(function(err,result){
-                for(var i in result){
-                    characterRecord = {
-                        id : result[i].armdozerId,
-                        name : result[i].name
-                    };
-                    characterList.push(characterRecord)
-                }
-                db.close();
-                fn(null,characterList);
-            });
-
-        });
-    }
-
     //TODO : 削除予定
     that.getCharacterInfo = function(armdozerId,fn){
         MongoClient.connect(url, function(err, db){
@@ -80,24 +50,6 @@ function mongoDao(spec, my) {
                 characterInfo.armdozerId = armdozerId;
                 db.close();
                 fn(null,characterInfo);
-            });
-        });
-    }
-
-    that.getPilotList = function(fn){
-        MongoClient.connect(url, function(err, db){
-            getPilotList(db,function(err,pilotList){
-                db.close();
-                fn(null,pilotList);
-            });
-        });
-    }
-
-    that.getPilotData = function(pilotId,fn){
-        MongoClient.connect(url, function(err, db){
-            getPilotData(pilotId,db,function(err,data){
-                fn(err,data);
-                db.close();
             });
         });
     }
@@ -127,9 +79,21 @@ function mongoDao(spec, my) {
             });
         });
     }
+
+    that.getEnemyData = function(armdozerId,pilotId,fn){
+        MongoClient.connect(url, function(err, db) {
+            getArmdozerData(armdozerId,db,function(err,armdozer){
+                getPilotData(pilotId,db,function(err,pilot){
+                    var enemyData = createPlayerData('nonePlayerCharacter',armdozer,pilot);
+                    db.close();
+                    fn(null,enemyData);
+                });
+            });
+        });
+    }
     
     function getOrCreateUserData(userId, db, fn){
-        getUserData(userId, db, function(err,user){
+        getUserDataByMongoDb(userId, db, function(err,user){
             if(user!==null){
                 fn(err,user);
             } else {
@@ -140,18 +104,15 @@ function mongoDao(spec, my) {
         });
     }
     
-    function getUserData(userId, db, fn) {
+    function getUserDataByMongoDb(userId, db, fn) {
         var collection = db.collection('users');
         collection.findOne({
             userId : userId
         }, function(err, data) {
             var userData = null;
             if(data!==null){
-                userData = {
-                    userId : data.userId,
-                    armdozerId : data.armdozerId,
-                    pilotId : data.pilotId
-                };
+                userData = ce.clone(data);
+                delete userData._id;
             }
             fn(null, userData);
         });
@@ -189,9 +150,9 @@ function mongoDao(spec, my) {
         });
     }
 
-    function createPlayerData(user,armdozer,pilot) {
+    function createPlayerData(userId,armdozer,pilot) {
         var playerData = {
-            userId : user.userId,
+            userId : userId,
             status : createStatusData(armdozer,pilot)
         };
 
@@ -233,34 +194,9 @@ function mongoDao(spec, my) {
     }
 
     function createArmdozerData(armdozer){
-        var armdozerData = {
-            name : armdozer.name,
-            pictName : armdozer.pictName,
-            hp : armdozer.hp,
-            speed : armdozer.speed,
-            weapons : {
-                1 : {
-                    name : armdozer.weapons['1'].name,
-                    power : armdozer.weapons['1'].power
-                },
-                2 : {
-                    name : armdozer.weapons['2'].name,
-                    power : armdozer.weapons['2'].power
-                },
-                3 : {
-                    name : armdozer.weapons['3'].name,
-                    power : armdozer.weapons['3'].power
-                },
-                4 : {
-                    name : armdozer.weapons['4'].name,
-                    power : armdozer.weapons['4'].power
-                },
-                5 : {
-                    name : armdozer.weapons['5'].name,
-                    power : armdozer.weapons['5'].power
-                }
-            }
-        };
+        var armdozerData = ce.clone(armdozer);
+        delete armdozerData._id;
+        delete armdozerData.armdozerId;
         return armdozerData;
     }
 

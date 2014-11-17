@@ -111,6 +111,18 @@ function server(spec, my) {
         getMasterData = fn;
     }
 
+    /**
+     * 敵データ取得関数
+     * この関数の実装は外部で行う
+     * @param {String} armdozerId
+     * @param {String} pilotId
+     * @param {Function} callback(err,enemyData)
+     */
+    var getEnemyData;
+    io.onGetEnemyData = function(fn){
+        getEnemyData = fn;
+    }
+
     io.sockets.on('connection', function(socket) {
         socket.gbraverInfo = {
             userId : null,
@@ -187,25 +199,11 @@ function server(spec, my) {
 
             getPlayerData(socket.gbraverInfo.userId, function(err, userData) {
                 socket.gbraverInfo.singlePlayRoom.addUser(userData);
-                getCharacterInfo(enemyId, function (err, armdozerData) { //TODO : onGetArmdozerDataと置き換える
-                    //TODO : パイロットデータはデータベースから持ってくるようにしたい。
-                    armdozerData.skill = {
-                        name : '恭子',
-                        pict : 'kyoko.png',
-                        shout : 'やぁぁぁぁて、やるぜ！！    ……なんてね。',
-                        type : 'quickCharge',
-                        battery : 3
-                    };
-                    enterRoomByNPC(armdozerData);
-                });
+                getEnemyData(enemyId,'kyoko',enterRoomByNPC);//TODO パイロットIDもクライアント側で指定できるようにする
             });
 
-            function enterRoomByNPC(armdozerData){
-                var enemyUserData = {
-                    userId: NONE_PLAYER_CHARACTOR_NAME,
-                    status: armdozerData
-                };
-                socket.gbraverInfo.singlePlayRoom.addUser(enemyUserData);
+            function enterRoomByNPC(err,enemyData){
+                socket.gbraverInfo.singlePlayRoom.addUser(enemyData);
                 socket.gbraverInfo.singlePlayRoom.initBattle();
                 socket.gbraverInfo.enemyRoutineBase.setRespData(null);
                 socket.emit('gameStart',socket.gbraverInfo.singlePlayRoom.getUsers());
