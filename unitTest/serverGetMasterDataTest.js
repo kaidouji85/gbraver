@@ -49,7 +49,7 @@ describe('serverクラスのテスト', function() {
                 var expect = {};
                 expect.armdozerList = [
                     {
-                        id : 'granBraver',
+                        armdozerId : 'granBraver',
                         name : 'グランブレイバー',
                         pictName : 'GranBraver.PNG',
                         hp : 3200,
@@ -78,7 +78,7 @@ describe('serverクラスのテスト', function() {
                         }
                     },
                     {
-                        id : 'landozer',
+                        armdozerId : 'landozer',
                         name : 'ランドーザ',
                         pictName : 'Landozer.PNG',
                         hp : 4700,
@@ -107,7 +107,7 @@ describe('serverクラスのテスト', function() {
                         }
                     },
                     {
-                        id : 'saikyouBraver',
+                        armdozerId : 'saikyouBraver',
                         name: '最強ブレイバー',
                         pictName: 'Landozer.PNG',
                         hp: 4700,
@@ -136,7 +136,7 @@ describe('serverクラスのテスト', function() {
                         }
                     },
                     {
-                        id : 'granBraverForQuickCharge',
+                        armdozerId : 'granBraverForQuickCharge',
                         name : 'グランブレイバー(クイックチャージ)',
                         pictName : 'GranBraver.PNG',
                         hp : 3200,

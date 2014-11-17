@@ -98,7 +98,7 @@ describe('serverクラスのテスト', function() {
                     'nonePlayerCharacter' : {
                         userId : 'nonePlayerCharacter',
                         status : {
-                            id : 'landozer',
+                            armdozerId : 'landozer',
                             name : 'ランドーザ',
                             pictName : 'Landozer.PNG',
                             hp : 4700,

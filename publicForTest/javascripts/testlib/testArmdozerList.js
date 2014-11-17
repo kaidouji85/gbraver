@@ -86,6 +86,35 @@ function getArmdozerList(){
                     power : 1200
                 }
             }
+        },
+        {
+            armdozerId : 'saikyouBraver',
+            name: '最強ブレイバー',
+            pictName: 'GranBraver.PNG',
+            hp: 4700,
+            speed: 1000,
+            weapons: {
+                1: {
+                    name: 'ブレイクパンチ',
+                    power: 5000
+                },
+                2: {
+                    name: 'ブレイクパンチ',
+                    power: 5000
+                },
+                3: {
+                    name: 'ブレイクパンチ',
+                    power: 5000
+                },
+                4: {
+                    name: 'ブレイクパンチ',
+                    power: 5000
+                },
+                5: {
+                    name: 'ブレイクパンチ',
+                    power: 5000
+                }
+            }
         }
     ];
     return armdozerList;

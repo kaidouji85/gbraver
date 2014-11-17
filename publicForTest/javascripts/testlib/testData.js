@@ -1,8 +1,5 @@
-var ce = require('cloneextend');
-
-function dbMock(spec,my){
+function testData(spec,my){
     var that = {};
-
     var userArray = [
         {
             userId : 'test001@gmail.com',
@@ -15,7 +12,7 @@ function dbMock(spec,my){
             pilotId : 'akane'
         },
         {
-            userId : 'test003@gmail.com',
+            userId : 'saikyou@gmail.com',
             armdozerId : 'saikyouBraver',
             pilotId : 'kyoko'
         },
@@ -89,7 +86,7 @@ function dbMock(spec,my){
         {
             armdozerId : 'saikyouBraver',
             name: '最強ブレイバー',
-            pictName: 'Landozer.PNG',
+            pictName: 'GranBraver.PNG',
             hp: 4700,
             speed: 1000,
             weapons: {
@@ -173,8 +170,7 @@ function dbMock(spec,my){
     ];
 
     that.getUserData = function(userId,cb){
-        var userData = searchUser(userId);
-        cb(null,userData);
+        return searchUser(userId);
     }
 
     that.getPlayerData = function(userId,cb){
@@ -188,12 +184,12 @@ function dbMock(spec,my){
         playerData.status.skill = pilotData;
         delete playerData.status.armdozerId;
         delete playerData.status.skill.id;
-        cb(null,playerData);
+        return playerData;
     }
 
     that.getArmdozerData = function(armdozerId,cb){
         var armdozerData = searchArmdozer(armdozerId);
-        cb(null,armdozerData);
+        return armdozerData;
     }
 
     that.getMasterData = function(cb){
@@ -201,13 +197,13 @@ function dbMock(spec,my){
             armdozerList : armdozerArray,
             pilotList : pilotArray
         };
-        cb(null,masterData);
+        return masterData;
     }
 
     function searchUser(userId){
         for(var i=0; i<userArray.length; i++){
             if(userId===userArray[i].userId){
-                return ce.clone(userArray[i]);
+                return $.extend(true, {}, userArray[i]);
             }
         }
     }
@@ -215,7 +211,7 @@ function dbMock(spec,my){
     function searchArmdozer(armdozerId){
         for(var i=0; i<armdozerArray.length; i++){
             if(armdozerArray[i].armdozerId === armdozerId){
-                return ce.clone(armdozerArray[i]);
+                return $.extend(true, {}, armdozerArray[i]);
             }
         }
     }
@@ -223,12 +219,10 @@ function dbMock(spec,my){
     function searchPilot(pilotId){
         for(var i=0; i<pilotArray.length; i++){
             if(pilotArray[i].id===pilotId){
-                return ce.clone(pilotArray[i]);
+                return $.extend(true, {}, pilotArray[i]);
             }
         }
     }
 
     return that;
 }
-
-module.exports = dbMock;
