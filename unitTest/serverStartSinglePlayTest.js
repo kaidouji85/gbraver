@@ -19,11 +19,9 @@ describe('serverクラスのテスト', function() {
     beforeEach(function() {
         app = http.createServer().listen(SERVER_PORT);
         testServer = server({
-            httpServer : app
+            httpServer : app,
+            dao : dbMock
         });
-        testServer.onGetUserData(dbMock.getUserData);
-        testServer.onGetPlayerData(dbMock.getPlayerData);
-        testServer.onGetEnemyData(dbMock.getEnemyData);
         testServer.onGetAttackRoutine(testEnemyRoutineDefine.getAttackRoutine);
         testServer.onGetDefenseRoutine(testEnemyRoutineDefine.getDefenseRoutine);
     });

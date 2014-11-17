@@ -7,64 +7,20 @@ var enemyRoutineBase = require('./enemyRoutineBase.js');
  * @param spec {Object}
  *     httpServer : httpサーバオブジェクト
  *     logLevel : socket.ioのログレベル
+ *     dao : dao
  * @param my {Object}
  */
 function server(spec, my) {
     var NONE_PLAYER_CHARACTOR_NAME = 'nonePlayerCharacter';
     var app = spec.httpServer;
     var logLevel = spec.logLevel || 1;
+    var dao = spec.dao;
     var io = require('socket.io').listen(app, {
         'log level' : logLevel
     });
     var roomArray = {};
     for(var i = 0; i < 100; i++){
         roomArray[i] = room();
-    }
-
-    /**
-     * 戦闘用プレイヤー情報取得
-     * この関数の実装は外部で行う
-     * @param {String} useId
-     * @param {Function} callback(err,data)
-     */
-    var getPlayerData;
-    io.onGetPlayerData = function(fn) {
-        getPlayerData = fn;
-    };
-
-    /**
-     * ユーザ情報取得
-     * この関数の実装は外部で行う
-     * @param {String} useId
-     * @param {Function} callback(err,data)
-     */
-    var getUserData;
-    io.onGetUserData = function(fn){
-        getUserData = fn;
-    };
-
-    /**
-     * ユーザ情報更新
-     * この関数の実装は外部で行う
-     * @param {String} userId
-     * @param {String} arndozerId
-     * @param {Function} callback(err,result)
-     */
-    var setArmdozerId;
-    io.onSetArmdozerId = function(fn){
-        setArmdozerId = fn;
-    };
-
-    //TODO : 削除予定
-    /**
-     * アームドーザ情報取得関数
-     * この関数の実装は外部で行う
-     * @param {String} armdozerId
-     * @param {FUnction} callback(err,result)
-     */
-    var getCharacterInfo;
-    io.onGetCharacterInfo = function(fn){
-        getCharacterInfo = fn;
     }
 
     /**
@@ -89,40 +45,6 @@ function server(spec, my) {
         getDefenseRoutine = fn;
     }
 
-    /**
-     * パイロット選択関数
-     * この関数の実装は外部で行う
-     * @param {String} userId
-     * @param {String} pilotId
-     * @param {Function} callback(err,result)
-     */
-    var setPilotId;
-    io.onSetPilotId = function(fn){
-        setPilotId = fn;
-    }
-
-    /**
-     * マスタデータ取得関数
-     * この関数の実装は外部で行う
-     * @param {Function} callback(err,masterData)
-     */
-    var getMasterData;
-    io.onGetMasterData = function(fn){
-        getMasterData = fn;
-    }
-
-    /**
-     * 敵データ取得関数
-     * この関数の実装は外部で行う
-     * @param {String} armdozerId
-     * @param {String} pilotId
-     * @param {Function} callback(err,enemyData)
-     */
-    var getEnemyData;
-    io.onGetEnemyData = function(fn){
-        getEnemyData = fn;
-    }
-
     io.sockets.on('connection', function(socket) {
         socket.gbraverInfo = {
             userId : null,
@@ -133,7 +55,7 @@ function server(spec, my) {
 
         socket.on('auth',function(data){
             var L_userId = data.userId;
-            getUserData(L_userId, function(err, userData) {
+            dao.getUserData(L_userId, function(err, userData) {
                 var sendData = {
                     armdozerId : userData.armdozerId,
                     pilotId : userData.pilotId
@@ -174,7 +96,7 @@ function server(spec, my) {
             }
 
             function prepareBattle() {
-                getPlayerData(socket.gbraverInfo.userId, function(err, userData) {
+                dao.getPlayerData(socket.gbraverInfo.userId, function(err, userData) {
                     socket.join(socket.gbraverInfo.roomId);
                     socket.emit('succesEnterRoom');
                     roomArray[socket.gbraverInfo.roomId].addUser(userData);
@@ -197,9 +119,9 @@ function server(spec, my) {
                 defenseRoutine : defenseRoutine
             });
 
-            getPlayerData(socket.gbraverInfo.userId, function(err, userData) {
+            dao.getPlayerData(socket.gbraverInfo.userId, function(err, userData) {
                 socket.gbraverInfo.singlePlayRoom.addUser(userData);
-                getEnemyData(enemyId,'kyoko',enterRoomByNPC);//TODO パイロットIDもクライアント側で指定できるようにする
+                dao.getEnemyData(enemyId,'kyoko',enterRoomByNPC);//TODO パイロットIDもクライアント側で指定できるようにする
             });
 
             function enterRoomByNPC(err,enemyData){
@@ -285,7 +207,7 @@ function server(spec, my) {
 
         socket.on('setArmdozer', function (data) {
             var armdozerId = data.armdozerId;
-            setArmdozerId(socket.gbraverInfo.userId, armdozerId, function (err, result) {
+            dao.setArmdozerId(socket.gbraverInfo.userId, armdozerId, function (err, result) {
                 if (result === true) {
                     socket.emit('successSetArmdozer', {});
                 }
@@ -309,13 +231,13 @@ function server(spec, my) {
         socket.on('setPilot',function(data){
             var userId = socket.gbraverInfo.userId;
             var pilotId = data.pilotId;
-            setPilotId(userId,pilotId,function(err,result){
+            dao.setPilotId(userId,pilotId,function(err,result){
                 socket.emit('successSetPilot',true);
             });
         });
 
         socket.on('getMasterData',function(data){
-            getMasterData(function(err,data){
+            dao.getMasterData(function(err,data){
                 socket.emit('successGetMasterData',data);
             });
         });

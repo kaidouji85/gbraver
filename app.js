@@ -106,14 +106,8 @@ var httpServer = app.listen(app.get('port'), function(){
 //socket.io server
 var server = require('./server.js');
 var gameServer = server({
-    httpServer : httpServer
+    httpServer : httpServer,
+    dao : dao
 });
-gameServer.onGetUserData(dao.getUserData);
-gameServer.onGetPlayerData(dao.getPlayerData);
-gameServer.onSetArmdozerId(dao.setArmdozerId);
-gameServer.onGetCharacterInfo(dao.getCharacterInfo);
-gameServer.onGetEnemyData(dao.getEnemyData);
 gameServer.onGetAttackRoutine(enemyRoutineDefine.getAttackRoutine);
 gameServer.onGetDefenseRoutine(enemyRoutineDefine.getDefenseRoutine);
-gameServer.onSetPilotId(dao.setPilotId);
-gameServer.onGetMasterData(dao.getMasterData);

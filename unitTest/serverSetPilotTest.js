@@ -18,10 +18,9 @@ describe('serverクラスのテスト',function(){
         };
         app = require('http').createServer().listen(SERVER_PORT);
         Server = server({
-            httpServer : app
+            httpServer : app,
+            dao : dbMock
         });
-        Server.onGetUserData(dbMock.getUserData);
-        Server.onGetPlayerData(dbMock.getPlayerData);
     });
 
     afterEach(function() {
@@ -40,7 +39,7 @@ describe('serverクラスのテスト',function(){
                 client.emit('setPilot',{
                     pilotId : 'iori'
                 });
-                Server.onSetPilotId(updatePilotId);
+                dbMock.setPilotId = updatePilotId;
             }
 
             function updatePilotId(userId,pilotId,fn) {

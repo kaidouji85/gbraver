@@ -20,11 +20,10 @@ describe('serverクラスのテスト', function() {
         };
         app = require('http').createServer().listen(SERVER_PORT);
         Server = server({
-            httpServer : app
+            httpServer : app,
+            dao : dbMock
         });
         roomId = -1;
-        Server.onGetUserData(dbMock.getUserData);
-        Server.onGetPlayerData(dbMock.getPlayerData);
     });
 
     beforeEach(function() {
