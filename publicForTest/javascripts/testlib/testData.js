@@ -169,6 +169,24 @@ function testData(spec,my){
         }
     ];
 
+    var stageData = [
+        {
+            title : '初級',
+            enemyId : 'landozer',
+            routineId : 'attack3'
+        },
+        {
+            title : '中級',
+            enemyId : 'granBraver',
+            routineId : 'attack3'
+        },
+        {
+            title : '上級',
+            enemyId : 'zeroBraver',
+            routineId : 'attack3'
+        }
+    ];
+
     that.getUserData = function(userId,cb){
         return searchUser(userId);
     }
@@ -198,6 +216,10 @@ function testData(spec,my){
             pilotList : pilotArray
         };
         return masterData;
+    }
+
+    that.getStageData = function(){
+        return stageData;
     }
 
     function searchUser(userId){
