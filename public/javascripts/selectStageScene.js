@@ -3,6 +3,7 @@ function selectStageScene(spec,my){
     var core = enchant.Core.instance;
     var stageData = spec.stageData;
     var armdozerList = spec.armdozerList;
+    var emitPushStageButton = function(enemyId,routineId){};
 
     that.stageButtonArray = [];
     init();
@@ -21,16 +22,29 @@ function selectStageScene(spec,my){
 
         //ステージボタン
         for(var i=0; i<stageData.length; i++){
-            that.stageButtonArray[i] = pictButton({
-                text : stageData[i].title,
-                pict : core.assets[core.PICT_WINDOW],
-                subPict : core.assets[core.PICT_ACTIVE_WINDOW]
-            });
+            that.stageButtonArray[i] = createStageButton(stageData[i]);
             that.stageButtonArray[i].x = 8;
             that.stageButtonArray[i].y = 64 + i*64;
             that.addChild(that.stageButtonArray[i]);
         }
+    }
+
+    that.onPushStageButon = function (fn){
+        emitPushStageButton = fn;
+    }
+
+    function createStageButton(stage){
+        var stageButton = pictButton({
+            text : stage.title,
+            pict : core.assets[core.PICT_WINDOW],
+            subPict : core.assets[core.PICT_ACTIVE_WINDOW]
+        });
+        stageButton.addEventListener(Event.TOUCH_END,function(){
+            emitPushStageButton(stage.enemyId,stage.routineId);
+        })
+        return stageButton;
 
     }
+
     return that;
 }

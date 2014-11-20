@@ -15,6 +15,17 @@ function doTest() {
             armdozerList : testDataInst.getArmdozerData()
         });
         Game.replaceScene(testScene);
+        pushStageButton();
+    }
+
+    function pushStageButton(){
+        testScene.onPushStageButon(assertOfPushStageButton);
+        touch(testScene.stageButtonArray[1]);
+    }
+
+    function assertOfPushStageButton(enemyId,routineId){
+        assert.equal(enemyId,'granBraver','敵IDが正しい');
+        assert.equal(routineId,'attack3','ルーチンIDが正しい');
         finishTest();
     }
 }
