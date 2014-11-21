@@ -22,9 +22,9 @@ function selectStageScene(spec,my){
 
         //ステージボタン
         for(var i=0; i<stageData.length; i++){
-            that.stageButtonArray[i] = createStageButton(stageData[i]);
-            that.stageButtonArray[i].x = 8;
-            that.stageButtonArray[i].y = 64 + i*64;
+            that.stageButtonArray[i] = createStageButton(i,stageData[i]);
+            that.stageButtonArray[i].x = 16;
+            that.stageButtonArray[i].y = 64 + i*84;
             that.addChild(that.stageButtonArray[i]);
         }
     }
@@ -33,16 +33,17 @@ function selectStageScene(spec,my){
         emitPushStageButton = fn;
     }
 
-    function createStageButton(stage){
-        var stageButton = pictButton({
-            text : stage.title,
+    function createStageButton(stageNo,stageData){
+        var button = stageButton({
+            stageNo : stageNo,
+            stageTitle : stageData.title,
             pict : core.assets[core.PICT_WINDOW],
             subPict : core.assets[core.PICT_ACTIVE_WINDOW]
         });
-        stageButton.addEventListener(Event.TOUCH_END,function(){
-            emitPushStageButton(stage.enemyId,stage.routineId);
+        button.addEventListener(Event.TOUCH_END,function(){
+            emitPushStageButton(stageData.enemyId,stageData.routineId);
         })
-        return stageButton;
+        return button;
 
     }
 
