@@ -31,6 +31,7 @@ function doTest() {
         assert.equal(testScene.stageButtonArray[0].getVisible(),false,'ボタン0が非表示');
         assert.equal(testScene.stageButtonArray[1].getVisible(),false,'ボタン1が非表示');
         assert.equal(testScene.stageButtonArray[2].getVisible(),false,'ボタン2が非表示');
+        assert.equal(testScene.prevButton.getVisible(),false,'戻るボタンが非表示');
         finishTest();
     }
 }

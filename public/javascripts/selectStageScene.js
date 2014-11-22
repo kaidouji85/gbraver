@@ -4,6 +4,7 @@ function selectStageScene(spec,my){
     var stageData = spec.stageData;
     var armdozerList = spec.armdozerList;
     var emitPushStageButton = function(enemyId,routineId){};
+    var emitPushPrevButton = function(){};
 
     that.stageButtonArray = [];
     init();
@@ -28,6 +29,19 @@ function selectStageScene(spec,my){
             that.addChild(that.stageButtonArray[i]);
         }
 
+        //戻るボタン
+        that.prevButton = pictButton({
+            text : '戻る',
+            pict : core.assets[core.PICT_WINDOW],
+            subPict : core.assets[core.PICT_ACTIVE_WINDOW]
+        });
+        that.prevButton.x = 88;
+        that.prevButton.y = 426;
+        that.prevButton.addEventListener(Event.TOUCH_END,function(e){
+            emitPushPrevButton();
+        });
+        that.addChild(that.prevButton);
+
         //メッセージウインドウ
         that.mesWindow = messageWindow({
             pict : core.assets[core.PICT_WINDOW]
@@ -43,6 +57,10 @@ function selectStageScene(spec,my){
         emitPushStageButton = fn;
     }
 
+    that.onPushPrevButton = function(fn){
+        emitPushPrevButton = fn;
+    }
+
     function createStageButton(stageNo,stageData){
         var button = stageButton({
             stageNo : stageNo,
@@ -54,6 +72,7 @@ function selectStageScene(spec,my){
             for(var i=0; i<that.stageButtonArray.length; i++){
                 that.stageButtonArray[i].setVisible(false);
             }
+            that.prevButton.setVisible(false);
             that.mesWindow.setVisible(true);
             emitPushStageButton(stageData.enemyId,stageData.routineId);
         })
