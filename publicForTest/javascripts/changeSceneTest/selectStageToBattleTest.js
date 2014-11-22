@@ -1,7 +1,7 @@
 enchant();
-window.onload = topToSetArmdozer;
+window.onload = doTest;
 
-function topToSetArmdozer(){
+function doTest(){
     var assert = chai.assert;
     var testDataInst = testData();
     var Game;
@@ -18,30 +18,23 @@ function topToSetArmdozer(){
         });
         Game.start();
         Game.onload = function(){
-            Game.changeTopScene();
-            pushSinglePlayButton();
+            Game.changeSelectStageScene();
+            pushStageButton();
         };
     }
 
-    function pushSinglePlayButton(){
-        touch(Game.currentScene.singlePlayButton);
+    function pushStageButton(){
+        touch(Game.currentScene.stageButtonArray[1]);
         Game.onSendMessage(asertOfMessage);
     }
 
     function asertOfMessage(message,data) {
         var expectData = {
-            enemyId : 'landozer',
+            enemyId : 'granBraver',
             routineId : 'attack3'
         };
         assert.equal(message, 'startSinglePlay', 'サーバ送信メッセージが正しい');
         assert.deepEqual(data, expectData, 'サーバ送信データが正しい');
-        assert.equal(Game.currentScene.battleRoomButton.getVisible(),false,'対戦ルーム入室ボタンが表示されない');
-        assert.equal(Game.currentScene.selectArmdozerButton.getVisible(),false,'アームドーザ選択ボタンが表示されない');
-        assert.equal(Game.currentScene.singlePlayButton.getVisible(),false,'シングルプレイボタンが表示されない');
-        assert.equal(Game.currentScene.selectPilotButton.getVisible(),false,'パイロット選択ボタンが表示されない');
-        assert.equal(Game.currentScene.title.getVisible(),true,'画面タイトルが表示される。');
-        assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
-        assert.equal(Game.currentScene.mesWindow.getText(),'通信待機中','メッセージウインドウのメッセージが正しい');
         Game.currentScene.tl.delay(60).then(function(){
             doServerResp();
         });
@@ -55,7 +48,7 @@ function topToSetArmdozer(){
             },
             'nonePlayerCharacter' : {
                 userId : 'nonePlayerCharacter',
-                status : testDataInst.getPlayerData('test002@gmail.com').status
+                status : testDataInst.getPlayerData('test001@gmail.com').status
             }
         };
         Game.onChangeScene(assertOfChangeScene);

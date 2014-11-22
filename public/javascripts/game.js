@@ -108,6 +108,13 @@ function game(spec, my) {
         scene.onPushPrevButton(function(){
             core.changeTopScene();
         });
+        scene.onPushStageButon(function(enemyId,routineId){
+            var data = {
+                enemyId : enemyId,
+                routineId : routineId
+            };
+            emitSendMessage('startSinglePlay',data);
+        });
         core.replaceScene(scene);
         emitChangeScene('selectStage');
     }
