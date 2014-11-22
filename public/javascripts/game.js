@@ -105,6 +105,9 @@ function game(spec, my) {
             stageData : stageData,
             armdozerList : armdozerList
         });
+        scene.onPushPrevButton(function(){
+            core.changeTopScene();
+        });
         core.replaceScene(scene);
         emitChangeScene('selectStage');
     }
