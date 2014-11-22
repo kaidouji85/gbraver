@@ -7,15 +7,15 @@ function topScene(spec,my){
 
     that.backgroundColor = "black";
     that.onPushBattleRoom = onPushBattleRoom;
-    that.onPushSinglePlay = onPushSinglePlay;
     that.onPushSelectPilotButton = onPushSelectPilotButton;
     that.onPushSelectArmdozerButton = onPushSelectArmdozerButton;
+    that.onPushSelectStageButton = onPushSelectStageButton;
     
     var core = enchant.Core.instance;
     var emitPushBattleRoom = function(){};
-    var emitPushSinglePlay = function(){};
     var emitPushSelectPilotButton = function(){};
     var emitPushSelectArmdozerButton = function(){};
+    var emitPushSelectStageButton = function(){};
     
     initSprite();
     function initSprite(){
@@ -40,24 +40,18 @@ function topScene(spec,my){
         that.pilotSprite.y = 100;
         that.addChild(that.pilotSprite);
 
-        //シングルプレイボタン
-        that.singlePlayButton = pictButton({
-            text : 'シングルプレイ',
+        //ステージセレクトボタン
+        that.selectStageButton = pictButton({
+            text : 'ステージセレクト',
             pict : core.assets[core.PICT_WINDOW],
             subPict : core.assets[core.PICT_ACTIVE_WINDOW]
         });
-        that.singlePlayButton.x = 8;
-        that.singlePlayButton.y = 300;
-        that.singlePlayButton.addEventListener(Event.TOUCH_END,function(){
-            that.battleRoomButton.setVisible(false);
-            that.selectArmdozerButton.setVisible(false);
-            that.singlePlayButton.setVisible(false);
-            that.selectPilotButton.setVisible(false);
-            that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
-            that.mesWindow.setVisible(true);
-            emitPushSinglePlay();
+        that.selectStageButton.x = 8;
+        that.selectStageButton.y = 300;
+        that.selectStageButton.addEventListener(Event.TOUCH_END,function(){
+            emitPushSelectStageButton();
         });
-        that.addChild(that.singlePlayButton);
+        that.addChild(that.selectStageButton);
 
         //対戦ルーム入室ボタン
         that.battleRoomButton = pictButton({
@@ -70,7 +64,7 @@ function topScene(spec,my){
         that.battleRoomButton.addEventListener(Event.TOUCH_END,function(e){
             that.battleRoomButton.setVisible(false);
             that.selectArmdozerButton.setVisible(false);
-            that.singlePlayButton.setVisible(false);
+            that.selectStageButton.setVisible(false);
             that.selectPilotButton.setVisible(false);
             that.mesWindow.setText(core.MESSAGE_GET_ROOMINFO);
             that.mesWindow.setVisible(true);
@@ -125,16 +119,16 @@ function topScene(spec,my){
         emitPushBattleRoom = fn;
     }
 
-    function onPushSinglePlay(fn){
-        emitPushSinglePlay = fn;
-    }
-
     function onPushSelectPilotButton(fn){
         emitPushSelectPilotButton = fn;
     }
 
     function onPushSelectArmdozerButton(fn){
         emitPushSelectArmdozerButton = fn;
+    }
+
+    function onPushSelectStageButton(fn){
+        emitPushSelectStageButton = fn;
     }
 
     function getArmdozerPictByArmdozerId(armdozerId){

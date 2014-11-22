@@ -8,6 +8,7 @@ function game(spec, my) {
     var pilotId = spec.pilotId;
     var pilotList = spec.pilotList;
     var armdozerList = spec.armdozerList;
+    var stageData = spec.stageData;
     var emitChangeScene = function(scene){};
     var emitSendMessage = function(message,data){};
 
@@ -51,14 +52,11 @@ function game(spec, my) {
         core.topScene.onPushBattleRoom(function(){
             emitSendMessage('getRoomInfo',null);
         });
-        core.topScene.onPushSinglePlay(function(){
-            emitSendMessage('startSinglePlay',{
-                enemyId:'landozer',
-                routineId : 'attack3'
-            });
-        });
         core.topScene.onPushSelectPilotButton(function(){
             core.changeSelectPilotScene();
+        });
+        core.topScene.onPushSelectStageButton(function(){
+            core.changeSelectStageScene();
         });
         core.replaceScene(core.topScene);
         emitChangeScene('top');
@@ -100,6 +98,15 @@ function game(spec, my) {
         });
         core.replaceScene(scene);
         emitChangeScene('selectArmdozer');
+    }
+
+    core.changeSelectStageScene = function(){
+        var scene = selectStageScene({
+            stageData : stageData,
+            armdozerList : armdozerList
+        });
+        core.replaceScene(scene);
+        emitChangeScene('selectStage');
     }
 
     core.onChangeScene = function(fn){

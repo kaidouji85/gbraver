@@ -13,7 +13,8 @@ function topToSetArmdozer(){
             armdozerId : 'granBraver',
             pilotId : 'kyoko',
             armdozerList : testDataInst.getMasterData().armdozerList,
-            pilotList : testDataInst.getMasterData().pilotList
+            pilotList : testDataInst.getMasterData().pilotList,
+            stageData : testDataInst.getStageData()
         });
         Game.start();
         Game.onload = function(){

@@ -1,7 +1,7 @@
 enchant();
-window.onload = topToRoomSelect;
+window.onload = topToSetArmdozer;
 
-function topToRoomSelect(){
+function topToSetArmdozer(){
     var assert = chai.assert;
     var testDataInst = testData();
     var Game;
@@ -18,18 +18,18 @@ function topToRoomSelect(){
         });
         Game.start();
         Game.onload = function(){
-            Game.changeSelectPilotScene();
-            pushPrevtButton();
+            Game.changeTopScene();
+            pushSelectStageButton();
         };
     }
 
-    function pushPrevtButton(){
+    function pushSelectStageButton(){
+        touch(Game.currentScene.selectStageButton);
         Game.onChangeScene(assertOfChangeScene);
-        touch(Game.currentScene.prevButton);
     }
 
-    function assertOfChangeScene(scene) {
-        assert.equal(scene,'top','トップシーンに遷移する');
+    function assertOfChangeScene(scene){
+        assert.equal(scene,'selectStage','ステージ選択画面へ遷移する');
         finishTest();
     }
 }
