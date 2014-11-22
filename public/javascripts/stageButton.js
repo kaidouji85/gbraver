@@ -15,6 +15,7 @@ function stageButton(spec,my){
     });
     var stageNoLabel = new Label();
     var stageTitleLabel = new Label();
+    var visible = true;
 
     init();
     function init(){
@@ -43,6 +44,17 @@ function stageButton(spec,my){
     that.addEventListener(Event.TOUCH_END,function(){
         baseWindow.setPict(pict);
     });
+
+    that.setVisible = function(value){
+        baseWindow.setVisible(value);
+        stageNoLabel.visible = value;
+        stageTitleLabel.visible = value;
+        visible = value;
+    }
+
+    that.getVisible = function(){
+        return visible;
+    }
 
     return that;
 }

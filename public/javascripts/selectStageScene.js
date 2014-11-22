@@ -22,11 +22,21 @@ function selectStageScene(spec,my){
 
         //ステージボタン
         for(var i=0; i<stageData.length; i++){
-            that.stageButtonArray[i] = createStageButton(i,stageData[i]);
+            that.stageButtonArray[i] = createStageButton(i+1,stageData[i]);
             that.stageButtonArray[i].x = 16;
-            that.stageButtonArray[i].y = 64 + i*84;
+            that.stageButtonArray[i].y = 64 + i*76;
             that.addChild(that.stageButtonArray[i]);
         }
+
+        //メッセージウインドウ
+        that.mesWindow = messageWindow({
+            pict : core.assets[core.PICT_WINDOW]
+        });
+        that.mesWindow.x = 0;
+        that.mesWindow.y = 180;
+        that.mesWindow.setVisible(false);
+        that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
+        that.addChild(that.mesWindow);
     }
 
     that.onPushStageButon = function (fn){
@@ -41,10 +51,13 @@ function selectStageScene(spec,my){
             subPict : core.assets[core.PICT_ACTIVE_WINDOW]
         });
         button.addEventListener(Event.TOUCH_END,function(){
+            for(var i=0; i<that.stageButtonArray.length; i++){
+                that.stageButtonArray[i].setVisible(false);
+            }
+            that.mesWindow.setVisible(true);
             emitPushStageButton(stageData.enemyId,stageData.routineId);
         })
         return button;
-
     }
 
     return that;

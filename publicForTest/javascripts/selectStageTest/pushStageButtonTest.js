@@ -26,6 +26,11 @@ function doTest() {
     function assertOfPushStageButton(enemyId,routineId){
         assert.equal(enemyId,'granBraver','敵IDが正しい');
         assert.equal(routineId,'attack3','ルーチンIDが正しい');
+        assert.equal(testScene.mesWindow.getVisible(),true,'メッセージウインドウが表示されている');
+        assert.equal(testScene.mesWindow.getText(),'通信待機中','メッセージウインドウのメッセージが正しい');
+        assert.equal(testScene.stageButtonArray[0].getVisible(),false,'ボタン0が非表示');
+        assert.equal(testScene.stageButtonArray[1].getVisible(),false,'ボタン1が非表示');
+        assert.equal(testScene.stageButtonArray[2].getVisible(),false,'ボタン2が非表示');
         finishTest();
     }
 }
