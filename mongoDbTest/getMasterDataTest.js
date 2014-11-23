@@ -106,6 +106,23 @@ describe('Mongo DBからマスタデータを取得', function() {
                     battery: 3
                 }
             ];
+            expect.stageData = [
+                {
+                    title : '初級',
+                    enemyId : 'landozer',
+                    routineId : 'attack3'
+                },
+                {
+                    title : '中級',
+                    enemyId : 'granBraver',
+                    routineId : 'attack3'
+                },
+                {
+                    title : '上級',
+                    enemyId : 'zeroBraver',
+                    routineId : 'attack3'
+                }
+            ];
             assert.equal(err,null,'エラーが出ない');
             assert.deepEqual(masterData, expect, 'マスターデータが取得できた');
             done();

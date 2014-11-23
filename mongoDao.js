@@ -69,12 +69,15 @@ function mongoDao(spec, my) {
         MongoClient.connect(url, function(err, db){
             getPilotList(db,function(err,pilotList){
                 getArmdozerList(db,function(err,armdozerList){
-                    var data = {
-                        pilotList : pilotList,
-                        armdozerList :armdozerList
-                    };
-                    db.close();
-                    fn(null,data);
+                    getStageData(db,function(err,stageData){
+                        var data = {
+                            pilotList : pilotList,
+                            armdozerList :armdozerList,
+                            stageData : stageData
+                        };
+                        db.close();
+                        fn(null,data);
+                    });
                 })
             });
         });
@@ -190,6 +193,20 @@ function mongoDao(spec, my) {
                 characterList.push(characterRecord)
             }
             fn(null,characterList);
+        });
+    }
+
+    function getStageData(db,fn){
+        var stageDataArray = new Array();
+        var stageDataRecord;
+        var collection = db.collection('stages');
+        collection.find().toArray(function(err,result){
+            for(var i in result){
+                stageDataRecord = ce.clone(result[i]);
+                delete stageDataRecord._id;
+                stageDataArray.push(stageDataRecord);
+            }
+            fn(null,stageDataArray);
         });
     }
 

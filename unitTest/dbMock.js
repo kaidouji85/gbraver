@@ -172,6 +172,24 @@ function dbMock(spec,my){
         }
     ];
 
+    var stageData = [
+        {
+            title : '初級',
+            enemyId : 'landozer',
+            routineId : 'attack3'
+        },
+        {
+            title : '中級',
+            enemyId : 'granBraver',
+            routineId : 'attack3'
+        },
+        {
+            title : '上級',
+            enemyId : 'zeroBraver',
+            routineId : 'attack3'
+        }
+    ];
+
     that.getUserData = function(userId,cb){
         var userData = searchUser(userId);
         cb(null,userData);
@@ -191,7 +209,8 @@ function dbMock(spec,my){
     that.getMasterData = function(cb){
         var masterData = {
             armdozerList : armdozerArray,
-            pilotList : pilotArray
+            pilotList : pilotArray,
+            stageData : stageData
         };
         cb(null,masterData);
     }

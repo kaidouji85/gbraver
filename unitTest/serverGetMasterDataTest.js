@@ -189,6 +189,23 @@ describe('serverクラスのテスト', function() {
                         type: 'guardBreak'
                     }
                 ];
+                expect.stageData = [
+                    {
+                        title : '初級',
+                        enemyId : 'landozer',
+                        routineId : 'attack3'
+                    },
+                    {
+                        title : '中級',
+                        enemyId : 'granBraver',
+                        routineId : 'attack3'
+                    },
+                    {
+                        title : '上級',
+                        enemyId : 'zeroBraver',
+                        routineId : 'attack3'
+                    }
+                ];
                 assert.deepEqual(expect,data,'マスターデータが正しい');
                 done();
             }

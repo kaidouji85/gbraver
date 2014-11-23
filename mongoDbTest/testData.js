@@ -108,17 +108,41 @@ var iori = {
     battery : 3
 };
 
+/**
+ * ステージデータ
+ * */
+var stage1 = {
+    title : '初級',
+    enemyId : 'landozer',
+    routineId : 'attack3'
+};
+
+var stage2 = {
+    title : '中級',
+    enemyId : 'granBraver',
+    routineId : 'attack3'
+};
+
+var stage3 = {
+    title : '上級',
+    enemyId : 'zeroBraver',
+    routineId : 'attack3'
+};
+
 var userData = [take,uchi];
 var armdozerData = [granBraver,landozer];
 var pilotData = [kyoko,akane,iori];
+var stageData = [stage1,stage2,stage3];
 
 function insertData(mongoUrl,fnc) {
     MongoClient.connect(mongoUrl, function(err, db) {
         insertUserData(userData,db,function(err,result){
             insertArmdozerData(armdozerData,db,function(err,result){
                 insertPilotData(pilotData,db,function(err,result){
-                    db.close();
-                    fnc(null,true);
+                    insertStageData(stageData,db,function(err,result){
+                        db.close();
+                        fnc(null,true);
+                    });
                 });
             });
         });
@@ -147,6 +171,15 @@ function insertPilotData(pilotData,db,fnc) {
     var collection = db.collection('pilots');
     collection.remove({}, {}, function(err, deletes) {
         collection.insert(pilotData, function(err, data) {
+            fnc(null, true);
+        });
+    });
+}
+
+function insertStageData(stageData,db,fnc){
+    var collection = db.collection('stages');
+    collection.remove({}, {}, function(err, deletes) {
+        collection.insert(stageData, function(err, data) {
             fnc(null, true);
         });
     });
