@@ -101,6 +101,37 @@ db.armdozers.insert({
     weapons : {
         1 : {
             name : 'バスターナックル',
+            power : 800
+        },
+        2 : {
+            name : 'バスターナックル',
+            power : 800
+        },
+        3 : {
+            name : 'バスターナックル',
+            power : 800
+        },
+        4 : {
+            name : 'バスターナックル',
+            power : 800
+        },
+        5 : {
+            name : 'バスターナックル',
+            power : 800
+        }
+    }
+});
+
+db.armdozers.insert({
+    armdozerId : 'zakoBraver',
+    cpuOnly : true,
+    name : 'ザコブレイバー',
+    pictName : 'GranBraver.PNG',
+    hp : 800,
+    speed : 140,
+    weapons : {
+        1 : {
+            name : 'バスターナックル',
             power : 600
         },
         2 : {
@@ -151,17 +182,17 @@ db.pilots.insert({
 
 db.stages.remove({});
 db.stages.insert({
-    title : '初級',
-    enemyId : 'landozer',
-    routineId : 'attack3'
+    title : 'はじての戦闘',
+    enemyId : 'zakoDozer',
+    routineId : 'attack1-defense1'
 });
 db.stages.insert({
-    title : '中級',
-    enemyId : 'granBraver',
-    routineId : 'attack3'
+    title : '攻撃の基本',
+    enemyId : 'zakoDozer',
+    routineId : 'attack1-defense3'
 });
 db.stages.insert({
-    title : '上級',
-    enemyId : 'zeroBraver',
-    routineId : 'attack3'
+    title : '回避の基本',
+    enemyId : 'zakoBraver',
+    routineId : 'attack3-defense1'
 });
