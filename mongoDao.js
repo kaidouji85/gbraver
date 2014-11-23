@@ -188,9 +188,11 @@ function mongoDao(spec, my) {
         var collection = db.collection('armdozers');
         collection.find().toArray(function(err,result){
             for(var i in result){
-                characterRecord = createArmdozerData(result[i]);
-                characterRecord.armdozerId = result[i].armdozerId;
-                characterList.push(characterRecord)
+                if(result[i].cpuOnly === undefined){
+                    characterRecord = createArmdozerData(result[i]);
+                    characterRecord.armdozerId = result[i].armdozerId;
+                    characterList.push(characterRecord)
+                }
             }
             fn(null,characterList);
         });

@@ -91,6 +91,37 @@ db.armdozers.insert({
     }
 });
 
+db.armdozers.insert({
+    armdozerId : 'zakoDozer',
+    cpuOnly : true,
+    name : 'ザコドーザ',
+    pictName : 'Landozer.PNG',
+    hp : 800,
+    speed : 80,
+    weapons : {
+        1 : {
+            name : 'バスターナックル',
+            power : 600
+        },
+        2 : {
+            name : 'バスターナックル',
+            power : 600
+        },
+        3 : {
+            name : 'バスターナックル',
+            power : 600
+        },
+        4 : {
+            name : 'バスターナックル',
+            power : 600
+        },
+        5 : {
+            name : 'バスターナックル',
+            power : 600
+        }
+    }
+});
+
 db.pilots.remove({});
 db.pilots.insert({
     id : 'kyoko',

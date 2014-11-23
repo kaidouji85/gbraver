@@ -78,6 +78,38 @@ var landozer = {
     }
 };
 
+//要素にcpuOnlyがある場合にCPU専用機となる
+var zakoDozer = {
+    armdozerId : 'zakoDozer',
+    cpuOnly : true,
+    name : 'ザコドーザ',
+    pictName : 'Landozer.PNG',
+    hp : 800,
+    speed : 80,
+    weapons : {
+        1 : {
+            name : 'バスターナックル',
+            power : 600
+        },
+        2 : {
+            name : 'バスターナックル',
+            power : 600
+        },
+        3 : {
+            name : 'バスターナックル',
+            power : 600
+        },
+        4 : {
+            name : 'バスターナックル',
+            power : 600
+        },
+        5 : {
+            name : 'バスターナックル',
+            power : 600
+        }
+    }
+};
+
 /**
  * パイロットデータ
  */
@@ -130,7 +162,7 @@ var stage3 = {
 };
 
 var userData = [take,uchi];
-var armdozerData = [granBraver,landozer];
+var armdozerData = [granBraver,landozer,zakoDozer];
 var pilotData = [kyoko,akane,iori];
 var stageData = [stage1,stage2,stage3];
 
