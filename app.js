@@ -40,7 +40,6 @@ app.use(passport.session());
 // development only
 if ('development' == app.get('env')) {
     app.use(errorhandler());
-    app.use(express.static(path.join(__dirname, 'publicForDebug')));
     app.use(express.static(path.join(__dirname, 'publicForTest')));
 }
 
