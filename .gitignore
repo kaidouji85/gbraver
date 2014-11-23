@@ -7,3 +7,4 @@ doSeleniumTest.sh
 .idea/
 initEnvForHeroku.sh
 startup.sh
+createDbBeta.sh
