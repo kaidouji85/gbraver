@@ -8,24 +8,7 @@ window.onload = function() {
     var userId = $("meta[name=userId]").attr('content');
     var masterData;
     var userData;
-    //TODO : サーバからデータを取得するようにする
-    var stageData = [
-        {
-            title : '初級',
-            enemyId : 'landozer',
-            routineId : 'attack3'
-        },
-        {
-            title : '中級',
-            enemyId : 'granBraver',
-            routineId : 'attack3'
-        },
-        {
-            title : '上級',
-            enemyId : 'zeroBraver',
-            routineId : 'attack3'
-        }
-    ];
+    var stageData;
     var Game;
 
     //ユーザ認証する
@@ -61,7 +44,7 @@ window.onload = function() {
             pilotId : userData.pilotId,
             armdozerList : masterData.armdozerList,
             pilotList : masterData.pilotList,
-            stageData : stageData
+            stageData : masterData.stageData
         });
         Game.start();
         Game.onload = function() {

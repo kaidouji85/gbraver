@@ -117,3 +117,20 @@ db.pilots.insert({
     shout: 'この一撃に、全てを掛ける！！',
     type: 'guardBreak'
 });
+
+db.stages.remove({});
+db.stages.insert({
+    title : '初級',
+    enemyId : 'landozer',
+    routineId : 'attack3'
+});
+db.stages.insert({
+    title : '中級',
+    enemyId : 'granBraver',
+    routineId : 'attack3'
+});
+db.stages.insert({
+    title : '上級',
+    enemyId : 'zeroBraver',
+    routineId : 'attack3'
+});
