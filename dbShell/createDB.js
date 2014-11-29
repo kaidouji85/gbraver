@@ -92,9 +92,9 @@ db.armdozers.insert({
 });
 
 db.armdozers.insert({
-    armdozerId : 'zakoDozer',
+    armdozerId : 'enemyLandozer',
     cpuOnly : true,
-    name : 'ザコドーザ',
+    name : 'ランドーザ',
     pictName : 'Landozer.PNG',
     hp : 800,
     speed : 80,
@@ -123,32 +123,63 @@ db.armdozers.insert({
 });
 
 db.armdozers.insert({
-    armdozerId : 'zakoBraver',
+    armdozerId : 'enemyGranBraver',
     cpuOnly : true,
-    name : 'ザコブレイバー',
+    name : 'グランブレイバー',
     pictName : 'GranBraver.PNG',
-    hp : 800,
-    speed : 140,
+    hp : 2500,
+    speed : 105,
     weapons : {
         1 : {
             name : 'バスターナックル',
-            power : 600
+            power : 1000
         },
         2 : {
             name : 'バスターナックル',
-            power : 600
+            power : 1000
         },
         3 : {
             name : 'バスターナックル',
-            power : 600
+            power : 1000
         },
         4 : {
             name : 'バスターナックル',
-            power : 600
+            power : 1000
         },
         5 : {
             name : 'バスターナックル',
-            power : 600
+            power : 1000
+        }
+    }
+});
+
+db.armdozers.insert({
+    armdozerId : 'enemyZeroBraver',
+    cpuOnly : true,
+    name : 'ゼロブレイバー',
+    pictName : 'ZeroBraver.PNG',
+    hp : 2300,
+    speed : 130,
+    weapons : {
+        1 : {
+            name : 'バスターナックル',
+            power : 1700
+        },
+        2 : {
+            name : 'バスターナックル',
+            power : 1700
+        },
+        3 : {
+            name : 'バスターナックル',
+            power : 1700
+        },
+        4 : {
+            name : 'バスターナックル',
+            power : 1700
+        },
+        5 : {
+            name : 'バスターナックル',
+            power : 1700
         }
     }
 });
@@ -182,17 +213,17 @@ db.pilots.insert({
 
 db.stages.remove({});
 db.stages.insert({
-    title : 'はじての戦闘',
-    enemyId : 'zakoDozer',
+    title : 'ランドーザと対決',
+    enemyId : 'enemyLandozer',
     routineId : 'attack1-defense1'
 });
 db.stages.insert({
-    title : '攻撃の基本',
-    enemyId : 'zakoDozer',
-    routineId : 'attack1-defense3'
+    title : 'グランブレイバーと対決',
+    enemyId : 'enemyGranBraver',
+    routineId : 'attack3-defense1'
 });
 db.stages.insert({
-    title : '回避の基本',
-    enemyId : 'zakoBraver',
-    routineId : 'attack3-defense1'
+    title : 'ゼロブレイバーと対決',
+    enemyId : 'enemyZeroBraver',
+    routineId : 'attack1-defense3'
 });

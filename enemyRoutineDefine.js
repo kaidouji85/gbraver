@@ -56,7 +56,10 @@ defenseRoutineList[ROUTINE_ID_ATTACK_1_DEFENSE_1] = function(statusArray) {
 // 1攻撃 3防御
 //*******************************
 attackRouitneList[ROUTINE_ID_ATTACK_1_DEFENSE_3] = function(statusArray) {
-    var command = getAttackCommand(1);
+    var command = getChargeCommand();
+    if(statusArray.nonePlayerCharacter.battery > 3){
+        command = getAttackCommand(1);
+    }
     return command;
 }
 
