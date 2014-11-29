@@ -42,7 +42,7 @@ function topScene(spec,my){
 
         //ステージセレクトボタン
         that.selectStageButton = pictButton({
-            text : 'ステージセレクト',
+            text : '1人用モード',
             pict : core.assets[core.PICT_WINDOW],
             subPict : core.assets[core.PICT_ACTIVE_WINDOW]
         });
@@ -55,7 +55,7 @@ function topScene(spec,my){
 
         //対戦ルーム入室ボタン
         that.battleRoomButton = pictButton({
-            text : '対戦ルーム',
+            text : '対戦モード',
             pict : core.assets[core.PICT_WINDOW],
             subPict : core.assets[core.PICT_ACTIVE_WINDOW]
         });
