@@ -8,3 +8,4 @@ doSeleniumTest.sh
 initEnvForHeroku.sh
 startup.sh
 createDbBeta.sh
+createDbHeroku.sh
