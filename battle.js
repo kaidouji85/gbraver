@@ -88,7 +88,7 @@ var battle = function(spec,my){
             damage = 0;
             hit = that.ATACK_MISS;
         } else if (atackBattery === defenthBattery) {
-            damage = statusArray[atackUserId].weapons[atackBattery].power;
+            damage = getDamage(statusArray[atackUserId],statusArray[defenseUserId],atackBattery,defenthBattery);
             if(guardBreakArray[atackUserId]===true){
                 hit = that.ATACK_HIT;
             }else {
@@ -96,8 +96,7 @@ var battle = function(spec,my){
                 hit = that.ATACK_GUARD;
             }
         } else {
-            damage = statusArray[atackUserId].weapons[atackBattery].power;
-            damage = damage + 100 * (atackBattery - 1 - defenthBattery);
+            damage = getDamage(statusArray[atackUserId],statusArray[defenseUserId],atackBattery,defenthBattery);
             if (defenthBattery === 0) {
                 damage = damage * 2;
                 hit = that.ATACK_CRITICAL;
@@ -134,6 +133,15 @@ var battle = function(spec,my){
             }
         }
         return defenseUserId;
+    }
+
+    function getDamage(attackStatus,defenseStatus,attackBattery,defenseBattery){
+        var damage = attackStatus.weapons[attackBattery].power;
+        var diff = attackBattery - defenseBattery;
+        if(diff > 0){
+            damage += 100 * (diff -1);
+        }
+        return damage;
     }
     
     /**
