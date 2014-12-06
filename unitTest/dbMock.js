@@ -33,6 +33,7 @@ function dbMock(spec,my){
             name : 'グランブレイバー',
             pictName : 'GranBraver.PNG',
             hp : 3200,
+            defense : 0,
             speed : 500,
             weapons : {
                 1 : {
@@ -62,6 +63,7 @@ function dbMock(spec,my){
             name : 'ランドーザ',
             pictName : 'Landozer.PNG',
             hp : 4700,
+            defense : 0,
             speed : 300,
             weapons : {
                 1 : {
@@ -91,6 +93,7 @@ function dbMock(spec,my){
             name: '最強ブレイバー',
             pictName: 'Landozer.PNG',
             hp: 4700,
+            defense : 0,
             speed: 1000,
             weapons: {
                 1: {
@@ -120,6 +123,7 @@ function dbMock(spec,my){
             name : 'グランブレイバー(クイックチャージ)',
             pictName : 'GranBraver.PNG',
             hp : 3200,
+            defense : 0,
             speed : 1000,
             weapons : {
                 1 : {

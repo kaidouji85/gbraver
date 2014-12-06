@@ -60,6 +60,7 @@ describe('serverクラスのテスト', function() {
                             active : 0,
                             battery : 5,
                             hp : 3200,
+                            defense : 0,
                             speed : 500,
                             skillPoint : 1,
                             weapons : {
@@ -99,6 +100,7 @@ describe('serverクラスのテスト', function() {
                             name : 'ランドーザ',
                             pictName : 'Landozer.PNG',
                             hp : 4700,
+                            defense : 0,
                             speed : 300,
                             active : 0,
                             battery : 5,
