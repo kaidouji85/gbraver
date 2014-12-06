@@ -6,6 +6,7 @@ db.armdozers.insert({
     name : 'グランブレイバー',
     pictName : 'GranBraver.PNG',
     hp : 3000,
+    defense : 100,
     speed : 110,
     weapons : {
         1 : {
@@ -36,6 +37,7 @@ db.armdozers.insert({
     name : 'ランドーザ',
     pictName : 'Landozer.PNG',
     hp : 3500,
+    defense : 100,
     speed : 95,
     weapons : {
         1 : {
@@ -66,6 +68,7 @@ db.armdozers.insert({
     name : 'ゼロブレイバー',
     pictName : 'ZeroBraver.PNG',
     hp : 2100,
+    defense : 100,
     speed : 125,
     weapons : {
         1 : {
@@ -97,6 +100,7 @@ db.armdozers.insert({
     name : 'ランドーザ',
     pictName : 'Landozer.PNG',
     hp : 800,
+    defense : 100,
     speed : 80,
     weapons : {
         1 : {
@@ -128,6 +132,7 @@ db.armdozers.insert({
     name : 'グランブレイバー',
     pictName : 'GranBraver.PNG',
     hp : 2500,
+    defense : 100,
     speed : 105,
     weapons : {
         1 : {
@@ -159,6 +164,7 @@ db.armdozers.insert({
     name : 'ゼロブレイバー',
     pictName : 'ZeroBraver.PNG',
     hp : 2300,
+    defense : 100,
     speed : 130,
     weapons : {
         1 : {

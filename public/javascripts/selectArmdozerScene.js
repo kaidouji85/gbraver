@@ -51,7 +51,7 @@ function selectArmdozerScene(spec,my){
         that.infoWindow = gridWindow({
             pict : core.assets[core.PICT_WINDOW],
             width : 10,
-            height : 8
+            height : 9
         });
         that.infoWindow.x = 150;
         that.infoWindow.y = 120;
@@ -92,18 +92,32 @@ function selectArmdozerScene(spec,my){
         that.powerValueLabel.y = 190;
         that.addChild(that.powerValueLabel);
 
+        //装甲ラベル
+        that.defenseLabel = new Label('装甲');
+        that.defenseLabel.color = 'white';
+        that.defenseLabel.x = 170;
+        that.defenseLabel.y = 210;
+        that.addChild(that.defenseLabel);
+
+        //装甲バリューラベル
+        that.defenseValueLabel = new Label('');
+        that.defenseValueLabel.color = 'white';
+        that.defenseValueLabel.x = 230;
+        that.defenseValueLabel.y = 210;
+        that.addChild(that.defenseValueLabel);
+
         //機動力ラベル
         that.speedLabel = new Label('機動');
         that.speedLabel.color = "white";
         that.speedLabel.x = 170;
-        that.speedLabel.y = 210;
+        that.speedLabel.y = 230;
         that.addChild(that.speedLabel);
 
         //機動力バリューラベル
         that.speedValueLabel = new Label('');
         that.speedValueLabel.color = "white";
         that.speedValueLabel.x = 230;
-        that.speedValueLabel.y = 210;
+        that.speedValueLabel.y = 230;
         that.addChild(that.speedValueLabel);
 
         //選択したアームドーザ
@@ -169,6 +183,7 @@ function selectArmdozerScene(spec,my){
         that.selectArmdozerSprite.image = core.assets[core.PICT_PREFIX+armdozerData.pictName];
         that.armdozerNameLabel.text = armdozerData.name;
         that.hpValueLabel.text = armdozerData.hp;
+        that.defenseValueLabel.text = armdozerData.defense;
         that.powerValueLabel.text = armdozerData.weapons[1].power;
         that.speedValueLabel.text = armdozerData.speed;
     }
