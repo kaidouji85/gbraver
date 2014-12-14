@@ -14,7 +14,7 @@ function battleToTop_win(){
     function initGame(){
         Game = game({
             userId : 'saikyou@gmail.com',
-            armdozerId : 'granBraver',
+            armdozerId : 'saikyouBraver',
             pilotId : 'kyoko',
             armdozerList : testDataInst.getMasterData().armdozerList,
             pilotList : testDataInst.getMasterData().pilotList,

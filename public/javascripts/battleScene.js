@@ -254,7 +254,8 @@ function battleScene(spec,my){
 
     function doGameEnd(data){
         refreshMertor(data.statusArray);
-        that.tl.delay(60).then(function(){
+        data.winner === that.userId ? that.winSprite.visible=true : that.loseSprite.visible = true;
+        that.tl.delay(120).then(function(){
             emitCommand({method:'ok'});
         });
     }

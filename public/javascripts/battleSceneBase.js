@@ -29,6 +29,8 @@ function battleSceneBase(spec,my){
     that.mesWindow = {};
     that.mertorWindowArray = {};
     that.commandWindow = {};
+    that.winSprite = {};
+    that.loseSprite = {};
 
     that.refreshMertor = function(statusArray){
         for(var uid in statusArray){
@@ -232,6 +234,23 @@ function battleSceneBase(spec,my){
         that.mesWindow.y = 336;
         that.mesWindow.setVisible(false);
         that.addChild(that.mesWindow);
+
+        //WIN画像
+        that.winSprite = new Sprite(202,55);
+        that.winSprite.image = core.assets[core.PICT_WIN];
+        that.winSprite.x = (core.width - that.winSprite.width)/2;
+        that.winSprite.y = 100;
+        that.winSprite.visible = false;
+        that.addChild(that.winSprite);
+
+        //LOSE画像
+        that.loseSprite = new Sprite(312,55);
+        that.loseSprite.image = core.assets[core.PICT_LOSE];
+        that.loseSprite.x = (core.width - that.loseSprite.width)/2;
+        that.loseSprite.y = 100;
+        that.loseSprite.visible = false;
+        that.addChild(that.loseSprite);
+
     }
 
     return that;
