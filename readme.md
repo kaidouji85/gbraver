@@ -97,8 +97,11 @@ herokuに環境変数を登録します。ここでは環境変数登録バッ�
 `git push heroku`
 
 
+## 素材提供
+[煉獄庭園様 (BGM)](http://www.rengoku-teien.com/)
+
 ## ゲームのプレイ動画
-<https://www.youtube.com/watch?v=yX4XXKsnl4A>
+<https://www.youtube.com/watch?v=RTJpLMEZYfM>
 
 
 ## その他

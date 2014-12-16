@@ -39,6 +39,14 @@ function battleScene(spec,my){
     that.minusIcon.addEventListener(Event.TOUCH_END,minusBattery);
     that.okIcon.addEventListener(Event.TOUCH_END,selectBattery);
     that.prevIcon.addEventListener(Event.TOUCH_END,prevAtackCommand);
+
+    that.addEventListener(Event.ENTER,function(){
+        core.assets[core.SOUND_BATTLE].play();
+    });
+
+    that.addEventListener(Event.EXIT,function(){
+        core.assets[core.SOUND_BATTLE].stop();
+    });
     
     function doWaitPhase(data){
         var turn = data.turn;

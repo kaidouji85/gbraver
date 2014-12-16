@@ -18,6 +18,8 @@ function gameBase(spec,my){
     core.PICT_COMMAND_WINDOW = core.PICT_PREFIX+'commandWindow.png';
     core.PICT_WIN = core.PICT_PREFIX+'win.png';
     core.PICT_LOSE = core.PICT_PREFIX+'lose.png';
+    core.SOUND_PREFIX = '/sound/';
+    core.SOUND_BATTLE = core.SOUND_PREFIX + 'hsd.mp3';
     core.WAIT_TIME_ACTIVE_RESET = 30;
     core.ICON_WIDTH = 124;
     core.ICON_HEIGHT = 40;
@@ -46,7 +48,6 @@ function gameBase(spec,my){
     preLoad();
 
     function preLoad() {
-        //戦闘画面
         core.preload(core.PICT_PREFIX+'GranBraver.PNG');
         core.preload(core.PICT_PREFIX+'Landozer.PNG');
         core.preload(core.PICT_PREFIX+'ZeroBraver.PNG');
@@ -70,6 +71,8 @@ function gameBase(spec,my){
         core.preload(core.PICT_COMMAND_WINDOW);
         core.preload(core.PICT_WIN);
         core.preload(core.PICT_LOSE);
+
+        core.preload(core.SOUND_BATTLE);
     }
     return core;
 }
