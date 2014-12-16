@@ -42,6 +42,7 @@ function battleScene(spec,my){
 
     that.addEventListener(Event.ENTER,function(){
         core.assets[core.SOUND_BATTLE].play();
+        core.assets[core.SOUND_BATTLE].src.loop = true;
     });
 
     that.addEventListener(Event.EXIT,function(){
