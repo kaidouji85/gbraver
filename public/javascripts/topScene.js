@@ -115,6 +115,10 @@ function topScene(spec,my){
         that.addChild(that.mesWindow);
     }
 
+    that.addEventListener(Event.ENTER,function(){
+        core.bgm.setBgm(core.assets[core.SOUND_CONFIG]);
+    });
+
     function onPushBattleRoom(fn){
         emitPushBattleRoom = fn;
     }

@@ -25,8 +25,13 @@ function battleToTop_lose(){
             Game.changeBattleScene({
                 statusArray : statusArray
             });
-            waitPhase();
+            assertOfBattleBgm();
         };
+    }
+
+    function assertOfBattleBgm(){
+        assert.deepEqual(Game.bgm.getBgm(),Game.assets[Game.SOUND_BATTLE],'戦闘BGMになっている');
+        waitPhase();
     }
 
     function waitPhase(){
@@ -175,10 +180,13 @@ function battleToTop_lose(){
     }
 
     function doDissolveRoom(){
-        Game.onChangeScene(function(scene){
-            assert.equal(scene,'top','トップ画面へ遷移する');
-            finishTest();
-        });
+        Game.onChangeScene(assertOfChangeScne);
         Game.emitServerResp('dissolveRoom',null);
+    }
+
+    function assertOfChangeScne(scene){
+        assert.equal(scene,'top','トップ画面へ遷移する');
+        assert.deepEqual(Game.bgm.getBgm(),Game.assets[Game.SOUND_CONFIG],'コンフィグ画面BGMになっている');
+        finishTest();
     }
 }

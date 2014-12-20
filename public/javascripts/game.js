@@ -12,6 +12,8 @@ function game(spec, my) {
     var emitChangeScene = function(scene){};
     var emitSendMessage = function(message,data){};
 
+    core.bgm = bgmManager();
+
     core.changeBattleScene = function(spec){
         spec.userId = userId;
         core.battleScene = battleScene(spec);

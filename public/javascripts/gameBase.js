@@ -20,6 +20,7 @@ function gameBase(spec,my){
     core.PICT_LOSE = core.PICT_PREFIX+'lose.png';
     core.SOUND_PREFIX = '/sound/';
     core.SOUND_BATTLE = core.SOUND_PREFIX + 'hsd.mp3';
+    core.SOUND_CONFIG = core.SOUND_PREFIX + 'omoide_loft.mp3';
     core.WAIT_TIME_ACTIVE_RESET = 30;
     core.ICON_WIDTH = 124;
     core.ICON_HEIGHT = 40;
@@ -73,6 +74,7 @@ function gameBase(spec,my){
         core.preload(core.PICT_LOSE);
 
         core.preload(core.SOUND_BATTLE);
+        core.preload(core.SOUND_CONFIG);
     }
     return core;
 }

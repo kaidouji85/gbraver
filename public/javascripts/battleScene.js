@@ -41,12 +41,7 @@ function battleScene(spec,my){
     that.prevIcon.addEventListener(Event.TOUCH_END,prevAtackCommand);
 
     that.addEventListener(Event.ENTER,function(){
-        core.assets[core.SOUND_BATTLE].play();
-        core.assets[core.SOUND_BATTLE].src.loop = true;
-    });
-
-    that.addEventListener(Event.EXIT,function(){
-        core.assets[core.SOUND_BATTLE].stop();
+        core.bgm.setBgm(core.assets[core.SOUND_BATTLE]);
     });
     
     function doWaitPhase(data){

@@ -19,8 +19,13 @@ function topToRoomSelect(){
         Game.start();
         Game.onload = function(){
             Game.changeTopScene();
-            pushBattleRoomButton();
+            assertOfConfigBgm();
         };
+    }
+
+    function assertOfConfigBgm(){
+        assert.deepEqual( Game.bgm.getBgm(),Game.assets[Game.SOUND_CONFIG] ,'BGMがコンフィグ画面に設定されている');
+        pushBattleRoomButton();
     }
     
     function pushBattleRoomButton(){
