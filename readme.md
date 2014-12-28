@@ -7,15 +7,8 @@ node.js、socket.io、enchant.jsがあれば簡単に出来るだろうという
 
 
 ## ゲームについて
-ジャンルは1対1の対戦PRGですが、バッテリーシステムという独自要素を実施しました。
-詳細は以下の通りです。
-* 攻撃側、防御側でバッテリーポイントと呼ばれる行動ポイントを出し合います
-* 攻撃の当たり判定は全てバッテリーポイントの大小だけで決まります
-* 攻撃側、防御側でポイントが同じだった場合、防御ということでダメージが半減されます
-* 防御側がバッテリー0を出した場合、被ダメージが2倍になります  
-
-詳細はこのスライドを参照して下さい。  
-<http://www.slideshare.net/yuusuketakeuchi96/g-33989023>
+詳細は以下ページをご参照ください。  
+<http://gbraver.jimdo.com/%E9%81%8A%E3%81%B3%E6%96%B9/>
 
 
 ## ローカル環境への導入
@@ -93,7 +86,7 @@ herokuに環境変数を登録します。ここでは環境変数登録バッ�
     heroku config:add GOOGLE_CLIENT_SECRET="GoogleOAuth2.0のGOOGLE CLIENT SECRET" --app $herokuAppName
 
 
-(4)herokuへデプロイ
+(4)herokuへデプロイ  
 `git push heroku`
 
 
@@ -101,9 +94,10 @@ herokuに環境変数を登録します。ここでは環境変数登録バッ�
 [煉獄庭園様 (BGM)](http://www.rengoku-teien.com/)
 
 ## ゲームのプレイ動画
-<https://www.youtube.com/watch?v=RTJpLMEZYfM>
+<https://www.youtube.com/watch?v=_lryKLk21Ug>
 
 
 ## その他
 中の人のブログです。 毎日プログラム  <http://blog.livedoor.jp/kaidouji85/>    
-α版公開サイト <http://gbraver.herokuapp.com/>
+安定版 <http://gbraver.herokuapp.com/>  
+β版 <http://gbraver-beta.herokuapp.com/>
