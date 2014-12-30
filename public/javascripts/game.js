@@ -14,6 +14,11 @@ function game(spec, my) {
 
     core.bgm = bgmManager();
 
+    core.changeTitleScene = function(){
+        var scene = new titleScene();
+        core.replaceScene(scene);
+    }
+
     core.changeBattleScene = function(spec){
         spec.userId = userId;
         core.battleScene = battleScene(spec);
