@@ -1,5 +1,5 @@
 //TODO : socket.ioコネクション処理を1.0推奨の非同期方式にする
-describe('serverクラスのテスト', function() {
+describe('一人用モードでプレイヤーが攻撃', function() {
     var SERVER_PORT = process.env.PORT || 3000;
     var SERVER_URL = 'http://localhost:'+SERVER_PORT;
 
@@ -154,7 +154,7 @@ describe('serverクラスのテスト', function() {
                 var expect = {
                     phase : 'damage',
                     hit : 4,
-                    damage : 3600,
+                    damage : 3200,
                     atackBattery : 3,
                     defenthBattery : 0,
                     statusArray : {
@@ -165,7 +165,7 @@ describe('serverクラスのテスト', function() {
                             skillPoint : 1
                         },
                         'nonePlayerCharacter' : {
-                            hp : 1100,
+                            hp : 1500,
                             battery : 5,
                             active : 3000,
                             skillPoint : 1
@@ -196,7 +196,7 @@ describe('serverクラスのテスト', function() {
                             skillPoint : 1
                         },
                         'nonePlayerCharacter' : {
-                            hp : 1100,
+                            hp : 1500,
                             battery : 5,
                             active : 5100,
                             skillPoint : 1

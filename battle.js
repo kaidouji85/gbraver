@@ -136,11 +136,9 @@ var battle = function(spec,my){
     }
 
     function getDamage(attackStatus,defenseStatus,attackBattery,defenseBattery){
-        var damage = attackStatus.weapons[attackBattery].power - defenseStatus.defense;
+        var damage = attackStatus.weapons[attackBattery].power;
         var diff = attackBattery - defenseBattery;
-        if(diff > 0){
-            damage += 100 * (diff -1);
-        }
+        damage += diff*defenseStatus.defense;
         return damage;
     }
     
