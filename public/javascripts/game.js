@@ -16,6 +16,9 @@ function game(spec, my) {
 
     core.changeTitleScene = function(){
         var scene = new titleScene();
+        scene.onPushStartButton(function(){
+            core.changeTopScene();
+        });
         core.replaceScene(scene);
     }
 

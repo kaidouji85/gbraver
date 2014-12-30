@@ -45,7 +45,7 @@ window.onload = function() {
         });
         Game.start();
         Game.onload = function() {
-            Game.changeTopScene();
+            Game.changeTitleScene();
             Game.onSendMessage(function(message,data){
                 socket.emit(message,data);
             });
