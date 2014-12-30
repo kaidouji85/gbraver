@@ -6,28 +6,28 @@ db.armdozers.insert({
     name : 'グランブレイバー',
     pictName : 'GranBraver.PNG',
     hp : 3000,
-    defense : 500,
+    defense : 150,
     speed : 110,
     weapons : {
         1 : {
             name : 'バスターナックル',
-            power : 1500
+            power : 1000
         },
         2 : {
             name : 'バスターナックル',
-            power : 1500
+            power : 1000
         },
         3 : {
             name : 'バスターナックル',
-            power : 1500
+            power : 1000
         },
         4 : {
             name : 'バスターナックル',
-            power : 1500
+            power : 1000
         },
         5 : {
             name : 'バスターナックル',
-            power : 1500
+            power : 1000
         }
     }      
 });
@@ -37,28 +37,28 @@ db.armdozers.insert({
     name : 'ランドーザ',
     pictName : 'Landozer.PNG',
     hp : 3500,
-    defense : 700,
+    defense : 100,
     speed : 95,
     weapons : {
         1 : {
             name : 'ブレイクパンチ',
-            power : 1400
+            power : 900
         },
         2 : {
             name : 'ブレイクパンチ',
-            power : 1400
+            power : 900
         },
         3 : {
             name : 'ブレイクパンチ',
-            power : 1400
+            power : 900
         },
         4 : {
             name : 'ブレイクパンチ',
-            power : 1400
+            power : 900
         },
         5 : {
             name : 'ブレイクパンチ',
-            power : 1400
+            power : 900
         }
     }       
 });
@@ -68,28 +68,28 @@ db.armdozers.insert({
     name : 'ゼロブレイバー',
     pictName : 'ZeroBraver.PNG',
     hp : 2500,
-    defense : 300,
+    defense : 200,
     speed : 125,
     weapons : {
         1 : {
             name : 'バスターナックル',
-            power : 1700
+            power : 1200
         },
         2 : {
             name : 'バスターナックル',
-            power : 1700
+            power : 1200
         },
         3 : {
             name : 'バスターナックル',
-            power : 1700
+            power : 1200
         },
         4 : {
             name : 'バスターナックル',
-            power : 1700
+            power : 1200
         },
         5 : {
             name : 'バスターナックル',
-            power : 1700
+            power : 1200
         }
     }
 });
@@ -100,28 +100,28 @@ db.armdozers.insert({
     name : 'ランドーザ',
     pictName : 'Landozer.PNG',
     hp : 800,
-    defense : 600,
+    defense : 100,
     speed : 80,
     weapons : {
         1 : {
             name : 'バスターナックル',
-            power : 1200
+            power : 700
         },
         2 : {
             name : 'バスターナックル',
-            power : 1200
+            power : 700
         },
         3 : {
             name : 'バスターナックル',
-            power : 1200
+            power : 700
         },
         4 : {
             name : 'バスターナックル',
-            power : 1200
+            power : 700
         },
         5 : {
             name : 'バスターナックル',
-            power : 1200
+            power : 700
         }
     }
 });
@@ -132,28 +132,28 @@ db.armdozers.insert({
     name : 'グランブレイバー',
     pictName : 'GranBraver.PNG',
     hp : 2500,
-    defense : 400,
+    defense : 150,
     speed : 105,
     weapons : {
         1 : {
             name : 'バスターナックル',
-            power : 1400
+            power : 1000
         },
         2 : {
             name : 'バスターナックル',
-            power : 1400
+            power : 1000
         },
         3 : {
             name : 'バスターナックル',
-            power : 1400
+            power : 1000
         },
         4 : {
             name : 'バスターナックル',
-            power : 1400
+            power : 1000
         },
         5 : {
             name : 'バスターナックル',
-            power : 1400
+            power : 1000
         }
     }
 });
@@ -164,28 +164,28 @@ db.armdozers.insert({
     name : 'ゼロブレイバー',
     pictName : 'ZeroBraver.PNG',
     hp : 2800,
-    defense : 300,
+    defense : 200,
     speed : 130,
     weapons : {
         1 : {
             name : 'バスターナックル',
-            power : 2000
+            power : 1800
         },
         2 : {
             name : 'バスターナックル',
-            power : 2000
+            power : 1800
         },
         3 : {
             name : 'バスターナックル',
-            power : 2000
+            power : 1800
         },
         4 : {
             name : 'バスターナックル',
-            power : 2000
+            power : 1800
         },
         5 : {
             name : 'バスターナックル',
-            power : 2000
+            power : 1800
         }
     }
 });
