@@ -19,8 +19,13 @@ function doTest(){
         Game.start();
         Game.onload = function(){
             Game.changeTitleScene();
-            pushStartButton();
+            Game.currentScene.tl.delay(1).then(assertOfBgm);
         };
+    }
+
+    function assertOfBgm(){
+        assert.equal(Game.bgm.getBgm(),Game.assets[Game.SOUND_TITLE],'タイトル画面のBGMに設定されている');
+        pushStartButton();
     }
 
     function pushStartButton(){
@@ -30,7 +35,7 @@ function doTest(){
 
     function assertOfChangeScene(scene){
         assert.equal(scene,'top','トップ画面に遷移する');
-        assert.deepEqual(Game.bgm.getBgm(),Game.assets[Game.SOUND_CONFIG],'BGMが正しい');
+        assert.deepEqual(Game.bgm.getBgm(),Game.assets[Game.SOUND_CONFIG],'トップ画面のBGMに設定されている');
         finishTest();
     }
 }

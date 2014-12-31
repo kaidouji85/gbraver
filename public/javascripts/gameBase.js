@@ -21,6 +21,7 @@ function gameBase(spec,my){
     core.SOUND_PREFIX = '/sound/';
     core.SOUND_BATTLE = core.SOUND_PREFIX + 'hsd.mp3';
     core.SOUND_CONFIG = core.SOUND_PREFIX + 'omoide_loft.mp3';
+    core.SOUND_TITLE = core.SOUND_PREFIX + 'eikyuu_kikan_ningen.mp3';
     core.WAIT_TIME_ACTIVE_RESET = 30;
     core.ICON_WIDTH = 124;
     core.ICON_HEIGHT = 40;
@@ -75,6 +76,7 @@ function gameBase(spec,my){
 
         core.preload(core.SOUND_BATTLE);
         core.preload(core.SOUND_CONFIG);
+        core.preload(core.SOUND_TITLE);
     }
     return core;
 }

@@ -17,6 +17,10 @@ function titleScene(spec,my){
         that.addChild(that.startButton);
     }
 
+    that.addEventListener(Event.ENTER,function(){
+        core.bgm.setBgm(core.assets[core.SOUND_TITLE]);
+    });
+
     that.onPushStartButton = function(fn){
         emitPushStartButton = fn;
     }
