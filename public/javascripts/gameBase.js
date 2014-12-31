@@ -18,6 +18,7 @@ function gameBase(spec,my){
     core.PICT_COMMAND_WINDOW = core.PICT_PREFIX+'commandWindow.png';
     core.PICT_WIN = core.PICT_PREFIX+'win.png';
     core.PICT_LOSE = core.PICT_PREFIX+'lose.png';
+    core.PICT_TITLE = core.PICT_PREFIX+'title.png';
     core.SOUND_PREFIX = '/sound/';
     core.SOUND_BATTLE = core.SOUND_PREFIX + 'hsd.mp3';
     core.SOUND_CONFIG = core.SOUND_PREFIX + 'omoide_loft.mp3';
@@ -73,6 +74,7 @@ function gameBase(spec,my){
         core.preload(core.PICT_COMMAND_WINDOW);
         core.preload(core.PICT_WIN);
         core.preload(core.PICT_LOSE);
+        core.preload(core.PICT_TITLE);
 
         core.preload(core.SOUND_BATTLE);
         core.preload(core.SOUND_CONFIG);

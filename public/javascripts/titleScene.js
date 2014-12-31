@@ -6,6 +6,10 @@ function titleScene(spec,my){
 
     init();
     function init() {
+        that.title = new Sprite(320,480);
+        that.title.image = core.assets[core.PICT_TITLE];
+        that.addChild(that.title);
+
         that.startButton = pictButton({
             text : 'スタート',
             pict : core.assets[core.PICT_WINDOW],
