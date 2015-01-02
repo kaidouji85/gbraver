@@ -1,10 +1,16 @@
 body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: black;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    background-color: black;
 }
 
 a {
-  color: #00B7FF;
+    color: #00B7FF;
+}
+
+#login {
+    position: fixed;
+    top: 200px;
+    left: 50px;
 }
 
 .myButton {
@@ -31,6 +37,8 @@ a {
     padding:6px 24px;
     text-decoration:none;
     text-shadow:0px 1px 0px #154682;
+    width: 192px;
+    text-align: center;
 }
 .myButton:hover {
     background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #0061a7), color-stop(1, #007dc1));
