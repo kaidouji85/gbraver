@@ -9,8 +9,14 @@ a {
 
 #login {
     position: fixed;
-    top: 200px;
-    left: 50px;
+    top: 182px;
+    left: 56px;
+}
+
+#howToPlay {
+    position: fixed;
+    top: 232px;
+    left: 56px;
 }
 
 .myButton {
