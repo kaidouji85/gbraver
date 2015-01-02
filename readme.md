@@ -92,8 +92,8 @@ herokuに環境変数を登録します。ここでは環境変数登録バッ�
 
 ## 素材提供
 [煉獄庭園様 (BGM)](http://www.rengoku-teien.com/)  
-[ザ・マッチメイカァズ様　(効果音)](http://osabisi.sakura.ne.jp/m2/)
-
+[ザ・マッチメイカァズ様　(効果音)](http://osabisi.sakura.ne.jp/m2/)  
+[Webフォントファン様 (フォント)](http://webfontfan.com)
 
 ## ゲームのプレイ動画
 <https://www.youtube.com/watch?v=_lryKLk21Ug>
