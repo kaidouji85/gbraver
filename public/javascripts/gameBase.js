@@ -24,6 +24,7 @@ function gameBase(spec,my){
     core.SOUND_CONFIG = core.SOUND_PREFIX + 'omoide_loft.mp3';
     core.SOUND_ATTACK_HIT = core.SOUND_PREFIX + 'mecha27.wav';
     core.SOUND_ATTACK_MISS = core.SOUND_PREFIX + 'swing32.wav';
+    core.SOUND_MY_TURN = core.SOUND_PREFIX + 'cursor02.wav';
     core.WAIT_TIME_ACTIVE_RESET = 30;
     core.ICON_WIDTH = 124;
     core.ICON_HEIGHT = 40;
@@ -81,6 +82,7 @@ function gameBase(spec,my){
         core.preload(core.SOUND_CONFIG);
         core.preload(core.SOUND_ATTACK_HIT);
         core.preload(core.SOUND_ATTACK_MISS);
+        core.preload(core.SOUND_MY_TURN);
     }
     return core;
 }
