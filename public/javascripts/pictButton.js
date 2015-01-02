@@ -16,6 +16,7 @@ function pictButton(spec,my){
     var buttonLabel = new Label(text);
 
     that.addChild(buttonWindow);
+    buttonLabel.font = "14px 'JapanSans80','ヒラギノ角ゴ Pro W3','Hiragino  Kaku Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック','MS PGothic',sans-serif";
     buttonLabel.color = COLOR_WHITE;
     buttonLabel.x = (BUTTON_WIDTH*16 - buttonLabel._boundWidth)/2;
     buttonLabel.y = (BUTTON_HEIGHT*16 - buttonLabel._boundHeight)/2;
