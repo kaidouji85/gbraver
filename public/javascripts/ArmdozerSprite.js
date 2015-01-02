@@ -37,6 +37,8 @@ function ArmdozerSprite(spec,my) {
         that.tl.delay(30)
             .then(function(){
                 that.frame = core.FRAME_DAMAGE;
+            }).delay(2).then(function(){
+                core.assets[core.SOUND_ATTACK_HIT].play();
             })
             .moveBy(10*that.scaleX,0,2)
             .moveBy(-10*that.scaleX,0,2);
@@ -50,6 +52,9 @@ function ArmdozerSprite(spec,my) {
 
     function doAvoidMotion(){
         that.tl.delay(31)
+            .then(function(){
+                core.assets[core.SOUND_ATTACK_MISS].play();
+            })
             .moveBy(50*that.scaleX,50,5)
             .moveBy(-50*that.scaleX,-50,5);
     }

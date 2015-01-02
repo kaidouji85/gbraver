@@ -22,6 +22,8 @@ function gameBase(spec,my){
     core.SOUND_PREFIX = '/sound/';
     core.SOUND_BATTLE = core.SOUND_PREFIX + 'hsd.mp3';
     core.SOUND_CONFIG = core.SOUND_PREFIX + 'omoide_loft.mp3';
+    core.SOUND_ATTACK_HIT = core.SOUND_PREFIX + 'punch-high1.mp3';
+    core.SOUND_ATTACK_MISS = core.SOUND_PREFIX + 'sword-gesture1.mp3';
     core.WAIT_TIME_ACTIVE_RESET = 30;
     core.ICON_WIDTH = 124;
     core.ICON_HEIGHT = 40;
@@ -77,6 +79,8 @@ function gameBase(spec,my){
 
         core.preload(core.SOUND_BATTLE);
         core.preload(core.SOUND_CONFIG);
+        core.preload(core.SOUND_ATTACK_HIT);
+        core.preload(core.SOUND_ATTACK_MISS);
     }
     return core;
 }
