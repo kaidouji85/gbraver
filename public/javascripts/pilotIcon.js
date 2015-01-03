@@ -2,6 +2,7 @@ function pilotIcon(spec,my){
     var that = new Group();
     var windowPict = spec.windowPict;
     var pilotPict = spec.pilotPict;
+    var scaleX = spec.scaleX;
     var visible = true;
     var pilotButton = {};
     var miniPilot = {};
@@ -18,6 +19,7 @@ function pilotIcon(spec,my){
 
         miniPilot = new Sprite(80,80);
         miniPilot.image = createFaceIcon(pilotPict);
+        miniPilot.scaleX = scaleX;
         that.addChild(miniPilot);
     }
 

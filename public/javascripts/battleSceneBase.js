@@ -99,7 +99,8 @@ function battleSceneBase(spec,my){
             //パイロットアイコン
             that.pilotIconArray[uid] = pilotIcon({
                 windowPict : core.assets[core.PICT_WINDOW],
-                pilotPict : core.assets[core.PICT_PREFIX+that.statusArray[uid].skill.pict]
+                pilotPict : core.assets[core.PICT_PREFIX+that.statusArray[uid].skill.pict],
+                scaleX : uid===that.userId ? 1 : -1
             });
             that.pilotIconArray[uid].x = uid===that.userId ? 240 : 0;
             that.pilotIconArray[uid].y = 80;
