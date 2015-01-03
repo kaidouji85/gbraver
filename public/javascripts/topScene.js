@@ -43,8 +43,7 @@ function topScene(spec,my){
         //ステージセレクトボタン
         that.selectStageButton = pictButton({
             text : '1人用モード',
-            pict : core.assets[core.PICT_WINDOW],
-            subPict : core.assets[core.PICT_ACTIVE_WINDOW]
+            pict : core.assets[core.PICT_BUTTON]
         });
         that.selectStageButton.x = 8;
         that.selectStageButton.y = 300;
@@ -56,8 +55,7 @@ function topScene(spec,my){
         //対戦ルーム入室ボタン
         that.battleRoomButton = pictButton({
             text : '対戦モード',
-            pict : core.assets[core.PICT_WINDOW],
-            subPict : core.assets[core.PICT_ACTIVE_WINDOW]
+            pict : core.assets[core.PICT_BUTTON]
         });
         that.battleRoomButton.x = 168;
         that.battleRoomButton.y = 300;
@@ -75,8 +73,7 @@ function topScene(spec,my){
         //アームドーザ選択ボタン
         that.selectArmdozerButton = pictButton({
             text : 'アームドーザ選択',
-            pict : core.assets[core.PICT_WINDOW],
-            subPict : core.assets[core.PICT_ACTIVE_WINDOW]
+            pict : core.assets[core.PICT_BUTTON]
         });
         that.selectArmdozerButton.x = 8;
         that.selectArmdozerButton.y = 364;
@@ -88,8 +85,7 @@ function topScene(spec,my){
         //パイロット選択ボタン
         that.selectPilotButton = pictButton({
             text : 'パイロット選択',
-            pict : core.assets[core.PICT_WINDOW],
-            subPict : core.assets[core.PICT_ACTIVE_WINDOW]
+            pict : core.assets[core.PICT_BUTTON]
         });
         that.selectPilotButton.x = 168;
         that.selectPilotButton.y = 364;

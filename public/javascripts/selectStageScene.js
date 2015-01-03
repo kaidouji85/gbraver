@@ -32,8 +32,7 @@ function selectStageScene(spec,my){
         //戻るボタン
         that.prevButton = pictButton({
             text : '戻る',
-            pict : core.assets[core.PICT_WINDOW],
-            subPict : core.assets[core.PICT_ACTIVE_WINDOW]
+            pict : core.assets[core.PICT_BUTTON]
         });
         that.prevButton.x = 88;
         that.prevButton.y = 426;

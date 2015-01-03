@@ -81,8 +81,7 @@ function selectPilotScene(spec,my) {
         //戻るボタン
         that.prevButton = pictButton({
             text : '戻る',
-            pict : core.assets[core.PICT_WINDOW],
-            subPict : core.assets[core.PICT_ACTIVE_WINDOW]
+            pict : core.assets[core.PICT_BUTTON]
         });
         that.prevButton.addEventListener(Event.TOUCH_END,function(){
             emitPushButton();
@@ -94,8 +93,7 @@ function selectPilotScene(spec,my) {
         //決定ボタン
         that.okButton = pictButton({
             text : '決定',
-            pict : core.assets[core.PICT_WINDOW],
-            subPict : core.assets[core.PICT_ACTIVE_WINDOW]
+            pict : core.assets[core.PICT_BUTTON]
         });
         that.okButton.addEventListener(Event.TOUCH_END,function(){
             invisibleButton();

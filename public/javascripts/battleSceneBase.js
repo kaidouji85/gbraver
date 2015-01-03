@@ -162,8 +162,7 @@ function battleSceneBase(spec,my){
         //攻撃アイコン
         that.atackIcon = pictButton({
             text : '攻撃',
-            pict : core.assets[core.PICT_WINDOW],
-            subPict : core.assets[core.PICT_ACTIVE_WINDOW]
+            pict : core.assets[core.PICT_BUTTON]
         });
         that.atackIcon.x = COMMAND_X_1;
         that.atackIcon.y = COMMAND_Y_1;
@@ -173,8 +172,7 @@ function battleSceneBase(spec,my){
         //チャージアイコン
         that.chargeIcon = pictButton({
             text : 'チャージ',
-            pict : core.assets[core.PICT_WINDOW],
-            subPict : core.assets[core.PICT_ACTIVE_WINDOW]
+            pict : core.assets[core.PICT_BUTTON]
         });
         that.chargeIcon.x = COMMAND_X_2;
         that.chargeIcon.y = COMMAND_Y_1;
@@ -184,8 +182,7 @@ function battleSceneBase(spec,my){
         //パイロットスキルアイコン
         that.skillIcon = pictButton({
             text : 'スキル',
-            pict : core.assets[core.PICT_WINDOW],
-            subPict : core.assets[core.PICT_ACTIVE_WINDOW]
+            pict : core.assets[core.PICT_BUTTON]
         });
         that.skillIcon.x = COMMAND_X_1;
         that.skillIcon.y = COMMAND_Y_2;
@@ -195,8 +192,7 @@ function battleSceneBase(spec,my){
         //+アイコン
         that.plusIcon = pictButton({
             text : '+',
-            pict : core.assets[core.PICT_WINDOW],
-            subPict : core.assets[core.PICT_ACTIVE_WINDOW]
+            pict : core.assets[core.PICT_BUTTON]
         });
         that.plusIcon.x = COMMAND_X_1;
         that.plusIcon.y = COMMAND_Y_1;
@@ -206,8 +202,7 @@ function battleSceneBase(spec,my){
         //-アイコン
         that.minusIcon = pictButton({
             text : '-',
-            pict : core.assets[core.PICT_WINDOW],
-            subPict : core.assets[core.PICT_ACTIVE_WINDOW]
+            pict : core.assets[core.PICT_BUTTON]
         });
         that.minusIcon.x = COMMAND_X_2;
         that.minusIcon.y = COMMAND_Y_1;
@@ -217,8 +212,7 @@ function battleSceneBase(spec,my){
         //決定アイコン
         that.okIcon = pictButton({
             text : '決定',
-            pict : core.assets[core.PICT_WINDOW],
-            subPict : core.assets[core.PICT_ACTIVE_WINDOW]
+            pict : core.assets[core.PICT_BUTTON]
         });
         that.okIcon.x = COMMAND_X_1;
         that.okIcon.y = COMMAND_Y_2;
@@ -228,8 +222,7 @@ function battleSceneBase(spec,my){
         //戻るアイコン
         that.prevIcon = pictButton({
             text : '戻る',
-            pict : core.assets[core.PICT_WINDOW],
-            subPict : core.assets[core.PICT_ACTIVE_WINDOW]
+            pict : core.assets[core.PICT_BUTTON]
         });
         that.prevIcon.x = COMMAND_X_2;
         that.prevIcon.y = COMMAND_Y_2;
