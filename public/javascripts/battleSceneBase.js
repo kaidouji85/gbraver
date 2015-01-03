@@ -8,7 +8,6 @@ function battleSceneBase(spec,my){
     that.statusArray = $.extend(true, {}, spec.statusArray);
     that.userId = spec.userId;
     that.backgroundColor = "black";
-    that.sky = {};
     that.ground = {};
     that.atackIcon = {};
     that.chargeIcon = {};
@@ -31,6 +30,7 @@ function battleSceneBase(spec,my){
     that.commandWindow = {};
     that.winSprite = {};
     that.loseSprite = {};
+    that.pilotIconArray = {};
 
     that.refreshMertor = function(statusArray){
         for(var uid in statusArray){
@@ -57,14 +57,6 @@ function battleSceneBase(spec,my){
         that.addChild(that.commandWindow);
 
         for(var uid in that.statusArray){
-            //キャラクタースプライト
-            var spec = {
-                pict : core.assets[core.PICT_PREFIX+that.statusArray[uid].pictName],
-                direction : uid===that.userId ? 'right' : 'left'
-            };
-            that.charaSpriteArray[uid] = new ArmdozerSprite(spec);
-            that.addChild(that.charaSpriteArray[uid]);
-
             //ウインドウ
             that.mertorWindowArray[uid] = gridWindow({
                 pict : core.assets[core.PICT_BLACK_WINDOW],
@@ -103,6 +95,23 @@ function battleSceneBase(spec,my){
             that.batteryMertorArray[uid].y = 50;
             that.batteryMertorArray[uid].setValue(5);
             that.addChild(that.batteryMertorArray[uid]);
+
+            //パイロットアイコン
+            that.pilotIconArray[uid] = pilotIcon({
+                windowPict : core.assets[core.PICT_WINDOW],
+                pilotPict : core.assets[core.PICT_PREFIX+that.statusArray[uid].skill.pict]
+            });
+            that.pilotIconArray[uid].x = uid===that.userId ? 240 : 0;
+            that.pilotIconArray[uid].y = 80;
+            that.addChild(that.pilotIconArray[uid]);
+
+            //キャラクタースプライト
+            var spec = {
+                pict : core.assets[core.PICT_PREFIX+that.statusArray[uid].pictName],
+                direction : uid===that.userId ? 'right' : 'left'
+            };
+            that.charaSpriteArray[uid] = new ArmdozerSprite(spec);
+            that.addChild(that.charaSpriteArray[uid]);
         }
 
         for(var uid in that.statusArray){
