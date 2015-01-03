@@ -18,7 +18,7 @@ function pictButton(spec,my){
         that.addChild(buttonSprite);
 
         buttonLabel = new Label(text);
-        buttonLabel.font = "14px 'JapanSans80','ヒラギノ角ゴ Pro W3','Hiragino  Kaku Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック','MS PGothic',sans-serif";
+        buttonLabel.font = "15px 'JapanSans80','ヒラギノ角ゴ Pro W3','Hiragino  Kaku Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック','MS PGothic',sans-serif";
         buttonLabel.color = COLOR_WHITE;
         buttonLabel.x = (BUTTON_WIDTH - buttonLabel._boundWidth)/2;
         buttonLabel.y = (BUTTON_HEIGHT - buttonLabel._boundHeight)/2;
@@ -41,10 +41,12 @@ function pictButton(spec,my){
 
     that.addEventListener(Event.TOUCH_START,function(){
         buttonLabel.color = COLOR_GRAY;
+        buttonSprite.frame = 1;
     });
 
     that.addEventListener(Event.TOUCH_END,function(){
         buttonLabel.color = COLOR_WHITE;
+        buttonSprite.frame = 0;
     });
 
     return that;
