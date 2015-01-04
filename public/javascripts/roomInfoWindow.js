@@ -1,8 +1,7 @@
 function roomInfoWindow(spec,my) {
     var COLOR_WHITE = '#FFFFFF';
-    var GRID_WIDTH = 18;
-    var GRID_HEIGHT = 4;
-    var GRID_SIZE = 16;
+    var GRID_WIDTH = 9;
+    var GRID_HEIGHT = 2;
 
     var that = new Group();
     var pict = spec.pict;
@@ -10,7 +9,9 @@ function roomInfoWindow(spec,my) {
     var baseWindow = gridWindow({
         pict : pict,
         width : GRID_WIDTH,
-        height : GRID_HEIGHT
+        height : GRID_HEIGHT,
+        spriteWidth : 32,
+        spriteHeight : 32
     });
     var roomNameLabel = new Label();
     var statusLabel = new Label();
@@ -23,12 +24,12 @@ function roomInfoWindow(spec,my) {
 
         roomNameLabel.color = COLOR_WHITE;
         roomNameLabel.x = 16;
-        roomNameLabel.y = 10;
+        roomNameLabel.y = 12;
         that.addChild(roomNameLabel);
 
         statusLabel.color = COLOR_WHITE;
         statusLabel.x = 86;
-        statusLabel.y = 10;
+        statusLabel.y = 12;
         that.addChild(statusLabel);
 
         usersLabel.color = COLOR_WHITE;

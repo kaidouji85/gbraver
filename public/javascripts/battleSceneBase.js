@@ -98,7 +98,7 @@ function battleSceneBase(spec,my){
 
             //パイロットアイコン
             that.pilotIconArray[uid] = pilotIcon({
-                windowPict : core.assets[core.PICT_WINDOW],
+                windowPict : core.assets[core.PICT_BLACK_WINDOW],
                 pilotPict : core.assets[core.PICT_PREFIX+that.statusArray[uid].skill.pict],
                 scaleX : uid===that.userId ? 1 : -1
             });
@@ -231,7 +231,8 @@ function battleSceneBase(spec,my){
 
         //メッセージウインドウ
         that.mesWindow = messageWindow({
-            pict : core.assets[core.PICT_WINDOW]
+            pict : core.assets[core.PICT_WINDOW],
+            height : 144
         });
         that.mesWindow.x = 0;
         that.mesWindow.y = 336;

@@ -94,7 +94,7 @@ function roomSelectScene(spec,my){
 
         //画面タイトル
         that.title = titleWindow({
-            pict : core.assets[core.PICT_WINDOW],
+            pict : core.assets[core.PICT_BLACK_WINDOW],
             text : 'ルーム選択'
         });
         that.addChild(that.title);

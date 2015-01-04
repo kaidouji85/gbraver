@@ -24,7 +24,7 @@ function selectArmdozerScene(spec,my){
 
         //画面タイトル
         that.title = titleWindow({
-            pict : core.assets[core.PICT_WINDOW],
+            pict : core.assets[core.PICT_BLACK_WINDOW],
             text : 'アームドーザ選択'
         });
         that.addChild(that.title);
@@ -32,7 +32,7 @@ function selectArmdozerScene(spec,my){
         //アームドーザボタン
         for(var i=0; i<MAX_ARMDOZER; i++) {
             that.armdozerButtonArray[i] = armdozerIcon({
-                windowPict : core.assets[core.PICT_WINDOW],
+                windowPict : core.assets[core.PICT_BLACK_WINDOW],
                 armdozerPict : core.assets[core.PICT_PREFIX + armdozerList[i].pictName]
             });
         }
@@ -50,74 +50,76 @@ function selectArmdozerScene(spec,my){
         //アームドーザ情報ウインドウ
         that.infoWindow = gridWindow({
             pict : core.assets[core.PICT_WINDOW],
-            width : 10,
-            height : 9
+            width : 5,
+            height : 5,
+            spriteWidth : 32,
+            spriteHeight : 32
         });
         that.infoWindow.x = 150;
-        that.infoWindow.y = 120;
+        that.infoWindow.y = 100;
         that.addChild(that.infoWindow);
 
         //アームドーザ名ラベル
         that.armdozerNameLabel = new Label('');
         that.armdozerNameLabel.color = "white";
         that.armdozerNameLabel.x = 170;
-        that.armdozerNameLabel.y = 140;
+        that.armdozerNameLabel.y = 120;
         that.addChild(that.armdozerNameLabel);
 
         //HPラベル
         that.hpLabel = new Label('HP');
         that.hpLabel.color = "white";
         that.hpLabel.x = 170;
-        that.hpLabel.y = 170;
+        that.hpLabel.y = 150;
         that.addChild(that.hpLabel);
 
         //HPバリューラベル
         that.hpValueLabel = new Label('');
         that.hpValueLabel.color = "white";
         that.hpValueLabel.x = 230;
-        that.hpValueLabel.y = 170;
+        that.hpValueLabel.y = 150;
         that.addChild(that.hpValueLabel);
 
         //攻撃力ラベル
         that.powerLabel = new Label('攻撃');
         that.powerLabel.color = 'white';
         that.powerLabel.x = 170;
-        that.powerLabel.y = 190;
+        that.powerLabel.y = 170;
         that.addChild(that.powerLabel);
 
         //攻撃力バリューラベル
         that.powerValueLabel = new Label('');
         that.powerValueLabel.color = 'white';
         that.powerValueLabel.x = 230;
-        that.powerValueLabel.y = 190;
+        that.powerValueLabel.y = 170;
         that.addChild(that.powerValueLabel);
 
         //装甲ラベル
         that.defenseLabel = new Label('脆性');
         that.defenseLabel.color = 'white';
         that.defenseLabel.x = 170;
-        that.defenseLabel.y = 210;
+        that.defenseLabel.y = 190;
         that.addChild(that.defenseLabel);
 
         //装甲バリューラベル
         that.defenseValueLabel = new Label('');
         that.defenseValueLabel.color = 'white';
         that.defenseValueLabel.x = 230;
-        that.defenseValueLabel.y = 210;
+        that.defenseValueLabel.y = 190;
         that.addChild(that.defenseValueLabel);
 
         //機動力ラベル
         that.speedLabel = new Label('機動');
         that.speedLabel.color = "white";
         that.speedLabel.x = 170;
-        that.speedLabel.y = 230;
+        that.speedLabel.y = 210;
         that.addChild(that.speedLabel);
 
         //機動力バリューラベル
         that.speedValueLabel = new Label('');
         that.speedValueLabel.color = "white";
         that.speedValueLabel.x = 230;
-        that.speedValueLabel.y = 230;
+        that.speedValueLabel.y = 210;
         that.addChild(that.speedValueLabel);
 
         //選択したアームドーザ

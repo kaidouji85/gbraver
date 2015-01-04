@@ -1,7 +1,7 @@
 function stageButton(spec,my){
     var COLOR_WHITE = '#FFFFFF';
-    var GRID_WIDTH = 18;
-    var GRID_HEIGHT = 4;
+    var GRID_WIDTH = 9;
+    var GRID_HEIGHT = 2;
 
     var that = new Group();
     var pict = spec.pict;
@@ -11,7 +11,9 @@ function stageButton(spec,my){
     var baseWindow = gridWindow({
         pict : pict,
         width : GRID_WIDTH,
-        height : GRID_HEIGHT
+        height : GRID_HEIGHT,
+        spriteWidth : 32,
+        spriteHeight : 32
     });
     var stageNoLabel = new Label();
     var stageTitleLabel = new Label();

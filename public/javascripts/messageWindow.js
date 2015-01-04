@@ -9,8 +9,10 @@ function messageWindow(spec,my){
     var height = spec.height || SPRITE_HEIGHT;
     var windowSprite = gridWindow({
         pict : pict,
-        width : width/16,
-        height : height/16
+        width : width/32,
+        height : height/32,
+        spriteWidth : 32,
+        spriteHeight : 32
     });
     var messageLabel = new Label('');
     var visible = true;

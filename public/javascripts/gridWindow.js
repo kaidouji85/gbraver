@@ -1,12 +1,12 @@
 function gridWindow(spec,my){
     var that = new Group();
-    var SPRITE_WIDTH = 16;
-    var SPRITE_HEIGHT = 16;
     var OPACITY = 1;
 
     var pict = spec.pict;
     var width = spec.width;
     var height = spec.height;
+    var SPRITE_WIDTH = spec.spriteWidth || 16;
+    var SPRITE_HEIGHT = spec.spriteHeight || 16;
 
     init();
     function init(){

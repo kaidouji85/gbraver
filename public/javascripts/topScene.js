@@ -33,7 +33,7 @@ function topScene(spec,my){
 
         //選択中パイロット
         that.pilotSprite = pilotIcon({
-            windowPict : core.assets[core.PICT_WINDOW],
+            windowPict : core.assets[core.PICT_BLACK_WINDOW],
             pilotPict : core.assets[core.PICT_PREFIX + getPilotPictByPilotId(pilotId)]
         });
         that.pilotSprite.x = 230;
@@ -96,7 +96,7 @@ function topScene(spec,my){
 
         //画面タイトル
         that.title = titleWindow({
-            pict : core.assets[core.PICT_WINDOW],
+            pict : core.assets[core.PICT_BLACK_WINDOW],
             text : 'メニュー'
         });
         that.addChild(that.title);

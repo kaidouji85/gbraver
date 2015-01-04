@@ -27,8 +27,10 @@ function selectPilotScene(spec,my) {
         //パイロット情報ウインドウ
         that.infoWindow = gridWindow({
             pict : core.assets[core.PICT_WINDOW],
-            width : 18,
-            height : 4
+            width : 9,
+            height : 2,
+            spriteWidth : 32,
+            spriteHeight : 32
         });
         that.infoWindow.x = (320-18*16)/2;
         that.infoWindow.y = 240;
@@ -38,19 +40,19 @@ function selectPilotScene(spec,my) {
         that.pilotLabel = new Label();
         that.pilotLabel.color = "white";
         that.pilotLabel.x = 38;
-        that.pilotLabel.y = 252;
+        that.pilotLabel.y = 258;
         that.addChild(that.pilotLabel);
 
         //スキルラベル
         that.skillLabel = new Label();
         that.skillLabel.color = "white";
         that.skillLabel.x = 38;
-        that.skillLabel.y = 270;
+        that.skillLabel.y = 276;
         that.addChild(that.skillLabel);
 
         //画面タイトル
         that.title = titleWindow({
-            pict : core.assets[core.PICT_WINDOW],
+            pict : core.assets[core.PICT_BLACK_WINDOW],
             text : 'パイロット選択'
         });
         that.addChild(that.title);
@@ -58,7 +60,7 @@ function selectPilotScene(spec,my) {
         //パイロットボタン
         for(var i=0; i<MAX_PILOT; i++) {
             that.pilotButtonArray[i] = pilotIcon({
-                windowPict : core.assets[core.PICT_WINDOW],
+                windowPict : core.assets[core.PICT_BLACK_WINDOW],
                 pilotPict : core.assets[core.PICT_PREFIX + pilotList[i].pict]
             });
         }
