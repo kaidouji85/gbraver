@@ -20,6 +20,7 @@ function gameBase(spec,my){
     core.PICT_LOSE = core.PICT_PREFIX+'lose.png';
     core.PICT_TITLE = core.PICT_PREFIX+'title.png';
     core.PICT_BUTTON = core.PICT_PREFIX+'button.png';
+    core.PICT_EXPLOSION = core.PICT_PREFIX+'explosion.png';
     core.SOUND_PREFIX = '/sound/';
     core.SOUND_BATTLE = core.SOUND_PREFIX + 'hsd.mp3';
     core.SOUND_CONFIG = core.SOUND_PREFIX + 'omoide_loft.mp3';
@@ -79,6 +80,7 @@ function gameBase(spec,my){
         core.preload(core.PICT_LOSE);
         core.preload(core.PICT_TITLE);
         core.preload(core.PICT_BUTTON);
+        core.preload(core.PICT_EXPLOSION);
 
         core.preload(core.SOUND_BATTLE);
         core.preload(core.SOUND_CONFIG);

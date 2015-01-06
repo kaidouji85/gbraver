@@ -259,8 +259,15 @@ function battleScene(spec,my){
 
     function doGameEnd(data){
         refreshMertor(data.statusArray);
-        data.winner === that.userId ? that.winSprite.visible=true : that.loseSprite.visible = true;
-        that.tl.delay(120).then(function(){
+        for(var uid in data.statusArray){
+            if( uid !== data.winner ){
+                that.charaSpriteArray[uid].doDownMotion();
+                break;
+            }
+        }
+        that.tl.delay(130).then(function(){
+            data.winner === that.userId ? that.winSprite.visible=true : that.loseSprite.visible = true;
+        }).delay(60).then(function(){
             emitCommand({method:'ok'});
         });
     }
