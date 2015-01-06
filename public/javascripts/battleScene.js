@@ -267,7 +267,7 @@ function battleScene(spec,my){
         }
         that.tl.delay(130).then(function(){
             data.winner === that.userId ? that.winSprite.visible=true : that.loseSprite.visible = true;
-        }).delay(60).then(function(){
+        }).delay(80).then(function(){
             emitCommand({method:'ok'});
         });
     }
