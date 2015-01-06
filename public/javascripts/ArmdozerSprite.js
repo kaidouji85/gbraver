@@ -74,6 +74,7 @@ function ArmdozerSprite(spec,my) {
             var posx = that.x-SPRITE_WIDTH/2+rand(SPRITE_WIDTH);
             var posy = that.y-SPRITE_HEIGHT/2+rand(SPRITE_HEIGHT);
             core.currentScene.addChild(createExplosion(posx,posy));
+            core.assets[core.SOUND_EXPLOSION].play();
         }).delay(4).loop();
         core.currentScene.tl.delay(120).then(function(){
             that.tl.clear();
