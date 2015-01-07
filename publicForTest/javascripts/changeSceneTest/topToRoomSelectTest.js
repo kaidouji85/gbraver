@@ -42,6 +42,7 @@ function topToRoomSelect(){
         assert.equal(Game.currentScene.selectStageButton.getVisible(),false,'ステージセレクトボタンが表示されない');
         assert.equal(Game.currentScene.selectPilotButton.getVisible(),false,'パイロット選択ボタンが表示されない');
         assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
+        assert.equal(Game.currentScene.logOffButton.getVisible(),false,'ログオフボタンが非表示');
         assert.equal(Game.currentScene.mesWindow.getText(),'ルーム情報取得中','メッセージが正しい');
         assert.equal(Game.currentScene.title.getVisible(),true,'画面タイトルが表示される');
         Game.currentScene.tl.delay(30).then(respSuccessGetRoomInfo);

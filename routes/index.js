@@ -17,7 +17,7 @@ exports.testClient = function(req, res){
 }
 
 //TODO : テストフォルダからモジュール持ってきてるのが気持ち悪い
-var testGlob = require('./testGlob.js');
+var testGlob = require('../seleniumTest/testGlob.js');
 exports.testList = function(req, res){
     var tg = testGlob();
     var testList = tg.glob('publicForTest/javascripts');

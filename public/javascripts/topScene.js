@@ -10,12 +10,14 @@ function topScene(spec,my){
     that.onPushSelectPilotButton = onPushSelectPilotButton;
     that.onPushSelectArmdozerButton = onPushSelectArmdozerButton;
     that.onPushSelectStageButton = onPushSelectStageButton;
+    that.onPushLogOffButton = onPushLogOffButton;
     
     var core = enchant.Core.instance;
     var emitPushBattleRoom = function(){};
     var emitPushSelectPilotButton = function(){};
     var emitPushSelectArmdozerButton = function(){};
     var emitPushSelectStageButton = function(){};
+    var emitPushLogOffButton = function(){};
     
     initSprite();
     function initSprite(){
@@ -64,6 +66,7 @@ function topScene(spec,my){
             that.selectArmdozerButton.setVisible(false);
             that.selectStageButton.setVisible(false);
             that.selectPilotButton.setVisible(false);
+            that.logOffButton.setVisible(false);
             that.mesWindow.setText(core.MESSAGE_GET_ROOMINFO);
             that.mesWindow.setVisible(true);
             emitPushBattleRoom();
@@ -93,6 +96,25 @@ function topScene(spec,my){
             emitPushSelectPilotButton();
         });
         that.addChild(that.selectPilotButton);
+
+        //ログオフボタン
+        that.logOffButton = pictButton({
+            text : 'ログオフ',
+            pict : core.assets[core.PICT_BUTTON]
+        });
+        that.logOffButton.x = 8;
+        that.logOffButton.y = 428;
+        that.logOffButton.addEventListener(Event.TOUCH_END,function(){
+            that.battleRoomButton.setVisible(false);
+            that.selectArmdozerButton.setVisible(false);
+            that.selectStageButton.setVisible(false);
+            that.selectPilotButton.setVisible(false);
+            that.logOffButton.setVisible(false);
+            that.mesWindow.setText(core.MESSAGE_LOGOFF);
+            that.mesWindow.setVisible(true);
+            emitPushLogOffButton();
+        });
+        that.addChild(that.logOffButton);
 
         //画面タイトル
         that.title = titleWindow({
@@ -145,6 +167,10 @@ function topScene(spec,my){
                 return pilotList[i].pict;
             }
         }
+    }
+
+    function onPushLogOffButton(fn) {
+        emitPushLogOffButton = fn;
     }
     
     return that;
