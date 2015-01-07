@@ -11,6 +11,7 @@ function game(spec, my) {
     var stageData = spec.stageData;
     var emitChangeScene = function(scene){};
     var emitSendMessage = function(message,data){};
+    var emitLogOff = function(){};
 
     core.bgm = bgmManager();
 
@@ -67,6 +68,9 @@ function game(spec, my) {
         });
         core.topScene.onPushSelectStageButton(function(){
             core.changeSelectStageScene();
+        });
+        core.topScene.onPushLogOffButton(function(){
+            emitLogOff();
         });
         core.replaceScene(core.topScene);
         emitChangeScene('top');
@@ -136,6 +140,10 @@ function game(spec, my) {
     core.onSendMessage = function(fn){
         emitSendMessage = fn;
     };
+
+    core.onLogOff = function(fn){
+        emitLogOff = fn;
+    }
     
     core.emitServerResp = function(message,data){
         switch(message) {

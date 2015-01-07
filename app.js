@@ -69,7 +69,7 @@ passport.use(new GoogleStrategy({
 
 //routing
 app.get('/', routes.index);
-//app.get('/gameMain', routes.gameMain);
+app.get('/logOff',routes.logOff);
 app.get('/auth/google',
     passport.authenticate('google', {
         scope: [

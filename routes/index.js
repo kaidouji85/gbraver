@@ -7,7 +7,14 @@ exports.index = function(req, res){
     } else {
         res.render('index', {title:'Gブレイバー'});
     }
-};
+}
+
+//TODO : テストコードがない
+exports.logOff = function(req, res){
+    req.session.gbraver = null;
+    res.redirect('/');
+
+}
 
 exports.testClient = function(req, res){
     var testCode = req.query.code;

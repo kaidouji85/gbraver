@@ -49,6 +49,10 @@ window.onload = function() {
             Game.onSendMessage(function(message,data){
                 socket.emit(message,data);
             });
+            //TODO : テストコードがない
+            Game.onLogOff(function(){
+                window.location = location.origin+'/logOff';
+            });
 
             socket.on('succesEnterRoom', function() {
                 Game.emitServerResp('succesEnterRoom');
@@ -90,7 +94,6 @@ window.onload = function() {
                 console.log('reconnecting');
                 window.location = location.origin;
             });
-
         };
     }
 

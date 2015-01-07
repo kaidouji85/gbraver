@@ -25,7 +25,7 @@ function doTest(){
 
     function pushLogOffButton(){
         touch(Game.currentScene.logOffButton);
-        Game.currentScene.onPushLogOffButton(assertOfLogOff);
+        Game.onLogOff(assertOfLogOff);
     }
 
     function assertOfLogOff(){
