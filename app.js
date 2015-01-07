@@ -69,7 +69,7 @@ passport.use(new GoogleStrategy({
 
 //routing
 app.get('/', routes.index);
-app.get('/gameMain', routes.gameMain);
+//app.get('/gameMain', routes.gameMain);
 app.get('/auth/google',
     passport.authenticate('google', {
         scope: [
@@ -85,11 +85,7 @@ app.get('/auth/google/callback', function (req, res, next) {
         req.session.gbraver = {
             user : user
         };
-        if(user){
-            res.redirect('/gameMain');
-        } else {
-            res.redirect('/');
-        }
+        res.redirect('/');
     })(req, res, next);
 });
 if('development' == app.get('env')){

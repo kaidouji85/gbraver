@@ -1,12 +1,12 @@
 exports.index = function(req, res){
-  res.render('index', {title:'Gブレイバー'});
-};
-
-exports.gameMain = function(req, res) {
-    var userId = req.session.gbraver.user.emails[0].value;
-    res.render('gameMain', {
-        userId : userId
-    });
+    if(req.session.gbraver){
+        var userId = req.session.gbraver.user.emails[0].value;
+        res.render('gameMain', {
+            userId : userId
+        });
+    } else {
+        res.render('index', {title:'Gブレイバー'});
+    }
 };
 
 exports.testClient = function(req, res){
@@ -15,8 +15,9 @@ exports.testClient = function(req, res){
         testCode : testCode
     });
 }
+
 //TODO : テストフォルダからモジュール持ってきてるのが気持ち悪い
-var testGlob = require('../seleniumTest/testGlob.js');
+var testGlob = require('./testGlob.js');
 exports.testList = function(req, res){
     var tg = testGlob();
     var testList = tg.glob('publicForTest/javascripts');
