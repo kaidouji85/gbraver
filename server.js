@@ -258,11 +258,22 @@ function server(spec, my) {
         });
 
         socket.on('setPilot',function(data){
-            var userId = socket.gbraverInfo.userId;
-            var pilotId = data.pilotId;
-            dao.setPilotId(userId,pilotId,function(err,result){
-                socket.emit('successSetPilot',true);
-            });
+            checkAlreadyLogin();
+            function checkAlreadyLogin() {
+                if (socket.isLogin()) {
+                    setPilot();
+                } else {
+                    socket.emit('noLoginError', 'ログインが完了していません。');
+                }
+            }
+
+            function setPilot(){
+                var userId = socket.gbraverInfo.userId;
+                var pilotId = data.pilotId;
+                dao.setPilotId(userId,pilotId,function(err,result){
+                    socket.emit('successSetPilot',true);
+                });
+            }
         });
 
         socket.on('getMasterData',function(data){

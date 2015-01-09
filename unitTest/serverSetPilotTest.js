@@ -1,5 +1,5 @@
 //TODO : socket.ioコネクション処理を1.0推奨の非同期方式にする
-describe('serverクラスのテスト',function(){
+describe('パイロット選択',function(){
     var SERVER_PORT = process.env.PORT || 3000;
     var SERVER_URL = 'http://localhost:'+SERVER_PORT;
 
@@ -27,30 +27,44 @@ describe('serverクラスのテスト',function(){
         app.close();
     });
 
-    describe('パイロット選択',function(){
-        it('パイロット選択に成功する',function(done){
-            var client = io.connect(SERVER_URL, option);
-            client.emit('auth', {
-                userId : 'test001@gmail.com'
-            });
-            client.once('successAuth',selectPilot);
-
-            function selectPilot(){
-                client.emit('setPilot',{
-                    pilotId : 'iori'
-                });
-                dbMock.setPilotId = updatePilotId;
-            }
-
-            function updatePilotId(userId,pilotId,fn) {
-                assert.equal('test001@gmail.com',userId,'ユーザIDが正しい');
-                assert.equal('iori', pilotId, 'パイロットIDが正しい');
-                fn(null,true);
-                client.once('successSetPilot', function() {
-                    done();
-                });
-            }
-
+    it('パイロット選択に成功する',function(done){
+        var client = io.connect(SERVER_URL, option);
+        client.emit('auth', {
+            userId : 'test001@gmail.com'
         });
+        client.once('successAuth',selectPilot);
+
+        function selectPilot(){
+            client.emit('setPilot',{
+                pilotId : 'iori'
+            });
+            dbMock.setPilotId = updatePilotId;
+        }
+
+        function updatePilotId(userId,pilotId,fn) {
+            assert.equal('test001@gmail.com',userId,'ユーザIDが正しい');
+            assert.equal('iori', pilotId, 'パイロットIDが正しい');
+            fn(null,true);
+            client.once('successSetPilot', function() {
+                done();
+            });
+        }
+    });
+
+    it('未ログインでパイロット選択をするとエラーが出る',function(done){
+        var client = io.connect(SERVER_URL, option);
+
+        selectPilot();
+        function selectPilot(){
+            client.emit('setPilot',{
+                pilotId : 'iori'
+            });
+            client.once('noLoginError', assertOfNoLoginError);
+        }
+
+        function assertOfNoLoginError(data){
+            assert.equal(data,'ログインが完了していません。','エラーメッセージが正しい');
+            done();
+        }
     });
 });
