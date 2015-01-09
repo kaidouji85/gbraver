@@ -223,11 +223,10 @@ describe('serverクラスのテスト', function() {
             client.emit('enterRoom', {
                 roomId : roomId
             });
-            client.on('enterRoomError', function(message) {
-                assert.equal(message, 'ユーザ認証が完了していません。');
+            client.on('noLoginError', function(message) {
+                assert.equal(message, 'ログインが完了していません。');
                 done();
-            }); 
-
+            });
         });
 
         it('3人入室するとエラーが出る',function(done){

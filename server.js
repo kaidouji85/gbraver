@@ -73,7 +73,7 @@ function server(spec, my) {
                 if(socket.gbraverInfo.userId!==null){
                     checkRoomUsersCapacity();
                 } else {
-                    socket.emit('enterRoomError', 'ユーザ認証が完了していません。');
+                    socket.emit('noLoginError', 'ログインが完了していません。');
                 }
             }
 
