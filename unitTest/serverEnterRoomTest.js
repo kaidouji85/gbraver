@@ -224,7 +224,7 @@ describe('serverクラスのテスト', function() {
                 roomId : roomId
             });
             client.on('noLoginError', function(message) {
-                assert.equal(message, 'ログインが完了していません。');
+                assert.equal(message, 'ログインが完了していません。','エラーメッセージが正しい');
                 done();
             });
         });

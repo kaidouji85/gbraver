@@ -53,6 +53,13 @@ function server(spec, my) {
             enemyRoutineBase : null
         };
 
+        socket.isLogin = function(){
+            if(socket.gbraverInfo.userId===null){
+                return false;
+            }
+            return true;
+        }
+
         socket.on('auth',function(data){
             var L_userId = data.userId;
             dao.getUserData(L_userId, function(err, userData) {
@@ -70,7 +77,7 @@ function server(spec, my) {
             checkAlreadyLogin();
 
             function checkAlreadyLogin(){
-                if(socket.gbraverInfo.userId!==null){
+                if(socket.isLogin()){
                     checkRoomUsersCapacity();
                 } else {
                     socket.emit('noLoginError', 'ログインが完了していません。');
@@ -109,20 +116,31 @@ function server(spec, my) {
         });
 
         socket.on('startSinglePlay',function(data){
-            var enemyId = data.enemyId;
-            var routineId = data.routineId;
-            var attackRoutine = getAttackRoutine(routineId);
-            var defenseRoutine = getDefenseRoutine(routineId);
-            socket.gbraverInfo.singlePlayRoom = room();
-            socket.gbraverInfo.enemyRoutineBase = enemyRoutineBase({
-                attackRoutine : attackRoutine,
-                defenseRoutine : defenseRoutine
-            });
+            checkAlreadyLogin();
+            function checkAlreadyLogin() {
+                if (socket.isLogin()) {
+                    getPlayerData();
+                } else {
+                    socket.emit('noLoginError', 'ログインが完了していません。');
+                }
+            }
 
-            dao.getPlayerData(socket.gbraverInfo.userId, function(err, userData) {
-                socket.gbraverInfo.singlePlayRoom.addUser(userData);
-                dao.getEnemyData(enemyId,'kyoko',enterRoomByNPC);//TODO パイロットIDもクライアント側で指定できるようにする
-            });
+            function getPlayerData(){
+                var enemyId = data.enemyId;
+                var routineId = data.routineId;
+                var attackRoutine = getAttackRoutine(routineId);
+                var defenseRoutine = getDefenseRoutine(routineId);
+                socket.gbraverInfo.singlePlayRoom = room();
+                socket.gbraverInfo.enemyRoutineBase = enemyRoutineBase({
+                    attackRoutine : attackRoutine,
+                    defenseRoutine : defenseRoutine
+                });
+
+                dao.getPlayerData(socket.gbraverInfo.userId, function(err, userData) {
+                    socket.gbraverInfo.singlePlayRoom.addUser(userData);
+                    dao.getEnemyData(enemyId,'kyoko',enterRoomByNPC);//TODO パイロットIDもクライアント側で指定できるようにする
+                });
+            }
 
             function enterRoomByNPC(err,enemyData){
                 socket.gbraverInfo.singlePlayRoom.addUser(enemyData);
