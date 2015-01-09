@@ -90,8 +90,16 @@ window.onload = function() {
                 Game.emitServerResp('successSetPilot',data);
             });
 
+            //TODO : 自動テストがない
             socket.on('reconnecting',function(){
                 console.log('reconnecting');
+                window.location = location.origin;
+            });
+
+            //TODO : 自動テストがない
+            socket.on('noLoginError',function(data){
+                console.log('no login error.');
+                console.log(data);
                 window.location = location.origin;
             });
         };
