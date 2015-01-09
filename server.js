@@ -224,12 +224,23 @@ function server(spec, my) {
         });
 
         socket.on('setArmdozer', function (data) {
-            var armdozerId = data.armdozerId;
-            dao.setArmdozerId(socket.gbraverInfo.userId, armdozerId, function (err, result) {
-                if (result === true) {
-                    socket.emit('successSetArmdozer', {});
+            checkAlreadyLogin();
+            function checkAlreadyLogin() {
+                if (socket.isLogin()) {
+                    setArmdozer();
+                } else {
+                    socket.emit('noLoginError', 'ログインが完了していません。');
                 }
-            });
+            }
+
+            function setArmdozer(){
+                var armdozerId = data.armdozerId;
+                dao.setArmdozerId(socket.gbraverInfo.userId, armdozerId, function (err, result) {
+                    if (result === true) {
+                        socket.emit('successSetArmdozer', {});
+                    }
+                });
+            }
         });
 
         socket.on('leaveRoom',function(){
