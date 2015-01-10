@@ -96,7 +96,7 @@ herokuに環境変数を登録します。ここでは環境変数登録バッ�
 [Webフォントファン様 (フォント)](http://webfontfan.com)
 
 ## ゲームのプレイ動画
-<https://www.youtube.com/watch?v=_lryKLk21Ug>
+<https://www.youtube.com/watch?v=46WSwvoTO7U>
 
 
 ## その他
