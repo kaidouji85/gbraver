@@ -23,6 +23,7 @@ var routes = require('./routes')({
 var path = require('path');
 var mongoDao = require('./mongoDao.js');
 var passport = require('passport');
+var xhr2proxy = require('xhr2proxy');
 var enemyRoutineDefine = require('./enemyRoutineDefine.js');
 var app = express();
 
@@ -40,6 +41,7 @@ app.use(cookieParser());
 app.use(session({secret: 'kaidouji85'}));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(xhr2proxy());
 
 // development only
 if ('development' == app.get('env')) {
