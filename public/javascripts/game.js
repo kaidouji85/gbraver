@@ -2,7 +2,10 @@ function game(spec, my) {
     /**
      * ゲームコア
      */
-    var core = gameBase();
+    var contentBaseUrl = spec.contentBaseUrl;
+    var core = gameBase({
+        contentBaseUrl : contentBaseUrl
+    });
     var userId = spec.userId;
     var armdozerId = spec.armdozerId;
     var pilotId = spec.pilotId;

@@ -1,6 +1,7 @@
 function gameBase(spec,my){
     var core = new Core(320, 480);
-    core.PICT_PREFIX = location.origin + '/images/';
+    var contentBaseUrl = spec ? spec.contentBaseUrl : null || location.origin;
+    core.PICT_PREFIX = contentBaseUrl + '/images/';
     core.PICT_ACTIVE_BAR = core.PICT_PREFIX+'activeBar.png';
     core.PICT_ACTIVE_BAR_BACK = core.PICT_PREFIX+'activeBack.png';
     core.PICT_BATTERY_GAUGE = core.PICT_PREFIX+'batteryGauge.png';
@@ -21,7 +22,7 @@ function gameBase(spec,my){
     core.PICT_TITLE = core.PICT_PREFIX+'title.png';
     core.PICT_BUTTON = core.PICT_PREFIX+'button.png';
     core.PICT_EXPLOSION = core.PICT_PREFIX+'explosion.png';
-    core.SOUND_PREFIX = '/sound/';
+    core.SOUND_PREFIX = contentBaseUrl+'/sound/';
     core.SOUND_BATTLE = core.SOUND_PREFIX + 'hsd.mp3';
     core.SOUND_CONFIG = core.SOUND_PREFIX + 'omoide_loft.mp3';
     core.SOUND_ATTACK_HIT = core.SOUND_PREFIX + 'mecha27.wav';

@@ -3,6 +3,7 @@ enchant();
 window.onload = function() {
     var socket = io.connect(location.origin);
     var userId = $("meta[name=userId]").attr('content');
+    var contentBaseUrl = $("meta[name=contentBaseUrl]").attr('content');//TODO : テストコードがない
     var masterData;
     var userData;
     var stageData;
@@ -37,6 +38,7 @@ window.onload = function() {
         //console.log(getTime()+' initGame');//test
         Game = new game({
             userId : userId,
+            contentBaseUrl : contentBaseUrl,
             armdozerId : userData.armdozerId,
             pilotId : userData.pilotId,
             armdozerList : masterData.armdozerList,

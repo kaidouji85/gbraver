@@ -5,7 +5,9 @@ enchant();
 window.onload = doTest;
 
 function doTest(){
-    var testGame = gameBase();
+    var testGame = gameBase({
+        contentBaseUrl : $("meta[name=contentBaseUrl]").attr('content') //TODO : 他テストにも横展開する
+    });
     console.log(getTime() + 'load start');
     testGame.start();
     testGame.onload = function(){

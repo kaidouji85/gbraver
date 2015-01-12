@@ -8,7 +8,8 @@ function routes(spec,my){
         if(req.session.gbraver){
             var userId = req.session.gbraver.user.emails[0].value;
             res.render('gameMain', {
-                userId : userId
+                userId : userId,
+                contentBaseUrl : contentBaseUrl
             });
         } else {
             res.render('index', {title:'Gブレイバー'});
@@ -25,7 +26,8 @@ function routes(spec,my){
     that.testClient = function(req, res){
         var testCode = req.query.code;
         res.render('testClient', {
-            testCode : testCode
+            testCode : testCode,
+            contentBaseUrl : contentBaseUrl
         });
     }
 
