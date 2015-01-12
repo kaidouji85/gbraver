@@ -19,6 +19,7 @@ node.js、socket.io、enchant.jsがあれば簡単に出来るだろうという
 | GOOGLE_CLIENT_SECRET | GoogleOAuth2.0のGOOGLE CLIENT SECRET | ○ | - |
 | PORT | 起動するポート番号 |  | 3000 |
 | BASE_URL | OAuth2.0のリダイレクト先のベースURL |  | localhost |
+| CONTENT_BASE_URL | 静的コンテンツの配置先URL |  | BASE_URLの値 |
 
 ##ローカル環境での使い方
 ### ローカル環境への導入

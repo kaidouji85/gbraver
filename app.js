@@ -1,8 +1,9 @@
 //const
 var PORT = process.env.PORT || 3000;
-var BASE_URL = process.env.BASE_URL || 'http://localhost:'+PORT;
+var BASE_URL = (process.env.BASE_URL || 'http://localhost:')+PORT;
 var GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 var GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
+var CONTENT_BASE_URL = process.env.CONTENT_BASE_URL || BASE_URL;
 
 /**
  * Module dependencies.
@@ -15,7 +16,10 @@ var session = require('express-session');
 var methodOverride = require('method-override');
 var morgan = require('morgan');
 var errorhandler = require('errorhandler')
-var routes = require('./routes');
+var routes = require('./routes')({
+    contentBaseUrl : CONTENT_BASE_URL,
+    testGlob : require('./seleniumTest/testGlob.js')   //TODO : 本番環境時にはtestGlobを設定しないようにする
+});
 var path = require('path');
 var mongoDao = require('./mongoDao.js');
 var passport = require('passport');
