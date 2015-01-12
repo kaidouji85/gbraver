@@ -43,8 +43,10 @@ window.onload = function() {
             pilotList : masterData.pilotList,
             stageData : masterData.stageData
         });
+        console.log(getTime()+' load start');//test
         Game.start();
         Game.onload = function() {
+            console.log(getTime()+' load complate');//test
             Game.changeTopScene();
             Game.onSendMessage(function(message,data){
                 socket.emit(message,data);
