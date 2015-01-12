@@ -101,7 +101,7 @@ herokuに環境変数を登録します。ここでは環境変数登録バッ�
     heroku config:add BASE_URL="herokuアプリのURL" --app $herokuAppName
     heroku config:add GOOGLE_CLIENT_ID="GoogleOAuth2.0のClient ID" --app $herokuAppName
     heroku config:add GOOGLE_CLIENT_SECRET="GoogleOAuth2.0のGOOGLE CLIENT SECRET" --app $herokuAppName
-
+    heroku config:add CONTENT_BASE_URL="静的コンテンツのベースURL" --app $herokuAppName
 
 (4)herokuへデプロイ  
 以下コマンドでherokuにデプロイします。
