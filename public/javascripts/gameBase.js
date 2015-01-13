@@ -23,8 +23,8 @@ function gameBase(spec,my){
     core.PICT_BUTTON = core.PICT_PREFIX+'button.png';
     core.PICT_EXPLOSION = core.PICT_PREFIX+'explosion.png';
     core.SOUND_PREFIX = contentBaseUrl+'/sound/';
-    core.SOUND_BATTLE = core.SOUND_PREFIX + 'hsd.mp3';
-    core.SOUND_CONFIG = core.SOUND_PREFIX + 'omoide_loft.mp3';
+    core.SOUND_BATTLE = core.SOUND_PREFIX + 'game_maoudamashii_1_battle34.ogg';
+    core.SOUND_CONFIG = core.SOUND_PREFIX + 'game_maoudamashii_5_town18.ogg';
     core.SOUND_ATTACK_HIT = core.SOUND_PREFIX + 'mecha27.wav';
     core.SOUND_ATTACK_MISS = core.SOUND_PREFIX + 'swing32.wav';
     core.SOUND_MY_TURN = core.SOUND_PREFIX + 'cursor02.wav';
@@ -85,8 +85,8 @@ function gameBase(spec,my){
         core.preload(core.PICT_BUTTON);
         core.preload(core.PICT_EXPLOSION);
 
-        //core.preload(core.SOUND_BATTLE);//TODO :  heroku速度測定用にBGMロードを削除
-        //core.preload(core.SOUND_CONFIG);//TODO :  heroku速度測定用にBGMロードを削除
+        core.preload(core.SOUND_BATTLE);
+        core.preload(core.SOUND_CONFIG);
         core.preload(core.SOUND_ATTACK_HIT);
         core.preload(core.SOUND_ATTACK_MISS);
         core.preload(core.SOUND_MY_TURN);
