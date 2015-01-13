@@ -85,8 +85,8 @@ function gameBase(spec,my){
         core.preload(core.PICT_BUTTON);
         core.preload(core.PICT_EXPLOSION);
 
-        core.preload(core.SOUND_BATTLE);
-        core.preload(core.SOUND_CONFIG);
+        //core.preload(core.SOUND_BATTLE);//TODO : 速度計測のためBGMロードをコメントアウトした
+        //core.preload(core.SOUND_CONFIG);//TODO : 速度計測のためBGMロードをコメントアウトした
         core.preload(core.SOUND_ATTACK_HIT);
         core.preload(core.SOUND_ATTACK_MISS);
         core.preload(core.SOUND_MY_TURN);

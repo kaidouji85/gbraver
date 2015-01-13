@@ -3,7 +3,7 @@ function bgmManager(spec,my){
     var bgm = null;
 
     that.setBgm = function(p_bgm) {
-        if(p_bgm !== bgm){
+        if(p_bgm && p_bgm !== bgm){
             if(bgm!==null){
                 bgm.stop();
             }
