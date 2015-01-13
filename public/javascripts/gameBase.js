@@ -85,8 +85,8 @@ function gameBase(spec,my){
         core.preload(core.PICT_BUTTON);
         core.preload(core.PICT_EXPLOSION);
 
-        core.preload(core.SOUND_BATTLE);
-        core.preload(core.SOUND_CONFIG);
+        //core.preload(core.SOUND_BATTLE);//TODO :  heroku速度測定用にBGMロードを削除
+        //core.preload(core.SOUND_CONFIG);//TODO :  heroku速度測定用にBGMロードを削除
         core.preload(core.SOUND_ATTACK_HIT);
         core.preload(core.SOUND_ATTACK_MISS);
         core.preload(core.SOUND_MY_TURN);
