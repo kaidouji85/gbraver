@@ -23,8 +23,8 @@ function gameBase(spec,my){
     core.PICT_BUTTON = core.PICT_PREFIX+'button.png';
     core.PICT_EXPLOSION = core.PICT_PREFIX+'explosion.png';
     core.SOUND_PREFIX = contentBaseUrl+'/sound/';
-    core.SOUND_BATTLE = core.SOUND_PREFIX + 'game_maoudamashii_1_battle34.ogg';
-    core.SOUND_CONFIG = core.SOUND_PREFIX + 'game_maoudamashii_5_town18.ogg';
+    core.SOUND_BATTLE = core.SOUND_PREFIX + 'game_maoudamashii_1_battle34.mp3';
+    core.SOUND_CONFIG = core.SOUND_PREFIX + 'game_maoudamashii_5_town18.mp3';
     core.SOUND_ATTACK_HIT = core.SOUND_PREFIX + 'mecha27.wav';
     core.SOUND_ATTACK_MISS = core.SOUND_PREFIX + 'swing32.wav';
     core.SOUND_MY_TURN = core.SOUND_PREFIX + 'cursor02.wav';
