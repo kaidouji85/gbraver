@@ -2,7 +2,7 @@ function game(spec, my) {
     /**
      * ゲームコア
      */
-    var contentBaseUrl = spec.contentBaseUrl;
+    var contentBaseUrl = spec&&spec.contentBaseUrl || location.origin;
     var core = gameBase({
         contentBaseUrl : contentBaseUrl
     });

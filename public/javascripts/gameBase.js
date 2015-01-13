@@ -1,6 +1,6 @@
 function gameBase(spec,my){
     var core = new Core(320, 480);
-    var contentBaseUrl = spec ? spec.contentBaseUrl : null || location.origin;
+    var contentBaseUrl = spec&&spec.contentBaseUrl || location.origin;
     core.PICT_PREFIX = contentBaseUrl + '/images/';
     core.PICT_ACTIVE_BAR = core.PICT_PREFIX+'activeBar.png';
     core.PICT_ACTIVE_BAR_BACK = core.PICT_PREFIX+'activeBack.png';
@@ -85,8 +85,8 @@ function gameBase(spec,my){
         core.preload(core.PICT_BUTTON);
         core.preload(core.PICT_EXPLOSION);
 
-        //core.preload(core.SOUND_BATTLE);//TODO : 速度計測のためBGMロードをコメントアウトした
-        //core.preload(core.SOUND_CONFIG);//TODO : 速度計測のためBGMロードをコメントアウトした
+        core.preload(core.SOUND_BATTLE);
+        core.preload(core.SOUND_CONFIG);
         core.preload(core.SOUND_ATTACK_HIT);
         core.preload(core.SOUND_ATTACK_MISS);
         core.preload(core.SOUND_MY_TURN);
