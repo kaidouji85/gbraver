@@ -110,7 +110,6 @@ herokuに環境変数を登録します。ここでは環境変数登録バッ�
 
 
 ## 素材提供
-[煉獄庭園様 (BGM)](http://www.rengoku-teien.com/)  
 [魔王魂(BGM)](http://maoudamashii.jokersounds.com/)
 [ザ・マッチメイカァズ様　(効果音)](http://osabisi.sakura.ne.jp/m2/)  
 [Webフォントファン様 (フォント)](http://webfontfan.com)
