@@ -1,6 +1,11 @@
 {
   "name": "gbraver",
-  "version": "0.0.1",
+  "version": "0.5.0",
+  "description": "It is an online game that was made by a combination of socket.io and enchant.js",
+  "author": {
+    "name": "Y.Takeuchi",
+    "email": "kaidouji85@gmail.com"
+  },
   "private": true,
   "scripts": {
     "start": "./startup.sh",
@@ -9,14 +14,10 @@
   "dependencies": {
     "express": "4.8.0",
     "ejs": "0.8.5",
-    "chai": "1.9.0",
-    "mocha": "1.17.1",
     "cloneextend": "0.0.3",
-    "selenium-webdriver": "2.42.0",
     "mongodb": "^1.3.23",
     "passport": "0.2.0",
     "socket.io": "^1.0.4",
-    "socket.io-client": "^1.0.4",
     "passport-google-oauth": "0.1.5",
     "body-parser": "^1.8.2",
     "multer": "^0.1.4",
@@ -26,6 +27,12 @@
     "morgan": "^1.3.1",
     "errorhandler": "^1.2.0",
     "glob": "^4.0.6"
+  },
+  "devDependencies": {
+    "chai": "1.9.0",
+    "mocha": "1.17.1",
+    "selenium-webdriver": "2.42.0",
+    "socket.io-client": "^1.0.4"
   },
   "engines": {
     "node": "0.10.x"

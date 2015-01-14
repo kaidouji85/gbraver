@@ -64,24 +64,27 @@ node.jsの起動と同時に環境変数を設定するように、startup.shを
 
 
 ### ローカルでのテスト実行方法
-テストの実行コマンドは以下の通りです。
+テストフレームワークのmochaをnpmからインストールしておいてください。
 
-ユニットテスト  
+    npm install mocha -g
+
+テストの実行コマンドは以下の通りです。
+####ユニットテスト
 
     npm test
 
-DAOテスト  
+####DAOテスト
 
     mocha mongoDbTest/ -R spec
 
-画面系テスト  
+####画面系テスト
 
     mocha seleniumTest/ -R spec
 
 - 画面系テストはpublicForDebug配下に置かれた、*Test.jsが実行されます。
 - ホスト名:ポート/testList でテスト一覧が出ます
 
-認証系テスト
+####認証系テスト
 
     NODE_MAIL_ADDRESS="テスト用Googleアカウント"  NODE_PASSWORD="テスト用Googleアカウントパスワード"  mocha loginTest/ -R spec
 
