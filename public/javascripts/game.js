@@ -29,7 +29,7 @@ function game(spec, my) {
 
     core.changeBattleScene = function(spec){
         spec.userId = userId;
-        spec.battleMode = battleMode;
+        spec.battleMode = spec.battleMode || battleMode;
         core.battleScene = battleScene(spec);
         core.battleScene.onCommand(function(command){
             emitSendMessage('command',command);
@@ -173,8 +173,11 @@ function game(spec, my) {
                 changePhase(data);
                 break;
             case 'dissolveRoom':
+                if(core.battleScene.getBattleMode()===core.BATTLE_MODE_TWO_PLAY){
+                    emitSendMessage('getRoomInfo',null);
+                }
                 core.battleScene = null;
-                core.changeTopScene();
+
                 break;
             case 'succesEnterRoom':
                 core.roomSelectScene.emitSuccesEnterRoom();
