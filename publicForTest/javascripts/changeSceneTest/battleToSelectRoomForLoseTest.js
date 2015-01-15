@@ -190,13 +190,30 @@ function battleToTop_lose(){
     }
 
     function doDissolveRoom(){
-        Game.onChangeScene(assertOfChangeScne);
+        Game.onSendMessage(assertOfSendMessage2);
         Game.emitServerResp('dissolveRoom',null);
     }
 
-    function assertOfChangeScne(scene){
-        assert.equal(scene,'top','トップ画面へ遷移する');
-        assert.deepEqual(Game.bgm.getBgm(),Game.assets[Game.SOUND_CONFIG],'コンフィグ画面BGMになっている');
+    function assertOfSendMessage2(message,data){
+        assert.equal(message,'getRoomInfo','サーバ送信メッセージが正しい');
+        assert.equal(data,null,'サーバ送信データが正しい');
+        Game.currentScene.tl.delay(30).then(respSuccessGetRoomInfo);
+    }
+
+    function respSuccessGetRoomInfo(){
+        var data = {
+            '0' : [],
+            '1' : [],
+            '2' : [],
+            '3' : [],
+            '4' : []
+        };
+        Game.onChangeScene(assertOfChangeScene);
+        Game.emitServerResp('successGetRoomInfo',data);
+    }
+
+    function assertOfChangeScene(scene){
+        assert.equal(scene,'selectRoom','ルーム選択画面へ遷移する');
         finishTest();
     }
 }
