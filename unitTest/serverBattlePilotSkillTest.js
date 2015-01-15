@@ -188,13 +188,15 @@ describe('serverクラスのテスト', function() {
                             hp : 3200,
                             battery : 3,
                             active : 5000,
-                            skillPoint : 1
+                            skillPoint : 1,
+                            overHeatFlag : false
                         },
                         'test002@gmail.com' : {
                             hp : 3100,
                             battery : 3,
                             active : 3000,
-                            skillPoint : 1
+                            skillPoint : 1,
+                            overHeatFlag : false
                         }
                     }
                 };
@@ -228,13 +230,15 @@ describe('serverクラスのテスト', function() {
                             hp : 3200,
                             battery : 3,
                             active : 5000,
-                            skillPoint : 1
+                            skillPoint : 1,
+                            overHeatFlag : false
                         },
                         'test002@gmail.com' : {
                             hp : 3100,
                             battery : 3,
                             active : 3000,
-                            skillPoint : 1
+                            skillPoint : 1,
+                            overHeatFlag : false
                         }
                     }
                 };
@@ -268,13 +272,15 @@ describe('serverクラスのテスト', function() {
                             hp : 3200,
                             battery : 5,
                             active : 5000,
-                            skillPoint : 0
+                            skillPoint : 0,
+                            overHeatFlag : false
                         },
                         'test002@gmail.com' : {
                             hp : 3100,
                             battery : 3,
                             active : 3000,
-                            skillPoint : 1
+                            skillPoint : 1,
+                            overHeatFlag : false
                         }
                     }
                 };
@@ -308,13 +314,15 @@ describe('serverクラスのテスト', function() {
                             hp: 3200,
                             battery: 5,
                             active: 5000,
-                            skillPoint: 0
+                            skillPoint: 0,
+                            overHeatFlag : false
                         },
                         'test002@gmail.com': {
                             hp: 3100,
                             battery: 3,
                             active: 3000,
-                            skillPoint: 1
+                            skillPoint: 1,
+                            overHeatFlag : false
                         }
                     }
                 };

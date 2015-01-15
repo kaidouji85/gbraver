@@ -104,13 +104,15 @@ describe('serverクラスのテスト', function() {
                             hp : 3200,
                             battery : 5,
                             active : 5000,
-                            skillPoint : 1
+                            skillPoint : 1,
+                            overHeatFlag : false
                         },
                         'test002@gmail.com' : {
                             hp : 4700,
                             battery : 5,
                             active : 3000,
-                            skillPoint : 1
+                            skillPoint : 1,
+                            overHeatFlag : false
                         }
                     }
                 };
@@ -144,13 +146,15 @@ describe('serverクラスのテスト', function() {
                             hp : 3200,
                             battery : 5,
                             active : 5000,
-                            skillPoint : 1
+                            skillPoint : 1,
+                            overHeatFlag : false
                         },
                         'test002@gmail.com' : {
                             hp : 4700,
                             battery : 5,
                             active : 3000,
-                            skillPoint : 1
+                            skillPoint : 1,
+                            overHeatFlag : false
                         }
                     }
                 };
@@ -174,7 +178,7 @@ describe('serverクラスのテスト', function() {
             }
 
             //***************************
-            // ディフェンスコマンドフェイズ
+            // チャージフェイズ
             //***************************
             function assertOfChargePhase(data) {
                 var expect = {
@@ -184,13 +188,15 @@ describe('serverクラスのテスト', function() {
                             hp : 3200,
                             battery : 5,
                             active : 0,
-                            skillPoint : 1
+                            skillPoint : 1,
+                            overHeatFlag : true
                         },
                         'test002@gmail.com' : {
                             hp : 4700,
                             battery : 5,
                             active : 3000,
-                            skillPoint : 1
+                            skillPoint : 1,
+                            overHeatFlag : false
                         }
                     }
                 };
@@ -214,7 +220,7 @@ describe('serverクラスのテスト', function() {
             }
 
             //***************************
-            // ディフェンスコマンドフェイズ
+            // ウェイトフェイズ2
             //***************************
             function assertOfWaitPhase2(data) {
                 var expect = {
@@ -226,13 +232,15 @@ describe('serverクラスのテスト', function() {
                             hp : 3200,
                             battery : 5,
                             active : 3500,
-                            skillPoint : 1
+                            skillPoint : 1,
+                            overHeatFlag : true
                         },
                         'test002@gmail.com' : {
                             hp : 4700,
                             battery : 5,
                             active : 5100,
-                            skillPoint : 1
+                            skillPoint : 1,
+                            overHeatFlag : false
                         }
                     }
                 };

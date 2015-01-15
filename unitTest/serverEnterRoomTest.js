@@ -88,6 +88,7 @@ describe('serverクラスのテスト', function() {
                             active : 0,
                             battery : 5,
                             skillPoint : 1,
+                            overHeatFlag : false,
                             hp : 3200,
                             defense : 0,
                             speed : 500,
@@ -133,6 +134,7 @@ describe('serverクラスのテスト', function() {
                             active : 0,
                             battery : 5,
                             skillPoint : 1,
+                            overHeatFlag : false,
                             weapons : {
                                 1 : {
                                     name : 'ブレイクパンチ',
@@ -331,13 +333,15 @@ describe('serverクラスのテスト', function() {
                                 hp : 3200,
                                 battery : 5,
                                 active : 5000,
-                                skillPoint : 1
+                                skillPoint : 1,
+                                overHeatFlag : false
                             },
                             'test002@gmail.com' : {
                                 hp : 4700,
                                 battery : 5,
                                 active : 3000,
-                                skillPoint : 1
+                                skillPoint : 1,
+                                overHeatFlag : false
                             }
                         }
                     };

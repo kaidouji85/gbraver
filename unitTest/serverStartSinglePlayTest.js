@@ -63,6 +63,7 @@ describe('一人用モード開始テスト', function () {
                         defense: 0,
                         speed: 500,
                         skillPoint: 1,
+                        overHeatFlag : false,
                         weapons: {
                             1: {
                                 name: 'バスターナックル',
@@ -105,6 +106,7 @@ describe('一人用モード開始テスト', function () {
                         active: 0,
                         battery: 5,
                         skillPoint: 1,
+                        overHeatFlag : false,
                         weapons: {
                             1: {
                                 name: 'ブレイクパンチ',
