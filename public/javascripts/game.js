@@ -174,6 +174,8 @@ function game(spec, my) {
             case 'dissolveRoom':
                 if(battleMode===core.BATTLE_MODE_TWO_PLAY){
                     emitSendMessage('getRoomInfo',null);
+                } else if(battleMode===core.BATTLE_MODE_SINGLE_PLAY) {
+                    core.changeSelectStageScene();
                 }
                 core.battleScene = null;
 

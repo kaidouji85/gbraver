@@ -1,3 +1,4 @@
+//対戦モードの場合、バトル終了後はルーム選択画面に遷移する
 enchant();
 window.onload = battleToTop_win;
 

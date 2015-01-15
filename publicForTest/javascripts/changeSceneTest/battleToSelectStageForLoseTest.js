@@ -1,4 +1,4 @@
-//対戦モードの場合、バトル終了後はルーム選択画面に遷移する
+//シングルプレイの場合、バトル終了後はルーム選択画面に遷移する
 enchant();
 window.onload = battleToTop_lose;
 
@@ -23,7 +23,7 @@ function battleToTop_lose(){
         });
         Game.start();
         Game.onload = function(){
-            Game.setBattleMode('twoPlay');
+            Game.setBattleMode('singlePlay');
             Game.changeBattleScene({
                 statusArray : statusArray
             });
@@ -192,30 +192,12 @@ function battleToTop_lose(){
     }
 
     function doDissolveRoom(){
-        Game.onSendMessage(assertOfSendMessage2);
+        Game.onChangeScene(assertOfChangeScene);
         Game.emitServerResp('dissolveRoom',null);
     }
 
-    function assertOfSendMessage2(message,data){
-        assert.equal(message,'getRoomInfo','サーバ送信メッセージが正しい');
-        assert.equal(data,null,'サーバ送信データが正しい');
-        Game.currentScene.tl.delay(30).then(respSuccessGetRoomInfo);
-    }
-
-    function respSuccessGetRoomInfo(){
-        var data = {
-            '0' : [],
-            '1' : [],
-            '2' : [],
-            '3' : [],
-            '4' : []
-        };
-        Game.onChangeScene(assertOfChangeScene);
-        Game.emitServerResp('successGetRoomInfo',data);
-    }
-
     function assertOfChangeScene(scene){
-        assert.equal(scene,'selectRoom','ルーム選択画面へ遷移する');
+        assert.equal(scene,'selectStage','ルーム選択画面へ遷移する');
         finishTest();
     }
 }
