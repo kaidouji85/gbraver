@@ -13,6 +13,7 @@ describe('Battleクラス パイロットスキル', function() {
             active : 5000,
             battery : 0,
             skillPoint : 1,
+            overHeatFlag : false,
             weapons : {
                 1 : {name : 'バスターナックル',power : 800},
                 2 : {name : 'バスターナックル',power : 1100},
@@ -34,6 +35,7 @@ describe('Battleクラス パイロットスキル', function() {
             active : 0,
             battery : 5,
             skillPoint : 1,
+            overHeatFlag : false,
             weapons : {
                 1 : {name:'ブレイクパンチ',power:1200},
                 2 : {name:'ブレイクパンチ',power:1700},
@@ -65,6 +67,7 @@ describe('Battleクラス パイロットスキル', function() {
             active : 5000,
             battery : 2,
             skillPoint : 1,
+            overHeatFlag : false,
             weapons : {
                 1 : {name : 'バスターナックル',power : 800},
                 2 : {name : 'バスターナックル',power : 1100},
@@ -86,6 +89,7 @@ describe('Battleクラス パイロットスキル', function() {
             active : 0,
             battery : 5,
             skillPoint : 1,
+            overHeatFlag : false,
             weapons : {
                 1 : {name:'ブレイクパンチ',power:1200},
                 2 : {name:'ブレイクパンチ',power:1700},
@@ -117,6 +121,7 @@ describe('Battleクラス パイロットスキル', function() {
             active : 0,
             battery : 5,
             skillPoint : 1,
+            overHeatFlag : false,
             weapons : {
                 1 : {name : 'バスターナックル',power : 2200},
                 2 : {name : 'バスターナックル',power : 2200},
@@ -134,6 +139,7 @@ describe('Battleクラス パイロットスキル', function() {
             active : 0,
             battery : 5,
             skillPoint : 1,
+            overHeatFlag : false,
             weapons : {
                 1 : {name:'ブレイクパンチ',power:1700},
                 2 : {name:'ブレイクパンチ',power:1700},
@@ -180,6 +186,7 @@ describe('Battleクラス パイロットスキル', function() {
             active : 0,
             battery : 5,
             skillPoint : 1,
+            overHeatFlag : false,
             weapons : {
                 1 : {name : 'バスターナックル',power : 1000},
                 2 : {name : 'バスターナックル',power : 1000},
@@ -197,6 +204,7 @@ describe('Battleクラス パイロットスキル', function() {
             active : 0,
             battery : 5,
             skillPoint : 1,
+            overHeatFlag : false,
             weapons : {
                 1 : {name:'ブレイクパンチ',power:1700},
                 2 : {name:'ブレイクパンチ',power:1700},
@@ -243,6 +251,7 @@ describe('Battleクラス パイロットスキル', function() {
             active : 0,
             battery : 5,
             skillPoint : 1,
+            overHeatFlag : false,
             weapons : {
                 1 : {name : 'バスターナックル',power : 2200},
                 2 : {name : 'バスターナックル',power : 2200},
@@ -263,6 +272,7 @@ describe('Battleクラス パイロットスキル', function() {
             active : 0,
             battery : 5,
             skillPoint : 1,
+            overHeatFlag : false,
             weapons : {
                 1 : {name:'ブレイクパンチ',power:1700},
                 2 : {name:'ブレイクパンチ',power:1700},
@@ -301,6 +311,7 @@ describe('Battleクラス パイロットスキル', function() {
             active : 0,
             battery : 5,
             skillPoint : 1,
+            overHeatFlag : false,
             weapons : {
                 1 : {name : 'バスターナックル',power : 2200},
                 2 : {name : 'バスターナックル',power : 2200},
@@ -321,6 +332,7 @@ describe('Battleクラス パイロットスキル', function() {
             active : 0,
             battery : 5,
             skillPoint : 1,
+            overHeatFlag : false,
             weapons : {
                 1 : {name:'ブレイクパンチ',power:1700},
                 2 : {name:'ブレイクパンチ',power:1700},
@@ -359,6 +371,7 @@ describe('Battleクラス パイロットスキル', function() {
             active : 0,
             battery : 5,
             skillPoint : 1,
+            overHeatFlag : false,
             weapons : {
                 1 : {name : 'バスターナックル',power : 2200},
                 2 : {name : 'バスターナックル',power : 2200},
@@ -379,6 +392,7 @@ describe('Battleクラス パイロットスキル', function() {
             active : 0,
             battery : 5,
             skillPoint : 1,
+            overHeatFlag : false,
             weapons : {
                 1 : {name:'ブレイクパンチ',power:1700},
                 2 : {name:'ブレイクパンチ',power:1700},
@@ -417,6 +431,7 @@ describe('Battleクラス パイロットスキル', function() {
             active : 0,
             battery : 5,
             skillPoint : 1,
+            overHeatFlag : false,
             weapons : {
                 1 : {name : 'バスターナックル',power : 2200},
                 2 : {name : 'バスターナックル',power : 2200},
@@ -437,6 +452,7 @@ describe('Battleクラス パイロットスキル', function() {
             active : 0,
             battery : 5,
             skillPoint : 1,
+            overHeatFlag : false,
             weapons : {
                 1 : {name:'ブレイクパンチ',power:1700},
                 2 : {name:'ブレイクパンチ',power:1700},
@@ -480,6 +496,7 @@ describe('Battleクラス パイロットスキル', function() {
             active : 0,
             battery : 5,
             skillPoint : 1,
+            overHeatFlag : false,
             weapons : {
                 1 : {name : 'バスターナックル',power : 2200},
                 2 : {name : 'バスターナックル',power : 2200},
@@ -500,6 +517,7 @@ describe('Battleクラス パイロットスキル', function() {
             active : 0,
             battery : 5,
             skillPoint : 1,
+            overHeatFlag : false,
             weapons : {
                 1 : {name:'ブレイクパンチ',power:1700},
                 2 : {name:'ブレイクパンチ',power:1700},
@@ -543,6 +561,7 @@ describe('Battleクラス パイロットスキル', function() {
             active : 0,
             battery : 5,
             skillPoint : 1,
+            overHeatFlag : false,
             weapons : {
                 1 : {name : 'バスターナックル',power : 2200},
                 2 : {name : 'バスターナックル',power : 2200},
@@ -563,6 +582,7 @@ describe('Battleクラス パイロットスキル', function() {
             active : 0,
             battery : 5,
             skillPoint : 1,
+            overHeatFlag : false,
             weapons : {
                 1 : {name:'ブレイクパンチ',power:1700},
                 2 : {name:'ブレイクパンチ',power:1700},
@@ -601,6 +621,7 @@ describe('Battleクラス パイロットスキル', function() {
             active : 0,
             battery : 5,
             skillPoint : 1,
+            overHeatFlag : false,
             weapons : {
                 1 : {name : 'バスターナックル',power : 2200},
                 2 : {name : 'バスターナックル',power : 2200},
@@ -621,6 +642,7 @@ describe('Battleクラス パイロットスキル', function() {
             active : 0,
             battery : 5,
             skillPoint : 1,
+            overHeatFlag : false,
             weapons : {
                 1 : {name:'ブレイクパンチ',power:1700},
                 2 : {name:'ブレイクパンチ',power:1700},
@@ -665,6 +687,7 @@ describe('Battleクラス パイロットスキル', function() {
             active : 0,
             battery : 5,
             skillPoint : 1,
+            overHeatFlag : false,
             weapons : {
                 1 : {name : 'バスターナックル',power : 2200},
                 2 : {name : 'バスターナックル',power : 2200},
@@ -685,6 +708,7 @@ describe('Battleクラス パイロットスキル', function() {
             active : 0,
             battery : 5,
             skillPoint : 1,
+            overHeatFlag : false,
             weapons : {
                 1 : {name:'ブレイクパンチ',power:1700},
                 2 : {name:'ブレイクパンチ',power:1700},

@@ -12,6 +12,7 @@ describe('Battleクラス getStatusArray()', function() {
             speed : 230,
             active : 0,
             battery : 5,
+            overHeatFlag : false,
             weapons : {
                 1 : {name : 'バスターナックル',power : 800},
                 2 : {name : 'バスターナックル',power : 1100},
@@ -28,6 +29,7 @@ describe('Battleクラス getStatusArray()', function() {
             speed : 230,
             active : 0,
             battery : 5,
+            overHeatFlag : false,
             weapons : {
                 1 : {name : 'バスターナックル',power : 800},
                 2 : {name : 'バスターナックル',power : 1100},

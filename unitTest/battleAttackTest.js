@@ -12,6 +12,7 @@ describe('Battleクラス 攻撃', function() {
             speed: 230,
             active: 0,
             battery: 5,
+            overHeatFlag : false,
             weapons: {
                 1: {name: 'バスターナックル', power: 800},
                 2: {name: 'バスターナックル', power: 1100},
@@ -28,6 +29,7 @@ describe('Battleクラス 攻撃', function() {
             speed: 150,
             active: 0,
             battery: 5,
+            overHeatFlag : false,
             weapons: {
                 1: {name: 'ブレイクパンチ', power: 1200},
                 2: {name: 'ブレイクパンチ', power: 1700},
@@ -62,6 +64,7 @@ describe('Battleクラス 攻撃', function() {
             speed: 230,
             active: 0,
             battery: 5,
+            overHeatFlag : false,
             weapons: {
                 1: {name: 'バスターナックル', power: 800},
                 2: {name: 'バスターナックル', power: 1100},
@@ -78,6 +81,7 @@ describe('Battleクラス 攻撃', function() {
             speed: 150,
             active: 0,
             battery: 5,
+            overHeatFlag : false,
             weapons: {
                 1: {name: 'ブレイクパンチ', power: 1200},
                 2: {name: 'ブレイクパンチ', power: 1700},
@@ -112,6 +116,7 @@ describe('Battleクラス 攻撃', function() {
             speed: 230,
             active: 0,
             battery: 5,
+            overHeatFlag : false,
             weapons: {
                 1: {name: 'バスターナックル', power: 800},
                 2: {name: 'バスターナックル', power: 1100},
@@ -128,6 +133,7 @@ describe('Battleクラス 攻撃', function() {
             speed: 150,
             active: 0,
             battery: 5,
+            overHeatFlag : false,
             weapons: {
                 1: {name: 'ブレイクパンチ', power: 1200},
                 2: {name: 'ブレイクパンチ', power: 1700},
@@ -162,6 +168,7 @@ describe('Battleクラス 攻撃', function() {
             speed: 230,
             active: 0,
             battery: 5,
+            overHeatFlag : false,
             weapons: {
                 1: {name: 'バスターナックル', power: 800},
                 2: {name: 'バスターナックル', power: 1100},
@@ -178,6 +185,7 @@ describe('Battleクラス 攻撃', function() {
             speed: 150,
             active: 0,
             battery: 5,
+            overHeatFlag : false,
             weapons: {
                 1: {name: 'ブレイクパンチ', power: 1200},
                 2: {name: 'ブレイクパンチ', power: 1700},
@@ -212,6 +220,7 @@ describe('Battleクラス 攻撃', function() {
             speed: 230,
             active: 0,
             battery: 5,
+            overHeatFlag : false,
             weapons: {
                 1: {name: 'バスターナックル', power: 800},
                 2: {name: 'バスターナックル', power: 1100},
@@ -228,6 +237,7 @@ describe('Battleクラス 攻撃', function() {
             speed: 150,
             active: 0,
             battery: 5,
+            overHeatFlag : false,
             weapons: {
                 1: {name: 'ブレイクパンチ', power: 1200},
                 2: {name: 'ブレイクパンチ', power: 1700},
@@ -260,6 +270,7 @@ describe('Battleクラス 攻撃', function() {
             speed: 230,
             active: 0,
             battery: 5,
+            overHeatFlag : false,
             weapons: {
                 1: {name: 'バスターナックル', power: 800},
                 2: {name: 'バスターナックル', power: 1100},
@@ -276,6 +287,7 @@ describe('Battleクラス 攻撃', function() {
             speed: 150,
             active: 0,
             battery: 5,
+            overHeatFlag : false,
             weapons: {
                 1: {name: 'ブレイクパンチ', power: 1200},
                 2: {name: 'ブレイクパンチ', power: 1700},
@@ -309,6 +321,7 @@ describe('Battleクラス 攻撃', function() {
             speed: 230,
             active: 0,
             battery: 5,
+            overHeatFlag : false,
             weapons: {
                 1: {name: 'バスターナックル', power: 800},
                 2: {name: 'バスターナックル', power: 1100},
@@ -325,6 +338,7 @@ describe('Battleクラス 攻撃', function() {
             speed: 150,
             active: 0,
             battery: 5,
+            overHeatFlag : false,
             weapons: {
                 1: {name: 'ブレイクパンチ', power: 1200},
                 2: {name: 'ブレイクパンチ', power: 1700},
@@ -359,6 +373,7 @@ describe('Battleクラス 攻撃', function() {
             speed: 230,
             active: 0,
             battery: 5,
+            overHeatFlag : false,
             weapons: {
                 1: {name: 'バスターナックル', power: 800},
                 2: {name: 'バスターナックル', power: 1100},
@@ -375,6 +390,7 @@ describe('Battleクラス 攻撃', function() {
             speed: 150,
             active: 0,
             battery: 5,
+            overHeatFlag : false,
             weapons: {
                 1: {name: 'ブレイクパンチ', power: 1200},
                 2: {name: 'ブレイクパンチ', power: 1700},
@@ -398,56 +414,4 @@ describe('Battleクラス 攻撃', function() {
         assert.equal(retAtack.damage, 0, 'ダメージが0である');
         assert.equal(statusArray[2].hp, 4700, 'HPに変化がない');
     });
-
-    /*
-    it('防御力の分だけダメージが減少する', function () {
-        var testData = {};
-        testData[1] = {
-            name: 'グランブレイバー',
-            pictName: 'GranBraver.PNG',
-            hp: 3200,
-            speed: 230,
-            defense : 100,
-            active: 0,
-            battery: 5,
-            weapons: {
-                1: {name: 'バスターナックル', power: 800},
-                2: {name: 'バスターナックル', power: 1100},
-                3: {name: 'バスターナックル', power: 1600},
-                4: {name: 'バスターナックル', power: 2100},
-                5: {name: 'バスターナックル', power: 2800}
-            }
-        };
-        testData[2] = {
-            name: 'ランドーザ',
-            pictName: 'Landozer.PNG',
-            hp: 4700,
-            defense : 300,
-            speed: 150,
-            active: 0,
-            battery: 5,
-            weapons: {
-                1: {name: 'ブレイクパンチ', power: 1200},
-                2: {name: 'ブレイクパンチ', power: 1700},
-                3: {name: 'ブレイクパンチ', power: 2300},
-                4: {name: 'ブレイクパンチ', power: 2900},
-                5: {name: 'ブレイクパンチ', power: 3800}
-            }
-        };
-
-        var Battle = battle({
-            statusArray: testData
-        });
-
-        Battle.doWaitPhase();
-        var retAtack = Battle.atack({
-            atackBattery: 2,
-            defenthBattery: 1
-        });
-        var statusArray = Battle.getStatusArray();
-        assert.equal(retAtack.hit, Battle.ATACK_HIT, '攻撃ヒット判定になる');
-        assert.equal(retAtack.damage, 800, '攻撃:1000 - 防御:300 なので 800ダメージになる');
-        assert.equal(statusArray[2].hp, 3900, 'HPが減る');
-    });
-    */
 });

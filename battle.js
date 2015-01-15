@@ -9,7 +9,6 @@ var battle = function(spec,my){
     var that = {};
     var statusArray = ce.clone(spec.statusArray);
     var atackUserId = null;
-    var overHeatFlagArray = {};
     var maxHpArray = {};
     var stunAttackArray = {};
     var guardBreakArray = {};
@@ -24,7 +23,6 @@ var battle = function(spec,my){
     init();
     function init() {
         for(var uid in statusArray){
-            overHeatFlagArray[uid] = false;
             maxHpArray[uid] = statusArray[uid].hp;
             stunAttackArray[uid] = false;
             guardBreakArray[uid] = false;
@@ -80,7 +78,7 @@ var battle = function(spec,my){
         var damage = 0;
         var defenseUserId = getDefenseUserId();
 
-        overHeatFlagArray[atackUserId] = false;
+        statusArray[atackUserId].overHeatFlag = false;
         if(atackBattery===0){
             damage = 0;
             hit = that.ATACK_MISS;
@@ -146,10 +144,9 @@ var battle = function(spec,my){
      * チャージ 
      */
     that.charge = function(){
-        var overHeatFlag = overHeatFlagArray[atackUserId];
         statusArray[atackUserId].battery = that.MAX_BATTERY;
-        statusArray[atackUserId].active = overHeatFlag ? -that.MAX_ACTIVE : 0;
-        overHeatFlagArray[atackUserId] = true;
+        statusArray[atackUserId].active = statusArray[atackUserId].overHeatFlag ? -that.MAX_ACTIVE : 0;
+        statusArray[atackUserId].overHeatFlag = true;
         atackUserId = null;
     };
 

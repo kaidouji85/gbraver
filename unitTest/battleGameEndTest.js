@@ -12,6 +12,7 @@ describe('Battleクラス ゲーム終了', function() {
             speed : 230,
             active : 0,
             battery : 1,
+            overHeatFlag : false,
             weapons : {
                 1 : {name : 'バスターナックル',power : 800},
                 2 : {name : 'バスターナックル',power : 1100},
@@ -28,6 +29,7 @@ describe('Battleクラス ゲーム終了', function() {
             speed : 150,
             active : 0,
             battery : 5,
+            overHeatFlag : false,
             weapons : {
                 1 : {name:'ブレイクパンチ',power:1200},
                 2 : {name:'ブレイクパンチ',power:1700},
@@ -56,6 +58,7 @@ describe('Battleクラス ゲーム終了', function() {
             speed : 230,
             active : 0,
             battery : 1,
+            overHeatFlag : false,
             weapons : {
                 1 : {name : 'バスターナックル',power : 800},
                 2 : {name : 'バスターナックル',power : 1100},
@@ -72,6 +75,7 @@ describe('Battleクラス ゲーム終了', function() {
             speed : 150,
             active : 0,
             battery : 5,
+            overHeatFlag : false,
             weapons : {
                 1 : {name:'ブレイクパンチ',power:1200},
                 2 : {name:'ブレイクパンチ',power:1700},
@@ -100,6 +104,7 @@ describe('Battleクラス ゲーム終了', function() {
             speed : 230,
             active : 0,
             battery : 1,
+            overHeatFlag : false,
             weapons : {
                 1 : {name : 'バスターナックル',power : 800},
                 2 : {name : 'バスターナックル',power : 1100},
@@ -116,6 +121,7 @@ describe('Battleクラス ゲーム終了', function() {
             speed : 150,
             active : 0,
             battery : 5,
+            overHeatFlag : false,
             weapons : {
                 1 : {name:'ブレイクパンチ',power:1200},
                 2 : {name:'ブレイクパンチ',power:1700},
