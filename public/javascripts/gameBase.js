@@ -52,6 +52,7 @@ function gameBase(spec,my){
     core.MESSAGE_LOGOFF = 'ログオフ中';
     core.MESSAGE_WINDOW_Y = 276;
     core.BATTLE_MODE_TWO_PLAY = 'twoPlay';
+    core.BATTLE_MODE_SINGLE_PLAY = 'singlePlay';
 
     core.fps = 40;
     core.battleScene = null;

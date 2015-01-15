@@ -136,6 +136,7 @@ function game(spec, my) {
             emitSendMessage('startSinglePlay',data);
         });
         core.replaceScene(scene);
+        battleMode = core.BATTLE_MODE_SINGLE_PLAY;
         emitChangeScene('selectStage');
     }
 
