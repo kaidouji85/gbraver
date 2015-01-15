@@ -100,7 +100,7 @@ function topScene(spec,my){
         //ログオフボタン
         that.logOffButton = pictButton({
             text : 'ログオフ',
-            pict : core.assets[core.PICT_BUTTON]
+            pict : core.assets[core.PICT_OVERHEAT_BUTTON]
         });
         that.logOffButton.x = 8;
         that.logOffButton.y = 428;
