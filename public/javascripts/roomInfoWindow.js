@@ -4,6 +4,7 @@ function roomInfoWindow(spec,my) {
     var GRID_HEIGHT = 2;
 
     var that = new Group();
+    var core = enchant.Core.instance;
     var pict = spec.pict;
     var subPict = spec.subPict;
     var baseWindow = gridWindow({
@@ -80,6 +81,7 @@ function roomInfoWindow(spec,my) {
 
     that.addEventListener(Event.TOUCH_START,function(){
         baseWindow.setPict(subPict);
+        core.assets[core.SOUND_PUSH_BUTTON].play();
     });
 
     that.addEventListener(Event.TOUCH_END,function(){

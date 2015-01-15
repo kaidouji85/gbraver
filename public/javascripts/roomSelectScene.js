@@ -108,7 +108,11 @@ function roomSelectScene(spec,my){
         that.mesWindow.setVisible(false);
         that.addChild(that.mesWindow);
     };
-    
+
+    that.addEventListener(Event.ENTER,function(){
+        core.bgm.setBgm(core.assets[core.SOUND_CONFIG]);
+    });
+
     function onEnterRoom(fn){
         emitEnterRoom = fn;
     };

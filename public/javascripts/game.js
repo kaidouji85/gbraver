@@ -17,8 +17,6 @@ function game(spec, my) {
     var emitSendMessage = function(message,data){};
     var emitLogOff = function(){};
 
-    core.bgm = bgmManager();
-
     core.changeTitleScene = function(){
         var scene = new titleScene();
         scene.onPushStartButton(function(){

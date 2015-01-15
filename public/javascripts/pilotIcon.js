@@ -1,5 +1,6 @@
 function pilotIcon(spec,my){
     var that = new Group();
+    var core = enchant.Core.instance;
     var windowPict = spec.windowPict;
     var pilotPict = spec.pilotPict;
     var scaleX = spec.scaleX;
@@ -40,6 +41,10 @@ function pilotIcon(spec,my){
         faceIcon.draw(image,widthMargin,0,size,size,6,6,68,68);
         return faceIcon;
     }
+
+    that.addEventListener(Event.TOUCH_START,function(){
+        core.assets[core.SOUND_PUSH_BUTTON].play();
+    });
 
     return that;
 }

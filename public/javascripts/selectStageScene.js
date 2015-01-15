@@ -52,6 +52,10 @@ function selectStageScene(spec,my){
         that.addChild(that.mesWindow);
     }
 
+    that.addEventListener(Event.ENTER,function(){
+        core.bgm.setBgm(core.assets[core.SOUND_CONFIG]);
+    });
+
     that.onPushStageButon = function (fn){
         emitPushStageButton = fn;
     }

@@ -50,6 +50,7 @@ function pictButton(spec,my){
     that.addEventListener(Event.TOUCH_START,function(){
         buttonLabel.color = COLOR_GRAY;
         buttonSprite.frame = 1;
+        core.assets[core.SOUND_PUSH_BUTTON].play();
     });
 
     that.addEventListener(Event.TOUCH_END,function(){

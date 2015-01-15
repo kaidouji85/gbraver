@@ -216,6 +216,7 @@ function battleToTop_lose(){
 
     function assertOfChangeScene(scene){
         assert.equal(scene,'selectRoom','ルーム選択画面へ遷移する');
+        assert.deepEqual(Game.bgm.getBgm(),Game.assets[Game.SOUND_CONFIG],'コンフィグ画面BGMになっている');
         finishTest();
     }
 }
