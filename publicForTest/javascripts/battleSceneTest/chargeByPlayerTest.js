@@ -38,13 +38,15 @@ function chargeByPlayer() {
                     hp : 4700,
                     battery : 5,
                     active : 3000,
-                    skillPoint : 1
+                    skillPoint : 1,
+                    overHeatFlag : false
                 },
                 'test001@gmail.com' : {
                     hp : 3200,
                     battery : 5,
                     active : 5000,
-                    skillPoint : 1
+                    skillPoint : 1,
+                    overHeatFlag : false
                 }
             }
         }; 
@@ -72,13 +74,15 @@ function chargeByPlayer() {
                     hp : 3200,
                     battery : 5,
                     active : 5000,
-                    skillPoint : 1
+                    skillPoint : 1,
+                    overHeatFlag : false
                 },
                 'test002@gmail.com' : {
                     hp : 4700,
                     battery : 5,
                     active : 3000,
-                    skillPoint : 1
+                    skillPoint : 1,
+                    overHeatFlag : false
                 }
             }
         }; 
@@ -89,6 +93,7 @@ function chargeByPlayer() {
     }
 
     function selectCommand() {
+        assert.deepEqual(Game.currentScene.chargeIcon.getPict(),Game.assets[Game.PICT_BUTTON],'チャージボタンが通常の色である')
         touch(Game.currentScene.chargeIcon);
         Game.onSendMessage(sendCommandForAttackCommandPhase);
     }
@@ -114,13 +119,15 @@ function chargeByPlayer() {
                     hp : 3200,
                     battery : 5,
                     active : 0,
-                    skillPoint : 1
+                    skillPoint : 1,
+                    overHeatFlag : true
                 },
                 'test002@gmail.com' : {
                     hp : 4700,
                     battery : 5,
                     active : 3000,
-                    skillPoint : 1
+                    skillPoint : 1,
+                    overHeatFlag : false
                 }
             }
         };

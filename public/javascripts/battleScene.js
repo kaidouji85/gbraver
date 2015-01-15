@@ -72,6 +72,11 @@ function battleScene(spec,my){
         if(that.userId === attackUserId){
             that.mesWindow.setVisible(false);
             setAtackCommandVisible(true);
+            if(data.statusArray[that.userId].overHeatFlag){
+                that.chargeIcon.setPict(core.assets[core.PICT_OVERHEAT_BUTTON]);
+            } else {
+                that.chargeIcon.setPict(core.assets[core.PICT_BUTTON]);
+            }
         } else {
             that.tl.delay(1).then(function(){
                 that.mesWindow.setVisible(true);

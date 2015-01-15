@@ -39,6 +39,14 @@ function pictButton(spec,my){
         return buttonLabel.text;
     }
 
+    that.getPict = function(){
+        return buttonSprite.image;
+    }
+
+    that.setPict = function(p_pict){
+        buttonSprite.image = p_pict;
+    }
+
     that.addEventListener(Event.TOUCH_START,function(){
         buttonLabel.color = COLOR_GRAY;
         buttonSprite.frame = 1;

@@ -44,13 +44,15 @@ function battleToTop_lose(){
                     hp : 4700,
                     battery : 5,
                     active : 3000,
-                    skillPoint : 1
+                    skillPoint : 1,
+                    overHeatFlag : false
                 },
                 'saikyou@gmail.com' : {
                     hp : 3200,
                     battery : 5,
                     active : 5000,
-                    skillPoint : 1
+                    skillPoint : 1,
+                    overHeatFlag : false
                 }
             }
         };
@@ -69,13 +71,15 @@ function battleToTop_lose(){
                     hp : 3200,
                     battery : 5,
                     active : 5000,
-                    skillPoint : 1
+                    skillPoint : 1,
+                    overHeatFlag : false
                 },
                 'test002@gmail.com' : {
                     hp : 4700,
                     battery : 5,
                     active : 3000,
-                    skillPoint : 1
+                    skillPoint : 1,
+                    overHeatFlag : false
                 }
             }
         };
@@ -94,13 +98,15 @@ function battleToTop_lose(){
                     hp : 3200,
                     battery : 5,
                     active : 5000,
-                    skillPoint : 1
+                    skillPoint : 1,
+                    overHeatFlag : false
                 },
                 'test002@gmail.com' : {
                     hp : 4700,
                     battery : 5,
                     active : 3000,
-                    skillPoint : 1
+                    skillPoint : 1,
+                    overHeatFlag : false
                 }
             }
         };
@@ -130,13 +136,15 @@ function battleToTop_lose(){
                     hp : 3200,
                     battery : 2,
                     active : 0,
-                    skillPoint : 1
+                    skillPoint : 1,
+                    overHeatFlag : false
                 },
                 'test002@gmail.com' : {
                     hp : -300,
                     battery : 3,
                     active : 3000,
-                    skillPoint : 1
+                    skillPoint : 1,
+                    overHeatFlag : false
                 }
             }
         };
@@ -156,13 +164,15 @@ function battleToTop_lose(){
                     hp : 3200,
                     battery : 2,
                     active : 0,
-                    skillPoint : 1
+                    skillPoint : 1,
+                    overHeatFlag : false
                 },
                 'test002@gmail.com' : {
                     hp : -300,
                     battery : 3,
                     active : 3000,
-                    skillPoint : 1
+                    skillPoint : 1,
+                    overHeatFlag : false
                 }
             }
         };
