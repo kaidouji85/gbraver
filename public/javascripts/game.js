@@ -12,6 +12,7 @@ function game(spec, my) {
     var pilotList = spec.pilotList;
     var armdozerList = spec.armdozerList;
     var stageData = spec.stageData;
+    var battleMode = core.BATTLE_MODE_TWO_PLAY;
     var emitChangeScene = function(scene){};
     var emitSendMessage = function(message,data){};
     var emitLogOff = function(){};
@@ -28,6 +29,7 @@ function game(spec, my) {
 
     core.changeBattleScene = function(spec){
         spec.userId = userId;
+        spec.battleMode = battleMode;
         core.battleScene = battleScene(spec);
         core.battleScene.onCommand(function(command){
             emitSendMessage('command',command);
@@ -37,6 +39,7 @@ function game(spec, my) {
     };
 
     core.changeRoomSelectScene = function(roomInfo){
+        battleMode = core.BATTLE_MODE_TWO_PLAY;
         core.roomSelectScene = roomSelectScene({
             roomInfo : roomInfo
         });

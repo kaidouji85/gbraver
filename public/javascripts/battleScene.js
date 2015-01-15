@@ -6,6 +6,7 @@ function battleScene(spec,my){
     var that = battleSceneBase(spec,my);
 
     var core = enchant.Core.instance;
+    var battleMode = spec.battleMode;
     var emitCommand = function(){};
     var selectMaxBattery = 5;
     var selectMinBattery = 0;
@@ -32,6 +33,7 @@ function battleScene(spec,my){
     that.doGameEnd = doGameEnd;
     that.doPilotSkill = doPilotSkill;
     that.refreshMertor = refreshMertor;
+    that.getBattleMode = getBattleMode;
     that.atackIcon.addEventListener(Event.TOUCH_END,moveBatteryCommand);
     that.chargeIcon.addEventListener(Event.TOUCH_END,charge);
     that.skillIcon.addEventListener(Event.TOUCH_END,pilotSkill);
@@ -275,6 +277,10 @@ function battleScene(spec,my){
         }).delay(80).then(function(){
             emitCommand({method:'ok'});
         });
+    }
+
+    function getBattleMode() {
+        return battleMode;
     }
     
     return that;

@@ -65,6 +65,7 @@ function roomSelectToBattle(){
 
     function assertChangeScene(scene) {
         assert.equal(scene, 'battle', '戦闘画面へ遷移する');
+        assert.equal(Game.currentScene.getBattleMode(),'twoPlay');
         Game.onSendMessage(assertSendMessage2);
     }
 

@@ -51,6 +51,7 @@ function gameBase(spec,my){
     core.MESSAGE_GET_ROOMINFO = 'ルーム情報取得中';
     core.MESSAGE_LOGOFF = 'ログオフ中';
     core.MESSAGE_WINDOW_Y = 276;
+    core.BATTLE_MODE_TWO_PLAY = 'twoPlay';
 
     core.fps = 40;
     core.battleScene = null;
