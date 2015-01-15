@@ -22,9 +22,9 @@ function battleToTop_win(){
         });
         Game.start();
         Game.onload = function(){
+            Game.setBattleMode('twoPlay');
             Game.changeBattleScene({
-                statusArray : statusArray,
-                battleMode : 'twoPlay'
+                statusArray : statusArray
             });
             waitPhase();
         };

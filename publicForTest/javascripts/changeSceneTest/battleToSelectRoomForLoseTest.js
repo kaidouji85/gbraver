@@ -22,6 +22,7 @@ function battleToTop_lose(){
         });
         Game.start();
         Game.onload = function(){
+            Game.setBattleMode('twoPlay');
             Game.changeBattleScene({
                 statusArray : statusArray
             });

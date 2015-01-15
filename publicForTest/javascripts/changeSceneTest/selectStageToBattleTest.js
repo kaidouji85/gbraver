@@ -57,7 +57,7 @@ function doTest(){
 
     function assertOfChangeScene(scene){
         assert.equal(scene,'battle','戦闘画面へ遷移する');
-        assert.equal(Game.currentScene.getBattleMode(),'singlePlay','戦闘モードがシングルプレイである');
+        assert.equal(Game.getBattleMode(),'singlePlay','戦闘モードがシングルプレイである');
         Game.onSendMessage(finishTest);
     }
 }
