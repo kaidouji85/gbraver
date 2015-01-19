@@ -192,8 +192,14 @@ function battleToTop_lose(){
     }
 
     function doDissolveRoom(){
-        Game.onSendMessage(assertOfSendMessage2);
         Game.emitServerResp('dissolveRoom',null);
+        assert.equal(Game.currentScene.battleEndIcon.getVisible(),true,'戦闘終了ボタンが表示されている');
+        Game.currentScene.tl.delay(30).then(pushBattleEndIcon);
+    }
+
+    function pushBattleEndIcon(){
+        Game.onSendMessage(assertOfSendMessage2);
+        touch(Game.currentScene.battleEndIcon);
     }
 
     function assertOfSendMessage2(message,data){

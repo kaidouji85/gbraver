@@ -6,8 +6,8 @@ function battleScene(spec,my){
     var that = battleSceneBase(spec,my);
 
     var core = enchant.Core.instance;
-    var battleMode = spec.battleMode;
     var emitCommand = function(){};
+    var emitPushBattleEndIcon = function(){};
     var selectMaxBattery = 5;
     var selectMinBattery = 0;
     var attackUserId = -1;
@@ -29,7 +29,9 @@ function battleScene(spec,my){
     that.doChargePhase = doChargePhase;
     that.doDefenthCommandPhase = doDefenthCommandPhase;
     that.doDamagePhase = doDamagePhase;
+    that.doDissolveRoom = doDissolveRoom;
     that.onCommand = onCommand;
+    that.onPushBattleEndIcon = onPushBattleEndIcon;
     that.doGameEnd = doGameEnd;
     that.doPilotSkill = doPilotSkill;
     that.refreshMertor = refreshMertor;
@@ -40,6 +42,9 @@ function battleScene(spec,my){
     that.minusIcon.addEventListener(Event.TOUCH_END,minusBattery);
     that.okIcon.addEventListener(Event.TOUCH_END,selectBattery);
     that.prevIcon.addEventListener(Event.TOUCH_END,prevAtackCommand);
+    that.battleEndIcon.addEventListener(Event.TOUCH_END,function(){
+        emitPushBattleEndIcon()
+    });
 
     that.addEventListener(Event.ENTER,function(){
         core.bgm.setBgm(core.assets[core.SOUND_BATTLE]);
@@ -277,6 +282,14 @@ function battleScene(spec,my){
             emitCommand({method:'ok'});
         });
     }
-    
+
+    function onPushBattleEndIcon(fn) {
+        emitPushBattleEndIcon = fn;
+    }
+
+    function doDissolveRoom(){
+        that.battleEndIcon.setVisible(true);
+    }
+
     return that;
 }

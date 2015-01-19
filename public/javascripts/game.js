@@ -31,6 +31,13 @@ function game(spec, my) {
         core.battleScene.onCommand(function(command){
             emitSendMessage('command',command);
         });
+        core.battleScene.onPushBattleEndIcon(function(){
+            if(battleMode===core.BATTLE_MODE_TWO_PLAY){
+                emitSendMessage('getRoomInfo',null);
+            } else if(battleMode===core.BATTLE_MODE_SINGLE_PLAY) {
+                core.changeSelectStageScene();
+            }
+        });
         core.pushScene(core.battleScene);
         emitChangeScene('battle');
     };
@@ -170,13 +177,7 @@ function game(spec, my) {
                 changePhase(data);
                 break;
             case 'dissolveRoom':
-                if(battleMode===core.BATTLE_MODE_TWO_PLAY){
-                    emitSendMessage('getRoomInfo',null);
-                } else if(battleMode===core.BATTLE_MODE_SINGLE_PLAY) {
-                    core.changeSelectStageScene();
-                }
-                core.battleScene = null;
-
+                core.battleScene.doDissolveRoom();
                 break;
             case 'succesEnterRoom':
                 core.roomSelectScene.emitSuccesEnterRoom();

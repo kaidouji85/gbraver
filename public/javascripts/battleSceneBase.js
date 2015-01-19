@@ -16,6 +16,7 @@ function battleSceneBase(spec,my){
     that.okIcon = {};
     that.prevIcon = {};
     that.skillIcon = {};
+    that.battleEndIcon = {};
     that.charaSpriteArray = {};
     that.hpMertorArray = {};
     that.activeBarArray = {};
@@ -229,6 +230,16 @@ function battleSceneBase(spec,my){
         that.prevIcon.setVisible(false);
         that.addChild(that.prevIcon);
 
+        //戦闘終了アイコン
+        that.battleEndIcon  = pictButton({
+            text : '戦闘終了',
+            pict : core.assets[core.PICT_BUTTON]
+        });
+        that.battleEndIcon.x = 88;
+        that.battleEndIcon.y = 260;
+        that.battleEndIcon.setVisible(false);
+        that.addChild(that.battleEndIcon);
+
         //メッセージウインドウ
         that.mesWindow = messageWindow({
             pict : core.assets[core.PICT_WINDOW],
@@ -254,7 +265,6 @@ function battleSceneBase(spec,my){
         that.loseSprite.y = 100;
         that.loseSprite.visible = false;
         that.addChild(that.loseSprite);
-
     }
 
     return that;
