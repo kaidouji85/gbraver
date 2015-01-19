@@ -194,6 +194,7 @@ function battleToTop_lose(){
     function doDissolveRoom(){
         Game.emitServerResp('dissolveRoom',null);
         assert.equal(Game.currentScene.battleEndIcon.getVisible(),true,'戦闘終了ボタンが表示されている');
+        assert.equal(Game.currentScene.mesWindow.getText(),'ボタンを押して下さい','メッセージウインドウの文字が正しい');
         Game.currentScene.tl.delay(30).then(pushBattleEndIcon);
     }
 
@@ -205,6 +206,8 @@ function battleToTop_lose(){
     function assertOfSendMessage2(message,data){
         assert.equal(message,'getRoomInfo','サーバ送信メッセージが正しい');
         assert.equal(data,null,'サーバ送信データが正しい');
+        assert.equal(Game.currentScene.battleEndIcon.getVisible(),false,'戦闘終了ボタンが表示されていない');
+        assert.equal(Game.currentScene.mesWindow.getText(),'ルーム情報取得中','メッセージウインドウの文字が正しい');
         Game.currentScene.tl.delay(30).then(respSuccessGetRoomInfo);
     }
 

@@ -42,9 +42,7 @@ function battleScene(spec,my){
     that.minusIcon.addEventListener(Event.TOUCH_END,minusBattery);
     that.okIcon.addEventListener(Event.TOUCH_END,selectBattery);
     that.prevIcon.addEventListener(Event.TOUCH_END,prevAtackCommand);
-    that.battleEndIcon.addEventListener(Event.TOUCH_END,function(){
-        emitPushBattleEndIcon()
-    });
+    that.battleEndIcon.addEventListener(Event.TOUCH_END,doBattleEnd);
 
     that.addEventListener(Event.ENTER,function(){
         core.bgm.setBgm(core.assets[core.SOUND_BATTLE]);
@@ -289,6 +287,13 @@ function battleScene(spec,my){
 
     function doDissolveRoom(){
         that.battleEndIcon.setVisible(true);
+        that.mesWindow.setText(core.MESSAGE_BATTLE_END);
+    }
+
+    function doBattleEnd() {
+        that.battleEndIcon.setVisible(false);
+        that.mesWindow.setText(core.MESSAGE_GET_ROOMINFO);
+        emitPushBattleEndIcon();
     }
 
     return that;

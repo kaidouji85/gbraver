@@ -51,6 +51,7 @@ function gameBase(spec,my){
     core.MESSAGE_WAIT_COMMAND = '対戦相手がコマンドを選択中......';
     core.MESSAGE_GET_ROOMINFO = 'ルーム情報取得中';
     core.MESSAGE_LOGOFF = 'ログオフ中';
+    core.MESSAGE_BATTLE_END = 'ボタンを押して下さい';
     core.MESSAGE_WINDOW_Y = 276;
     core.BATTLE_MODE_TWO_PLAY = 'twoPlay';
     core.BATTLE_MODE_SINGLE_PLAY = 'singlePlay';
