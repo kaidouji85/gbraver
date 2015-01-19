@@ -204,5 +204,4 @@ function doTest(){
         assert.deepEqual(Game.bgm.getBgm(),Game.assets[Game.SOUND_CONFIG],'コンフィグ画面BGMになっている');
         finishTest();
     }
-
 }

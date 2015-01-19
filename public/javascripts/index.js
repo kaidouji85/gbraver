@@ -106,6 +106,10 @@ window.onload = function() {
                 console.log(data);
                 window.location = location.origin;
             });
+
+            socket.on('battleError',function(data){
+                Game.emitServerResp('battleError',data);
+            });
         };
     }
 

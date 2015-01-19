@@ -194,6 +194,9 @@ function game(spec, my) {
             case 'successSetPilot':
                 core.changeTopScene();
                 break;
+            case 'battleError' :
+                core.changeTopScene();
+                break;
         }
     };
 
