@@ -381,7 +381,7 @@ describe('serverクラスのテスト', function() {
                 });
                 client2.once('succesEnterRoom',function(data){
                     client2.once('gameStart', function(data) {
-                        client2.once('dissolveRoom', function() {
+                        client2.once('battleError', function() {
                             done();
                         });
                     });
@@ -417,7 +417,7 @@ describe('serverクラスのテスト', function() {
                 });
                 client2.once('succesEnterRoom',function(data){
                     client2.once('gameStart', function(data) {
-                        client2.once('dissolveRoom', function() {
+                        client2.once('battleError', function() {
                             doReEnterRoom();
                         });
                     });
@@ -469,7 +469,7 @@ describe('serverクラスのテスト', function() {
                 });
                 client2.once('succesEnterRoom',function(data){
                     client2.once('gameStart', function(data) {
-                        client2.once('dissolveRoom', function() {
+                        client2.once('battleError', function() {
                             doReEnterRoom();
                         });
                     });

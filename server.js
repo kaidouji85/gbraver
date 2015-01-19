@@ -165,7 +165,7 @@ function server(spec, my) {
             roomArray[socket.gbraverInfo.roomId].setCommand(socket.gbraverInfo.userId, method, param);
             if (roomArray[socket.gbraverInfo.roomId].isInputFinish()) {
                 if (roomArray[socket.gbraverInfo.roomId].isGameEnd()) {
-                    dissolveRoom(socket.gbraverInfo.roomId);
+                    dissolveRoom(socket.gbraverInfo.roomId,'dissolveRoom');
                 } else {
                     var ret = roomArray[socket.gbraverInfo.roomId].executePhase();
                     io.sockets.in(socket.gbraverInfo.roomId).emit('resp', ret);
@@ -192,14 +192,14 @@ function server(spec, my) {
             }
         }
 
-        function dissolveRoom(P_roomId){
+        function dissolveRoom(P_roomId,P_message){
             roomArray[P_roomId] = room();
 
             var clients = findClientsSocketByRoomId(P_roomId);
             for (var i in clients) {
                 clients[i].leave(P_roomId);
                 clients[i].gbraverInfo.roomId = null;
-                clients[i].emit('dissolveRoom');
+                clients[i].emit(P_message);
             }
         }
 
@@ -219,7 +219,7 @@ function server(spec, my) {
 
         socket.on('disconnect', function(data) {
             if(socket.gbraverInfo.roomId !== null){
-                dissolveRoom(socket.gbraverInfo.roomId);
+                dissolveRoom(socket.gbraverInfo.roomId,'battleError');
             }
         });
 
