@@ -45,6 +45,7 @@ githubからプロジェクトをダウントードします。
 
 (5)startup.shの作成
 node.jsの起動と同時に環境変数を設定するように、startup.shを作成します。
+startup.shの場所はshell配下に置いて下さい。
 
     #!/bin/sh
 

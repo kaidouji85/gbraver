@@ -3,10 +3,6 @@ node_modules
 npm-debug.log
 chromedriver
 chromedriver.exe
-doSeleniumTest.sh
 .idea/
-initEnvForHeroku.sh
-startup.sh
-createDbBeta.sh
-createDbHeroku.sh
 s3auth.json
+shell/
