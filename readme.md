@@ -21,7 +21,7 @@ node.js、socket.io、enchant.jsがあれば簡単に出来るだろうという
 | BASE_URL | OAuth2.0のリダイレクト先のベースURL |  | localhost |
 | CONTENT_BASE_URL | 静的コンテンツの配置先URL |  | BASE_URLの値 |
 
-##ローカル環境での使い方
+##ローカル環境で開発をする
 ### ローカル環境への導入
 (1)必須ソフトウェア  
 導入の前提として、以下のソフトがインストールされている必要があります。  
@@ -112,10 +112,26 @@ herokuに環境変数を登録します。ここでは環境変数登録バッ�
     git push heroku
 
 
+##静的コンテンツをS3にアップロードする
+以下コマンドで静的コンテンツをs3にアップロードできます。
+
+    grunt s3
+    
+gruntコマンドを利用するには、プロジェクトのルートディレクトリにs3auth.jsonを用意する必要があります。
+
+    {
+        "key": "AWSのkey",
+        "secret": "AWSのsecret"
+    }
+
+
 ## 素材提供
-[魔王魂(BGM)](http://maoudamashii.jokersounds.com/)
+[DOGA L-3(ロボットグラフィック)](http://doga.jp/2010/programs/dogal/index.html#dogal3)  
+[魔王魂(BGM)](http://maoudamashii.jokersounds.com/)  
 [ザ・マッチメイカァズ様　(効果音)](http://osabisi.sakura.ne.jp/m2/)  
-[Webフォントファン様 (フォント)](http://webfontfan.com)
+[Webフォントファン様 (フォント)](http://webfontfan.com)  
+[キャラクターなんとか機(女の子グラフィック)](http://khmix.sakura.ne.jp/download.shtml)
+
 
 ## ゲームのプレイ動画
 <https://www.youtube.com/watch?v=46WSwvoTO7U>

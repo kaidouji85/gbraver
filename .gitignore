@@ -9,3 +9,4 @@ initEnvForHeroku.sh
 startup.sh
 createDbBeta.sh
 createDbHeroku.sh
+s3auth.json
