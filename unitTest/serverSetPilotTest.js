@@ -5,7 +5,7 @@ describe('パイロット選択',function(){
 
     var assert = require('chai').assert;
     var io = require('socket.io-client');
-    var server = require('../server.js');
+    var server = require('../server/server.js');
     var dbMock = require('./dbMock.js')();
 
     var app;

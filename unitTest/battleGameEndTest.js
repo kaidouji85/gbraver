@@ -1,6 +1,6 @@
 describe('Battleクラス ゲーム終了', function() {
     var assert = require('chai').assert;
-    var battle = require('../battle.js');
+    var battle = require('../server/battle.js');
 
     it('HPが0になったのでゲームが終了する',function(){
         var testData = {};

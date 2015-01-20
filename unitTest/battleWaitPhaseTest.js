@@ -1,6 +1,6 @@
 describe('Battleクラス ウェイトフェイズ', function() {
     var assert = require('chai').assert;
-    var battle = require('../battle.js');
+    var battle = require('../server/battle.js');
 
     it('素早いキャラクターのターンになる', function () {
         var testData = {};

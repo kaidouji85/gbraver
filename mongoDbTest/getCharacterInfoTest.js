@@ -1,5 +1,5 @@
 var assert = require('chai').assert;
-var mongoDao = require('../mongoDao.js');
+var mongoDao = require('../server/mongoDao.js');
 var insertData = require('./testData.js').insertData;
 var MongoClient = require('mongodb').MongoClient;
 

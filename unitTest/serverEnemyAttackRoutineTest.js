@@ -10,7 +10,7 @@ describe('serverクラスのテスト', function() {
     var dbMock = require('./dbMock.js')();
 
     var app;
-    var server = require('../server.js');
+    var server = require('../server/server.js');
     var testServer;
     var option = {
         'forceNew' : true

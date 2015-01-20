@@ -1,6 +1,6 @@
 describe('Battleクラス チャージ', function() {
     var assert = require('chai').assert;
-    var battle = require('../battle.js');
+    var battle = require('../server/battle.js');
 
     it('チャージしてバッテリーが全回復する',function(){
         var testData = {};

@@ -21,9 +21,9 @@ var routes = require('./routes')({
     testGlob : require('./seleniumTest/testGlob.js')   //TODO : 本番環境時にはtestGlobを設定しないようにする
 });
 var path = require('path');
-var mongoDao = require('./mongoDao.js');
+var mongoDao = require('./server/mongoDao.js');
 var passport = require('passport');
-var enemyRoutineDefine = require('./enemyRoutineDefine.js');
+var enemyRoutineDefine = require('./server/enemyRoutineDefine.js');
 var app = express();
 
 // all environments
@@ -103,7 +103,7 @@ var httpServer = app.listen(app.get('port'), function(){
 });
 
 //socket.io server
-var server = require('./server.js');
+var server = require('./server/server.js');
 var gameServer = server({
     httpServer : httpServer,
     dao : dao
