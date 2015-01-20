@@ -1,8 +1,8 @@
 //シングルプレイの場合、バトル終了後はルーム選択画面に遷移する
 enchant();
-window.onload = doTest;
+window.onload = battleToTop_lose;
 
-function doTest(){
+function battleToTop_lose(){
     var assert = chai.assert;
     var testDataInst = testData();
     var statusArray = {
@@ -14,8 +14,8 @@ function doTest(){
 
     function initGame(){
         Game = game({
-            userId : 'saikyou@gmail.com',
-            armdozerId : 'saikyouBraver',
+            userId : 'test002@gmail.com',
+            armdozerId : 'landozer',
             pilotId : 'kyoko',
             armdozerList : testDataInst.getMasterData().armdozerList,
             pilotList : testDataInst.getMasterData().pilotList,
@@ -27,8 +27,13 @@ function doTest(){
             Game.changeBattleScene({
                 statusArray : statusArray
             });
-            waitPhase();
+            assertOfBattleBgm();
         };
+    }
+
+    function assertOfBattleBgm(){
+        assert.deepEqual(Game.bgm.getBgm(),Game.assets[Game.SOUND_BATTLE],'戦闘BGMになっている');
+        waitPhase();
     }
 
     function waitPhase(){
@@ -55,7 +60,7 @@ function doTest(){
         };
         Game.emitServerResp('resp',waitPhaseData);
         Game.onSendMessage(function(message,data){
-            //message,dataはplayerChargeTestで確認済み
+            //message,dataはenemyAtackTestで確認済み
             atackCommandPhase();
         });
     }
@@ -81,17 +86,8 @@ function doTest(){
             }
         };
         Game.emitServerResp('resp',atackCommandPhaseData);
-        selectCommand();
-    }
-
-    function selectCommand(){
-        touch(Game.battleScene.atackIcon);
-        touch(Game.battleScene.plusIcon);
-        touch(Game.battleScene.plusIcon);
-        touch(Game.battleScene.okIcon);
-
         Game.onSendMessage(function(message,data){
-            //message,dataはplayerAtackTestで確認済み
+            //message,dataはenemyAtackTestで確認済み
             defenthCommandPhase();
         });
     }
@@ -117,6 +113,13 @@ function doTest(){
             }
         };
         Game.emitServerResp('resp',defenthCommandData);
+        selectCommand();
+    }
+
+    function selectCommand(){
+        touch(Game.battleScene.plusIcon);
+        touch(Game.battleScene.okIcon);
+
         Game.onSendMessage(function(message,data){
             //message,dataはplayerAtackTestで確認済み
             damagePhase();
@@ -150,7 +153,7 @@ function doTest(){
         Game.emitServerResp('resp',damagePhaseData);
         Game.onSendMessage(function(message,data){
             //message,dataはplayerAtackTestで確認済み
-            gameEnd();
+            Game.currentScene.tl.delay(30).then(gameEnd);
         });
     }
 
@@ -185,7 +188,9 @@ function doTest(){
         };
         assert.equal(message,'command','ゲーム終了時のサーバ送信メッセージが正しい');
         assert.deepEqual(data,expectData,'ゲーム終了時のサーバ送信データが正しい');
-        doDissolveRoom();
+        assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示されている');
+        assert.equal(Game.currentScene.mesWindow.getText(),'通信待機中','メッセージウインドウの文字が正しい');
+        Game.currentScene.tl.delay(30).then(doDissolveRoom);
     }
 
     function doDissolveRoom(){

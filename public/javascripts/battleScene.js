@@ -270,7 +270,6 @@ function battleScene(spec,my){
     }
 
     function doGameEnd(data){
-        refreshMertor(data.statusArray);
         ExplosionAnime.play(data,function(){
             emitCommand({method:'ok'});
         });
@@ -283,6 +282,7 @@ function battleScene(spec,my){
     function doDissolveRoom(){
         that.battleEndIcon.setVisible(true);
         that.mesWindow.setText(core.MESSAGE_BATTLE_END);
+        that.mesWindow.setVisible(true);
     }
 
     function doBattleEnd() {

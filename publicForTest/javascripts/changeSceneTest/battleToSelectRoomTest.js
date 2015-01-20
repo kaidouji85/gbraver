@@ -10,8 +10,8 @@ function battleToTop_lose(){
         'saikyou@gmail.com' : testDataInst.getPlayerData('saikyou@gmail.com').status
     };
     var Game;
-    initGame();
 
+    initGame();
     function initGame(){
         Game = game({
             userId : 'test002@gmail.com',
@@ -22,13 +22,15 @@ function battleToTop_lose(){
             stageData : testDataInst.getStageData()
         });
         Game.start();
-        Game.onload = function(){
-            Game.setBattleMode('twoPlay');
-            Game.changeBattleScene({
-                statusArray : statusArray
-            });
-            assertOfBattleBgm();
-        };
+        Game.onload = onLoad;
+    }
+
+    function onLoad(){
+        Game.setBattleMode('twoPlay');
+        Game.changeBattleScene({
+            statusArray : statusArray
+        });
+        assertOfBattleBgm();
     }
 
     function assertOfBattleBgm(){
@@ -153,7 +155,7 @@ function battleToTop_lose(){
         Game.emitServerResp('resp',damagePhaseData);
         Game.onSendMessage(function(message,data){
             //message,dataはplayerAtackTestで確認済み
-            gameEnd();
+            Game.currentScene.tl.delay(30).then(gameEnd);
         });
     }
 
@@ -188,13 +190,16 @@ function battleToTop_lose(){
         };
         assert.equal(message,'command','ゲーム終了時のサーバ送信メッセージが正しい');
         assert.deepEqual(data,expectData,'ゲーム終了時のサーバ送信データが正しい');
-        doDissolveRoom();
+        assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示されている');
+        assert.equal(Game.currentScene.mesWindow.getText(),'通信待機中','メッセージウインドウの文字が正しい');
+        Game.currentScene.tl.delay(30).then(doDissolveRoom);
     }
 
     function doDissolveRoom(){
         Game.emitServerResp('dissolveRoom',null);
         assert.equal(Game.currentScene.battleEndIcon.getVisible(),true,'戦闘終了ボタンが表示されている');
         assert.equal(Game.currentScene.mesWindow.getText(),'ボタンを押して下さい','メッセージウインドウの文字が正しい');
+        assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示されている');
         Game.currentScene.tl.delay(30).then(pushBattleEndIcon);
     }
 
