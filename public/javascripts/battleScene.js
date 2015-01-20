@@ -18,6 +18,9 @@ function battleScene(spec,my){
     var MyTurnAnime = myTurnAnime({
         battleScene : that
     });
+    var ExplosionAnime = explosionAnime({
+        battleScene : that
+    });
 
     var WAIT_TIME_ACTIVE_RESET = 30;
     var FRAME_STAND = 0;
@@ -268,15 +271,7 @@ function battleScene(spec,my){
 
     function doGameEnd(data){
         refreshMertor(data.statusArray);
-        for(var uid in data.statusArray){
-            if( uid !== data.winner ){
-                that.charaSpriteArray[uid].doDownMotion();
-                break;
-            }
-        }
-        that.tl.delay(130).then(function(){
-            data.winner === that.userId ? that.winSprite.visible=true : that.loseSprite.visible = true;
-        }).delay(80).then(function(){
+        ExplosionAnime.play(data,function(){
             emitCommand({method:'ok'});
         });
     }
