@@ -245,6 +245,7 @@ function server(spec, my) {
 
         socket.on('leaveRoom',function(){
             roomArray[socket.gbraverInfo.roomId] = room();
+            socket.leave(socket.gbraverInfo.roomId);
             socket.gbraverInfo.roomId = null;
             socket.emit('successLeaveRoom');
         });
