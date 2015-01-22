@@ -9,7 +9,9 @@ function roomSelectScene(spec,my){
     that.mesWindow = {};
     that.title = {};
     that.okButton = {};
+    that.refreshButton = {};
     that.onEnterRoom = onEnterRoom;
+    that.onPushRefreshButton = onPushRefreshButton;
     that.onPushPrevButton = onPushPrevButton;
     that.emitSuccesEnterRoom = emitSuccesEnterRoom;
     that.onLeaveRoom = onLeaveRoom;
@@ -20,6 +22,7 @@ function roomSelectScene(spec,my){
     var emitEnterRoom;
     var emitPushPrevButton = function(){};
     var emitLeaveRoom = function(){};
+    var emitPushRefreshButton = function(){};
     
     var CNT_MAX_ENTER_ROOM = 5;
     
@@ -58,12 +61,22 @@ function roomSelectScene(spec,my){
 
         });
 
+        //更新ボタン
+        that.refreshButton =  pictButton({
+            text : '更新',
+            pict : core.assets[core.PICT_BUTTON]
+        });
+        that.refreshButton.x = 8;
+        that.refreshButton.y = 426;
+        that.refreshButton.addEventListener(Event.TOUCH_END,pushRefreshButton);
+        that.addChild(that.refreshButton);
+
         //戻るボタン
         that.prevButton = pictButton({
             text : '戻る',
             pict : core.assets[core.PICT_BUTTON]
         });
-        that.prevButton.x = 88;
+        that.prevButton.x = 168;
         that.prevButton.y = 426;
         that.prevButton.addEventListener(Event.TOUCH_END,function(e){
             pushPrevButton();
@@ -118,12 +131,13 @@ function roomSelectScene(spec,my){
     };
 
     function pushEnterRoom(roomId){
-        that.enterRoomButtonArray.forEach(function(button){
-            button.setVisible(false);
-        });
+        for(var i=0; i<that.enterRoomButtonArray.length; i++){
+            that.enterRoomButtonArray[i].setVisible(false);
+        }
         that.mesWindow.setVisible(true);
         that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
         that.prevButton.setVisible(false);
+        that.refreshButton.setVisible(false);
         emitEnterRoom({
             roomId : roomId
         });
@@ -131,7 +145,18 @@ function roomSelectScene(spec,my){
     
     function onPushPrevButton(fn){
         emitPushPrevButton = fn;
-    };
+    }
+
+    function pushRefreshButton() {
+        for(var i=0; i<that.enterRoomButtonArray.length; i++){
+            that.enterRoomButtonArray[i].setVisible(false);
+        }
+        that.mesWindow.setVisible(true);
+        that.mesWindow.setText(core.MESSAGE_GET_ROOMINFO);
+        that.prevButton.setVisible(false);
+        that.refreshButton.setVisible(false);
+        emitPushRefreshButton();
+    }
 
     function pushPrevButton(){
         emitPushPrevButton();
@@ -178,7 +203,12 @@ function roomSelectScene(spec,my){
         that.enterRoomButtonArray.forEach(function(button){
             button.setVisible(true);
         });
+        that.refreshButton.setVisible(true);
         that.prevButton.setVisible(true);
+    }
+
+    function onPushRefreshButton(fn){
+        emitPushRefreshButton = fn;
     }
    
     return that;

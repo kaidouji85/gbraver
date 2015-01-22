@@ -61,6 +61,7 @@ function enterRoomAndGameStart(){
         assert.equal(Game.currentScene.enterRoomButtonArray[0].getVisible(),false,'ルーム4ボタンが非表示');
         assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
         assert.equal(Game.currentScene.mesWindow.getText(),'通信待機中','メッセージが正しい');
+        assert.equal(Game.currentScene.refreshButton.getVisible(),false,'更新ボタンが非表示');
         assert.equal(Game.currentScene.prevButton.getVisible(),false,'戻るボタンが非表示');
         Game.currentScene.tl.delay(30).then(successEnterRoom);
     }

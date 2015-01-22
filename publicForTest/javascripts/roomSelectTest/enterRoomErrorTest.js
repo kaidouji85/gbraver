@@ -50,6 +50,7 @@ function enterRoomAndGameStart(){
         assert.equal(Game.currentScene.enterRoomButtonArray[0].getVisible(),false,'ルーム2ボタンが非表示');
         assert.equal(Game.currentScene.enterRoomButtonArray[0].getVisible(),false,'ルーム3ボタンが非表示');
         assert.equal(Game.currentScene.enterRoomButtonArray[0].getVisible(),false,'ルーム4ボタンが非表示');
+        assert.equal(Game.currentScene.refreshButton.getVisible(),false,'更新ボタンが非表示');
         assert.equal(Game.currentScene.prevButton.getVisible(),false,'戻るボタンが非表示');
         assert.equal(Game.currentScene.leaveRoomButton.getVisible(),false,'退出ボタンが非表示');
         assert.equal(Game.currentScene.okButton.getVisible(),true,'OKボタンが表示される');
@@ -71,6 +72,7 @@ function enterRoomAndGameStart(){
         assert.equal(Game.currentScene.enterRoomButtonArray[0].getVisible(),true,'ルーム2ボタンが表示される');
         assert.equal(Game.currentScene.enterRoomButtonArray[0].getVisible(),true,'ルーム3ボタンが表示される');
         assert.equal(Game.currentScene.enterRoomButtonArray[0].getVisible(),true,'ルーム4ボタンが表示される');
+        assert.equal(Game.currentScene.refreshButton.getVisible(),true,'更新ボタンが表示される');
         assert.equal(Game.currentScene.prevButton.getVisible(),true,'戻るボタンが表示される');
 
         finishTest();

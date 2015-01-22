@@ -56,6 +56,9 @@ function game(spec, my) {
         core.roomSelectScene.onLeaveRoom(function(){
             emitSendMessage('leaveRoom',null);
         });
+        core.roomSelectScene.onPushRefreshButton(function(){
+            emitSendMessage('getRoomInfo',null);
+        });
         core.replaceScene(core.roomSelectScene);
         emitChangeScene('selectRoom');
     };
