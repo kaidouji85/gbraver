@@ -59,17 +59,41 @@ function roomSelectToBattle(){
         assert.equal(data,null,'データが正しい');
         assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
         assert.equal(Game.currentScene.mesWindow.getText(),'通信待機中','メッセージが正しい');
+        assert.equal(Game.currentScene.refreshButton.getVisible(),false,'更新ボタンが非表示である');
         assert.equal(Game.currentScene.leaveRoomButton.getVisible(),false,'退出ボタンが非表示である');
         Game.currentScene.tl.delay(30).then(successLeaveRoom);
     }
 
     function successLeaveRoom() {
-        Game.onChangeScene(moveTopScene);
+        Game.onSendMessage(sendGetRoomInfo);
         Game.emitServerResp('successLeaveRoom',null);
     }
 
-    function moveTopScene(scene) {
-        assert.equal(scene,'top','トップシーンに遷移する');
+    function sendGetRoomInfo(message,data){
+        assert.equal(message,'getRoomInfo','サーバ送信メッセージが正しい');
+        assert.equal(data,null,'データが正しい');
+        assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
+        assert.equal(Game.currentScene.mesWindow.getText(),'通信待機中','メッセージが正しい');//TODO : メッセージを”ルーム情報取得中”にする
+        assert.equal(Game.currentScene.refreshButton.getVisible(),false,'更新ボタンが非表示である');
+        assert.equal(Game.currentScene.leaveRoomButton.getVisible(),false,'退出ボタンが非表示である');
+        Game.currentScene.tl.delay(30).then(respSuccessGetRoomInfo);
+    }
+
+    function respSuccessGetRoomInfo(){
+        Game.emitServerResp('successGetRoomInfo',{
+            '0' : [],
+            '1' : ['test001@gmail.com','test002@gmail.com'],
+            '2' : ['test003@gmail.com','test004@gmail.com'],
+            '3' : ['test005@gmail.com'],
+            '4' : []
+        })
+        assert.equal(Game.currentScene.enterRoomButtonArray[0].getVisible(),true,'ルーム0ボタンが表示される');
+        assert.equal(Game.currentScene.enterRoomButtonArray[0].getVisible(),true,'ルーム1ボタンが表示される');
+        assert.equal(Game.currentScene.enterRoomButtonArray[0].getVisible(),true,'ルーム2ボタンが表示される');
+        assert.equal(Game.currentScene.enterRoomButtonArray[0].getVisible(),true,'ルーム3ボタンが表示される');
+        assert.equal(Game.currentScene.enterRoomButtonArray[0].getVisible(),true,'ルーム4ボタンが表示される');
+        assert.equal(Game.currentScene.refreshButton.getVisible(),true,'更新ボタンが表示される');
+        assert.equal(Game.currentScene.prevButton.getVisible(),true,'戻るボタンが表示される');
         finishTest();
     }
 }

@@ -53,6 +53,13 @@ function doTest(){
             '3' : ['test005@gmail.com'],
             '4' : []
         });
+        assert.equal(Game.currentScene.enterRoomButtonArray[0].getVisible(),true,'ルーム0ボタンが表示される');
+        assert.equal(Game.currentScene.enterRoomButtonArray[0].getVisible(),true,'ルーム1ボタンが表示される');
+        assert.equal(Game.currentScene.enterRoomButtonArray[0].getVisible(),true,'ルーム2ボタンが表示される');
+        assert.equal(Game.currentScene.enterRoomButtonArray[0].getVisible(),true,'ルーム3ボタンが表示される');
+        assert.equal(Game.currentScene.enterRoomButtonArray[0].getVisible(),true,'ルーム4ボタンが表示される');
+        assert.equal(Game.currentScene.refreshButton.getVisible(),true,'更新ボタンが表示される');
+        assert.equal(Game.currentScene.prevButton.getVisible(),true,'戻るボタンが表示される');
         finishTest();
     }
 }
