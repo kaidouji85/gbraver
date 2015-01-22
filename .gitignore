@@ -6,3 +6,5 @@ chromedriver.exe
 .idea/
 s3auth.json
 shell/
+public/Thumbs.db
+public/images/Thumbs.db
