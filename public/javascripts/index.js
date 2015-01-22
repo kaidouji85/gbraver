@@ -59,6 +59,7 @@ window.onload = function() {
             });
 
             socket.on('succesEnterRoom', function() {
+                console.log('succesEnterRoom');//test
                 Game.emitServerResp('succesEnterRoom');
             });
 
@@ -87,6 +88,7 @@ window.onload = function() {
             });
 
             socket.on('enterRoomError',function(data){
+                consonle.log('enterRoomError '+data);//test
                 Game.emitServerResp('enterRoomError',data);
             });
 
