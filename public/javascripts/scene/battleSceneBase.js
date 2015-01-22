@@ -8,15 +8,7 @@ function battleSceneBase(spec,my){
     that.statusArray = $.extend(true, {}, spec.statusArray);
     that.userId = spec.userId;
     that.backgroundColor = "black";
-    that.ground = {};
-    that.atackIcon = {};
-    that.chargeIcon = {};
-    that.plusIcon = {};
-    that.minusIcon = {};
-    that.okIcon = {};
-    that.prevIcon = {};
-    that.skillIcon = {};
-    that.battleEndIcon = {};
+
     that.charaSpriteArray = {};
     that.hpMertorArray = {};
     that.activeBarArray = {};
@@ -25,13 +17,9 @@ function battleSceneBase(spec,my){
     that.damageLabelArray = {};
     that.subDamageLabelArray = {};
     that.pilotSpriteArray = {};
-    that.hitEffect = {};
-    that.mesWindow = {};
-    that.mertorWindowArray = {};
-    that.commandWindow = {};
-    that.winSprite = {};
-    that.loseSprite = {};
     that.pilotIconArray = {};
+    that.hitEffectArray = {};
+    that.mertorWindowArray = {};
 
     (function() {
         //背景(地面)
@@ -134,12 +122,12 @@ function battleSceneBase(spec,my){
             that.addChild(that.subDamageLabelArray[uid]);
 
             //攻撃エフェクト
-            that.hitEffect[uid] = hitEffect({
+            that.hitEffectArray[uid] = hitEffect({
                 pict : core.assets[core.PICT_HIT_EFFECT]
             });
-            that.hitEffect[uid].x = uid===that.userId ? 128 : -64;
-            that.hitEffect[uid].y = 96;
-            that.addChild(that.hitEffect[uid]);
+            that.hitEffectArray[uid].x = uid===that.userId ? 128 : -64;
+            that.hitEffectArray[uid].y = 96;
+            that.addChild(that.hitEffectArray[uid]);
 
             //パイロット
             that.pilotSpriteArray[uid] = new Sprite(256,256);

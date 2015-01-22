@@ -30,7 +30,7 @@ function attackAnime(spec,my){
                         battleScene.charaSpriteArray[uid].doAvoidMotion();
                     } else {
                         battleScene.charaSpriteArray[uid].doHitMotion();
-                        battleScene.hitEffect[uid].play();
+                        battleScene.hitEffectArray[uid].play();
                     }
                 }
             }
