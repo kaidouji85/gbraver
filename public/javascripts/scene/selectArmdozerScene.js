@@ -31,7 +31,7 @@ function selectArmdozerScene(spec,my){
 
         //アームドーザボタン
         for(var i=0; i<MAX_ARMDOZER; i++) {
-            that.armdozerButtonArray[i] = armdozerIcon({
+            that.armdozerButtonArray[i] = armdozerButton({
                 windowPict : core.assets[core.PICT_BLACK_WINDOW],
                 armdozerPict : core.assets[core.PICT_PREFIX + armdozerList[i].pictName]
             });

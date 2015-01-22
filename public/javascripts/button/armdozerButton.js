@@ -1,4 +1,4 @@
-function armdozerIcon(spec,my){
+function armdozerButton(spec,my){
     var that = new Group();
     var core = enchant.Core.instance;
     var windowPict = spec.windowPict;
