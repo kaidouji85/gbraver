@@ -97,5 +97,11 @@ function gridWindow(spec,my){
         }
     }
 
+    that.setOpacity = function(opacity){
+        for(var i=0; i<that.childNodes.length; i++){
+            that.childNodes[i].opacity = opacity;
+        }
+    }
+
     return that;
 }
