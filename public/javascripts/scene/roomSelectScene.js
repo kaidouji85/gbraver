@@ -15,7 +15,6 @@ function roomSelectScene(spec,my){
     that.onPushPrevButton = onPushPrevButton;
     that.emitSuccesEnterRoom = emitSuccesEnterRoom;
     that.onLeaveRoom = onLeaveRoom;
-    that.emitSuccesLeaveRoom = emitSuccesLeaveRoom;
     that.emitEnterRoomError = emitEnterRoomError;
     
     var core = enchant.Core.instance;
@@ -178,23 +177,16 @@ function roomSelectScene(spec,my){
         emitLeaveRoom = fn;
     }
 
-    function emitSuccesLeaveRoom() {
-        that.prevButton.setVisible(true);
-        that.mesWindow.setVisible(false);
-        that.enterRoomButtonArray.forEach(function(button){
-            button.setVisible(true);
-        });
-    }
-
     function emitEnterRoomError(message){
-        that.mesWindow.setVisible(true);
-        that.mesWindow.setText(message);
+        that.refreshButton.setVisible(false);
         that.prevButton.setVisible(false);
         that.leaveRoomButton.setVisible(false);
         that.enterRoomButtonArray.forEach(function(button){
             button.setVisible(false);
         });
         that.okButton.setVisible(true);
+        that.mesWindow.setVisible(true);
+        that.mesWindow.setText(message);
     }
 
     function pushOkButton() {
