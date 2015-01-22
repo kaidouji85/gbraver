@@ -33,16 +33,7 @@ function battleSceneBase(spec,my){
     that.loseSprite = {};
     that.pilotIconArray = {};
 
-    that.refreshMertor = function(statusArray){
-        for(var uid in statusArray){
-            that.hpMertorArray[uid].setValue(statusArray[uid].hp);
-            that.batteryMertorArray[uid].setValue(statusArray[uid].battery);
-            that.activeBarArray[uid].setValue(120*statusArray[uid].active/5000);
-        }
-    }
-
-    initSprite();
-    function initSprite() {
+    (function() {
         //背景(地面)
         that.ground = new Sprite(320,256);
         that.ground.image = core.assets[core.PICT_BG_GROUND];
@@ -265,6 +256,14 @@ function battleSceneBase(spec,my){
         that.loseSprite.y = 100;
         that.loseSprite.visible = false;
         that.addChild(that.loseSprite);
+    }())
+
+    that.refreshMertor = function(statusArray){
+        for(var uid in statusArray){
+            that.hpMertorArray[uid].setValue(statusArray[uid].hp);
+            that.batteryMertorArray[uid].setValue(statusArray[uid].battery);
+            that.activeBarArray[uid].setValue(120*statusArray[uid].active/5000);
+        }
     }
 
     return that;
