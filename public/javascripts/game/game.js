@@ -54,6 +54,7 @@ function game(spec, my) {
             core.changeTopScene();
         });
         core.roomSelectScene.onLeaveRoom(function(){
+            console.log('leaveRoom');//test
             emitSendMessage('leaveRoom',null);
         });
         core.roomSelectScene.onPushRefreshButton(function(){

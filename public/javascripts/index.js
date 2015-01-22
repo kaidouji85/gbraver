@@ -88,7 +88,7 @@ window.onload = function() {
             });
 
             socket.on('enterRoomError',function(data){
-                consonle.log('enterRoomError '+data);//test
+                console.log('enterRoomError '+data);//test
                 Game.emitServerResp('enterRoomError',data);
             });
 
