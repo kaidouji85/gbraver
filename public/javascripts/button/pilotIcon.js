@@ -42,9 +42,5 @@ function pilotIcon(spec,my){
         return faceIcon;
     }
 
-    that.addEventListener(Event.TOUCH_START,function(){
-        core.assets[core.SOUND_PUSH_BUTTON].play();
-    });
-
     return that;
 }

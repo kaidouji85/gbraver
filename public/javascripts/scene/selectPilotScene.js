@@ -59,7 +59,7 @@ function selectPilotScene(spec,my) {
 
         //パイロットボタン
         for(var i=0; i<MAX_PILOT; i++) {
-            that.pilotButtonArray[i] = pilotIcon({
+            that.pilotButtonArray[i] = pilotButton({
                 windowPict : core.assets[core.PICT_BLACK_WINDOW],
                 pilotPict : core.assets[core.PICT_PREFIX + pilotList[i].pict]
             });
