@@ -162,6 +162,10 @@ function selectArmdozerScene(spec,my){
         refreshInformation(selectArmdozerId);
     }
 
+    that.getName = function(){
+        return 'selectArmdozer';
+    }
+
     that.onPushOkButton = function(fn){
         emitPushOkButton = fn;
     };

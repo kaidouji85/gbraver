@@ -119,6 +119,10 @@ function selectPilotScene(spec,my) {
         refreshInformation(selectPilotId);
     }
 
+    that.getName = function(){
+        return 'selectPilot';
+    }
+
     that.onPushPrevButton = function(fn){
         emitPushButton = fn;
     }

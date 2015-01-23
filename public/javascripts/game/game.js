@@ -39,7 +39,7 @@ function game(spec, my) {
             }
         });
         core.pushScene(core.battleScene);
-        emitChangeScene('battle');
+        emitChangeScene(core.currentScene.getName());
     };
 
     core.changeRoomSelectScene = function(roomInfo){
@@ -60,7 +60,7 @@ function game(spec, my) {
             emitSendMessage('getRoomInfo',null);
         });
         core.replaceScene(core.roomSelectScene);
-        emitChangeScene('selectRoom');
+        emitChangeScene(core.currentScene.getName());
     };
     
     core.changeTopScene = function(){
@@ -86,7 +86,7 @@ function game(spec, my) {
             emitLogOff();
         });
         core.replaceScene(core.topScene);
-        emitChangeScene('top');
+        emitChangeScene(core.currentScene.getName());
     };
 
     core.changeSelectPilotScene = function() {
@@ -105,7 +105,7 @@ function game(spec, my) {
             pilotId = l_pilotId;
         });
         core.replaceScene(scene);
-        emitChangeScene('selectPilot');
+        emitChangeScene(core.currentScene.getName());
     }
 
     core.changeSelectArmdozerScene = function(){
@@ -124,7 +124,7 @@ function game(spec, my) {
             core.changeTopScene();
         });
         core.replaceScene(scene);
-        emitChangeScene('selectArmdozer');
+        emitChangeScene(core.currentScene.getName());
     }
 
     core.changeSelectStageScene = function(){
@@ -144,7 +144,7 @@ function game(spec, my) {
         });
         core.replaceScene(scene);
         battleMode = core.BATTLE_MODE_SINGLE_PLAY;
-        emitChangeScene('selectStage');
+        emitChangeScene(core.currentScene.getName());
     }
 
     core.onChangeScene = function(fn){

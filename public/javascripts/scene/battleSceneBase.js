@@ -246,6 +246,10 @@ function battleSceneBase(spec,my){
         that.addChild(that.loseSprite);
     }())
 
+    that.getName = function(){
+        return 'battle';
+    }
+
     that.refreshMertor = function(statusArray){
         for(var uid in statusArray){
             that.hpMertorArray[uid].setValue(statusArray[uid].hp);

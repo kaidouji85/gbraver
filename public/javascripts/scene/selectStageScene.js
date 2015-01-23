@@ -52,6 +52,10 @@ function selectStageScene(spec,my){
         that.addChild(that.mesWindow);
     }
 
+    that.getName = function(){
+        return 'selectStage';
+    }
+
     that.addEventListener(Event.ENTER,function(){
         core.bgm.setBgm(core.assets[core.SOUND_CONFIG]);
     });

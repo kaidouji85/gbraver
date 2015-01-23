@@ -133,6 +133,10 @@ function topScene(spec,my){
         that.addChild(that.mesWindow);
     }
 
+    that.getName = function(){
+        return 'top';
+    }
+
     that.addEventListener(Event.ENTER,function(){
         core.bgm.setBgm(core.assets[core.SOUND_CONFIG]);
     });
