@@ -8,7 +8,7 @@ function getSkillDescription(pilotData){
             ret = 'HPを'+pilotData.value*100+'%回復する'
             break;
         case 'guardBreak':
-            ret = 'ガードを無効化する';
+            ret = '攻撃力+'+pilotData.value+'、さらにガードを無効にする';
             break;
         default :
             ret = '不明スキル';

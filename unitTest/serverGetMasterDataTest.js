@@ -190,7 +190,8 @@ describe('serverクラスのテスト', function() {
                         name: '伊織',
                         pict: 'iori.png',
                         shout: 'この一撃に、全てを掛ける！！',
-                        type: 'guardBreak'
+                        type: 'guardBreak',
+                        value : 500
                     }
                 ];
                 expect.stageData = [
