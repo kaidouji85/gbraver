@@ -36,29 +36,29 @@ db.armdozers.insert({
     armdozerId : 'landozer',
     name : 'ランドーザ',
     pictName : 'Landozer.PNG',
-    hp : 3800,
+    hp : 3300,
     defense : 200,
     speed : 95,
     weapons : {
         1 : {
             name : 'ブレイクパンチ',
-            power : 1400
+            power : 1300
         },
         2 : {
             name : 'ブレイクパンチ',
-            power : 1400
+            power : 1300
         },
         3 : {
             name : 'ブレイクパンチ',
-            power : 1400
+            power : 1300
         },
         4 : {
             name : 'ブレイクパンチ',
-            power : 1400
+            power : 1300
         },
         5 : {
             name : 'ブレイクパンチ',
-            power : 1400
+            power : 1300
         }
     }       
 });
@@ -67,9 +67,9 @@ db.armdozers.insert({
     armdozerId : 'zeroBraver',
     name : 'ゼロブレイバー',
     pictName : 'ZeroBraver.PNG',
-    hp : 2300,
+    hp : 2500,
     defense : 50,
-    speed : 125,
+    speed : 145,
     weapons : {
         1 : {
             name : 'バスターナックル',
@@ -206,7 +206,7 @@ db.pilots.insert({
     pict : 'akane.png',
     shout : 'まだまだ、勝負はこれからよ。',
     type : 'recoverHp',
-    value : 0.5
+    value : 0.3
 });
 
 db.pilots.insert({
@@ -215,7 +215,7 @@ db.pilots.insert({
     pict: 'iori.png',
     shout: 'この一撃に、全てを掛ける！！',
     type: 'guardBreak',
-    value : 500
+    value : 200
 });
 
 db.stages.remove({});
