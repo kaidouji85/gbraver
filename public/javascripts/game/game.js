@@ -197,8 +197,12 @@ function game(spec, my) {
             case 'successSetPilot':
                 core.changeTopScene();
                 break;
-            case 'battleError' :
-                core.changeTopScene();
+            case 'battleError' :    //TODO : 自動テストがない
+                if(core.currentScene.getName()==='battle'){
+                    core.changeTopScene();
+                } else if(core.currentScene.getName()==='selectRoom') {
+                    core.currentScene.emitEnterRoomError('そのコネクションは既に入室しています。');
+                }
                 break;
         }
     };
