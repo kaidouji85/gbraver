@@ -98,7 +98,7 @@ function server(spec, my) {
                     socket.gbraverInfo.roomId = L_roomId;
                     prepareBattle();
                 } else {
-                    socket.emit('enterRoomError', 'このコネクションは既に入室しています。');
+                    dissolveRoom(socket.gbraverInfo.roomId,'battleError');
                 }
             }
 

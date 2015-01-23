@@ -12,9 +12,9 @@ describe('serverクラスのテスト', function() {
     
     var option;
     var Server;
-    var roomId = -1;
+    var roomId = 1;
     
-    before(function(){
+    beforeEach(function(){
         option = {
             'forceNew' : true
         };
@@ -23,15 +23,10 @@ describe('serverクラスのテスト', function() {
             httpServer : app,
             dao : dbMock
         });
-        roomId = -1;
-    });
-
-    beforeEach(function() {
-        roomId++;
         complates = {};
     });
     
-    after(function() {
+    afterEach(function() {
         app.close();
     });
 
@@ -189,10 +184,24 @@ describe('serverクラスのテスト', function() {
                     roomId : roomId
                 });
 
-                client.once('enterRoomError', function(message) {
-                    assert.equal(message, 'このコネクションは既に入室しています。');
-                    done();
-                }); 
+                client.once('battleError', function() {
+                    getRoomInfo();
+                });
+
+                function getRoomInfo(){
+                    client.emit('getRoomInfo');
+                    client.once('successGetRoomInfo',function(data){
+                        var expect = {
+                            '0' : [],
+                            '1' : [],
+                            '2' : [],
+                            '3' : [],
+                            '4' : []
+                        }
+                        assert.deepEqual(expect,data,'ルームから退出している');
+                        done();
+                    });
+                }
             }
         });
         
@@ -213,11 +222,25 @@ describe('serverクラスのテスト', function() {
                     roomId : roomId+1
                 });
 
-                client.once('enterRoomError', function(message) {
-                    assert.equal(message, 'このコネクションは既に入室しています。');
-                    done();
+                client.once('battleError', function() {
+                    getRoomInfo();
                 }); 
             }
+
+             function getRoomInfo(){
+                 client.emit('getRoomInfo');
+                 client.once('successGetRoomInfo',function(data){
+                     var expect = {
+                         '0' : [],
+                         '1' : [],
+                         '2' : [],
+                         '3' : [],
+                         '4' : []
+                     }
+                     assert.deepEqual(expect,data,'ルームから退出している');
+                     done();
+                 });
+             }
         });
         
         it('ユーザ認証なしで入室したら、エラーが返される', function(done) {
