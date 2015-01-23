@@ -12,6 +12,7 @@ var battle = function(spec,my){
     var maxHpArray = {};
     var stunAttackArray = {};
     var guardBreakArray = {};
+    var plusPowerArray = {};
 
     that.MAX_ACTIVE = 5000;
     that.ATACK_HIT = 1;
@@ -26,6 +27,7 @@ var battle = function(spec,my){
             maxHpArray[uid] = statusArray[uid].hp;
             stunAttackArray[uid] = false;
             guardBreakArray[uid] = false;
+            plusPowerArray[uid] = 0;
         }
     }
     
@@ -85,25 +87,25 @@ var battle = function(spec,my){
         } else if (atackBattery < defenthBattery) {
             damage = 0;
             hit = that.ATACK_MISS;
-        } else if (atackBattery === defenthBattery) {
-            damage = getDamage(statusArray[atackUserId],statusArray[defenseUserId],atackBattery,defenthBattery);
-            if(guardBreakArray[atackUserId]===true){
-                hit = that.ATACK_HIT;
-            }else {
-                damage = damage / 2;
-                hit = that.ATACK_GUARD;
-            }
         } else {
-            damage = getDamage(statusArray[atackUserId],statusArray[defenseUserId],atackBattery,defenthBattery);
-            if (defenthBattery === 0) {
-                damage = damage * 2;
-                hit = that.ATACK_CRITICAL;
+            damage = getDamage(statusArray[atackUserId],statusArray[defenseUserId],atackBattery,defenthBattery)  + plusPowerArray[atackUserId];
+            if(atackBattery === defenthBattery){
+                if(guardBreakArray[atackUserId]===true){
+                    hit = that.ATACK_HIT;
+                }else {
+                    damage = damage / 2;
+                    hit = that.ATACK_GUARD;
+                }
             } else {
-                hit = that.ATACK_HIT;
-            }
-
-            if(stunAttackArray[atackUserId]){
-                statusArray[defenseUserId].active = -that.MAX_ACTIVE/2;
+                if (defenthBattery === 0) {
+                    damage = damage * 2;
+                    hit = that.ATACK_CRITICAL;
+                } else {
+                    hit = that.ATACK_HIT;
+                }
+                if(stunAttackArray[atackUserId]){
+                    statusArray[defenseUserId].active = -that.MAX_ACTIVE/2;
+                }
             }
         }
 
@@ -113,6 +115,7 @@ var battle = function(spec,my){
         statusArray[defenseUserId].battery -= defenthBattery;
         stunAttackArray[atackUserId] = false;
         guardBreakArray[atackUserId] = false;
+        plusPowerArray[atackUserId] = 0;
         atackUserId = null;
 
         var ret = {
@@ -193,6 +196,7 @@ var battle = function(spec,my){
             stunAttackArray[atackUserId] = true;
         } else if(type === 'guardBreak') {
             guardBreakArray[atackUserId] = true;
+            plusPowerArray[atackUserId] = statusArray[atackUserId].skill.value;
         }
     }
     
