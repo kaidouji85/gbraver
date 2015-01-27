@@ -1,49 +1,13 @@
 describe('Battleクラス パイロットスキル', function() {
     var assert = require('chai').assert;
     var battle = require('../server/battle.js');
+    var battleUnitData = require('./battleUnitData.js')();
 
     it('クイックチャージでバッテリーを回復する',function(){
         var testData = {};
-        testData['test001@gmail.com'] = {
-            name : 'グランブレイバー',
-            pictName : 'GranBraver.PNG',
-            hp : 2000,
-            defense : 0,
-            speed : 250,
-            active : 5000,
-            battery : 0,
-            skillPoint : 1,
-            overHeatFlag : false,
-            weapons : {
-                1 : {name : 'バスターナックル',power : 800},
-                2 : {name : 'バスターナックル',power : 1100},
-                3 : {name : 'バスターナックル',power : 1600},
-                4 : {name : 'バスターナックル',power : 2100},
-                5 : {name : 'バスターナックル',power : 2800}
-            },
-            skill : {
-                type : 'quickCharge',
-                battery : 3
-            }
-        };
-        testData['test002@gmail.com'] = {
-            name : 'ランドーザ',
-            pictName : 'Landozer.PNG',
-            hp : 4700,
-            defense : 0,
-            speed : 150,
-            active : 0,
-            battery : 5,
-            skillPoint : 1,
-            overHeatFlag : false,
-            weapons : {
-                1 : {name:'ブレイクパンチ',power:1200},
-                2 : {name:'ブレイクパンチ',power:1700},
-                3 : {name:'ブレイクパンチ',power:2300},
-                4 : {name:'ブレイクパンチ',power:2900},
-                5 : {name:'ブレイクパンチ',power:3800}
-            }
-        };
+        testData['test001@gmail.com'] = battleUnitData.get('granBraverQuickCharge');
+        testData['test001@gmail.com'].battery = 0;
+        testData['test002@gmail.com'] = battleUnitData.get('landozer');
 
         var Battle = battle({
             statusArray : testData
@@ -58,46 +22,9 @@ describe('Battleクラス パイロットスキル', function() {
 
     it('クイックチャージでもバッテリー上限を超えて回復しない',function(){
         var testData = {};
-        testData['test001@gmail.com'] = {
-            name : 'グランブレイバー',
-            pictName : 'GranBraver.PNG',
-            hp : 2000,
-            defense : 0,
-            speed : 250,
-            active : 5000,
-            battery : 2,
-            skillPoint : 1,
-            overHeatFlag : false,
-            weapons : {
-                1 : {name : 'バスターナックル',power : 800},
-                2 : {name : 'バスターナックル',power : 1100},
-                3 : {name : 'バスターナックル',power : 1600},
-                4 : {name : 'バスターナックル',power : 2100},
-                5 : {name : 'バスターナックル',power : 2800}
-            },
-            skill : {
-                type : 'quickCharge',
-                battery : 3
-            }
-        };
-        testData['test002@gmail.com'] = {
-            name : 'ランドーザ',
-            pictName : 'Landozer.PNG',
-            hp : 4700,
-            defense : 0,
-            speed : 150,
-            active : 0,
-            battery : 5,
-            skillPoint : 1,
-            overHeatFlag : false,
-            weapons : {
-                1 : {name:'ブレイクパンチ',power:1200},
-                2 : {name:'ブレイクパンチ',power:1700},
-                3 : {name:'ブレイクパンチ',power:2300},
-                4 : {name:'ブレイクパンチ',power:2900},
-                5 : {name:'ブレイクパンチ',power:3800}
-            }
-        };
+        testData['test001@gmail.com'] = battleUnitData.get('granBraverQuickCharge');
+        testData['test001@gmail.com'].battery = 2;
+        testData['test002@gmail.com'] = battleUnitData.get('landozer');
 
         var Battle = battle({
             statusArray : testData
@@ -112,56 +39,17 @@ describe('Battleクラス パイロットスキル', function() {
 
     it('HP回復スキルで最大HPの50%分回復する',function(){
         var testData = {};
-        testData['test001@gmail.com'] = {
-            name : 'グランブレイバー',
-            pictName : 'GranBraver.PNG',
-            hp : 3000,
-            defense : 0,
-            speed : 110,
-            active : 0,
-            battery : 5,
-            skillPoint : 1,
-            overHeatFlag : false,
-            weapons : {
-                1 : {name : 'バスターナックル',power : 2200},
-                2 : {name : 'バスターナックル',power : 2200},
-                3 : {name : 'バスターナックル',power : 2200},
-                4 : {name : 'バスターナックル',power : 2200},
-                5 : {name : 'バスターナックル',power : 2200}
-            }
-        };
-        testData['test002@gmail.com'] = {
-            name : 'ランドーザ',
-            pictName : 'Landozer.PNG',
-            hp : 3500,
-            defense : 0,
-            speed : 100,
-            active : 0,
-            battery : 5,
-            skillPoint : 1,
-            overHeatFlag : false,
-            weapons : {
-                1 : {name:'ブレイクパンチ',power:1700},
-                2 : {name:'ブレイクパンチ',power:1700},
-                3 : {name:'ブレイクパンチ',power:1700},
-                4 : {name:'ブレイクパンチ',power:1700},
-                5 : {name:'ブレイクパンチ',power:1700}
-            },
-            skill : {
-                type : 'recoverHp',
-                value : 0.5
-            }
-        };
-
+        testData['test001@gmail.com'] = battleUnitData.get('granBraver');
+        testData['test002@gmail.com'] = battleUnitData.get('landozerRecoverHp');
         var Battle = battle({
             statusArray : testData
         });
 
-        //グランブレイバーが2200ダメージを与える
+        //グランブレイバーが2800ダメージを与える
         Battle.doWaitPhase();
         Battle.getStatusArray();
         Battle.atack({
-            atackBattery : 2,
+            atackBattery : 5,
             defenthBattery : 1
         });
 
@@ -171,58 +59,20 @@ describe('Battleクラス パイロットスキル', function() {
         Battle.getStatusArray();
 
         var statusArray = Battle.getStatusArray();
-        assert.equal(statusArray['test002@gmail.com'].hp,3050,'test002@gmail.comのHPが1750回復する。');
+        assert.equal(statusArray['test002@gmail.com'].hp,2450,'test002@gmail.comのHPが1750回復する。');
         assert.equal(statusArray['test002@gmail.com'].skillPoint,0,'test002@gmail.comのスキルポイントが-1される。');
     });
 
     it('HP回復スキルでは最大HP以上は回復しない',function(){
         var testData = {};
-        testData['test001@gmail.com'] = {
-            name : 'グランブレイバー',
-            pictName : 'GranBraver.PNG',
-            hp : 3000,
-            defense : 0,
-            speed : 110,
-            active : 0,
-            battery : 5,
-            skillPoint : 1,
-            overHeatFlag : false,
-            weapons : {
-                1 : {name : 'バスターナックル',power : 1000},
-                2 : {name : 'バスターナックル',power : 1000},
-                3 : {name : 'バスターナックル',power : 1000},
-                4 : {name : 'バスターナックル',power : 1000},
-                5 : {name : 'バスターナックル',power : 1000}
-            }
-        };
-        testData['test002@gmail.com'] = {
-            name : 'ランドーザ',
-            pictName : 'Landozer.PNG',
-            hp : 3500,
-            defense : 0,
-            speed : 100,
-            active : 0,
-            battery : 5,
-            skillPoint : 1,
-            overHeatFlag : false,
-            weapons : {
-                1 : {name:'ブレイクパンチ',power:1700},
-                2 : {name:'ブレイクパンチ',power:1700},
-                3 : {name:'ブレイクパンチ',power:1700},
-                4 : {name:'ブレイクパンチ',power:1700},
-                5 : {name:'ブレイクパンチ',power:1700}
-            },
-            skill : {
-                type : 'recoverHp',
-                value : 0.5
-            }
-        };
+        testData['test001@gmail.com'] = battleUnitData.get('granBraver');
+        testData['test002@gmail.com'] = battleUnitData.get('landozerRecoverHp');
 
         var Battle = battle({
             statusArray : testData
         });
 
-        //グランブレイバーが1000ダメージを与える
+        //グランブレイバーが1100ダメージを与える
         Battle.doWaitPhase();
         Battle.getStatusArray();
         Battle.atack({
@@ -242,45 +92,8 @@ describe('Battleクラス パイロットスキル', function() {
 
     it('スタンスキルを使い、攻撃ヒット時にアクティブゲージが-5000になる',function(){
         var testData = {};
-        testData['test001@gmail.com'] = {
-            name : 'グランブレイバー',
-            pictName : 'GranBraver.PNG',
-            hp : 3000,
-            defense : 0,
-            speed : 1000,
-            active : 0,
-            battery : 5,
-            skillPoint : 1,
-            overHeatFlag : false,
-            weapons : {
-                1 : {name : 'バスターナックル',power : 2200},
-                2 : {name : 'バスターナックル',power : 2200},
-                3 : {name : 'バスターナックル',power : 2200},
-                4 : {name : 'バスターナックル',power : 2200},
-                5 : {name : 'バスターナックル',power : 2200}
-            },
-            skill : {
-                type : 'stunAttack'
-            }
-        };
-        testData['test002@gmail.com'] = {
-            name : 'ランドーザ',
-            pictName : 'Landozer.PNG',
-            hp : 3500,
-            defense : 0,
-            speed : 100,
-            active : 0,
-            battery : 5,
-            skillPoint : 1,
-            overHeatFlag : false,
-            weapons : {
-                1 : {name:'ブレイクパンチ',power:1700},
-                2 : {name:'ブレイクパンチ',power:1700},
-                3 : {name:'ブレイクパンチ',power:1700},
-                4 : {name:'ブレイクパンチ',power:1700},
-                5 : {name:'ブレイクパンチ',power:1700}
-            }
-        };
+        testData['test001@gmail.com'] = battleUnitData.get('granBraverStunAttack');
+        testData['test002@gmail.com'] = battleUnitData.get('landozer');
 
         var Battle = battle({
             statusArray : testData
@@ -295,52 +108,15 @@ describe('Battleクラス パイロットスキル', function() {
         });
 
         var statusArray = Battle.getStatusArray();
-        assert.equal(statusArray['test002@gmail.com'].hp,1300,'test002@gmail.comが2200ダメージを受ける');
+        assert.equal(statusArray['test002@gmail.com'].hp,3600,'test002@gmail.comが1100ダメージを受ける');
         assert.equal(statusArray['test002@gmail.com'].active,-2500,'test002@gmail.comのアクティブゲージが-2500になる');
         assert.equal(statusArray['test001@gmail.com'].skillPoint,0,'test001@gmail.comのスキルポイントが-1される。');
     });
 
     it('防御されたのでスタンスキルは無効',function(){
         var testData = {};
-        testData['test001@gmail.com'] = {
-            name : 'グランブレイバー',
-            pictName : 'GranBraver.PNG',
-            hp : 3000,
-            defense : 0,
-            speed : 1000,
-            active : 0,
-            battery : 5,
-            skillPoint : 1,
-            overHeatFlag : false,
-            weapons : {
-                1 : {name : 'バスターナックル',power : 2200},
-                2 : {name : 'バスターナックル',power : 2200},
-                3 : {name : 'バスターナックル',power : 2200},
-                4 : {name : 'バスターナックル',power : 2200},
-                5 : {name : 'バスターナックル',power : 2200}
-            },
-            skill : {
-                type : 'stunAttack'
-            }
-        };
-        testData['test002@gmail.com'] = {
-            name : 'ランドーザ',
-            pictName : 'Landozer.PNG',
-            hp : 3500,
-            defense : 0,
-            speed : 100,
-            active : 0,
-            battery : 5,
-            skillPoint : 1,
-            overHeatFlag : false,
-            weapons : {
-                1 : {name:'ブレイクパンチ',power:1700},
-                2 : {name:'ブレイクパンチ',power:1700},
-                3 : {name:'ブレイクパンチ',power:1700},
-                4 : {name:'ブレイクパンチ',power:1700},
-                5 : {name:'ブレイクパンチ',power:1700}
-            }
-        };
+        testData['test001@gmail.com'] = battleUnitData.get('granBraverStunAttack');
+        testData['test002@gmail.com'] = battleUnitData.get('landozer');
 
         var Battle = battle({
             statusArray : testData
@@ -355,52 +131,15 @@ describe('Battleクラス パイロットスキル', function() {
         });
 
         var statusArray = Battle.getStatusArray();
-        assert.equal(statusArray['test002@gmail.com'].hp,2400,'test002@gmail.comが1100ダメージを受ける');
-        assert.equal(statusArray['test002@gmail.com'].active,500,'test002@gmail.comのアクティブゲージが減らない');
+        assert.equal(statusArray['test002@gmail.com'].hp,4300,'test002@gmail.comが400ダメージを受ける');
+        assert.equal(statusArray['test002@gmail.com'].active,3300,'test002@gmail.comのアクティブゲージが減らない');
         assert.equal(statusArray['test001@gmail.com'].skillPoint,0,'test001@gmail.comのスキルポイントが-1される。');
     });
 
     it('回避されたのでスタンスキルは無効',function(){
         var testData = {};
-        testData['test001@gmail.com'] = {
-            name : 'グランブレイバー',
-            pictName : 'GranBraver.PNG',
-            hp : 3000,
-            defense : 0,
-            speed : 1000,
-            active : 0,
-            battery : 5,
-            skillPoint : 1,
-            overHeatFlag : false,
-            weapons : {
-                1 : {name : 'バスターナックル',power : 2200},
-                2 : {name : 'バスターナックル',power : 2200},
-                3 : {name : 'バスターナックル',power : 2200},
-                4 : {name : 'バスターナックル',power : 2200},
-                5 : {name : 'バスターナックル',power : 2200}
-            },
-            skill : {
-                type : 'stunAttack'
-            }
-        };
-        testData['test002@gmail.com'] = {
-            name : 'ランドーザ',
-            pictName : 'Landozer.PNG',
-            hp : 3500,
-            defense : 0,
-            speed : 100,
-            active : 0,
-            battery : 5,
-            skillPoint : 1,
-            overHeatFlag : false,
-            weapons : {
-                1 : {name:'ブレイクパンチ',power:1700},
-                2 : {name:'ブレイクパンチ',power:1700},
-                3 : {name:'ブレイクパンチ',power:1700},
-                4 : {name:'ブレイクパンチ',power:1700},
-                5 : {name:'ブレイクパンチ',power:1700}
-            }
-        };
+        testData['test001@gmail.com'] = battleUnitData.get('granBraverStunAttack');
+        testData['test002@gmail.com'] = battleUnitData.get('landozer');
 
         var Battle = battle({
             statusArray : testData
@@ -415,52 +154,16 @@ describe('Battleクラス パイロットスキル', function() {
         });
 
         var statusArray = Battle.getStatusArray();
-        assert.equal(statusArray['test002@gmail.com'].hp,3500,'test002@gmail.comがダメージを受けない');
-        assert.equal(statusArray['test002@gmail.com'].active,500,'test002@gmail.comのアクティブゲージが減らない');
+        assert.equal(statusArray['test002@gmail.com'].hp,4700,'test002@gmail.comがダメージを受けない');
+        assert.equal(statusArray['test002@gmail.com'].active,3300,'test002@gmail.comのアクティブゲージが減らない');
         assert.equal(statusArray['test001@gmail.com'].skillPoint,0,'test001@gmail.comのスキルポイントが-1される。');
     });
 
     it('2回目攻撃以降はスタン攻撃スキルは無効(1回目に攻撃ミス)',function(){
         var testData = {};
-        testData['test001@gmail.com'] = {
-            name : 'グランブレイバー',
-            pictName : 'GranBraver.PNG',
-            hp : 3000,
-            defense : 0,
-            speed : 1000,
-            active : 0,
-            battery : 5,
-            skillPoint : 1,
-            overHeatFlag : false,
-            weapons : {
-                1 : {name : 'バスターナックル',power : 2200},
-                2 : {name : 'バスターナックル',power : 2200},
-                3 : {name : 'バスターナックル',power : 2200},
-                4 : {name : 'バスターナックル',power : 2200},
-                5 : {name : 'バスターナックル',power : 2200}
-            },
-            skill : {
-                type : 'stunAttack'
-            }
-        };
-        testData['test002@gmail.com'] = {
-            name : 'ランドーザ',
-            pictName : 'Landozer.PNG',
-            hp : 3500,
-            defense : 0,
-            speed : 100,
-            active : 0,
-            battery : 5,
-            skillPoint : 1,
-            overHeatFlag : false,
-            weapons : {
-                1 : {name:'ブレイクパンチ',power:1700},
-                2 : {name:'ブレイクパンチ',power:1700},
-                3 : {name:'ブレイクパンチ',power:1700},
-                4 : {name:'ブレイクパンチ',power:1700},
-                5 : {name:'ブレイクパンチ',power:1700}
-            }
-        };
+        testData['test001@gmail.com'] = battleUnitData.get('granBraverStunAttack');
+        testData['test001@gmail.com'].speed = 1000;
+        testData['test002@gmail.com'] = battleUnitData.get('landozer');
 
         var Battle = battle({
             statusArray : testData
@@ -482,50 +185,14 @@ describe('Battleクラス パイロットスキル', function() {
         });
 
         var statusArray = Battle.getStatusArray();
-        assert.equal(statusArray['test002@gmail.com'].active,1000,'test002@gmail.comのアクティブゲージが減らない');
+        assert.equal(statusArray['test002@gmail.com'].active,1500,'test002@gmail.comのアクティブゲージが減らない');
     });
 
     it('2回目攻撃以降はスタン攻撃スキルは無効(1回目に攻撃ヒット)',function(){
         var testData = {};
-        testData['test001@gmail.com'] = {
-            name : 'グランブレイバー',
-            pictName : 'GranBraver.PNG',
-            hp : 3000,
-            defense : 0,
-            speed : 1000,
-            active : 0,
-            battery : 5,
-            skillPoint : 1,
-            overHeatFlag : false,
-            weapons : {
-                1 : {name : 'バスターナックル',power : 2200},
-                2 : {name : 'バスターナックル',power : 2200},
-                3 : {name : 'バスターナックル',power : 2200},
-                4 : {name : 'バスターナックル',power : 2200},
-                5 : {name : 'バスターナックル',power : 2200}
-            },
-            skill : {
-                type : 'stunAttack'
-            }
-        };
-        testData['test002@gmail.com'] = {
-            name : 'ランドーザ',
-            pictName : 'Landozer.PNG',
-            hp : 3500,
-            defense : 0,
-            speed : 100,
-            active : 0,
-            battery : 5,
-            skillPoint : 1,
-            overHeatFlag : false,
-            weapons : {
-                1 : {name:'ブレイクパンチ',power:1700},
-                2 : {name:'ブレイクパンチ',power:1700},
-                3 : {name:'ブレイクパンチ',power:1700},
-                4 : {name:'ブレイクパンチ',power:1700},
-                5 : {name:'ブレイクパンチ',power:1700}
-            }
-        };
+        testData['test001@gmail.com'] = battleUnitData.get('granBraverStunAttack');
+        testData['test001@gmail.com'].speed = 1000;
+        testData['test002@gmail.com'] = battleUnitData.get('landozer');
 
         var Battle = battle({
             statusArray : testData
@@ -547,51 +214,13 @@ describe('Battleクラス パイロットスキル', function() {
         });
 
         var statusArray = Battle.getStatusArray();
-        assert.equal(statusArray['test002@gmail.com'].active,-2000,'test002@gmail.comのアクティブゲージが減らない');
+        assert.equal(statusArray['test002@gmail.com'].active,-1750,'test002@gmail.comのアクティブゲージが減らない');
     });
 
     it('ガードブレイクスキルによりガードが無効になり追加ダメージが入る',function(){
         var testData = {};
-        testData['test001@gmail.com'] = {
-            name : 'グランブレイバー',
-            pictName : 'GranBraver.PNG',
-            hp : 3000,
-            defense : 0,
-            speed : 1000,
-            active : 0,
-            battery : 5,
-            skillPoint : 1,
-            overHeatFlag : false,
-            weapons : {
-                1 : {name : 'バスターナックル',power : 2200},
-                2 : {name : 'バスターナックル',power : 2200},
-                3 : {name : 'バスターナックル',power : 2200},
-                4 : {name : 'バスターナックル',power : 2200},
-                5 : {name : 'バスターナックル',power : 2200}
-            },
-            skill : {
-                type : 'guardBreak',
-                value : 300
-            }
-        };
-        testData['test002@gmail.com'] = {
-            name : 'ランドーザ',
-            pictName : 'Landozer.PNG',
-            hp : 3500,
-            defense : 0,
-            speed : 100,
-            active : 0,
-            battery : 5,
-            skillPoint : 1,
-            overHeatFlag : false,
-            weapons : {
-                1 : {name:'ブレイクパンチ',power:1700},
-                2 : {name:'ブレイクパンチ',power:1700},
-                3 : {name:'ブレイクパンチ',power:1700},
-                4 : {name:'ブレイクパンチ',power:1700},
-                5 : {name:'ブレイクパンチ',power:1700}
-            }
-        };
+        testData['test001@gmail.com'] = battleUnitData.get('granBraverGuardBreak');
+        testData['test002@gmail.com'] = battleUnitData.get('landozer');
 
         var Battle = battle({
             statusArray : testData
@@ -606,53 +235,15 @@ describe('Battleクラス パイロットスキル', function() {
         });
 
         var statusArray = Battle.getStatusArray();
-        assert.equal(statusArray['test002@gmail.com'].hp,1000,'test002@gmail.comが2200+300=2500ダメージを受ける');
+        assert.equal(statusArray['test002@gmail.com'].hp,3600,'test002@gmail.comが800+300=1100ダメージを受ける');
         assert.equal(statusArray['test001@gmail.com'].skillPoint,0,'test001@gmail.comのスキルポイントが-1される。');
         assert.equal(attackResult.hit,1,'通常ヒット判定になる');
     });
 
     it('ガードブレイクスキルにより追加ダメージが入る',function(){
         var testData = {};
-        testData['test001@gmail.com'] = {
-            name : 'グランブレイバー',
-            pictName : 'GranBraver.PNG',
-            hp : 3000,
-            defense : 0,
-            speed : 1000,
-            active : 0,
-            battery : 5,
-            skillPoint : 1,
-            overHeatFlag : false,
-            weapons : {
-                1 : {name : 'バスターナックル',power : 2200},
-                2 : {name : 'バスターナックル',power : 2200},
-                3 : {name : 'バスターナックル',power : 2200},
-                4 : {name : 'バスターナックル',power : 2200},
-                5 : {name : 'バスターナックル',power : 2200}
-            },
-            skill : {
-                type : 'guardBreak',
-                value : 300
-            }
-        };
-        testData['test002@gmail.com'] = {
-            name : 'ランドーザ',
-            pictName : 'Landozer.PNG',
-            hp : 3500,
-            defense : 0,
-            speed : 100,
-            active : 0,
-            battery : 5,
-            skillPoint : 1,
-            overHeatFlag : false,
-            weapons : {
-                1 : {name:'ブレイクパンチ',power:1700},
-                2 : {name:'ブレイクパンチ',power:1700},
-                3 : {name:'ブレイクパンチ',power:1700},
-                4 : {name:'ブレイクパンチ',power:1700},
-                5 : {name:'ブレイクパンチ',power:1700}
-            }
-        };
+        testData['test001@gmail.com'] = battleUnitData.get('granBraverGuardBreak');
+        testData['test002@gmail.com'] = battleUnitData.get('landozer');
 
         var Battle = battle({
             statusArray : testData
@@ -667,58 +258,21 @@ describe('Battleクラス パイロットスキル', function() {
         });
 
         var statusArray = Battle.getStatusArray();
-        assert.equal(statusArray['test002@gmail.com'].hp,1000,'test002@gmail.comが2200+300=2500ダメージを受ける');
+        assert.equal(statusArray['test002@gmail.com'].hp,2800,'test002@gmail.comが1600+300=1900ダメージを受ける');
     });
 
     it('2回目以降はガードブレイクスキルが無効(1回目は攻撃ヒット)',function(){
         var testData = {};
-        testData['test001@gmail.com'] = {
-            name : 'グランブレイバー',
-            pictName : 'GranBraver.PNG',
-            hp : 3000,
-            defense : 0,
-            speed : 1000,
-            active : 0,
-            battery : 5,
-            skillPoint : 1,
-            overHeatFlag : false,
-            weapons : {
-                1 : {name : 'バスターナックル',power : 2200},
-                2 : {name : 'バスターナックル',power : 2200},
-                3 : {name : 'バスターナックル',power : 2200},
-                4 : {name : 'バスターナックル',power : 2200},
-                5 : {name : 'バスターナックル',power : 2200}
-            },
-            skill : {
-                type : 'guardBreak',
-                value : 0
-            }
-        };
-        testData['test002@gmail.com'] = {
-            name : 'ランドーザ',
-            pictName : 'Landozer.PNG',
-            hp : 3500,
-            defense : 0,
-            speed : 100,
-            active : 0,
-            battery : 5,
-            skillPoint : 1,
-            overHeatFlag : false,
-            weapons : {
-                1 : {name:'ブレイクパンチ',power:1700},
-                2 : {name:'ブレイクパンチ',power:1700},
-                3 : {name:'ブレイクパンチ',power:1700},
-                4 : {name:'ブレイクパンチ',power:1700},
-                5 : {name:'ブレイクパンチ',power:1700}
-            }
-        };
+        testData['test001@gmail.com'] = battleUnitData.get('granBraverGuardBreak');
+        testData['test001@gmail.com'].speed = 1000;
+        testData['test002@gmail.com'] = battleUnitData.get('landozer');
 
         var Battle = battle({
             statusArray : testData
         });
 
         //グランブレイバーがガードブレイクスキルを発動
-        //ランドーザが2200ダメージを受ける
+        //ランドーザが1100ダメージを受ける
         Battle.doWaitPhase();
         Battle.doPilotSkill();
         Battle.atack({
@@ -734,51 +288,14 @@ describe('Battleクラス パイロットスキル', function() {
         });
 
         var statusArray = Battle.getStatusArray();
-        assert.equal(statusArray['test002@gmail.com'].hp,200,'test002@gmail.comが1100ダメージを受ける');
+        assert.equal(statusArray['test002@gmail.com'].hp,3200,'test002@gmail.comが400ダメージを受ける');
     });
 
     it('2回目以降はガードブレイクスキルが無効(1回目は攻撃ミス)',function(){
         var testData = {};
-        testData['test001@gmail.com'] = {
-            name : 'グランブレイバー',
-            pictName : 'GranBraver.PNG',
-            hp : 3000,
-            defense : 0,
-            speed : 1000,
-            active : 0,
-            battery : 5,
-            skillPoint : 1,
-            overHeatFlag : false,
-            weapons : {
-                1 : {name : 'バスターナックル',power : 2200},
-                2 : {name : 'バスターナックル',power : 2200},
-                3 : {name : 'バスターナックル',power : 2200},
-                4 : {name : 'バスターナックル',power : 2200},
-                5 : {name : 'バスターナックル',power : 2200}
-            },
-            skill : {
-                type : 'guardBreak',
-                value : 0
-            }
-        };
-        testData['test002@gmail.com'] = {
-            name : 'ランドーザ',
-            pictName : 'Landozer.PNG',
-            hp : 3500,
-            defense : 0,
-            speed : 100,
-            active : 0,
-            battery : 5,
-            skillPoint : 1,
-            overHeatFlag : false,
-            weapons : {
-                1 : {name:'ブレイクパンチ',power:1700},
-                2 : {name:'ブレイクパンチ',power:1700},
-                3 : {name:'ブレイクパンチ',power:1700},
-                4 : {name:'ブレイクパンチ',power:1700},
-                5 : {name:'ブレイクパンチ',power:1700}
-            }
-        };
+        testData['test001@gmail.com'] = battleUnitData.get('granBraverGuardBreak');
+        testData['test001@gmail.com'].speed = 1000;
+        testData['test002@gmail.com'] = battleUnitData.get('landozer');
 
         var Battle = battle({
             statusArray : testData
@@ -800,6 +317,6 @@ describe('Battleクラス パイロットスキル', function() {
         });
 
         var statusArray = Battle.getStatusArray();
-        assert.equal(statusArray['test002@gmail.com'].hp,2400,'test002@gmail.comが1100ダメージを受ける');
+        assert.equal(statusArray['test002@gmail.com'].hp,4300,'test002@gmail.comが400ダメージを受ける');
     });
 }); 
