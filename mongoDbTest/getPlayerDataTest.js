@@ -51,7 +51,7 @@ describe('Mongo DBからプレイヤー情報を取得する', function() {
                             power : 2800
                         }
                     },
-                    skill : {
+                    pilot : {
                         name : '恭子',
                         pict : 'kyoko.png',
                         shout : 'やぁぁぁぁて、やるぜ！！    ……なんてね。',
@@ -106,7 +106,7 @@ describe('Mongo DBからプレイヤー情報を取得する', function() {
                             power : 2800
                         }
                     },
-                    skill : {
+                    pilot : {
                         name : '恭子',
                         pict : 'kyoko.png',
                         shout : 'やぁぁぁぁて、やるぜ！！    ……なんてね。',

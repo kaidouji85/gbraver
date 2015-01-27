@@ -165,7 +165,7 @@ function mongoDao(spec, my) {
     function createStatusData(armdozer,pilot) {
         var statusData = createArmdozerData(armdozer);
         delete pilot.id;
-        statusData.skill = pilot;
+        statusData.pilot = pilot;
         return statusData;
     }
 
