@@ -23,6 +23,9 @@ function battleUnitData() {
             }
         };
 
+        unitData['granBraverSpeed1000'] = ce.clone(unitData['granBraver']);
+        unitData['granBraverSpeed1000'].speed = 1000;
+
         unitData['landozer'] = {
             name: 'ランドーザ',
             pictName: 'Landozer.PNG',
@@ -41,23 +44,8 @@ function battleUnitData() {
             }
         };
 
-        unitData['landozerDefense200'] = {
-            name: 'ランドーザ',
-            pictName: 'Landozer.PNG',
-            hp: 4700,
-            defense : 200,
-            speed: 150,
-            active: 0,
-            battery: 5,
-            overHeatFlag : false,
-            weapons: {
-                1: {name: 'ブレイクパンチ', power: 1200},
-                2: {name: 'ブレイクパンチ', power: 1700},
-                3: {name: 'ブレイクパンチ', power: 2300},
-                4: {name: 'ブレイクパンチ', power: 2900},
-                5: {name: 'ブレイクパンチ', power: 3800}
-            }
-        }
+        unitData['landozerDefense200'] = ce.clone(unitData['landozer']);
+        unitData['landozerDefense200'].defense = 200;
     })()
 
     that.get = function(unitId){
