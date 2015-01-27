@@ -256,9 +256,9 @@ function dbMock(spec,my){
             userId : userId,
             status : armdozerData
         };
-        unitData.status.skill = pilotData;
+        unitData.status.pilot = pilotData;
         delete unitData.status.armdozerId;
-        delete unitData.status.skill.id;
+        delete unitData.status.pilot.id;
         return unitData;
     }
 

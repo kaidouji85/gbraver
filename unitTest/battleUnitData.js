@@ -22,7 +22,7 @@ function battleUnitData() {
                 4: {name: 'バスターナックル', power: 2100},
                 5: {name: 'バスターナックル', power: 2800}
             },
-            skill : {
+            pilot : {
                 type : 'quickCharge',
                 battery : 3
             }
@@ -32,20 +32,20 @@ function battleUnitData() {
         unitData['granBraverSpeed1000'].speed = 1000;
 
         unitData['granBraverQuickCharge'] = ce.clone(unitData['granBraver']);
-        unitData['granBraverQuickCharge'].skill =
+        unitData['granBraverQuickCharge'].pilot =
         {
             type : 'quickCharge',
             battery : 3
         };
 
         unitData['granBraverStunAttack'] = ce.clone(unitData['granBraver']);
-        unitData['granBraverStunAttack'].skill =
+        unitData['granBraverStunAttack'].pilot =
         {
             type : 'stunAttack'
         }
 
         unitData['granBraverGuardBreak'] = ce.clone(unitData['granBraver']);
-        unitData['granBraverGuardBreak'].skill =
+        unitData['granBraverGuardBreak'].pilot =
         {
             type : 'guardBreak',
             value : 300
@@ -68,7 +68,7 @@ function battleUnitData() {
                 4: {name: 'ブレイクパンチ', power: 2900},
                 5: {name: 'ブレイクパンチ', power: 3800}
             },
-            skill : {
+            pilot : {
             type : 'quickCharge',
                 battery : 3
         }
@@ -79,7 +79,7 @@ function battleUnitData() {
 
         unitData['landozerRecoverHp'] = ce.clone(unitData['landozer']);
         unitData['landozerRecoverHp'].hp = 3500;
-        unitData['landozerRecoverHp'].skill =
+        unitData['landozerRecoverHp'].pilot =
         {
             type : 'recoverHp',
             value : 0.5
@@ -102,7 +102,7 @@ function battleUnitData() {
                 4 : {name : 'バスターナックル',power : 2100},
                 5 : {name : 'バスターナックル',power : 2800}
             },
-            skill : {
+            pilot : {
                 type : 'quickCharge',
                 battery : 3
             }

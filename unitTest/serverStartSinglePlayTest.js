@@ -86,7 +86,7 @@ describe('一人用モード開始テスト', function () {
                                 power: 2800
                             }
                         },
-                        skill: {
+                        pilot: {
                             name: '恭子',
                             pict: 'kyoko.png',
                             shout: 'やぁぁぁぁて、やるぜ！！    ……なんてね。',
@@ -129,7 +129,7 @@ describe('一人用モード開始テスト', function () {
                                 power: 3800
                             }
                         },
-                        skill: {
+                        pilot: {
                             name: '恭子',
                             pict: 'kyoko.png',
                             shout: 'やぁぁぁぁて、やるぜ！！    ……なんてね。',

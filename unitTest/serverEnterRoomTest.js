@@ -109,7 +109,7 @@ describe('serverクラスのテスト', function() {
                                     power : 2800
                                 }
                             },
-                            skill : {
+                            pilot : {
                                 name : '恭子',
                                 pict : 'kyoko.png',
                                 shout : 'やぁぁぁぁて、やるぜ！！    ……なんてね。',
@@ -152,7 +152,7 @@ describe('serverクラスのテスト', function() {
                                     power : 3800
                                 }
                             },
-                            skill : {
+                            pilot : {
                                 name : '茜',
                                 pict : 'akane.png',
                                 shout : 'まだまだ、勝負はこれからよ。',

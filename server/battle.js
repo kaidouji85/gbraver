@@ -180,15 +180,15 @@ var battle = function(spec,my){
      * パイロットスキル発動
      */
     that.doPilotSkill = function() {
-        var type = statusArray[atackUserId].skill.type;
+        var type = statusArray[atackUserId].pilot.type;
         statusArray[atackUserId].skillPoint -= 1;
         if(type === 'quickCharge') {
-            statusArray[atackUserId].battery += statusArray[atackUserId].skill.battery;
+            statusArray[atackUserId].battery += statusArray[atackUserId].pilot.battery;
             if(statusArray[atackUserId].battery > that.MAX_BATTERY) {
                 statusArray[atackUserId].battery = that.MAX_BATTERY;
             }
         } else if(type === 'recoverHp') {
-            statusArray[atackUserId].hp += maxHpArray[atackUserId] * statusArray[atackUserId].skill.value;
+            statusArray[atackUserId].hp += maxHpArray[atackUserId] * statusArray[atackUserId].pilot.value;
             if(statusArray[atackUserId].hp > maxHpArray[atackUserId]){
                 statusArray[atackUserId].hp = maxHpArray[atackUserId];
             }
@@ -196,7 +196,7 @@ var battle = function(spec,my){
             stunAttackArray[atackUserId] = true;
         } else if(type === 'guardBreak') {
             guardBreakArray[atackUserId] = true;
-            plusPowerArray[atackUserId] = statusArray[atackUserId].skill.value;
+            plusPowerArray[atackUserId] = statusArray[atackUserId].pilot.value;
         }
     }
     
