@@ -1,7 +1,7 @@
 describe('Battleクラス オブジェクトコピー', function() {
     var assert = require('chai').assert;
-    var battle = require('../server/battle.js');
-    var battleUnitData = require('./battleUnitData.js')();
+    var battle = require('../../server/battle.js');
+    var battleUnitData = require('./../testData/battleUnitData.js')();
 
     it('オブジェクトがコピーされている',function(){
         var testData = {};

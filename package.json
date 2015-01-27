@@ -9,7 +9,7 @@
   "private": true,
   "scripts": {
     "start": "./shell/startup.sh",
-    "test": "mocha unitTest/ -R spec"
+    "test": "mocha unitTest/** -R spec"
   },
   "dependencies": {
     "express": "4.8.0",

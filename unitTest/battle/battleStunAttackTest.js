@@ -1,7 +1,7 @@
 describe('Battleクラス パイロットスキル スタン攻撃', function() {
     var assert = require('chai').assert;
-    var battle = require('../server/battle.js');
-    var battleUnitData = require('./battleUnitData.js')();
+    var battle = require('../../server/battle.js');
+    var battleUnitData = require('./../testData/battleUnitData.js')();
 
     it('スタンスキルを使い、攻撃ヒット時にアクティブゲージが-5000になる',function(){
         var testData = {};

@@ -3,14 +3,14 @@ describe('serverクラスのテスト', function() {
     var SERVER_PORT = process.env.PORT || 3000;
     var SERVER_URL = 'http://localhost:'+SERVER_PORT;
 
-    var testEnemyRoutineDefine = require('./testEnemyRoutineDefine.js');
+    var testEnemyRoutineDefine = require('./../testData/testEnemyRoutineDefine.js');
     var assert = require('chai').assert;
     var io = require('socket.io-client');
     var http = require('http');
-    var dbMock = require('./dbMock.js')();
+    var dbMock = require('./../testData/dbMock.js')();
 
     var app;
-    var server = require('../server/server.js');
+    var server = require('../../server/server.js');
     var testServer;
     var option = {
         'forceNew' : true

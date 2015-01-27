@@ -5,9 +5,9 @@ describe('serverクラスのテスト', function() {
 
     var assert = require('chai').assert;
     var io = require('socket.io-client');
-    var server = require('../server/server.js');
-    var testCompleter = require('./testCompleter.js');
-    var dbMock = require('./dbMock.js')();
+    var server = require('../../server/server.js');
+    var testCompleter = require('./../testData/testCompleter.js');
+    var dbMock = require('./../testData/dbMock.js')();
 
     var app;
     var option;

@@ -1,7 +1,7 @@
 describe('Battleクラス 攻撃', function() {
     var assert = require('chai').assert;
-    var battle = require('../server/battle.js');
-    var battleUnitData = require('./battleUnitData.js')();
+    var battle = require('../../server/battle.js');
+    var battleUnitData = require('./../testData/battleUnitData.js')();
 
     it('攻撃側のバッテリーが多いので攻撃がヒットする', function () {
         var testData = {};

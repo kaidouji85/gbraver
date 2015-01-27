@@ -1,7 +1,7 @@
 describe('Battleクラス パイロットスキル クイックチャージ', function() {
     var assert = require('chai').assert;
-    var battle = require('../server/battle.js');
-    var battleUnitData = require('./battleUnitData.js')();
+    var battle = require('../../server/battle.js');
+    var battleUnitData = require('./../testData/battleUnitData.js')();
 
     it('クイックチャージでバッテリーを回復する',function(){
         var testData = {};

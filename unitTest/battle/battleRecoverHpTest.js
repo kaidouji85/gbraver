@@ -1,7 +1,7 @@
 describe('Battleクラス パイロットスキル HP回復', function() {
     var assert = require('chai').assert;
-    var battle = require('../server/battle.js');
-    var battleUnitData = require('./battleUnitData.js')();
+    var battle = require('../../server/battle.js');
+    var battleUnitData = require('./../testData/battleUnitData.js')();
 
     it('HP回復スキルで最大HPの50%分回復する',function(){
         var testData = {};

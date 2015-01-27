@@ -1,7 +1,7 @@
 describe('Battleクラス getStatusArray()', function() {
     var assert = require('chai').assert;
-    var battle = require('../server/battle.js');
-    var battleUnitData = require('./battleUnitData.js')();
+    var battle = require('../../server/battle.js');
+    var battleUnitData = require('./../testData/battleUnitData.js')();
 
     it('ユーザIDを指定して、任意のキャラクターステータスを取り出す',function(){
         var testData = {};
