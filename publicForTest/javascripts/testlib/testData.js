@@ -204,9 +204,9 @@ function testData(spec,my){
             userId : userId,
             status : armdozerData
         };
-        playerData.status.skill = pilotData;
+        playerData.status.pilot = pilotData;
         delete playerData.status.armdozerId;
-        delete playerData.status.skill.id;
+        delete playerData.status.pilot.id;
         return playerData;
     }
 

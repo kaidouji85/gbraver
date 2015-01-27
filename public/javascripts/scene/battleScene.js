@@ -135,7 +135,7 @@ function battleScene(spec,my){
             that.pilotSpriteArray[attackUserId].visible = true;
             that.mesWindow.setVisible(true);
             //that.mesWindow.setText(that.statusArray[attackUserId].skill.shout);
-            that.mesWindow.setText(getSkillDescription(that.statusArray[attackUserId].skill));
+            that.mesWindow.setText(getSkillDescription(that.statusArray[attackUserId].pilot));
         }).delay(120).then(function(){
             that.pilotSpriteArray[attackUserId].visible = false;
             that.mesWindow.setVisible(true);
