@@ -23,6 +23,7 @@ describe('Mongo DBからキャラクター情報を取得する', function() {
                 pictName : 'GranBraver.PNG',
                 hp : 3200,
                 speed : 230,
+                defense : 150,
                 weapons : {
                     1 : {
                         name : 'バスターナックル',

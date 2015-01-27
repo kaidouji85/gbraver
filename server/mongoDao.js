@@ -166,6 +166,12 @@ function mongoDao(spec, my) {
         var statusData = createArmdozerData(armdozer);
         delete pilot.id;
         statusData.pilot = pilot;
+        statusData.hp += pilot.hp;
+        statusData.speed += pilot.speed;
+        statusData.defense += pilot.defense;
+        for(var i=1; i<=5; i++){
+            statusData.weapons[i].power += pilot.power;
+        }
         return statusData;
     }
 

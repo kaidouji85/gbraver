@@ -24,6 +24,7 @@ var granBraver = {
     pictName : 'GranBraver.PNG',
     hp : 3200,
     speed : 230,
+    defense : 150,
     weapons : {
         1 : {
             name : 'バスターナックル',
@@ -54,6 +55,7 @@ var landozer = {
     pictName : 'Landozer.PNG',
     hp : 4700,
     speed : 150,
+    defense : 200,
     weapons : {
         1 : {
             name : 'ブレイクパンチ',
@@ -86,6 +88,7 @@ var zakoDozer = {
     pictName : 'Landozer.PNG',
     hp : 800,
     speed : 80,
+    defense : 200,
     weapons : {
         1 : {
             name : 'バスターナックル',
@@ -119,7 +122,11 @@ var kyoko = {
     pict : 'kyoko.png',
     shout : 'やぁぁぁぁて、やるぜ！！    ……なんてね。',
     type : 'quickCharge',
-    battery : 3
+    battery : 3,
+    hp : 100,
+    power : 100,
+    defense : -50,
+    speed : 100
 };
 
 var akane = {
@@ -128,7 +135,11 @@ var akane = {
     pict: 'akane.png',
     shout: 'まだまだ、勝負はこれからよ。',
     type : 'recoverHp',
-    value : 0.5
+    value : 0.5,
+    hp : 0,
+    power : 0,
+    defense : 0,
+    speed : 0
 };
 
 var iori = {
@@ -137,7 +148,11 @@ var iori = {
     pict : 'iori.png',
     shout : 'この一撃に、全てを掛ける！！',
     type : 'quickCharge',
-    battery : 3
+    battery : 3,
+    hp : 0,
+    power : 0,
+    defense : 0,
+    speed : 0
 };
 
 /**

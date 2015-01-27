@@ -91,7 +91,11 @@ describe('一人用モード開始テスト', function () {
                             pict: 'kyoko.png',
                             shout: 'やぁぁぁぁて、やるぜ！！    ……なんてね。',
                             type: 'quickCharge',
-                            battery: 3
+                            battery: 3,
+                            hp : 0,
+                            power : 0,
+                            defense : 0,
+                            speed : 0
                         }
                     }
                 },
@@ -134,7 +138,11 @@ describe('一人用モード開始テスト', function () {
                             pict: 'kyoko.png',
                             shout: 'やぁぁぁぁて、やるぜ！！    ……なんてね。',
                             type: 'quickCharge',
-                            battery: 3
+                            battery: 3,
+                            hp : 0,
+                            power : 0,
+                            defense : 0,
+                            speed : 0
                         }
                     }
                 }

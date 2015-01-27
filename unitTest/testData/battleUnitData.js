@@ -24,7 +24,11 @@ function battleUnitData() {
             },
             pilot : {
                 type : 'quickCharge',
-                battery : 3
+                battery : 3,
+                hp : 0,
+                power : 0,
+                defense : 0,
+                speed : 0
             }
         };
 
@@ -35,20 +39,32 @@ function battleUnitData() {
         unitData['granBraverQuickCharge'].pilot =
         {
             type : 'quickCharge',
-            battery : 3
+            battery : 3,
+            hp : 0,
+            power : 0,
+            defense : 0,
+            speed : 0
         };
 
         unitData['granBraverStunAttack'] = ce.clone(unitData['granBraver']);
         unitData['granBraverStunAttack'].pilot =
         {
-            type : 'stunAttack'
+            type : 'stunAttack',
+            hp : 0,
+            power : 0,
+            defense : 0,
+            speed : 0
         }
 
         unitData['granBraverGuardBreak'] = ce.clone(unitData['granBraver']);
         unitData['granBraverGuardBreak'].pilot =
         {
             type : 'guardBreak',
-            value : 300
+            value : 300,
+            hp : 0,
+            power : 0,
+            defense : 0,
+            speed : 0
         }
 
         unitData['landozer'] = {
@@ -69,9 +85,13 @@ function battleUnitData() {
                 5: {name: 'ブレイクパンチ', power: 3800}
             },
             pilot : {
-            type : 'quickCharge',
-                battery : 3
-        }
+                type : 'quickCharge',
+                battery : 3,
+                hp : 0,
+                power : 0,
+                defense : 0,
+                speed : 0
+            }
         };
 
         unitData['landozerDefense200'] = ce.clone(unitData['landozer']);
@@ -82,7 +102,11 @@ function battleUnitData() {
         unitData['landozerRecoverHp'].pilot =
         {
             type : 'recoverHp',
-            value : 0.5
+            value : 0.5,
+            hp : 0,
+            power : 0,
+            defense : 0,
+            speed : 0
         };
 
         unitData['zeroBraver'] = {
@@ -104,7 +128,11 @@ function battleUnitData() {
             },
             pilot : {
                 type : 'quickCharge',
-                battery : 3
+                battery : 3,
+                hp : 0,
+                power : 0,
+                defense : 0,
+                speed : 0
             }
         };
     })()

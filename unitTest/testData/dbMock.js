@@ -157,7 +157,11 @@ function dbMock(spec,my){
             pict : 'kyoko.png',
             shout : 'やぁぁぁぁて、やるぜ！！    ……なんてね。',
             type : 'quickCharge',
-            battery : 3
+            battery : 3,
+            hp : 0,
+            power : 0,
+            defense : 0,
+            speed : 0
         },
         {
             id : 'akane',
@@ -165,7 +169,11 @@ function dbMock(spec,my){
             pict : 'akane.png',
             shout : 'まだまだ、勝負はこれからよ。',
             type : 'recoverHp',
-            value : 0.5
+            value : 0.5,
+            hp : 0,
+            power : 0,
+            defense : 0,
+            speed : 0
         },
         {
             id : 'iori',
@@ -173,7 +181,11 @@ function dbMock(spec,my){
             pict: 'iori.png',
             shout: 'この一撃に、全てを掛ける！！',
             type: 'guardBreak',
-            value: 500
+            value: 500,
+            hp : 0,
+            power : 0,
+            defense : 0,
+            speed : 0
         }
     ];
 

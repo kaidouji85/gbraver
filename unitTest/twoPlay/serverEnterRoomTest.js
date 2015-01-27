@@ -114,7 +114,11 @@ describe('serverクラスのテスト', function() {
                                 pict : 'kyoko.png',
                                 shout : 'やぁぁぁぁて、やるぜ！！    ……なんてね。',
                                 type : 'quickCharge',
-                                battery : 3
+                                battery : 3,
+                                hp : 0,
+                                power : 0,
+                                defense : 0,
+                                speed : 0
                             }
                         }
                     },
@@ -157,7 +161,11 @@ describe('serverクラスのテスト', function() {
                                 pict : 'akane.png',
                                 shout : 'まだまだ、勝負はこれからよ。',
                                 type : 'recoverHp',
-                                value : 0.5
+                                value : 0.5,
+                                hp : 0,
+                                power : 0,
+                                defense : 0,
+                                speed : 0
                             }
                         }
                     }

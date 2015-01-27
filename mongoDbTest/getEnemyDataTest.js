@@ -27,28 +27,29 @@ describe('Mongo DBからシングルブレイ用キャラクターデータを�
                 status : {
                     name : 'グランブレイバー',
                     pictName : 'GranBraver.PNG',
-                    hp : 3200,
-                    speed : 230,
-                    weapons : {
+                    hp : 3300,      //パイロットのステータス補正でHP+100
+                    speed : 330,    //パイロットのステータス補正で機動+100,
+                    defense : 100,   //パイロットのステータス補正で防御-50
+                    weapons : {     //パイロットのステータス補正で各武器の攻撃力+100
                         1 : {
                             name : 'バスターナックル',
-                            power : 800
+                            power : 900
                         },
                         2 : {
                             name : 'バスターナックル',
-                            power : 1100
+                            power : 1200
                         },
                         3 : {
                             name : 'バスターナックル',
-                            power : 1600
+                            power : 1700
                         },
                         4 : {
                             name : 'バスターナックル',
-                            power : 2100
+                            power : 2200
                         },
                         5 : {
                             name : 'バスターナックル',
-                            power : 2800
+                            power : 2900
                         }
                     },
                     pilot : {
@@ -56,7 +57,11 @@ describe('Mongo DBからシングルブレイ用キャラクターデータを�
                         pict : 'kyoko.png',
                         shout : 'やぁぁぁぁて、やるぜ！！    ……なんてね。',
                         type : 'quickCharge',
-                        battery : 3
+                        battery : 3,
+                        hp : 100,
+                        power : 100,
+                        defense : -50,
+                        speed : 100
                     }
                 }
             };
