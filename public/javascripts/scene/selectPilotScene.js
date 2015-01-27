@@ -1,5 +1,9 @@
 function selectPilotScene(spec,my) {
     var MAX_PILOT = 3;
+    var STATUS_WINDOW_X = 176;
+    var STATUS_WINDOW_Y = 80;
+    var PILOT_SKILL_WINDOW_X = 16;
+    var PILOT_SKILL_WINDOW_Y = 224;
 
     var that = new Scene();
     var core = enchant.Core.instance;
@@ -20,35 +24,113 @@ function selectPilotScene(spec,my) {
 
         //選択中のパイロット画像
         that.selectPilotSprite = new Sprite(256,256);
-        that.selectPilotSprite.x = 32;
-        that.selectPilotSprite.y = 48;
+        that.selectPilotSprite.x = -48;
+        that.selectPilotSprite.y = 32;
+        that.selectPilotSprite.scaleX = 0.8;
+        that.selectPilotSprite.scaleY = 0.8;
         that.addChild(that.selectPilotSprite);
 
         //パイロット情報ウインドウ
         that.infoWindow = gridWindow({
+            pict : core.assets[core.PICT_WINDOW],
+            width : 4,
+            height : 4,
+            spriteWidth : 32,
+            spriteHeight : 32
+        });
+        that.infoWindow.x = STATUS_WINDOW_X;
+        that.infoWindow.y = STATUS_WINDOW_Y;
+        that.addChild(that.infoWindow);
+
+        //パイロット名ラベル
+        that.pilotLabel = new Label();
+        that.pilotLabel.color = "white";
+        that.pilotLabel.x = STATUS_WINDOW_X + 16;
+        that.pilotLabel.y = STATUS_WINDOW_Y + 16;
+        that.addChild(that.pilotLabel);
+
+        //HPラベル
+        that.hpLabel = new Label('HP');
+        that.hpLabel.color = "white";
+        that.hpLabel.x = STATUS_WINDOW_X + 16;
+        that.hpLabel.y = STATUS_WINDOW_Y + 48;
+        that.addChild(that.hpLabel);
+
+        //HPバリューラベル
+        that.hpValueLabel = new Label();
+        that.hpValueLabel.text = "100";
+        that.hpValueLabel.color = "white";
+        that.hpValueLabel.x = STATUS_WINDOW_X + 64;
+        that.hpValueLabel.y = STATUS_WINDOW_Y + 48;
+        that.addChild(that.hpValueLabel);
+
+        //攻撃ラベル
+        that.attackLabel = new Label('攻撃');
+        that.attackLabel.color = 'white';
+        that.attackLabel.x = STATUS_WINDOW_X + 16;
+        that.attackLabel.y = STATUS_WINDOW_Y + 64;
+        that.addChild(that.attackLabel);
+
+        //攻撃バリューラベル
+        that.attackValueLabel = new Label();
+        that.attackValueLabel.color = 'white';
+        that.attackValueLabel.x = STATUS_WINDOW_X + 64;
+        that.attackValueLabel.y = STATUS_WINDOW_Y + 64;
+        that.addChild(that.attackValueLabel);
+
+        //脆性ラベル
+        that.defenseLabel = new Label('脆性');
+        that.defenseLabel.color = 'white';
+        that.defenseLabel.x = STATUS_WINDOW_X + 16;
+        that.defenseLabel.y = STATUS_WINDOW_Y + 80;
+        that.addChild(that.defenseLabel);
+
+        //脆性バリューラベル
+        that.defenseValueLabel = new Label();
+        that.defenseValueLabel.color = 'white';
+        that.defenseValueLabel.x = STATUS_WINDOW_X + 64;
+        that.defenseValueLabel.y = STATUS_WINDOW_Y + 80;
+        that.addChild(that.defenseValueLabel);
+
+        //機動ラベル
+        that.speedLabel = new Label('機動');
+        that.speedLabel.color = 'white';
+        that.speedLabel.x = STATUS_WINDOW_X + 16;
+        that.speedLabel.y = STATUS_WINDOW_Y + 96;
+        that.addChild(that.speedLabel);
+
+        //機動バリューラベル
+        that.speedValueLabel = new Label();
+        that.speedValueLabel.color = 'white';
+        that.speedValueLabel.x = STATUS_WINDOW_X + 64;
+        that.speedValueLabel.y = STATUS_WINDOW_Y + 96;
+        that.addChild(that.speedValueLabel);
+
+        //スキルウインドウ
+        that.skillWindow = gridWindow({
             pict : core.assets[core.PICT_WINDOW],
             width : 9,
             height : 2,
             spriteWidth : 32,
             spriteHeight : 32
         });
-        that.infoWindow.x = (320-18*16)/2;
-        that.infoWindow.y = 240;
-        that.addChild(that.infoWindow);
-
-        //パイロット名ラベル
-        that.pilotLabel = new Label();
-        that.pilotLabel.color = "white";
-        that.pilotLabel.x = 38;
-        that.pilotLabel.y = 258;
-        that.addChild(that.pilotLabel);
+        that.skillWindow.x = PILOT_SKILL_WINDOW_X;
+        that.skillWindow.y = PILOT_SKILL_WINDOW_Y;
+        that.addChild(that.skillWindow);
 
         //スキルラベル
-        that.skillLabel = new Label();
+        that.skillLabel = new Label('パイロットスキル');
         that.skillLabel.color = "white";
-        that.skillLabel.x = 38;
-        that.skillLabel.y = 276;
+        that.skillLabel.x = PILOT_SKILL_WINDOW_X + 16;
+        that.skillLabel.y = PILOT_SKILL_WINDOW_Y + 16;
         that.addChild(that.skillLabel);
+
+        //スキルバリューラベル
+        that.skillValueLabel = new Label();
+        that.skillValueLabel.color = "white";
+        that.skillValueLabel.x = PILOT_SKILL_WINDOW_X + 16;
+        that.skillValueLabel.y = PILOT_SKILL_WINDOW_Y + 36;
+        that.addChild(that.skillValueLabel);
 
         //画面タイトル
         that.title = titleWindow({
@@ -146,7 +228,11 @@ function selectPilotScene(spec,my) {
     function refreshInformation(pilotId){
         var pilotData = getPilotData(pilotId);
         that.pilotLabel.text = pilotData.name;
-        that.skillLabel.text = getSkillDescription(pilotData);
+        that.skillValueLabel.text = getSkillDescription(pilotData);
+        that.hpValueLabel.text = pilotData.hp;
+        that.attackValueLabel.text = pilotData.power;
+        that.defenseValueLabel.text = pilotData.defense;
+        that.speedValueLabel.text = pilotData.speed;
         that.selectPilotSprite.image = core.assets[core.PICT_PREFIX+pilotData.pict];
     }
 
