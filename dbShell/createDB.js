@@ -197,7 +197,11 @@ db.pilots.insert({
     pict : 'kyoko.png',
     shout : 'やぁぁぁぁて、やるぜ！！    ……なんてね。',
     type : 'quickCharge',
-    battery : 3
+    battery : 3,
+    hp : 150,
+    power : 80,
+    defense : -50,
+    speed : 10
 });
 
 db.pilots.insert({
@@ -206,7 +210,11 @@ db.pilots.insert({
     pict : 'akane.png',
     shout : 'まだまだ、勝負はこれからよ。',
     type : 'recoverHp',
-    value : 0.3
+    value : 0.3,
+    hp : 100,
+    power : 150,
+    defense : -20,
+    speed : 5
 });
 
 db.pilots.insert({
@@ -215,7 +223,11 @@ db.pilots.insert({
     pict: 'iori.png',
     shout: 'この一撃に、全てを掛ける！！',
     type: 'guardBreak',
-    value : 200
+    value : 200,
+    hp : 50,
+    power : 50,
+    defense : -10,
+    speed : 15
 });
 
 db.stages.remove({});
