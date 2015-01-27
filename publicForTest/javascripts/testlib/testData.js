@@ -154,7 +154,11 @@ function testData(spec,my){
             pict : 'kyoko.png',
             shout : 'やぁぁぁぁて、やるぜ！！    ……なんてね。',
             type : 'quickCharge',
-            battery : 3
+            battery : 3,
+            hp : 100,
+            power : 100,
+            defense : -50,
+            speed : 100
         },
         {
             id : 'akane',
@@ -162,7 +166,11 @@ function testData(spec,my){
             pict : 'akane.png',
             shout : 'まだまだ、勝負はこれからよ。',
             type : 'recoverHp',
-            value : 0.5
+            value : 0.5,
+            hp : 200,
+            power : 50,
+            defense : -50,
+            speed : 50
         },
         {
             id : 'iori',
@@ -170,7 +178,11 @@ function testData(spec,my){
             pict: 'iori.png',
             shout: 'この一撃に、全てを掛ける！！',
             type: 'guardBreak',
-            value : 500
+            value : 500,
+            hp : 50,
+            power : 50,
+            defense : -100,
+            speed : 300
         }
     ];
 
