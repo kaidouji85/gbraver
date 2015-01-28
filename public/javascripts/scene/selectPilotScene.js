@@ -60,7 +60,6 @@ function selectPilotScene(spec,my) {
         that.hpValueLabel = new Label();
         that.hpValueLabel.text = "100";
         that.hpValueLabel.color = "white";
-        that.hpValueLabel.x = STATUS_WINDOW_X + 64;
         that.hpValueLabel.y = STATUS_WINDOW_Y + 48;
         that.addChild(that.hpValueLabel);
 
@@ -74,7 +73,6 @@ function selectPilotScene(spec,my) {
         //攻撃バリューラベル
         that.attackValueLabel = new Label();
         that.attackValueLabel.color = 'white';
-        that.attackValueLabel.x = STATUS_WINDOW_X + 64;
         that.attackValueLabel.y = STATUS_WINDOW_Y + 64;
         that.addChild(that.attackValueLabel);
 
@@ -88,7 +86,6 @@ function selectPilotScene(spec,my) {
         //脆性バリューラベル
         that.defenseValueLabel = new Label();
         that.defenseValueLabel.color = 'white';
-        that.defenseValueLabel.x = STATUS_WINDOW_X + 64;
         that.defenseValueLabel.y = STATUS_WINDOW_Y + 80;
         that.addChild(that.defenseValueLabel);
 
@@ -102,7 +99,6 @@ function selectPilotScene(spec,my) {
         //機動バリューラベル
         that.speedValueLabel = new Label();
         that.speedValueLabel.color = 'white';
-        that.speedValueLabel.x = STATUS_WINDOW_X + 64;
         that.speedValueLabel.y = STATUS_WINDOW_Y + 96;
         that.addChild(that.speedValueLabel);
 
@@ -234,6 +230,11 @@ function selectPilotScene(spec,my) {
         that.defenseValueLabel.text = pilotData.defense;
         that.speedValueLabel.text = pilotData.speed;
         that.selectPilotSprite.image = core.assets[core.PICT_PREFIX+pilotData.pict];
+
+        that.hpValueLabel.x = STATUS_WINDOW_X + 104 - that.hpValueLabel._boundWidth;
+        that.attackValueLabel.x = STATUS_WINDOW_X + 104 - that.attackValueLabel._boundWidth;
+        that.defenseValueLabel.x = STATUS_WINDOW_X + 104 - that.defenseValueLabel._boundWidth;
+        that.speedValueLabel.x = STATUS_WINDOW_X + 104 - that.speedValueLabel._boundWidth;
     }
 
     function getPilotData(pilotId){

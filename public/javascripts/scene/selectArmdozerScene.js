@@ -76,7 +76,6 @@ function selectArmdozerScene(spec,my){
         //HPバリューラベル
         that.hpValueLabel = new Label('');
         that.hpValueLabel.color = "white";
-        that.hpValueLabel.x = 230;
         that.hpValueLabel.y = 150;
         that.addChild(that.hpValueLabel);
 
@@ -90,7 +89,6 @@ function selectArmdozerScene(spec,my){
         //攻撃力バリューラベル
         that.powerValueLabel = new Label('');
         that.powerValueLabel.color = 'white';
-        that.powerValueLabel.x = 230;
         that.powerValueLabel.y = 170;
         that.addChild(that.powerValueLabel);
 
@@ -104,7 +102,6 @@ function selectArmdozerScene(spec,my){
         //装甲バリューラベル
         that.defenseValueLabel = new Label('');
         that.defenseValueLabel.color = 'white';
-        that.defenseValueLabel.x = 230;
         that.defenseValueLabel.y = 190;
         that.addChild(that.defenseValueLabel);
 
@@ -118,7 +115,6 @@ function selectArmdozerScene(spec,my){
         //機動力バリューラベル
         that.speedValueLabel = new Label('');
         that.speedValueLabel.color = "white";
-        that.speedValueLabel.x = 230;
         that.speedValueLabel.y = 210;
         that.addChild(that.speedValueLabel);
 
@@ -190,6 +186,11 @@ function selectArmdozerScene(spec,my){
         that.defenseValueLabel.text = armdozerData.defense;
         that.powerValueLabel.text = armdozerData.weapons[1].power;
         that.speedValueLabel.text = armdozerData.speed;
+
+        that.hpValueLabel.x = 256 - that.hpValueLabel._boundWidth;
+        that.powerValueLabel.x = 256 - that.powerValueLabel._boundWidth;
+        that.defenseValueLabel.x = 256 - that.defenseValueLabel._boundWidth;
+        that.speedValueLabel.x = 256 - that.speedValueLabel._boundWidth;
     }
 
     function selectArmdozer(){
