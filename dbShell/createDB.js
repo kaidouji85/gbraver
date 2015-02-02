@@ -6,7 +6,7 @@ db.armdozers.insert({
     name : 'グランブレイバー',
     pictName : 'GranBraver.PNG',
     hp : 3000,
-    defense : 150,
+    defense : 1000,
     speed : 110,
     weapons : {
         1 : {
@@ -37,7 +37,7 @@ db.armdozers.insert({
     name : 'ランドーザ',
     pictName : 'Landozer.PNG',
     hp : 3300,
-    defense : 200,
+    defense : 1200,
     speed : 95,
     weapons : {
         1 : {
@@ -68,7 +68,7 @@ db.armdozers.insert({
     name : 'ゼロブレイバー',
     pictName : 'ZeroBraver.PNG',
     hp : 2500,
-    defense : 50,
+    defense : 800,
     speed : 145,
     weapons : {
         1 : {
@@ -100,7 +100,7 @@ db.armdozers.insert({
     name : 'ランドーザ',
     pictName : 'Landozer.PNG',
     hp : 800,
-    defense : 100,
+    defense : 1000,
     speed : 80,
     weapons : {
         1 : {
@@ -132,7 +132,7 @@ db.armdozers.insert({
     name : 'グランブレイバー',
     pictName : 'GranBraver.PNG',
     hp : 2500,
-    defense : 150,
+    defense : 1000,
     speed : 105,
     weapons : {
         1 : {
@@ -164,7 +164,7 @@ db.armdozers.insert({
     name : 'ゼロブレイバー',
     pictName : 'ZeroBraver.PNG',
     hp : 2800,
-    defense : 200,
+    defense : 1000,
     speed : 130,
     weapons : {
         1 : {
@@ -198,10 +198,10 @@ db.pilots.insert({
     shout : 'やぁぁぁぁて、やるぜ！！    ……なんてね。',
     type : 'quickCharge',
     battery : 3,
-    hp : 150,
-    power : 80,
-    defense : -50,
-    speed : 10
+    hp : 100,
+    power : 100,
+    defense : 100,
+    speed : 15
 });
 
 db.pilots.insert({
@@ -211,9 +211,9 @@ db.pilots.insert({
     shout : 'まだまだ、勝負はこれからよ。',
     type : 'recoverHp',
     value : 0.3,
-    hp : 100,
-    power : 150,
-    defense : -20,
+    hp : 300,
+    power : 100,
+    defense : 150,
     speed : 5
 });
 
@@ -224,10 +224,10 @@ db.pilots.insert({
     shout: 'この一撃に、全てを掛ける！！',
     type: 'guardBreak',
     value : 200,
-    hp : 50,
-    power : 50,
-    defense : -10,
-    speed : 15
+    hp : 100,
+    power : 300,
+    defense : 100,
+    speed : 5
 });
 
 db.stages.remove({});
