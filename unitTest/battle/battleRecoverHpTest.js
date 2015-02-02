@@ -15,7 +15,7 @@ describe('Battleクラス パイロットスキル HP回復', function() {
         Battle.doWaitPhase();
         Battle.getStatusArray();
         Battle.atack({
-            atackBattery : 5,
+            atackBattery : 3,
             defenthBattery : 1
         });
 

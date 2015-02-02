@@ -9,7 +9,7 @@ function battleUnitData() {
             name: 'グランブレイバー',
             pictName: 'GranBraver.PNG',
             hp: 3200,
-            defense : 0,
+            defense : 1000,
             speed: 230,
             active: 0,
             battery: 5,
@@ -71,7 +71,7 @@ function battleUnitData() {
             name: 'ランドーザ',
             pictName: 'Landozer.PNG',
             hp: 4700,
-            defense : 0,
+            defense : 1000,
             speed: 150,
             active: 0,
             battery: 5,
@@ -89,13 +89,10 @@ function battleUnitData() {
                 battery : 3,
                 hp : 0,
                 power : 0,
-                defense : 0,
+                defense : 500,
                 speed : 0
             }
         };
-
-        unitData['landozerDefense200'] = ce.clone(unitData['landozer']);
-        unitData['landozerDefense200'].defense = 200;
 
         unitData['landozerRecoverHp'] = ce.clone(unitData['landozer']);
         unitData['landozerRecoverHp'].hp = 3500;
@@ -113,7 +110,7 @@ function battleUnitData() {
             name : 'ゼロブレイバー',
             pictName : 'ZeroBraver.PNG',
             hp : 4200,
-            defense : 0,
+            defense : 1000,
             speed : 230,
             active : 0,
             battery : 5,

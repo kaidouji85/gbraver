@@ -118,7 +118,7 @@ describe('一人用モードでプレイヤーが攻撃', function() {
                 client.emit('command',{
                     method : 'atack',
                     param : {
-                        battery : 3
+                        battery : 1
                     }
                 });
                 client.once('resp',defenseCommandPhase);
@@ -161,12 +161,12 @@ describe('一人用モードでプレイヤーが攻撃', function() {
                     phase : 'damage',
                     hit : 4,
                     damage : 3200,
-                    atackBattery : 3,
+                    atackBattery : 1,
                     defenthBattery : 0,
                     statusArray : {
                         'test001@gmail.com' : {
                             hp : 3200,
-                            battery : 2,
+                            battery : 4,
                             active : 0,
                             skillPoint : 1,
                             overHeatFlag : false
@@ -199,7 +199,7 @@ describe('一人用モードでプレイヤーが攻撃', function() {
                     statusArray : {
                         'test001@gmail.com' : {
                             hp : 3200,
-                            battery : 2,
+                            battery : 4,
                             active : 3500,
                             skillPoint : 1,
                             overHeatFlag : false

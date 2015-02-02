@@ -192,7 +192,7 @@ describe('serverクラスのテスト', function() {
                             overHeatFlag : false
                         },
                         'test002@gmail.com' : {
-                            hp : 3100,
+                            hp : 1500,
                             battery : 3,
                             active : 3000,
                             skillPoint : 1,
@@ -234,7 +234,7 @@ describe('serverクラスのテスト', function() {
                             overHeatFlag : false
                         },
                         'test002@gmail.com' : {
-                            hp : 3100,
+                            hp : 1500,
                             battery : 3,
                             active : 3000,
                             skillPoint : 1,
@@ -276,7 +276,7 @@ describe('serverクラスのテスト', function() {
                             overHeatFlag : false
                         },
                         'test002@gmail.com' : {
-                            hp : 3100,
+                            hp : 1500,
                             battery : 3,
                             active : 3000,
                             skillPoint : 1,
@@ -318,7 +318,7 @@ describe('serverクラスのテスト', function() {
                             overHeatFlag : false
                         },
                         'test002@gmail.com': {
-                            hp: 3100,
+                            hp: 1500,
                             battery: 3,
                             active: 3000,
                             skillPoint: 1,

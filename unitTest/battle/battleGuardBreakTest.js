@@ -45,7 +45,7 @@ describe('Battleクラス パイロットスキル ガードブレイク', funct
         });
 
         var statusArray = Battle.getStatusArray();
-        assert.equal(statusArray['test002@gmail.com'].hp,2800,'test002@gmail.comが1600+300=1900ダメージを受ける');
+        assert.equal(statusArray['test002@gmail.com'].hp,1600,'test002@gmail.comが+300追加ダメージを受ける');
     });
 
     it('2回目以降はガードブレイクスキルが無効(1回目は攻撃ヒット)',function(){
