@@ -76,14 +76,14 @@ function selectPilotScene(spec,my) {
         that.attackValueLabel.y = STATUS_WINDOW_Y + 64;
         that.addChild(that.attackValueLabel);
 
-        //脆性ラベル
-        that.defenseLabel = new Label('脆性');
+        //防御ラベル
+        that.defenseLabel = new Label('防御');
         that.defenseLabel.color = 'white';
         that.defenseLabel.x = STATUS_WINDOW_X + 16;
         that.defenseLabel.y = STATUS_WINDOW_Y + 80;
         that.addChild(that.defenseLabel);
 
-        //脆性バリューラベル
+        //防御バリューラベル
         that.defenseValueLabel = new Label();
         that.defenseValueLabel.color = 'white';
         that.defenseValueLabel.y = STATUS_WINDOW_Y + 80;

@@ -93,7 +93,7 @@ function selectArmdozerScene(spec,my){
         that.addChild(that.powerValueLabel);
 
         //装甲ラベル
-        that.defenseLabel = new Label('脆性');
+        that.defenseLabel = new Label('防御');
         that.defenseLabel.color = 'white';
         that.defenseLabel.x = 170;
         that.defenseLabel.y = 190;
