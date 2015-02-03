@@ -73,23 +73,23 @@ db.armdozers.insert({
     weapons : {
         1 : {
             name : 'バスターナックル',
-            power : 1000
+            power : 1200
         },
         2 : {
             name : 'バスターナックル',
-            power : 1000
+            power : 1200
         },
         3 : {
             name : 'バスターナックル',
-            power : 1000
+            power : 1200
         },
         4 : {
             name : 'バスターナックル',
-            power : 1000
+            power : 1200
         },
         5 : {
             name : 'バスターナックル',
-            power : 1000
+            power : 1200
         }
     }
 });
@@ -211,9 +211,9 @@ db.pilots.insert({
     shout : 'まだまだ、勝負はこれからよ。',
     type : 'recoverHp',
     value : 0.3,
-    hp : 300,
-    power : 100,
-    defense : 150,
+    hp : 400,
+    power : 50,
+    defense : 200,
     speed : 5
 });
 
