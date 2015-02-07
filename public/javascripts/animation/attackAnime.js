@@ -57,7 +57,9 @@ function attackAnime(spec,my){
         }).delay(120).then(function(){
             battleScene.refreshMertor(damagedStatusArray);
             for (var uid in battleScene.statusArray) {
-                battleScene.charaSpriteArray[uid].doStandMotion();
+                if(damagedStatusArray[uid].hp>0){
+                    battleScene.charaSpriteArray[uid].doStandMotion();
+                }
                 if (uid !== attackUserId) {
                     battleScene.damageLabelArray[uid].setVisible(false);
                     battleScene.subDamageLabelArray[uid].visible = false;
