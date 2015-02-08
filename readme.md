@@ -135,7 +135,7 @@ gruntコマンドを利用するには、プロジェクトのルートディレ
 
 
 ## ゲームのプレイ動画
-<https://www.youtube.com/watch?v=46WSwvoTO7U>
+<https://www.youtube.com/watch?v=v1XIxE8y85k>
 
 
 ## その他
