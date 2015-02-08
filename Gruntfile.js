@@ -1,11 +1,11 @@
 module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        s3auth: grunt.file.readJSON('s3auth.json'),
+        gruntConfig: grunt.file.readJSON('GruntConfig.json'),
         s3: {
             options: {
-                key: '<%= s3auth.key %>',
-                secret: '<%= s3auth.secret %>',
+                key: '<%= gruntConfig.s3.key %>',
+                secret: '<%= gruntConfig.s3.secret %>',
                 region: 'ap-northeast-1',
                 bucket: 'gbraver-aws',
                 access: 'public-read'
@@ -16,9 +16,31 @@ module.exports = function (grunt) {
                     { src: 'public/sound/*', dest: 'sound' }
                 ]
             }
+        },
+        exec: {
+            mongo: {
+                cmd: 'mongo <%= gruntConfig.mongo.url %> '+
+                        '-u <%= gruntConfig.mongo.user %> '+
+                        '-p<%= gruntConfig.mongo.password %> '+
+                        'dbShell/createDB.js'
+            },
+            mongoBeta : {
+                cmd: 'mongo <%= gruntConfig.mongoBeta.url %> '+
+                        '-u <%= gruntConfig.mongoBeta.user %> '+
+                        '-p<%= gruntConfig.mongoBeta.password %> '+
+                        'dbShell/createDB.js'
+            },
+            pushHeroku : {
+                cmd : 'git push heroku'
+            },
+            pushHerokuBeta : {
+                cmd : 'git push beta development:master'
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-s3');
-    grunt.registerTask('upload', 's3');
+    grunt.loadNpmTasks('grunt-exec');
+    grunt.registerTask('deploy',['s3','exec:mongo','exec:pushHeroku']);
+    grunt.registerTask('deployBeta',['exec:mongoBeta','exec:pushHerokuBeta']);
 };

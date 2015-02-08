@@ -21,6 +21,26 @@ node.js、socket.io、enchant.jsがあれば簡単に出来るだろうという
 | BASE_URL | OAuth2.0のリダイレクト先のベースURL |  | localhost |
 | CONTENT_BASE_URL | 静的コンテンツの配置先URL |  | BASE_URLの値 |
 
+##GruntConfig.jsonの作成
+gruntタスクの設定ファイルであるGruntConfig.jsonを作成します。
+```javascript
+{
+    "s3" :{
+        "key": "AWSのkey",
+        "secret": "AWSのsecret"
+    },
+    "mongo" : {
+        "user": "本番環境のmongoDBのユーザ名",
+        "password":"本番環境のmongoDBのパスワード",
+        "url":"本番環境のmongoDBのURL"
+    },
+    "mongoBeta" : {
+        "user": "テスト環境のmongoDBのユーザ名",
+        "password":"テスト環境のmongoDBのパスワード",
+        "url":"テスト環境のmongoDBのURL"
+    }
+}
+```
 ##ローカル環境で開発をする
 ### ローカル環境への導入
 (1)必須ソフトウェア  
@@ -110,20 +130,7 @@ herokuに環境変数を登録します。ここでは環境変数登録バッ�
 (4)herokuへデプロイ  
 以下コマンドでherokuにデプロイします。
 
-    git push heroku
-
-
-##静的コンテンツをS3にアップロードする
-以下コマンドで静的コンテンツをs3にアップロードできます。
-
-    grunt s3
-    
-gruntコマンドを利用するには、プロジェクトのルートディレクトリにs3auth.jsonを用意する必要があります。
-
-    {
-        "key": "AWSのkey",
-        "secret": "AWSのsecret"
-    }
+    grunt deploy
 
 
 ## 素材提供
