@@ -1,4 +1,4 @@
-db.users.remove({});
+//db.users.remove({});
 
 db.armdozers.remove({});
 db.armdozers.insert({
