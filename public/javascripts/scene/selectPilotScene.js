@@ -139,7 +139,9 @@ function selectPilotScene(spec,my) {
         for(var i=0; i<MAX_PILOT; i++) {
             that.pilotButtonArray[i] = pilotButton({
                 windowPict : core.assets[core.PICT_BLACK_WINDOW],
-                pilotPict : core.assets[core.PICT_PREFIX + pilotList[i].pict]
+                pilotPict : core.assets[core.PICT_PREFIX + pilotList[i].pict],
+                width : 4,
+                height : 4
             });
         }
 

@@ -6,8 +6,8 @@ function pilotButton(spec,my){
     (function(){
         pushedButton = gridWindow({
             pict : spec.windowPict,
-            width : 5,
-            height : 5
+            width : spec.width,
+            height : spec.height
         });
         pushedButton.setOpacity(0);
         that.addChild(pushedButton);
