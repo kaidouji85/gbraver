@@ -157,8 +157,8 @@ function testData(spec,my){
             battery : 3,
             hp : 100,
             power : 100,
-            defense : -50,
-            speed : 100
+            defense : 100,
+            speed : 15
         },
         {
             id : 'akane',
@@ -167,16 +167,28 @@ function testData(spec,my){
             shout : 'まだまだ、勝負はこれからよ。',
             type : 'recoverHp',
             value : 0.5,
-            hp : 200,
+            hp : 400,
             power : 50,
-            defense : -50,
-            speed : 50
+            defense : 200,
+            speed : 5
         },
         {
             id : 'iori',
             name: '伊織',
             pict: 'iori.png',
             shout: 'この一撃に、全てを掛ける！！',
+            type: 'guardBreak',
+            value : 500,
+            hp : 100,
+            power : 300,
+            defense : 100,
+            speed : 5
+        },
+        {
+            id : 'akira',
+            name: '晶',
+            pict: 'akira.png',
+            shout: '肉を切らせて骨を断つ',
             type: 'guardBreak',
             value : 500,
             hp : 50,
