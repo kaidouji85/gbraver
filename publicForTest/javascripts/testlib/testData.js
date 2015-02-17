@@ -193,8 +193,8 @@ function testData(spec,my){
             value : 500,
             hp : 50,
             power : 50,
-            defense : -100,
-            speed : 300
+            defense : 300,
+            speed : 5
         }
     ];
 

@@ -1,5 +1,5 @@
 function selectPilotScene(spec,my) {
-    var MAX_PILOT = 3;
+    var MAX_PILOT = 4;
     var STATUS_WINDOW_X = 176;
     var STATUS_WINDOW_Y = 80;
     var PILOT_SKILL_WINDOW_X = 16;
@@ -146,7 +146,7 @@ function selectPilotScene(spec,my) {
         }
 
         that.pilotButtonArray.forEach(function(button,i){
-            button.x = 20 + 100*i;
+            button.x = 10 + 80*i;
             button.y = 320;
             button.addEventListener(Event.TOUCH_END,function(){
                 var pilotId = pilotList[i].id;

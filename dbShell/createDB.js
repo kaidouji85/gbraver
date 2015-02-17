@@ -230,6 +230,19 @@ db.pilots.insert({
     speed : 5
 });
 
+db.pilots.insert({
+    id : 'akira',
+    name: '晶',
+    pict: 'akira.png',
+    shout: '肉を切らせて骨を断つ',
+    type: 'recoverHp',
+    value : 0.3,
+    hp : 100,
+    power : 100,
+    defense : 300,
+    speed : 5
+});
+
 db.stages.remove({});
 db.stages.insert({
     title : 'ランドーザと対決',
