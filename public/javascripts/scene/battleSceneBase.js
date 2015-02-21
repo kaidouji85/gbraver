@@ -80,6 +80,8 @@ function battleSceneBase(spec,my){
             that.pilotIconArray[uid] = pilotIcon({
                 windowPict : core.assets[core.PICT_BLACK_WINDOW],
                 pilotPict : core.assets[core.PICT_PREFIX+that.statusArray[uid].pilot.pict],
+                pictTopMargin : that.statusArray[uid].pilot.pictTopMargin,
+                pictLeftMargin : that.statusArray[uid].pilot.pictLeftMargin,
                 scaleX : uid===that.userId ? 1 : -1
             });
             that.pilotIconArray[uid].x = uid===that.userId ? 240 : 0;

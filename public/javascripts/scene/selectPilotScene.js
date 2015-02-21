@@ -140,6 +140,8 @@ function selectPilotScene(spec,my) {
             that.pilotButtonArray[i] = pilotButton({
                 windowPict : core.assets[core.PICT_BLACK_WINDOW],
                 pilotPict : core.assets[core.PICT_PREFIX + pilotList[i].pict],
+                pictTopMargin : pilotList[i].pictTopMargin,
+                pictLeftMargin : pilotList[i].pictLeftMargin,
                 width : 4,
                 height : 4
             });

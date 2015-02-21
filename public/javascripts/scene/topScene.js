@@ -34,9 +34,12 @@ function topScene(spec,my){
         that.addChild(that.selectArmdozerSprite);
 
         //選択中パイロット
+        var pilotData = getPilotData(pilotId)
         that.pilotSprite = pilotIcon({
             windowPict : core.assets[core.PICT_BLACK_WINDOW],
-            pilotPict : core.assets[core.PICT_PREFIX + getPilotPictByPilotId(pilotId)]
+            pilotPict : core.assets[core.PICT_PREFIX + pilotData.pict],
+            pictTopMargin : pilotData.pictTopMargin,
+            pictLeftMargin : pilotData.pictLeftMargin
         });
         that.pilotSprite.x = 230;
         that.pilotSprite.y = 100;
@@ -165,10 +168,10 @@ function topScene(spec,my){
         }
     }
 
-    function getPilotPictByPilotId(pilotId){
+    function getPilotData(pilotId){
         for(var i in pilotList){
             if(pilotList[i].id === pilotId){
-                return pilotList[i].pict;
+                return pilotList[i];
             }
         }
     }
