@@ -67,6 +67,17 @@ function battleUnitData() {
             speed : 0
         }
 
+        unitData['granBraverSuperGuard'] = ce.clone(unitData['granBraver']);
+        unitData['granBraverSuperGuard'].pilot =
+        {
+            type : 'superGuard',
+            value : 0.5,
+            hp : 0,
+            power : 0,
+            defense : 0,
+            speed : 0
+        }
+
         unitData['landozer'] = {
             name: 'ランドーザ',
             pictName: 'Landozer.PNG',

@@ -13,6 +13,7 @@ var battle = function(spec,my){
     var stunAttackArray = {};
     var guardBreakArray = {};
     var plusPowerArray = {};
+    var superGuardArray = {};
 
     that.MAX_ACTIVE = 5000;
     that.ATACK_HIT = 1;
@@ -28,6 +29,7 @@ var battle = function(spec,my){
             stunAttackArray[uid] = false;
             guardBreakArray[uid] = false;
             plusPowerArray[uid] = 0;
+            superGuardArray[uid] = 1;
         }
     }
     
@@ -88,7 +90,9 @@ var battle = function(spec,my){
             damage = 0;
             hit = that.ATACK_MISS;
         } else {
-            damage = getDamage(statusArray[atackUserId],statusArray[defenseUserId],atackBattery,defenthBattery)  + plusPowerArray[atackUserId];
+            damage = getDamage(statusArray[atackUserId],statusArray[defenseUserId],atackBattery,defenthBattery)
+            + plusPowerArray[atackUserId];
+
             if(atackBattery === defenthBattery){
                 if(guardBreakArray[atackUserId]===true){
                     hit = that.ATACK_HIT;
@@ -107,6 +111,8 @@ var battle = function(spec,my){
                     statusArray[defenseUserId].active = -that.MAX_ACTIVE/2;
                 }
             }
+            damage = damage * superGuardArray[defenseUserId];
+            superGuardArray[defenseUserId] = 1;
         }
 
         statusArray[atackUserId].battery -= atackBattery;
@@ -201,6 +207,8 @@ var battle = function(spec,my){
         } else if(type === 'guardBreak') {
             guardBreakArray[atackUserId] = true;
             plusPowerArray[atackUserId] = statusArray[atackUserId].pilot.value;
+        } else if(type === 'superGuard'){
+            superGuardArray[atackUserId] = statusArray[atackUserId].pilot.value;
         }
     }
     
