@@ -203,7 +203,7 @@ db.pilots.insert({
     hp : 100,
     power : 100,
     defense : 100,
-    speed : 15
+    speed : 25
 });
 
 db.pilots.insert({
@@ -215,9 +215,9 @@ db.pilots.insert({
     shout : 'まだまだ、勝負はこれからよ。',
     type : 'recoverHp',
     value : 0.3,
-    hp : 400,
-    power : 50,
-    defense : 200,
+    hp : 500,
+    power : 100,
+    defense : 100,
     speed : 5
 });
 
@@ -243,8 +243,8 @@ db.pilots.insert({
     pictTopMargin : 32,
     pictLeftMargin : 64,
     shout: '肉を切らせて骨を断つ',
-    type: 'recoverHp',
-    value : 0.3,
+    type: 'superGuard',
+    value : 0.5,
     hp : 100,
     power : 100,
     defense : 300,

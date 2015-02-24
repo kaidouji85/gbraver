@@ -10,6 +10,9 @@ function getSkillDescription(pilotData){
         case 'guardBreak':
             ret = '攻撃力+'+pilotData.value+'、さらにガードを無効にする';
             break;
+        case 'superGuard' :
+            ret = 'ダメージを'+(1-pilotData.value)*100+'%軽減する';
+            break;
         default :
             ret = '不明スキル';
             break;
