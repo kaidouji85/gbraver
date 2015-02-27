@@ -22,8 +22,7 @@ var battle = function(spec,my){
     that.ATACK_CRITICAL = 4;
     that.MAX_BATTERY = 5;
 
-    init();
-    function init() {
+    (function() {
         for(var uid in statusArray){
             maxHpArray[uid] = statusArray[uid].hp;
             stunAttackArray[uid] = false;
@@ -31,7 +30,7 @@ var battle = function(spec,my){
             plusPowerArray[uid] = 0;
             superGuardArray[uid] = 1;
         }
-    }
+    })()
     
     that.getStatusArray = function() {
         return statusArray;
@@ -76,82 +75,66 @@ var battle = function(spec,my){
      * @param {Object} command
      */
     that.atack = function (command) {
-        var hit = 0;
         var atackBattery = command.atackBattery;
         var defenthBattery = command.defenthBattery;
         var damage = 0;
+        var hit = that.ATACK_MISS;
         var defenseUserId = getDefenseUserId();
 
-        statusArray[atackUserId].overHeatFlag = false;
-        if(atackBattery===0){
+        //フェイント攻撃 または 攻撃回避
+        if(atackBattery===0 || atackBattery<defenthBattery){
             damage = 0;
             hit = that.ATACK_MISS;
-        } else if (atackBattery < defenthBattery) {
-            damage = 0;
-            hit = that.ATACK_MISS;
-        } else {
-            damage = getDamage(statusArray[atackUserId],statusArray[defenseUserId],atackBattery,defenthBattery)
-            + plusPowerArray[atackUserId];
-
-            if(atackBattery === defenthBattery){
-                if(guardBreakArray[atackUserId]===true){
-                    hit = that.ATACK_HIT;
-                }else {
-                    damage = damage / 2;
-                    hit = that.ATACK_GUARD;
-                }
-            } else {
-                if (defenthBattery === 0) {
-                    damage = damage * 2;
-                    hit = that.ATACK_CRITICAL;
-                } else {
-                    hit = that.ATACK_HIT;
-                }
-                if(stunAttackArray[atackUserId]){
-                    statusArray[defenseUserId].active = -that.MAX_ACTIVE/2;
-                }
+        }
+        else {
+            //ダメージ計算
+            var basicDamage = statusArray[atackUserId].weapons[atackBattery].power;
+            var batteryDiff = atackBattery - defenthBattery;
+            var damageBonus = batteryDiff * ( basicDamage - statusArray[defenseUserId].defense );
+            if(damageBonus < 0){
+                damageBonus = 0;
             }
+            damage = basicDamage + damageBonus + plusPowerArray[atackUserId];
+            hit = that.ATACK_HIT;
+
+            //ガード
+            if(atackBattery===defenthBattery && guardBreakArray[atackUserId]===false){
+                damage = damage / 2;
+                hit = that.ATACK_GUARD;
+            }
+            //クリティカル
+            else if (defenthBattery === 0) {
+                damage = damage * 2;
+                hit = that.ATACK_CRITICAL;
+            }
+
+            //スタン攻撃判定
+            if(stunAttackArray[atackUserId] && hit!==that.ATACK_GUARD && hit!==that.ATACK_MISS){
+                statusArray[defenseUserId].active = -that.MAX_ACTIVE/2;
+            }
+
+            //スーパーガード判定
             damage = damage * superGuardArray[defenseUserId];
             superGuardArray[defenseUserId] = 1;
         }
 
+        statusArray[atackUserId].overHeatFlag = false;
         statusArray[atackUserId].battery -= atackBattery;
         statusArray[atackUserId].active = 0;
+
         statusArray[defenseUserId].hp -= damage;
         statusArray[defenseUserId].battery -= defenthBattery;
+
         stunAttackArray[atackUserId] = false;
         guardBreakArray[atackUserId] = false;
         plusPowerArray[atackUserId] = 0;
         atackUserId = null;
 
-        var ret = {
+        return {
             hit: hit,
             damage: damage
         };
-        return ret;
     };
-
-    function getDefenseUserId(){
-        var defenseUserId = null;
-        for (var uid in statusArray) {
-            if (uid !== atackUserId) {
-                defenseUserId = uid;
-                break;
-            }
-        }
-        return defenseUserId;
-    }
-
-    function getDamage(attackStatus,defenseStatus,attackBattery,defenseBattery){
-        var damage = attackStatus.weapons[attackBattery].power;
-        var diff = attackBattery - defenseBattery;
-        var bonus = diff*(attackStatus.weapons[attackBattery].power-defenseStatus.defense);
-        if(bonus<0){
-            bonus = 0;
-        }
-        damage += bonus;
-        return damage;
-    }
     
     /**
      * チャージ 
@@ -211,7 +194,18 @@ var battle = function(spec,my){
             superGuardArray[atackUserId] = statusArray[atackUserId].pilot.value;
         }
     }
-    
+
+    function getDefenseUserId(){
+        var defenseUserId = null;
+        for (var uid in statusArray) {
+            if (uid !== atackUserId) {
+                defenseUserId = uid;
+                break;
+            }
+        }
+        return defenseUserId;
+    }
+
     return that;
 };
 
