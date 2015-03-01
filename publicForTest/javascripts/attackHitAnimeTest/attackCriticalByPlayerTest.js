@@ -2,9 +2,9 @@ enchant();
 //TODO : モバイル環境でTouch to Start から先に進まない不具合を回避するために追加
 //       http://make-muda.weblike.jp/2014/04/1283/
 enchant.ENV.SOUND_ENABLED_ON_MOBILE_SAFARI = false;
-window.onload = attackCriticalAnimeTest;
+window.onload = doTest;
 
-function attackCriticalAnimeTest(){
+function doTest(){
     var assert = chai.assert;
     var testDataInst = testData();
     var statusArray = {

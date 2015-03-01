@@ -1,5 +1,4 @@
 enchant();
-
 window.onload = doTest;
 
 function doTest(){

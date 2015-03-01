@@ -1,8 +1,8 @@
 //シングルプレイの場合、バトル終了後はルーム選択画面に遷移する
 enchant();
-window.onload = battleToTop_lose;
+window.onload = doTest;
 
-function battleToTop_lose(){
+function doTest(){
     var assert = chai.assert;
     var testDataInst = testData();
     var statusArray = {

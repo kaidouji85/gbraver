@@ -1,7 +1,7 @@
 enchant();
-window.onload = enterRoomAndGameStart;
+window.onload = doTest;
 
-function enterRoomAndGameStart(){
+function doTest(){
     var assert = chai.assert;
     var Game;
     initGame();

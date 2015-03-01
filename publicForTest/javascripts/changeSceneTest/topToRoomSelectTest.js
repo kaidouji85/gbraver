@@ -1,7 +1,7 @@
 enchant();
-window.onload = topToRoomSelect;
+window.onload = doTest;
 
-function topToRoomSelect(){
+function doTest(){
     var assert = chai.assert;
     var testDataInst = testData();
     var Game;

@@ -1,7 +1,7 @@
 enchant();
-window.onload = topToSetArmdozer;
+window.onload = doTest;
 
-function topToSetArmdozer(){
+function doTest(){
     var assert = chai.assert;
     var testDataInst = testData();
     var Game;
