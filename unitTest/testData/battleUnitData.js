@@ -29,6 +29,9 @@ function battleUnitData() {
                 power : 0,
                 defense : 0,
                 speed : 0
+            },
+            ability: {
+                type: 'none'
             }
         };
 
@@ -78,6 +81,14 @@ function battleUnitData() {
             speed : 0
         }
 
+        unitData['granBraverBoostBattery'] = ce.clone(unitData['granBraver']);
+        unitData['granBraverBoostBattery'].ability =
+        {
+            type : 'boostBattery',
+            battery: 5,
+            threshold: 0.3
+        }
+
         unitData['landozer'] = {
             name: 'ランドーザ',
             pictName: 'Landozer.PNG',
@@ -102,6 +113,9 @@ function battleUnitData() {
                 power : 0,
                 defense : 500,
                 speed : 0
+            },
+            ability: {
+                type: 'none'
             }
         };
 
@@ -141,6 +155,9 @@ function battleUnitData() {
                 power : 0,
                 defense : 0,
                 speed : 0
+            },
+            ability: {
+                type: 'none'
             }
         };
     })()

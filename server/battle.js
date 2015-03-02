@@ -14,6 +14,7 @@ var battle = function(spec,my){
     var guardBreakArray = {};
     var plusPowerArray = {};
     var superGuardArray = {};
+    var armdozerAbilityArray = {};
 
     that.MAX_ACTIVE = 5000;
     that.ATACK_HIT = 1;
@@ -29,6 +30,7 @@ var battle = function(spec,my){
             guardBreakArray[uid] = false;
             plusPowerArray[uid] = 0;
             superGuardArray[uid] = 1;
+            armdozerAbilityArray[uid] = true;
         }
     })()
     
@@ -193,6 +195,27 @@ var battle = function(spec,my){
         } else if(type === 'superGuard'){
             superGuardArray[atackUserId] = statusArray[atackUserId].pilot.value;
         }
+    }
+
+    /**
+     * アームドーザアビリティチェックおよび発動
+     */
+    that.doArmdozerAbility = function(){
+        var isEffective = false;
+        var playerId = '';
+        for (var uid in statusArray) {
+            var thresholdHp = statusArray[uid].ability.threshold * maxHpArray[uid];
+            if(thresholdHp>=statusArray[uid].hp && armdozerAbilityArray[uid]){
+                isEffective = true;
+                playerId = uid;
+                armdozerAbilityArray[uid] = false;
+            }
+        }
+
+        return {
+            isEffective: isEffective,
+            playerId: playerId
+        };
     }
 
     function getDefenseUserId(){
