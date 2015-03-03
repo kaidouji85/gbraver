@@ -209,6 +209,7 @@ var battle = function(spec,my){
                 isEffective = true;
                 playerId = uid;
                 armdozerAbilityArray[uid] = false;
+                executeArmdozerAbility(uid);
             }
         }
 
@@ -227,6 +228,15 @@ var battle = function(spec,my){
             }
         }
         return defenseUserId;
+    }
+
+    function executeArmdozerAbility(userId){
+        if(statusArray[userId].ability.type === 'boostBattery'){
+            statusArray[userId].battery += statusArray[userId].ability.battery;
+            if(statusArray[userId].battery > that.MAX_BATTERY){
+                statusArray[userId].battery = that.MAX_BATTERY
+            }
+        }
     }
 
     return that;
