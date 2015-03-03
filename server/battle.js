@@ -14,7 +14,7 @@ var battle = function(spec,my){
     var guardBreakArray = {};
     var plusPowerArray = {};
     var superGuardArray = {};
-    var armdozerAbilityArray = {};
+    var boostBatteryArray = {};
 
     that.MAX_ACTIVE = 5000;
     that.ATACK_HIT = 1;
@@ -30,7 +30,7 @@ var battle = function(spec,my){
             guardBreakArray[uid] = false;
             plusPowerArray[uid] = 0;
             superGuardArray[uid] = 1;
-            armdozerAbilityArray[uid] = true;
+            boostBatteryArray[uid] = true;
         }
     })()
     
@@ -204,12 +204,14 @@ var battle = function(spec,my){
         var isEffective = false;
         var playerId = '';
         for (var uid in statusArray) {
-            var thresholdHp = statusArray[uid].ability.threshold * maxHpArray[uid];
-            if(thresholdHp>=statusArray[uid].hp && armdozerAbilityArray[uid]){
-                isEffective = true;
-                playerId = uid;
-                armdozerAbilityArray[uid] = false;
-                executeArmdozerAbility(uid);
+            if(statusArray[uid].ability.type==='boostBattery'){
+                var thresholdHp = statusArray[uid].ability.threshold * maxHpArray[uid];
+                if(thresholdHp>=statusArray[uid].hp && boostBatteryArray[uid]){
+                    isEffective = true;
+                    playerId = uid;
+                    boostBatteryArray[uid] = false;
+                    executeBoostBattery(uid);
+                }
             }
         }
 
@@ -230,12 +232,10 @@ var battle = function(spec,my){
         return defenseUserId;
     }
 
-    function executeArmdozerAbility(userId){
-        if(statusArray[userId].ability.type === 'boostBattery'){
-            statusArray[userId].battery += statusArray[userId].ability.battery;
-            if(statusArray[userId].battery > that.MAX_BATTERY){
-                statusArray[userId].battery = that.MAX_BATTERY
-            }
+    function executeBoostBattery(userId) {
+        statusArray[userId].battery += statusArray[userId].ability.battery;
+        if (statusArray[userId].battery > that.MAX_BATTERY) {
+            statusArray[userId].battery = that.MAX_BATTERY
         }
     }
 
