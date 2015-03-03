@@ -75,6 +75,9 @@ describe('serverクラスのテスト', function() {
                                 name : 'バスターナックル',
                                 power : 2800
                             }
+                        },
+                        ability: {
+                            type: 'none'
                         }
                     },
                     {
@@ -105,6 +108,9 @@ describe('serverクラスのテスト', function() {
                                 name : 'ブレイクパンチ',
                                 power : 3800
                             }
+                        },
+                        ability: {
+                            type: 'none'
                         }
                     },
                     {
@@ -135,6 +141,9 @@ describe('serverクラスのテスト', function() {
                                 name: 'ブレイクパンチ',
                                 power: 5000
                             }
+                        },
+                        ability: {
+                            type: 'none'
                         }
                     },
                     {
@@ -165,6 +174,44 @@ describe('serverクラスのテスト', function() {
                                 name : 'バスターナックル',
                                 power : 2800
                             }
+                        },
+                        ability: {
+                            type: 'none'
+                        }
+                    },
+                    {
+                        armdozerId : 'granBraverBoostBattery',
+                        name : 'グランブレイバー',
+                        pictName : 'GranBraver.PNG',
+                        hp : 3200,
+                        defense : 0,
+                        speed : 500,
+                        weapons : {
+                            1 : {
+                                name : 'バスターナックル',
+                                power : 800
+                            },
+                            2 : {
+                                name : 'バスターナックル',
+                                power : 1100
+                            },
+                            3 : {
+                                name : 'バスターナックル',
+                                power : 1600
+                            },
+                            4 : {
+                                name : 'バスターナックル',
+                                power : 2100
+                            },
+                            5 : {
+                                name : 'バスターナックル',
+                                power : 2800
+                            }
+                        },
+                        ability: {
+                            type : 'boostBattery',
+                            battery: 5,
+                            threshold: 0.3
                         }
                     }
                 ];

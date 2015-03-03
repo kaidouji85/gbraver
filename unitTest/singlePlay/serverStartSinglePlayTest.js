@@ -86,6 +86,9 @@ describe('一人用モード開始テスト', function () {
                                 power: 2800
                             }
                         },
+                        ability: {
+                            type: 'none'
+                        },
                         pilot: {
                             name: '恭子',
                             pict: 'kyoko.png',
@@ -132,6 +135,9 @@ describe('一人用モード開始テスト', function () {
                                 name: 'ブレイクパンチ',
                                 power: 3800
                             }
+                        },
+                        ability: {
+                            type: 'none'
                         },
                         pilot: {
                             name: '恭子',

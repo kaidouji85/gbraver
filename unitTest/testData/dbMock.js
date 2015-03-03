@@ -56,6 +56,9 @@ function dbMock(spec,my){
                     name : 'バスターナックル',
                     power : 2800
                 }
+            },
+            ability: {
+                type: 'none'
             }
         },
         {
@@ -86,6 +89,9 @@ function dbMock(spec,my){
                     name : 'ブレイクパンチ',
                     power : 3800
                 }
+            },
+            ability: {
+                type: 'none'
             }
         },
         {
@@ -116,15 +122,51 @@ function dbMock(spec,my){
                     name: 'ブレイクパンチ',
                     power: 5000
                 }
+            },
+            ability: {
+                type: 'none'
             }
         },
         {
-            armdozerId : 'granBraverForQuickCharge',
-            name : 'グランブレイバー(クイックチャージ)',
+            armdozerId: 'granBraverForQuickCharge',
+            name: 'グランブレイバー(クイックチャージ)',
+            pictName: 'GranBraver.PNG',
+            hp: 3200,
+            defense: 0,
+            speed: 1000,
+            weapons: {
+                1: {
+                    name: 'バスターナックル',
+                    power: 800
+                },
+                2: {
+                    name: 'バスターナックル',
+                    power: 1100
+                },
+                3: {
+                    name: 'バスターナックル',
+                    power: 1600
+                },
+                4: {
+                    name: 'バスターナックル',
+                    power: 2100
+                },
+                5: {
+                    name: 'バスターナックル',
+                    power: 2800
+                }
+            },
+            ability: {
+                type: 'none'
+            }
+        },
+        {
+            armdozerId : 'granBraverBoostBattery',
+            name : 'グランブレイバー',
             pictName : 'GranBraver.PNG',
             hp : 3200,
             defense : 0,
-            speed : 1000,
+            speed : 500,
             weapons : {
                 1 : {
                     name : 'バスターナックル',
@@ -146,6 +188,11 @@ function dbMock(spec,my){
                     name : 'バスターナックル',
                     power : 2800
                 }
+            },
+            ability: {
+                type : 'boostBattery',
+                battery: 5,
+                threshold: 0.3
             }
         }
     ];

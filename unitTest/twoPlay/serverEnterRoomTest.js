@@ -109,6 +109,9 @@ describe('serverクラスのテスト', function() {
                                     power : 2800
                                 }
                             },
+                            ability: {
+                                type: 'none'
+                            },
                             pilot : {
                                 name : '恭子',
                                 pict : 'kyoko.png',
@@ -155,6 +158,9 @@ describe('serverクラスのテスト', function() {
                                     name : 'ブレイクパンチ',
                                     power : 3800
                                 }
+                            },
+                            ability: {
+                                type: 'none'
                             },
                             pilot : {
                                 name : '茜',
