@@ -184,7 +184,7 @@ describe('serverクラスのテスト', function() {
                         name : 'グランブレイバー',
                         pictName : 'GranBraver.PNG',
                         hp : 3200,
-                        defense : 0,
+                        defense : 1000,
                         speed : 500,
                         weapons : {
                             1 : {

@@ -7,6 +7,7 @@ const PHASE_DAMAGE = 'damage';
 const PHASE_CHARGE = 'charge';
 const PHASE_GAME_END = 'gameEnd';
 const PHASE_PILOT_SKILL = 'pilotSkill';
+const PHASE_ARMDOZER_ABILITY = 'armdozerAbility'
 
 function room(){
     var that = {};
@@ -59,6 +60,7 @@ function room(){
             case PHASE_DAMAGE:
             case PHASE_PILOT_SKILL:
             case PHASE_CHARGE:
+            case PHASE_ARMDOZER_ABILITY:
                 if (method === 'ok') {
                     inputFlag[userId] = true;
                 }   
@@ -98,8 +100,17 @@ function room(){
     that.executePhase = function(){
         var ret = null;
         switch(phase) {
-            case PHASE_PREPARE:
             case PHASE_DAMAGE:
+                var ability = Battle.doArmdozerAbility();
+                if(ability.isEffective===true){
+                    ret = {
+                        phase: 'armdozerAbility',
+                        playerId: ability.playerId
+                    }
+                    break;
+                }
+            case PHASE_PREPARE:
+            case PHASE_ARMDOZER_ABILITY:
             case PHASE_CHARGE:
                 if(Battle.isEnd()===true){
                     ret = {
