@@ -29,7 +29,10 @@ db.armdozers.insert({
             name : 'バスターナックル',
             power : 1100
         }
-    }      
+    },
+    ability: {
+    type: 'none'
+}
 });
 
 db.armdozers.insert({
@@ -60,7 +63,10 @@ db.armdozers.insert({
             name : 'ブレイクパンチ',
             power : 1300
         }
-    }       
+    },
+    ability: {
+        type: 'none'
+    }
 });
 
 db.armdozers.insert({
@@ -91,6 +97,9 @@ db.armdozers.insert({
             name : 'バスターナックル',
             power : 1200
         }
+    },
+    ability: {
+        type: 'none'
     }
 });
 
@@ -123,6 +132,9 @@ db.armdozers.insert({
             name : 'バスターナックル',
             power : 700
         }
+    },
+    ability: {
+        type: 'none'
     }
 });
 
@@ -155,6 +167,9 @@ db.armdozers.insert({
             name : 'バスターナックル',
             power : 1000
         }
+    },
+    ability: {
+        type: 'none'
     }
 });
 
@@ -187,6 +202,9 @@ db.armdozers.insert({
             name : 'バスターナックル',
             power : 1800
         }
+    },
+    ability: {
+        type: 'none'
     }
 });
 
