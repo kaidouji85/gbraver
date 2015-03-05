@@ -30,7 +30,7 @@ describe('serverクラスのテスト', function() {
     });
 
     describe('戦闘ロジック#アームドーザアビリティ', function() {
-        it('HPが一定以下になったのでアームドーザアビリティが発動する', function(done) {
+        it('アームドーザアビリティよりも死亡が優先する', function(done) {
             var client1 = io.connect(SERVER_URL, option);
             var client2 = io.connect(SERVER_URL, option);
             var tc = testCompleter({done:done});
@@ -210,7 +210,7 @@ describe('serverクラスのテスト', function() {
                 client2.emit('command', {
                     method : 'atack',
                     param : {
-                        battery : 2
+                        battery : 5
                     }
                 });
                 client2.once('resp', doDefenseCommandPhase2_client2);
@@ -224,7 +224,7 @@ describe('serverクラスのテスト', function() {
                 client1.emit('command', {
                     method : 'defenth',
                     param : {
-                        battery : 1
+                        battery : 0
                     }
                 });
                 client1.once('resp', doDamagePhase2_client1);
@@ -244,95 +244,50 @@ describe('serverクラスのテスト', function() {
                 client1.emit('command', {
                     method : 'ok'
                 });
-                client1.once('resp', doArmdozerAbilityPhase_client1);
+                client1.once('resp', doGameEndPhase_client1);
             }
 
             function doDamagePhase2_client2(data){
                 client2.emit('command', {
                     method : 'ok'
                 });
-                client2.once('resp', doArmdozerAbilityPhase_client2);
+                client2.once('resp', doGameEndPhase_client2);
             }
 
             //**************************************************
-            // アームドーザアビリティ発動
-            // test005@gmail.comのアームドーザスキルが発動する
+            // ゲーム終了
             //**************************************************
-            function assertOfArmdozerAbilityPhase(data){
+            function assertOfGameEndPhase(data){
                 var expect = {
-                    phase: 'armdozerAbility',
-                    playerId: 'test005@gmail.com',
-                    statusArray: {
-                        'test005@gmail.com': {
-                            hp: 800,
-                            battery: 5,
-                            active: 3500,
-                            skillPoint: 1,
+                    phase : 'gameEnd',
+                    winner : 'test002@gmail.com',
+                    statusArray : {
+                        'test002@gmail.com' : {
+                            hp : 4700,
+                            battery : 0,
+                            active : 0,
+                            skillPoint : 1,
                             overHeatFlag : false
                         },
-                        'test002@gmail.com': {
-                            hp: 4700,
-                            battery: 3,
-                            active: 0,
-                            skillPoint: 1,
+                        'test005@gmail.com' : {
+                            hp : -32400,
+                            battery : 5,
+                            active : 3500,
+                            skillPoint : 1,
                             overHeatFlag : false
                         }
                     }
                 };
-                assert.deepEqual(data,expect,'アームドーザアビリティのデータが正しい');
+                assert.deepEqual(data,expect,'ゲーム終了判定のオブジェクトが正しい');
             }
 
-            function doArmdozerAbilityPhase_client1(data) {
-                assertOfArmdozerAbilityPhase(data);
-                client1.emit('command', {
-                    method : 'ok'
-                });
-                client1.once('resp', doWaitPhase3_client1);
-            }
-
-            function doArmdozerAbilityPhase_client2(data) {
-                assertOfArmdozerAbilityPhase(data);
-                client2.emit('command', {
-                    method : 'ok'
-                });
-                client2.once('resp', doWaitPhase3_client2);
-            }
-
-            //**************************************************
-            // ウェイトフェイズ3
-            //**************************************************
-            function assertOfWaitPhase3(data){
-                var expect = {
-                    phase: 'wait',
-                    atackUserId: 'test005@gmail.com',
-                    turn: 3,
-                    statusArray: {
-                        'test005@gmail.com': {
-                            hp: 800,
-                            battery: 5,
-                            active: 5000,
-                            skillPoint: 1,
-                            overHeatFlag : false
-                        },
-                        'test002@gmail.com': {
-                            hp: 4700,
-                            battery: 3,
-                            active: 900,
-                            skillPoint: 1,
-                            overHeatFlag : false
-                        }
-                    }
-                };
-                assert.deepEqual(data,expect,'ウェイトフェイズ3のデータが正しい');
-            }
-
-            function doWaitPhase3_client1(data){
-                assertOfWaitPhase3(data);
+            function doGameEndPhase_client1(data) {
+                assertOfGameEndPhase(data);
                 tc.completeClient('test005@gmail.com');
             }
 
-            function doWaitPhase3_client2(data){
-                assertOfWaitPhase3(data);
+            function doGameEndPhase_client2(data) {
+                assertOfGameEndPhase(data);
                 tc.completeClient('test002@gmail.com');
             }
         });

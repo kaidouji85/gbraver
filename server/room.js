@@ -101,21 +101,19 @@ function room(){
         var ret = null;
         switch(phase) {
             case PHASE_DAMAGE:
-                var ability = Battle.doArmdozerAbility();
-                if(ability.isEffective===true){
-                    ret = {
-                        phase: 'armdozerAbility',
-                        playerId: ability.playerId
-                    }
-                    break;
-                }
             case PHASE_PREPARE:
             case PHASE_ARMDOZER_ABILITY:
             case PHASE_CHARGE:
+                var ability = Battle.doArmdozerAbility();
                 if(Battle.isEnd()===true){
                     ret = {
                         winner : Battle.getWinPlayer(),
                         phase : PHASE_GAME_END
+                    };
+                } else if(ability.isEffective===true) {
+                    ret = {
+                        phase: 'armdozerAbility',
+                        playerId: ability.playerId
                     };
                 } else {
                     ret = Battle.doWaitPhase();
