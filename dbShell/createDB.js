@@ -31,8 +31,10 @@ db.armdozers.insert({
         }
     },
     ability: {
-    type: 'none'
-}
+        type : 'boostBattery',
+        battery: 5,
+        threshold: 0.3
+    }
 });
 
 db.armdozers.insert({
