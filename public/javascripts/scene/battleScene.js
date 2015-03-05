@@ -37,6 +37,7 @@ function battleScene(spec,my){
     that.onPushBattleEndIcon = onPushBattleEndIcon;
     that.doGameEnd = doGameEnd;
     that.doPilotSkill = doPilotSkill;
+    that.doArmdozerAbility = doArmdozerAbility;
     that.refreshMertor = refreshMertor;
     that.atackIcon.addEventListener(Event.TOUCH_END,moveBatteryCommand);
     that.chargeIcon.addEventListener(Event.TOUCH_END,charge);
@@ -289,6 +290,17 @@ function battleScene(spec,my){
         that.battleEndIcon.setVisible(false);
         that.mesWindow.setText(core.MESSAGE_GET_ROOMINFO);
         emitPushBattleEndIcon();
+    }
+
+    function doArmdozerAbility(data) {
+        that.tl.then(function(){
+            refreshMertor(data.statusArray);
+            that.mesWindow.setVisible(true);
+            that.mesWindow.setText('アームドーザアビリティ発動');
+        }).delay(60).then(function(){
+            that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
+            emitCommand({method:'ok'});
+        });
     }
 
     return that;

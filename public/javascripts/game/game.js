@@ -247,6 +247,9 @@ function game(spec, my) {
             case 'pilotSkill':
                 core.battleScene.doPilotSkill(data);
                 break;
+            case 'armdozerAbility':
+                core.battleScene.doArmdozerAbility(data);
+                break;
         }
     }
 
