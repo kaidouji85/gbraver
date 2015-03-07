@@ -28,7 +28,7 @@ function doTest(){
     function armdozerAbilityPhase(){
         var data = {
             phase: 'armdozerAbility',
-            playerId: 'test002@gmail.com',
+            playerId: 'test001@gmail.com',
             statusArray : {
                 'test002@gmail.com' : {
                     hp : 4700,

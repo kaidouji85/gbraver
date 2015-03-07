@@ -292,12 +292,15 @@ function battleScene(spec,my){
     }
 
     function doArmdozerAbility(data) {
+        var playerId = data.playerId;
         that.tl.then(function(){
             refreshMertor(data.statusArray);
             that.mesWindow.setVisible(true);
-            that.mesWindow.setText(getArmdozerAbilityDescription(that.statusArray[data.playerId].ability));
+            that.mesWindow.setText(getArmdozerAbilityDescription(that.statusArray[playerId].ability));
+            that.charaSpriteArray[playerId].doMyTurnMotion();
         }).delay(120).then(function(){
             that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
+            that.charaSpriteArray[playerId].doStandMotion();
             emitCommand({method:'ok'});
         });
     }
