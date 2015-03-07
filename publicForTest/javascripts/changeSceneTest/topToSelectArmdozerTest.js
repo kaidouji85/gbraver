@@ -25,7 +25,7 @@ function doTest(){
 
     function pushSelectArmdozerButton(){
         Game.onChangeScene(assertOfChangeScene);
-        touch(Game.topScene.selectArmdozerButton);
+        touch(Game.currentScene.selectArmdozerButton);
     }
 
     function assertOfChangeScene(scene) {

@@ -25,7 +25,7 @@ function doTest(){
 
     function pushSelectPilotButton(){
         Game.onChangeScene(assertOfChangeScene);
-        touch(Game.topScene.selectPilotButton);
+        touch(Game.currentScene.selectPilotButton);
     }
 
     function assertOfChangeScene(scene) {

@@ -57,7 +57,6 @@ function gameBase(spec,my){
     core.BATTLE_MODE_SINGLE_PLAY = 'singlePlay';
 
     core.fps = 40;
-    core.setArmdozerScene = null;
     core.bgm = bgmManager();
     preLoad();
 

@@ -30,7 +30,7 @@ function doTest(){
     
     function pushBattleRoomButton(){
         //console.log('対戦ルーム入室ボタンを押す');
-        touch(Game.topScene.battleRoomButton);
+        touch(Game.currentScene.battleRoomButton);
         Game.onSendMessage(sendGetRoomInfo);
     }
 

@@ -56,28 +56,28 @@ function game(spec, my) {
     };
     
     core.changeTopScene = function(){
-        core.topScene = topScene({
+        var scene = topScene({
             armdozerId : armdozerId,
             pilotId : pilotId,
             armdozerList : armdozerList,
             pilotList : pilotList
         });
-        core.topScene.onPushSelectArmdozerButton(function(){
+        scene.onPushSelectArmdozerButton(function(){
             core.changeSelectArmdozerScene();
         });
-        core.topScene.onPushBattleRoom(function(){
+        scene.onPushBattleRoom(function(){
             emitSendMessage('getRoomInfo',null);
         });
-        core.topScene.onPushSelectPilotButton(function(){
+        scene.onPushSelectPilotButton(function(){
             core.changeSelectPilotScene();
         });
-        core.topScene.onPushSelectStageButton(function(){
+        scene.onPushSelectStageButton(function(){
             core.changeSelectStageScene();
         });
-        core.topScene.onPushLogOffButton(function(){
+        scene.onPushLogOffButton(function(){
             emitLogOff();
         });
-        core.replaceScene(core.topScene);
+        core.replaceScene(scene);
         emitChangeScene(core.currentScene.getName());
     };
 
