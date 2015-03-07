@@ -135,7 +135,6 @@ function battleScene(spec,my){
         that.tl.then(function(){
             that.pilotSpriteArray[attackUserId].visible = true;
             that.mesWindow.setVisible(true);
-            //that.mesWindow.setText(that.statusArray[attackUserId].skill.shout);
             that.mesWindow.setText(getSkillDescription(that.statusArray[attackUserId].pilot));
         }).delay(120).then(function(){
             that.pilotSpriteArray[attackUserId].visible = false;
@@ -296,8 +295,8 @@ function battleScene(spec,my){
         that.tl.then(function(){
             refreshMertor(data.statusArray);
             that.mesWindow.setVisible(true);
-            that.mesWindow.setText('アームドーザアビリティ発動');
-        }).delay(60).then(function(){
+            that.mesWindow.setText(getArmdozerAbilityDescription(that.statusArray[data.playerId].ability));
+        }).delay(120).then(function(){
             that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
             emitCommand({method:'ok'});
         });

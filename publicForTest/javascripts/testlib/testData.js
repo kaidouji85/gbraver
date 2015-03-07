@@ -53,6 +53,11 @@ function testData(spec,my){
                     name : 'バスターナックル',
                     power : 2800
                 }
+            },
+            ability: {
+                type : 'boostBattery',
+                battery: 5,
+                threshold: 0.3
             }
         },
         {
@@ -83,6 +88,9 @@ function testData(spec,my){
                     name : 'ブレイクパンチ',
                     power : 3800
                 }
+            },
+            ability: {
+                type: 'none'
             }
         },
         {
@@ -113,6 +121,9 @@ function testData(spec,my){
                     name: 'ブレイクパンチ',
                     power: 5000
                 }
+            },
+            ability: {
+                type: 'none'
             }
         },
         {
@@ -143,6 +154,9 @@ function testData(spec,my){
                     name : 'バスターナックル',
                     power : 2800
                 }
+            },
+            ability: {
+                type: 'none'
             }
         }
     ];
