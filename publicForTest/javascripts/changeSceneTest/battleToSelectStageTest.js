@@ -117,8 +117,8 @@ function doTest(){
     }
 
     function selectCommand(){
-        touch(Game.battleScene.plusIcon);
-        touch(Game.battleScene.okIcon);
+        touch(Game.currentScene.plusIcon);
+        touch(Game.currentScene.okIcon);
 
         Game.onSendMessage(function(message,data){
             //message,dataはplayerAtackTestで確認済み

@@ -27,18 +27,18 @@ function game(spec, my) {
 
     core.changeBattleScene = function(spec){
         spec.userId = userId;
-        core.battleScene = battleScene(spec);
-        core.battleScene.onCommand(function(command){
+        var scene = battleScene(spec);
+        scene.onCommand(function(command){
             emitSendMessage('command',command);
         });
-        core.battleScene.onPushBattleEndIcon(function(){
+        scene.onPushBattleEndIcon(function(){
             if(battleMode===core.BATTLE_MODE_TWO_PLAY){
                 emitSendMessage('getRoomInfo',null);
             } else if(battleMode===core.BATTLE_MODE_SINGLE_PLAY) {
                 core.changeSelectStageScene();
             }
         });
-        core.pushScene(core.battleScene);
+        core.pushScene(scene);
         emitChangeScene(core.currentScene.getName());
     };
 
@@ -180,7 +180,9 @@ function game(spec, my) {
                 changePhase(data);
                 break;
             case 'dissolveRoom':
-                core.battleScene.doDissolveRoom();
+                if(core.currentScene.getName()==='battle'){
+                    core.currentScene.doDissolveRoom();
+                }
                 break;
             case 'succesEnterRoom':
                 core.roomSelectScene.emitSuccesEnterRoom();
@@ -227,28 +229,28 @@ function game(spec, my) {
         var phase = data.phase;
         switch(phase) {
             case 'wait':
-                core.battleScene.doWaitPhase(data);
+                core.currentScene.doWaitPhase(data);
                 break;
             case 'atackCommand':
-                core.battleScene.doAtackCommandPhase(data);
+                core.currentScene.doAtackCommandPhase(data);
                 break;
             case 'charge':
-                core.battleScene.doChargePhase(data);
+                core.currentScene.doChargePhase(data);
                 break;
             case 'defenthCommand':
-                core.battleScene.doDefenthCommandPhase(data);
+                core.currentScene.doDefenthCommandPhase(data);
                 break;
             case 'damage':
-                core.battleScene.doDamagePhase(data);
+                core.currentScene.doDamagePhase(data);
                 break;
             case 'gameEnd':
-                core.battleScene.doGameEnd(data);
+                core.currentScene.doGameEnd(data);
                 break;
             case 'pilotSkill':
-                core.battleScene.doPilotSkill(data);
+                core.currentScene.doPilotSkill(data);
                 break;
             case 'armdozerAbility':
-                core.battleScene.doArmdozerAbility(data);
+                core.currentScene.doArmdozerAbility(data);
                 break;
         }
     }
