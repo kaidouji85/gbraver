@@ -29,7 +29,7 @@ function doTest(){
 
     function enterRoom(){
         //ルーム3を押す
-        touch(Game.roomSelectScene.enterRoomButtonArray[3]);
+        touch(Game.currentScene.enterRoomButtonArray[3]);
         Game.onSendMessage(sendEnterRoomCommand);
     }
 

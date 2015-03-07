@@ -27,7 +27,7 @@ function doTest(){
             };
             Game.changeRoomSelectScene(roomInfo);
             //console.log('ルーム2で入室');
-            touch(Game.roomSelectScene.enterRoomButtonArray[2]);
+            touch(Game.currentScene.enterRoomButtonArray[2]);
             Game.onSendMessage(sendEnterRoomCoomand);
         };
     }

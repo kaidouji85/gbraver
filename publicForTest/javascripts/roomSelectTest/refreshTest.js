@@ -27,7 +27,7 @@ function doTest(){
     }
 
     function pushRegreshButton(){
-        touch(Game.roomSelectScene.refreshButton);
+        touch(Game.currentScene.refreshButton);
         Game.onSendMessage(sendGetRoomInfo);
     }
 

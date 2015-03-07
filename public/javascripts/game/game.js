@@ -17,14 +17,6 @@ function game(spec, my) {
     var emitSendMessage = function(message,data){};
     var emitLogOff = function(){};
 
-    core.changeTitleScene = function(){
-        var scene = new titleScene();
-        scene.onPushStartButton(function(){
-            core.changeTopScene();
-        });
-        core.replaceScene(scene);
-    }
-
     core.changeBattleScene = function(spec){
         spec.userId = userId;
         var scene = battleScene(spec);
@@ -44,22 +36,22 @@ function game(spec, my) {
 
     core.changeRoomSelectScene = function(roomInfo){
         battleMode = core.BATTLE_MODE_TWO_PLAY;
-        core.roomSelectScene = roomSelectScene({
+        var scene = roomSelectScene({
             roomInfo : roomInfo
         });
-        core.roomSelectScene.onEnterRoom(function(data){
+        scene.onEnterRoom(function(data){
             emitSendMessage('enterRoom',data);
         });
-        core.roomSelectScene.onPushPrevButton(function(data){
+        scene.onPushPrevButton(function(data){
             core.changeTopScene();
         });
-        core.roomSelectScene.onLeaveRoom(function(){
+        scene.onLeaveRoom(function(){
             emitSendMessage('leaveRoom',null);
         });
-        core.roomSelectScene.onPushRefreshButton(function(){
+        scene.onPushRefreshButton(function(){
             emitSendMessage('getRoomInfo',null);
         });
-        core.replaceScene(core.roomSelectScene);
+        core.replaceScene(scene);
         emitChangeScene(core.currentScene.getName());
     };
     
@@ -185,7 +177,9 @@ function game(spec, my) {
                 }
                 break;
             case 'succesEnterRoom':
-                core.roomSelectScene.emitSuccesEnterRoom();
+                if(core.currentScene.getName()==='selectRoom'){
+                    core.currentScene.emitSuccesEnterRoom();
+                }
                 break;
             case 'successLeaveRoom':
                 emitSendMessage('getRoomInfo',null);
@@ -194,7 +188,9 @@ function game(spec, my) {
                 core.changeRoomSelectScene(data);
                 break;
             case 'enterRoomError':
-                core.roomSelectScene.emitEnterRoomError(data);
+                if(core.currentScene.getName()==='selectRoom') {
+                    core.currentScene.emitEnterRoomError(data);
+                }
                 break;
             case 'successSetPilot':
                 core.changeTopScene();

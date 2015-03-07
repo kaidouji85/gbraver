@@ -32,7 +32,7 @@ function doTest(){
 
     function pushChangeButton(){
         console.log('戻るボタンを押す');
-        touch(Game.roomSelectScene.prevButton);
+        touch(Game.currentScene.prevButton);
         Game.onChangeScene(assertOfChangeScene);
     }
 
