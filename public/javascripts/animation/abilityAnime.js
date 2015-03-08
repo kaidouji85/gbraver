@@ -11,7 +11,7 @@ function abilityAnime(spec,my){
             that.armdozerAbilityBack.setVisible(true);
             that.armdozerAbilityCutInArray[playerId].visible = true;
             cutInAnime();
-        }).delay(250).then(function(){
+        }).delay(120).then(function(){
             that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
             that.armdozerAbilityBack.setVisible(false);
             that.armdozerAbilityCutInArray[playerId].visible = false;
@@ -19,8 +19,11 @@ function abilityAnime(spec,my){
         });
 
         function cutInAnime(){
-            that.armdozerAbilityCutInArray[playerId].y = -128;
-            that.armdozerAbilityCutInArray[playerId].tl.delay(40).moveTo(0,80,120);
+            var dir = that.armdozerAbilityCutInArray[playerId].scaleX>0 ? 1 : -1;
+            var targetX = dir>0 ? 40 : -40;
+            that.armdozerAbilityCutInArray[playerId].y = 80;
+            that.armdozerAbilityCutInArray[playerId].x = dir>0 ? 320 : -320;
+            that.armdozerAbilityCutInArray[playerId].tl.moveTo(targetX,80,10);
         }
     }
 

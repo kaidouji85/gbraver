@@ -71,7 +71,7 @@ function battleSceneBase(spec,my){
         for(var uid in that.statusArray){
             //アームドーザ発動時のアップ画像
             if(that.statusArray[uid].ability.type!=='none'){
-                that.armdozerAbilityCutInArray[uid] = new Sprite(320,512);
+                that.armdozerAbilityCutInArray[uid] = new Sprite(320,256);
                 that.armdozerAbilityCutInArray[uid].image = core.assets[core.PICT_PREFIX+'wakeUp'+that.statusArray[uid].pictName];
                 that.armdozerAbilityCutInArray[uid].x = 0;
                 that.armdozerAbilityCutInArray[uid].y = 80;
