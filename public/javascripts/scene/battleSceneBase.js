@@ -20,6 +20,7 @@ function battleSceneBase(spec,my){
     that.pilotIconArray = {};
     that.hitEffectArray = {};
     that.mertorWindowArray = {};
+    that.armdozerAbilityCutInArray = {};
 
     (function() {
         //背景(地面)
@@ -35,6 +36,48 @@ function battleSceneBase(spec,my){
         that.commandWindow.x = 0;
         that.commandWindow.y = 336;
         that.addChild(that.commandWindow);
+
+        for(var uid in that.statusArray){
+            //パイロットアイコン
+            that.pilotIconArray[uid] = pilotIcon({
+                windowPict : core.assets[core.PICT_BLACK_WINDOW],
+                pilotPict : core.assets[core.PICT_PREFIX+that.statusArray[uid].pilot.pict],
+                pictTopMargin : that.statusArray[uid].pilot.pictTopMargin,
+                pictLeftMargin : that.statusArray[uid].pilot.pictLeftMargin,
+                scaleX : uid===that.userId ? 1 : -1
+            });
+            that.pilotIconArray[uid].x = uid===that.userId ? 240 : 0;
+            that.pilotIconArray[uid].y = 80;
+            that.addChild(that.pilotIconArray[uid]);
+
+            //キャラクタースプライト
+            var spec = {
+                pict : core.assets[core.PICT_PREFIX+that.statusArray[uid].pictName],
+                direction : uid===that.userId ? 'right' : 'left'
+            };
+            that.charaSpriteArray[uid] = new ArmdozerSprite(spec);
+            that.addChild(that.charaSpriteArray[uid]);
+        }
+
+        //アームドーザアビリティ発動背景
+        that.armdozerAbilityBack = new Sprite(320,256);
+        that.armdozerAbilityBack.image = core.assets[core.PICT_WAKEUP_BACK];
+        that.armdozerAbilityBack.y = 80;
+        that.addChild(that.armdozerAbilityBack);
+
+        for(var uid in that.statusArray){
+            //アームドーザ発動時のアップ画像
+            if(that.statusArray[uid].ability.type!=='none'){
+                that.armdozerAbilityCutInArray[uid] = new Sprite(160,160);
+                that.armdozerAbilityCutInArray[uid].image = core.assets[core.PICT_PREFIX+that.statusArray[uid].pictName];
+                that.armdozerAbilityCutInArray[uid].x = 100;
+                that.armdozerAbilityCutInArray[uid].y = 232;
+                that.armdozerAbilityCutInArray[uid].scaleX = uid===that.userId ? 3 : -3;
+                that.armdozerAbilityCutInArray[uid].scaleY = 3;
+                that.armdozerAbilityCutInArray[uid].visible = false;
+                that.addChild(that.armdozerAbilityCutInArray[uid]);
+            }
+        }
 
         for(var uid in that.statusArray){
             //ウインドウ
@@ -76,28 +119,6 @@ function battleSceneBase(spec,my){
             that.batteryMertorArray[uid].setValue(5);
             that.addChild(that.batteryMertorArray[uid]);
 
-            //パイロットアイコン
-            that.pilotIconArray[uid] = pilotIcon({
-                windowPict : core.assets[core.PICT_BLACK_WINDOW],
-                pilotPict : core.assets[core.PICT_PREFIX+that.statusArray[uid].pilot.pict],
-                pictTopMargin : that.statusArray[uid].pilot.pictTopMargin,
-                pictLeftMargin : that.statusArray[uid].pilot.pictLeftMargin,
-                scaleX : uid===that.userId ? 1 : -1
-            });
-            that.pilotIconArray[uid].x = uid===that.userId ? 240 : 0;
-            that.pilotIconArray[uid].y = 80;
-            that.addChild(that.pilotIconArray[uid]);
-
-            //キャラクタースプライト
-            var spec = {
-                pict : core.assets[core.PICT_PREFIX+that.statusArray[uid].pictName],
-                direction : uid===that.userId ? 'right' : 'left'
-            };
-            that.charaSpriteArray[uid] = new ArmdozerSprite(spec);
-            that.addChild(that.charaSpriteArray[uid]);
-        }
-
-        for(var uid in that.statusArray){
             //出したバッテリー
             that.batteryNumberArray[uid] = new Sprite(64,64);
             that.batteryNumberArray[uid].image = core.assets[core.PICT_BATTERY_NUMBER];
