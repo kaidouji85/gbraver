@@ -163,6 +163,14 @@ function battleSceneBase(spec,my){
             that.addChild(that.pilotSpriteArray[uid]);
         }
 
+        //アームドーザアビリティ発動テロップ
+        that.executeAbilitySprite = new Sprite(320,64);
+        that.executeAbilitySprite.image = core.assets[core.PICT_EXECUTE_ABILITY_TELOP];
+        that.executeAbilitySprite.x = 0;
+        that.executeAbilitySprite.y = 270;
+        that.executeAbilitySprite.visible = false;
+        that.addChild(that.executeAbilitySprite);
+
         //攻撃アイコン
         that.atackIcon = pictButton({
             text : '攻撃',

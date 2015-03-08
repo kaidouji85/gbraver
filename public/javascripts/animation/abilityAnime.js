@@ -17,10 +17,13 @@ function abilityAnime(spec,my){
 
             that.armdozerAbilityCutInArray[playerId].visible = true;
             cutInAnime();
+
+            that.executeAbilitySprite.visible = true;
         }).delay(120).then(function(){
             that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
             that.armdozerAbilityBack.setVisible(false);
             that.armdozerAbilityCutInArray[playerId].visible = false;
+            that.executeAbilitySprite.visible = false;
             fn();
         });
 
