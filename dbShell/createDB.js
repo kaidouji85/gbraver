@@ -43,7 +43,7 @@ db.armdozers.insert({
     pictName : 'Landozer.PNG',
     hp : 3300,
     defense : 1200,
-    speed : 80,
+    speed : 90,
     weapons : {
         1 : {
             name : 'ブレイクパンチ',
@@ -238,7 +238,7 @@ db.pilots.insert({
     hp : 500,
     power : 100,
     defense : 100,
-    speed : 5
+    speed : 10
 });
 
 db.pilots.insert({
@@ -253,7 +253,7 @@ db.pilots.insert({
     hp : 100,
     power : 300,
     defense : 100,
-    speed : 5
+    speed : 10
 });
 
 db.pilots.insert({
@@ -268,7 +268,7 @@ db.pilots.insert({
     hp : 100,
     power : 100,
     defense : 300,
-    speed : 5
+    speed : 10
 });
 
 db.stages.remove({});
