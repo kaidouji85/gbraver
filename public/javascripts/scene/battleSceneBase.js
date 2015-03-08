@@ -61,8 +61,7 @@ function battleSceneBase(spec,my){
 
         //アームドーザアビリティ発動背景
         that.armdozerAbilityBack = scrollBackGround({
-            pict : core.assets[core.PICT_WAKEUP_BACK],
-            speed : -6
+            pict : core.assets[core.PICT_WAKEUP_BACK]
         });
         that.armdozerAbilityBack.y = 80;
         that.armdozerAbilityBack.setVisible(false);
