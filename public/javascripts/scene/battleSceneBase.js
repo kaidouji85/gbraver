@@ -60,10 +60,12 @@ function battleSceneBase(spec,my){
         }
 
         //アームドーザアビリティ発動背景
-        that.armdozerAbilityBack = new Sprite(320,256);
-        that.armdozerAbilityBack.image = core.assets[core.PICT_WAKEUP_BACK];
+        that.armdozerAbilityBack = scrollBackGround({
+            pict : core.assets[core.PICT_WAKEUP_BACK],
+            speed : -6
+        });
         that.armdozerAbilityBack.y = 80;
-        that.armdozerAbilityBack.visible = false;
+        that.armdozerAbilityBack.setVisible(false);
         that.addChild(that.armdozerAbilityBack);
 
         for(var uid in that.statusArray){
@@ -74,7 +76,6 @@ function battleSceneBase(spec,my){
                 that.armdozerAbilityCutInArray[uid].x = 0;
                 that.armdozerAbilityCutInArray[uid].y = 80;
                 that.armdozerAbilityCutInArray[uid].scaleX = uid===that.userId ? 1 : -1;
-                //that.armdozerAbilityCutInArray[uid].scaleY = 3;
                 that.armdozerAbilityCutInArray[uid].visible = false;
                 that.addChild(that.armdozerAbilityCutInArray[uid]);
             }

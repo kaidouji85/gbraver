@@ -8,16 +8,20 @@ function abilityAnime(spec,my){
             that.refreshMertor(data.statusArray);
             that.mesWindow.setVisible(true);
             that.mesWindow.setText(getArmdozerAbilityDescription(that.statusArray[playerId].ability));
-            that.charaSpriteArray[playerId].doMyTurnMotion();
-            that.armdozerAbilityBack.visible = true;
+            that.armdozerAbilityBack.setVisible(true);
             that.armdozerAbilityCutInArray[playerId].visible = true;
-        }).delay(120).then(function(){
+            cutInAnime();
+        }).delay(250).then(function(){
             that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
-            that.charaSpriteArray[playerId].doStandMotion();
-            that.armdozerAbilityBack.visible = false;
+            that.armdozerAbilityBack.setVisible(false);
             that.armdozerAbilityCutInArray[playerId].visible = false;
             fn();
         });
+
+        function cutInAnime(){
+            that.armdozerAbilityCutInArray[playerId].y = -128;
+            that.armdozerAbilityCutInArray[playerId].tl.delay(40).moveTo(0,80,120);
+        }
     }
 
     return that;
