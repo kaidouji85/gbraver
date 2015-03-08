@@ -63,17 +63,18 @@ function battleSceneBase(spec,my){
         that.armdozerAbilityBack = new Sprite(320,256);
         that.armdozerAbilityBack.image = core.assets[core.PICT_WAKEUP_BACK];
         that.armdozerAbilityBack.y = 80;
+        that.armdozerAbilityBack.visible = false;
         that.addChild(that.armdozerAbilityBack);
 
         for(var uid in that.statusArray){
             //アームドーザ発動時のアップ画像
             if(that.statusArray[uid].ability.type!=='none'){
-                that.armdozerAbilityCutInArray[uid] = new Sprite(160,160);
-                that.armdozerAbilityCutInArray[uid].image = core.assets[core.PICT_PREFIX+that.statusArray[uid].pictName];
-                that.armdozerAbilityCutInArray[uid].x = 100;
-                that.armdozerAbilityCutInArray[uid].y = 232;
-                that.armdozerAbilityCutInArray[uid].scaleX = uid===that.userId ? 3 : -3;
-                that.armdozerAbilityCutInArray[uid].scaleY = 3;
+                that.armdozerAbilityCutInArray[uid] = new Sprite(320,512);
+                that.armdozerAbilityCutInArray[uid].image = core.assets[core.PICT_PREFIX+'wakeUp'+that.statusArray[uid].pictName];
+                that.armdozerAbilityCutInArray[uid].x = 0;
+                that.armdozerAbilityCutInArray[uid].y = 80;
+                that.armdozerAbilityCutInArray[uid].scaleX = uid===that.userId ? 1 : -1;
+                //that.armdozerAbilityCutInArray[uid].scaleY = 3;
                 that.armdozerAbilityCutInArray[uid].visible = false;
                 that.addChild(that.armdozerAbilityCutInArray[uid]);
             }

@@ -21,6 +21,9 @@ function battleScene(spec,my){
     var ExplosionAnime = explosionAnime({
         battleScene : that
     });
+    var AbilityAnime = abilityAnime({
+        battleScene : that
+    });
 
     var WAIT_TIME_ACTIVE_RESET = 30;
     var FRAME_STAND = 0;
@@ -292,6 +295,7 @@ function battleScene(spec,my){
     }
 
     function doArmdozerAbility(data) {
+        /*
         var playerId = data.playerId;
         that.tl.then(function(){
             refreshMertor(data.statusArray);
@@ -307,6 +311,10 @@ function battleScene(spec,my){
             that.armdozerAbilityCutInArray[playerId].visible = false;
             emitCommand({method:'ok'});
         });
+        */
+        AbilityAnime.play(data,function(){
+            emitCommand({method:'ok'});
+        })
     }
 
     return that;
