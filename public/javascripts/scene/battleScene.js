@@ -24,6 +24,9 @@ function battleScene(spec,my){
     var AbilityAnime = abilityAnime({
         battleScene : that
     });
+    var SkillAnime = skillAnime({
+        battleScene : that
+    });
 
     var WAIT_TIME_ACTIVE_RESET = 30;
     var FRAME_STAND = 0;
@@ -132,22 +135,9 @@ function battleScene(spec,my){
     };
 
     function doPilotSkill(data){
-        refreshMertor(data.statusArray);
         skillPoint = data.statusArray[that.userId].skillPoint;
 
-        that.tl.then(function(){
-            that.pilotSpriteArray[attackUserId].visible = true;
-            that.mesWindow.setVisible(true);
-            that.mesWindow.setText(getSkillDescription(that.statusArray[attackUserId].pilot));
-        }).delay(120).then(function(){
-            that.pilotSpriteArray[attackUserId].visible = false;
-            that.mesWindow.setVisible(true);
-            if(attackUserId === that.userId){
-                that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
-            } else {
-                that.mesWindow.setText(core.MESSAGE_WAIT_COMMAND);
-            }
-
+        SkillAnime.play(attackUserId,data,function(){
             emitCommand({method:'ok'});
         });
     }
@@ -295,23 +285,6 @@ function battleScene(spec,my){
     }
 
     function doArmdozerAbility(data) {
-        /*
-        var playerId = data.playerId;
-        that.tl.then(function(){
-            refreshMertor(data.statusArray);
-            that.mesWindow.setVisible(true);
-            that.mesWindow.setText(getArmdozerAbilityDescription(that.statusArray[playerId].ability));
-            that.charaSpriteArray[playerId].doMyTurnMotion();
-            that.armdozerAbilityBack.visible = true;
-            that.armdozerAbilityCutInArray[playerId].visible = true;
-        }).delay(120).then(function(){
-            that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
-            that.charaSpriteArray[playerId].doStandMotion();
-            that.armdozerAbilityBack.visible = false;
-            that.armdozerAbilityCutInArray[playerId].visible = false;
-            emitCommand({method:'ok'});
-        });
-        */
         AbilityAnime.play(data,function(){
             emitCommand({method:'ok'});
         })
