@@ -25,6 +25,7 @@ function gameBase(spec,my){
     core.PICT_OVERHEAT_BUTTON = core.PICT_PREFIX+'overHeatButton.png';
     core.PICT_WAKEUP_BACK = core.PICT_PREFIX+'wakeUpBack.png';
     core.PICT_EXECUTE_ABILITY_TELOP = core.PICT_PREFIX+'executeAbility.png';
+    core.PICT_EXECUTE_SKILL_TELOP = core.PICT_PREFIX+'executePilotSkill.png';
     core.SOUND_PREFIX = contentBaseUrl+'/sound/';
     core.SOUND_BATTLE = core.SOUND_PREFIX + 'game_maoudamashii_1_battle34.mp3';
     core.SOUND_CONFIG = core.SOUND_PREFIX + 'game_maoudamashii_5_town07.mp3';
@@ -94,6 +95,7 @@ function gameBase(spec,my){
         core.preload(core.PICT_OVERHEAT_BUTTON);
         core.preload(core.PICT_WAKEUP_BACK);
         core.preload(core.PICT_EXECUTE_ABILITY_TELOP);
+        core.preload(core.PICT_EXECUTE_SKILL_TELOP);
 
         core.preload(core.SOUND_BATTLE);
         core.preload(core.SOUND_CONFIG);

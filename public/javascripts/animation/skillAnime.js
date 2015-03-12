@@ -16,6 +16,8 @@ function skillAnime(spec,my){
             battleScene.armdozerAbilityBack.setVisible(true);
             battleScene.armdozerAbilityBack.setSpeed(speed);
 
+            battleScene.executePilotSKillSprite.visible=true;
+
             battleScene.pilotSpriteArray[attackUserId].visible = true;
             cutInAnime();
 
@@ -27,6 +29,7 @@ function skillAnime(spec,my){
             }
             battleScene.armdozerAbilityBack.setVisible(false);
             battleScene.pilotSpriteArray[attackUserId].visible = false;
+            battleScene.executePilotSKillSprite.visible=false;
             fn();
         });
 

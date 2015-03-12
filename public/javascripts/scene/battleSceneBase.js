@@ -171,6 +171,14 @@ function battleSceneBase(spec,my){
         that.executeAbilitySprite.visible = false;
         that.addChild(that.executeAbilitySprite);
 
+        //パイロットスキル発動テロップ
+        that.executePilotSKillSprite = new Sprite(320,64);
+        that.executePilotSKillSprite.image = core.assets[core.PICT_EXECUTE_SKILL_TELOP];
+        that.executePilotSKillSprite.x = 0;
+        that.executePilotSKillSprite.y = 270;
+        that.executePilotSKillSprite.visible = false;
+        that.addChild(that.executePilotSKillSprite);
+
         //攻撃アイコン
         that.atackIcon = pictButton({
             text : '攻撃',
