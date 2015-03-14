@@ -35,6 +35,7 @@ function gameBase(spec,my){
     core.SOUND_EXPLOSION = core.SOUND_PREFIX + 'tm2r_bom27_a.wav';
     core.SOUND_PUSH_BUTTON = core.SOUND_PREFIX + 'tm2_switch001.wav';
     core.SOUND_OPEN_BATTERY = core.SOUND_PREFIX + 'power21.wav';
+    core.SOUND_WAKE_UP = core.SOUND_PREFIX + 'mecha20.wav';
     core.WAIT_TIME_ACTIVE_RESET = 30;
     core.ICON_WIDTH = 124;
     core.ICON_HEIGHT = 40;
@@ -106,6 +107,7 @@ function gameBase(spec,my){
         core.preload(core.SOUND_EXPLOSION);
         core.preload(core.SOUND_PUSH_BUTTON);
         core.preload(core.SOUND_OPEN_BATTERY);
+        core.preload(core.SOUND_WAKE_UP);
     }
     return core;
 }

@@ -33,6 +33,9 @@ function abilityAnime(spec,my){
             battleScene.armdozerAbilityCutInArray[playerId].y = 80;
             battleScene.armdozerAbilityCutInArray[playerId].x = dir>0 ? 200 : -200;
             battleScene.armdozerAbilityCutInArray[playerId].tl.moveTo(targetX,80,10);
+            battleScene.armdozerAbilityCutInArray[playerId].tl.delay(10).then(function(){
+                core.assets[core.SOUND_WAKE_UP].play();
+            });
         }
     }
 

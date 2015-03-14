@@ -38,6 +38,9 @@ function skillAnime(spec,my){
             battleScene.pilotSpriteArray[attackUserId].y = 80;
             battleScene.pilotSpriteArray[attackUserId].x = dir>0 ? 200 : -200;
             battleScene.pilotSpriteArray[attackUserId].tl.moveTo(targetX,80,10);
+            battleScene.pilotSpriteArray[attackUserId].tl.delay(5).then(function(){
+                core.assets[core.SOUND_WAKE_UP].play();
+            });
         }
     }
 
