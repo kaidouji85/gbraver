@@ -121,8 +121,9 @@ function battleSceneBase(spec,my){
             that.addChild(that.batteryMertorArray[uid]);
 
             //出したバッテリー
-            that.batteryNumberArray[uid] = new Sprite(64,64);
-            that.batteryNumberArray[uid].image = core.assets[core.PICT_BATTERY_NUMBER];
+            that.batteryNumberArray[uid] = batteryNumber({
+                pict : core.assets[core.PICT_BATTERY_NUMBER]
+            });
             that.batteryNumberArray[uid].x = uid===that.userId ? 226 : 30;
             that.batteryNumberArray[uid].y = 190;
             that.batteryNumberArray[uid].visible = false;

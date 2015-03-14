@@ -18,7 +18,9 @@ function attackAnime(spec,my){
                 battleScene.batteryMertorArray[uid].setValue(battery);
                 battleScene.batteryNumberArray[uid].frame = uid===attackUserId ? atackBattery : defenthBattery;
                 battleScene.batteryNumberArray[uid].visible = true;
+                battleScene.batteryNumberArray[uid].playOpenBatteryAnime();
                 battleScene.charaSpriteArray[uid].frame = uid===attackUserId ? core.FRAME_ATTACK : core.FRAME_STAND;
+                core.assets[core.SOUND_OPEN_BATTERY].play();
             }
         }).delay(120).then(function(){
             for(var uid in battleScene.statusArray){
