@@ -19,7 +19,6 @@ function gameBase(spec,my){
     core.PICT_COMMAND_WINDOW = core.PICT_PREFIX+'commandWindow.png';
     core.PICT_WIN = core.PICT_PREFIX+'win.png';
     core.PICT_LOSE = core.PICT_PREFIX+'lose.png';
-    core.PICT_TITLE = core.PICT_PREFIX+'title.png';
     core.PICT_BUTTON = core.PICT_PREFIX+'button.png';
     core.PICT_EXPLOSION = core.PICT_PREFIX+'explosion.png';
     core.PICT_OVERHEAT_BUTTON = core.PICT_PREFIX+'overHeatButton.png';
@@ -91,7 +90,6 @@ function gameBase(spec,my){
         core.preload(core.PICT_COMMAND_WINDOW);
         core.preload(core.PICT_WIN);
         core.preload(core.PICT_LOSE);
-        core.preload(core.PICT_TITLE);
         core.preload(core.PICT_BUTTON);
         core.preload(core.PICT_EXPLOSION);
         core.preload(core.PICT_OVERHEAT_BUTTON);
