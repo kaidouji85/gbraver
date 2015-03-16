@@ -10,12 +10,15 @@ a {
 
 .center {
     text-align:center;
-    top: 320px;
-
 }
 
-.basicDiv {
-    margin-top: 16px;
+.topPict {
+    margin-top: 24px;
+    margin-bottom: 8px;
+}
+
+.buttonBasic {
+    margin-top: 8px;
 }
 
 .myButton {
