@@ -7,16 +7,14 @@ a {
     color: #00B7FF;
 }
 
-#login {
-    position: fixed;
+.center {
+    text-align:center;
     top: 320px;
-    left: 42px;
+
 }
 
-#howToPlay {
-    position: fixed;
-    top: 370px;
-    left: 42px;
+.basicDiv {
+    margin-top: 8px;
 }
 
 .myButton {
