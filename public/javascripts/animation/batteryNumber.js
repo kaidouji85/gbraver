@@ -3,10 +3,10 @@ function batteryNumber(spec,my){
     that.image = spec.pict;
 
     that.playOpenBatteryAnime = function(){
-        that.scaleX = 4;
-        that.scaleY = 4;
-        that.opacity = 0.4;
-        that.tl.scaleTo(1,1,5).and().fadeIn(5);
+        that.scaleX = 1;
+        that.scaleY = 1;
+        that.opacity = 0;
+        that.tl.fadeIn(15).and().scaleTo(2,2,15).delay(15).scaleTo(1,1,15);
     }
 
 
