@@ -6,28 +6,28 @@ db.armdozers.insert({
     name : 'グランブレイバー',
     pictName : 'GranBraver.PNG',
     hp : 3000,
-    defense : 1000,
+    defense : 950,
     speed : 110,
     weapons : {
         1 : {
             name : 'バスターナックル',
-            power : 1100
+            power : 1000
         },
         2 : {
             name : 'バスターナックル',
-            power : 1100
+            power : 1000
         },
         3 : {
             name : 'バスターナックル',
-            power : 1100
+            power : 1000
         },
         4 : {
             name : 'バスターナックル',
-            power : 1100
+            power : 1000
         },
         5 : {
             name : 'バスターナックル',
-            power : 1100
+            power : 1000
         }
     },
     ability: {
@@ -42,28 +42,28 @@ db.armdozers.insert({
     name : 'ランドーザ',
     pictName : 'Landozer.PNG',
     hp : 3300,
-    defense : 1200,
-    speed : 90,
+    defense : 1000,
+    speed : 95,
     weapons : {
         1 : {
             name : 'ブレイクパンチ',
-            power : 1300
+            power : 1100
         },
         2 : {
             name : 'ブレイクパンチ',
-            power : 1300
+            power : 1100
         },
         3 : {
             name : 'ブレイクパンチ',
-            power : 1300
+            power : 1100
         },
         4 : {
             name : 'ブレイクパンチ',
-            power : 1300
+            power : 1100
         },
         5 : {
             name : 'ブレイクパンチ',
-            power : 1300
+            power : 1100
         }
     },
     ability: {
@@ -75,29 +75,29 @@ db.armdozers.insert({
     armdozerId : 'zeroBraver',
     name : 'ゼロブレイバー',
     pictName : 'ZeroBraver.PNG',
-    hp : 2500,
-    defense : 800,
-    speed : 145,
+    hp : 2300,
+    defense : 850,
+    speed : 130,
     weapons : {
         1 : {
             name : 'バスターナックル',
-            power : 1200
+            power : 1100
         },
         2 : {
             name : 'バスターナックル',
-            power : 1200
+            power : 1100
         },
         3 : {
             name : 'バスターナックル',
-            power : 1200
+            power : 1100
         },
         4 : {
             name : 'バスターナックル',
-            power : 1200
+            power : 1100
         },
         5 : {
             name : 'バスターナックル',
-            power : 1200
+            power : 1100
         }
     },
     ability: {
@@ -220,10 +220,10 @@ db.pilots.insert({
     shout : 'やぁぁぁぁて、やるぜ！！    ……なんてね。',
     type : 'quickCharge',
     battery : 3,
-    hp : 100,
-    power : 100,
-    defense : 100,
-    speed : 25
+    hp : 200,
+    power : 50,
+    defense : 50,
+    speed : 20
 });
 
 db.pilots.insert({
@@ -236,8 +236,8 @@ db.pilots.insert({
     type : 'recoverHp',
     value : 0.3,
     hp : 500,
-    power : 100,
-    defense : 100,
+    power : 50,
+    defense : 50,
     speed : 10
 });
 
@@ -250,9 +250,9 @@ db.pilots.insert({
     shout: 'この一撃に、全てを掛ける！！',
     type: 'guardBreak',
     value : 200,
-    hp : 100,
-    power : 300,
-    defense : 100,
+    hp : 200,
+    power : 100,
+    defense : 50,
     speed : 10
 });
 
@@ -265,9 +265,9 @@ db.pilots.insert({
     shout: '肉を切らせて骨を断つ',
     type: 'superGuard',
     value : 0.5,
-    hp : 100,
-    power : 100,
-    defense : 300,
+    hp : 200,
+    power : 50,
+    defense : 100,
     speed : 10
 });
 
