@@ -33,7 +33,7 @@ db.armdozers.insert({
     ability: {
         type : 'boostBattery',
         battery: 5,
-        threshold: 0.3
+        threshold: 0.4
     }
 });
 
@@ -47,23 +47,23 @@ db.armdozers.insert({
     weapons : {
         1 : {
             name : 'ブレイクパンチ',
-            power : 1100
+            power : 1050
         },
         2 : {
             name : 'ブレイクパンチ',
-            power : 1100
+            power : 1050
         },
         3 : {
             name : 'ブレイクパンチ',
-            power : 1100
+            power : 1050
         },
         4 : {
             name : 'ブレイクパンチ',
-            power : 1100
+            power : 1050
         },
         5 : {
             name : 'ブレイクパンチ',
-            power : 1100
+            power : 1050
         }
     },
     ability: {
@@ -75,9 +75,9 @@ db.armdozers.insert({
     armdozerId : 'zeroBraver',
     name : 'ゼロブレイバー',
     pictName : 'ZeroBraver.PNG',
-    hp : 2300,
-    defense : 850,
-    speed : 130,
+    hp : 2600,
+    defense : 900,
+    speed : 140,
     weapons : {
         1 : {
             name : 'バスターナックル',
@@ -235,7 +235,7 @@ db.pilots.insert({
     shout : 'まだまだ、勝負はこれからよ。',
     type : 'recoverHp',
     value : 0.3,
-    hp : 500,
+    hp : 300,
     power : 50,
     defense : 50,
     speed : 10
