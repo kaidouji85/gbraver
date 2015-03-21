@@ -234,7 +234,7 @@ describe('serverクラスのテスト', function() {
                 expect = {
                     phase : 'damage',
                     hit : 1,
-                    damage : 3200,
+                    damage : 1920,
                     atackBattery : 3,
                     defenthBattery : 2,
                     statusArray : {
@@ -246,7 +246,7 @@ describe('serverクラスのテスト', function() {
                             overHeatFlag : false
                         },
                         'test002@gmail.com' : {
-                            hp : 1500,
+                            hp : 2780,
                             battery : 3,
                             active : 3000,
                             skillPoint : 1,
@@ -290,7 +290,7 @@ describe('serverクラスのテスト', function() {
                             overHeatFlag : false
                         },
                         'test002@gmail.com' : {
-                            hp : 1500,
+                            hp : 2780,
                             battery : 4,
                             active : 5100,
                             skillPoint : 1,

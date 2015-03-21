@@ -197,7 +197,7 @@ describe('serverクラスのテスト', function() {
 
             //**************************************************
             // アタックコマンドフェイズ2
-            // test002@gmail.comが2で攻撃する
+            // test002@gmail.comが3で攻撃する
             //**************************************************
             function doAttackCommandPhase2_client1(data) {
                 client1.emit('command', {
@@ -210,7 +210,7 @@ describe('serverクラスのテスト', function() {
                 client2.emit('command', {
                     method : 'atack',
                     param : {
-                        battery : 2
+                        battery : 3
                     }
                 });
                 client2.once('resp', doDefenseCommandPhase2_client2);
@@ -264,7 +264,7 @@ describe('serverクラスのテスト', function() {
                     playerId: 'test005@gmail.com',
                     statusArray: {
                         'test005@gmail.com': {
-                            hp: 800,
+                            hp: 380,
                             battery: 5,
                             active: 3500,
                             skillPoint: 1,
@@ -272,7 +272,7 @@ describe('serverクラスのテスト', function() {
                         },
                         'test002@gmail.com': {
                             hp: 4700,
-                            battery: 3,
+                            battery: 2,
                             active: 0,
                             skillPoint: 1,
                             overHeatFlag : false
@@ -308,7 +308,7 @@ describe('serverクラスのテスト', function() {
                     turn: 3,
                     statusArray: {
                         'test005@gmail.com': {
-                            hp: 800,
+                            hp: 380,
                             battery: 5,
                             active: 5000,
                             skillPoint: 1,
@@ -316,7 +316,7 @@ describe('serverクラスのテスト', function() {
                         },
                         'test002@gmail.com': {
                             hp: 4700,
-                            battery: 3,
+                            battery: 2,
                             active: 900,
                             skillPoint: 1,
                             overHeatFlag : false

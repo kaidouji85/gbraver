@@ -1,4 +1,4 @@
-describe('Battleクラス パイロットスキル スタン攻撃', function() {
+describe('Battleクラス パイロットスキル スーパーガード', function() {
     var assert = require('chai').assert;
     var battle = require('../../server/battle.js');
     var battleUnitData = require('./../testData/battleUnitData.js')();
@@ -25,7 +25,7 @@ describe('Battleクラス パイロットスキル スタン攻撃', function() 
         });
         var retStatus = Battle.getStatusArray();
 
-        assert.equal(retAttack.damage,1200,'ダメージが50%になる');
+        assert.equal(retAttack.damage,920,'ダメージが50%になる');
         assert.equal(retStatus['test001@gmail.com'].skillPoint,0,'パイロットスキルポイントが0になる');
     });
 
@@ -62,7 +62,7 @@ describe('Battleクラス パイロットスキル スタン攻撃', function() 
         });
         var retStatus = Battle.getStatusArray();
 
-        assert.equal(retAttack.damage,2400,'ダメージが100%である');
+        assert.equal(retAttack.damage,1840,'ダメージが100%である');
     });
 
 
@@ -99,6 +99,6 @@ describe('Battleクラス パイロットスキル スタン攻撃', function() 
         });
         var retStatus = Battle.getStatusArray();
 
-        assert.equal(retAttack.damage,1200,'ダメージが50%である');
+        assert.equal(retAttack.damage,920,'ダメージが50%である');
     });
 });

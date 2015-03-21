@@ -19,8 +19,8 @@ describe('Battleクラス 攻撃', function() {
         });
         var statusArray = Battle.getStatusArray();
         assert.equal(retAtack.hit, Battle.ATACK_HIT, '攻撃ヒット判定になる');
-        assert.equal(retAtack.damage, 1200, '基礎攻撃力1100 + バッテリー差分100 = 1200ダメージ');
-        assert.equal(statusArray[2].hp, 3500, 'HPが減っている');
+        assert.equal(retAtack.damage, 1120, '基礎攻撃力1100 + バッテリー差分20 = 1120ダメージ');
+        assert.equal(statusArray[2].hp, 3580, 'HPが減っている');
     });
 
     it('攻撃・防御側が同じバッテリーを出したので防御判定になりダメージが半減される', function () {
@@ -118,26 +118,6 @@ describe('Battleクラス 攻撃', function() {
         var statusArray = Battle.getStatusArray();
         assert.equal(statusArray[1].battery, 2, '攻撃側バッテリーが減る');
         assert.equal(statusArray[2].battery, 4, '防御側バッテリーが減る');
-    });
-
-    it('ダメージにバッテリー差分ボーナスが入る', function () {
-        var testData = {};
-        testData[1] = battleUnitData.get('granBraver');
-        testData[2] = battleUnitData.get('landozer');
-
-        var Battle = battle({
-            statusArray: testData
-        });
-
-        Battle.doWaitPhase();
-        var retAtack = Battle.atack({
-            atackBattery: 3,
-            defenthBattery: 2
-        });
-        var statusArray = Battle.getStatusArray();
-        assert.equal(retAtack.hit, Battle.ATACK_HIT, '攻撃ヒット判定になる');
-        assert.equal(retAtack.damage, 2200, 'ダメージに+600ボーナスが入る');
-        assert.equal(statusArray[2].hp, 2500, 'HPが減っている');
     });
 
     it('0で攻撃したので攻撃は絶対にミスする', function () {

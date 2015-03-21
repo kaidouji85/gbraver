@@ -25,7 +25,7 @@ describe('Battleクラス パイロットスキル HP回復', function() {
         Battle.getStatusArray();
 
         var statusArray = Battle.getStatusArray();
-        assert.equal(statusArray['test002@gmail.com'].hp,2450,'test002@gmail.comのHPが1750回復する。');
+        assert.equal(statusArray['test002@gmail.com'].hp,3410,'test002@gmail.comのHPが1750回復する。');
         assert.equal(statusArray['test002@gmail.com'].skillPoint,0,'test002@gmail.comのスキルポイントが-1される。');
     });
 

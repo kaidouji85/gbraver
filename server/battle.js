@@ -92,7 +92,8 @@ var battle = function(spec,my){
             //ダメージ計算
             var basicDamage = statusArray[atackUserId].weapons[atackBattery].power;
             var batteryDiff = atackBattery - defenthBattery;
-            var damageBonus = batteryDiff * ( basicDamage - statusArray[defenseUserId].defense );
+            var damageBonus = batteryDiff * ( basicDamage - statusArray[defenseUserId].defense ) / 5;
+            damageBonus = Math.floor(damageBonus);
             if(damageBonus < 0){
                 damageBonus = 0;
             }

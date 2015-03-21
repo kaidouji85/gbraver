@@ -160,7 +160,7 @@ describe('一人用戦闘モード終了', function() {
                 var expect = {
                     phase : 'damage',
                     hit : 4,
-                    damage : 40000,
+                    damage : 16000,
                     atackBattery : 3,
                     defenthBattery : 0,
                     statusArray : {
@@ -172,7 +172,7 @@ describe('一人用戦闘モード終了', function() {
                             overHeatFlag : false
                         },
                         'nonePlayerCharacter' : {
-                            hp : -35300,
+                            hp : -11300,
                             battery : 5,
                             active : 1500,
                             skillPoint : 1,
@@ -204,7 +204,7 @@ describe('一人用戦闘モード終了', function() {
                             overHeatFlag : false
                         },
                         'nonePlayerCharacter' : {
-                            hp : -35300,
+                            hp : -11300,
                             battery : 5,
                             active : 1500,
                             skillPoint : 1,

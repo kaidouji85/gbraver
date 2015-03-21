@@ -23,7 +23,7 @@ describe('Battleクラス アビリティ ブーストバッテリー', function
         //ランドーザが攻撃する
         Battle.doWaitPhase();
         Battle.atack({
-            atackBattery: 2,
+            atackBattery: 3,
             defenthBattery: 1
         });
 
@@ -55,7 +55,7 @@ describe('Battleクラス アビリティ ブーストバッテリー', function
         //ランドーザが攻撃する
         Battle.doWaitPhase();
         Battle.atack({
-            atackBattery: 2,
+            atackBattery: 3,
             defenthBattery: 1
         });
 
