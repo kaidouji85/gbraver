@@ -45,6 +45,7 @@ describe('serverクラスのテスト', function() {
             function startSinglePlay() {
                 client.emit('startSinglePlay',{
                     enemyId : 'granBraver',
+                    pilotId : 'kyoko',
                     routineId : 'zero'
                 });
                 client.once('gameStart',gameStart);

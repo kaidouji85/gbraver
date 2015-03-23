@@ -45,6 +45,7 @@ describe('一人用戦闘モード終了', function() {
             function startSinglePlay() {
                 client.emit('startSinglePlay',{
                     enemyId : 'landozer',
+                    pilotId : 'kyoko',
                     routineId : 'zero'
                 });
                 client.once('gameStart',gameStart);

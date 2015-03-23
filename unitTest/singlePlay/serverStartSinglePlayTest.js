@@ -45,6 +45,7 @@ describe('一人用モード開始テスト', function () {
         function startSinglePlay() {
             client.emit('startSinglePlay', {
                 enemyId: 'landozer',
+                pilotId : 'akane',
                 routineId: 'zero'
             });
             client.once('gameStart', assertOfGameStart);
@@ -90,11 +91,11 @@ describe('一人用モード開始テスト', function () {
                             type: 'none'
                         },
                         pilot: {
-                            name: '恭子',
-                            pict: 'kyoko.png',
-                            shout: 'やぁぁぁぁて、やるぜ！！    ……なんてね。',
-                            type: 'quickCharge',
-                            battery: 3,
+                            name : '恭子',
+                            pict : 'kyoko.png',
+                            shout : 'やぁぁぁぁて、やるぜ！！    ……なんてね。',
+                            type : 'quickCharge',
+                            battery : 3,
                             hp : 0,
                             power : 0,
                             defense : 0,
@@ -140,11 +141,11 @@ describe('一人用モード開始テスト', function () {
                             type: 'none'
                         },
                         pilot: {
-                            name: '恭子',
-                            pict: 'kyoko.png',
-                            shout: 'やぁぁぁぁて、やるぜ！！    ……なんてね。',
-                            type: 'quickCharge',
-                            battery: 3,
+                            name: '茜',
+                            pict: 'akane.png',
+                            shout: 'まだまだ、勝負はこれからよ。',
+                            type: 'recoverHp',
+                            value: 0.5,
                             hp : 0,
                             power : 0,
                             defense : 0,

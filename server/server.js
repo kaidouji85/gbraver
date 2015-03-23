@@ -128,6 +128,7 @@ function server(spec, my) {
             function getPlayerData(){
                 var enemyId = data.enemyId;
                 var routineId = data.routineId;
+                var pilotId = data.pilotId;
                 var attackRoutine = getAttackRoutine(routineId);
                 var defenseRoutine = getDefenseRoutine(routineId);
                 socket.gbraverInfo.singlePlayRoom = room();
@@ -138,7 +139,7 @@ function server(spec, my) {
 
                 dao.getPlayerData(socket.gbraverInfo.userId, function(err, userData) {
                     socket.gbraverInfo.singlePlayRoom.addUser(userData);
-                    dao.getEnemyData(enemyId,'kyoko',enterRoomByNPC);//TODO パイロットIDもクライアント側で指定できるようにする
+                    dao.getEnemyData(enemyId,pilotId,enterRoomByNPC);
                 });
             }
 
