@@ -245,16 +245,19 @@ function dbMock(spec,my){
         {
             title : '初級',
             enemyId : 'landozer',
+            pilotId : 'kyoko',
             routineId : 'attack3'
         },
         {
             title : '中級',
             enemyId : 'granBraver',
+            pilotId : 'akane',
             routineId : 'attack3'
         },
         {
             title : '上級',
             enemyId : 'zeroBraver',
+            pilotId : 'iori',
             routineId : 'attack3'
         }
     ];
