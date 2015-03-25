@@ -127,9 +127,10 @@ function game(spec, my) {
         scene.onPushPrevButton(function(){
             core.changeTopScene();
         });
-        scene.onPushStageButon(function(enemyId,routineId){
+        scene.onPushStageButon(function(enemyId,pilotId,routineId){
             var data = {
                 enemyId : enemyId,
+                pilotId : pilotId,
                 routineId : routineId
             };
             emitSendMessage('startSinglePlay',data);

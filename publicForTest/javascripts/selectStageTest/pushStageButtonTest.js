@@ -22,8 +22,9 @@ function doTest() {
         touch(testScene.stageButtonArray[1]);
     }
 
-    function assertOfPushStageButton(enemyId,routineId){
+    function assertOfPushStageButton(enemyId,pilotId,routineId){
         assert.equal(enemyId,'granBraver','敵IDが正しい');
+        assert.equal(pilotId,'akane','パイロットIDが正しい');
         assert.equal(routineId,'attack3','ルーチンIDが正しい');
         assert.equal(testScene.mesWindow.getVisible(),true,'メッセージウインドウが表示されている');
         assert.equal(testScene.mesWindow.getText(),'通信待機中','メッセージウインドウのメッセージが正しい');

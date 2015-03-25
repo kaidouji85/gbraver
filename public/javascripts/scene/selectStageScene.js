@@ -81,7 +81,7 @@ function selectStageScene(spec,my){
             }
             that.prevButton.setVisible(false);
             that.mesWindow.setVisible(true);
-            emitPushStageButton(stageData.enemyId,stageData.routineId);
+            emitPushStageButton(stageData.enemyId,stageData.pilotId,stageData.routineId);
         })
         return button;
     }

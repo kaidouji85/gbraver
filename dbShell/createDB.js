@@ -281,7 +281,7 @@ db.stages.insert({
 db.stages.insert({
     title : 'グランブレイバーと対決',
     enemyId : 'enemyGranBraver',
-    pilotID : 'iori',
+    pilotId : 'iori',
     routineId : 'attack3-defense1'
 });
 db.stages.insert({

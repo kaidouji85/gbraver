@@ -31,6 +31,7 @@ function doTest(){
     function asertOfMessage(message,data) {
         var expectData = {
             enemyId : 'granBraver',
+            pilotId : 'akane',
             routineId : 'attack3'
         };
         assert.equal(message, 'startSinglePlay', 'サーバ送信メッセージが正しい');
