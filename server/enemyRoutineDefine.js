@@ -5,6 +5,7 @@ var ROUTINE_ID_ZERO = 'zero';
 var ROUTINE_ID_ATTACK_3_DEFENSE_1 = 'attack3-defense1';
 var ROUTINE_ID_ATTACK_1_DEFENSE_1 = 'attack1-defense1';
 var ROUTINE_ID_ATTACK_1_DEFENSE_3 = 'attack1-defense3';
+var ROUTINE_ID_ZERO_BRAVER = 'zeroBraver';
 
 //*******************************
 // 0攻撃 0防御
@@ -73,6 +74,36 @@ defenseRoutineList[ROUTINE_ID_ATTACK_1_DEFENSE_3] = function(statusArray) {
     return command;
 }
 
+//*******************************
+// ゼロブレイバー
+//*******************************
+attackRouitneList[ROUTINE_ID_ZERO_BRAVER] = function(statusArray) {
+    var command = getAttackCommand(statusArray.nonePlayerCharacter.battery);
+
+    if(statusArray.nonePlayerCharacter.skillPoint>=1 && statusArray.nonePlayerCharacter.hp<2000) {
+        command = getPilotSkillCommand();
+    } else if ( getPlayerStatus(statusArray).battery == 0 ) {
+        command = getAttackCommand(statusArray.nonePlayerCharacter.battery);
+    } else if (statusArray.nonePlayerCharacter.battery < 2) {
+        command = getChargeCommand();
+    } else if(statusArray.nonePlayerCharacter.battery >= 3){
+        command = getAttackCommand(3);
+    }
+
+    return command;
+}
+
+defenseRoutineList[ROUTINE_ID_ZERO_BRAVER] = function(statusArray) {
+    var command = getDefenseCommand(1);
+
+    if(statusArray.nonePlayerCharacter.battery >= 3){
+        command = getDefenseCommand(3);
+    }else {
+        command = getDefenseCommand(statusArray.nonePlayerCharacter.battery);
+    }
+    return command;
+}
+
 function getAttackCommand(attackBattery){
     var command = {
         method : 'atack',
@@ -98,6 +129,20 @@ function getDefenseCommand(defenseBattery){
         }
     };
     return command;
+}
+
+function getPilotSkillCommand() {
+    return {
+        method : 'pilotSkill'
+    };
+}
+
+function getPlayerStatus(statusArray) {
+    for(uid in statusArray){
+        if(uid !== 'nonePlayerCharacter'){
+            return statusArray[uid];
+        }
+    }
 }
 
 module.exports.getAttackRoutine = function(routineId) {

@@ -180,29 +180,29 @@ db.armdozers.insert({
     cpuOnly : true,
     name : 'ゼロブレイバー',
     pictName : 'ZeroBraver.PNG',
-    hp : 2800,
+    hp : 2400,
     defense : 400,
     speed : 130,
     weapons : {
         1 : {
             name : 'バスターナックル',
-            power : 1800
+            power : 1300
         },
         2 : {
             name : 'バスターナックル',
-            power : 1800
+            power : 1300
         },
         3 : {
             name : 'バスターナックル',
-            power : 1800
+            power : 1300
         },
         4 : {
             name : 'バスターナックル',
-            power : 1800
+            power : 1300
         },
         5 : {
             name : 'バスターナックル',
-            power : 1800
+            power : 1300
         }
     },
     ability: {
@@ -288,5 +288,5 @@ db.stages.insert({
     title : 'ゼロブレイバーと対決',
     enemyId : 'enemyZeroBraver',
     pilotId : 'akane',
-    routineId : 'attack1-defense3'
+    routineId : 'zeroBraver'
 });
