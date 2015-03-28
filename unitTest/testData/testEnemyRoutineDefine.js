@@ -1,6 +1,9 @@
 var attackRouitneList = {};
 var defenseRoutineList = {};
 
+//**************************
+// 攻撃0、防御0
+//**************************
 attackRouitneList['zero'] = function(statusArray) {
     var command = {
         method : 'atack',
@@ -21,6 +24,9 @@ defenseRoutineList['zero'] = function(statusArray) {
     return command;
 }
 
+//**************************
+// パイロットスキル発動
+//**************************
 attackRouitneList['pilotSkill'] = function(statusArray) {
     var command = {
         method : 'pilotSkill'
@@ -29,6 +35,29 @@ attackRouitneList['pilotSkill'] = function(statusArray) {
 }
 
 defenseRoutineList['pilotSkill'] = function(statusArray) {
+    var command = {
+        method : 'defenth',
+        param : {
+            battery : 0
+        }
+    };
+    return command;
+}
+
+//**************************
+// 3攻撃
+//**************************
+attackRouitneList['attack3'] = function(statusArray) {
+    var command = {
+        method : 'atack',
+        param : {
+            battery : 3
+        }
+    };
+    return command;
+}
+
+defenseRoutineList['attack3'] = function(statusArray) {
     var command = {
         method : 'defenth',
         param : {

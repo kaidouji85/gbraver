@@ -1,3 +1,6 @@
+var enemyRoutineAttackValidate = require('./enemyRoutineAttackValidate.js');
+var enemyRoutineDefenseValidate = require('./enemyRoutineDefenseValidate.js');
+
 function enemyRoutine(spec,my){
     var that = {};
     var attackRoutine = spec.attackRoutine;
@@ -22,8 +25,10 @@ function enemyRoutine(spec,my){
             attackUserId = respData.atackUserId;
         } else if(respData.phase === 'defenthCommand' && attackUserId !== NONE_PLAYER_CHARACTER) {
             command = defenseRoutine(respData.statusArray);
+            command = enemyRoutineDefenseValidate(command,respData.statusArray);
         } else if(respData.phase === 'atackCommand' && attackUserId === NONE_PLAYER_CHARACTER) {
             command = attackRoutine(respData.statusArray);
+            command = enemyRoutineAttackValidate(command,respData.statusArray);
         }
 
         return command;
