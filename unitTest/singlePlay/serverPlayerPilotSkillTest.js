@@ -31,7 +31,7 @@ describe('serverクラスのテスト', function() {
     });
 
     describe(' 一人用モード戦闘',function(){
-        it('敵がパイロットスキルを発動する',function(done){
+        it('プレイヤーがパイロットスキルを発動する',function(done){
             var client = io(SERVER_URL, option);
             client.on('connect',doAuth);
 
@@ -44,7 +44,7 @@ describe('serverクラスのテスト', function() {
 
             function startSinglePlay() {
                 client.emit('startSinglePlay',{
-                    enemyId : 'saikyouBraver',
+                    enemyId : 'landozer',
                     pilotId : 'kyoko',
                     routineId : 'zero'
                 });
@@ -62,39 +62,24 @@ describe('serverクラスのテスト', function() {
                 client.emit('command',{
                     method : 'ok'
                 });
-                client.once('resp',assertOfPilotSkillPhaseData);
+                client.once('resp',attackCommandPhase);
             }
 
-            function assertOfPilotSkillPhaseData(data) {
-                var expect = {
-                    phase: 'atackCommand',
-                    statusArray: {
-                        'test001@gmail.com': {
-                            hp: 3200,
-                            active: 2500,
-                            battery: 5,
-                            skillPoint: 1,
-                            overHeatFlag: false },
-                        nonePlayerCharacter: {
-                            hp: 4700,
-                            active: 5000,
-                            battery: 5,
-                            skillPoint: 1,
-                            overHeatFlag: false }}
-                };
-                assert.deepEqual(data,expect,'パイロットスキル発動フェイズのデータが正しい');
-                doPilotSkillPhase();
+            function attackCommandPhase(data) {
+                client.emit('command',{
+                    method : 'pilotSkill'
+                });
+                client.once('resp',pilotSkillPhase);
             }
 
-            function doPilotSkillPhase() {
-
+            function pilotSkillPhase(data) {
                 client.emit('command',{
                     method : 'ok'
                 });
-                client.once('resp',waitPhase2);
+                client.once('resp',attackCommandPhase2);
             }
 
-            function waitPhase2(data) {
+            function attackCommandPhase2(data) {
                 done();
             }
         });

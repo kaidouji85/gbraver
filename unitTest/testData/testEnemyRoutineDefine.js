@@ -21,6 +21,23 @@ defenseRoutineList['zero'] = function(statusArray) {
     return command;
 }
 
+attackRouitneList['pilotSkill'] = function(statusArray) {
+    var command = {
+        method : 'pilotSkill'
+    };
+    return command;
+}
+
+defenseRoutineList['pilotSkill'] = function(statusArray) {
+    var command = {
+        method : 'defenth',
+        param : {
+            battery : 0
+        }
+    };
+    return command;
+}
+
 module.exports.getAttackRoutine = function(routineId) {
     return attackRouitneList[routineId];
 }
