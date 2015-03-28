@@ -121,6 +121,8 @@ var battle = function(spec,my){
             superGuardArray[defenseUserId] = 1;
         }
 
+        damage = Math.floor(damage);
+
         statusArray[atackUserId].overHeatFlag = false;
         statusArray[atackUserId].battery -= atackBattery;
         statusArray[atackUserId].active = 0;
