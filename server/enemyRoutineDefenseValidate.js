@@ -12,11 +12,9 @@ function enemyRoutineDefenseValidate(command,statusArray) {
     if(command.method==='defenth'){
         if(command.param.battery < 0) {
             ret = ZERO_DEFENSE;
-        } else if (command.param.battery > 0) {
+        } else if (command.param.battery > 5) {
             ret = ZERO_DEFENSE;
-        }
-
-        if (command.param.battery > statusArray[NONE_PLAYER_CHARACTER].battery ) {
+        } else if (command.param.battery > statusArray[NONE_PLAYER_CHARACTER].battery ) {
             var battery = statusArray[NONE_PLAYER_CHARACTER].battery>0 ? 1 : 0;
             ret = {
                 method: 'defenth',
