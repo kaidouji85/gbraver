@@ -71,5 +71,38 @@ describe('敵ルーチンのテスト',function(){
             assert.deepEqual(ret,expect,'0防御になる');
         });
 
+        it('マイナスで防御すると、0防御になる',function(){
+            var command = {
+                method : 'defenth',
+                param : {
+                    battery : -2
+                }
+            };
+            var statusArray = {
+                'nonePlayerCharacter' : {
+                    hp : 3200,
+                    battery : 0,
+                    active : 5000,
+                    skillPoint : 5,
+                    overHeatFlag : false
+                },
+                'test002@gmail.com' : {
+                    hp : 4700,
+                    battery : 5,
+                    active : 3000,
+                    skillPoint : 1,
+                    overHeatFlag : false
+                }
+            };
+
+            var ret = enemyRoutineDefenseValidate(command,statusArray);
+            var expect = {
+                method : 'defenth',
+                param : {
+                    battery : 0
+                }
+            };
+            assert.deepEqual(ret,expect,'0防御になる');
+        });
     });
 });

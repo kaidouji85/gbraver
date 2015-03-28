@@ -9,7 +9,11 @@ var enemyRoutineAttackValidate = function(command,statusArray) {
     var ret = command;
 
     if(command.method === 'atack') {
-        if(command.param.battery > statusArray[NONE_PLAYER_CHARACTER].battery) {
+        if (command.param.battery < 0) {
+            ret = ZERO_ATTACK;
+        } else if (command.param.battery > 5) {
+            ret = ZERO_ATTACK;
+        } else if(command.param.battery > statusArray[NONE_PLAYER_CHARACTER].battery) {
             ret = ZERO_ATTACK;
         }
     } else if (command.method === 'pilotSkill') {

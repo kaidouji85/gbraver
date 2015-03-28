@@ -67,5 +67,73 @@ describe('敵ルーチンのテスト',function(){
             };
             assert.deepEqual(expect,ret,'0攻撃になる');
         });
+
+        it('マイナスで攻撃すると、0攻撃になる',function(){
+            var command = {
+                method : 'atack',
+                param : {
+                    battery : -2
+                }
+            };
+            var statusArray = {
+                'nonePlayerCharacter' : {
+                    hp : 3200,
+                    battery : 5,
+                    active : 5000,
+                    skillPoint : 0,
+                    overHeatFlag : false
+                },
+                'test002@gmail.com' : {
+                    hp : 4700,
+                    battery : 5,
+                    active : 3000,
+                    skillPoint : 1,
+                    overHeatFlag : false
+                }
+            };
+
+            var ret = enemyRoutineAttackValidate(command,statusArray);
+            var expect = {
+                method : 'atack',
+                param : {
+                    battery : 0
+                }
+            };
+            assert.deepEqual(expect,ret,'0攻撃になる');
+        });
+
+        it('5を超えて攻撃すると、0攻撃になる',function(){
+            var command = {
+                method : 'atack',
+                param : {
+                    battery : 8
+                }
+            };
+            var statusArray = {
+                'nonePlayerCharacter' : {
+                    hp : 3200,
+                    battery : 5,
+                    active : 5000,
+                    skillPoint : 0,
+                    overHeatFlag : false
+                },
+                'test002@gmail.com' : {
+                    hp : 4700,
+                    battery : 5,
+                    active : 3000,
+                    skillPoint : 1,
+                    overHeatFlag : false
+                }
+            };
+
+            var ret = enemyRoutineAttackValidate(command,statusArray);
+            var expect = {
+                method : 'atack',
+                param : {
+                    battery : 0
+                }
+            };
+            assert.deepEqual(expect,ret,'0攻撃になる');
+        });
     });
 });
