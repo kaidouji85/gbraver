@@ -5,12 +5,15 @@ function scrollBackGround(spec,my) {
     var MAX_ARRAY = 2;
 
     var pict = spec.pict;
-    var speed = -6;
     var backGroundArray = new Array(MAX_ARRAY);
 
     (function() {
         for(var i=0; i<MAX_ARRAY; i++) {
-            backGroundArray[i] = createBackGround();
+            backGroundArray[i] = scrollObject({
+                pict : pict,
+                width : WIDTH,
+                height : HEIGHT
+            });
             backGroundArray[i].x = i * WIDTH;
             backGroundArray[i].y = 0;
             backGroundArray[i].scaleX = i%2===0 ? 1 : -1;
@@ -19,27 +22,15 @@ function scrollBackGround(spec,my) {
     })()
 
     that.setSpeed = function(pSpeed){
-        speed = pSpeed;
+        for(var i=0; i<MAX_ARRAY; i++) {
+            backGroundArray[i].setSpeed(pSpeed);
+        }
     }
 
     that.setVisible = function(value){
         for(var i=0; i<MAX_ARRAY; i++) {
             backGroundArray[i].visible = value;
         }
-    }
-
-    function createBackGround() {
-        var backGround = new Sprite(WIDTH,HEIGHT);
-        backGround.image = pict;
-        backGround.addEventListener(Event.ENTER_FRAME,function(e){
-            backGround.x += speed;
-            if(backGround.x < -WIDTH) {
-                backGround.x += WIDTH*2;
-            } else if(backGround.x > WIDTH) {
-                backGround.x -= WIDTH*2;
-            }
-        });
-        return backGround;
     }
 
     return that;
