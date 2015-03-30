@@ -89,6 +89,14 @@ function battleUnitData() {
             threshold: 0.3
         }
 
+        unitData['granBraverBoostActive'] = ce.clone(unitData['granBraver']);
+        unitData['granBraverBoostActive'].ability =
+        {
+            type : 'boostActive',
+            active : 0.3,
+            threshold: 0.3
+        }
+
         unitData['landozer'] = {
             name: 'ランドーザ',
             pictName: 'Landozer.PNG',

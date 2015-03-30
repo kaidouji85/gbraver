@@ -15,6 +15,7 @@ var battle = function(spec,my){
     var plusPowerArray = {};
     var superGuardArray = {};
     var boostBatteryArray = {};
+    var abilityArray = {};
 
     that.MAX_ACTIVE = 5000;
     that.ATACK_HIT = 1;
@@ -31,6 +32,7 @@ var battle = function(spec,my){
             plusPowerArray[uid] = 0;
             superGuardArray[uid] = 1;
             boostBatteryArray[uid] = true;
+            abilityArray[uid] = true;
         }
     })()
     
@@ -207,13 +209,15 @@ var battle = function(spec,my){
         var isEffective = false;
         var playerId = '';
         for (var uid in statusArray) {
-            if(statusArray[uid].ability.type==='boostBattery'){
-                var thresholdHp = statusArray[uid].ability.threshold * maxHpArray[uid];
-                if(thresholdHp>=statusArray[uid].hp && boostBatteryArray[uid]){
-                    isEffective = true;
-                    playerId = uid;
-                    boostBatteryArray[uid] = false;
+            var thresholdHp = statusArray[uid].ability.threshold * maxHpArray[uid];
+            if(thresholdHp>=statusArray[uid].hp && abilityArray[uid]){
+                isEffective = true;
+                playerId = uid;
+                abilityArray[uid] = false;
+                if(statusArray[uid].ability.type==='boostBattery') {
                     executeBoostBattery(uid);
+                } else if(statusArray[uid].ability.type==='boostActive') {
+                    execuetActive(uid);
                 }
             }
         }
@@ -239,6 +243,13 @@ var battle = function(spec,my){
         statusArray[userId].battery += statusArray[userId].ability.battery;
         if (statusArray[userId].battery > that.MAX_BATTERY) {
             statusArray[userId].battery = that.MAX_BATTERY
+        }
+    }
+
+    function execuetActive(userId) {
+        statusArray[userId].active += that.MAX_ACTIVE * statusArray[userId].ability.active;
+        if (statusArray[userId].active > that.MAX_ACTIVE) {
+            statusArray[userId].active = that.MAX_ACTIVE
         }
     }
 
