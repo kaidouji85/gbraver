@@ -101,7 +101,9 @@ db.armdozers.insert({
         }
     },
     ability: {
-        type: 'none'
+        type : 'boostActive',
+        active : 0.3,
+        threshold: 0.4
     }
 });
 
