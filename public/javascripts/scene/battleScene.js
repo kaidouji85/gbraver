@@ -273,11 +273,13 @@ function battleScene(spec,my){
     }
 
     function doDissolveRoom(){
+        that.mesWindow.setVisible(false);
         that.battleEndIcon.setVisible(true);
     }
 
     function doBattleEnd() {
         that.battleEndIcon.setVisible(false);
+        that.mesWindow.setVisible(true);
         that.mesWindow.setText(core.MESSAGE_GET_ROOMINFO);
         emitPushBattleEndIcon();
     }

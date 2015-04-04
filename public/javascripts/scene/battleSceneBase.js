@@ -262,8 +262,8 @@ function battleSceneBase(spec,my){
             text : '戦闘終了',
             pict : core.assets[core.PICT_BUTTON]
         });
-        that.battleEndIcon.x = 88;
-        that.battleEndIcon.y = 210;
+        that.battleEndIcon.x = (COMMAND_X_1 + COMMAND_X_2)/2;
+        that.battleEndIcon.y = (COMMAND_Y_1 + COMMAND_Y_2)/2;
         that.battleEndIcon.setVisible(false);
         that.addChild(that.battleEndIcon);
 

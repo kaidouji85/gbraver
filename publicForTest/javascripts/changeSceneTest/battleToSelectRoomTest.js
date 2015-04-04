@@ -208,6 +208,7 @@ function doTest(){
         assert.equal(message,'getRoomInfo','サーバ送信メッセージが正しい');
         assert.equal(data,null,'サーバ送信データが正しい');
         assert.equal(Game.currentScene.battleEndIcon.getVisible(),false,'戦闘終了ボタンが表示されていない');
+        assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示されている');
         assert.equal(Game.currentScene.mesWindow.getText(),'ルーム情報取得中','メッセージウインドウの文字が正しい');
         Game.currentScene.tl.delay(30).then(respSuccessGetRoomInfo);
     }
