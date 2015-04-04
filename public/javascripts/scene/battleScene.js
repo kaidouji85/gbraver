@@ -274,7 +274,6 @@ function battleScene(spec,my){
 
     function doDissolveRoom(){
         that.battleEndIcon.setVisible(true);
-        that.mesWindow.setVisible(false);
     }
 
     function doBattleEnd() {

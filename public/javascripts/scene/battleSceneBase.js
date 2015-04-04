@@ -155,8 +155,11 @@ function battleSceneBase(spec,my){
             that.addChild(that.hitEffectArray[uid]);
 
             //パイロット
-            that.pilotSpriteArray[uid] = new Sprite(256,256);
-            that.pilotSpriteArray[uid].image = core.assets[core.PICT_PREFIX+that.statusArray[uid].pilot.pict];
+            that.pilotSpriteArray[uid] = cutInSprite({
+                width : 256,
+                height : 256,
+                image : core.assets[core.PICT_PREFIX+that.statusArray[uid].pilot.pict]
+            });
             that.pilotSpriteArray[uid].x = uid===that.userId ? 128 : -64;
             that.pilotSpriteArray[uid].y = 80;
             that.pilotSpriteArray[uid].scaleX = uid===that.userId ? 1 : -1;
@@ -256,7 +259,7 @@ function battleSceneBase(spec,my){
             pict : core.assets[core.PICT_BUTTON]
         });
         that.battleEndIcon.x = 88;
-        that.battleEndIcon.y = 382;
+        that.battleEndIcon.y = 160;
         that.battleEndIcon.setVisible(false);
         that.addChild(that.battleEndIcon);
 

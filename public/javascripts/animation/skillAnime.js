@@ -19,7 +19,8 @@ function skillAnime(spec,my){
             battleScene.executePilotSKillSprite.visible=true;
 
             battleScene.pilotSpriteArray[attackUserId].visible = true;
-            cutInAnime();
+            battleScene.pilotSpriteArray[attackUserId].play();
+            //cutInAnime();
 
         }).delay(120).then(function(){
             if(attackUserId === battleScene.userId){
@@ -32,16 +33,6 @@ function skillAnime(spec,my){
             battleScene.executePilotSKillSprite.visible=false;
             fn();
         });
-
-        function cutInAnime(){
-            var targetX = dir>0 ? 64 : 0;
-            battleScene.pilotSpriteArray[attackUserId].y = 80;
-            battleScene.pilotSpriteArray[attackUserId].x = dir>0 ? 200 : -200;
-            battleScene.pilotSpriteArray[attackUserId].tl.moveTo(targetX,80,10);
-            battleScene.pilotSpriteArray[attackUserId].tl.delay(5).then(function(){
-                core.assets[core.SOUND_WAKE_UP].play();
-            });
-        }
     }
 
     return battleScene;
