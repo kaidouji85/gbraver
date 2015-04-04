@@ -17,7 +17,7 @@ function abilityAnime(spec,my){
             battleScene.armdozerAbilityBack.setSpeed(speed);
 
             battleScene.armdozerAbilityCutInArray[playerId].visible = true;
-            cutInAnime();
+            battleScene.armdozerAbilityCutInArray[playerId].play();
 
             battleScene.executeAbilitySprite.visible = true;
         }).delay(120).then(function(){
@@ -27,16 +27,6 @@ function abilityAnime(spec,my){
             battleScene.executeAbilitySprite.visible = false;
             fn();
         });
-
-        function cutInAnime(){
-            var targetX = dir>0 ? 40 : -40;
-            battleScene.armdozerAbilityCutInArray[playerId].y = 80;
-            battleScene.armdozerAbilityCutInArray[playerId].x = dir>0 ? 200 : -200;
-            battleScene.armdozerAbilityCutInArray[playerId].tl.moveTo(targetX,80,10);
-            battleScene.armdozerAbilityCutInArray[playerId].tl.delay(10).then(function(){
-                core.assets[core.SOUND_WAKE_UP].play();
-            });
-        }
     }
 
     return that;
