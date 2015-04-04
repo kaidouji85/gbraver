@@ -188,8 +188,6 @@ function doTest(){
         };
         assert.equal(message,'command','ゲーム終了時のサーバ送信メッセージが正しい');
         assert.deepEqual(data,expectData,'ゲーム終了時のサーバ送信データが正しい');
-        assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示されている');
-        assert.equal(Game.currentScene.mesWindow.getText(),'通信待機中','メッセージウインドウの文字が正しい');
         Game.currentScene.tl.delay(30).then(doDissolveRoom);
     }
 

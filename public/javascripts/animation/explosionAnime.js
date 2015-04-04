@@ -14,9 +14,10 @@ function explosionAnime(spec,my){
         }
         battleScene.tl.delay(130).then(function(){
             data.winner === battleScene.userId ? battleScene.winSprite.visible=true : battleScene.loseSprite.visible = true;
-        }).delay(80).then(function(){
-            battleScene.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
+            battleScene.pilotSpriteArray[data.winner].visible = true;
+            battleScene.mesWindow.setText(battleScene.statusArray[data.winner].pilot.shout);
             battleScene.mesWindow.setVisible(true);
+        }).delay(80).then(function(){
             fn();
         });
     }

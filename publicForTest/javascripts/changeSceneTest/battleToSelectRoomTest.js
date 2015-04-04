@@ -190,16 +190,12 @@ function doTest(){
         };
         assert.equal(message,'command','ゲーム終了時のサーバ送信メッセージが正しい');
         assert.deepEqual(data,expectData,'ゲーム終了時のサーバ送信データが正しい');
-        assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示されている');
-        assert.equal(Game.currentScene.mesWindow.getText(),'通信待機中','メッセージウインドウの文字が正しい');
         Game.currentScene.tl.delay(30).then(doDissolveRoom);
     }
 
     function doDissolveRoom(){
         Game.emitServerResp('dissolveRoom',null);
         assert.equal(Game.currentScene.battleEndIcon.getVisible(),true,'戦闘終了ボタンが表示されている');
-        assert.equal(Game.currentScene.mesWindow.getText(),'ボタンを押して下さい','メッセージウインドウの文字が正しい');
-        assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示されている');
         Game.currentScene.tl.delay(30).then(pushBattleEndIcon);
     }
 

@@ -256,7 +256,7 @@ function battleSceneBase(spec,my){
             pict : core.assets[core.PICT_BUTTON]
         });
         that.battleEndIcon.x = 88;
-        that.battleEndIcon.y = 260;
+        that.battleEndIcon.y = 382;
         that.battleEndIcon.setVisible(false);
         that.addChild(that.battleEndIcon);
 
@@ -271,18 +271,18 @@ function battleSceneBase(spec,my){
         that.addChild(that.mesWindow);
 
         //WIN画像
-        that.winSprite = new Sprite(202,55);
+        that.winSprite = new Sprite(202,56);
         that.winSprite.image = core.assets[core.PICT_WIN];
         that.winSprite.x = (core.width - that.winSprite.width)/2;
-        that.winSprite.y = 100;
+        that.winSprite.y = 260;
         that.winSprite.visible = false;
         that.addChild(that.winSprite);
 
         //LOSE画像
-        that.loseSprite = new Sprite(312,55);
+        that.loseSprite = new Sprite(313,56);
         that.loseSprite.image = core.assets[core.PICT_LOSE];
         that.loseSprite.x = (core.width - that.loseSprite.width)/2;
-        that.loseSprite.y = 100;
+        that.loseSprite.y = 260;
         that.loseSprite.visible = false;
         that.addChild(that.loseSprite);
     }())
