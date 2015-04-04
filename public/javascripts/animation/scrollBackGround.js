@@ -33,5 +33,11 @@ function scrollBackGround(spec,my) {
         }
     }
 
+    that.setOpacity = function(opacity) {
+        for(var i=0; i<MAX_ARRAY; i++) {
+            backGroundArray[i].opacity = opacity;
+        }
+    }
+
     return that;
 }

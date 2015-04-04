@@ -16,6 +16,11 @@ function explosionAnime(spec,my){
             data.winner === battleScene.userId ? battleScene.winSprite.visible=true : battleScene.loseSprite.visible = true;
             battleScene.pilotSpriteArray[data.winner].visible = true;
             battleScene.pilotSpriteArray[data.winner].play();
+
+            var speed =  data.winner === battleScene.userId ? -10 : 10;
+            battleScene.armdozerAbilityBack.setVisible(true);
+            battleScene.armdozerAbilityBack.setSpeed(speed);
+
             battleScene.mesWindow.setText(battleScene.statusArray[data.winner].pilot.shout);
             battleScene.mesWindow.setVisible(true);
         }).delay(80).then(function(){

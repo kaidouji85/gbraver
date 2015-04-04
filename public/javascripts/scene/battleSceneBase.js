@@ -65,6 +65,7 @@ function battleSceneBase(spec,my){
         });
         that.armdozerAbilityBack.y = 80;
         that.armdozerAbilityBack.setVisible(false);
+        that.armdozerAbilityBack.setOpacity(0.7);
         that.addChild(that.armdozerAbilityBack);
 
         for(var uid in that.statusArray){
@@ -262,7 +263,7 @@ function battleSceneBase(spec,my){
             pict : core.assets[core.PICT_BUTTON]
         });
         that.battleEndIcon.x = 88;
-        that.battleEndIcon.y = 160;
+        that.battleEndIcon.y = 210;
         that.battleEndIcon.setVisible(false);
         that.addChild(that.battleEndIcon);
 
@@ -280,7 +281,7 @@ function battleSceneBase(spec,my){
         that.winSprite = new Sprite(202,56);
         that.winSprite.image = core.assets[core.PICT_WIN];
         that.winSprite.x = (core.width - that.winSprite.width)/2;
-        that.winSprite.y = 260;
+        that.winSprite.y = 270;
         that.winSprite.visible = false;
         that.addChild(that.winSprite);
 
@@ -288,7 +289,7 @@ function battleSceneBase(spec,my){
         that.loseSprite = new Sprite(313,56);
         that.loseSprite.image = core.assets[core.PICT_LOSE];
         that.loseSprite.x = (core.width - that.loseSprite.width)/2;
-        that.loseSprite.y = 260;
+        that.loseSprite.y = 270;
         that.loseSprite.visible = false;
         that.addChild(that.loseSprite);
     }())
