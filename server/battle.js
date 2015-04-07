@@ -214,10 +214,12 @@ var battle = function(spec,my){
                 isEffective = true;
                 playerId = uid;
                 abilityArray[uid] = false;
-                if(statusArray[uid].ability.type==='boostBattery') {
+                if(statusArray[uid].ability.type ==='boostBattery') {
                     executeBoostBattery(uid);
-                } else if(statusArray[uid].ability.type==='boostActive') {
+                } else if(statusArray[uid].ability.type ==='boostActive') {
                     execuetActive(uid);
+                } else if (statusArray[uid].ability.type === 'boostPower') {
+                    executeBoostPower(uid);
                 }
             }
         }
@@ -250,6 +252,13 @@ var battle = function(spec,my){
         statusArray[userId].active += that.MAX_ACTIVE * statusArray[userId].ability.active;
         if (statusArray[userId].active > that.MAX_ACTIVE) {
             statusArray[userId].active = that.MAX_ACTIVE
+        }
+    }
+
+    function executeBoostPower(userId) {
+        var power = statusArray[userId].ability.power;
+        for(var i=1; i<=5; i++){
+            statusArray[userId].weapons[i].power += power;
         }
     }
 
