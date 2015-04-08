@@ -67,7 +67,9 @@ db.armdozers.insert({
         }
     },
     ability: {
-        type: 'none'
+        type: 'boostPower',
+        power : 100,
+        threshold : 0.4
     }
 });
 
@@ -103,7 +105,7 @@ db.armdozers.insert({
     ability: {
         type : 'boostActive',
         active : 0.3,
-        threshold: 0.4
+        threshold : 0.4
     }
 });
 
@@ -138,7 +140,9 @@ db.armdozers.insert({
         }
     },
     ability: {
-        type: 'none'
+        type: 'boostPower',
+        power : 100,
+        threshold : 0.4
     }
 });
 
