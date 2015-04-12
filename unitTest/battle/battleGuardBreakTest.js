@@ -17,35 +17,15 @@ describe('Battleクラス パイロットスキル ガードブレイク', funct
         Battle.doWaitPhase();
         Battle.doPilotSkill();
         var attackResult = Battle.atack({
-            atackBattery : 1,
-            defenthBattery : 1
-        });
-
-        var statusArray = Battle.getStatusArray();
-        assert.equal(statusArray['test002@gmail.com'].hp,3600,'test002@gmail.comが800+300=1100ダメージを受ける');
-        assert.equal(statusArray['test001@gmail.com'].skillPoint,0,'test001@gmail.comのスキルポイントが-1される。');
-        assert.equal(attackResult.hit,1,'通常ヒット判定になる');
-    });
-
-    it('ガードブレイクスキルにより追加ダメージが入る',function(){
-        var testData = {};
-        testData['test001@gmail.com'] = battleUnitData.get('granBraverGuardBreak');
-        testData['test002@gmail.com'] = battleUnitData.get('landozer');
-
-        var Battle = battle({
-            statusArray : testData
-        });
-
-        //グランブレイバーがガードブレイクスキルを発動
-        Battle.doWaitPhase();
-        Battle.doPilotSkill();
-        var attackResult = Battle.atack({
             atackBattery : 3,
-            defenthBattery : 1
+            defenthBattery : 3
         });
 
         var statusArray = Battle.getStatusArray();
-        assert.equal(statusArray['test002@gmail.com'].hp,2560,'test002@gmail.comが+300追加ダメージを受ける');
+        assert.equal(attackResult.damage,900,'600(通常ダメージ)+300(追加ダメージ)=900ダメージを受ける');
+        assert.equal(attackResult.hit,1,'通常ヒット判定になる');
+        assert.equal(statusArray['test001@gmail.com'].skillPoint,0,'test001@gmail.comのスキルポイントが-1される。');
+
     });
 
     it('2回目以降はガードブレイクスキルが無効(1回目は攻撃ヒット)',function(){
@@ -69,13 +49,12 @@ describe('Battleクラス パイロットスキル ガードブレイク', funct
 
         //グランブレイバー2回目の攻撃
         Battle.doWaitPhase();
-        Battle.atack({
-            atackBattery : 1,
-            defenthBattery : 1
+        var result = Battle.atack({
+            atackBattery : 3,
+            defenthBattery : 3
         });
-
-        var statusArray = Battle.getStatusArray();
-        assert.equal(statusArray['test002@gmail.com'].hp,3200,'test002@gmail.comが400ダメージを受ける');
+        assert.equal(result.hit,3,'ガード判定になる');
+        assert.equal(result.damage,300,'ダメージが半減する');
     });
 
     it('2回目以降はガードブレイクスキルが無効(1回目は攻撃ミス)',function(){
@@ -98,12 +77,11 @@ describe('Battleクラス パイロットスキル ガードブレイク', funct
 
         //グランブレイバー2回目の攻撃
         Battle.doWaitPhase();
-        Battle.atack({
-            atackBattery : 1,
-            defenthBattery : 1
+        var result = Battle.atack({
+            atackBattery : 3,
+            defenthBattery : 3
         });
-
-        var statusArray = Battle.getStatusArray();
-        assert.equal(statusArray['test002@gmail.com'].hp,4300,'test002@gmail.comが400ダメージを受ける');
+        assert.equal(result.hit,3,'ガード判定になる');
+        assert.equal(result.damage,300,'ダメージが半減する');
     });
 });
