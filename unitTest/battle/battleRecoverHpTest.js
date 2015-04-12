@@ -11,13 +11,15 @@ describe('Battleクラス パイロットスキル HP回復', function() {
             statusArray : testData
         });
 
-        //グランブレイバーが2800ダメージを与える
+        //グランブレイバーが2100ダメージを与える
+        //ランドーザのHPは1400
         Battle.doWaitPhase();
         Battle.getStatusArray();
-        Battle.atack({
-            atackBattery : 3,
+        var result = Battle.atack({
+            atackBattery : 5,
             defenthBattery : 1
         });
+        console.log(result);
 
         //ランドーザがスキルを使いHPを回復
         Battle.doWaitPhase();
@@ -25,7 +27,7 @@ describe('Battleクラス パイロットスキル HP回復', function() {
         Battle.getStatusArray();
 
         var statusArray = Battle.getStatusArray();
-        assert.equal(statusArray['test002@gmail.com'].hp,3410,'test002@gmail.comのHPが1750回復する。');
+        assert.equal(statusArray['test002@gmail.com'].hp,3150,'test002@gmail.comのHP = 1400 + 1750(回復)');
         assert.equal(statusArray['test002@gmail.com'].skillPoint,0,'test002@gmail.comのスキルポイントが-1される。');
     });
 
