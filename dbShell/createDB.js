@@ -11,23 +11,23 @@ db.armdozers.insert({
     weapons : {
         1 : {
             name : 'バスターナックル',
-            power : 1000
+            power : 1500
         },
         2 : {
             name : 'バスターナックル',
-            power : 1000
+            power : 1500
         },
         3 : {
             name : 'バスターナックル',
-            power : 1000
+            power : 1500
         },
         4 : {
             name : 'バスターナックル',
-            power : 1000
+            power : 1500
         },
         5 : {
             name : 'バスターナックル',
-            power : 1000
+            power : 1500
         }
     },
     ability: {
@@ -42,28 +42,28 @@ db.armdozers.insert({
     name : 'ランドーザ',
     pictName : 'Landozer.PNG',
     hp : 3300,
-    defense : 650,
+    defense : 600,
     speed : 95,
     weapons : {
         1 : {
             name : 'ブレイクパンチ',
-            power : 1100
+            power : 1600
         },
         2 : {
             name : 'ブレイクパンチ',
-            power : 1100
+            power : 1600
         },
         3 : {
             name : 'ブレイクパンチ',
-            power : 1100
+            power : 1600
         },
         4 : {
             name : 'ブレイクパンチ',
-            power : 1100
+            power : 1600
         },
         5 : {
             name : 'ブレイクパンチ',
-            power : 1100
+            power : 1600
         }
     },
     ability: {
@@ -83,23 +83,23 @@ db.armdozers.insert({
     weapons : {
         1 : {
             name : 'バスターナックル',
-            power : 1100
+            power : 1600
         },
         2 : {
             name : 'バスターナックル',
-            power : 1100
+            power : 1600
         },
         3 : {
             name : 'バスターナックル',
-            power : 1100
+            power : 1600
         },
         4 : {
             name : 'バスターナックル',
-            power : 1100
+            power : 1600
         },
         5 : {
             name : 'バスターナックル',
-            power : 1100
+            power : 1600
         }
     },
     ability: {

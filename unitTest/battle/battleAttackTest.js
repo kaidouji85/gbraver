@@ -12,15 +12,15 @@ describe('Battleクラス 攻撃', function() {
             statusArray: testData
         });
 
-        var retWaitPhase = Battle.doWaitPhase();
+       Battle.doWaitPhase();
         var retAtack = Battle.atack({
-            atackBattery: 2,
+            atackBattery: 3,
             defenthBattery: 1
         });
         var statusArray = Battle.getStatusArray();
         assert.equal(retAtack.hit, Battle.ATACK_HIT, '攻撃ヒット判定になる');
-        assert.equal(retAtack.damage, 1120, '基礎攻撃力1100 + バッテリー差分20 = 1120ダメージ');
-        assert.equal(statusArray[2].hp, 3580, 'HPが減っている');
+        assert.equal(retAtack.damage, 700, '1600(攻撃) - 1000(防御) + 100(バッテリー差分) = 700 ');
+        assert.equal(statusArray[2].hp, 4000, 'HPが減っている');
     });
 
     it('攻撃・防御側が同じバッテリーを出したので防御判定になりダメージが半減される', function () {
@@ -39,8 +39,8 @@ describe('Battleクラス 攻撃', function() {
         });
         var statusArray = Battle.getStatusArray();
         assert.equal(retAtack.hit, Battle.ATACK_GUARD, '防御判定になる');
-        assert.equal(retAtack.damage, 2100 / 2, 'ダメージが半減される');
-        assert.equal(statusArray[2].hp, 3650, 'HPが減っている');
+        assert.equal(retAtack.damage, ( 2100 - 1000 ) / 2, 'ダメージが半減される');
+        assert.equal(statusArray[2].hp, 4150, 'HPが減っている');
     });
 
     it('防御側が多くバッテリーを出したので攻撃ミスになりダメージが0になる', function () {
@@ -74,12 +74,12 @@ describe('Battleクラス 攻撃', function() {
 
         var retWaitPhase = Battle.doWaitPhase();
         var retAtack = Battle.atack({
-            atackBattery: 1,
+            atackBattery: 3,
             defenthBattery: 0
         });
         var statusArray = Battle.getStatusArray();
         assert.equal(retAtack.hit, Battle.ATACK_CRITICAL, 'クリィカルヒットになる');
-        assert.equal(retAtack.damage, 800 * 2, 'ダメージが2倍になる');
+        assert.equal(retAtack.damage, 1600, 'ダメージが2倍になる');
         assert.equal(statusArray[2].hp, 3100, 'HPが減っている');
     });
 

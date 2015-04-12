@@ -4,69 +4,33 @@ describe('Battleクラス アビリティ ブーストアクティブ', function
     var battleUnitData = require('./../testData/battleUnitData.js')();
 
     it('HPが30%以下なのでブーストアクティブが発動する', function () {
-        var testData = {};
-        testData['test001@gmail.com'] = battleUnitData.get('granBraverBoostActive');
-        testData['test001@gmail.com'].active = 0;//アクティブゲージを0にする
-        testData['test002@gmail.com'] = battleUnitData.get('landozer');
-
         var Battle = battle({
-            statusArray: testData
+            statusArray: {
+                'test001@gmail.com' : battleUnitData.get('granBraverBoostActive'),
+                'test002@gmail.com' : battleUnitData.get('landozer')
+            }
         });
+        Battle.getStatusArray()['test001@gmail.com'].hp = 100;  //HPを30%以下にする
 
-        //グランブレイバーがフェイント攻撃する
-        Battle.doWaitPhase();
-        Battle.atack({
-            atackBattery: 0,
-            defenthBattery: 0
-        });
-
-        //ランドーザが攻撃する
-        Battle.doWaitPhase();
-        Battle.atack({
-            atackBattery: 3,
-            defenthBattery: 1
-        });
-
-        //HPが30%以下なのでブーストバッテリーが発動する
         var ret = Battle.doArmdozerAbility();
         var expect = {
             isEffective: true,
             playerId: 'test001@gmail.com'
         };
         assert.deepEqual(ret,expect,'test001@gmail.comのアビリティが発動する');
-
-        var statusArray = Battle.getStatusArray();
-        assert.equal(statusArray['test001@gmail.com'].active,2760+1500,'アクティブゲージが1500回復する');
+        assert.equal(Battle.getStatusArray()['test001@gmail.com'].active,1500,'アクティブゲージが1500回復する');
     });
 
     it('アームドーザアビリティは1回しか発動しない',function(){
-        var testData = {};
-        testData['test001@gmail.com'] = battleUnitData.get('granBraverBoostActive');
-        testData['test001@gmail.com'].active = 0;//アクティブゲージを0にする
-        testData['test002@gmail.com'] = battleUnitData.get('landozer');
-
         var Battle = battle({
-            statusArray: testData
+            statusArray: {
+                'test001@gmail.com' : battleUnitData.get('granBraverBoostActive'),
+                'test002@gmail.com' : battleUnitData.get('landozer')
+            }
         });
+        Battle.getStatusArray()['test001@gmail.com'].hp = 100;  //HPを30%以下にする
 
-        //グランブレイバーがフェイント攻撃する
-        Battle.doWaitPhase();
-        Battle.atack({
-            atackBattery: 0,
-            defenthBattery: 0
-        });
-
-        //ランドーザが攻撃する
-        Battle.doWaitPhase();
-        Battle.atack({
-            atackBattery: 3,
-            defenthBattery: 1
-        });
-
-        //HPが30%以下なのでブーストバッテリーが発動する
         Battle.doArmdozerAbility();
-
-        //HPが30%以下なのでブーストバッテリーが発動する
         var ret = Battle.doArmdozerAbility();
         var expect = {
             isEffective: false,

@@ -92,14 +92,13 @@ var battle = function(spec,my){
         }
         else {
             //ダメージ計算
-            var basicDamage = statusArray[atackUserId].weapons[atackBattery].power;
-            var batteryDiff = atackBattery - defenthBattery;
-            var damageBonus = batteryDiff * ( basicDamage - statusArray[defenseUserId].defense ) / 5;
-            damageBonus = Math.floor(damageBonus);
-            if(damageBonus < 0){
-                damageBonus = 0;
+            var basicDamage = statusArray[atackUserId].weapons[atackBattery].power - statusArray[defenseUserId].defense;
+            var batteryDiff = atackBattery - defenthBattery - 1;
+            var plusDamage = batteryDiff * 100;
+            if(plusDamage<0){
+                plusDamage = 0;
             }
-            damage = basicDamage + damageBonus + plusPowerArray[atackUserId];
+            damage = basicDamage + plusDamage + plusPowerArray[atackUserId];
             hit = that.ATACK_HIT;
 
             //ガード
