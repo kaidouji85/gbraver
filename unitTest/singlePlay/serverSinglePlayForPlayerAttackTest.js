@@ -161,7 +161,7 @@ describe('一人用モードでプレイヤーが攻撃', function() {
                 var expect = {
                     phase : 'damage',
                     hit : 4,
-                    damage : 1920,
+                    damage : 1600,
                     atackBattery : 1,
                     defenthBattery : 0,
                     statusArray : {
@@ -173,7 +173,7 @@ describe('一人用モードでプレイヤーが攻撃', function() {
                             overHeatFlag : false
                         },
                         'nonePlayerCharacter' : {
-                            hp : 2780,
+                            hp : 3100,
                             battery : 5,
                             active : 3000,
                             skillPoint : 1,
@@ -206,7 +206,7 @@ describe('一人用モードでプレイヤーが攻撃', function() {
                             overHeatFlag : false
                         },
                         'nonePlayerCharacter' : {
-                            hp : 2780,
+                            hp : 3100,
                             battery : 5,
                             active : 5100,
                             skillPoint : 1,

@@ -191,7 +191,7 @@ describe('serverクラスのテスト', function() {
                             overHeatFlag : false
                         },
                         'test002@gmail.com' : {
-                            hp : -1300,
+                            hp : -300,
                             battery : 3,
                             active : 1500,
                             skillPoint : 1,
