@@ -21,7 +21,6 @@ describe('Battleクラス パイロットスキル スタン攻撃', function() 
         });
 
         var statusArray = Battle.getStatusArray();
-        assert.equal(statusArray['test002@gmail.com'].hp,3580,'test002@gmail.comが1120ダメージを受ける');
         assert.equal(statusArray['test002@gmail.com'].active,-2500,'test002@gmail.comのアクティブゲージが-2500になる');
         assert.equal(statusArray['test001@gmail.com'].skillPoint,0,'test001@gmail.comのスキルポイントが-1される。');
     });
@@ -44,7 +43,6 @@ describe('Battleクラス パイロットスキル スタン攻撃', function() 
         });
 
         var statusArray = Battle.getStatusArray();
-        assert.equal(statusArray['test002@gmail.com'].hp,4300,'test002@gmail.comが400ダメージを受ける');
         assert.equal(statusArray['test002@gmail.com'].active,3300,'test002@gmail.comのアクティブゲージが減らない');
         assert.equal(statusArray['test001@gmail.com'].skillPoint,0,'test001@gmail.comのスキルポイントが-1される。');
     });
@@ -67,7 +65,6 @@ describe('Battleクラス パイロットスキル スタン攻撃', function() 
         });
 
         var statusArray = Battle.getStatusArray();
-        assert.equal(statusArray['test002@gmail.com'].hp,4700,'test002@gmail.comがダメージを受けない');
         assert.equal(statusArray['test002@gmail.com'].active,3300,'test002@gmail.comのアクティブゲージが減らない');
         assert.equal(statusArray['test001@gmail.com'].skillPoint,0,'test001@gmail.comのスキルポイントが-1される。');
     });
