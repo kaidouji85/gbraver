@@ -25,7 +25,7 @@ describe('Battleクラス パイロットスキル スーパーガード', funct
         });
         var retStatus = Battle.getStatusArray();
 
-        assert.equal(retAttack.damage,920,'ダメージが50%になる');
+        assert.equal(retAttack.damage,350,'ダメージが50%になる');
         assert.equal(retStatus['test001@gmail.com'].skillPoint,0,'パイロットスキルポイントが0になる');
     });
 
@@ -62,7 +62,7 @@ describe('Battleクラス パイロットスキル スーパーガード', funct
         });
         var retStatus = Battle.getStatusArray();
 
-        assert.equal(retAttack.damage,1840,'ダメージが100%である');
+        assert.equal(retAttack.damage,700,'ダメージが100%である');
     });
 
 
@@ -99,6 +99,6 @@ describe('Battleクラス パイロットスキル スーパーガード', funct
         });
         var retStatus = Battle.getStatusArray();
 
-        assert.equal(retAttack.damage,920,'ダメージが50%である');
+        assert.equal(retAttack.damage,350,'ダメージが50%である');
     });
 });
