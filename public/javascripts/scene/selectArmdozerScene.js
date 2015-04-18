@@ -2,6 +2,8 @@ function selectArmdozerScene(spec,my){
     var MAX_ARMDOZER = 3;
     var INFO_WINDOW_X = 144;
     var INFO_WINDOW_Y = 64;
+    var ABILITY_WINDOW_X = 16;
+    var ABILITY_WINDOW_Y = 212;
 
     var that = new Scene();
     var core = enchant.Core.instance;
@@ -133,29 +135,29 @@ function selectArmdozerScene(spec,my){
             spriteWidth : 32,
             spriteHeight : 32
         });
-        that.abilityWindow.x = 16;
-        that.abilityWindow.y = 212;
+        that.abilityWindow.x = ABILITY_WINDOW_X;
+        that.abilityWindow.y = ABILITY_WINDOW_Y;
         that.addChild(that.abilityWindow);
 
         //アビリティラベル
         that.abilityLabel = new Label('アームドーザアビリティ');
         that.abilityLabel.color = "white";
-        that.abilityLabel.x = 32;
-        that.abilityLabel.y = 226;
+        that.abilityLabel.x = ABILITY_WINDOW_X + 12;
+        that.abilityLabel.y = ABILITY_WINDOW_Y + 12;
         that.addChild(that.abilityLabel);
 
         //アビリティ発動条件ラベル
         that.abilityTriggerLabel = new Label('発動条件');
         that.abilityTriggerLabel.color = "white";
-        that.abilityTriggerLabel.x = 32;
-        that.abilityTriggerLabel.y = 242;
+        that.abilityTriggerLabel.x = ABILITY_WINDOW_X + 12;
+        that.abilityTriggerLabel.y = ABILITY_WINDOW_Y + 28;
         that.addChild(that.abilityTriggerLabel);
 
         //アビリティ説明ラベル
         that.abilityDescriptionLabel = new Label('アビリティ説明');
         that.abilityDescriptionLabel.color = 'white';
-        that.abilityDescriptionLabel.x = 32;
-        that.abilityDescriptionLabel.y = 258;
+        that.abilityDescriptionLabel.x = ABILITY_WINDOW_X + 12;
+        that.abilityDescriptionLabel.y = ABILITY_WINDOW_Y + 44;
         that.addChild(that.abilityDescriptionLabel);
 
         //決定ボタン
@@ -221,8 +223,8 @@ function selectArmdozerScene(spec,my){
         that.defenseValueLabel.text = armdozerData.defense;
         that.powerValueLabel.text = armdozerData.weapons[1].power;
         that.speedValueLabel.text = armdozerData.speed;
-        that.abilityTriggerLabel.text = '条件：' + getArmdozerAbilityTrigger( armdozerData.ability );
-        that.abilityDescriptionLabel.text = '効果：' + getArmdozerAbilityDescription( armdozerData.ability );
+        that.abilityTriggerLabel.text = '発動条件：' + getArmdozerAbilityTrigger( armdozerData.ability );
+        that.abilityDescriptionLabel.text = '効果　　：' + getArmdozerAbilityDescription( armdozerData.ability );
 
         that.hpValueLabel.x = 272 - that.hpValueLabel._boundWidth;
         that.powerValueLabel.x = 272 - that.powerValueLabel._boundWidth;
