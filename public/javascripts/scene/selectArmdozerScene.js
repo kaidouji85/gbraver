@@ -1,5 +1,7 @@
 function selectArmdozerScene(spec,my){
     var MAX_ARMDOZER = 3;
+    var INFO_WINDOW_X = 144;
+    var INFO_WINDOW_Y = 64;
 
     var that = new Scene();
     var core = enchant.Core.instance;
@@ -51,77 +53,110 @@ function selectArmdozerScene(spec,my){
         that.infoWindow = gridWindow({
             pict : core.assets[core.PICT_WINDOW],
             width : 5,
-            height : 5,
+            height : 4,
             spriteWidth : 32,
             spriteHeight : 32
         });
-        that.infoWindow.x = 150;
-        that.infoWindow.y = 100;
+        that.infoWindow.x = INFO_WINDOW_X;
+        that.infoWindow.y = INFO_WINDOW_Y;
         that.addChild(that.infoWindow);
 
         //アームドーザ名ラベル
         that.armdozerNameLabel = new Label('');
         that.armdozerNameLabel.color = "white";
-        that.armdozerNameLabel.x = 170;
-        that.armdozerNameLabel.y = 120;
+        that.armdozerNameLabel.x = INFO_WINDOW_X + 16;
+        that.armdozerNameLabel.y = INFO_WINDOW_Y + 24;
         that.addChild(that.armdozerNameLabel);
 
         //HPラベル
         that.hpLabel = new Label('HP');
         that.hpLabel.color = "white";
-        that.hpLabel.x = 170;
-        that.hpLabel.y = 150;
+        that.hpLabel.x = INFO_WINDOW_X + 32;
+        that.hpLabel.y = INFO_WINDOW_Y + 48;
         that.addChild(that.hpLabel);
 
         //HPバリューラベル
         that.hpValueLabel = new Label('');
         that.hpValueLabel.color = "white";
-        that.hpValueLabel.y = 150;
+        that.hpValueLabel.y = INFO_WINDOW_Y + 48;
         that.addChild(that.hpValueLabel);
 
         //攻撃力ラベル
         that.powerLabel = new Label('攻撃');
         that.powerLabel.color = 'white';
-        that.powerLabel.x = 170;
-        that.powerLabel.y = 170;
+        that.powerLabel.x = INFO_WINDOW_X + 32;
+        that.powerLabel.y = INFO_WINDOW_Y + 64;
         that.addChild(that.powerLabel);
 
         //攻撃力バリューラベル
         that.powerValueLabel = new Label('');
         that.powerValueLabel.color = 'white';
-        that.powerValueLabel.y = 170;
+        that.powerValueLabel.y = INFO_WINDOW_Y + 64;
         that.addChild(that.powerValueLabel);
 
         //装甲ラベル
         that.defenseLabel = new Label('防御');
         that.defenseLabel.color = 'white';
-        that.defenseLabel.x = 170;
-        that.defenseLabel.y = 190;
+        that.defenseLabel.x = INFO_WINDOW_X + 32;
+        that.defenseLabel.y = INFO_WINDOW_Y + 80;
         that.addChild(that.defenseLabel);
 
         //装甲バリューラベル
         that.defenseValueLabel = new Label('');
         that.defenseValueLabel.color = 'white';
-        that.defenseValueLabel.y = 190;
+        that.defenseValueLabel.y = INFO_WINDOW_Y + 80;
         that.addChild(that.defenseValueLabel);
 
         //機動力ラベル
         that.speedLabel = new Label('機動');
         that.speedLabel.color = "white";
-        that.speedLabel.x = 170;
-        that.speedLabel.y = 210;
+        that.speedLabel.x = INFO_WINDOW_X + 32;
+        that.speedLabel.y = INFO_WINDOW_Y + 96;
         that.addChild(that.speedLabel);
 
         //機動力バリューラベル
         that.speedValueLabel = new Label('');
         that.speedValueLabel.color = "white";
-        that.speedValueLabel.y = 210;
+        that.speedValueLabel.y = INFO_WINDOW_Y + 96;
         that.addChild(that.speedValueLabel);
 
         //選択したアームドーザ
         that.selectArmdozerSprite = new Sprite(160,160);
-        that.selectArmdozerSprite.y = 110;
+        that.selectArmdozerSprite.y = 48;
         that.addChild(that.selectArmdozerSprite);
+
+        //アビリティウインドウ
+        that.abilityWindow = gridWindow({
+            pict : core.assets[core.PICT_WINDOW],
+            width : 9,
+            height : 2,
+            spriteWidth : 32,
+            spriteHeight : 32
+        });
+        that.abilityWindow.x = 16;
+        that.abilityWindow.y = 212;
+        that.addChild(that.abilityWindow);
+
+        //アビリティラベル
+        that.abilityLabel = new Label('アームドーザアビリティ');
+        that.abilityLabel.color = "white";
+        that.abilityLabel.x = 32;
+        that.abilityLabel.y = 226;
+        that.addChild(that.abilityLabel);
+
+        //アビリティ発動条件ラベル
+        that.abilityTriggerLabel = new Label('発動条件');
+        that.abilityTriggerLabel.color = "white";
+        that.abilityTriggerLabel.x = 32;
+        that.abilityTriggerLabel.y = 242;
+        that.addChild(that.abilityTriggerLabel);
+
+        //アビリティ説明ラベル
+        that.abilityDescriptionLabel = new Label('アビリティ説明');
+        that.abilityDescriptionLabel.color = 'white';
+        that.abilityDescriptionLabel.x = 32;
+        that.abilityDescriptionLabel.y = 258;
+        that.addChild(that.abilityDescriptionLabel);
 
         //決定ボタン
         that.okButton = pictButton({
@@ -186,11 +221,13 @@ function selectArmdozerScene(spec,my){
         that.defenseValueLabel.text = armdozerData.defense;
         that.powerValueLabel.text = armdozerData.weapons[1].power;
         that.speedValueLabel.text = armdozerData.speed;
+        that.abilityTriggerLabel.text = '条件：' + getArmdozerAbilityTrigger( armdozerData.ability );
+        that.abilityDescriptionLabel.text = '効果：' + getArmdozerAbilityDescription( armdozerData.ability );
 
-        that.hpValueLabel.x = 256 - that.hpValueLabel._boundWidth;
-        that.powerValueLabel.x = 256 - that.powerValueLabel._boundWidth;
-        that.defenseValueLabel.x = 256 - that.defenseValueLabel._boundWidth;
-        that.speedValueLabel.x = 256 - that.speedValueLabel._boundWidth;
+        that.hpValueLabel.x = 272 - that.hpValueLabel._boundWidth;
+        that.powerValueLabel.x = 272 - that.powerValueLabel._boundWidth;
+        that.defenseValueLabel.x = 272 - that.defenseValueLabel._boundWidth;
+        that.speedValueLabel.x = 272 - that.speedValueLabel._boundWidth;
     }
 
     function selectArmdozer(){

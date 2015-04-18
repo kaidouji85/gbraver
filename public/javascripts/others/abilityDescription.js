@@ -13,3 +13,15 @@ function getArmdozerAbilityDescription(ability){
     }
     return ret;
 }
+
+function getArmdozerAbilityTrigger(ability) {
+    var ret = 'アビリティ発動条件';
+    switch(ability.type){
+        case 'boostBattery':
+        case 'boostActive':
+        case 'boostPower':
+            ret = 'HPが'+ability.threshold*100+'%以下';
+            break;
+    }
+    return ret;
+}
