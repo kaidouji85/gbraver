@@ -120,23 +120,23 @@ db.armdozers.insert({
     weapons : {
         1 : {
             name : 'バスターナックル',
-            power : 700
+            power : 1400
         },
         2 : {
             name : 'バスターナックル',
-            power : 700
+            power : 1400
         },
         3 : {
             name : 'バスターナックル',
-            power : 700
+            power : 1400
         },
         4 : {
             name : 'バスターナックル',
-            power : 700
+            power : 1400
         },
         5 : {
             name : 'バスターナックル',
-            power : 700
+            power : 1400
         }
     },
     ability: {
@@ -157,23 +157,23 @@ db.armdozers.insert({
     weapons : {
         1 : {
             name : 'バスターナックル',
-            power : 1000
+            power : 1500
         },
         2 : {
             name : 'バスターナックル',
-            power : 1000
+            power : 1500
         },
         3 : {
             name : 'バスターナックル',
-            power : 1000
+            power : 1500
         },
         4 : {
             name : 'バスターナックル',
-            power : 1000
+            power : 1500
         },
         5 : {
             name : 'バスターナックル',
-            power : 1000
+            power : 1500
         }
     },
     ability: {
@@ -192,23 +192,23 @@ db.armdozers.insert({
     weapons : {
         1 : {
             name : 'バスターナックル',
-            power : 1300
+            power : 1900
         },
         2 : {
             name : 'バスターナックル',
-            power : 1300
+            power : 1900
         },
         3 : {
             name : 'バスターナックル',
-            power : 1300
+            power : 1900
         },
         4 : {
             name : 'バスターナックル',
-            power : 1300
+            power : 1900
         },
         5 : {
             name : 'バスターナックル',
-            power : 1300
+            power : 1900
         }
     },
     ability: {
