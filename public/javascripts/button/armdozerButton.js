@@ -12,10 +12,11 @@ function armdozerButton(spec,my){
     function init(){
         armdozerButton = gridWindow({
             pict : windowPict,
-            width : 5,
-            height : 5
+            width : 4,
+            height : 4
         });
         that.addChild(armdozerButton);
+
 
         miniArmdozer = new Sprite(80,80);
         miniArmdozer.image = createFaceIcon(armdozerPict);
@@ -23,8 +24,8 @@ function armdozerButton(spec,my){
 
         pushedButton = gridWindow({
             pict : windowPict,
-            width : 5,
-            height : 5
+            width : 4,
+            height : 4
         });
         pushedButton.setOpacity(0);
         that.addChild(pushedButton);
@@ -45,7 +46,7 @@ function armdozerButton(spec,my){
         var widthMargin = 48;
         var size = 64;
         var faceIcon = new Surface(80,80);
-        faceIcon.draw(image,widthMargin,0,size,size,6,6,68,68);
+        faceIcon.draw(image,widthMargin,0,size,size,6,6, 52,52);
         return faceIcon;
     }
 

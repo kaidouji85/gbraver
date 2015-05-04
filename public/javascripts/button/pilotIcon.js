@@ -13,7 +13,6 @@ function pilotIcon(spec,my){
     var pilotButton = {};
     var miniPilot = {};
 
-
     init();
     function init(){
         pilotButton = gridWindow({

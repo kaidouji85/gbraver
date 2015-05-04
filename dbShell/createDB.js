@@ -110,6 +110,42 @@ db.armdozers.insert({
 });
 
 db.armdozers.insert({
+    armdozerId : 'guardias',
+    name : 'ガーディアス',
+    pictName : 'Guardias.png',
+    hp : 2100,
+    defense : 800,
+    speed : 100,
+    weapons : {
+        1 : {
+            name : 'バスターナックル',
+            power : 1400
+        },
+        2 : {
+            name : 'バスターナックル',
+            power : 1400
+        },
+        3 : {
+            name : 'バスターナックル',
+            power : 1400
+        },
+        4 : {
+            name : 'バスターナックル',
+            power : 1400
+        },
+        5 : {
+            name : 'バスターナックル',
+            power : 1400
+        }
+    },
+    ability: {
+        type : 'boostBattery',
+        battery: 2,
+        threshold: 0.4
+    }
+});
+
+db.armdozers.insert({
     armdozerId : 'enemyLandozer',
     cpuOnly : true,
     name : 'ランドーザ',

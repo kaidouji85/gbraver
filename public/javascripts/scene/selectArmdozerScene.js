@@ -1,16 +1,16 @@
 function selectArmdozerScene(spec,my){
-    var MAX_ARMDOZER = 3;
-    var INFO_WINDOW_X = 144;
-    var INFO_WINDOW_Y = 64;
-    var ABILITY_WINDOW_X = 16;
-    var ABILITY_WINDOW_Y = 212;
-
     var that = new Scene();
     var core = enchant.Core.instance;
     var armdozerList = spec.armdozerList;
     var selectArmdozerId = spec.selectArmdozerId;
     var emitPushOkButton = function(armdozerId){};
     var emitPushPrevButton = function(){}
+
+    var MAX_ARMDOZER = armdozerList.length;
+    var INFO_WINDOW_X = 144;
+    var INFO_WINDOW_Y = 64;
+    var ABILITY_WINDOW_X = 16;
+    var ABILITY_WINDOW_Y = 212;
 
     that.backgroundColor = "black";
     that.background = {};
@@ -41,7 +41,7 @@ function selectArmdozerScene(spec,my){
             });
         }
         that.armdozerButtonArray.forEach(function(button,i){
-            button.x = 20 + 100*i;
+            button.x = 10 + 80*i;
             button.y = 320;
             button.addEventListener(Event.TOUCH_END,function(){
                 var armdozerId = armdozerList[i].armdozerId;
