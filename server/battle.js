@@ -105,6 +105,9 @@ var battle = function(spec,my){
             if(atackBattery===defenthBattery && guardBreakArray[atackUserId]===false){
                 damage = damage / 2;
                 hit = that.ATACK_GUARD;
+                if( statusArray[defenseUserId].ability.type === 'hyperArmor' ) {
+                    damage *= statusArray[defenseUserId].ability.value;
+                }
             }
             //クリティカル
             else if (defenthBattery === 0) {

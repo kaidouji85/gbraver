@@ -147,6 +147,12 @@ function battleUnitData() {
             speed : 0
         };
 
+        unitData['landozerHyperArmor'] = ce.clone(unitData['landozer']);
+        unitData['landozerHyperArmor'].ability = {
+            type: 'hyperArmor',
+            value : 0
+        };
+
         unitData['zeroBraver'] = {
             name : 'ゼロブレイバー',
             pictName : 'ZeroBraver.PNG',
