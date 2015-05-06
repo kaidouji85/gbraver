@@ -113,8 +113,8 @@ db.armdozers.insert({
     armdozerId : 'guardias',
     name : 'ガーディアス',
     pictName : 'Guardias.png',
-    hp : 2100,
-    defense : 800,
+    hp : 1700,
+    defense : 700,
     speed : 100,
     weapons : {
         1 : {
@@ -139,9 +139,8 @@ db.armdozers.insert({
         }
     },
     ability: {
-        type : 'boostBattery',
-        battery: 2,
-        threshold: 0.4
+        type : 'hyperArmor',
+        value : 0
     }
 });
 
