@@ -113,7 +113,7 @@ db.armdozers.insert({
     armdozerId : 'guardias',
     name : 'ガーディアス',
     pictName : 'Guardias.png',
-    hp : 1400,
+    hp : 2100,
     defense : 700,
     speed : 100,
     weapons : {
