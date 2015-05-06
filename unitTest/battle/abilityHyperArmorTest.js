@@ -21,5 +21,13 @@ describe('Battleクラス アビリティ ハイパーアーマ', function() {
         });
         assert.equal( ret.hit, Battle.ATACK_GUARD, '防御判定である' );
         assert.equal( ret.damage, 0 , 'ダメージが0である' );
+
+        //アームドーザアビリティ発動
+        var ret = Battle.doArmdozerAbility();
+        var expect = {
+            isEffective: true,
+            playerId: 'test002@gmail.com'
+        };
+        assert.deepEqual(ret,expect,'test002@gmail.comのアビリティが発動する');
     });
 });

@@ -11,7 +11,7 @@ function getArmdozerAbilityDescription(ability){
             ret = '攻撃が'+ability.power+'増加';
             break;
         case 'hyperArmor' :
-            ret = 'ダメージが'+ability.value*100+'%になる';
+            ret = '防御したらダメージが'+ability.value*100+'%';
             break;
     }
     return ret;
@@ -23,10 +23,10 @@ function getArmdozerAbilityTrigger(ability) {
         case 'boostBattery':
         case 'boostActive':
         case 'boostPower':
-            ret = 'HPが'+ability.threshold*100+'%以下の時に1回だけ';
+            ret = 'HPが'+ability.threshold*100+'%以下(1回のみ)';
             break;
         case 'hyperArmor':
-            ret = '攻撃を防御した時'
+            ret = '常時'
             break;
     }
     return ret;

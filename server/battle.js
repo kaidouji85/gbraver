@@ -15,7 +15,8 @@ var battle = function(spec,my){
     var plusPowerArray = {};
     var superGuardArray = {};
     var boostBatteryArray = {};
-    var abilityArray = {};
+    var thresholdAbilityArray = {};
+    var hyperArmorFiredFlag = {};
 
     that.MAX_ACTIVE = 5000;
     that.ATACK_HIT = 1;
@@ -32,7 +33,8 @@ var battle = function(spec,my){
             plusPowerArray[uid] = 0;
             superGuardArray[uid] = 1;
             boostBatteryArray[uid] = true;
-            abilityArray[uid] = true;
+            thresholdAbilityArray[uid] = true;
+            hyperArmorFiredFlag[uid] = false;
         }
     })()
     
@@ -107,6 +109,7 @@ var battle = function(spec,my){
                 hit = that.ATACK_GUARD;
                 if( statusArray[defenseUserId].ability.type === 'hyperArmor' ) {
                     damage *= statusArray[defenseUserId].ability.value;
+                    hyperArmorFiredFlag[defenseUserId] = true;
                 }
             }
             //クリティカル
@@ -214,18 +217,24 @@ var battle = function(spec,my){
         var isEffective = false;
         var playerId = '';
         for (var uid in statusArray) {
-            var thresholdHp = statusArray[uid].ability.threshold * maxHpArray[uid];
-            if(thresholdHp>=statusArray[uid].hp && abilityArray[uid]){
+            if(isThresholdAbility( statusArray[uid].ability.type )) {
+                var thresholdHp = statusArray[uid].ability.threshold * maxHpArray[uid];
+                if(thresholdHp>=statusArray[uid].hp && thresholdAbilityArray[uid]){
+                    isEffective = true;
+                    playerId = uid;
+                    thresholdAbilityArray[uid] = false;
+                    if(statusArray[uid].ability.type ==='boostBattery') {
+                        executeBoostBattery(uid);
+                    } else if(statusArray[uid].ability.type ==='boostActive') {
+                        execuetBoostActive(uid);
+                    } else if (statusArray[uid].ability.type === 'boostPower') {
+                        executeBoostPower(uid);
+                    }
+                }
+            } else if( statusArray[uid].ability.type === 'hyperArmor' && hyperArmorFiredFlag[uid] ){
                 isEffective = true;
                 playerId = uid;
-                abilityArray[uid] = false;
-                if(statusArray[uid].ability.type ==='boostBattery') {
-                    executeBoostBattery(uid);
-                } else if(statusArray[uid].ability.type ==='boostActive') {
-                    execuetActive(uid);
-                } else if (statusArray[uid].ability.type === 'boostPower') {
-                    executeBoostPower(uid);
-                }
+                hyperArmorFiredFlag[uid] = false
             }
         }
 
@@ -253,7 +262,7 @@ var battle = function(spec,my){
         }
     }
 
-    function execuetActive(userId) {
+    function execuetBoostActive(userId) {
         statusArray[userId].active += that.MAX_ACTIVE * statusArray[userId].ability.active;
         if (statusArray[userId].active > that.MAX_ACTIVE) {
             statusArray[userId].active = that.MAX_ACTIVE
@@ -265,6 +274,10 @@ var battle = function(spec,my){
         for(var i=1; i<=5; i++){
             statusArray[userId].weapons[i].power += power;
         }
+    }
+
+    function isThresholdAbility( type ) {
+        return type==='boostBattery' || type==='boostActive' || type==='boostPower' ? true : false;
     }
 
     return that;
