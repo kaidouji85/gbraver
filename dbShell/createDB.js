@@ -114,7 +114,7 @@ db.armdozers.insert({
     name : 'ガーディアス',
     pictName : 'Guardias.png',
     hp : 2100,
-    defense : 700,
+    defense : 800,
     speed : 100,
     weapons : {
         1 : {
