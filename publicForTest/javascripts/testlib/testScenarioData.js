@@ -27,5 +27,15 @@ function testScenarioData(){
         }
     ];
 
+    scenarioData['pilotRightTest'] = [
+        {
+            method : 'pilot',
+            param : {
+                id : 'akane',
+                dir : 'right'
+            }
+        }
+    ];
+
     return scenarioData;
 }

@@ -23,7 +23,8 @@ function storyScene(spec,my) {
         for(var pid in that.pilotSpriteArray){
             that.pilotSpriteArray[pid] = new Sprite(256,256);
             that.pilotSpriteArray[pid].visible = false;
-            that.pilotSpriteArray[pid].y = 100
+            that.pilotSpriteArray[pid].x = pid==='left' ? -64 : 128;;
+            that.pilotSpriteArray[pid].y = 100;
             that.pilotSpriteArray[pid].scaleX = pid==='left' ? -1 : 1;
             that.addChild(that.pilotSpriteArray[pid]);
         }
