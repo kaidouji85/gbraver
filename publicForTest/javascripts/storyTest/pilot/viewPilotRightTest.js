@@ -15,10 +15,10 @@ function doTest(){
             pilotList : pilotList
         });
         Game.replaceScene(testScene);
-        assertOfLeftPilot();
+        assertOfRightPilot();
     };
 
-    function assertOfLeftPilot() {
+    function assertOfRightPilot() {
         assert.equal(Game.currentScene.pilotSpriteArray['right'].visible,true,'右側パイロットスプライトが表示されている');
         assert.equal(Game.currentScene.getStoryIndex(),1,'ストーリーインデックスが次に進む');
         finishTest();

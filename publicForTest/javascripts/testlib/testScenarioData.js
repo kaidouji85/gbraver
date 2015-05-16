@@ -37,5 +37,68 @@ function testScenarioData(){
         }
     ];
 
+    scenarioData['activeLeftPilotTest'] = [
+        {
+            method : 'pilot',
+            param : {
+                id : 'kyoko',
+                dir : 'left'
+            }
+        },
+        {
+            method : 'pilot',
+            param : {
+                id : 'akane',
+                dir : 'right'
+            }
+        },
+        {
+            method : 'activePilot',
+            param : 'left'
+        }
+    ];
+
+    scenarioData['activeRightPilotTest'] = [
+        {
+            method : 'pilot',
+            param : {
+                id : 'kyoko',
+                dir : 'left'
+            }
+        },
+        {
+            method : 'pilot',
+            param : {
+                id : 'akane',
+                dir : 'right'
+            }
+        },
+        {
+            method : 'activePilot',
+            param : 'right'
+        }
+    ];
+
+    scenarioData['activeNoPilotTest'] = [
+        {
+            method : 'pilot',
+            param : {
+                id : 'kyoko',
+                dir : 'left'
+            }
+        },
+        {
+            method : 'pilot',
+            param : {
+                id : 'akane',
+                dir : 'right'
+            }
+        },
+        {
+            method : 'activePilot',
+            param : 'no'
+        }
+    ];
+
     return scenarioData;
 }

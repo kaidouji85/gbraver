@@ -7,7 +7,8 @@ function storyScene(spec,my) {
     var emitProceedStory = function(){};
     var methodMap = {
         mes : doMes,
-        pilot : doPilot
+        pilot : doPilot,
+        activePilot : doActivePilot
     };
 
     that.pilotSpriteArray = {
@@ -76,6 +77,14 @@ function storyScene(spec,my) {
         var pict = core.assets[core.PICT_PREFIX+pilotData.pict];
         that.pilotSpriteArray[dir].visible = true;
         that.pilotSpriteArray[dir].image = pict;
+        return true;
+    }
+
+    function doActivePilot(param){
+        var activeDir = param;
+        for(var pid in that.pilotSpriteArray) {
+            that.pilotSpriteArray[pid].opacity = activeDir===pid ? 1 : 0.5;
+        }
         return true;
     }
 
