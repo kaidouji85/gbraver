@@ -3,27 +3,22 @@ window.onload = doTest;
 
 function doTest(){
     var assert = chai.assert;
-    var testDataInst = testData();
     var Game = gameBase();
     var testScene;
+    var testScenario = testScenarioData()['mesTest'];
 
     Game.start();
     Game.onload = function(){
         testScene = storyScene({
-            scenarioData : testScenarioData
+            scenarioData : testScenario
         });
         Game.replaceScene(testScene);
-        pushNextButton();
+        assertOfViewMessage();
     };
 
-    function pushNextButton(){
-        Game.currentScene.onProceedStory(assertOfStory);
-        touch(Game.currentScene);
-
-    }
-
-    function assertOfStory(index, scenario) {
+    function assertOfViewMessage() {
         assert.equal(Game.currentScene.getStoryIndex(),1,'ストーリーインデックスが次に進む');
+        assert.equal(Game.currentScene.mesWindow.getText(),testScenario[0].param,'表示されるセリフが正しい');
         finishTest();
     }
 }
