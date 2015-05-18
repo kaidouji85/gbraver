@@ -17,7 +17,7 @@ function doTest(){
     };
 
     function assertOfViewMessage() {
-        assert.equal(Game.currentScene.getStoryIndex(),1,'ストーリーインデックスが次に進む');
+        assert.equal(Game.currentScene.getStoryIndex(),0,'ストーリーインデックスがそのまま');
         assert.equal(Game.currentScene.mesWindow.getText(),testScenario[0].param,'表示されるセリフが正しい');
         finishTest();
     }

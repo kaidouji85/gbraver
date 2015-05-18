@@ -100,5 +100,21 @@ function testScenarioData(){
         }
     ];
 
+    scenarioData['moveBattleTest'] = [
+        {
+            method : 'mes',
+            param :
+            'でかい口叩けるのも、今のうちよ<br>'+
+            '私のランドーザが最強なんだから'
+        },
+        {
+            method : 'moveBattle',
+            param : {
+                armdozerId : 'landozer',
+                pilotId : 'akane'
+            }
+        }
+    ];
+
     return scenarioData;
 }

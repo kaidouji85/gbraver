@@ -5,7 +5,7 @@ function doTest(){
     var assert = chai.assert;
     var Game = gameBase();
     var testScene;
-    var testScenario = testScenarioData()['mesTest'];
+    var testScenario = testScenarioData()['moveBattleTest'];
 
     Game.start();
     Game.onload = function(){
@@ -17,14 +17,15 @@ function doTest(){
     };
 
     function pushNextButton(){
-        Game.currentScene.onProceedStory(assertOfStory);
+        Game.currentScene.onEndStory(assertEndOfStory);
         touch(Game.currentScene);
 
     }
 
-    function assertOfStory() {
-        assert.equal(Game.currentScene.getStoryIndex(),1,'ストーリーインデックスがそのまま');
-        assert.equal(Game.currentScene.mesWindow.getText(),testScenario[1].param,'セリフが正しい');
+    function assertEndOfStory(battle) {
+        assert.equal(Game.currentScene.getStoryIndex(),1,'ストーリーインデックスが正しい');
+        assert.equal(battle.armdozerId, 'landozer', 'アームドーザIDが正しい');
+        assert.equal(battle.pilotId, 'akane', 'パイロットIが正しい');
         finishTest();
     }
 }

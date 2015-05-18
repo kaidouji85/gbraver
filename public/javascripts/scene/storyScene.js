@@ -5,10 +5,12 @@ function storyScene(spec,my) {
     var pilotList = spec.pilotList;
     var storyIndex = 0;
     var emitProceedStory = function(){};
+    var emitEndStory = function(battle){};
     var methodMap = {
         mes : doMes,
         pilot : doPilot,
-        activePilot : doActivePilot
+        activePilot : doActivePilot,
+        moveBattle : doMoveBattle
     };
 
     that.pilotSpriteArray = {
@@ -52,6 +54,10 @@ function storyScene(spec,my) {
         emitProceedStory = fn;
     }
 
+    that.onEndStory = function(fn){
+        emitEndStory = fn;
+    }
+
     function doStory(){
         if(scenarioArray.length <= storyIndex){
             return;
@@ -59,9 +65,9 @@ function storyScene(spec,my) {
 
         var scenario = scenarioArray[storyIndex];
         var ret = methodMap[scenario.method](scenario.param);
-        storyIndex ++;
         emitProceedStory();
         if(ret) {
+            storyIndex ++;
             doStory();
         }
     }
@@ -88,9 +94,15 @@ function storyScene(spec,my) {
         return true;
     }
 
+    function doMoveBattle(param){
+        emitEndStory(param);
+        return false;
+    }
+
     function pushScreen(){
         var scenario = scenarioArray[storyIndex];
         if( scenario.method === 'mes' ){
+            storyIndex ++;
             doStory();
         }
     }
