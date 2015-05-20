@@ -46,6 +46,11 @@ function storyScene(spec,my) {
         doStory();
     })()
 
+
+    that.getName = function(){
+        return 'storyScene'
+    }
+
     that.getStoryIndex = function(){
         return storyIndex;
     }

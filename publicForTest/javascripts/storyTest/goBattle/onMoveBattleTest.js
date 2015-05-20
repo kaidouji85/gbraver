@@ -24,8 +24,9 @@ function doTest(){
 
     function assertEndOfStory(battle) {
         assert.equal(Game.currentScene.getStoryIndex(),1,'ストーリーインデックスが正しい');
-        assert.equal(battle.armdozerId, 'landozer', 'アームドーザIDが正しい');
+        assert.equal(battle.enemyId, 'landozer', 'アームドーザIDが正しい');
         assert.equal(battle.pilotId, 'akane', 'パイロットIが正しい');
+        assert.equal(battle.routineId,'attack3','ルーチンが正しい');
         finishTest();
     }
 }

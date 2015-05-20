@@ -12,6 +12,7 @@ function game(spec, my) {
     var pilotList = spec.pilotList;
     var armdozerList = spec.armdozerList;
     var stageData = spec.stageData;
+    var scenarioData = spec.scenarioData;
     var battleMode = core.BATTLE_MODE_TWO_PLAY;
     var emitChangeScene = function(scene){};
     var emitSendMessage = function(message,data){};
@@ -137,6 +138,18 @@ function game(spec, my) {
         });
         core.replaceScene(scene);
         battleMode = core.BATTLE_MODE_SINGLE_PLAY;
+        emitChangeScene(core.currentScene.getName());
+    }
+
+    core.changeStoryScene = function(senarioId){
+        var scene = storyScene({
+            scenarioData : scenarioData[senarioId],
+            pilotList : pilotList
+        });
+        scene.onEndStory(function(battle){
+            emitSendMessage('startSinglePlay',battle);
+        });
+        core.replaceScene(scene);
         emitChangeScene(core.currentScene.getName());
     }
 
