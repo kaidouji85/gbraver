@@ -1,8 +1,6 @@
 enchant();
 window.onload = doTest;
 
-//TODO サーバレスポンスを返す、戦闘シーン切り替え、の手順を作る
-
 function doTest(){
     var assert = chai.assert;
     var testDataInst = testData();
@@ -44,6 +42,29 @@ function doTest(){
         };
         assert.equal(message,'startSinglePlay','サーバ送信メッセージが正しい');
         assert.deepEqual(data,expextData,'サーバ送信データが正しい');
-        finishTest();
+        //TODO ローディング画面を追加する
+        Game.currentScene.tl.delay(60).then(doServerResp);
+
+    }
+
+    function doServerResp() {
+        var serverResp = {
+            'test001@gmail.com' : {
+                userId : 'test001@gmail.com',
+                status : testDataInst.getPlayerData('test001@gmail.com').status
+            },
+            'nonePlayerCharacter' : {
+                userId : 'nonePlayerCharacter',
+                status : testDataInst.getPlayerData('test002@gmail.com').status
+            }
+        };
+        Game.onChangeScene(assertOfChangeScene);
+        Game.emitServerResp('gameStart',serverResp);
+    }
+
+    function assertOfChangeScene(scene){
+        assert.equal(scene,'battle','戦闘画面へ遷移する');
+        assert.equal(Game.getBattleMode(),'singlePlay','戦闘モードがシングルプレイである');
+        Game.onSendMessage(finishTest);
     }
 }

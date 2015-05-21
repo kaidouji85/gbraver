@@ -150,6 +150,7 @@ function game(spec, my) {
             emitSendMessage('startSinglePlay',battle);
         });
         core.replaceScene(scene);
+        battleMode = core.BATTLE_MODE_SINGLE_PLAY;
         emitChangeScene(core.currentScene.getName());
     }
 
