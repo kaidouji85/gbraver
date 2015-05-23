@@ -8,13 +8,13 @@ a {
     color: #00B7FF;
 }
 
-.center {
+.main {
     text-align:center;
+    overflow:visible;
 }
 
 .topPict {
-    margin-top: 24px;
-    margin-bottom: 8px;
+    height : 312px;
 }
 
 .buttonBasic {
