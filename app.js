@@ -4,6 +4,8 @@ var BASE_URL = process.env.BASE_URL || 'http://localhost:'+PORT;
 var GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 var GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 var CONTENT_BASE_URL = process.env.CONTENT_BASE_URL || BASE_URL;
+var TWITTER_CONSUMER_KEY = process.env.TWITTER_CONSUMER_KEY;
+var TWITTER_CONSUMER_SECRET = process.env.TWITTER_CONSUMER_SECRET;
 
 /**
  * Module dependencies.
@@ -51,11 +53,13 @@ if ('development' == app.get('env')) {
 var mongoUri = process.env.MONGOHQ_URL || 'mongodb://localhost/gbraver';
 var dao = mongoDao({url : mongoUri});
 
-//google OAuth2
-var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+//Passport
 passport.serializeUser(function(user, done) {
     done(null, user);
 });
+
+//google OAuth2
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 passport.deserializeUser(function(obj, done) {
     done(null, obj);
 });
@@ -71,9 +75,32 @@ passport.use(new GoogleStrategy({
     }
 ));
 
+// twitter
+var TwitterStrategy = require('passport-twitter');
+passport.use(new TwitterStrategy({
+        consumerKey: TWITTER_CONSUMER_KEY,
+        consumerSecret: TWITTER_CONSUMER_SECRET,
+        callbackURL: BASE_URL+'/auth/twitter/callback'
+    },
+    function(token, tokenSecret, profile, done) {
+        /*
+        User.findOrCreate({ twitterId: profile.id }, function (err, user) {
+            return done(err, user);
+        });
+        */
+        return done(null,profile);
+    }
+));
+
 //routing
 app.get('/', routes.index);
 app.get('/logOff',routes.logOff);
+if('development' == app.get('env')){
+    app.get('/testClient',routes.testClient);
+    app.get('/testList',routes.testList);
+}
+
+//routing google-oauth
 app.get('/auth/google',
     passport.authenticate('google', {
         scope: [
@@ -87,15 +114,24 @@ app.get('/auth/google',
 app.get('/auth/google/callback', function (req, res, next) {
     passport.authenticate('google', function (err, user) {
         req.session.gbraver = {
-            user : user
+            userid : user.emails[0].value
         };
         res.redirect('/');
     })(req, res, next);
 });
-if('development' == app.get('env')){
-    app.get('/testClient',routes.testClient);
-    app.get('/testList',routes.testList);
-}
+
+//routing passport-twitter
+app.get('/auth/twitter',
+    passport.authenticate('twitter'));
+app.get('/auth/twitter/callback',
+    passport.authenticate('twitter', { failureRedirect: '/' }),
+    function(req, res) {
+        // Successful authentication, redirect home.
+        req.session.gbraver = {
+            userid : 'twitter:'+req.user.username
+        };
+        res.redirect('/');
+    });
 
 //http server
 var httpServer = app.listen(app.get('port'), function(){
