@@ -6,7 +6,7 @@ function routes(spec,my){
 
     that.index = function(req, res){
         if(req.session.gbraver){
-            var userId = req.session.gbraver.user.emails[0].value;
+            var userId = req.session.gbraver.userid;
             res.render('gameMain', {
                 userId : userId,
                 contentBaseUrl : contentBaseUrl
