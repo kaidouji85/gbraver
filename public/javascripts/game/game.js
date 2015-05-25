@@ -13,6 +13,7 @@ function game(spec, my) {
     var armdozerList = spec.armdozerList;
     var stageData = spec.stageData;
     var scenarioData = spec.scenarioData;
+    var currentScenarioId = spec.startScenarioId;
     var battleMode = core.BATTLE_MODE_TWO_PLAY;
     var emitChangeScene = function(scene){};
     var emitSendMessage = function(message,data){};
@@ -78,6 +79,10 @@ function game(spec, my) {
         scene.onPushLogOffButton(function(){
             emitLogOff();
         });
+        scene.onPushStoryButton(function(){
+            core.changeStoryScene(currentScenarioId);
+        });
+
         core.replaceScene(scene);
         emitChangeScene(core.currentScene.getName());
     };
@@ -150,7 +155,7 @@ function game(spec, my) {
             emitSendMessage('startSinglePlay',battle);
         });
         core.replaceScene(scene);
-        battleMode = core.BATTLE_MODE_SINGLE_PLAY;
+        battleMode = core.BATTLE_MODE_STORY;
         emitChangeScene(core.currentScene.getName());
     }
 
@@ -234,6 +239,10 @@ function game(spec, my) {
 
     core.setBattleMode = function(mode){
         battleMode = mode;
+    }
+
+    core.getScenarioId = function(){
+        return currentScenarioId;
     }
 
     function changePhase(data){

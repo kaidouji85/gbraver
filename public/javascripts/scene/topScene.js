@@ -11,6 +11,7 @@ function topScene(spec,my){
     that.onPushSelectArmdozerButton = onPushSelectArmdozerButton;
     that.onPushSelectStageButton = onPushSelectStageButton;
     that.onPushLogOffButton = onPushLogOffButton;
+    that.onPushStoryButton = onPushStoryButton;
     
     var core = enchant.Core.instance;
     var emitPushBattleRoom = function(){};
@@ -18,6 +19,7 @@ function topScene(spec,my){
     var emitPushSelectArmdozerButton = function(){};
     var emitPushSelectStageButton = function(){};
     var emitPushLogOffButton = function(){};
+    var emitPushStoryButton = function(){};
     
     initSprite();
     function initSprite(){
@@ -45,12 +47,24 @@ function topScene(spec,my){
         that.pilotSprite.y = 100;
         that.addChild(that.pilotSprite);
 
-        //ステージセレクトボタン
-        that.selectStageButton = pictButton({
-            text : '1人用モード',
+        //ストーリーモードボタン
+        that.storyButton = pictButton({
+            text : 'ストーリーモード',
             pict : core.assets[core.PICT_BUTTON]
         });
-        that.selectStageButton.x = 8;
+        that.storyButton.x = 8;
+        that.storyButton.y = 300;
+        that.storyButton.addEventListener(Event.TOUCH_END,function(){
+            emitPushStoryButton();
+        });
+        that.addChild(that.storyButton);
+
+        //ステージセレクトボタン
+        that.selectStageButton = pictButton({
+            text : '練習モード',
+            pict : core.assets[core.PICT_BUTTON]
+        });
+        that.selectStageButton.x = 168;
         that.selectStageButton.y = 300;
         that.selectStageButton.addEventListener(Event.TOUCH_END,function(){
             emitPushSelectStageButton();
@@ -62,8 +76,8 @@ function topScene(spec,my){
             text : '対戦モード',
             pict : core.assets[core.PICT_BUTTON]
         });
-        that.battleRoomButton.x = 168;
-        that.battleRoomButton.y = 300;
+        that.battleRoomButton.x = 8;
+        that.battleRoomButton.y = 364;
         that.battleRoomButton.addEventListener(Event.TOUCH_END,function(e){
             that.battleRoomButton.setVisible(false);
             that.selectArmdozerButton.setVisible(false);
@@ -81,7 +95,7 @@ function topScene(spec,my){
             text : 'アームドーザ選択',
             pict : core.assets[core.PICT_BUTTON]
         });
-        that.selectArmdozerButton.x = 8;
+        that.selectArmdozerButton.x = 168;
         that.selectArmdozerButton.y = 364;
         that.selectArmdozerButton.addEventListener(Event.TOUCH_END,function(e){
             emitPushSelectArmdozerButton();
@@ -93,8 +107,8 @@ function topScene(spec,my){
             text : 'パイロット選択',
             pict : core.assets[core.PICT_BUTTON]
         });
-        that.selectPilotButton.x = 168;
-        that.selectPilotButton.y = 364;
+        that.selectPilotButton.x = 8;
+        that.selectPilotButton.y = 428;
         that.selectPilotButton.addEventListener(Event.TOUCH_END,function(e){
             emitPushSelectPilotButton();
         });
@@ -105,7 +119,7 @@ function topScene(spec,my){
             text : 'ログオフ',
             pict : core.assets[core.PICT_OVERHEAT_BUTTON]
         });
-        that.logOffButton.x = 8;
+        that.logOffButton.x = 168;
         that.logOffButton.y = 428;
         that.logOffButton.addEventListener(Event.TOUCH_END,function(){
             that.battleRoomButton.setVisible(false);
@@ -158,6 +172,10 @@ function topScene(spec,my){
 
     function onPushSelectStageButton(fn){
         emitPushSelectStageButton = fn;
+    }
+
+    function onPushStoryButton(fn){
+        emitPushStoryButton = fn;
     }
 
     function getArmdozerPictByArmdozerId(armdozerId){
