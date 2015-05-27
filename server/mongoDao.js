@@ -70,13 +70,16 @@ function mongoDao(spec, my) {
             getPilotList(db,function(err,pilotList){
                 getArmdozerList(db,function(err,armdozerList){
                     getStageData(db,function(err,stageData){
-                        var data = {
-                            pilotList : pilotList,
-                            armdozerList :armdozerList,
-                            stageData : stageData
-                        };
-                        db.close();
-                        fn(null,data);
+                        getScenarioData(db,function(err,scenarioData){
+                            var data = {
+                                pilotList : pilotList,
+                                armdozerList :armdozerList,
+                                stageData : stageData,
+                                scenarioData : scenarioData
+                            };
+                            db.close();
+                            fn(null,data);
+                        });
                     });
                 })
             });
@@ -215,6 +218,16 @@ function mongoDao(spec, my) {
                 stageDataArray.push(stageDataRecord);
             }
             fn(null,stageDataArray);
+        });
+    }
+
+    function getScenarioData(db,fn){
+        var scenarioData = {};
+        var collection = db.collection('scenarios');
+        collection.find().toArray(function(err,result){
+            var scenarioData = ce.clone(result[0]);
+            delete scenarioData._id;
+            fn(null,scenarioData);
         });
     }
 

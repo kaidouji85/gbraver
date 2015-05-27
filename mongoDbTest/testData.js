@@ -176,10 +176,42 @@ var stage3 = {
     routineId : 'attack3'
 };
 
+/**
+ * シナリオデータ
+ */
+var mesTest = [
+    {
+        method : 'mes',
+        param :
+        '春日野高校の恭子よ<br>'+
+        'アームドーザの操縦には、結構自信があるんだ<br>'+
+        'お互いにベストを尽くしましょう'
+    },
+    {
+        method : 'mes',
+        param :
+        'でかい口叩けるのも、今のうちよ<br>'+
+        '私のランドーザが最強なんだから'
+    }
+];
+
+var pilotLeftTest = [
+    {
+        method : 'pilot',
+        param : {
+            id : 'kyoko',
+            dir : 'left'
+        }
+    }
+];
+
 var userData = [take,uchi];
 var armdozerData = [granBraver,landozer,zakoDozer];
 var pilotData = [kyoko,akane,iori];
 var stageData = [stage1,stage2,stage3];
+var scenarioData = {
+    mesTest : mesTest,
+    pilotLeftTest : pilotLeftTest};
 
 function insertData(mongoUrl,fnc) {
     MongoClient.connect(mongoUrl, function(err, db) {
@@ -187,8 +219,10 @@ function insertData(mongoUrl,fnc) {
             insertArmdozerData(armdozerData,db,function(err,result){
                 insertPilotData(pilotData,db,function(err,result){
                     insertStageData(stageData,db,function(err,result){
-                        db.close();
-                        fnc(null,true);
+                        insertScenarioData(scenarioData,db,function(err,result){
+                            db.close();
+                            fnc(null,true);
+                        });
                     });
                 });
             });
@@ -227,6 +261,15 @@ function insertStageData(stageData,db,fnc){
     var collection = db.collection('stages');
     collection.remove({}, {}, function(err, deletes) {
         collection.insert(stageData, function(err, data) {
+            fnc(null, true);
+        });
+    });
+}
+
+function insertScenarioData(scenarioData,db,fnc){
+    var collection = db.collection('scenarios');
+    collection.remove({}, {}, function(err, deletes) {
+        collection.insert(scenarioData, function(err, data) {
             fnc(null, true);
         });
     });
