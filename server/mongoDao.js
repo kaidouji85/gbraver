@@ -70,7 +70,7 @@ function mongoDao(spec, my) {
             getPilotList(db,function(err,pilotList){
                 getArmdozerList(db,function(err,armdozerList){
                     getStageData(db,function(err,stageData){
-                        getScenarioData(db,function(err,scenarioData){
+                        getScenarioDataList(db,function(err,scenarioData){
                             var data = {
                                 pilotList : pilotList,
                                 armdozerList :armdozerList,
@@ -221,12 +221,16 @@ function mongoDao(spec, my) {
         });
     }
 
-    function getScenarioData(db,fn){
-        var scenarioData = {};
+    function getScenarioDataList(db,fn){
+        var scenarioData = [];
+        var scenarioRecord = {};
         var collection = db.collection('scenarios');
         collection.find().toArray(function(err,result){
-            var scenarioData = ce.clone(result[0]);
-            delete scenarioData._id;
+            for(var i in result){
+                scenarioRecord = ce.clone(result[i]);
+                delete scenarioRecord._id;
+                scenarioData.push(scenarioRecord);
+            }
             fn(null,scenarioData);
         });
     }

@@ -179,39 +179,43 @@ var stage3 = {
 /**
  * シナリオデータ
  */
-var mesTest = [
-    {
-        method : 'mes',
-        param :
-        '春日野高校の恭子よ<br>'+
-        'アームドーザの操縦には、結構自信があるんだ<br>'+
-        'お互いにベストを尽くしましょう'
-    },
-    {
-        method : 'mes',
-        param :
-        'でかい口叩けるのも、今のうちよ<br>'+
-        '私のランドーザが最強なんだから'
-    }
-];
-
-var pilotLeftTest = [
-    {
-        method : 'pilot',
-        param : {
-            id : 'kyoko',
-            dir : 'left'
+var mesTest = {
+    id : 'mesTest',
+    data :     [
+        {
+            method : 'mes',
+            param :
+            '春日野高校の恭子よ<br>'+
+            'アームドーザの操縦には、結構自信があるんだ<br>'+
+            'お互いにベストを尽くしましょう'
+        },
+        {
+            method : 'mes',
+            param :
+            'でかい口叩けるのも、今のうちよ<br>'+
+            '私のランドーザが最強なんだから'
         }
-    }
-];
+    ]
+};
+
+var pilotLeftTest = {
+    id : 'pilotLeftTest',
+    data :    [
+        {
+            method : 'pilot',
+            param : {
+                id : 'kyoko',
+                dir : 'left'
+            }
+        }
+    ]
+};
 
 var userData = [take,uchi];
 var armdozerData = [granBraver,landozer,zakoDozer];
 var pilotData = [kyoko,akane,iori];
 var stageData = [stage1,stage2,stage3];
-var scenarioData = {
-    mesTest : mesTest,
-    pilotLeftTest : pilotLeftTest};
+var scenarioData = [mesTest, pilotLeftTest];
 
 function insertData(mongoUrl,fnc) {
     MongoClient.connect(mongoUrl, function(err, db) {
