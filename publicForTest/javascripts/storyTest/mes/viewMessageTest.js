@@ -5,7 +5,7 @@ function doTest(){
     var assert = chai.assert;
     var Game = gameBase();
     var testScene;
-    var testScenario = testScenarioData()['mesTest'];
+    var testScenario = testScenarioData().getData('mesTest');
 
     Game.start();
     Game.onload = function(){

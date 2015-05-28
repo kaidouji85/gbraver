@@ -148,7 +148,7 @@ function game(spec, my) {
 
     core.changeStoryScene = function(senarioId){
         var scene = storyScene({
-            scenarioData : scenarioData[senarioId],
+            scenarioData : getScenarioData(senarioId),
             pilotList : pilotList
         });
         scene.onEndStory(function(battle){
@@ -272,6 +272,14 @@ function game(spec, my) {
             case 'armdozerAbility':
                 core.currentScene.doArmdozerAbility(data);
                 break;
+        }
+    }
+
+    function getScenarioData(scenarioId){
+        for(var i in scenarioData){
+            if(scenarioData[i].id===scenarioId){
+                return scenarioData[i].data;
+            }
         }
     }
 

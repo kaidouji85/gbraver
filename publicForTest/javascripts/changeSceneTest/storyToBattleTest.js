@@ -4,7 +4,7 @@ window.onload = doTest;
 function doTest(){
     var assert = chai.assert;
     var testDataInst = testData();
-    var testScenario = testScenarioData();
+    var testScenario = testScenarioData().getMasterData();
     var Game;
 
     initGame();

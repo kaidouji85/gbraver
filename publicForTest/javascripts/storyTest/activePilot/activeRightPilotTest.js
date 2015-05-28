@@ -5,7 +5,7 @@ function doTest(){
     var assert = chai.assert;
     var Game = gameBase();
     var testScene;
-    var testScenario = testScenarioData()['activeRightPilotTest'];
+    var testScenario = testScenarioData().getData('activeRightPilotTest');
     var pilotList = testData().getMasterData().pilotList;
 
     Game.start();
