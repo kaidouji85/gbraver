@@ -43,7 +43,9 @@ window.onload = function() {
             pilotId : userData.pilotId,
             armdozerList : masterData.armdozerList,
             pilotList : masterData.pilotList,
-            stageData : masterData.stageData
+            stageData : masterData.stageData,
+            scenarioData : masterData.scenarioData,
+            startScenarioId : 'start'//TODO マスタデータから取得する
         });
         //console.log(getTime()+' load start');//test
         Game.start();
