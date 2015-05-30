@@ -30,6 +30,8 @@ function game(spec, my) {
                 emitSendMessage('getRoomInfo',null);
             } else if(battleMode===core.BATTLE_MODE_SINGLE_PLAY) {
                 core.changeSelectStageScene();
+            } else if(battleMode===core.BATTLE_MODE_STORY){
+                core.changeStoryScene(currentScenarioId);
             }
         });
         core.pushScene(scene);
@@ -243,6 +245,10 @@ function game(spec, my) {
 
     core.getScenarioId = function(){
         return currentScenarioId;
+    }
+
+    core.setScenarioId = function(id){
+        currentScenarioId = id;
     }
 
     function changePhase(data){

@@ -64,7 +64,7 @@ function doTest(){
 
     function assertOfChangeScene(scene){
         assert.equal(scene,'battle','戦闘画面へ遷移する');
-        assert.equal(Game.getBattleMode(),'story','戦闘モードストーリーモードである');
+        assert.equal(Game.getBattleMode(),'story','戦闘モードがストーリーである');
         Game.onSendMessage(finishTest);
     }
 }
