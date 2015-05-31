@@ -27,7 +27,6 @@ function gameBase(spec,my){
     core.PICT_EXECUTE_SKILL_TELOP = core.PICT_PREFIX+'executePilotSkill.png';
     core.SOUND_PREFIX = contentBaseUrl+'/sound/';
     core.SOUND_BATTLE = core.SOUND_PREFIX + 'game_maoudamashii_1_battle34.mp3';
-    core.SOUND_CONFIG = core.SOUND_PREFIX + 'game_maoudamashii_5_town07.mp3';
     core.SOUND_ATTACK_HIT = core.SOUND_PREFIX + 'mecha27.wav';
     core.SOUND_ATTACK_MISS = core.SOUND_PREFIX + 'swing32.wav';
     core.SOUND_MY_TURN = core.SOUND_PREFIX + 'cursor02.wav';
@@ -103,7 +102,6 @@ function gameBase(spec,my){
         core.preload(core.PICT_EXECUTE_SKILL_TELOP);
 
         core.preload(core.SOUND_BATTLE);
-        core.preload(core.SOUND_CONFIG);
         core.preload(core.SOUND_ATTACK_HIT);
         core.preload(core.SOUND_ATTACK_MISS);
         core.preload(core.SOUND_MY_TURN);

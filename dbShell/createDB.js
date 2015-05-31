@@ -337,17 +337,40 @@ db.scenarios.insert({
     id : 'start',
     data :[
         {
-            method : 'pilot',
-            param : {
-                id : 'kyoko',
-                dir : 'left'
-            }
+            method : 'mes',
+            param :
+            'この度はストーリーモードを遊んで頂きありがとうございます。'
+        },
+        {
+            method : 'mes',
+            param :
+            '本モードは現在β版のため、次のような不備があります。'
+        },
+        {
+            method : 'mes',
+            param :
+                '一旦ストーリーモードに入ると途中で抜けてることができません。'+
+                'お手数ではございますが、ブラウザを閉じて下さい。'
+        },
+        {
+            method : 'mes',
+            param :
+            'また、ストーリー進行機能が未実装のため、同じストーリーの無限再生が続きます。'
+        },
+        {
+            method : 'mes',
+            param :
+                'それではストーリーモードをお楽しみ下さい。'
+        },
+        {
+            method : 'mes',
+            param : '・・・・・・'
         },
         {
             method : 'pilot',
             param : {
-                id : 'akane',
-                dir : 'right'
+                id : 'kyoko',
+                dir : 'left'
             }
         },
         {
@@ -357,9 +380,21 @@ db.scenarios.insert({
         {
             method : 'mes',
             param :
-            '春日野高校の恭子よ<br>'+
-            'アームドーザの操縦には、結構自信があるんだ<br>'+
-            'お互いにベストを尽くしましょう'
+                'ここが大会の会場か。地区大会の初戦だから全然人が来ないと思ってたけど、結構大勢来てるのね。'
+        },
+        {
+            method : 'mes',
+            param :
+                '今回は初参戦だから、1、２回戦突破できれば上出来かな。'+
+                'まあ、今は目の前の試合に集中しよう。'
+        },
+
+        {
+            method : 'pilot',
+            param : {
+                id : 'akane',
+                dir : 'right'
+            }
         },
         {
             method : 'activePilot',
@@ -368,8 +403,54 @@ db.scenarios.insert({
         {
             method : 'mes',
             param :
-            'でかい口叩けるのも、今のうちよ<br>'+
-            '私のランドーザが最強なんだから'
+            'あなたが私の対戦相手かしら。去年は見かけなかったけど、もしかして新入り？'
+        },
+        {
+            method : 'activePilot',
+            param : 'left'
+        },
+        {
+            method : 'mes',
+            param :
+                'ええ、まあ。'
+        },
+        {
+            method : 'activePilot',
+            param : 'right'
+        },
+        {
+            method : 'mes',
+            param :
+                'ふぅん、あなたも運がないわね。初戦の相手が前回県大会ベスト1のこの私なんだから。'
+        },
+        {
+            method : 'mes',
+            param :
+                '可哀想だけど、一瞬で勝負をつけさせてもらうわ。'
+        },
+        {
+            method : 'activePilot',
+            param : 'left'
+        },
+        {
+            method : 'mes',
+            param :
+                '初戦でこんな相手に当たるなんてね。でも、くよくよしてられない。勝てる方法を考えるんだ。'
+        },
+        {
+            method : 'mes',
+            param :
+                '前に試合をビデオで見たことがあるけど、確かあそこは攻撃重視のスタイルだったはず。'+
+                'ならこっちは防御に徹して、隙をついて攻撃すれば勝機はある'
+        },
+        {
+            method : 'activePilot',
+            param : 'right'
+        },
+        {
+            method : 'mes',
+            param :
+                '準備はいいかしら？<br>じゃあ、いくわよ！！'
         },
         {
             method : 'moveBattle',

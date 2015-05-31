@@ -204,7 +204,7 @@ function selectPilotScene(spec,my) {
     that.addEventListener(Event.ENTER,function(){
         core.bgm.setMute();
     });
-    
+
     that.getName = function(){
         return 'selectPilot';
     }
