@@ -46,6 +46,9 @@ function storyScene(spec,my) {
         doStory();
     })()
 
+    that.addEventListener(Event.ENTER,function(){
+        core.bgm.setMute();
+    });
 
     that.getName = function(){
         return 'storyScene'

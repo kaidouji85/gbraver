@@ -195,6 +195,10 @@ function selectArmdozerScene(spec,my){
         refreshInformation(selectArmdozerId);
     }
 
+    that.addEventListener(Event.ENTER,function(){
+        core.bgm.setMute();
+    });
+
     that.getName = function(){
         return 'selectArmdozer';
     }

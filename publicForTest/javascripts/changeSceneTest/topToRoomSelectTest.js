@@ -19,13 +19,8 @@ function doTest(){
         Game.start();
         Game.onload = function(){
             Game.changeTopScene();
-            assertOfConfigBgm();
+            pushBattleRoomButton();
         };
-    }
-
-    function assertOfConfigBgm(){
-        assert.deepEqual( Game.bgm.getBgm(),Game.assets[Game.SOUND_CONFIG] ,'BGMがコンフィグ画面に設定されている');
-        pushBattleRoomButton();
     }
     
     function pushBattleRoomButton(){

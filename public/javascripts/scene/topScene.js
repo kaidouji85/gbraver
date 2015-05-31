@@ -155,7 +155,7 @@ function topScene(spec,my){
     }
 
     that.addEventListener(Event.ENTER,function(){
-        core.bgm.setBgm(core.assets[core.SOUND_CONFIG]);
+        core.bgm.setMute();
     });
 
     function onPushBattleRoom(fn){

@@ -17,5 +17,12 @@ function bgmManager(spec,my){
         return bgm;
     }
 
+    that.setMute = function(){
+        if(bgm){
+            bgm.stop();
+            bgm = null;
+        }
+    }
+
     return that;
 }
