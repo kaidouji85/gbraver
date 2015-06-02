@@ -24,7 +24,7 @@ function storyWindow(spec,my){
         messageLabel.color = COLOR_WHITE;
         messageLabel.x = 16;
         messageLabel.y = 32;
-        messageLabel.width = 288;
+        messageLabel.width = 260;
         that.addChild(messageLabel);
     }
 
