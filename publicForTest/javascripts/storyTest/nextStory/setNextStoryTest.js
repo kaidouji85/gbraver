@@ -5,7 +5,7 @@ function doTest(){
     var assert = chai.assert;
     var Game = gameBase();
     var testScene;
-    var testScenario = testScenarioData().getData('mesTest');
+    var testScenario = testScenarioData().getData('nextStoryTest');
 
     Game.start();
     Game.onload = function(){
@@ -17,13 +17,13 @@ function doTest(){
     };
 
     function pushNextButton(){
-        Game.currentScene.onProceedStory(assertOfStory);
+        Game.currentScene.onChangeNextStory(assertOfStory);
         touch(Game.currentScene);
     }
 
-    function assertOfStory() {
-        assert.equal(Game.currentScene.getStoryIndex(),1,'ストーリーインデックスがそのまま');
-        assert.equal(Game.currentScene.mesWindow.getText(),testScenario[1].param,'セリフが正しい');
+    function assertOfStory(nextStoryId) {
+        assert.equal(Game.currentScene.getStoryIndex(),1,'ストーリーインデックスが正しい');
+        assert.equal(nextStoryId,testScenario[1].param,'ステージクリア後に遷移するストーリーIDが正しい');
         finishTest();
     }
 }

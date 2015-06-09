@@ -188,6 +188,21 @@ function testScenarioData(spec,my){
         ]
     });
 
+    scenarioData.push({
+        id : 'nextStoryTest',
+        data : [
+            {
+                method : 'mes',
+                param :
+                '次のストーリーに進みます'
+            },
+            {
+                method : 'nextStory',
+                param : 'nextStoryId'
+            }
+        ]
+    });
+
     that.getMasterData = function(){
         return scenarioData;
     }

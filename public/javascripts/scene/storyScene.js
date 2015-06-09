@@ -6,11 +6,13 @@ function storyScene(spec,my) {
     var storyIndex = 0;
     var emitProceedStory = function(){};
     var emitEndStory = function(battle){};
+    var emitChangeNextStory = function(nextStoryId){};
     var methodMap = {
         mes : doMes,
         pilot : doPilot,
         activePilot : doActivePilot,
-        moveBattle : doMoveBattle
+        moveBattle : doMoveBattle,
+        nextStory : doNextStory
     };
 
     that.pilotSpriteArray = {
@@ -66,6 +68,10 @@ function storyScene(spec,my) {
         emitEndStory = fn;
     }
 
+    that.onChangeNextStory = function(fn){
+        emitChangeNextStory = fn;
+    }
+
     function doStory(){
         if(scenarioArray.length <= storyIndex){
             return;
@@ -105,6 +111,11 @@ function storyScene(spec,my) {
     function doMoveBattle(param){
         emitEndStory(param);
         return false;
+    }
+
+    function doNextStory(param){
+        emitChangeNextStory(param);
+        return true;
     }
 
     function pushScreen(){
