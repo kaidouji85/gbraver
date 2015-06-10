@@ -5,7 +5,7 @@ function doTest(){
     var assert = chai.assert;
     var Game = gameBase();
     var testScene;
-    var testScenario = testScenarioData().getData('nextStoryTest');
+    var testScenario = testScenarioData().getData('nextScenarioTest');
 
     Game.start();
     Game.onload = function(){
@@ -21,9 +21,9 @@ function doTest(){
         touch(Game.currentScene);
     }
 
-    function assertOfStory(nextStoryId) {
+    function assertOfStory(nextScenarioId) {
         assert.equal(Game.currentScene.getStoryIndex(),1,'ストーリーインデックスが正しい');
-        assert.equal(nextStoryId,testScenario[1].param,'ステージクリア後に遷移するストーリーIDが正しい');
+        assert.equal(nextScenarioId,testScenario[1].param,'ステージクリア後に遷移するシナリオIDが正しい');
         finishTest();
     }
 }

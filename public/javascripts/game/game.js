@@ -14,6 +14,7 @@ function game(spec, my) {
     var stageData = spec.stageData;
     var scenarioData = spec.scenarioData;
     var currentScenarioId = spec.startScenarioId;
+    var nextScenarioId = null;
     var battleMode = core.BATTLE_MODE_TWO_PLAY;
     var emitChangeScene = function(scene){};
     var emitSendMessage = function(message,data){};
@@ -156,6 +157,9 @@ function game(spec, my) {
         scene.onEndStory(function(battle){
             emitSendMessage('startSinglePlay',battle);
         });
+        scene.onChangeNextStory(function(p_nextScenarioId){
+            nextScenarioId = p_nextScenarioId;
+        });
         core.replaceScene(scene);
         battleMode = core.BATTLE_MODE_STORY;
         emitChangeScene(core.currentScene.getName());
@@ -249,6 +253,10 @@ function game(spec, my) {
 
     core.setScenarioId = function(id){
         currentScenarioId = id;
+    }
+
+    core.getNextScenarioId = function(){
+        return nextScenarioId;
     }
 
     function changePhase(data){

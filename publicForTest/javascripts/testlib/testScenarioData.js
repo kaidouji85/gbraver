@@ -189,7 +189,7 @@ function testScenarioData(spec,my){
     });
 
     scenarioData.push({
-        id : 'nextStoryTest',
+        id : 'nextScenarioTest',
         data : [
             {
                 method : 'mes',
@@ -197,8 +197,8 @@ function testScenarioData(spec,my){
                 '次のストーリーに進みます'
             },
             {
-                method : 'nextStory',
-                param : 'nextStoryId'
+                method : 'nextScenario',
+                param : 'nextScenarioId'
             }
         ]
     });
