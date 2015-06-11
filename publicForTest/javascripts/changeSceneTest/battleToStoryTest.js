@@ -29,7 +29,7 @@ function doTest(){
 
     function setBattleMode() {
         Game.setBattleMode('story');
-        Game.setScenarioId('mesTest');
+        Game.setNextScenarioId('mesTest');
         Game.changeBattleScene({
             statusArray : statusArray
         });
@@ -204,6 +204,7 @@ function doTest(){
 
     function assertOfChangeScene(scene){
         assert.equal(scene,'storyScene','ストーリー画面へ遷移する');
+        assert.equal(Game.getScenarioId(),'mesTest','ストーリーIが正しい');
         finishTest();
     }
 }

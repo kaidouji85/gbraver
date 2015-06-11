@@ -32,6 +32,8 @@ function game(spec, my) {
             } else if(battleMode===core.BATTLE_MODE_SINGLE_PLAY) {
                 core.changeSelectStageScene();
             } else if(battleMode===core.BATTLE_MODE_STORY){
+                currentScenarioId = nextScenarioId;
+                nextScenarioId = null;
                 core.changeStoryScene(currentScenarioId);
             }
         });
@@ -257,6 +259,10 @@ function game(spec, my) {
 
     core.getNextScenarioId = function(){
         return nextScenarioId;
+    }
+
+    core.setNextScenarioId = function(id){
+        nextScenarioId = id;
     }
 
     function changePhase(data){
