@@ -454,6 +454,33 @@ db.scenarios.insert({
                 'じゃあ、いくわよ！！'
         },
         {
+            method : 'nextScenario',
+            param : 'second'
+        },
+        {
+            method : 'moveBattle',
+            param : {
+                enemyId : 'landozer',
+                pilotId : 'akane',
+                routineId : 'attack3-defense1'
+            }
+        }
+    ]
+});
+
+db.scenarios.insert({
+    id : 'second',
+    data :[
+        {
+            method : 'mes',
+            param :
+                '2番目のストーリー'
+        },
+        {
+            method : 'nextScenario',
+            param : 'second'
+        },
+        {
             method : 'moveBattle',
             param : {
                 enemyId : 'landozer',
