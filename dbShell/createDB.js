@@ -388,7 +388,7 @@ db.scenarios.insert({
         {
             method : 'mes',
             param :
-                'カッコいいーー<br>写メ取らなくちゃ'
+                'カッコいいーー<br>ああ、スリスリしたい'
         },
         {
             method : 'pilot',
@@ -481,20 +481,14 @@ db.scenarios.insert({
     id : 'second',
     data :[
         {
-            method : 'pilot',
-            param : {
-                id : 'kyoko',
-                dir : 'left'
-            }
-        },
-        {
-            method : 'activePilot',
-            param : 'left'
+            method : 'mes',
+            param :
+                'ごめん、<br>今週はシナリオの打ち込みをする<br>時間がなかったんだ'
         },
         {
             method : 'mes',
             param :
-                ''
+                'だから唐突に戦闘に<br>なるけど許してね'
         },
         {
             method : 'nextScenario',
