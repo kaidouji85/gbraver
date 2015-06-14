@@ -339,31 +339,28 @@ db.scenarios.insert({
         {
             method : 'mes',
             param :
-                'この度はストーリーモードを遊んで頂き、誠にありがとうございます。'
+                '本モードは現在β版のため、<br>' +
+                '一旦ストーリーモードに入ると<br>' +
+                '途中で抜けてることができません。'
         },
         {
             method : 'mes',
             param :
-                '本モードは現在β版のため、一旦ストーリーモードに入ると途中で抜けてることができません。'
+                'お手数ですが、<br>' +
+                'ブラウザを閉じて下さい。'
         },
         {
             method : 'mes',
             param :
-            'お手数ではございますが、ブラウザを閉じて下さい。'
-        },
-        {
-            method : 'mes',
-            param :
-                'また、ストーリー進行機能が未実装のため、同じストーリーの無限再生が続きます。'
-        },
-        {
-            method : 'mes',
-            param :
-                'それではストーリーモードをお楽しみ下さい。'
+                'それでは<br>ストーリーモードを<br>お楽しみ下さい。'
         },
         {
             method : 'mes',
             param : '・・・・・・'
+        },
+        {
+            method : 'mes',
+            param : '地区大会1回戦'
         },
         {
             method : 'pilot',
@@ -379,15 +376,20 @@ db.scenarios.insert({
         {
             method : 'mes',
             param :
-                'ここが大会の会場ね。' +
-                '地区大会の初戦だから全然人いないと思ったけど、そうでもないのね'
+                'さすが地区大会<br>アームドーザがこんなにたくさん'
         },
         {
             method : 'mes',
             param :
-                '今回は初参戦だから1、２回戦まで突破できれば上出来かな。'
+                '！！<br>' +
+                'あの無骨なボディラインは<br>' +
+                'ランドーザの初期型じゃない'
         },
-
+        {
+            method : 'mes',
+            param :
+                'カッコいいーー<br>写メ取らなくちゃ'
+        },
         {
             method : 'pilot',
             param : {
@@ -402,46 +404,16 @@ db.scenarios.insert({
         {
             method : 'mes',
             param :
-            'あなたが私の対戦相手かしら。' +
-            '去年は見かけなかったけど、もしかし大会は初めて？'
-        },
-        {
-            method : 'activePilot',
-            param : 'right'
-        },
-        {
-            method : 'mes',
-            param :
-                'だとしたら、あなたも運が無いわね。' +
-                '初戦の相手が、前回県大会ベスト16のこの私なんだから。'
-        },
-        {
-            method : 'mes',
-            param :
-                '可哀想だけど一瞬でカタをつけさせてもうらうわ。'
+                'ちょっと、そこのあんた<br>人のアームドーザの前で何してんのよ'
         },
         {
             method : 'activePilot',
             param : 'left'
         },
         {
-            method: 'mes',
-            param: 'まさか初戦でこんな相手に当たるなんて。'
-        },
-        {
             method : 'mes',
             param :
-            'でも、くよくよしてられない。勝つ方法を考えるんだ。'
-        },
-        {
-            method : 'mes',
-            param :
-                '前に試合をビデオで見たことがあるけど、 確かあのチームは攻撃重視のスタイルだったはず。'
-        },
-        {
-            method : 'mes',
-            param :
-                'なら、こっちは防御に徹して、隙をついて攻撃すれば勝機はあるわ。'
+                'ごめんなさい、<br>カッコいいアームドーザだったんで、<br>つい・・・'
         },
         {
             method : 'activePilot',
@@ -450,8 +422,45 @@ db.scenarios.insert({
         {
             method : 'mes',
             param :
-                '準備はいいかしら？<br>' +
-                'じゃあ、いくわよ！！'
+                'カッコいい<br>' +
+                'この私のアームドーザが・・・・・・'
+        },
+        {
+            method : 'mes',
+            param :
+                'へ、へぇ<br>' +
+                '結構、見る目があるじゃない'
+        },
+        {
+            method : 'mes',
+            param :
+                'いいわ、<br>' +
+                '試合が始まるまで<br>' +
+                '好きなだけ見てちょうだい'
+        },
+        {
+            method : 'activePilot',
+            param : 'left'
+        },
+        {
+            method : 'mes',
+            param :
+                '初戦の相手はランドーザか<br>' +
+                '厄介な相手だわ'
+        },
+        {
+            method : 'mes',
+            param :
+                '旧式で動きは遅いけど、<br>' +
+                'パワー、装甲ともに上位レベルの機体<br>'+
+                'まともに殴り合うのは不利ね'
+        },
+        {
+            method : 'mes',
+            param :
+                '基本は回避、防御に徹して、<br>' +
+                'バッテリーが切れになったところを<br>' +
+                '攻撃するしかないか'
         },
         {
             method : 'nextScenario',
@@ -472,9 +481,20 @@ db.scenarios.insert({
     id : 'second',
     data :[
         {
+            method : 'pilot',
+            param : {
+                id : 'kyoko',
+                dir : 'left'
+            }
+        },
+        {
+            method : 'activePilot',
+            param : 'left'
+        },
+        {
             method : 'mes',
             param :
-                '2番目のストーリー'
+                ''
         },
         {
             method : 'nextScenario',
@@ -483,8 +503,8 @@ db.scenarios.insert({
         {
             method : 'moveBattle',
             param : {
-                enemyId : 'landozer',
-                pilotId : 'akane',
+                enemyId : 'guardias',
+                pilotId : 'akira',
                 routineId : 'attack3-defense1'
             }
         }
