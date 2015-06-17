@@ -1,4 +1,3 @@
-//シングルプレイの場合、バトル終了後はルーム選択画面に遷移する
 enchant();
 window.onload = doTest;
 
@@ -15,7 +14,7 @@ function doTest(){
 
     function initGame(){
         Game = game({
-            userId : 'test002@gmail.com',
+            userId : 'saikyou@gmail.com',
             armdozerId : 'landozer',
             pilotId : 'kyoko',
             armdozerList : testDataInst.getMasterData().armdozerList,
@@ -29,7 +28,7 @@ function doTest(){
 
     function setBattleMode() {
         Game.setBattleMode('story');
-        Game.setNextScenarioId('mesTest');
+        Game.setNextScenarioId('activeRightPilotTest');
         Game.changeBattleScene({
             statusArray : statusArray
         });
@@ -60,7 +59,6 @@ function doTest(){
         };
         Game.emitServerResp('resp',waitPhaseData);
         Game.onSendMessage(function(message,data){
-            //message,dataはenemyAtackTestで確認済み
             atackCommandPhase();
         });
     }
@@ -86,8 +84,15 @@ function doTest(){
             }
         };
         Game.emitServerResp('resp',atackCommandPhaseData);
+        selectCommand();
+    }
+
+    function selectCommand(){
+        touch(Game.currentScene.atackIcon);
+        touch(Game.currentScene.plusIcon);
+        touch(Game.currentScene.plusIcon);
+        touch(Game.currentScene.okIcon);
         Game.onSendMessage(function(message,data){
-            //message,dataはenemyAtackTestで確認済み
             defenthCommandPhase();
         });
     }
@@ -113,13 +118,6 @@ function doTest(){
             }
         };
         Game.emitServerResp('resp',defenthCommandData);
-        selectCommand();
-    }
-
-    function selectCommand(){
-        touch(Game.currentScene.plusIcon);
-        touch(Game.currentScene.okIcon);
-
         Game.onSendMessage(function(message,data){
             //message,dataはplayerAtackTestで確認済み
             damagePhase();
@@ -204,7 +202,7 @@ function doTest(){
 
     function assertOfChangeScene(scene){
         assert.equal(scene,'storyScene','ストーリー画面へ遷移する');
-        assert.equal(Game.getScenarioId(),'mesTest','ストーリーIが正しい');
+        assert.equal(Game.getScenarioId(),'activeRightPilotTest','ストーリーIDが正しい');
         finishTest();
     }
 }

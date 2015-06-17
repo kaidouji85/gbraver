@@ -26,13 +26,13 @@ function game(spec, my) {
         scene.onCommand(function(command){
             emitSendMessage('command',command);
         });
-        scene.onPushBattleEndIcon(function(){
+        scene.onPushBattleEndIcon(function(isWin){
             if(battleMode===core.BATTLE_MODE_TWO_PLAY){
                 emitSendMessage('getRoomInfo',null);
             } else if(battleMode===core.BATTLE_MODE_SINGLE_PLAY) {
                 core.changeSelectStageScene();
             } else if(battleMode===core.BATTLE_MODE_STORY){
-                currentScenarioId = nextScenarioId;
+                currentScenarioId = isWin ? nextScenarioId : currentScenarioId;
                 nextScenarioId = null;
                 core.changeStoryScene(currentScenarioId);
             }

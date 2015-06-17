@@ -32,6 +32,7 @@ function battleScene(spec,my){
     var FRAME_STAND = 0;
     var FRAME_ATTACK = 1;
     var FRAME_DAMAGE = 2;
+    var isWin = false;
 
     that.doWaitPhase = doWaitPhase;
     that.doAtackCommandPhase = doAtackCommandPhase;
@@ -263,6 +264,7 @@ function battleScene(spec,my){
     }
 
     function doGameEnd(data){
+        isWin = data.winner === that.userId;
         ExplosionAnime.play(data,function(){
             emitCommand({method:'ok'});
         });
@@ -281,7 +283,7 @@ function battleScene(spec,my){
         that.battleEndIcon.setVisible(false);
         that.mesWindow.setVisible(true);
         that.mesWindow.setText(core.MESSAGE_GET_ROOMINFO);
-        emitPushBattleEndIcon();
+        emitPushBattleEndIcon(isWin);
     }
 
     function doArmdozerAbility(data) {

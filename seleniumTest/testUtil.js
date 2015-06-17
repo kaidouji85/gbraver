@@ -20,7 +20,7 @@ function testUtil(spec,my) {
             return webdriver.getTitle().then(function (title) {
                 return 'finish' === title;
             });
-        }, 20000);
+        }, 21000);
     }
 
     return that;
