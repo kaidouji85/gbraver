@@ -16,6 +16,7 @@ function pictNumber(spec,my){
         }
     }
 
+    //TODO メソッド名をsetValuに変更する
     that.setDamage = function(damage){
         var damageStr = damage.toString();
         var digits = damageStr.length;
