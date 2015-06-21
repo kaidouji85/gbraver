@@ -33,6 +33,7 @@ function battleScene(spec,my){
     var FRAME_ATTACK = 1;
     var FRAME_DAMAGE = 2;
     var isWin = false;
+    var sendCommandFlag = false;
 
     that.doWaitPhase = doWaitPhase;
     that.doAtackCommandPhase = doAtackCommandPhase;
@@ -84,6 +85,7 @@ function battleScene(spec,my){
     }
     
     function doAtackCommandPhase(data){
+        sendCommaandFlag = false;
         if(that.userId === attackUserId){
             that.mesWindow.setVisible(false);
             setAtackCommandVisible(true);
@@ -92,6 +94,7 @@ function battleScene(spec,my){
             } else {
                 that.chargeIcon.setPict(core.assets[core.PICT_BUTTON]);
             }
+            setPlayerTurnTimer();
         } else {
             that.tl.delay(1).then(function(){
                 that.mesWindow.setVisible(true);
@@ -203,6 +206,7 @@ function battleScene(spec,my){
         that.mesWindow.setVisible(true);
         that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
         emitCommand({method:'charge'});
+        sendCommandFlag = true;
     };
 
     function pilotSkill(){
@@ -290,6 +294,18 @@ function battleScene(spec,my){
         AbilityAnime.play(data,function(){
             emitCommand({method:'ok'});
         })
+    }
+
+    function setPlayerTurnTimer(){
+        that.playerTurnTimer.setVisible(true);
+        that.playerTurnTimer.startTurnCount(that.timeOver);
+        that.playerTurnTimer.onTimeOut(function(){
+            if(sendCommandFlag === false){
+                charge();
+                sendCommandFlag = true;
+            }
+            that.playerTurnTimer.setVisible(false);
+        });
     }
 
     return that;

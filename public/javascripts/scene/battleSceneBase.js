@@ -7,6 +7,7 @@ function battleSceneBase(spec,my){
     var COMMAND_Y_2 = 422;
     that.statusArray = $.extend(true, {}, spec.statusArray);
     that.userId = spec.userId;
+    that.timeOver = spec.timeOver || 600;
     that.backgroundColor = "black";
 
     that.charaSpriteArray = {};
@@ -292,6 +293,13 @@ function battleSceneBase(spec,my){
         that.loseSprite.y = 270;
         that.loseSprite.visible = false;
         that.addChild(that.loseSprite);
+
+        //自分ターン用のターンタイマー
+        that.playerTurnTimer = turnTimer();
+        that.playerTurnTimer.x = 160;
+        that.playerTurnTimer.y = 240;
+        that.playerTurnTimer.setVisible(false);
+        that.addChild(that.playerTurnTimer);
     }())
 
     that.getName = function(){

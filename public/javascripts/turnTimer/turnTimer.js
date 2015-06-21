@@ -22,6 +22,10 @@ function turnTimer(spec,my){
         emitTimeOut = fn;
     }
 
+    that.setVisible = function(value){
+        turnCountNumber.setVisible(value);
+    }
+
     function tick(){
         sec --;
         if(sec>=0){
