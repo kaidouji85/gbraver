@@ -202,11 +202,13 @@ function battleScene(spec,my){
     };
     
     function charge(){
+        sendCommandFlag = true;
+        that.playerTurnTimer.setVisible(false);
+        
         setAtackCommandVisible(false);
         that.mesWindow.setVisible(true);
         that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
         emitCommand({method:'charge'});
-        sendCommandFlag = true;
     };
 
     function pilotSkill(){

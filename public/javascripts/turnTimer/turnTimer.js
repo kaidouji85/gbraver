@@ -4,6 +4,7 @@ function turnTimer(spec,my){
     var turnCountNumber = null;
     var emitTimeOut = function(){};
     var sec = 0;
+    var visible = true;
 
     (function(){
         spec ? null : spec = {};
@@ -24,11 +25,16 @@ function turnTimer(spec,my){
 
     that.setVisible = function(value){
         turnCountNumber.setVisible(value);
+        visible = value;
+    }
+
+    that.getVisible = function(){
+        return visible;
     }
 
     function tick(){
         sec --;
-        if(sec>=0){
+        if(sec>=0 && visible){
             turnCountNumber.setDamage(sec);
         } else {
             emitTimeOut();
