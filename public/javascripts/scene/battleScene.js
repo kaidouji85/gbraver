@@ -211,6 +211,8 @@ function battleScene(spec,my){
     };
 
     function pilotSkill(){
+        setSendCommandFlagTrue();
+
         setAtackCommandVisible(false);
         that.mesWindow.setVisible(true);
         that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
