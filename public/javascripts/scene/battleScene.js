@@ -202,9 +202,8 @@ function battleScene(spec,my){
     };
     
     function charge(){
-        sendCommandFlag = true;
-        that.playerTurnTimer.setVisible(false);
-        
+        setSendCommandFlagTrue();
+
         setAtackCommandVisible(false);
         that.mesWindow.setVisible(true);
         that.mesWindow.setText(core.MESSAGE_WAIT_COMMUNICATE);
@@ -219,10 +218,11 @@ function battleScene(spec,my){
     }
     
     function selectBattery(){
+        setSendCommandFlagTrue();
+
         var battery = that.batteryNumberArray[that.userId].frame;
         setBatteryCommandVisible(false);
         that.batteryNumberArray[that.userId].visible = false;
-        
         if(attackUserId===that.userId){
             that.mesWindow.setVisible(true);
             that.mesWindow.setText(core.MESSAGE_WAIT_COMMAND);
@@ -308,6 +308,11 @@ function battleScene(spec,my){
             }
             that.playerTurnTimer.setVisible(false);
         });
+    }
+
+    function setSendCommandFlagTrue() {
+        sendCommandFlag = true;
+        that.playerTurnTimer.setVisible(false);
     }
 
     return that;
