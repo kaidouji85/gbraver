@@ -94,7 +94,7 @@ function battleScene(spec,my){
             } else {
                 that.chargeIcon.setPict(core.assets[core.PICT_BUTTON]);
             }
-            setPlayerTurnTimer();
+            setTurnTimer(charge);
         } else {
             that.tl.delay(1).then(function(){
                 that.mesWindow.setVisible(true);
@@ -123,6 +123,7 @@ function battleScene(spec,my){
                 emitCommand({method:'ok'});
             });
         } else {
+            setTurnTimer(selectBattery);
             that.mesWindow.setVisible(false);
             viewBatteryCommand();
         }
@@ -300,12 +301,12 @@ function battleScene(spec,my){
         })
     }
 
-    function setPlayerTurnTimer(){
+    function setTurnTimer(fn){
         that.playerTurnTimer.setVisible(true);
         that.playerTurnTimer.startTurnCount(that.timeOver);
         that.playerTurnTimer.onTimeOut(function(){
             if(sendCommandFlag === false){
-                charge();
+                fn();
             }
             that.playerTurnTimer.setVisible(false);
         });

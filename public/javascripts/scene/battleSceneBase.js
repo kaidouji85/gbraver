@@ -294,7 +294,7 @@ function battleSceneBase(spec,my){
         that.loseSprite.visible = false;
         that.addChild(that.loseSprite);
 
-        //自分ターン用のターンタイマー
+        //ターンタイマー
         that.playerTurnTimer = turnTimer();
         that.playerTurnTimer.x = 160;
         that.playerTurnTimer.y = 240;

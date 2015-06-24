@@ -22,7 +22,6 @@ function game(spec, my) {
 
     core.changeBattleScene = function(spec){
         spec.userId = userId;
-        spec.timeOver = 15;
         var scene = battleScene(spec);
         scene.onCommand(function(command){
             emitSendMessage('command',command);
@@ -191,6 +190,7 @@ function game(spec, my) {
                     statusArray[uid] = data[uid].status;
                 }
                 core.changeBattleScene({
+                    timeOver : 15,
                     statusArray : statusArray
                 });
                 emitSendMessage('command',{
