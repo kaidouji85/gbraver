@@ -94,7 +94,7 @@ function battleScene(spec,my){
             } else {
                 that.chargeIcon.setPict(core.assets[core.PICT_BUTTON]);
             }
-            setTurnTimer(charge);
+            setTurnTimer(onPlayerTimeOver);
         } else {
             that.tl.delay(1).then(function(){
                 that.mesWindow.setVisible(true);
@@ -315,6 +315,14 @@ function battleScene(spec,my){
     function setSendCommandFlagTrue() {
         sendCommandFlag = true;
         that.playerTurnTimer.setVisible(false);
+    }
+
+    function onPlayerTimeOver() {
+        if(that.atackIcon.getVisible()){
+            charge();
+        } else if(that.okIcon.getVisible()) {
+            selectBattery();
+        }
     }
 
     return that;
