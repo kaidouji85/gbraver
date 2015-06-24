@@ -87,6 +87,8 @@ function doTest(){
         };
         assert.equal(message,'command','攻撃コマンドフェイズのサーバ送信メッセージ名が正しい');
         assert.deepEqual(data, expect, '攻撃コマンドフェイズのサーバ送信データが正しい');
+        assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
+        assert.equal(Game.currentScene.mesWindow.getText(),'通信待機中','メッセージが正しい');
         finishTest();
     }
 }
