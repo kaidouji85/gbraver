@@ -33,11 +33,16 @@ function turnTimer(spec,my){
     }
 
     function tick(){
+        if(visible===false){
+            return;
+        }
+
         sec --;
-        if(sec>=0 && visible){
+        if(sec>=0){
             turnCountNumber.setDamage(sec);
         } else {
             emitTimeOut();
+            turnCountNumber.tl.unloop();
         }
     }
 

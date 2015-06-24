@@ -85,7 +85,7 @@ function battleScene(spec,my){
     }
     
     function doAtackCommandPhase(data){
-        sendCommaandFlag = false;
+        sendCommandFlag = false;
         if(that.userId === attackUserId){
             that.mesWindow.setVisible(false);
             setAtackCommandVisible(true);
@@ -145,7 +145,7 @@ function battleScene(spec,my){
             emitCommand({method:'ok'});
         });
     }
-    
+
     function onCommand(fn) {
         emitCommand = fn;
     };
@@ -306,7 +306,6 @@ function battleScene(spec,my){
         that.playerTurnTimer.onTimeOut(function(){
             if(sendCommandFlag === false){
                 charge();
-                sendCommandFlag = true;
             }
             that.playerTurnTimer.setVisible(false);
         });

@@ -22,6 +22,7 @@ function game(spec, my) {
 
     core.changeBattleScene = function(spec){
         spec.userId = userId;
+        spec.timeOver = 15;
         var scene = battleScene(spec);
         scene.onCommand(function(command){
             emitSendMessage('command',command);
