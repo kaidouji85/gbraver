@@ -303,7 +303,7 @@ db.pilots.insert({
     pict: 'akira.png',
     pictTopMargin : 32,
     pictLeftMargin : 64,
-    shout: 'あんた、結構強かったよ',
+    shout: '努力は僕を裏切らない！！',
     type: 'superGuard',
     value : 0.5,
     hp : 200,
