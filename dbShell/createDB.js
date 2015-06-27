@@ -483,12 +483,59 @@ db.scenarios.insert({
         {
             method : 'mes',
             param :
-                'ごめん、<br>今週はシナリオの打ち込みをする<br>時間がなかったんだ'
+                '地区大会2回戦'
         },
         {
-            method : 'mes',
-            param :
-                'だから唐突に戦闘に<br>なるけど許してね'
+            method : 'pilot',
+            param : {
+                id : 'kyoko',
+                dir : 'left'
+            }
+        },
+        {
+            method : 'activePilot',
+            param : 'left'
+        },
+        {
+            method: 'mes',
+            param : 'こんなに色々なアームドーザを間近で見られるなんて<br>'+
+                    '天国ですが、ここは'
+        },
+        {
+            method : 'pilot',
+            param : {
+                id : 'akira',
+                dir : 'right'
+            }
+        },
+        {
+            method : 'activePilot',
+            param : 'right'
+        },
+        {
+            method: 'mes',
+            param : '君が次の対戦相手かい<br>'+
+                    'お互いにベストを尽くそうじゃないか'
+        },
+        {
+            method: 'activePilot',
+            param : 'left'
+        },
+        {
+            method: 'mes',
+            param: 'お手柔らかにお願いね'
+        },
+        {
+            method : 'activePilot',
+            param : 'right'
+        },
+        {
+            method: 'mes',
+            param : '悪いけど、この勝負は僕はもらったよ'
+        },
+        {
+            method: 'mes',
+            param: '君たちとは鍛え方が違うってことを、見せてあげるよ'
         },
         {
             method : 'nextScenario',
