@@ -334,7 +334,7 @@ db.stages.insert({
 
 db.scenarios.remove({});
 db.scenarios.insert({
-    id : 'start',
+    id : 'kyokoStart',
     data :[
         {
             method : 'mes',
