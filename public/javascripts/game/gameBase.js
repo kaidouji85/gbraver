@@ -49,6 +49,7 @@ function gameBase(spec,my){
     core.SYSTEM_BG_HEIGHT = 480;
     core.BUTTON_WIDTH = 96;
     core.BUTTON_HEIGHT = 24;
+    core.COMMAND_TIME_OVER = 30;
     core.MESSAGE_WAIT_COMMUNICATE = '通信待機中';
     core.MESSAGE_WAIT_ENTERROOM = 'プレイヤーの入室待ち';
     core.MESSAGE_WAIT_COMMAND = '対戦相手がコマンドを選択中......';

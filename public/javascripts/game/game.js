@@ -190,7 +190,7 @@ function game(spec, my) {
                     statusArray[uid] = data[uid].status;
                 }
                 core.changeBattleScene({
-                    timeOver : 15,
+                    timeOver : core.COMMAND_TIME_OVER,
                     statusArray : statusArray
                 });
                 emitSendMessage('command',{
