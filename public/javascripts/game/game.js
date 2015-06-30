@@ -13,7 +13,7 @@ function game(spec, my) {
     var armdozerList = spec.armdozerList;
     var stageData = spec.stageData;
     var scenarioData = spec.scenarioData;
-    var currentScenarioId = spec.startScenarioId;
+    var currentScenarioId = spec.pilotId+'Start';
     var nextScenarioId = null;
     var battleMode = core.BATTLE_MODE_TWO_PLAY;
     var emitChangeScene = function(scene){};

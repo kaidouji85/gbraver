@@ -16,8 +16,7 @@ function doTest(){
             armdozerList : testDataInst.getMasterData().armdozerList,
             pilotList : testDataInst.getMasterData().pilotList,
             stageData : testDataInst.getStageData(),
-            scenarioData : testScenario,
-            startScenarioId : 'moveStoryToBattle'
+            scenarioData : testScenario
         });
         Game.start();
         Game.onload = function(){
@@ -33,7 +32,7 @@ function doTest(){
 
     function assertOfChangeScene(scene){
         assert.equal(scene,'storyScene','ストーリーモードに遷移する');
-        assert.equal(Game.getScenarioId(),'moveStoryToBattle','シナリオIDが正しい');
+        assert.equal(Game.getScenarioId(),'kyokoStart','シナリオIDが パイロット名+Start となっている ');
         finishTest();
     }
 }
