@@ -303,7 +303,7 @@ db.pilots.insert({
     pict: 'akira.png',
     pictTopMargin : 32,
     pictLeftMargin : 64,
-    shout: '努力は僕を裏切らない！！',
+    shout: 'やった、僕の勝ちだ',
     type: 'superGuard',
     value : 0.5,
     hp : 200,
@@ -338,28 +338,6 @@ db.scenarios.insert({
     data :[
         {
             method : 'mes',
-            param :
-                '本モードは現在β版のため、<br>' +
-                '一旦ストーリーモードに入ると<br>' +
-                '途中で抜けてることができません。'
-        },
-        {
-            method : 'mes',
-            param :
-                'お手数ですが、<br>' +
-                'ブラウザを閉じて下さい。'
-        },
-        {
-            method : 'mes',
-            param :
-                'それでは<br>ストーリーモードを<br>お楽しみ下さい。'
-        },
-        {
-            method : 'mes',
-            param : '・・・・・・'
-        },
-        {
-            method : 'mes',
             param : '地区大会1回戦'
         },
         {
@@ -388,7 +366,7 @@ db.scenarios.insert({
         {
             method : 'mes',
             param :
-                'カッコいいーー<br>ああ、スリスリしたい'
+                'カッコいいーー<br>もう、スリスリしちゃおう'
         },
         {
             method : 'pilot',
@@ -422,49 +400,12 @@ db.scenarios.insert({
         {
             method : 'mes',
             param :
-                'カッコいい<br>' +
-                'この私のアームドーザが・・・・・・'
-        },
-        {
-            method : 'mes',
-            param :
-                'へ、へぇ<br>' +
-                '結構、見る目があるじゃない'
-        },
-        {
-            method : 'mes',
-            param :
-                'いいわ、<br>' +
-                '試合が始まるまで<br>' +
-                '好きなだけ見てちょうだい'
-        },
-        {
-            method : 'activePilot',
-            param : 'left'
-        },
-        {
-            method : 'mes',
-            param :
-                '初戦の相手はランドーザか<br>' +
-                '厄介な相手だわ'
-        },
-        {
-            method : 'mes',
-            param :
-                '旧式で動きは遅いけど、<br>' +
-                'パワー、装甲ともに上位レベルの機体<br>'+
-                'まともに殴り合うのは不利ね'
-        },
-        {
-            method : 'mes',
-            param :
-                '基本は回避、防御に徹して、<br>' +
-                'バッテリーが切れになったところを<br>' +
-                '攻撃するしかないか'
+                '試合前なのに随分と余裕じゃない<br>' +
+                'いいわ、あんたのその根性、私がキッチリと鍛え直してあげるわ'
         },
         {
             method : 'nextScenario',
-            param : 'second'
+            param : 'kyokoSecond'
         },
         {
             method : 'moveBattle',
@@ -478,7 +419,7 @@ db.scenarios.insert({
 });
 
 db.scenarios.insert({
-    id : 'second',
+    id : 'kyokoSecond',
     data :[
         {
             method : 'mes',
@@ -498,8 +439,9 @@ db.scenarios.insert({
         },
         {
             method: 'mes',
-            param : 'こんなに色々なアームドーザを間近で見られるなんて<br>'+
-                    '天国ですが、ここは'
+            param : '!!<br>' +
+                    'あれは、この前ロールアウトされたばかりのガーディアスじゃない<br>'+
+                    'こんな、ところでお目にかかれるなんて'
         },
         {
             method : 'pilot',
@@ -514,16 +456,15 @@ db.scenarios.insert({
         },
         {
             method: 'mes',
-            param : '君が次の対戦相手かい<br>'+
-                    'お互いにベストを尽くそうじゃないか'
+            param : 'ちょっと、そこの君<br>もうすぐ試合の時間なんだけど'
         },
         {
-            method: 'activePilot',
+            method : 'activePilot',
             param : 'left'
         },
         {
             method: 'mes',
-            param: 'お手柔らかにお願いね'
+            param : 'あっ、ごめんなさい<br>私ったらアームドーザのことになったらつい・・・・・・'
         },
         {
             method : 'activePilot',
@@ -531,15 +472,15 @@ db.scenarios.insert({
         },
         {
             method: 'mes',
-            param : '悪いけど、この勝負は僕はもらったよ'
+            param : '周りが見えなくなる程、君は好きなことに熱中できるのか<br>いいね、そういうの嫌いじゃないないよ'
         },
         {
             method: 'mes',
-            param: '君たちとは鍛え方が違うってことを、見せてあげるよ'
+            param : '僕の名前は晶<br>この試合、お互いにベストを尽くそうじゃないか'
         },
         {
             method : 'nextScenario',
-            param : 'second'
+            param : 'kyokoSecond'
         },
         {
             method : 'moveBattle',
