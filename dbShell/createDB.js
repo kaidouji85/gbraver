@@ -492,3 +492,36 @@ db.scenarios.insert({
         }
     ]
 });
+
+db.scenarios.insert({
+    id : 'akaneStart',
+    data :[
+        {
+            method : 'mes',
+            param : '地区大会1回戦'
+        },
+        {
+            method : 'pilot',
+            param : {
+                id : 'akane',
+                dir : 'left'
+            }
+        },
+        {
+            method: 'mes',
+            param: 'あかねスタート'
+        },
+        {
+            method : 'nextScenario',
+            param : 'akaneStart'
+        },
+        {
+            method : 'moveBattle',
+            param : {
+                enemyId : 'granBraver',
+                pilotId : 'kyoko',
+                routineId : 'attack3-defense1'
+            }
+        }
+    ]
+});

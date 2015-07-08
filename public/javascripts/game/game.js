@@ -13,7 +13,7 @@ function game(spec, my) {
     var armdozerList = spec.armdozerList;
     var stageData = spec.stageData;
     var scenarioData = spec.scenarioData;
-    var currentScenarioId = spec.pilotId+'Start';
+    var currentScenarioId = getStartScenarioId();
     var nextScenarioId = null;
     var battleMode = core.BATTLE_MODE_TWO_PLAY;
     var emitChangeScene = function(scene){};
@@ -106,6 +106,7 @@ function game(spec, my) {
             };
             emitSendMessage('setPilot',data);
             pilotId = l_pilotId;
+            currentScenarioId = getStartScenarioId();
         });
         core.replaceScene(scene);
         emitChangeScene(core.currentScene.getName());
@@ -302,6 +303,10 @@ function game(spec, my) {
                 return scenarioData[i].data;
             }
         }
+    }
+
+    function getStartScenarioId() {
+        return pilotId + 'Start';
     }
 
     return core;
