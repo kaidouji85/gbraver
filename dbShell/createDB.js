@@ -348,15 +348,6 @@ db.scenarios.insert({
             }
         },
         {
-            method : 'activePilot',
-            param : 'left'
-        },
-        {
-            method : 'mes',
-            param :
-                'さすが地区大会<br>アームドーザがこんなにたくさん'
-        },
-        {
             method : 'mes',
             param :
                 '！！<br>' +
@@ -508,8 +499,35 @@ db.scenarios.insert({
             }
         },
         {
+            method : 'activePilot',
+            param : 'left'
+        },
+        {
             method: 'mes',
-            param: 'あかねスタート'
+            param: '初っ端からブレイバーシリーズに当たるなんて、<br>私もつくづく運がないわね'
+        },
+        {
+            method: 'mes',
+            param: '・・・・・・って凡人なら考えるんでしょうけど、<br>天才の私には関係ないわ'
+        },
+        {
+            method : 'pilot',
+            param : {
+                id : 'kyoko',
+                dir : 'right'
+            }
+        },
+        {
+            method : 'activePilot',
+            param : 'right'
+        },
+        {
+            method: 'mes',
+            param: 'あなたレアなアームドーザに乗ってるわね'
+        },
+        {
+            method: 'mes',
+            param: '私が勝ったらスリスリさせてもらってもいい？'
         },
         {
             method : 'nextScenario',
