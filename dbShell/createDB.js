@@ -543,3 +543,63 @@ db.scenarios.insert({
         }
     ]
 });
+
+db.scenarios.insert({
+    id : 'akiraStart',
+    data :[
+        {
+            method : 'mes',
+            param : '地区大会1回戦'
+        },
+        {
+            method : 'pilot',
+            param : {
+                id : 'akira',
+                dir : 'left'
+            }
+        },
+        {
+            method : 'activePilot',
+            param : 'left'
+        },
+        {
+            method: 'mes',
+            param: '駆動系、バッテリーゲイン、全てオールグリーン'
+        },
+        {
+            method: 'mes',
+            param: 'いくよ、バトルモード アクティベート！！'
+        },
+        {
+            method : 'pilot',
+            param : {
+                id : 'kyoko',
+                dir : 'right'
+            }
+        },
+        {
+            method : 'activePilot',
+            param : 'right'
+        },
+        {
+            method: 'mes',
+            param: 'なんてカッコイイ、アームドーザなのかしら<br>ああ、ペロペロしたい'
+        },
+        {
+            method: 'mes',
+            param: 'いけない、思わずヨダレが出ちゃったわ'
+        },
+        {
+            method : 'nextScenario',
+            param : 'akiraStart'
+        },
+        {
+            method : 'moveBattle',
+            param : {
+                enemyId : 'granBraver',
+                pilotId : 'kyoko',
+                routineId : 'attack3-defense1'
+            }
+        }
+    ]
+});
