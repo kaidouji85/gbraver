@@ -17,12 +17,14 @@ var battle = function(spec,my){
     var boostBatteryArray = {};
     var thresholdAbilityArray = {};
     var hyperArmorFiredFlag = {};
+    var hyperShieldArray = {};
 
     that.MAX_ACTIVE = 5000;
     that.ATACK_HIT = 1;
     that.ATACK_MISS = 2;
     that.ATACK_GUARD = 3;
     that.ATACK_CRITICAL = 4;
+    that.ATACK_SHELD = 5;
     that.MAX_BATTERY = 5;
 
     (function() {
@@ -35,6 +37,7 @@ var battle = function(spec,my){
             boostBatteryArray[uid] = true;
             thresholdAbilityArray[uid] = true;
             hyperArmorFiredFlag[uid] = false;
+            hyperShieldArray[uid] = statusArray[uid].ability.type==='hyperShield'?statusArray[uid].ability.value : 0;
         }
     })()
     
@@ -137,7 +140,12 @@ var battle = function(spec,my){
         statusArray[atackUserId].battery -= atackBattery;
         statusArray[atackUserId].active = 0;
 
-        statusArray[defenseUserId].hp -= damage;
+        //ハイパーシールド判定
+        if(hyperShieldArray[defenseUserId] > 0){
+            hyperShieldArray[defenseUserId] -= damage;
+        } else {
+            statusArray[defenseUserId].hp -= damage;
+        }
         statusArray[defenseUserId].battery -= defenthBattery;
 
         stunAttackArray[atackUserId] = false;
