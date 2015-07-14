@@ -19,7 +19,6 @@ describe('Battleクラス パイロットスキル HP回復', function() {
             atackBattery : 5,
             defenthBattery : 1
         });
-        console.log(result);
 
         //ランドーザがスキルを使いHPを回復
         Battle.doWaitPhase();
