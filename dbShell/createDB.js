@@ -32,7 +32,7 @@ db.armdozers.insert({
     },
     ability: {
         type : 'boostBattery',
-        battery: 2,
+        battery: 3,
         threshold: 0.4
     }
 });
@@ -68,7 +68,7 @@ db.armdozers.insert({
     },
     ability: {
         type: 'boostPower',
-        power : 100,
+        power : 400,
         threshold : 0.4
     }
 });
@@ -139,8 +139,8 @@ db.armdozers.insert({
         }
     },
     ability: {
-        type : 'hyperArmor',
-        value : 0
+        type : 'hyperShield',
+        value : 1000
     }
 });
 
@@ -260,7 +260,7 @@ db.pilots.insert({
     pictLeftMargin : 64,
     shout : '10年早いわ・・・・・・、なんてね',
     type : 'quickCharge',
-    battery : 2,
+    battery : 3,
     hp : 200,
     power : 50,
     defense : 50,
@@ -290,7 +290,7 @@ db.pilots.insert({
     pictLeftMargin : 64,
     shout: '・・・・・・勝った',
     type: 'guardBreak',
-    value : 100,
+    value : 300,
     hp : 200,
     power : 100,
     defense : 50,

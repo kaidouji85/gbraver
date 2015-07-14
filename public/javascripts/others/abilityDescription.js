@@ -13,6 +13,9 @@ function getArmdozerAbilityDescription(ability){
         case 'hyperArmor' :
             ret = '防御したらダメージが'+ability.value*100+'%';
             break;
+        case 'hyperShield' :
+            ret = ability.value+'までのダメージを無効化';
+            break;
     }
     return ret;
 }
@@ -26,6 +29,7 @@ function getArmdozerAbilityTrigger(ability) {
             ret = 'HPが'+ability.threshold*100+'%以下(1回のみ)';
             break;
         case 'hyperArmor':
+        case 'hyperShield':
             ret = '常時'
             break;
     }
