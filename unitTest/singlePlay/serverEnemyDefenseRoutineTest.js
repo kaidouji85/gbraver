@@ -58,14 +58,16 @@ describe('serverクラスのテスト', function() {
                             battery : 5,
                             active : 5000,
                             skillPoint : 1,
-                            overHeatFlag : false
+                            overHeatFlag : false,
+                            specialPoint : 0
                         },
                         'nonePlayerCharacter' : {
                             hp : 4700,
                             battery : 5,
                             active : 3000,
                             skillPoint : 1,
-                            overHeatFlag : false
+                            overHeatFlag : false,
+                            specialPoint : 0
                         }
                     };
                     assert.deepEqual(expect,statusArray,'現在のステータスが敵防御思考ルーチンに渡される');

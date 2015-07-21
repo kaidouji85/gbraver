@@ -9,6 +9,7 @@ function battleUnitData() {
         data.battery = 5;
         data.overHeatFlag = false;
         data.skillPoint = 1;
+        data.specialPoint = 0;
         unitData[id] = data;
     }
 

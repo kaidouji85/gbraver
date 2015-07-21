@@ -17,7 +17,6 @@ var battle = function(spec,my){
     var boostBatteryArray = {};
     var thresholdAbilityArray = {};
     var hyperArmorFiredFlag = {};
-    var hyperShieldArray = {};
 
     that.MAX_ACTIVE = 5000;
     that.ATACK_HIT = 1;
@@ -37,7 +36,10 @@ var battle = function(spec,my){
             boostBatteryArray[uid] = true;
             thresholdAbilityArray[uid] = true;
             hyperArmorFiredFlag[uid] = false;
-            hyperShieldArray[uid] = statusArray[uid].ability.type==='hyperShield'?statusArray[uid].ability.value : 0;
+
+            if(statusArray[uid].ability.type==='hyperShield'){
+                statusArray[uid].specialPoint = statusArray[uid].ability.value;
+            }
         }
     })()
     
@@ -141,8 +143,8 @@ var battle = function(spec,my){
         statusArray[atackUserId].active = 0;
 
         //ハイパーシールド判定
-        if(hyperShieldArray[defenseUserId] > 0){
-            hyperShieldArray[defenseUserId] -= damage;
+        if(statusArray[defenseUserId].ability.type === 'hyperShield' && statusArray[defenseUserId].specialPoint > 0){
+            statusArray[defenseUserId].specialPoint -= damage;
         } else {
             statusArray[defenseUserId].hp -= damage;
         }

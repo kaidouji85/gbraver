@@ -74,13 +74,15 @@ describe('serverクラスのテスト', function() {
                             active: 2500,
                             battery: 5,
                             skillPoint: 1,
-                            overHeatFlag: false },
+                            overHeatFlag: false,
+                            specialPoint : 0},
                         nonePlayerCharacter: {
                             hp: 4700,
                             active: 5000,
                             battery: 5,
                             skillPoint: 1,
-                            overHeatFlag: false }}
+                            overHeatFlag: false,
+                            specialPoint : 0}}
                 };
                 assert.deepEqual(data,expect,'パイロットスキル発動フェイズのデータが正しい');
                 doPilotSkillPhase();

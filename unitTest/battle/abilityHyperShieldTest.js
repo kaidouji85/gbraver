@@ -22,6 +22,7 @@ describe('Battleクラス アビリティ ハイパーシールド', function() 
 
         assert.equal( ret.damage, 700 , 'ダメージが700である' );
         assert.equal( Battle.getStatusArray()['test002@gmail.com'].hp, 4700, 'HPが減らない');
+        assert.equal( Battle.getStatusArray()['test002@gmail.com'].specialPoint, 300, '特殊ポイントが300である');
     });
 
     it('シールドを貫通してもHPは減らない', function () {
@@ -43,6 +44,7 @@ describe('Battleクラス アビリティ ハイパーシールド', function() 
 
         assert.equal( ret.damage, 4400 , 'ダメージが4400である' );
         assert.equal( Battle.getStatusArray()['test002@gmail.com'].hp, 4700, 'HPが減らない');
+        assert.equal( Battle.getStatusArray()['test002@gmail.com'].specialPoint, -3400, '特殊ポイントが-3400である');
     });
 
     it('シールド破壊後はHPが減る', function () {
@@ -78,5 +80,16 @@ describe('Battleクラス アビリティ ハイパーシールド', function() 
         });
 
         assert.equal( Battle.getStatusArray()['test002@gmail.com'].hp, 3100, 'HPが減る');
+    });
+
+    it('特殊ポイントがシールド値になっている',function(){
+        var Battle = battle({
+            statusArray: {
+                'test001@gmail.com' : battleUnitData.get('granBraver'),
+                'test002@gmail.com' : battleUnitData.get('landozerHyperShield')
+            }
+        });
+
+        assert.equal( Battle.getStatusArray()['test002@gmail.com'].specialPoint, 1000, '特殊ポイントがシールド値と同じ');
     });
 });

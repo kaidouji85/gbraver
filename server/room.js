@@ -42,6 +42,7 @@ function room(){
             status.battery = 5;
             status.skillPoint = 1;
             status.overHeatFlag = false;
+            status.specialPoint = 0;
             statusArray[userId] = status;
         }
         Battle = battle({statusArray : statusArray});
@@ -170,6 +171,7 @@ function room(){
             statusArray[i].battery = nowStatus[i].battery;
             statusArray[i].skillPoint = nowStatus[i].skillPoint;
             statusArray[i].overHeatFlag = nowStatus[i].overHeatFlag;
+            statusArray[i].specialPoint = nowStatus[i].specialPoint;
         }
         return statusArray;
     }

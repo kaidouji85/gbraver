@@ -69,14 +69,16 @@ describe('一人用戦闘モード終了', function() {
                             battery : 5,
                             active : 5000,
                             skillPoint : 1,
-                            overHeatFlag : false
+                            overHeatFlag : false,
+                            specialPoint : 0
                         },
                         'nonePlayerCharacter' : {
                             hp : 4700,
                             battery : 5,
                             active : 1500,
                             skillPoint : 1,
-                            overHeatFlag : false
+                            overHeatFlag : false,
+                            specialPoint : 0
                         }
                     }
                 };
@@ -100,14 +102,16 @@ describe('一人用戦闘モード終了', function() {
                             battery : 5,
                             active : 5000,
                             skillPoint : 1,
-                            overHeatFlag : false
+                            overHeatFlag : false,
+                            specialPoint : 0
                         },
                         'nonePlayerCharacter' : {
                             hp : 4700,
                             battery : 5,
                             active : 1500,
                             skillPoint : 1,
-                            overHeatFlag : false
+                            overHeatFlag : false,
+                            specialPoint : 0
                         }
                     }
                 };
@@ -134,14 +138,16 @@ describe('一人用戦闘モード終了', function() {
                             battery : 5,
                             active : 5000,
                             skillPoint : 1,
-                            overHeatFlag : false
+                            overHeatFlag : false,
+                            specialPoint : 0
                         },
                         'nonePlayerCharacter' : {
                             hp : 4700,
                             battery : 5,
                             active : 1500,
                             skillPoint : 1,
-                            overHeatFlag : false
+                            overHeatFlag : false,
+                            specialPoint : 0
                         }
                     }
                 };
@@ -170,14 +176,16 @@ describe('一人用戦闘モード終了', function() {
                             battery : 2,
                             active : 0,
                             skillPoint : 1,
-                            overHeatFlag : false
+                            overHeatFlag : false,
+                            specialPoint : 0
                         },
                         'nonePlayerCharacter' : {
                             hp : -5700,
                             battery : 5,
                             active : 1500,
                             skillPoint : 1,
-                            overHeatFlag : false
+                            overHeatFlag : false,
+                            specialPoint : 0
                         }
                     }
                 };
@@ -202,14 +210,16 @@ describe('一人用戦闘モード終了', function() {
                             battery : 2,
                             active : 0,
                             skillPoint : 1,
-                            overHeatFlag : false
+                            overHeatFlag : false,
+                            specialPoint : 0
                         },
                         'nonePlayerCharacter' : {
                             hp : -5700,
                             battery : 5,
                             active : 1500,
                             skillPoint : 1,
-                            overHeatFlag : false
+                            overHeatFlag : false,
+                            specialPoint : 0
                         }
                     }
                 };
