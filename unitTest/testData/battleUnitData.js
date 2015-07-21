@@ -4,17 +4,21 @@ function battleUnitData() {
     var that = {};
     var unitData = {};
 
+    function addData(id,data){
+        data.active = 0;
+        data.battery = 5;
+        data.overHeatFlag = false;
+        data.skillPoint = 1;
+        unitData[id] = data;
+    }
+
     (function(){
-        unitData['granBraver'] = {
+        var granBraver = {
             name: 'グランブレイバー',
             pictName: 'GranBraver.PNG',
             hp: 3200,
             defense : 1000,
             speed: 230,
-            active: 0,
-            battery: 5,
-            overHeatFlag : false,
-            skillPoint : 1,
             weapons: {
                 1: {name: 'バスターナックル', power: 800},
                 2: {name: 'バスターナックル', power: 1100},
@@ -33,88 +37,86 @@ function battleUnitData() {
             ability: {
                 type: 'none'
             }
-        };
-
-        unitData['granBraverSpeed1000'] = ce.clone(unitData['granBraver']);
-        unitData['granBraverSpeed1000'].speed = 1000;
-
-        unitData['granBraverQuickCharge'] = ce.clone(unitData['granBraver']);
-        unitData['granBraverQuickCharge'].pilot =
-        {
-            type : 'quickCharge',
-            battery : 3,
-            hp : 0,
-            power : 0,
-            defense : 0,
-            speed : 0
-        };
-
-        unitData['granBraverStunAttack'] = ce.clone(unitData['granBraver']);
-        unitData['granBraverStunAttack'].pilot =
-        {
-            type : 'stunAttack',
-            hp : 0,
-            power : 0,
-            defense : 0,
-            speed : 0
         }
+        addData('granBraver',granBraver);
 
-        unitData['granBraverGuardBreak'] = ce.clone(unitData['granBraver']);
-        unitData['granBraverGuardBreak'].pilot =
-        {
-            type : 'guardBreak',
-            value : 300,
-            hp : 0,
-            power : 0,
-            defense : 0,
-            speed : 0
-        }
+        addData('granBraverSpeed1000',ce.cloneextend(granBraver,{
+            speed : 1000
+        }));
 
-        unitData['granBraverSuperGuard'] = ce.clone(unitData['granBraver']);
-        unitData['granBraverSuperGuard'].pilot =
-        {
-            type : 'superGuard',
-            value : 0.5,
-            hp : 0,
-            power : 0,
-            defense : 0,
-            speed : 0
-        }
+        addData('granBraverQuickCharge',ce.cloneextend(granBraver,{
+            pilot : {
+                type : 'quickCharge',
+                battery : 3,
+                hp : 0,
+                power : 0,
+                defense : 0,
+                speed : 0
+            }
+        }));
 
-        unitData['granBraverBoostBattery'] = ce.clone(unitData['granBraver']);
-        unitData['granBraverBoostBattery'].ability =
-        {
-            type : 'boostBattery',
-            battery: 5,
-            threshold: 0.3
-        }
+        addData('granBraverStunAttack',ce.cloneextend(granBraver,{
+            pilot : {
+                type : 'stunAttack',
+                hp : 0,
+                power : 0,
+                defense : 0,
+                speed : 0
+            }
+        }));
 
-        unitData['granBraverBoostActive'] = ce.clone(unitData['granBraver']);
-        unitData['granBraverBoostActive'].ability =
-        {
-            type : 'boostActive',
-            active : 0.3,
-            threshold: 0.3
-        }
+        addData('granBraverGuardBreak',ce.cloneextend(granBraver,{
+            pilot : {
+                type : 'guardBreak',
+                value : 300,
+                hp : 0,
+                power : 0,
+                defense : 0,
+                speed : 0
+            }
+        }));
 
-        unitData['granBraverBoostPower'] = ce.clone(unitData['granBraver']);
-        unitData['granBraverBoostPower'].ability =
-        {
-            type : 'boostPower',
-            power : 100,
-            threshold: 0.3
-        }
+        addData('granBraverSuperGuard',ce.cloneextend(granBraver,{
+            pilot : {
+                type : 'superGuard',
+                value : 0.5,
+                hp : 0,
+                power : 0,
+                defense : 0,
+                speed : 0
+            }
+        }));
 
-        unitData['landozer'] = {
+        addData('granBraverBoostBattery',ce.cloneextend(granBraver,{
+            ability: {
+                type : 'boostBattery',
+                battery: 5,
+                threshold: 0.3
+            }
+        }));
+
+        addData('granBraverBoostActive',ce.cloneextend(granBraver,{
+            ability : {
+                type : 'boostActive',
+                active : 0.3,
+                threshold: 0.3
+            }
+        }));
+
+        addData('granBraverBoostPower',ce.cloneextend(granBraver,{
+            ability: {
+                type : 'boostPower',
+                power : 100,
+                threshold: 0.3
+            }
+        }));
+
+        var landozer =  {
             name: 'ランドーザ',
             pictName: 'Landozer.PNG',
             hp: 4700,
             defense : 1000,
             speed: 150,
-            active: 0,
-            battery: 5,
-            overHeatFlag : false,
-            skillPoint : 1,
             weapons: {
                 1: {name: 'ブレイクパンチ', power: 1200},
                 2: {name: 'ブレイクパンチ', power: 1700},
@@ -133,33 +135,36 @@ function battleUnitData() {
             ability: {
                 type: 'none'
             }
-        };
+        }
+        addData('landozer',landozer);
 
-        unitData['landozerRecoverHp'] = ce.clone(unitData['landozer']);
-        unitData['landozerRecoverHp'].hp = 3500;
-        unitData['landozerRecoverHp'].pilot =
-        {
-            type : 'recoverHp',
-            value : 0.5,
-            hp : 0,
-            power : 0,
-            defense : 0,
-            speed : 0
-        };
+        addData('landozerRecoverHp',ce.cloneextend(landozer,{
+            hp : 3500,
+            pilot: {
+                type : 'recoverHp',
+                value : 0.5,
+                hp : 0,
+                power : 0,
+                defense : 0,
+                speed : 0
+            }
+        }));
 
-        unitData['landozerHyperArmor'] = ce.clone(unitData['landozer']);
-        unitData['landozerHyperArmor'].ability = {
-            type: 'hyperArmor',
-            value : 0
-        };
+        addData('landozerHyperArmor',ce.cloneextend(landozer,{
+            ability : {
+                type: 'hyperArmor',
+                value : 0
+            }
+        }));
 
-        unitData['landozerHyperShield'] = ce.clone(unitData['landozer']);
-        unitData['landozerHyperShield'].ability = {
-            type: 'hyperShield',
-            value : 1000
-        };
+        addData('landozerHyperShield',ce.cloneextend(landozer,{
+            ability: {
+                type: 'hyperShield',
+                value : 1000
+            }
+        }));
 
-        unitData['zeroBraver'] = {
+        var zeroBraver = {
             name : 'ゼロブレイバー',
             pictName : 'ZeroBraver.PNG',
             hp : 4200,
@@ -188,6 +193,7 @@ function battleUnitData() {
                 type: 'none'
             }
         };
+        addData('zeroBraver',zeroBraver);
     })()
 
     that.get = function(unitId){
