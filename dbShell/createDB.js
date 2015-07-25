@@ -140,7 +140,8 @@ db.armdozers.insert({
     },
     ability: {
         type : 'hyperShield',
-        value : 1000
+        value : 1000,
+        breakedPict : 'GuardiasBreak.png'
     }
 });
 

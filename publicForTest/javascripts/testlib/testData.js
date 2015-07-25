@@ -20,6 +20,11 @@ function testData(spec,my){
             userId : 'test004@gmail.com',
             armdozerId : 'granBraverForQuickCharge',
             pilotId : 'kyoko'
+        },
+        {
+            userId : 'test005@gmail.com',
+            armdozerId : 'guardias',
+            pilotId : 'iori'
         }
     ];
 
@@ -157,6 +162,41 @@ function testData(spec,my){
             },
             ability: {
                 type: 'none'
+            }
+        },
+        {
+            armdozerId : 'guardias',
+            name : 'ガーディアス',
+            pictName : 'Guardias.png',
+            hp : 2100,
+            defense : 800,
+            speed : 100,
+            weapons : {
+                1 : {
+                    name : 'バスターナックル',
+                    power : 1400
+                },
+                2 : {
+                    name : 'バスターナックル',
+                    power : 1400
+                },
+                3 : {
+                    name : 'バスターナックル',
+                    power : 1400
+                },
+                4 : {
+                    name : 'バスターナックル',
+                    power : 1400
+                },
+                5 : {
+                    name : 'バスターナックル',
+                    power : 1400
+                }
+            },
+            ability: {
+                type : 'hyperShield',
+                value : 1000,
+                breakedPict : 'GuardiasBreak.png'
             }
         }
     ];

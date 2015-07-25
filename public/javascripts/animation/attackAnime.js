@@ -62,14 +62,23 @@ function attackAnime(spec,my){
                 if(damagedStatusArray[uid].hp>0){
                     battleScene.charaSpriteArray[uid].doStandMotion();
                 }
+
+                // 防御側だけ実施する処理
                 if (uid !== attackUserId) {
                     battleScene.damageLabelArray[uid].setVisible(false);
                     battleScene.subDamageLabelArray[uid].visible = false;
+
+                    //シールドブレイク判定
+                    if(battleScene.statusArray[uid].ability.type==='hyperShield' && data.statusArray[uid].specialPoint<=0){
+                        var breakPictName = battleScene.statusArray[uid].ability.breakedPict;
+                        battleScene.charaSpriteArray[uid].image = core.assets[core.PICT_PREFIX+breakPictName];
+                    }
                 }
             }
         }).delay(10).then(function(){
             fn();
         });
     }
+
     return that;
 }
