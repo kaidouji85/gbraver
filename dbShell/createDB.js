@@ -68,7 +68,7 @@ db.armdozers.insert({
     },
     ability: {
         type: 'boostPower',
-        power : 400,
+        power : 300,
         threshold : 0.4
     }
 });
@@ -77,7 +77,7 @@ db.armdozers.insert({
     armdozerId : 'zeroBraver',
     name : 'ゼロブレイバー',
     pictName : 'ZeroBraver.PNG',
-    hp : 2600,
+    hp : 2200,
     defense : 400,
     speed : 140,
     weapons : {
@@ -104,8 +104,8 @@ db.armdozers.insert({
     },
     ability: {
         type : 'boostActive',
-        active : 0.3,
-        threshold : 0.4
+        active : 0.6,
+        threshold : 0.2
     }
 });
 
@@ -113,9 +113,9 @@ db.armdozers.insert({
     armdozerId : 'guardias',
     name : 'ガーディアス',
     pictName : 'Guardias.png',
-    hp : 2100,
+    hp : 2300,
     defense : 800,
-    speed : 100,
+    speed : 105,
     weapons : {
         1 : {
             name : 'バスターナックル',
