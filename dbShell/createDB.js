@@ -644,7 +644,7 @@ db.scenarios.insert({
         },
         {
             method : 'nextScenario',
-            param : 'akiraStart'
+            param : 'ioriStart'
         },
         {
             method : 'moveBattle',
