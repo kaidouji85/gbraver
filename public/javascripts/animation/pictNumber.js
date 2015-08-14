@@ -5,6 +5,7 @@ function pictNumber(spec,my){
     var SPRITE_HEIGHT = spec.height || 32;
     var pict = spec.pict;
     var numberSpriteArray = new Array(MAX_NUMBER_SPRITE);
+    var visible = true;
 
     init();
     function init(){
@@ -18,6 +19,10 @@ function pictNumber(spec,my){
 
     //TODO メソッド名をsetValuに変更する
     that.setDamage = function(damage){
+        if(visible===false) {
+            return;
+        }
+
         var damageStr = damage.toString();
         var digits = damageStr.length;
         var i=0;
@@ -33,7 +38,8 @@ function pictNumber(spec,my){
         }
     }
 
-    that.setVisible = function(visible){
+    that.setVisible = function(p_visible){
+        visible = p_visible;
         for(var i=0; i<MAX_NUMBER_SPRITE; i++){
             numberSpriteArray[i].visible = visible;
         }

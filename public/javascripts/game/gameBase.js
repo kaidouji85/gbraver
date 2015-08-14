@@ -7,7 +7,6 @@ function gameBase(spec,my){
     core.PICT_BATTERY_GAUGE = core.PICT_PREFIX+'batteryGauge.png';
     core.PICT_BATTERY_BACK = core.PICT_PREFIX+'batteryBack.png';
     core.PICT_BATTERY_NUMBER = core.PICT_PREFIX+'batteryNumber.png';
-    core.PICT_ATTTACK_PARTICLE = core.PICT_PREFIX+'attackParticle.png';
     core.PICT_HIT_EFFECT = core.PICT_PREFIX+'hitEffect.png';
     core.PICT_DAMAGE = core.PICT_PREFIX+'damage.png';
     core.PICT_HIT_TEXT = core.PICT_PREFIX+'hitText.png';
@@ -25,6 +24,7 @@ function gameBase(spec,my){
     core.PICT_WAKEUP_BACK = core.PICT_PREFIX+'wakeUpBack.png';
     core.PICT_EXECUTE_ABILITY_TELOP = core.PICT_PREFIX+'executeAbility.png';
     core.PICT_EXECUTE_SKILL_TELOP = core.PICT_PREFIX+'executePilotSkill.png';
+    core.PICT_MINI_NUMBER = core.PICT_PREFIX+'miniNumber.png';
     core.SOUND_PREFIX = contentBaseUrl+'/sound/';
     core.SOUND_BATTLE = core.SOUND_PREFIX + 'game_maoudamashii_1_battle34.mp3';
     core.SOUND_ATTACK_HIT = core.SOUND_PREFIX + 'mecha27.wav';
@@ -84,7 +84,6 @@ function gameBase(spec,my){
         core.preload(core.PICT_BATTERY_GAUGE);
         core.preload(core.PICT_BATTERY_BACK);
         core.preload(core.PICT_BATTERY_NUMBER);
-        core.preload(core.PICT_ATTTACK_PARTICLE);
         core.preload(core.PICT_HIT_EFFECT);
         core.preload(core.PICT_DAMAGE);
         core.preload(core.PICT_HIT_TEXT);
@@ -102,6 +101,7 @@ function gameBase(spec,my){
         core.preload(core.PICT_WAKEUP_BACK);
         core.preload(core.PICT_EXECUTE_ABILITY_TELOP);
         core.preload(core.PICT_EXECUTE_SKILL_TELOP);
+        core.preload(core.PICT_MINI_NUMBER);
 
         core.preload(core.SOUND_BATTLE);
         core.preload(core.SOUND_ATTACK_HIT);

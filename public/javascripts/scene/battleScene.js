@@ -46,7 +46,6 @@ function battleScene(spec,my){
     that.doGameEnd = doGameEnd;
     that.doPilotSkill = doPilotSkill;
     that.doArmdozerAbility = doArmdozerAbility;
-    that.refreshMertor = refreshMertor;
     that.atackIcon.addEventListener(Event.TOUCH_END,moveBatteryCommand);
     that.chargeIcon.addEventListener(Event.TOUCH_END,charge);
     that.skillIcon.addEventListener(Event.TOUCH_END,pilotSkill);
@@ -71,7 +70,7 @@ function battleScene(spec,my){
         }
 
         that.tl.delay(turn).then(function(){
-            refreshMertor(data.statusArray);
+            that.refreshMertor(data.statusArray);
             MyTurnAnime.play(data,function(){
                 that.mesWindow.setVisible(true);
                 if(attackUserId === that.userId) {
@@ -105,7 +104,7 @@ function battleScene(spec,my){
     }
     
     function doChargePhase(data){
-        refreshMertor(data.statusArray);
+        that.refreshMertor(data.statusArray);
         that.mesWindow.setVisible(false);
         that.tl.delay(WAIT_TIME_ACTIVE_RESET).then(function(){
             that.charaSpriteArray[attackUserId].frame = FRAME_STAND;
@@ -117,7 +116,7 @@ function battleScene(spec,my){
     };
     
     function doDefenthCommandPhase(data){
-        refreshMertor(data.statusArray);
+        that.refreshMertor(data.statusArray);
         if(attackUserId===that.userId){
             that.tl.delay(30).then(function(){
                 emitCommand({method:'ok'});
@@ -150,14 +149,6 @@ function battleScene(spec,my){
     function onCommand(fn) {
         emitCommand = fn;
     };
-    
-    function refreshMertor(statusArray){
-        for(var uid in statusArray){
-            that.hpMertorArray[uid].setValue(statusArray[uid].hp);
-            that.batteryMertorArray[uid].setValue(statusArray[uid].battery);
-            that.activeBarArray[uid].setValue(120*statusArray[uid].active/5000);
-        }
-    }
 
     function moveBatteryCommand(){
         setAtackCommandVisible(false);

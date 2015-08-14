@@ -22,6 +22,7 @@ function battleSceneBase(spec,my){
     that.hitEffectArray = {};
     that.mertorWindowArray = {};
     that.armdozerAbilityCutInArray = {};
+    that.specialPointNumberArray = {};
 
     (function() {
         //背景(地面)
@@ -124,6 +125,22 @@ function battleSceneBase(spec,my){
             that.batteryMertorArray[uid].y = 50;
             that.batteryMertorArray[uid].setValue(5);
             that.addChild(that.batteryMertorArray[uid]);
+
+            //特殊ポイント
+            that.specialPointNumberArray[uid] = pictNumber({
+                width : 16,
+                height : 16,
+                pict : core.assets[core.PICT_MINI_NUMBER]
+            });
+            that.specialPointNumberArray[uid].x = uid===that.userId ? 205 : 115;
+            that.specialPointNumberArray[uid].y = 80;
+            if(isVisibleSpecialPoint(that.statusArray[uid])){
+                //TODO 将来的にはアビリティに応じて初期値の取得場所をかえる
+                that.specialPointNumberArray[uid].setDamage(that.statusArray[uid].ability.value);
+            } else {
+                that.specialPointNumberArray[uid].setVisible(false);
+            }
+            that.addChild(that.specialPointNumberArray[uid]);
 
             //出したバッテリー
             that.batteryNumberArray[uid] = batteryNumber({
@@ -311,7 +328,19 @@ function battleSceneBase(spec,my){
             that.hpMertorArray[uid].setValue(statusArray[uid].hp);
             that.batteryMertorArray[uid].setValue(statusArray[uid].battery);
             that.activeBarArray[uid].setValue(120*statusArray[uid].active/5000);
+
+            //TODO 現状で特殊ポイントを使うのはハイパーシールドだけなので、下限値は0で決め打ちにする
+            var sp = statusArray[uid].specialPoint >= 0 ? statusArray[uid].specialPoint : 0;
+            that.specialPointNumberArray[uid].setDamage(sp);
         }
+    }
+
+    function isVisibleSpecialPoint(status) {
+        return status.ability.type === 'hyperShield';
+    }
+
+    function getSpecialPointGauge(status) {
+
     }
 
     return that;

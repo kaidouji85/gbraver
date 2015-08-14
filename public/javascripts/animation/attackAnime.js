@@ -40,6 +40,7 @@ function attackAnime(spec,my){
             for (var uid in battleScene.statusArray) {
                 if (uid !== attackUserId) {
                     battleScene.damageLabelArray[uid].visible = true;
+                    battleScene.damageLabelArray[uid].setVisible(true);
                     battleScene.damageLabelArray[uid].setDamage(damage);
                     if(hit!==core.ATACK_HIT){
                         battleScene.subDamageLabelArray[uid].visible = true;
