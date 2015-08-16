@@ -3,9 +3,10 @@ function customBar(spec,my){
     var barImage = spec.barImage;
     var direction = spec.direction;
     var maxValue = spec.maxValue;
+    var height = spec.height || 16;
     var backImage = spec.backImage;
-    var mainBar = new Sprite(maxValue,16);
-    var backBar = new Sprite(maxValue+2,18);
+    var mainBar = new Sprite(maxValue,height);
+    var backBar = new Sprite(maxValue,height);
     var value = 0;
     var turn = 0;
     var speed = 0;
@@ -43,6 +44,15 @@ function customBar(spec,my){
         }
         fixBarWidth();
     });
+
+    that.setVisible = function(value){
+        mainBar.visible = value;
+        backBar.visible = value;
+    }
+
+    that.getMaxValue = function(){
+        return maxValue;
+    }
 
     function fixBarWidth(){
         var width = value;

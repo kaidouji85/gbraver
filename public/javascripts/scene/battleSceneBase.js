@@ -23,6 +23,7 @@ function battleSceneBase(spec,my){
     that.mertorWindowArray = {};
     that.armdozerAbilityCutInArray = {};
     that.specialPointNumberArray = {};
+    that.specialPointBarArray = {};
 
     (function() {
         //背景(地面)
@@ -51,6 +52,41 @@ function battleSceneBase(spec,my){
             that.pilotIconArray[uid].x = uid===that.userId ? 240 : 0;
             that.pilotIconArray[uid].y = 80;
             that.addChild(that.pilotIconArray[uid]);
+
+            //特殊ポイント
+            that.specialPointNumberArray[uid] = pictNumber({
+                width : 16,
+                height : 16,
+                pict : core.assets[core.PICT_MINI_NUMBER]
+            });
+            that.specialPointNumberArray[uid].x = uid===that.userId ? 205 : 115;
+            that.specialPointNumberArray[uid].y = 80;
+            if(isVisibleSpecialPoint(that.statusArray[uid])){
+                //TODO 将来的にはアビリティに応じて初期値の取得場所をかえる
+                that.specialPointNumberArray[uid].setDamage(that.statusArray[uid].ability.value);
+            } else {
+                that.specialPointNumberArray[uid].setVisible(false);
+            }
+            that.addChild(that.specialPointNumberArray[uid]);
+
+            //特殊ポイントバー
+            that.specialPointBarArray[uid] = customBar({
+                barImage : core.assets[core.PICT_SPECIAL_BAR],
+                backImage : core.assets[core.PICT_SPECIAL_BAR_BACK],
+                maxValue : 80,
+                height : 8,
+                direction : uid===that.userId ? 'right' : 'left'
+            });
+            that.specialPointBarArray[uid].x = uid===that.userId ? 220 : 100;
+            that.specialPointBarArray[uid].y = 320;
+            if(isVisibleSpecialPoint(that.statusArray[uid])){
+                //TODO 将来的にはアビリティに応じて初期値の取得場所をかえる
+                that.specialPointBarArray[uid].setValue(80);
+            } else {
+                that.specialPointBarArray[uid].setVisible(false);
+            }
+
+            that.addChild(that.specialPointBarArray[uid]);
 
             //キャラクタースプライト
             var spec = {
@@ -125,22 +161,6 @@ function battleSceneBase(spec,my){
             that.batteryMertorArray[uid].y = 50;
             that.batteryMertorArray[uid].setValue(5);
             that.addChild(that.batteryMertorArray[uid]);
-
-            //特殊ポイント
-            that.specialPointNumberArray[uid] = pictNumber({
-                width : 16,
-                height : 16,
-                pict : core.assets[core.PICT_MINI_NUMBER]
-            });
-            that.specialPointNumberArray[uid].x = uid===that.userId ? 205 : 115;
-            that.specialPointNumberArray[uid].y = 80;
-            if(isVisibleSpecialPoint(that.statusArray[uid])){
-                //TODO 将来的にはアビリティに応じて初期値の取得場所をかえる
-                that.specialPointNumberArray[uid].setDamage(that.statusArray[uid].ability.value);
-            } else {
-                that.specialPointNumberArray[uid].setVisible(false);
-            }
-            that.addChild(that.specialPointNumberArray[uid]);
 
             //出したバッテリー
             that.batteryNumberArray[uid] = batteryNumber({
@@ -329,18 +349,20 @@ function battleSceneBase(spec,my){
             that.batteryMertorArray[uid].setValue(statusArray[uid].battery);
             that.activeBarArray[uid].setValue(120*statusArray[uid].active/5000);
 
-            //TODO 現状で特殊ポイントを使うのはハイパーシールドだけなので、下限値は0で決め打ちにする
-            var sp = statusArray[uid].specialPoint >= 0 ? statusArray[uid].specialPoint : 0;
-            that.specialPointNumberArray[uid].setDamage(sp);
+            if(isVisibleSpecialPoint(that.statusArray[uid])) {
+                //TODO 現状で特殊ポイントを使うのはハイパーシールドだけなので、下限値は0で決め打ちにする
+                var sp = statusArray[uid].specialPoint >= 0 ? statusArray[uid].specialPoint : 0;
+                that.specialPointNumberArray[uid].setDamage(sp);
+
+                var value = sp / that.statusArray[uid].ability.value
+                    * that.specialPointBarArray[uid].getMaxValue();
+                that.specialPointBarArray[uid].setValue(value);
+            }
         }
     }
 
     function isVisibleSpecialPoint(status) {
         return status.ability.type === 'hyperShield';
-    }
-
-    function getSpecialPointGauge(status) {
-
     }
 
     return that;

@@ -65,7 +65,8 @@ function battleScene(spec,my){
         that.mesWindow.setVisible(false);
         attackUserId = data.atackUserId;
         for(var uid in data.statusArray) {
-            plusValue = (120*data.statusArray[uid].active/5000 - that.activeBarArray[uid].getValue())/turn;
+            plusValue = (that.activeBarArray[uid].getMaxValue()*data.statusArray[uid].active/5000
+                - that.activeBarArray[uid].getValue())/turn;
             that.activeBarArray[uid].plus(turn,plusValue);
         }
 

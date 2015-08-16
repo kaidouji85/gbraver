@@ -25,6 +25,8 @@ function gameBase(spec,my){
     core.PICT_EXECUTE_ABILITY_TELOP = core.PICT_PREFIX+'executeAbility.png';
     core.PICT_EXECUTE_SKILL_TELOP = core.PICT_PREFIX+'executePilotSkill.png';
     core.PICT_MINI_NUMBER = core.PICT_PREFIX+'miniNumber.png';
+    core.PICT_SPECIAL_BAR = core.PICT_PREFIX+'specialBar.png';
+    core.PICT_SPECIAL_BAR_BACK = core.PICT_PREFIX+'specialBarBack.png';
     core.SOUND_PREFIX = contentBaseUrl+'/sound/';
     core.SOUND_BATTLE = core.SOUND_PREFIX + 'game_maoudamashii_1_battle34.mp3';
     core.SOUND_ATTACK_HIT = core.SOUND_PREFIX + 'mecha27.wav';
@@ -102,6 +104,8 @@ function gameBase(spec,my){
         core.preload(core.PICT_EXECUTE_ABILITY_TELOP);
         core.preload(core.PICT_EXECUTE_SKILL_TELOP);
         core.preload(core.PICT_MINI_NUMBER);
+        core.preload(core.PICT_SPECIAL_BAR);
+        core.preload(core.PICT_SPECIAL_BAR_BACK);
 
         core.preload(core.SOUND_BATTLE);
         core.preload(core.SOUND_ATTACK_HIT);
