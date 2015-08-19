@@ -2,7 +2,7 @@ function customBar(spec,my){
     var that = new Group();
     var barImage = spec.barImage;
     var direction = spec.direction;
-    var maxValue = spec.maxValue;
+    var maxValue = spec.maxValue || barImage.width;
     var height = spec.height || 16;
     var backImage = spec.backImage;
     var mainBar = new Sprite(maxValue,height);
@@ -11,17 +11,17 @@ function customBar(spec,my){
     var turn = 0;
     var speed = 0;
 
-    init();
-    function init(){
+    (function(){
         backBar.image = backImage;
         backBar.x = (direction==='right' ? -1 : -maxValue-1);
-        backBar.y = -1;
+        backBar.scaleX = (direction==='right' ? 1 : -1);
         that.addChild(backBar);
 
         mainBar.image = barImage;
         mainBar.x = (direction==='right' ? 0 : 0);
+        mainBar.scaleX = (direction==='right' ? 1 : -1);
         that.addChild(mainBar);
-    }
+    })()
 
     that.plus = function(p_turn,p_speed){
         turn = p_turn;

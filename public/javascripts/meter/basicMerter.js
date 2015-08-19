@@ -1,0 +1,75 @@
+function basicMerter(spec,my) {
+    var that = new Group();
+    var core = enchant.Core.instance;
+
+    var userId = spec.userId;
+    var statusArray = $.extend(true, {}, spec.statusArray);
+
+    var WIDTH = 320;
+    var HEIGHT = 64;
+
+    (function(){
+        that.merterLabel = MerterLabel();
+        that.addChild(that.merterLabel);
+
+        that.addChild(NumberBack(0,0));
+        that.addChild(NumberBack(WIDTH-core.assets[core.PICT_MINI_NUMBER].width/10*4,0));
+
+        that.hpMerterArray = {};
+        that.maxHpArray = {};
+        that.hpNumberArray = {};
+        for(var uid in statusArray){
+            that.maxHpArray[uid] = statusArray[uid].hp;
+
+            that.hpMerterArray[uid] = HpMerter(uid);
+            that.addChild(that.hpMerterArray[uid]);
+
+            that.hpNumberArray[uid] = HpNumber(uid);
+            that.addChild(that.hpNumberArray[uid]);
+        }
+    })()
+
+    // ラベル
+    function MerterLabel() {
+        var base = new Sprite(48,64);
+        base.image = core.assets[core.PICT_BASIC_MERTER_BASE];
+        base.x = (WIDTH - base.width)/2;
+        return base;
+    }
+
+    // HPメータ
+    function HpMerter(uid) {
+        var merter = customBar({
+            barImage : core.assets[core.PICT_HP_MERTER_UP],
+            backImage : core.assets[core.PICT_HP_MERTER_DOWN],
+            direction : userId===uid ? 'right' : 'left'
+        });
+        merter.x = userId===uid ?
+            (WIDTH+core.assets[core.PICT_BASIC_MERTER_BASE].width)/2 :
+            (WIDTH-core.assets[core.PICT_BASIC_MERTER_BASE].width)/2 ;
+        merter.setValue(core.assets[core.PICT_HP_MERTER_UP].width);
+        return merter;
+    }
+
+    // HPの数字
+    function HpNumber(uid) {
+        var hp = pictNumber({
+            pict : core.assets[core.PICT_MINI_NUMBER],
+            centerPos : 'left'
+        });
+        hp.x = uid===userId ? WIDTH : core.assets[core.PICT_MINI_NUMBER].width/10*4;
+        hp.setDamage(statusArray[uid].hp);
+        return hp;
+    }
+
+    // 数字のバック
+    function NumberBack(x,y) {
+        var back = new Sprite(64,16);
+        back.image = core.assets[core.PICT_BASIC_MERTER_NUMBER_BACK];
+        back.x = x;
+        back.y = y;
+        return back;
+    }
+
+    return that;
+}
