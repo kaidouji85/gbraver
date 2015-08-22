@@ -7,6 +7,8 @@ function basicMerter(spec,my) {
 
     var WIDTH = 320;
     var HEIGHT = 64;
+    var MAX_ACTIVE = 5000;
+    var MAX_BATTERY = 5;
 
     (function(){
         that.merterLabel = MerterLabel();
@@ -18,6 +20,8 @@ function basicMerter(spec,my) {
         that.hpMerterArray = {};
         that.maxHpArray = {};
         that.hpNumberArray = {};
+        that.activeBarArray={};
+        that.batteryMerterArray={};
         for(var uid in statusArray){
             that.maxHpArray[uid] = statusArray[uid].hp;
 
@@ -26,6 +30,12 @@ function basicMerter(spec,my) {
 
             that.hpNumberArray[uid] = HpNumber(uid);
             that.addChild(that.hpNumberArray[uid]);
+
+            that.activeBarArray[uid] = ActiveBar(uid);
+            that.addChild(that.activeBarArray[uid]);
+
+            that.batteryMerterArray[uid] = BatteryMerter(uid);
+            that.addChild(that.batteryMerterArray[uid]);
         }
     })()
 
@@ -69,6 +79,43 @@ function basicMerter(spec,my) {
         back.x = x;
         back.y = y;
         return back;
+    }
+
+    // アクティブバー
+    function ActiveBar(uid) {
+        var merter = customBar({
+            barImage : core.assets[core.PICT_ACTIVE_MERTER_UP],
+            backImage : core.assets[core.PICT_ACTIVE_MERTER_DOWN],
+            direction : userId===uid ? 'right' : 'left'
+        });
+        merter.x = userId===uid ?
+        (WIDTH+core.assets[core.PICT_BASIC_MERTER_BASE].width)/2 :
+        (WIDTH-core.assets[core.PICT_BASIC_MERTER_BASE].width)/2 ;
+        merter.setValue(core.assets[core.PICT_ACTIVE_MERTER_UP].width);
+        merter.y = 16;
+        return merter;
+    }
+
+    // バッテリーメータ
+    function BatteryMerter(uid) {
+        var merter = batteryMertor({
+            gaugeImage : core.assets[core.PICT_BATTERY_MERTER_UP],
+            backImage : core.assets[core.PICT_BATTERY_MERTER_DOWN],
+            direction : userId===uid ? 'right' : 'left'
+        });
+        
+        merter.x = userId===uid ?
+        (WIDTH+core.assets[core.PICT_BASIC_MERTER_BASE].width)/2 :
+         (WIDTH-core.assets[core.PICT_BASIC_MERTER_BASE].width)/2
+         - core.assets[core.PICT_BATTERY_MERTER_UP].width*MAX_BATTERY;
+
+        /*
+        merter.x =(WIDTH-core.assets[core.PICT_BASIC_MERTER_BASE].width)/2
+            - core.assets[core.PICT_BATTERY_MERTER_UP].width*MAX_BATTERY;
+            */
+        merter.setValue(5);
+        merter.y = 32;
+        return merter;
     }
 
     return that;

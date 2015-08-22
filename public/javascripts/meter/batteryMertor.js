@@ -1,13 +1,15 @@
 function batteryMertor(spec,my){
-    var WIDTH = 24;
-    var HEIGHT = 16;
-    var BACK_WIDTH = 120;
     var MAX_BATTERY = 5;
+    var core = enchant.Core.instance;
     
     var that = new Group();
     var gaugeImage = spec.gaugeImage;
     var backImage = spec.backImage;
     var direction = spec.direction;
+    var WIDTH = gaugeImage.width || 24;
+    var HEIGHT = gaugeImage.height || 16;
+    var BACK_WIDTH = backImage.width || 120;
+
     var batteryArray = [];
     var batteryBack = new Sprite(BACK_WIDTH,HEIGHT);
     var value;

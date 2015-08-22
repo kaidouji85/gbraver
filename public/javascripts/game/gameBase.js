@@ -31,6 +31,10 @@ function gameBase(spec,my){
     core.PICT_HP_MERTER_UP = core.PICT_PREFIX+'hpMerterUp.png';
     core.PICT_HP_MERTER_DOWN = core.PICT_PREFIX+'hpMerterDown.png';
     core.PICT_BASIC_MERTER_NUMBER_BACK = core.PICT_PREFIX+'basicMerterNumberBack.png';
+    core.PICT_ACTIVE_MERTER_UP = core.PICT_PREFIX+'activeMerterUp.png';
+    core.PICT_ACTIVE_MERTER_DOWN = core.PICT_PREFIX+'activeMerterDown.png';
+    core.PICT_BATTERY_MERTER_UP = core.PICT_PREFIX+'batteryMerterUp.png';
+    core.PICT_BATTERY_MERTER_DOWN = core.PICT_PREFIX+'batteryMerterDown.png';
 
     core.SOUND_PREFIX = contentBaseUrl+'/sound/';
     core.SOUND_BATTLE = core.SOUND_PREFIX + 'game_maoudamashii_1_battle34.mp3';
@@ -115,6 +119,10 @@ function gameBase(spec,my){
         core.preload(core.PICT_HP_MERTER_UP);
         core.preload(core.PICT_HP_MERTER_DOWN);
         core.preload(core.PICT_BASIC_MERTER_NUMBER_BACK);
+        core.preload(core.PICT_ACTIVE_MERTER_UP);
+        core.preload(core.PICT_ACTIVE_MERTER_DOWN);
+        core.preload(core.PICT_BATTERY_MERTER_UP);
+        core.preload(core.PICT_BATTERY_MERTER_DOWN);
 
         core.preload(core.SOUND_BATTLE);
         core.preload(core.SOUND_ATTACK_HIT);
