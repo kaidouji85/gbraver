@@ -11,13 +11,15 @@ function batteryMertor(spec,my){
     var BACK_WIDTH = backImage.width || 120;
 
     var batteryArray = [];
-    var batteryBack = new Sprite(BACK_WIDTH,HEIGHT);
+    var batteryBackArray = [];
     var value;
-    
-    batteryBack.image = backImage;
-    that.addChild(batteryBack);
-    
+
     for(var i=0; i<MAX_BATTERY; i++){
+        batteryBackArray[i] = new Sprite(WIDTH,HEIGHT);
+        batteryBackArray[i].image = backImage;
+        batteryBackArray[i].x = direction==='right' ? WIDTH*i : WIDTH*(MAX_BATTERY-1)-WIDTH*i;
+        that.addChild(batteryBackArray[i]);
+
         batteryArray[i] = new Sprite(WIDTH,HEIGHT);
         batteryArray[i].image = gaugeImage;
         batteryArray[i].x = direction==='right' ? WIDTH*i : WIDTH*(MAX_BATTERY-1)-WIDTH*i;

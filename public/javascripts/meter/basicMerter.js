@@ -103,17 +103,13 @@ function basicMerter(spec,my) {
             backImage : core.assets[core.PICT_BATTERY_MERTER_DOWN],
             direction : userId===uid ? 'right' : 'left'
         });
-        
+
         merter.x = userId===uid ?
         (WIDTH+core.assets[core.PICT_BASIC_MERTER_BASE].width)/2 :
          (WIDTH-core.assets[core.PICT_BASIC_MERTER_BASE].width)/2
          - core.assets[core.PICT_BATTERY_MERTER_UP].width*MAX_BATTERY;
 
-        /*
-        merter.x =(WIDTH-core.assets[core.PICT_BASIC_MERTER_BASE].width)/2
-            - core.assets[core.PICT_BATTERY_MERTER_UP].width*MAX_BATTERY;
-            */
-        merter.setValue(5);
+        merter.setValue(3);
         merter.y = 32;
         return merter;
     }
