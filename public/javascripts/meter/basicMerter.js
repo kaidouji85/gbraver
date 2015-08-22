@@ -124,15 +124,13 @@ function basicMerter(spec,my) {
 
     //特殊ポイントメータ
     function SpecialMerter(uid) {
-        var merter = customBar({
-            barImage : core.assets[core.PICT_SPECIAL_MERTER_UP],
-            backImage : core.assets[core.PICT_SPECIAL_MERTER_DOWN],
-            direction : userId===uid ? 'right' : 'left'
+        var merter = specialMerter({
+            ability : statusArray[uid].ability,
+            isPlayer : userId===uid
         });
         merter.x = userId===uid ?
         (WIDTH+core.assets[core.PICT_BASIC_MERTER_BASE].width)/2 :
-        (WIDTH-core.assets[core.PICT_BASIC_MERTER_BASE].width)/2 ;
-        merter.setValue(core.assets[core.PICT_HP_MERTER_UP].width);
+        (WIDTH-core.assets[core.PICT_BASIC_MERTER_BASE].width)/2;
         merter.y = 48;
         return merter;
     }

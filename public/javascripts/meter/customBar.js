@@ -13,12 +13,12 @@ function customBar(spec,my){
 
     (function(){
         backBar.image = backImage;
-        backBar.x = (direction==='right' ? -1 : -maxValue-1);
+        backBar.x = getBarX(maxValue);
         backBar.scaleX = (direction==='right' ? 1 : -1);
         that.addChild(backBar);
 
         mainBar.image = barImage;
-        mainBar.x = (direction==='right' ? 0 : 0);
+        mainBar.x = 0;
         mainBar.scaleX = (direction==='right' ? 1 : -1);
         that.addChild(mainBar);
     })()
@@ -62,7 +62,11 @@ function customBar(spec,my){
             width = 0;
         }
         mainBar.width = width;
-        mainBar.x = (direction==='right' ? 0 : -width);
+        mainBar.x = getBarX(width);
+    }
+
+    function getBarX(width) {
+        return direction==='right' ? 0 : -width;
     }
 
     return that;
