@@ -52,6 +52,10 @@ function pictNumber(spec,my){
         }
     }
 
+    that.getVisible = function(){
+        return visible;
+    }
+
     function getNumberX(digits,i) {
         switch(CENTER_POS){
             case 'right':
