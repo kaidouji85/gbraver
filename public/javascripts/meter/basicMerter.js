@@ -21,31 +21,27 @@ function basicMerter(spec,my) {
         that.addChild(NumberBack(WIDTH-core.assets[core.PICT_MINI_NUMBER].width/10*4,32));
         that.addChild(NumberBack(WIDTH-core.assets[core.PICT_MINI_NUMBER].width/10*4,48));
 
-        that.hpMerterArray = {};
-        that.maxHpArray = {};
-        that.hpNumberArray = {};
-        that.activeBarArray={};
-        that.batteryMerterArray={};
-        that.specialMerterArray = {};
-        for(var uid in statusArray){
-            that.maxHpArray[uid] = statusArray[uid].hp;
+        that.maxHpArray = _.mapObject(statusArray,function(status){return status.hp});
+        that.hpMerterArray = createAndAddObjectArray(HpMerter);
+        that.hpNumberArray = createAndAddObjectArray(HpNumber);
+        that.activeBarArray = createAndAddObjectArray(ActiveBar);
+        that.batteryMerterArray = createAndAddObjectArray(BatteryMerter);
+        that.specialMerterArray = createAndAddObjectArray(SpecialMerter);
 
-            that.hpMerterArray[uid] = HpMerter(uid);
-            that.addChild(that.hpMerterArray[uid]);
-
-            that.hpNumberArray[uid] = HpNumber(uid);
-            that.addChild(that.hpNumberArray[uid]);
-
-            that.activeBarArray[uid] = ActiveBar(uid);
-            that.addChild(that.activeBarArray[uid]);
-
-            that.batteryMerterArray[uid] = BatteryMerter(uid);
-            that.addChild(that.batteryMerterArray[uid]);
-
-            that.specialMerterArray[uid] = SpecialMerter(uid);
-            that.addChild(that.specialMerterArray[uid]);
-        }
     })()
+
+    /**
+     * オブジェクト配列作成および生成したオブジェクトをシーンに登録する
+     *
+     * @param creator オブジェクト生成関数
+     */
+    function createAndAddObjectArray(creator) {
+        return _.mapObject(statusArray,function(status,uid){
+            var obj = creator(uid);
+            that.addChild(obj);
+            return obj;
+        });
+    }
 
     // ラベル
     function MerterLabel() {
