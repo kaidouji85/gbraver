@@ -102,7 +102,7 @@ function basicMerter(spec,my) {
         merter.x = userId===uid ?
         (WIDTH+core.assets[core.PICT_BASIC_MERTER_BASE].width)/2 :
         (WIDTH-core.assets[core.PICT_BASIC_MERTER_BASE].width)/2 ;
-        merter.setValue(core.assets[core.PICT_ACTIVE_MERTER_UP].width);
+        merter.setValue(0);
         merter.y = 16;
         return merter;
     }

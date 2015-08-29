@@ -65,9 +65,9 @@ function battleScene(spec,my){
         that.mesWindow.setVisible(false);
         attackUserId = data.atackUserId;
         for(var uid in data.statusArray) {
-            plusValue = (that.activeBarArray[uid].getMaxValue()*data.statusArray[uid].active/5000
-                - that.activeBarArray[uid].getValue())/turn;
-            that.activeBarArray[uid].plus(turn,plusValue);
+            plusValue = (that.merter.activeBarArray[uid].getMaxValue()*data.statusArray[uid].active/5000
+                - that.merter.activeBarArray[uid].getValue())/turn;
+            that.merter.activeBarArray[uid].plus(turn,plusValue);
         }
 
         that.tl.delay(turn).then(function(){
@@ -163,11 +163,11 @@ function battleScene(spec,my){
         that.batteryNumberArray[that.userId].visible = true;
         selectMaxBattery = getSelectMaxBattery();
         selectMinBattery = getSelectMinBattery();
-        that.batteryNumberArray[that.userId].frame = that.batteryMertorArray[that.userId].getValue()>0 ? 1 : 0;
+        that.batteryNumberArray[that.userId].frame = that.merter.batteryMerterArray[that.userId].getValue()>0 ? 1 : 0;
     }
     
     function getSelectMaxBattery(){
-        return that.batteryMertorArray[that.userId].getValue();;
+        return that.merter.batteryMerterArray[that.userId].getValue();;
     }
     
     function getSelectMinBattery(){
