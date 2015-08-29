@@ -122,46 +122,14 @@ function battleSceneBase(spec,my){
             }
         }
 
+        // 基本ゲージ
+        that.merter = basicMerter({
+            userId : that.userId,
+            statusArray : that.statusArray
+        });
+        that.addChild(that.merter);
+
         for(var uid in that.statusArray){
-            //ウインドウ
-            that.mertorWindowArray[uid] = gridWindow({
-                pict : core.assets[core.PICT_BLACK_WINDOW],
-                width : 10,
-                height : 5
-            });
-            that.mertorWindowArray[uid].x = uid===that.userId ? 160 : 0;
-            that.mertorWindowArray[uid].y = 0;
-            that.addChild(that.mertorWindowArray[uid]);
-
-            //HPメータ
-            that.hpMertorArray[uid] = hpMertor();
-            that.hpMertorArray[uid].y = 10;
-            that.hpMertorArray[uid].x = uid===that.userId ? 170 : 10;
-            that.hpMertorArray[uid].setValue(that.statusArray[uid].hp);
-            that.addChild(that.hpMertorArray[uid]);
-
-            //アクティブゲージ
-            that.activeBarArray[uid] = customBar({
-                barImage : core.assets[core.PICT_ACTIVE_BAR],
-                backImage : core.assets[core.PICT_ACTIVE_BAR_BACK],
-                maxValue : 120,
-                direction : uid===that.userId ? 'right' : 'left'
-            });
-            that.activeBarArray[uid].x = uid===that.userId ? 170 : 130;
-            that.activeBarArray[uid].y = 30;
-            that.addChild(that.activeBarArray[uid]);
-
-            //バッテリーメータ
-            that.batteryMertorArray[uid] = new batteryMertor({
-                gaugeImage : core.assets[core.PICT_BATTERY_GAUGE],
-                backImage : core.assets[core.PICT_BATTERY_BACK],
-                direction : uid===that.userId ? 'right' : 'left'
-            });
-            that.batteryMertorArray[uid].x = uid===that.userId ? 170 : 10;
-            that.batteryMertorArray[uid].y = 50;
-            that.batteryMertorArray[uid].setValue(5);
-            that.addChild(that.batteryMertorArray[uid]);
-
             //出したバッテリー
             that.batteryNumberArray[uid] = batteryNumber({
                 pict : core.assets[core.PICT_BATTERY_NUMBER]
@@ -345,19 +313,10 @@ function battleSceneBase(spec,my){
 
     that.refreshMertor = function(statusArray){
         for(var uid in statusArray){
-            that.hpMertorArray[uid].setValue(statusArray[uid].hp);
-            that.batteryMertorArray[uid].setValue(statusArray[uid].battery);
-            that.activeBarArray[uid].setValue(120*statusArray[uid].active/5000);
-
-            if(isVisibleSpecialPoint(that.statusArray[uid])) {
-                //TODO 現状で特殊ポイントを使うのはハイパーシールドだけなので、下限値は0で決め打ちにする
-                var sp = statusArray[uid].specialPoint >= 0 ? statusArray[uid].specialPoint : 0;
-                that.specialPointNumberArray[uid].setDamage(sp);
-
-                var value = sp / that.statusArray[uid].ability.value
-                    * that.specialPointBarArray[uid].getMaxValue();
-                that.specialPointBarArray[uid].setValue(value);
-            }
+            that.merter.setHp(uid,statusArray[uid].hp);
+            that.merter.batteryMerterArray[uid].setValue(statusArray[uid].battery);
+            that.merter.activeBarArray[uid].setValue(core.assets[core.PICT_ACTIVE_MERTER_UP].width
+                *statusArray[uid].active/5000);
         }
     }
 

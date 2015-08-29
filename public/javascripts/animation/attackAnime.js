@@ -13,9 +13,9 @@ function attackAnime(spec,my){
 
         battleScene.tl.then(function(){
             for(var uid in battleScene.statusArray){
-                var battery = battleScene.batteryMertorArray[uid].getValue();
+                var battery = battleScene.merter.batteryMerterArray[uid].getValue();
                 battery -= uid===attackUserId ? atackBattery : defenthBattery;
-                battleScene.batteryMertorArray[uid].setValue(battery);
+                battleScene.merter.batteryMerterArray[uid].setValue(battery);
                 battleScene.batteryNumberArray[uid].frame = uid===attackUserId ? atackBattery : defenthBattery;
                 battleScene.batteryNumberArray[uid].visible = true;
                 battleScene.batteryNumberArray[uid].playOpenBatteryAnime();
@@ -52,8 +52,7 @@ function attackAnime(spec,my){
                             battleScene.subDamageLabelArray[uid].frame = 2;
                         }
                     }
-                    battleScene.hpMertorArray[uid].setValue(damagedStatusArray[uid].hp);
-
+                    battleScene.merter.setHp(uid,damagedStatusArray[uid].hp);
                     break;
                 }
             }

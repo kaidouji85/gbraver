@@ -30,6 +30,13 @@ function basicMerter(spec,my) {
 
     })()
 
+    that.setHp = function(uid,hp) {
+        that.hpNumberArray[uid].setDamage(hp);
+
+        var width = core.assets[core.PICT_HP_MERTER_UP].width * hp / that.maxHpArray[uid];
+        that.hpMerterArray[uid].setValue(width);
+    }
+
     /**
      * オブジェクト配列作成および生成したオブジェクトをシーンに登録する
      *
