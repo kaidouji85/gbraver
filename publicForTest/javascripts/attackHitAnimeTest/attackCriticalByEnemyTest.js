@@ -68,11 +68,11 @@ function doTest(){
     }
 
     function assertAnimeEnd(){
-        var playerHp = testScene.hpMertorArray['test002@gmail.com'].getValue();
-        var playerBattery = testScene.batteryMertorArray['test002@gmail.com'].getValue();
+        var playerHp = testScene.merter.hpNumberArray['test002@gmail.com'].getValue();
+        var playerBattery = testScene.merter.batteryMerterArray['test002@gmail.com'].getValue();
         var playerFrame = testScene.charaSpriteArray['test002@gmail.com'].frame;
-        var enemyActive = testScene.activeBarArray['test001@gmail.com'].getValue();
-        var enemyBattery = testScene.batteryMertorArray['test001@gmail.com'].getValue();
+        var enemyActive = testScene.merter.activeBarArray['test001@gmail.com'].getValue();
+        var enemyBattery = testScene.merter.batteryMerterArray['test001@gmail.com'].getValue();
         var enemyFrame = testScene.charaSpriteArray['test001@gmail.com'].frame;
 
         assert.equal(playerHp,1100,'プレイヤーのHPが減っている');

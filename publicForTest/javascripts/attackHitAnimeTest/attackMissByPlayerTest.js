@@ -65,11 +65,11 @@ function doTest(){
     }
 
     function assertAnimeEnd(){
-        var playerActive = testScene.activeBarArray['test001@gmail.com'].getValue();
-        var playerBattery = testScene.batteryMertorArray['test001@gmail.com'].getValue();
+        var playerActive = testScene.merter.activeBarArray['test001@gmail.com'].getValue();
+        var playerBattery = testScene.merter.batteryMerterArray['test001@gmail.com'].getValue();
         var playerFrame = testScene.charaSpriteArray['test001@gmail.com'].frame;
-        var enemyHp = testScene.hpMertorArray['test002@gmail.com'].getValue();
-        var enemyBattery = testScene.batteryMertorArray['test002@gmail.com'].getValue();
+        var enemyHp = testScene.merter.hpNumberArray['test002@gmail.com'].getValue();
+        var enemyBattery = testScene.merter.batteryMerterArray['test002@gmail.com'].getValue();
         var enemyFrame = testScene.charaSpriteArray['test002@gmail.com'].frame;
 
         assert.equal(playerActive,0,"プレイヤーのアクティブゲージが0である");
