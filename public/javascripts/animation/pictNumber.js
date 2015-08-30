@@ -24,7 +24,8 @@ function pictNumber(spec,my){
         if(visible===false) {
             return;
         }
-        damage = p_damage;
+        damage = p_damage > 0 ? p_damage : 0 ;
+
 
         var damageStr = damage.toString();
         var digits = damageStr.length;

@@ -22,8 +22,6 @@ function battleSceneBase(spec,my){
     that.hitEffectArray = {};
     that.mertorWindowArray = {};
     that.armdozerAbilityCutInArray = {};
-    that.specialPointNumberArray = {};
-    that.specialPointBarArray = {};
 
     (function() {
         //背景(地面)
@@ -52,41 +50,6 @@ function battleSceneBase(spec,my){
             that.pilotIconArray[uid].x = uid===that.userId ? 240 : 0;
             that.pilotIconArray[uid].y = 80;
             that.addChild(that.pilotIconArray[uid]);
-
-            //特殊ポイント
-            that.specialPointNumberArray[uid] = pictNumber({
-                width : 16,
-                height : 16,
-                pict : core.assets[core.PICT_MINI_NUMBER]
-            });
-            that.specialPointNumberArray[uid].x = uid===that.userId ? 205 : 115;
-            that.specialPointNumberArray[uid].y = 80;
-            if(isVisibleSpecialPoint(that.statusArray[uid])){
-                //TODO 将来的にはアビリティに応じて初期値の取得場所をかえる
-                that.specialPointNumberArray[uid].setDamage(that.statusArray[uid].ability.value);
-            } else {
-                that.specialPointNumberArray[uid].setVisible(false);
-            }
-            that.addChild(that.specialPointNumberArray[uid]);
-
-            //特殊ポイントバー
-            that.specialPointBarArray[uid] = customBar({
-                barImage : core.assets[core.PICT_SPECIAL_BAR],
-                backImage : core.assets[core.PICT_SPECIAL_BAR_BACK],
-                maxValue : 80,
-                height : 8,
-                direction : uid===that.userId ? 'right' : 'left'
-            });
-            that.specialPointBarArray[uid].x = uid===that.userId ? 220 : 100;
-            that.specialPointBarArray[uid].y = 320;
-            if(isVisibleSpecialPoint(that.statusArray[uid])){
-                //TODO 将来的にはアビリティに応じて初期値の取得場所をかえる
-                that.specialPointBarArray[uid].setValue(80);
-            } else {
-                that.specialPointBarArray[uid].setVisible(false);
-            }
-
-            that.addChild(that.specialPointBarArray[uid]);
 
             //キャラクタースプライト
             var spec = {
@@ -317,11 +280,8 @@ function battleSceneBase(spec,my){
             that.merter.batteryMerterArray[uid].setValue(statusArray[uid].battery);
             that.merter.activeBarArray[uid].setValue(core.assets[core.PICT_ACTIVE_MERTER_UP].width
                 *statusArray[uid].active/5000);
+            that.merter.specialMerterArray[uid].setValue(statusArray[uid].specialPoint);
         }
-    }
-
-    function isVisibleSpecialPoint(status) {
-        return status.ability.type === 'hyperShield';
     }
 
     return that;

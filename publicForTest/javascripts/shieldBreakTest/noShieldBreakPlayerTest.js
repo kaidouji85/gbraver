@@ -24,12 +24,14 @@ function doTest(){
             'test001@gmail.com' : {
                 hp : 3200,
                 battery : 5,
-                active : 5000
+                active : 5000,
+                specialPoint: 0
             },
             'test005@gmail.com' : {
                 hp : 2100,
                 battery : 5,
-                active : 3000
+                active : 3000,
+                specialPoint: 1000
             }
         });
         testGame.pushScene(testScene);

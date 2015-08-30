@@ -53,6 +53,7 @@ function attackAnime(spec,my){
                         }
                     }
                     battleScene.merter.setHp(uid,damagedStatusArray[uid].hp);
+                    battleScene.merter.specialMerterArray[uid].setValue(damagedStatusArray[uid].specialPoint);
                     break;
                 }
             }

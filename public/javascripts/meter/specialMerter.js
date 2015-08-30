@@ -20,6 +20,13 @@ function specialMerter(spec,my) {
 
     that.getMaxValue = config.getMaxValue;
 
+    that.setValue = function(value) {
+        that.number.setDamage(value);
+
+        var width =  that.merterBar.getMaxValue() * value / config.getMaxValue();
+        that.merterBar.setValue(width);
+    }
+
     //特殊ポイントメータ
     function MerterBar() {
         var merter = customBar({

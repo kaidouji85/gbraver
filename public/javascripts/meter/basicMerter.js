@@ -27,7 +27,6 @@ function basicMerter(spec,my) {
         that.activeBarArray = createAndAddObjectArray(ActiveBar);
         that.batteryMerterArray = createAndAddObjectArray(BatteryMerter);
         that.specialMerterArray = createAndAddObjectArray(SpecialMerter);
-
     })()
 
     that.setHp = function(uid,hp) {
