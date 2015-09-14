@@ -2,7 +2,7 @@
 =======
 
 ## はじめに
-機動倶楽部Gブレイバーとは、竹内佑介が趣味で作成している通信対戦ゲームです。
+機動倶楽部Gブレイバーとは、kaidouji85が趣味で作成している通信対戦ゲームです。
 node.js、socket.io、enchant.jsがあれば簡単に出来るだろうという軽いノリで作りました。
 
 
@@ -17,6 +17,8 @@ node.js、socket.io、enchant.jsがあれば簡単に出来るだろうという
 |:----------|:-----|:-----|:-----------|
 | GOOGLE_CLIENT_ID | GoogleOAuth2.0のClient ID | ○ | - |
 | GOOGLE_CLIENT_SECRET | GoogleOAuth2.0のGOOGLE CLIENT SECRET | ○ | - |
+| TWITTER_CONSUMER_KEY | Twitter Oauth認証用のconsume key | ○ | - |
+| TWITTER_CONSUMER_SECRET | Twitter Oauth認証用のconsumer secret | ○ | - |
 | PORT | 起動するポート番号 |  | 3000 |
 | BASE_URL | OAuth2.0のリダイレクト先のベースURL |  | localhost |
 | CONTENT_BASE_URL | 静的コンテンツの配置先URL |  | BASE_URLの値 |
@@ -55,6 +57,8 @@ githubからプロジェクトをダウントードします。
 (3)依存ライブラリのインストール  
 プロジェクトフォルダのルートに移動して、以下コマンドで依存ライブラリをインストールします。  
 
+    npm install -g mocha
+    npm install -g grunt-cli
     npm install
 
 
@@ -85,9 +89,6 @@ startup.shの場所はshell配下に置いて下さい。
 
 
 ### ローカルでのテスト実行方法
-テストフレームワークのmochaをnpmからインストールしておいてください。
-
-    npm install mocha -g
 
 テストの実行コマンドは以下の通りです。
 ####ユニットテスト
@@ -122,10 +123,12 @@ herokuに環境変数を登録します。ここでは環境変数登録バッ�
     #!/bin/sh
 
     herokuAppName="herokuアプリ名"
-    heroku config:add BASE_URL="herokuアプリのURL" --app $herokuAppName
-    heroku config:add GOOGLE_CLIENT_ID="GoogleOAuth2.0のClient ID" --app $herokuAppName
-    heroku config:add GOOGLE_CLIENT_SECRET="GoogleOAuth2.0のGOOGLE CLIENT SECRET" --app $herokuAppName
-    heroku config:add CONTENT_BASE_URL="静的コンテンツのベースURL" --app $herokuAppName
+    heroku config:set BASE_URL="herokuアプリのURL" --app $herokuAppName
+    heroku config:set GOOGLE_CLIENT_ID="GoogleOAuth2.0のClient ID" --app $herokuAppName
+    heroku config:set GOOGLE_CLIENT_SECRET="GoogleOAuth2.0のGOOGLE CLIENT SECRET" --app $herokuAppName
+    heroku config:set TWITTER_CONSUMER_KEY="Twitter Oauth認証用のconsume key" --app $herokuAppName
+    heroku config:set TWITTER_CONSUMER_SECRET="Twitter Oauth認証用のconsumer secret" --app $herokuAppName  
+    heroku config:set CONTENT_BASE_URL="静的コンテンツのベースURL" --app $herokuAppName
 
 (4)herokuへデプロイ  
 以下コマンドでherokuにデプロイします。
@@ -141,11 +144,8 @@ herokuに環境変数を登録します。ここでは環境変数登録バッ�
 [キャラクターなんとか機(女の子グラフィック)](http://khmix.sakura.ne.jp/download.shtml)
 
 
-## ゲームのプレイ動画
-<https://www.youtube.com/watch?v=v1XIxE8y85k>
-
-
 ## その他
+進捗状況をニコニコ動画で配信してます <http://www.nicovideo.jp/mylist/52628047>
 中の人のブログです。 毎日プログラム  <http://blog.livedoor.jp/kaidouji85/>    
 安定版 <http://gbraver.herokuapp.com/>  
 β版 <http://gbraver-beta.herokuapp.com/>
