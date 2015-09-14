@@ -259,13 +259,13 @@ db.pilots.insert({
     pict : 'kyoko.png',
     pictTopMargin : 0,
     pictLeftMargin : 64,
-    shout : '10年早いわ・・・・・・、なんてね',
+    shout : '10年早いぜ、なんてね',
     type : 'quickCharge',
     battery : 3,
-    hp : 200,
-    power : 50,
-    defense : 50,
-    speed : 20
+    hp : 300,
+    power : 200,
+    defense : 200,
+    speed : 15
 });
 
 db.pilots.insert({
@@ -276,10 +276,10 @@ db.pilots.insert({
     pictLeftMargin : 64,
     shout : 'まぁ、当然の結果ね',
     type : 'recoverHp',
-    value : 0.2,
-    hp : 400,
-    power : 50,
-    defense : 50,
+    value : 0.25,
+    hp : 500,
+    power : 100,
+    defense : 300,
     speed : 10
 });
 
@@ -292,10 +292,10 @@ db.pilots.insert({
     shout: '・・・・・・勝った',
     type: 'guardBreak',
     value : 300,
-    hp : 200,
-    power : 100,
-    defense : 50,
-    speed : 10
+    hp : 100,
+    power : 600,
+    defense : 100,
+    speed : 25
 });
 
 db.pilots.insert({
@@ -304,13 +304,13 @@ db.pilots.insert({
     pict: 'akira.png',
     pictTopMargin : 32,
     pictLeftMargin : 64,
-    shout: 'やった、僕の勝ちだ',
+    shout: '僕の勝ちだね',
     type: 'superGuard',
     value : 0.5,
-    hp : 200,
-    power : 50,
-    defense : 100,
-    speed : 10
+    hp : 400,
+    power : 400,
+    defense : 400,
+    speed : 20
 });
 
 db.stages.remove({});

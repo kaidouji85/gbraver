@@ -61,7 +61,7 @@ githubからプロジェクトをダウントードします。
 (4)データベースの初期化  
 以下コマンドで、データベースを初期化します。  
 
-    mongodb mongo ホスト名/gbraver dbShell/createDB.js
+    mongo ホスト名/gbraver dbShell/createDB.js
 
 (5)startup.shの作成
 node.jsの起動と同時に環境変数を設定するように、startup.shを作成します。
