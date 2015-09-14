@@ -58,7 +58,7 @@ githubからプロジェクトをダウントードします。
 プロジェクトフォルダのルートに移動して、以下コマンドで依存ライブラリをインストールします。  
 
     npm install -g mocha
-    npm install -g grunt
+    npm install -g grunt-cli
     npm install
 
 
