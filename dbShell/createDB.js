@@ -262,10 +262,10 @@ db.pilots.insert({
     shout : '10年早いぜ、なんてね',
     type : 'quickCharge',
     battery : 3,
-    hp : 300,
+    hp : 200,
     power : 200,
     defense : 200,
-    speed : 15
+    speed : 20
 });
 
 db.pilots.insert({
@@ -277,10 +277,10 @@ db.pilots.insert({
     shout : 'まぁ、当然の結果ね',
     type : 'recoverHp',
     value : 0.25,
-    hp : 500,
+    hp : 400,
     power : 100,
     defense : 300,
-    speed : 10
+    speed : 15
 });
 
 db.pilots.insert({
@@ -291,11 +291,11 @@ db.pilots.insert({
     pictLeftMargin : 64,
     shout: '・・・・・・勝った',
     type: 'guardBreak',
-    value : 300,
-    hp : 100,
-    power : 600,
-    defense : 100,
-    speed : 25
+    value : 200,
+    hp : 0,
+    power : 400,
+    defense : 0,
+    speed : 30
 });
 
 db.pilots.insert({
@@ -307,10 +307,10 @@ db.pilots.insert({
     shout: '僕の勝ちだね',
     type: 'superGuard',
     value : 0.5,
-    hp : 400,
-    power : 400,
-    defense : 400,
-    speed : 20
+    hp : 300,
+    power : 300,
+    defense : 300,
+    speed : 25
 });
 
 db.stages.remove({});
