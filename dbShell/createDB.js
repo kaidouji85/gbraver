@@ -43,7 +43,7 @@ db.armdozers.insert({
     pictName : 'Landozer.PNG',
     hp : 3300,
     defense : 600,
-    speed : 95,
+    speed : 90,
     weapons : {
         1 : {
             name : 'ブレイクパンチ',
@@ -68,7 +68,7 @@ db.armdozers.insert({
     },
     ability: {
         type: 'boostPower',
-        power : 300,
+        power : 200,
         threshold : 0.4
     }
 });
@@ -105,7 +105,7 @@ db.armdozers.insert({
     ability: {
         type : 'boostActive',
         active : 0.6,
-        threshold : 0.2
+        threshold : 0.4
     }
 });
 
@@ -279,8 +279,8 @@ db.pilots.insert({
     value : 0.25,
     hp : 400,
     power : 100,
-    defense : 300,
-    speed : 15
+    defense : 100,
+    speed : 10
 });
 
 db.pilots.insert({
