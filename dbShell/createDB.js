@@ -276,7 +276,7 @@ db.pilots.insert({
     pictLeftMargin : 64,
     shout : 'まぁ、当然の結果ね',
     type : 'recoverHp',
-    value : 0.25,
+    value : 0.40,
     hp : 400,
     power : 100,
     defense : 100,
