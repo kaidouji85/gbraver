@@ -30,7 +30,8 @@
     "passport": "0.2.0",
     "passport-google-oauth": "0.1.5",
     "passport-twitter": "^1.0.3",
-    "socket.io": "^1.0.4"
+    "socket.io": "^1.0.4",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "chai": "1.9.0",

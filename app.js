@@ -47,6 +47,7 @@ app.use(passport.session());
 if ('development' == app.get('env')) {
     app.use(errorhandler());
     app.use(express.static(path.join(__dirname, 'publicForTest')));
+    app.use(express.static(path.join(__dirname, 'buildForTest')));
 }
 
 //DB

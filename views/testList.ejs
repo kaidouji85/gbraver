@@ -10,7 +10,7 @@
 <h1><%= title %></h1>
 
 <% for(var i=0; i<testList.length; i++) {%>
-<a href="testClient?code=<%= testList[i].slice(13) %>" target="_blank">
+<a href="testClient?code=<%= urlList[i] %>" target="_blank">
     <%= testList[i] %>
 </a><br>
 <% } %>
