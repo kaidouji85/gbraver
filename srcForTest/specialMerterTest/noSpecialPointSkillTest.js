@@ -1,3 +1,6 @@
+var specialMerter = require('../../src/meter/specialMerter');
+var testUtil = require('../testlib/testUtil');
+
 enchant();
 window.onload = doTest;
 
@@ -24,6 +27,6 @@ function doTest() {
     function assertOfMerter(){
         assert.equal(testMerter.getMaxValue(),0,'最大値が正しい');
         assert.equal(testMerter.number.getVisible(),false,'数字が表示されていない');
-        finishTest();
+        testUtil.finishTest();
     }
 }

@@ -1,4 +1,5 @@
 var testData = require('../testlib/testData');
+var testUtil = require('../testlib/testUtil');
 
 enchant();
 window.onload = doTest;
@@ -29,7 +30,7 @@ function doTest(){
             };
             Game.changeRoomSelectScene(roomInfo);
             //console.log('ルーム2で入室');
-            touch(Game.currentScene.enterRoomButtonArray[2]);
+            testUtil.touch(Game.currentScene.enterRoomButtonArray[2]);
             Game.onSendMessage(sendEnterRoomCoomand);
         };
     }
@@ -53,7 +54,7 @@ function doTest(){
 
     function pushLeaveRoomButton(){
         Game.onSendMessage(sendLeaveRoomCommand);
-        touch(Game.currentScene.leaveRoomButton);
+        testUtil.touch(Game.currentScene.leaveRoomButton);
     }
 
     function sendLeaveRoomCommand(message,data) {
@@ -96,6 +97,6 @@ function doTest(){
         assert.equal(Game.currentScene.enterRoomButtonArray[0].getVisible(),true,'ルーム4ボタンが表示される');
         assert.equal(Game.currentScene.refreshButton.getVisible(),true,'更新ボタンが表示される');
         assert.equal(Game.currentScene.prevButton.getVisible(),true,'戻るボタンが表示される');
-        finishTest();
+        testUtil.finishTest();
     }
 }

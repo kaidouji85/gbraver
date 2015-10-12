@@ -1,3 +1,5 @@
+var turnTimer = require('../../src/turnTimer/turnTimer');
+
 enchant();
 window.onload = doTest;
 
@@ -23,6 +25,6 @@ function doTest() {
     }
 
     function assertOfTimeOut(){
-        finishTest();
+        testUtil.finishTest();
     }
 }

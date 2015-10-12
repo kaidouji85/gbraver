@@ -1,4 +1,5 @@
 var testData = require('../testlib/testData');
+var testUtil = require('../testlib/testUtil');
 
 enchant();
 window.onload = doTest;
@@ -27,13 +28,13 @@ function doTest(){
 
     function pushPrevButton(){
         Game.onChangeScene(assertOfChangeScene);
-        touch(Game.currentScene.prevButton);
+        testUtil.touch(Game.currentScene.prevButton);
     }
 
     function assertOfChangeScene(scene){
         assert.equal(scene,'top','トップシーンに遷移する');
         assert.equal(Game.getArmdozerId(),'granBraver','選択画像が変わらない');
-        finishTest();
+        testUtil.finishTest();
     }
 
 }

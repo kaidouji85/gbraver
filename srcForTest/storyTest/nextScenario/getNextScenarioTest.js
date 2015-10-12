@@ -1,4 +1,6 @@
 var testData = require('../../testlib/testData');
+var testUtil = require('../../testlib/testUtil');
+var testScenarioData = require('../../testlib/testScenarioData');
 
 enchant();
 window.onload = doTest;
@@ -27,11 +29,11 @@ function doTest(){
 
     function pushNextButton(){
         Game.currentScene.onProceedStory(assertOfStory);
-        touch(Game.currentScene);
+        testUtil.touch(Game.currentScene);
     }
 
     function assertOfStory() {
         assert.equal(Game.getNextScenarioId(),'nextScenarioId','次のストーリーIDが正しく設定されている');
-        finishTest();
+        testUtil.finishTest();
     }
 }

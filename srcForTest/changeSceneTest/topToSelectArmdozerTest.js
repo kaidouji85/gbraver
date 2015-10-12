@@ -1,4 +1,5 @@
 var testData = require('../testlib/testData');
+var testUtil = require('../testlib/testUtil');
 
 enchant();
 window.onload = doTest;
@@ -27,11 +28,11 @@ function doTest(){
 
     function pushSelectArmdozerButton(){
         Game.onChangeScene(assertOfChangeScene);
-        touch(Game.currentScene.selectArmdozerButton);
+        testUtil.touch(Game.currentScene.selectArmdozerButton);
     }
 
     function assertOfChangeScene(scene) {
         assert.equal(scene,'selectArmdozer','パイロット選択シーンに遷移する');
-        finishTest();
+        testUtil.finishTest();
     }
 }

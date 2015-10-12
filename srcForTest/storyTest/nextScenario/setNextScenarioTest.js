@@ -1,3 +1,7 @@
+var storyScene = require('../../../src/scene/storyScene');
+var testUtil = require('../../testlib/testUtil');
+var testScenarioData = require('../../testlib/testScenarioData');
+
 enchant();
 window.onload = doTest;
 
@@ -18,12 +22,12 @@ function doTest(){
 
     function pushNextButton(){
         Game.currentScene.onChangeNextStory(assertOfStory);
-        touch(Game.currentScene);
+        testUtil.touch(Game.currentScene);
     }
 
     function assertOfStory(nextScenarioId) {
         assert.equal(Game.currentScene.getStoryIndex(),1,'ストーリーインデックスが正しい');
         assert.equal(nextScenarioId,testScenario[1].param,'ステージクリア後に遷移するシナリオIDが正しい');
-        finishTest();
+        testUtil.finishTest();
     }
 }

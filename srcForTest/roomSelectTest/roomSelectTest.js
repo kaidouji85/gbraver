@@ -1,3 +1,5 @@
+var testUtil = require('../testlib/testUtil');
+
 enchant();
 window.onload = doTest;
 
@@ -44,7 +46,7 @@ function doTest(){
 
     function enterRoom(){
         //ルーム2を押す
-        touch(Game.currentScene.enterRoomButtonArray[2]);
+        testUtil.touch(Game.currentScene.enterRoomButtonArray[2]);
         Game.onSendMessage(sendEnterRoomCommand);
     }
 
@@ -71,6 +73,6 @@ function doTest(){
         assert.equal(Game.currentScene.leaveRoomButton.getVisible(),true,'退出ボタンが表示されている');
         assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
         assert.equal(Game.currentScene.mesWindow.getText(),'プレイヤーの入室待ち','メッセージが正しい');
-        finishTest();
+        testUtil.finishTest();
     }
 }

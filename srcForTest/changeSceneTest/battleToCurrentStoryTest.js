@@ -1,4 +1,6 @@
 var testData = require('../testlib/testData');
+var testUtil = require('../testlib/testUtil');
+var testScenarioData = require('../testlib/testScenarioData');
 
 enchant();
 window.onload = doTest;
@@ -118,8 +120,8 @@ function doTest(){
     }
 
     function selectCommand(){
-        touch(Game.currentScene.plusIcon);
-        touch(Game.currentScene.okIcon);
+        testUtil.touch(Game.currentScene.plusIcon);
+        testUtil.touch(Game.currentScene.okIcon);
 
         Game.onSendMessage(function(message,data){
             //message,dataはplayerAtackTestで確認済み
@@ -200,12 +202,12 @@ function doTest(){
 
     function pushBattleEndIcon(){
         Game.onChangeScene(assertOfChangeScene);
-        touch(Game.currentScene.battleEndIcon);
+        testUtil.touch(Game.currentScene.battleEndIcon);
     }
 
     function assertOfChangeScene(scene){
         assert.equal(scene,'storyScene','ストーリー画面へ遷移する');
         assert.equal(Game.getScenarioId(),'activeLeftPilotTest','ストーリーIDが正しい');
-        finishTest();
+        testUtil.finishTest();
     }
 }

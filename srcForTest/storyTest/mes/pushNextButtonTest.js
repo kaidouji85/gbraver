@@ -1,3 +1,7 @@
+var storyScene = require('../../../src/scene/storyScene');
+var testUtil = require('../../testlib/testUtil');
+var testScenarioData = require('../../testlib/testScenarioData');
+
 enchant();
 window.onload = doTest;
 
@@ -18,12 +22,12 @@ function doTest(){
 
     function pushNextButton(){
         Game.currentScene.onProceedStory(assertOfStory);
-        touch(Game.currentScene);
+        testUtil.touch(Game.currentScene);
     }
 
     function assertOfStory() {
         assert.equal(Game.currentScene.getStoryIndex(),1,'ストーリーインデックスがそのまま');
         assert.equal(Game.currentScene.mesWindow.getText(),testScenario[1].param,'セリフが正しい');
-        finishTest();
+        testUtil.finishTest();
     }
 }

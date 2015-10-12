@@ -1,4 +1,6 @@
 var testData = require('../testlib/testData');
+var selectStageScene = require('../../src/scene/selectStageScene');
+var testUtil = require('../testlib/testUtil');
 
 enchant();
 window.onload = doTest;
@@ -21,7 +23,7 @@ function doTest() {
 
     function pushStageButton(){
         testScene.onPushStageButon(assertOfPushStageButton);
-        touch(testScene.stageButtonArray[1]);
+        testUtil.touch(testScene.stageButtonArray[1]);
     }
 
     function assertOfPushStageButton(enemyId,pilotId,routineId){
@@ -34,6 +36,6 @@ function doTest() {
         assert.equal(testScene.stageButtonArray[1].getVisible(),false,'ボタン1が非表示');
         assert.equal(testScene.stageButtonArray[2].getVisible(),false,'ボタン2が非表示');
         assert.equal(testScene.prevButton.getVisible(),false,'戻るボタンが非表示');
-        finishTest();
+        testUtil.finishTest();
     }
 }

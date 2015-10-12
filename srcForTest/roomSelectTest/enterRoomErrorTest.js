@@ -1,3 +1,5 @@
+var testUtil = require('../testlib/testUtil');
+
 enchant();
 window.onload = doTest;
 
@@ -29,7 +31,7 @@ function doTest(){
 
     function enterRoom(){
         //ルーム3を押す
-        touch(Game.currentScene.enterRoomButtonArray[3]);
+        testUtil.touch(Game.currentScene.enterRoomButtonArray[3]);
         Game.onSendMessage(sendEnterRoomCommand);
     }
 
@@ -59,7 +61,7 @@ function doTest(){
     }
 
     function pushOkButton(){
-        touch(Game.currentScene.okButton);
+        testUtil.touch(Game.currentScene.okButton);
         Game.currentScene.tl.delay(1).then(assertOfRedrawRoomList);
 
     }
@@ -75,6 +77,6 @@ function doTest(){
         assert.equal(Game.currentScene.refreshButton.getVisible(),true,'更新ボタンが表示される');
         assert.equal(Game.currentScene.prevButton.getVisible(),true,'戻るボタンが表示される');
 
-        finishTest();
+        testUtil.finishTest();
     }
 }

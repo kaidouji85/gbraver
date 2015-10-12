@@ -1,4 +1,5 @@
 var testData = require('../testlib/testData');
+var testUtil = require('../testlib/testUtil');
 
 enchant();
 window.onload = doTest;
@@ -26,7 +27,7 @@ function doTest(){
     }
 
     function pushStageButton(){
-        touch(Game.currentScene.stageButtonArray[1]);
+        testUtil.touch(Game.currentScene.stageButtonArray[1]);
         Game.onSendMessage(asertOfMessage);
     }
 

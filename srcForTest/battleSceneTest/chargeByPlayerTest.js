@@ -1,4 +1,5 @@
 var testData = require('../testlib/testData');
+var testUtil = require('../testlib/testUtil');
 
 enchant();
 window.onload = doTest;
@@ -93,7 +94,7 @@ function doTest() {
 
     function selectCommand() {
         assert.deepEqual(Game.currentScene.chargeIcon.getPict(),Game.assets[Game.PICT_BUTTON],'チャージボタンが通常の色である')
-        touch(Game.currentScene.chargeIcon);
+        testUtil.touch(Game.currentScene.chargeIcon);
         Game.onSendMessage(sendCommandForAttackCommandPhase);
     }
     

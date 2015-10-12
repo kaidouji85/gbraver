@@ -1,4 +1,5 @@
 var testData = require('../testlib/testData');
+var testUtil = require('../testlib/testUtil');
 
 enchant();
 window.onload = doTest;
@@ -68,6 +69,6 @@ function doTest(){
 
     function assertOfChangeScene(scene){
         assert.equal(scene,'top','トップシーンに繊維する');
-        finishTest();
+        testUtil.finishTest();
     }
 }

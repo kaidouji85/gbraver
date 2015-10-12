@@ -1,4 +1,8 @@
 var testData = require('../testlib/testData');
+var gameBase = require('../../src/game/gameBase');
+var myTurnAnime = require('../../src/animation/myTurnAnime');
+var battleSceneBase = require('../../src/scene/battleSceneBase');
+var testUtil = require('../testlib/testUtil');
 
 enchant();
 window.onload = doTest;
@@ -48,6 +52,6 @@ function doTest(){
     }
 
     function assertAnimeEnd(){
-        finishTest();
+        testUtil.finishTest();
     }
 }

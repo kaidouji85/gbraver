@@ -1,3 +1,5 @@
+var testUtil = require('../testlib/testUtil');
+
 //TODO : リソースのロード時間を測定するテストページ
 //       JavaScriptのコンソールに測定結果が表示される
 //       現状ではパフォーマンステストを手動で実行している
@@ -12,7 +14,7 @@ function doTest(){
     testGame.start();
     testGame.onload = function(){
         console.log(getTime() + 'load end');
-        finishTest();
+        testUtil.finishTest();
     };
 }
 

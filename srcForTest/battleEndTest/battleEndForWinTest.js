@@ -1,4 +1,8 @@
 var testData = require('../testlib/testData');
+var gameBase = require('../../src/game/gameBase');
+var explosionAnime = require('../../src/animation/explosionAnime');
+var battleSceneBase = require('../../src/scene/battleSceneBase');
+var testUtil = require('../testlib/testUtil');
 
 enchant();
 window.onload = doTest;
@@ -53,6 +57,6 @@ function doTest(){
 
     function assertOfEndAnime(){
         assert.equal(testScene.winSprite.visible,true,'WINが表示される');
-        finishTest();
+        testUtil.finishTest();
     }
 }

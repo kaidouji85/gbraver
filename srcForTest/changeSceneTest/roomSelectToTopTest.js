@@ -1,4 +1,5 @@
 var testData = require('../testlib/testData');
+var testUtil = require('../testlib/testUtil');
 
 enchant();
 window.onload = doTest;
@@ -34,12 +35,12 @@ function doTest(){
 
     function pushChangeButton(){
         console.log('戻るボタンを押す');
-        touch(Game.currentScene.prevButton);
+        testUtil.touch(Game.currentScene.prevButton);
         Game.onChangeScene(assertOfChangeScene);
     }
 
     function assertOfChangeScene(scene){
         assert.equal(scene, 'top', 'トップ画面へ遷移する');
-        finishTest();
+        testUtil.finishTest();
     }
 }

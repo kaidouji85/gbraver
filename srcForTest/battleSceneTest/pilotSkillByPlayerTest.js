@@ -1,4 +1,5 @@
 var testData = require('../testlib/testData');
+var testUtil = require('../testlib/testUtil');
 
 enchant();
 window.onload = doTest;
@@ -86,7 +87,7 @@ function doTest(){
 
 
     function selectCommand(){
-        touch(Game.currentScene.skillIcon);
+        testUtil.touch(Game.currentScene.skillIcon);
         Game.onSendMessage(sendCommandForAttackCommand);
     }
 
@@ -160,7 +161,7 @@ function doTest(){
 
     function assertOfAttackCommand2(){
         assert.equal(Game.currentScene.skillIcon.getVisible(),false,'スキルアイコンが表示されない');
-        finishTest();
+        testUtil.finishTest();
     }
 
 }

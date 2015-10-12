@@ -1,3 +1,7 @@
+var storyScene = require('../../../src/scene/storyScene');
+var testUtil = require('../../testlib/testUtil');
+var testScenarioData = require('../../testlib/testScenarioData');
+
 enchant();
 window.onload = doTest;
 
@@ -18,7 +22,7 @@ function doTest(){
 
     function pushNextButton(){
         Game.currentScene.onEndStory(assertEndOfStory);
-        touch(Game.currentScene);
+        testUtil.touch(Game.currentScene);
 
     }
 
@@ -27,6 +31,6 @@ function doTest(){
         assert.equal(battle.enemyId, 'landozer', 'アームドーザIDが正しい');
         assert.equal(battle.pilotId, 'akane', 'パイロットIが正しい');
         assert.equal(battle.routineId,'attack3','ルーチンが正しい');
-        finishTest();
+        testUtil.finishTest();
     }
 }

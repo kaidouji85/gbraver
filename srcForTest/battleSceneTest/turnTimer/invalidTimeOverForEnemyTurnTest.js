@@ -1,4 +1,5 @@
 var testData = require('../../testlib/testData');
+var testUtil = require('../../testlib/testUtil');
 
 enchant();
 window.onload = doTest;
@@ -107,7 +108,7 @@ function doTest(){
 
     function selectCommnad(){
         Game.onSendMessage(sendCommandForDefenseCommand);
-        touch(Game.currentScene.okIcon);
+        testUtil.touch(Game.currentScene.okIcon);
     }
 
     function sendCommandForDefenseCommand(){
@@ -117,7 +118,7 @@ function doTest(){
         });
         //3秒待つ
         Game.currentScene.tl.delay(120).then(function(){
-            finishTest();
+            testUtil.finishTest();
         });
     }
 

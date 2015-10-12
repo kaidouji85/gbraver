@@ -1,4 +1,6 @@
 var testData = require('../testlib/testData');
+var testUtil = require('../testlib/testUtil');
+var testScenarioData = require('../testlib/testScenarioData');
 
 enchant();
 window.onload = doTest;
@@ -32,8 +34,8 @@ function doTest(){
 
     function pushNextButton(){
         Game.onSendMessage(assertOfMessaage);
-        touch(Game.currentScene);
-        touch(Game.currentScene);
+        testUtil.touch(Game.currentScene);
+        testUtil.touch(Game.currentScene);
     }
 
     function assertOfMessaage(message,data){

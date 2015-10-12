@@ -1,4 +1,5 @@
 var testData = require('../testlib/testData');
+var testUtil = require('../testlib/testUtil');
 
 //シングルプレイの場合、バトル終了後はルーム選択画面に遷移する
 enchant();
@@ -114,8 +115,8 @@ function doTest(){
     }
 
     function selectCommand(){
-        touch(Game.currentScene.plusIcon);
-        touch(Game.currentScene.okIcon);
+        testUtil.touch(Game.currentScene.plusIcon);
+        testUtil.touch(Game.currentScene.okIcon);
 
         Game.onSendMessage(function(message,data){
             //message,dataはplayerAtackTestで確認済み
@@ -196,11 +197,11 @@ function doTest(){
 
     function pushBattleEndIcon(){
         Game.onChangeScene(assertOfChangeScene);
-        touch(Game.currentScene.battleEndIcon);
+        testUtil.touch(Game.currentScene.battleEndIcon);
     }
 
     function assertOfChangeScene(scene){
         assert.equal(scene,'selectStage','ルーム選択画面へ遷移する');
-        finishTest();
+        testUtil.finishTest();
     }
 }

@@ -1,3 +1,5 @@
+var testUtil = require('../testlib/testUtil');
+
 enchant();
 window.onload = doTest;
 
@@ -27,7 +29,7 @@ function doTest(){
     }
 
     function pushRegreshButton(){
-        touch(Game.currentScene.refreshButton);
+        testUtil.touch(Game.currentScene.refreshButton);
         Game.onSendMessage(sendGetRoomInfo);
     }
 
@@ -60,6 +62,6 @@ function doTest(){
         assert.equal(Game.currentScene.enterRoomButtonArray[0].getVisible(),true,'ルーム4ボタンが表示される');
         assert.equal(Game.currentScene.refreshButton.getVisible(),true,'更新ボタンが表示される');
         assert.equal(Game.currentScene.prevButton.getVisible(),true,'戻るボタンが表示される');
-        finishTest();
+        testUtil.finishTest();
     }
 }

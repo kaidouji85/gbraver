@@ -1,4 +1,6 @@
 var testData = require('../testlib/testData');
+var selectPilotScene = require('../../src/scene/selectPilotScene');
+var testUtil = require('../testlib/testUtil');
 
 enchant();
 window.onload = doTest;
@@ -21,7 +23,7 @@ function doTest(){
     };
 
     function pushKyokoButton(){
-        touch(Game.currentScene.pilotButtonArray[0]);
+        testUtil.touch(Game.currentScene.pilotButtonArray[0]);
         Game.currentScene.tl.delay(30).then(finishTest);
     }
 

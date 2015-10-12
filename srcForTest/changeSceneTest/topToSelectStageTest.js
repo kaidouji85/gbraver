@@ -1,4 +1,5 @@
 var testData = require('../testlib/testData');
+var testUtil = require('../testlib/testUtil');
 
 enchant();
 window.onload = doTest;
@@ -26,12 +27,12 @@ function doTest(){
     }
 
     function pushSelectStageButton(){
-        touch(Game.currentScene.selectStageButton);
+        testUtil.touch(Game.currentScene.selectStageButton);
         Game.onChangeScene(assertOfChangeScene);
     }
 
     function assertOfChangeScene(scene){
         assert.equal(scene,'selectStage','ステージ選択画面へ遷移する');
-        finishTest();
+        testUtil.finishTest();
     }
 }

@@ -1,4 +1,5 @@
 var testData = require('../testlib/testData');
+var testUtil = require('../testlib/testUtil');
 
 enchant();
 window.onload = doTest;
@@ -29,7 +30,7 @@ function doTest(){
             };
             Game.changeRoomSelectScene(roomInfo);
             //console.log('ルーム2で入室');
-            touch(Game.currentScene.enterRoomButtonArray[2]);
+            testUtil.touch(Game.currentScene.enterRoomButtonArray[2]);
             Game.onSendMessage(assertSendMessage);
         };
     }
@@ -77,6 +78,6 @@ function doTest(){
         };
         assert.equal(message, 'command', 'サーバレスポンスメッセージが正しい');
         assert.deepEqual(data, expectData, 'メッセージオプションが正しい');
-        finishTest();
+        testUtil.finishTest();
     }
 }

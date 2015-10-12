@@ -1,4 +1,6 @@
 var testData = require('../testlib/testData');
+var basicMerter = require('../../src/meter/basicMerter');
+var testUtil = require('../testlib/testUtil');
 
 enchant();
 window.onload = doTest;
@@ -29,6 +31,6 @@ function doTest() {
         assert.equal(testMerter.hpNumberArray['test001@gmail.com'].getValue(),3200,'Hが正しい');
         assert.equal(testMerter.maxHpArray['test002@gmail.com'],4700,'最大HPが正しい');
         assert.equal(testMerter.hpNumberArray['test002@gmail.com'].getValue(),4700,'Hが正しい');
-        finishTest();
+        testUtil.finishTest();
     }
 }

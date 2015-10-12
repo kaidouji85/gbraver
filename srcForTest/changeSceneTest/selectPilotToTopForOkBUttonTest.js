@@ -1,4 +1,5 @@
 var testData = require('../testlib/testData');
+var testUtil = require('../testlib/testUtil');
 
 enchant();
 window.onload = doTest;
@@ -26,13 +27,13 @@ function doTest(){
     }
 
     function pushIoriButton(){
-        touch(Game.currentScene.pilotButtonArray[2]);
+        testUtil.touch(Game.currentScene.pilotButtonArray[2]);
         Game.currentScene.tl.delay(30).then(pushOkButton);
     }
 
     function pushOkButton(){
         Game.onSendMessage(assertOfSendMessage)
-        touch(Game.currentScene.okButton);
+        testUtil.touch(Game.currentScene.okButton);
     }
 
     function assertOfSendMessage(message,data){
@@ -53,7 +54,7 @@ function doTest(){
         assert.equal(scene,'top','トップシーンに遷移する');
         assert.equal(Game.getPilotId(),'iori','パイロット画像名が正しい');
         assert.equal(Game.getScenarioId(),'ioriStart','シナリオ名が正しい');
-        finishTest();
+        testUtil.finishTest();
     }
 
 }

@@ -1,4 +1,6 @@
 var testData = require('../testlib/testData');
+var selectPilotScene = require('../../src/scene/selectPilotScene');
+var testUtil = require('../testlib/testUtil');
 
 enchant();
 window.onload = doTest;
@@ -21,10 +23,10 @@ function doTest(){
 
     function pushPrevButton(){
         testScene.onPushPrevButton(assertOfPushPrevButton)
-        touch(testScene.prevButton);
+        testUtil.touch(testScene.prevButton);
     }
 
     function assertOfPushPrevButton(){
-        finishTest();
+        testUtil.finishTest();
     }
 }

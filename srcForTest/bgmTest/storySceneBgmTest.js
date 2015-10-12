@@ -1,3 +1,7 @@
+var storyScene = require('../../src/scene/storyScene');
+var testUtil = require('../testlib/testUtil');
+var testScenarioData = require('../testlib/testScenarioData');
+
 enchant();
 window.onload = doTest;
 
@@ -18,6 +22,6 @@ function doTest(){
 
     function assertOfBgm(){
         assert.equal(Game.bgm.getBgm(),null,'BGなしに設定されている');
-        finishTest();
+        testUtil.finishTest();
     }
 }

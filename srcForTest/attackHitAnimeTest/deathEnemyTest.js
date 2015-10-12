@@ -1,4 +1,8 @@
 var testData = require('../testlib/testData');
+var gameBase = require('../../src/game/gameBase');
+var attackAnime = require('../../src/animation/attackAnime');
+var battleSceneBase = require('../../src/scene/battleSceneBase');
+var testUtil = require('../testlib/testUtil');
 
 enchant();
 window.onload = function(){
@@ -67,6 +71,6 @@ window.onload = function(){
     function assertAnimeEnd(){
         var playerFrame = testScene.charaSpriteArray['test002@gmail.com'].frame;
         assert.equal(playerFrame,testGame.FRAME_DAMAGE,"HPが0なのでプレイヤーのモーションが「ダメージ」である");
-        finishTest();
+        testUtil.finishTest();
     }
 }

@@ -1,4 +1,6 @@
 var testData = require('../testlib/testData');
+var specialMerter = require('../../src/meter/specialMerter');
+var testUtil = require('../testlib/testUtil');
 
 enchant();
 window.onload = doTest;
@@ -25,6 +27,6 @@ function doTest() {
     }
 
     function assertOfMerter(){
-        finishTest();
+        testUtil.finishTest();
     }
 }

@@ -1,4 +1,8 @@
 var testData = require('../testlib/testData');
+var gameBase = require('../../src/game/gameBase');
+var attackAnime = require('../../src/animation/attackAnime');
+var battleSceneBase = require('../../src/scene/battleSceneBase');
+var testUtil = require('../testlib/testUtil');
 
 enchant();
 window.onload = doTest;
@@ -74,6 +78,6 @@ function doTest(){
         var pict = testGame.currentScene.charaSpriteArray['test005@gmail.com'].image;
         assert.deepEqual(pict,testGame.assets[testGame.PICT_PREFIX+'GuardiasBreak.png'],
             'ガーディアスの画像がアーマーブレイク状態である');
-        finishTest();
+        testUtil.finishTest();
     }
 }

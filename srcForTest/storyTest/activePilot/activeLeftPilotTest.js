@@ -1,4 +1,7 @@
 var testData = require('../../testlib/testData');
+var storyScene = require('../../../src/scene/storyScene');
+var testUtil = require('../../testlib/testUtil');
+var testScenarioData = require('../../testlib/testScenarioData');
 
 enchant();
 window.onload = doTest;
@@ -24,6 +27,6 @@ function doTest(){
         assert.equal(Game.currentScene.pilotSpriteArray['right'].opacity,0.5,'右側パイロットスプライトが半透明になる');
         assert.equal(Game.currentScene.pilotSpriteArray['left'].opacity,1,'左側パイロットスプライトが表示されている');
         assert.equal(Game.currentScene.getStoryIndex(),3,'ストーリーインデックスが次に進む');
-        finishTest();
+        testUtil.finishTest();
     }
 }

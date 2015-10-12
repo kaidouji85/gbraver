@@ -1,4 +1,5 @@
 var testData = require('../testlib/testData');
+var testUtil = require('../testlib/testUtil');
 
 enchant();
 window.onload = doTest;
@@ -26,7 +27,7 @@ function doTest(){
     }
 
     function pushLogOffButton(){
-        touch(Game.currentScene.logOffButton);
+        testUtil.touch(Game.currentScene.logOffButton);
         Game.onLogOff(assertOfLogOff);
     }
 
@@ -38,6 +39,6 @@ function doTest(){
         assert.equal(Game.currentScene.selectPilotButton.getVisible(),false,'パイロット選択ボタンが表示されない');
         assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
         assert.equal(Game.currentScene.mesWindow.getText(),'ログオフ中','メッセージが正しい');
-        finishTest();
+        testUtil.finishTest();
     }
 }

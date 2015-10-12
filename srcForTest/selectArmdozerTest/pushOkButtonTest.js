@@ -1,4 +1,6 @@
 var testData = require('../testlib/testData');
+var selectArmdozerScene = require('../../src/scene/selectArmdozerScene');
+var testUtil = require('../testlib/testUtil');
 
 enchant();
 window.onload = doTest;
@@ -20,12 +22,12 @@ function doTest(){
     };
 
     function pushArmdozerButton(){
-        touch(Game.currentScene.armdozerButtonArray[1]);
+        testUtil.touch(Game.currentScene.armdozerButtonArray[1]);
         Game.currentScene.tl.delay(30).then(pushOkButton);
     }
 
     function pushOkButton(){
-        touch(Game.currentScene.okButton);
+        testUtil.touch(Game.currentScene.okButton);
         Game.currentScene.onPushOkButton(assertOfPushArmdozerButton);
 
     }
@@ -44,7 +46,7 @@ function doTest(){
         assert.equal(Game.currentScene.armdozerButtonArray[2].getVisible(),false,'アームドーザボタン2が非表示');
         assert.equal(Game.currentScene.okButton.getVisible(),false,'決定ボタンが非表示');
         assert.equal(Game.currentScene.prevButton.getVisible(),false,'戻るボタンが非表示');
-        finishTest();
+        testUtil.finishTest();
     }
 
 }

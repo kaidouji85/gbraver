@@ -1,4 +1,4 @@
-function testScenarioData(spec,my){
+module.exports = function(spec,my){
     var that = {};
     var scenarioData = [];
 

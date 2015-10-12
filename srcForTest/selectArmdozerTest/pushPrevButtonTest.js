@@ -1,4 +1,6 @@
 var testData = require('../testlib/testData');
+var selectArmdozerScene = require('../../src/scene/selectArmdozerScene');
+var testUtil = require('../testlib/testUtil');
 
 enchant();
 window.onload = doTest;
@@ -20,7 +22,7 @@ function doTest(){
     };
 
     function pushOkButton(){
-        touch(Game.currentScene.prevButton);
+        testUtil.touch(Game.currentScene.prevButton);
         Game.currentScene.onPushPrevButton(finishTest);
     }
 

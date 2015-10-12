@@ -1,4 +1,5 @@
 var testData = require('../testlib/testData');
+var testUtil = require('../testlib/testUtil');
 
 enchant();
 window.onload = doTest;
@@ -27,7 +28,7 @@ function doTest(){
     
     function pushBattleRoomButton(){
         //console.log('対戦ルーム入室ボタンを押す');
-        touch(Game.currentScene.battleRoomButton);
+        testUtil.touch(Game.currentScene.battleRoomButton);
         Game.onSendMessage(sendGetRoomInfo);
     }
 
@@ -59,6 +60,6 @@ function doTest(){
 
     function assertOfChangeScene(scene){
         assert.equal(scene,'selectRoom','ルーム選択画面へ遷移する');
-        finishTest();
+        testUtil.finishTest();
     }
 }

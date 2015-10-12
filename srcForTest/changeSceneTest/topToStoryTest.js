@@ -1,4 +1,6 @@
 var testData = require('../testlib/testData');
+var testUtil = require('../testlib/testUtil');
+var testScenarioData = require('../testlib/testScenarioData');
 
 enchant();
 window.onload = doTest;
@@ -29,12 +31,12 @@ function doTest(){
 
     function pushStoryButton(){
         Game.onChangeScene(assertOfChangeScene);
-        touch(Game.currentScene.storyButton);
+        testUtil.touch(Game.currentScene.storyButton);
     }
 
     function assertOfChangeScene(scene){
         assert.equal(scene,'storyScene','ストーリーモードに遷移する');
         assert.equal(Game.getScenarioId(),'kyokoStart','シナリオIDが パイロット名+Start となっている ');
-        finishTest();
+        testUtil.finishTest();
     }
 }

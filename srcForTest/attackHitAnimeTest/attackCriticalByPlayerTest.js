@@ -1,4 +1,8 @@
 var testData = require('../testlib/testData');
+var gameBase = require('../../src/game/gameBase');
+var attackAnime = require('../../src/animation/attackAnime');
+var battleSceneBase = require('../../src/scene/battleSceneBase');
+var testUtil = require('../testlib/testUtil');
 
 enchant();
 window.onload = function(){
@@ -79,6 +83,6 @@ window.onload = function(){
         assert.equal(enemyBattery,5,"敵のバッテリーが正しい");
         assert.equal(enemyFrame,testGame.FRAME_STAND,"敵のモーションが「立ち」である");
 
-        finishTest();
+        testUtil.finishTest();
     }
 }

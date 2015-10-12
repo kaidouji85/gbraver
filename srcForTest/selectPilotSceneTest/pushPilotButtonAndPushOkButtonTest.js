@@ -1,4 +1,6 @@
 var testData = require('../testlib/testData');
+var selectPilotScene = require('../../src/scene/selectPilotScene');
+var testUtil = require('../testlib/testUtil');
 
 enchant();
 window.onload = doTest;
@@ -20,13 +22,13 @@ function doTest(){
     };
 
     function pushIoriButton(){
-        touch(Game.currentScene.pilotButtonArray[2]);
+        testUtil.touch(Game.currentScene.pilotButtonArray[2]);
         Game.currentScene.tl.delay(30).then(pushOkButton);
     }
 
     function pushOkButton(){
         Game.currentScene.onPushOkButton(assertOfPushOkButton);
-        touch(Game.currentScene.okButton);
+        testUtil.touch(Game.currentScene.okButton);
     }
 
     function assertOfPushOkButton(pilotId){
@@ -36,7 +38,7 @@ function doTest(){
         assert.equal(Game.currentScene.pilotButtonArray[0].getVisible(),false,'パイロットアイコン0が非表示');
         assert.equal(Game.currentScene.pilotButtonArray[1].getVisible(),false,'パイロットアイコン1が非表示');
         assert.equal(Game.currentScene.pilotButtonArray[2].getVisible(),false,'パイロットアイコン2が非表示');
-        finishTest();
+        testUtil.finishTest();
     }
 
 }

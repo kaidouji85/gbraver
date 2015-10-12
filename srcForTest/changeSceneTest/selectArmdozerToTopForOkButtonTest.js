@@ -1,4 +1,5 @@
 var testData = require('../testlib/testData');
+var testUtil = require('../testlib/testUtil');
 
 enchant();
 window.onload = doTest;
@@ -26,13 +27,13 @@ function doTest(){
     }
 
     function pushLandozerButton(){
-        touch(Game.currentScene.armdozerButtonArray[1]);
+        testUtil.touch(Game.currentScene.armdozerButtonArray[1]);
         Game.currentScene.tl.delay(30).then(pushOkButton);
     }
 
     function pushOkButton(){
         Game.onSendMessage(assertOfSendMessage)
-        touch(Game.currentScene.okButton);
+        testUtil.touch(Game.currentScene.okButton);
     }
 
     function assertOfSendMessage(message,data){
@@ -52,7 +53,7 @@ function doTest(){
     function assertOfChangeScene(scene){
         assert.equal(scene,'top','トップシーンに遷移する');
         assert.equal(Game.getArmdozerId(),'landozer','選択画像が変わる');
-        finishTest();
+        testUtil.finishTest();
     }
 
 }

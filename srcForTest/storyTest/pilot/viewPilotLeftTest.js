@@ -1,4 +1,7 @@
 var testData = require('../../testlib/testData');
+var storyScene = require('../../../src/scene/storyScene');
+var testUtil = require('../../testlib/testUtil');
+var testScenarioData = require('../../testlib/testScenarioData');
 
 enchant();
 window.onload = doTest;
@@ -23,6 +26,6 @@ function doTest(){
     function assertOfLeftPilot() {
         assert.equal(Game.currentScene.pilotSpriteArray['left'].visible,true,'左側パイロットスプライトが表示されている');
         assert.equal(Game.currentScene.getStoryIndex(),1,'ストーリーインデックスが次に進む');
-        finishTest();
+        testUtil.finishTest();
     }
 }

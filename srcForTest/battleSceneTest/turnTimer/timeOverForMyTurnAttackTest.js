@@ -1,4 +1,5 @@
 var testData = require('../../testlib/testData');
+var testUtil = require('../../testlib/testUtil');
 
 enchant();
 window.onload = doTest;
@@ -85,9 +86,9 @@ function doTest(){
 
     function selectCommand(){
         Game.onSendMessage(sendCommandForAttackCommand);
-        touch(Game.currentScene.atackIcon);
-        touch(Game.currentScene.plusIcon);
-        touch(Game.currentScene.plusIcon);
+        testUtil.touch(Game.currentScene.atackIcon);
+        testUtil.touch(Game.currentScene.plusIcon);
+        testUtil.touch(Game.currentScene.plusIcon);
     }
 
     function sendCommandForAttackCommand(message,data){
@@ -101,6 +102,6 @@ function doTest(){
         assert.deepEqual(data, expect, '攻撃コマンドフェイズのサーバ送信データが正しい');
         assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
         assert.equal(Game.currentScene.mesWindow.getText(),'対戦相手がコマンドを選択中......','メッセージが正しい');
-        finishTest();
+        testUtil.finishTest();
     }
 }
