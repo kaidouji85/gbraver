@@ -1,6 +1,6 @@
 var PORT = process.env.PORT || 3000;
 var BASE_URL = 'http://localhost:'+PORT;
-var PUBLIC_FOR_TEST_LENGTH = 13;
+var TEST_DIR = 'buildForTest';
 var assert = require('chai').assert;
 var webdriver = require('selenium-webdriver');
 var test = require('selenium-webdriver/testing');
@@ -27,10 +27,10 @@ test.describe('画面テスト', function() {
     globTestJs();
     function globTestJs(){
         var tg = testGlob();
-        var fileList = tg.glob('publicForTest/javascripts');
+        var fileList = tg.glob(TEST_DIR+'/javascripts');
         var file;
         for(var i in fileList){
-            file = fileList[i].slice(PUBLIC_FOR_TEST_LENGTH);
+            file = fileList[i].slice(TEST_DIR.length+1);
             doTest(file);
         }
     }

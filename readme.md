@@ -32,14 +32,16 @@ gruntタスクの設定ファイルであるGruntConfig.jsonを作成します�
         "secret": "AWSのsecret"
     },
     "mongo" : {
-        "user": "本番環境のmongoDBのユーザ名",
-        "password":"本番環境のmongoDBのパスワード",
-        "url":"本番環境のmongoDBのURL"
-    },
-    "mongoBeta" : {
-        "user": "テスト環境のmongoDBのユーザ名",
-        "password":"テスト環境のmongoDBのパスワード",
-        "url":"テスト環境のmongoDBのURL"
+        "product": {
+            "user": "本番環境のmongoDBのユーザ名",
+            "password":"本番環境のmongoDBのパスワード",
+            "url":"本番環境のmongoDBのURL"
+        },
+        "beta": {
+            "user": "テスト環境のmongoDBのユーザ名",
+            "password":"テスト環境のmongoDBのパスワード",
+            "url":"テスト環境のmongoDBのURL"
+        }
     }
 }
 ```
@@ -75,12 +77,29 @@ startup.shの場所はshell配下に置いて下さい。
 
     GOOGLE_CLIENT_ID="GoogleOAuth2.0のClient ID"
     GOOGLE_CLIENT_SECRET="GoogleOAuth2.0のGOOGLE CLIENT SECRET"
+    TWITTER_CONSUMER_KEY="TWITTERのCONSUMER_KEY"
+    TWITTER_CONSUMER_SECRET="TWITTERのCONSUMER_SECRET"
 
     export GOOGLE_CLIENT_ID
     export GOOGLE_CLIENT_SECRET
 
     node app.js
 
+### ローカル環境でのビルド方法
+GブレイバーのクライアントはWebパックを使用しているため、ビルドが必要になります。
+ビルド対象はプロダクトコード、テストコードになります。
+
+#### 全てをビルドする
+
+    grunt webpack
+
+#### プロダクトだけビルドする
+
+    grunt webpack:product
+
+#### テストコード
+
+    grunt webpack:test
 
 ### ローカル環境の起動方法
 以下コマンドを実行します。
@@ -103,12 +122,9 @@ startup.shの場所はshell配下に置いて下さい。
 
     mocha seleniumTest/ -R spec
 
-- 画面系テストはpublicForDebug配下に置かれた、*Test.jsが実行されます。
+- 画面系テストはsrcForTest配下に置かれた、*Test.jsが実行されます。
 - ホスト名:ポート/testList でテスト一覧が出ます
-
-####認証系テスト
-
-    NODE_MAIL_ADDRESS="テスト用Googleアカウント"  NODE_PASSWORD="テスト用Googleアカウントパスワード"  mocha loginTest/ -R spec
+- テスト実行前にはテストコードをビルドして下さい
 
 ##herokuへのデプロイ方法
 (1)前提条件
