@@ -16,7 +16,7 @@ module.exports = function(mongo) {
             cmd : 'git push heroku'
         },
         pushHerokuBeta : {
-            cmd : 'git push beta development:master'
+            cmd : 'git push beta develop:master'
         }
     };
 }
