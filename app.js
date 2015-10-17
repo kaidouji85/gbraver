@@ -20,12 +20,12 @@ var morgan = require('morgan');
 var errorhandler = require('errorhandler')
 var routes = require('./routes')({
     contentBaseUrl : CONTENT_BASE_URL,
-    testGlob : require('./seleniumTest/testGlob.js')   //TODO : 本番環境時にはtestGlobを設定しないようにする
+    testGlob : require('./testGlob')   //TODO : 本番環境時にはtestGlobを設定しないようにする
 });
 var path = require('path');
-var mongoDao = require('./server/mongoDao.js');
+var mongoDao = require('./server/mongoDao');
 var passport = require('passport');
-var enemyRoutineDefine = require('./server/enemyRoutineDefine.js');
+var enemyRoutineDefine = require('./server/enemyRoutineDefine');
 var app = express();
 
 // all environments
