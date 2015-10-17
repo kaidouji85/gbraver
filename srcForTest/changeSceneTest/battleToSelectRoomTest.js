@@ -1,5 +1,6 @@
 var testData = require('../testlib/testData');
 var testUtil = require('../testlib/testUtil');
+var game = require('../../src/game/game');
 
 //対戦モードの場合、バトル終了後はルーム選択画面に遷移する
 enchant();

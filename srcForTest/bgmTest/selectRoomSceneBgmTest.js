@@ -1,4 +1,5 @@
 var testUtil = require('../testlib/testUtil');
+var game = require('../../src/game/game');
 
 enchant();
 window.onload = doTest;

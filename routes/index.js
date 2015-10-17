@@ -38,7 +38,7 @@ function routes(spec,my){
         var testDir = 'srcForTest';
         var testList = tg.glob(testDir);
         var urlList = _.map(testList,function(path){
-            return 'javascripts/' + path.slice(testDir.length);
+            return 'javascripts' + path.slice(testDir.length);
         });
         res.render('testList',{
             title : 'テスト一覧 (total'+testList.length + ')',

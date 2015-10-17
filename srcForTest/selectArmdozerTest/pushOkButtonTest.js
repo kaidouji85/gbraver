@@ -1,6 +1,7 @@
 var testData = require('../testlib/testData');
 var selectArmdozerScene = require('../../src/scene/selectArmdozerScene');
 var testUtil = require('../testlib/testUtil');
+var gameBase = require('../../src/game/gameBase');
 
 enchant();
 window.onload = doTest;

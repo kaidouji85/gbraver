@@ -1,5 +1,6 @@
 var testData = require('../testlib/testData');
 var testUtil = require('../testlib/testUtil');
+var game = require('../../src/game/game');
 
 enchant();
 window.onload = dpoTest;

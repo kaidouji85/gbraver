@@ -2,6 +2,7 @@ var testData = require('../../testlib/testData');
 var storyScene = require('../../../src/scene/storyScene');
 var testUtil = require('../../testlib/testUtil');
 var testScenarioData = require('../../testlib/testScenarioData');
+var gameBase = require('../../../src/game/gameBase');
 
 enchant();
 window.onload = doTest;

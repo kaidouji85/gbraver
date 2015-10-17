@@ -1,4 +1,5 @@
 var testUtil = require('../testlib/testUtil');
+var gameBase = require('../../src/game/gameBase');
 
 //TODO : リソースのロード時間を測定するテストページ
 //       JavaScriptのコンソールに測定結果が表示される

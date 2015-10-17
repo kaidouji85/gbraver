@@ -1,5 +1,6 @@
 var testData = require('../testlib/testData');
 var testUtil = require('../testlib/testUtil');
+var game = require('../../src/game/game');
 
 enchant();
 window.onload = doTest;
@@ -62,6 +63,6 @@ function doTest(){
     function assertOfChangeScene(scene){
         assert.equal(scene,'battle','戦闘画面へ遷移する');
         assert.equal(Game.getBattleMode(),'singlePlay','戦闘モードがシングルプレイである');
-        Game.onSendMessage(finishTest);
+        Game.onSendMessage(testUtil.finishTest);
     }
 }

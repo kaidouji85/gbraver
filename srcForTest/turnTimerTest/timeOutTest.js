@@ -1,4 +1,6 @@
 var turnTimer = require('../../src/turnTimer/turnTimer');
+var gameBase = require('../../src/game/gameBase');
+var testUtil = require('../testlib/testUtil');
 
 enchant();
 window.onload = doTest;

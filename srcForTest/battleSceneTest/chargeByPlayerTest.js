@@ -1,5 +1,6 @@
 var testData = require('../testlib/testData');
 var testUtil = require('../testlib/testUtil');
+var game = require('../../src/game/game');
 
 enchant();
 window.onload = doTest;
@@ -145,6 +146,6 @@ function doTest() {
         assert.equal(Game.currentScene.charaSpriteArray['test001@gmail.com'].frame,0,'プレイヤーキャラのポーズが「立ち」である');
         assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
         assert.equal(Game.currentScene.mesWindow.getText(),'通信待機中','メッセージが正しい');
-        Game.currentScene.tl.delay(30).then(finishTest);
+        Game.currentScene.tl.delay(30).then(testUtil.finishTest);
     }
 }

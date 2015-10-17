@@ -1,6 +1,7 @@
 var testData = require('../testlib/testData');
 var testUtil = require('../testlib/testUtil');
 var testScenarioData = require('../testlib/testScenarioData');
+var game = require('../../src/game/game');
 
 enchant();
 window.onload = doTest;
@@ -69,6 +70,6 @@ function doTest(){
     function assertOfChangeScene(scene){
         assert.equal(scene,'battle','戦闘画面へ遷移する');
         assert.equal(Game.getBattleMode(),'story','戦闘モードがストーリーである');
-        Game.onSendMessage(finishTest);
+        Game.onSendMessage(testUtil.finishTest);
     }
 }
