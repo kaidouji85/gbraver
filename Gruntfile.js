@@ -1,7 +1,7 @@
 module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        gruntConfig: grunt.file.readJSON('GruntConfig.json'),
+        gruntConfig: grunt.file.readJSON('./GruntConfig.json'),
         s3: {
             options: {
                 key: '<%= gruntConfig.s3.key %>',
@@ -36,11 +36,13 @@ module.exports = function (grunt) {
             pushHerokuBeta : {
                 cmd : 'git push beta development:master'
             }
-        }
+        },
+        webpack: require('./grunt/webpack')
     });
 
     grunt.loadNpmTasks('grunt-s3');
     grunt.loadNpmTasks('grunt-exec');
+    grunt.loadNpmTasks('grunt-webpack');
     grunt.registerTask('deploy',['s3','exec:mongo','exec:pushHeroku']);
     grunt.registerTask('deployBeta',['exec:mongoBeta','exec:pushHerokuBeta']);
 };

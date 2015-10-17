@@ -1,4 +1,4 @@
-var getTestFileEntries = require('./seleniumTest/getTestFileEntries');
+var getTestFileEntries = require('./../../seleniumTest/getTestFileEntries');
 
 module.exports = {
     entry: getTestFileEntries('srcForTest'),
