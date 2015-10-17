@@ -6,7 +6,7 @@ function routes(spec,my){
     var contentBaseUrl = spec.contentBaseUrl;
 
 
-    that.index = function(req, res){
+    that.root = function(req, res){
         if(req.session.gbraver){
             var userId = req.session.gbraver.userid;
             res.render('gameMain', {
