@@ -13,10 +13,10 @@ module.exports = function(mongo) {
             ' dbShell/createDB.js'
         },
         pushHeroku : {
-            cmd : 'git push heroku'
+            cmd : 'git push heroku master:master --force'
         },
         pushHerokuBeta : {
-            cmd : 'git push beta develop:master'
+            cmd : 'git push beta develop:master --force'
         }
     };
 }
