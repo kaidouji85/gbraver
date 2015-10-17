@@ -83,7 +83,7 @@ startup.shの場所はshell配下に置いて下さい。
     export GOOGLE_CLIENT_ID
     export GOOGLE_CLIENT_SECRET
 
-    node app.js
+    nodemon app.js
 
 ### ローカル環境でのビルド方法
 GブレイバーのクライアントはWebパックを使用しているため、ビルドが必要になります。

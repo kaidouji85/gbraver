@@ -94,7 +94,7 @@ passport.use(new TwitterStrategy({
 ));
 
 //routing
-app.get('/', routes.index);
+app.get('/', routes.root);
 app.get('/logOff',routes.logOff);
 if('development' == app.get('env')){
     app.get('/testClient',routes.testClient);
