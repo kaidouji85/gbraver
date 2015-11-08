@@ -12,11 +12,12 @@ db.scenarios.insert({
 
 
         // 暗転的なものを入れたい
-        storyUtil.pilot('iori','right'),    // 代役
+        storyUtil.pilot('uketuke','right'),
         storyUtil.mes('いらっしゃい響子ちゃん。今日は何の用かしら？'),
         storyUtil.pilot('kyoko','left'),
+        storyUtil.activePilot('left'),
         storyUtil.mes('私も晴れて高校生になったので、機動倶楽部の登録に来ました。必要書類は、これでいいですよね。'),
-        storyUtil.pilot('iori','right'),
+        storyUtil.activePilot('right'),
         storyUtil.mes('確認しますので、少々お待ち下さい。<br>・・・・・・、はい、問題なしです、大丈夫です。<br>これで今日からあなたも機動倶楽部の一員よ。'),
 
         // 暗転的なものを入れたい

@@ -64,3 +64,18 @@ db.pilots.insert({
     defense : 300,
     speed : 25
 });
+
+db.pilots.insert({
+    id : 'uketuke',
+    name: '受付お姉さん',
+    pict: 'uketuke.png',
+    pictTopMargin : 0,
+    pictLeftMargin : 64,
+    shout: '',
+    type: 'noSkill',
+    value : 0,
+    hp : 0,
+    power : 0,
+    defense : 0,
+    speed : 0
+});
