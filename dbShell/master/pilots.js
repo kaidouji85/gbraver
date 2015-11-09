@@ -79,3 +79,18 @@ db.pilots.insert({
     defense : 0,
     speed : 0
 });
+
+db.pilots.insert({
+    id : 'untensyu',
+    name: '車の運転手',
+    pict: 'untensyu.png',
+    pictTopMargin : 0,
+    pictLeftMargin : 64,
+    shout: '',
+    type: 'noSkill',
+    value : 0,
+    hp : 0,
+    power : 0,
+    defense : 0,
+    speed : 0
+});
