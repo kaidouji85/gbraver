@@ -94,6 +94,8 @@ module.exports = function(spec,my){
         core.preload(core.PICT_PREFIX+'akane.png');
         core.preload(core.PICT_PREFIX+'iori.png');
         core.preload(core.PICT_PREFIX+'akira.png');
+        core.preload(core.PICT_PREFIX+'uketuke.png');
+        core.preload(core.PICT_PREFIX+'untensyu.png');
         core.preload(core.PICT_ACTIVE_BAR);
         core.preload(core.PICT_ACTIVE_BAR_BACK);
         core.preload(core.PICT_BATTERY_GAUGE);
