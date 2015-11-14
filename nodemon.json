@@ -1,0 +1,13 @@
+{
+  "ignore" : [
+    "dbShell/*",
+    "grunt/*",
+    "mongoDbTest/*",
+    "node_modules/*",
+    "seleniumTest/*",
+    "src/*",
+    "srcForTest/*",
+    "testGlob/*",
+    "unitTest/*"
+  ]
+}

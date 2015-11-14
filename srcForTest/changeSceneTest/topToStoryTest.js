@@ -37,7 +37,7 @@ function doTest(){
 
     function assertOfChangeScene(scene){
         assert.equal(scene,'storyScene','ストーリーモードに遷移する');
-        assert.equal(Game.getScenarioId(),'kyokoStart','シナリオIDが パイロット名+Start となっている ');
+        assert.equal(Game.getScenarioId(),'first','シナリオIDがfirstとなっている');
         testUtil.finishTest();
     }
 }
