@@ -45,7 +45,7 @@ db.scenarios.insert({
         storyUtil.activePilot('right'),
         storyUtil.mes('なら先輩、お手柔らかに頼みます。'),
 
-        storyUtil.nextScenario('kyokoSecond'),
+        storyUtil.nextScenario('first'),
         storyUtil.moveBattle({
             enemyId: 'landozer',
             pilotId: 'akane',
