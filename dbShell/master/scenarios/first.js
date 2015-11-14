@@ -1,5 +1,5 @@
 db.scenarios.insert({
-    id : 'kyokoStart',
+    id : 'first',
     data :[
         storyUtil.pilot('untensyu','left'),   //代役
         storyUtil.mes('着いたよ、お嬢ちゃん'),
@@ -46,6 +46,14 @@ db.scenarios.insert({
         storyUtil.mes('なら先輩、お手柔らかに頼みます。'),
 
         storyUtil.nextScenario('kyokoSecond'),
-        storyUtil.moveBattle('landozer', 'akane', 'attack3-defense1')
+        storyUtil.moveBattle({
+            enemyId: 'landozer',
+            pilotId: 'akane',
+            routineId: 'attack3-defense1',
+            player: {
+                armdozerId: 'granBraver',
+                pilotId: 'kyoko'
+            }
+        })
     ]
 });

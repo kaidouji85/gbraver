@@ -54,7 +54,6 @@ function doTest(){
     function assertOfChangeScene(scene){
         assert.equal(scene,'top','トップシーンに遷移する');
         assert.equal(Game.getPilotId(),'iori','パイロット画像名が正しい');
-        assert.equal(Game.getScenarioId(),'ioriStart','シナリオ名が正しい');
         testUtil.finishTest();
     }
 

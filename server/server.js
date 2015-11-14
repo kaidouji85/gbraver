@@ -116,31 +116,45 @@ function server(spec, my) {
         });
 
         socket.on('startSinglePlay',function(data){
-            checkAlreadyLogin();
-            function checkAlreadyLogin() {
+            (function () {
                 if (socket.isLogin()) {
-                    getPlayerData();
+                    createRoom();
                 } else {
                     socket.emit('noLoginError', 'ログインが完了していません。');
                 }
+            })()
+
+            function createRoom() {
+                socket.gbraverInfo.singlePlayRoom = room();
+                createPlayerData();
             }
 
-            function getPlayerData(){
-                var enemyId = data.enemyId;
-                var routineId = data.routineId;
-                var pilotId = data.pilotId;
-                var attackRoutine = getAttackRoutine(routineId);
-                var defenseRoutine = getDefenseRoutine(routineId);
-                socket.gbraverInfo.singlePlayRoom = room();
-                socket.gbraverInfo.enemyRoutineBase = enemyRoutineBase({
-                    attackRoutine : attackRoutine,
-                    defenseRoutine : defenseRoutine
-                });
+            function createPlayerData(){
+                if(data.player) {
+                    dao.getEnemyData(data.player.armdozerId, data.player.pilotId,function(err, userData){
+                        // getEnemyDataで生成したデータはuserIdがnonePlayerCharacterになるので、
+                        // 強制的にuserIdをログインユーザのものに設定する
+                        userData.userId = socket.gbraverInfo.userId;
+                        enterRoomByPlayer(userData);
+                    });
+                } else {
+                    dao.getPlayerData(socket.gbraverInfo.userId, function(err, userData){
+                        enterRoomByPlayer(userData);
+                    });
+                }
+            }
 
-                dao.getPlayerData(socket.gbraverInfo.userId, function(err, userData) {
-                    socket.gbraverInfo.singlePlayRoom.addUser(userData);
-                    dao.getEnemyData(enemyId,pilotId,enterRoomByNPC);
+            function enterRoomByPlayer(userData) {
+                socket.gbraverInfo.singlePlayRoom.addUser(userData);
+                createEnemyData();
+            }
+
+            function createEnemyData() {
+                socket.gbraverInfo.enemyRoutineBase = enemyRoutineBase({
+                    attackRoutine : getAttackRoutine(data.routineId),
+                    defenseRoutine : getDefenseRoutine(data.routineId)
                 });
+                dao.getEnemyData(data.enemyId,data.pilotId,enterRoomByNPC);
             }
 
             function enterRoomByNPC(err,enemyData){

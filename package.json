@@ -10,7 +10,7 @@
   "scripts": {
     "postinstall": "grunt --gruntfile Gruntfile.heroku.js webpack:product",
     "start": "./shell/startup.sh",
-    "test": "mocha unitTest/** -R spec"
+    "test": "mocha $(find unitTest -name '*.js')"
   },
   "dependencies": {
     "body-parser": "^1.8.2",
@@ -23,6 +23,7 @@
     "glob": "^4.0.6",
     "grunt": "0.4.5",
     "grunt-cli": "0.1.13",
+    "grunt-contrib-watch": "^0.6.1",
     "grunt-exec": "^0.4.6",
     "grunt-s3": "^0.2.0-alpha.3",
     "grunt-webpack": "^1.0.11",
