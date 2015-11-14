@@ -1,5 +1,5 @@
 db.scenarios.insert({
-    id : 'kyokoStart',
+    id : 'first',
     data :[
         storyUtil.pilot('untensyu','left'),   //代役
         storyUtil.mes('着いたよ、お嬢ちゃん'),

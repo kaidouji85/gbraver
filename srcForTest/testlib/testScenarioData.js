@@ -204,7 +204,8 @@ module.exports = function(spec,my){
     });
 
     scenarioData.push({
-        id : 'kyokoStart',
+        id : '' +
+        'first',
         data : [
             {
                 method : 'mes',

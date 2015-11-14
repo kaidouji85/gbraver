@@ -315,7 +315,7 @@ module.exports = function(spec, my) {
     }
 
     function getStartScenarioId() {
-        return pilotId + 'Start';
+        return 'first';
     }
 
     return core;
