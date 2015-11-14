@@ -133,7 +133,11 @@ module.exports = function(spec,my){
                 param : {
                     enemyId : 'landozer',
                     pilotId : 'akane',
-                    routineId : 'attack3'
+                    routineId : 'attack3',
+                    player: {
+                        armdozerId: 'granBraver',
+                        pilotId: 'kyoko'
+                    }
                 }
             }
         ]

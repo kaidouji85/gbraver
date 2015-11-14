@@ -24,7 +24,6 @@ function doTest(){
     function pushNextButton(){
         Game.currentScene.onEndStory(assertEndOfStory);
         testUtil.touch(Game.currentScene);
-
     }
 
     function assertEndOfStory(battle) {
@@ -32,6 +31,8 @@ function doTest(){
         assert.equal(battle.enemyId, 'landozer', 'アームドーザIDが正しい');
         assert.equal(battle.pilotId, 'akane', 'パイロットIが正しい');
         assert.equal(battle.routineId,'attack3','ルーチンが正しい');
+        assert.equal(battle.player.armdozerId, 'granBraver', 'プレイヤーアームドーザIDが正しい');
+        assert.equal(battle.player.pilotId, 'kyoko', 'プレイヤーパイロットIDが正しい');
         testUtil.finishTest();
     }
 }

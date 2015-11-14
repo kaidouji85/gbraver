@@ -27,14 +27,10 @@ var storyUtil = {
         }
     },
 
-    moveBattle: function(enemyId, pilotId, routineId) {
+    moveBattle: function(param, routineId) {
         return {
             method : 'moveBattle',
-            param : {
-                enemyId : enemyId,
-                pilotId : pilotId,
-                routineId : routineId
-            }
+            param : param
         };
     },
 
