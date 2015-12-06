@@ -6,9 +6,8 @@ module.exports = function(spec,my) {
     var EXPLOSION_WIDTH = 96;
     var EXPLOSION_HEIGHT = 96;
     var DEFAULT_X_FOR_DIRECTION_RIGHT = 170;
-    var DEFAULT_Y_FOR_DIRECTION_RIGHT = 150;
     var DEFAULT_X_FOR_DIRECTION_LEFT = -10;
-    var DEFAULT_Y_FOR_DIRECTION_LEFT = 150;
+    var DEFAULT_Y = 130;
     var DIRECTION_RIGHT = 'right';
 
     var that = new Sprite(SPRITE_WIDTH,SPRITE_HEIGHT);
@@ -51,7 +50,7 @@ module.exports = function(spec,my) {
 
     function doStandMotion(){
         that.x = direction===DIRECTION_RIGHT ? DEFAULT_X_FOR_DIRECTION_RIGHT : DEFAULT_X_FOR_DIRECTION_LEFT;
-        that.y = direction===DIRECTION_RIGHT ? DEFAULT_Y_FOR_DIRECTION_RIGHT : DEFAULT_Y_FOR_DIRECTION_LEFT;
+        that.y = DEFAULT_Y;
         that.frame = core.FRAME_STAND;
     }
 

@@ -107,7 +107,7 @@ module.exports = function(spec,my){
                 pict : core.assets[core.PICT_BATTERY_NUMBER]
             });
             that.batteryNumberArray[uid].x = uid===that.userId ? 226 : 30;
-            that.batteryNumberArray[uid].y = 190;
+            that.batteryNumberArray[uid].y = 170;
             that.batteryNumberArray[uid].visible = false;
             that.addChild(that.batteryNumberArray[uid]);
 
