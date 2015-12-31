@@ -23,7 +23,7 @@ describe('serverクラスのテスト', function() {
     afterEach(function() {
         app.close();
     });
-    
+
     describe('認証系テスト',function(){
         it('存在するユーザなので認証に成功する',function(done){
             var client = io(SERVER_URL, option);

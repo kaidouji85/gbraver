@@ -1,3 +1,5 @@
+var __ = require('underscore');
+
 module.exports = function(mongo) {
     return {
         mongo: {
@@ -17,6 +19,15 @@ module.exports = function(mongo) {
         },
         pushHerokuBeta : {
             cmd : 'git push beta develop:master --force'
+        },
+        test : {
+            cmd : __.reduce([
+                'battle',
+                'enemyRoutine',
+                'otherApi',
+                'singlePlay',
+                'twoPlay'], function(memo, now){
+                return memo + 'mocha unitTest/'+ now + '/; ' }, '')
         }
     };
 }
