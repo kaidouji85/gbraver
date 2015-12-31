@@ -8,16 +8,13 @@ describe('serverクラスのテスト', function() {
     var dbMock = require('./../testData/dbMock.js')();
 
     var app;
-    var option;
-    var Server;
+    var option = {'forceNew' : true};
+    var testServer;
     var dbMockInst;
     
     beforeEach(function(){
-        option = {
-            'forceNew' : true
-        };
         app = require('http').createServer().listen(SERVER_PORT);
-        Server = server({
+        testServer = server({
             httpServer : app,
             dao : dbMock
         });
@@ -26,7 +23,7 @@ describe('serverクラスのテスト', function() {
     afterEach(function() {
         app.close();
     });
-    
+
     describe('認証系テスト',function(){
         it('存在するユーザなので認証に成功する',function(done){
             var client = io(SERVER_URL, option);
