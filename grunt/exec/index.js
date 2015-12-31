@@ -27,7 +27,7 @@ module.exports = function(mongo) {
                 'otherApi',
                 'singlePlay',
                 'twoPlay'], function(memo, now){
-                return memo + 'mocha unitTest/'+ now + '/; ' }, '')
+                return memo + 'mocha --reporter progress unitTest/'+ now + '/; ' }, '')
         }
     };
 }
