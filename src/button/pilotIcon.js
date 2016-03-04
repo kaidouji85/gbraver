@@ -15,6 +15,8 @@ module.exports = function(spec,my){
     var pilotButton = {};
     var miniPilot = {};
 
+    var GRID_WINDOW_SIZE = 16;
+
     init();
     function init(){
         pilotButton = gridWindow({
@@ -24,7 +26,7 @@ module.exports = function(spec,my){
         });
         that.addChild(pilotButton);
 
-        miniPilot = new Sprite(80,80);
+        miniPilot = new Sprite(width * GRID_WINDOW_SIZE,height * GRID_WINDOW_SIZE);
         miniPilot.image = createFaceIcon(pilotPict);
         miniPilot.scaleX = scaleX;
         that.addChild(miniPilot);
@@ -43,11 +45,11 @@ module.exports = function(spec,my){
     function createFaceIcon(image) {
         var iconMargin = 6;
         var posx1 = iconMargin;
-        var posx2 = width*16 - iconMargin*2;
         var posy1 = iconMargin;
-        var posy2 = height*16 - iconMargin*2;
+        var posx2 = width * GRID_WINDOW_SIZE - iconMargin*2;
+        var posy2 = height * GRID_WINDOW_SIZE - iconMargin*2;
 
-        var faceIcon = new Surface(80,80);
+        var faceIcon = new Surface(width * GRID_WINDOW_SIZE, height * GRID_WINDOW_SIZE);
         faceIcon.draw(image,pictLeftMargin,pictTopMargin,pictCutSize,pictCutSize,posx1,posy1,posx2,posy2);
         return faceIcon;
     }
