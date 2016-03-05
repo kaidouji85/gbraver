@@ -32,7 +32,7 @@ db.armdozers.insert({
     weapons : createWeapons(1600),
     ability: {
         type: 'boostPower',
-        power : 200,
+        power : 500,
         threshold : 0.4
     }
 });
@@ -57,7 +57,7 @@ db.armdozers.insert({
     name : 'ガーディアス',
     pictName : 'Guardias.png',
     hp : 2300,
-    defense : 800,
+    defense : 600,
     speed : 105,
     weapons : createWeapons(1400),
     ability: {
