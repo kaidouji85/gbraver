@@ -39,6 +39,7 @@ module.exports = function(spec,my){
     core.PICT_BATTERY_MERTER_DOWN = core.PICT_PREFIX+'batteryMerterDown.png';
     core.PICT_SPECIAL_MERTER_UP = core.PICT_PREFIX+'specialMerterUp.png';
     core.PICT_SPECIAL_MERTER_DOWN = core.PICT_PREFIX+'specialMerterDown.png';
+    core.PICT_TOURNAMENT_BASE = core.PICT_PREFIX + 'tournamentBase.png';
 
     core.SOUND_PREFIX = contentBaseUrl+'/sound/';
     core.SOUND_BATTLE = core.SOUND_PREFIX + 'game_maoudamashii_1_battle34.mp3';
@@ -131,6 +132,7 @@ module.exports = function(spec,my){
         core.preload(core.PICT_BATTERY_MERTER_DOWN);
         core.preload(core.PICT_SPECIAL_MERTER_UP);
         core.preload(core.PICT_SPECIAL_MERTER_DOWN);
+        core.preload(core.PICT_TOURNAMENT_BASE);
 
         core.preload(core.SOUND_BATTLE);
         core.preload(core.SOUND_ATTACK_HIT);
