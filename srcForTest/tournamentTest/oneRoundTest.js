@@ -17,48 +17,19 @@ function doTest() {
 
     function initTournament(){
         testTournament = tournamentTable({
-            participants: {
-                left: {
-                    up: {
-                        up: {pilotId: 'kyoko'},
-                        down: {pilotId: 'akane'}
-                    },
-                    down: {
-                        up: {pilotId: 'iori'},
-                        down: {pilotId: 'akira'}
-                    }
-                },
-                right: {
-                    up: {
-                        up: {pilotId: 'kyoko'},
-                        down: {pilotId: 'akane'}
-                    },
-                    down: {
-                        up: {pilotId: 'iori'},
-                        down: {pilotId: 'akira'}
-                    }
-                }
-            },
-            /*
-                [
-                [
-                    {pilotId: 'kyoko'},
-                    {pilotId: 'akane'}
-                ],
-                [
-                    {pilotId: 'iori'},
-                    {pilotId: 'akira'}
-                ],
-                [
-                    {pilotId: 'kyoko'},
-                    {pilotId: 'akane'}
-                ],
-                [
-                    {pilotId: 'iori'},
-                    {pilotId: 'akira'}
-                ]
+            participants: [
+                {pilotId: 'kyoko'},
+                {pilotId: 'akane'},
+
+                {pilotId: 'iori'},
+                {pilotId: 'akira'},
+
+                {pilotId: 'kyoko'},
+                {pilotId: 'akane'},
+
+                {pilotId: 'iori'},
+                {pilotId: 'akira'}
             ],
-            */
             masterData: testData.getMasterData()
         });
 

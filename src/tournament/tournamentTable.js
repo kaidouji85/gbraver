@@ -1,5 +1,10 @@
 var pilotIcon = require('../button/pilotIcon');
 
+var TOURNAMENT_TABLE_WIDTH = 192;
+var TOURNAMENT_TABLE_HEIGHT = 304;
+var PILOT_ICON_WIDTH = 64;
+var INTERVAL = 16;
+
 module.exports = function(spec, my) {
     var that = new Group();
     var core = enchant.Core.instance;
@@ -7,21 +12,19 @@ module.exports = function(spec, my) {
     var masterData = spec.masterData;
 
     (function(){
-        var tournamentBase = new Sprite(192, 336);
+        var tournamentBase = new Sprite(TOURNAMENT_TABLE_WIDTH, TOURNAMENT_TABLE_HEIGHT);
         tournamentBase.image = core.assets[core.PICT_TOURNAMENT_BASE];
         tournamentBase.x = 64;
         that.addChild(tournamentBase);
 
-        _.each(participants, function(item, dir1){
-            _.each(item, function(item, dir2){
-                _.each(item, function(item, dir3){
-                    var pilot = createPilot(item.pilotId, dir1==='right' ? 1 : -1);
-                    pilot.x = dir1 === 'right' ? 192 + 64 : 0;
-                    pilot.y = (dir2 === 'up' ? 0 : 160+16) + (dir3 === 'up' ? 0 : 96);
-                    that.addChild(pilot);
-                });
-            });
+        _.each(participants, function(pilot, index){
+            var isLeft = _.contains([0,1,2,3], index);
+            var icon = createPilot(pilot.pilotId, isLeft ? -1 : 1);
+            icon.x = isLeft ? 0 : TOURNAMENT_TABLE_WIDTH + PILOT_ICON_WIDTH;
+            icon.y = (isLeft ? index : index - 4)* (PILOT_ICON_WIDTH + INTERVAL);
+            that.addChild(icon);
         });
+
     })();
 
     function createPilot(id, scale) {
