@@ -19,29 +19,50 @@ function doTest() {
         testTournament = tournamentTable({
             participants: {
                 left: {
-                    left: {
-                        left:{pilotId: 'kyoko'},
-                        right:{pilotId: 'akane'}
+                    up: {
+                        up: {pilotId: 'kyoko'},
+                        down: {pilotId: 'akane'}
                     },
-                    right: {
-                        left: {pilotId: 'iori'},
-                        right: {pilotId: 'akira'}
+                    down: {
+                        up: {pilotId: 'iori'},
+                        down: {pilotId: 'akira'}
                     }
                 },
-                right:{
-                    left: {
-                        left:{pilotId: 'kyoko'},
-                        right:{pilotId: 'akane'}
+                right: {
+                    up: {
+                        up: {pilotId: 'kyoko'},
+                        down: {pilotId: 'akane'}
                     },
-                    right: {
-                        left: {pilotId: 'iori'},
-                        right: {pilotId: 'akira'}
+                    down: {
+                        up: {pilotId: 'iori'},
+                        down: {pilotId: 'akira'}
                     }
                 }
             },
+            /*
+                [
+                [
+                    {pilotId: 'kyoko'},
+                    {pilotId: 'akane'}
+                ],
+                [
+                    {pilotId: 'iori'},
+                    {pilotId: 'akira'}
+                ],
+                [
+                    {pilotId: 'kyoko'},
+                    {pilotId: 'akane'}
+                ],
+                [
+                    {pilotId: 'iori'},
+                    {pilotId: 'akira'}
+                ]
+            ],
+            */
             masterData: testData.getMasterData()
         });
 
+        testGame.currentScene.backgroundColor = 'black';
         testGame.currentScene.addChild(testTournament);
         testUtil.finishTest();
     }

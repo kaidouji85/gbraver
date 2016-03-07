@@ -7,24 +7,37 @@ module.exports = function(spec, my) {
     var masterData = spec.masterData;
 
     (function(){
-        var tournamentBase = new Sprite(320, 480);
+        var tournamentBase = new Sprite(192, 336);
         tournamentBase.image = core.assets[core.PICT_TOURNAMENT_BASE];
+        tournamentBase.x = 64;
         that.addChild(tournamentBase);
 
-        var pilotData = _.find(masterData.pilotList, function(item){
-            return item.id === 'kyoko'
+        _.each(participants, function(item, dir1){
+            _.each(item, function(item, dir2){
+                _.each(item, function(item, dir3){
+                    var pilot = createPilot(item.pilotId, dir1==='right' ? 1 : -1);
+                    pilot.x = dir1 === 'right' ? 192 + 64 : 0;
+                    pilot.y = (dir2 === 'up' ? 0 : 160+16) + (dir3 === 'up' ? 0 : 96);
+                    that.addChild(pilot);
+                });
+            });
         });
-        var pilot = pilotIcon({
+    })();
+
+    function createPilot(id, scale) {
+        var pilotData = _.find(masterData.pilotList, function(item){
+            return item.id === id
+        });
+        return pilotIcon({
             windowPict : core.assets[core.PICT_BLACK_WINDOW],
             pilotPict : core.assets[core.PICT_PREFIX+pilotData.pict],
             pictTopMargin : pilotData.pictTopMargin,
             pictLeftMargin : pilotData.pictLeftMargin,
-            scaleX : -1,
+            scaleX : scale,
             width : 4,
             height : 4
         });
-        that.addChild(pilot);
-    })();
+    }
 
     return that;
 }
