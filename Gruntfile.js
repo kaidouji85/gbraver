@@ -12,7 +12,6 @@ function GruntFile(grunt) {
         s3: require('./grunt/s3')(config.s3),
         exec: require('./grunt/exec')(config.mongo),
         webpack: require('./grunt/webpack'),
-        watch: require('./grunt/watch')
     });
 
     grunt.loadNpmTasks('grunt-s3');
@@ -20,5 +19,4 @@ function GruntFile(grunt) {
     grunt.loadNpmTasks('grunt-webpack');
     grunt.registerTask('deploy',['s3','exec:mongo','exec:pushHeroku']);
     grunt.registerTask('deployBeta',['exec:mongoBeta','exec:pushHerokuBeta']);
-    grunt.loadNpmTasks('grunt-contrib-watch');
 }
