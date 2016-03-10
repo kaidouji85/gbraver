@@ -31,7 +31,7 @@ db.pilots.insert({
     value : 0.50,
     hp : 500,
     power : 100,
-    defense : 100,
+    defense : 300,
     speed : 10
 });
 
@@ -43,7 +43,7 @@ db.pilots.insert({
     pictLeftMargin : 64,
     shout: '・・・・・・勝った',
     type: 'guardBreak',
-    value : 200,
+    value : 400,
     hp : 0,
     power : 400,
     defense : 0,

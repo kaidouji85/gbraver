@@ -54,9 +54,11 @@ module.exports = function(spec,my){
                 pilotPict : core.assets[core.PICT_PREFIX+that.statusArray[uid].pilot.pict],
                 pictTopMargin : that.statusArray[uid].pilot.pictTopMargin,
                 pictLeftMargin : that.statusArray[uid].pilot.pictLeftMargin,
-                scaleX : uid===that.userId ? 1 : -1
+                scaleX : uid===that.userId ? 1 : -1,
+                width : 4,
+                height : 4
             });
-            that.pilotIconArray[uid].x = uid===that.userId ? 240 : 0;
+            that.pilotIconArray[uid].x = uid===that.userId ? 256 : 0;
             that.pilotIconArray[uid].y = 80;
             that.addChild(that.pilotIconArray[uid]);
 
