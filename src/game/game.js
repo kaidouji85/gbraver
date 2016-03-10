@@ -302,68 +302,26 @@ module.exports = function(spec, my) {
     }
 
     /**
-     * サーバからのレスポンス内容に応じてアクションを実行する
-     * @param message メッセージ
-     * @param data データ
+     * サーバからgameStartが返された際のイベントハンドラ
+     * @param data サーバレスポンス
      */
-    core.emitServerResp = function(message, data){
-        switch(message) {
-            case 'successSetArmdozer' :
-                core.changeTopScene();
-                break;
-            case 'gameStart' :
-                core.changeBattleScene({
-                    timeOver : core.COMMAND_TIME_OVER,
-                    statusArray : __.mapObject(data,function(val, key){
-                        return val.status;
-                    })
-                });
-                emitSendMessage('command',{
-                    method : 'ready'
-                });
-                break;
-            case 'resp' :
-                changePhase(data);
-                break;
-            case 'dissolveRoom':
-                if(core.currentScene.getName()==='battle'){
-                    core.currentScene.doDissolveRoom();
-                }
-                break;
-            case 'succesEnterRoom':
-                if(core.currentScene.getName()==='selectRoom'){
-                    core.currentScene.emitSuccesEnterRoom();
-                }
-                break;
-            case 'successLeaveRoom':
-                emitSendMessage('getRoomInfo',null);
-                break;
-            case 'successGetRoomInfo':
-                core.changeRoomSelectScene(data);
-                break;
-            case 'enterRoomError':
-                if(core.currentScene.getName()==='selectRoom') {
-                    core.currentScene.emitEnterRoomError(data);
-                }
-                break;
-            case 'successSetPilot':
-                core.changeTopScene();
-                break;
-            case 'battleError' :    //TODO : 自動テストがない
-                if(core.currentScene.getName()==='battle'){
-                    core.changeTopScene();
-                } else if(core.currentScene.getName()==='selectRoom') {
-                    core.currentScene.emitEnterRoomError('そのコネクションは既に入室しています。');
-                }
-                break;
-        }
-    };
+    function onGameStart(data) {
+        core.changeBattleScene({
+            timeOver : core.COMMAND_TIME_OVER,
+            statusArray : __.mapObject(data,function(val, key){
+                return val.status;
+            })
+        });
+        emitSendMessage('command',{
+            method : 'ready'
+        });
+    }
 
     /**
-     * 戦闘結果のレスポンスに応じてアクションを実行する
+     * サーバからrespが返された際のイベントハンドラ
      * @param data サーバからのデータ
      */
-    function changePhase(data){
+    function onResp(data){
         var methodMap = {
             wait: 'doWaitPhase',
             atackCommand: 'doAtackCommandPhase',
@@ -378,6 +336,71 @@ module.exports = function(spec, my) {
             key === data.phase && core.currentScene[val](data);
         });
     }
+
+    /**
+     * サーバからdissolveRoomが返された際のイベントハンドラ
+     * @param data サーバからのデータ
+     */
+    function onDissolveRoom(data) {
+        if(core.currentScene.getName()==='battle'){
+            core.currentScene.doDissolveRoom();
+        }
+    }
+
+    /**
+     * サーバからsuccesEnterRoomが返された際のイベントハンドラ
+     * @param data サーバからのデータ
+     */
+    function onSuccesEnterRoom(data) {
+        if(core.currentScene.getName()==='selectRoom'){
+            core.currentScene.emitSuccesEnterRoom();
+        }
+    }
+
+    /**
+     * サーバからenterRoomErrorが返された際のイベントハンドラ
+     * @param data サーバからのデータ
+     */
+    function onEnterRoomError(data) {
+        if(core.currentScene.getName()==='selectRoom') {
+            core.currentScene.emitEnterRoomError(data);
+        }
+    }
+
+    /**
+     * サーバからbattleErrorが返された際のイベントハンドラ
+     * @param data サーバからのデータ
+     */
+    function onBattleError(data) {
+        if(core.currentScene.getName()==='battle'){
+            core.changeTopScene();
+        } else if(core.currentScene.getName()==='selectRoom') {
+            core.currentScene.emitEnterRoomError('そのコネクションは既に入室しています。');
+        }
+    }
+
+    /**
+     * サーバからメッセージが来た際のイベントハンドラ
+     * @param message メッセージ
+     * @param data データ
+     */
+    core.emitServerResp = function(message, data){
+        var methodMap = {
+            successSetArmdozer: core.changeTopScene,
+            gameStart: onGameStart,
+            resp: onResp,
+            dissolveRoom: onDissolveRoom,
+            succesEnterRoom: onSuccesEnterRoom,
+            successLeaveRoom: function() {emitSendMessage('getRoomInfo',null);},
+            successGetRoomInfo: core.changeRoomSelectScene,
+            enterRoomError: onEnterRoomError,
+            successSetPilot: core.changeTopScene,
+            battleError: onBattleError
+        };
+        __.each(methodMap, function(val, key) {
+            message === key && val(data);
+        });
+    };
 
     return core;
 }
