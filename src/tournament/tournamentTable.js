@@ -1,4 +1,5 @@
 var pilotIcon = require('../button/pilotIcon');
+var __ = require('underscore');
 
 var TOURNAMENT_TABLE_WIDTH = 192;
 var TOURNAMENT_TABLE_HEIGHT = 304;
@@ -17,8 +18,8 @@ module.exports = function(spec, my) {
         tournamentBase.x = 64;
         that.addChild(tournamentBase);
 
-        _.each(participants, function(pilot, index){
-            var isLeft = _.contains([0,1,2,3], index);
+        __.each(participants, function(pilot, index){
+            var isLeft = __.contains([0,1,2,3], index);
             var icon = createPilot(pilot.pilotId, isLeft ? -1 : 1);
             icon.x = isLeft ? 0 : TOURNAMENT_TABLE_WIDTH + PILOT_ICON_WIDTH;
             icon.y = (isLeft ? index : index - 4)* (PILOT_ICON_WIDTH + INTERVAL);
@@ -28,7 +29,7 @@ module.exports = function(spec, my) {
     })();
 
     function createPilot(id, scale) {
-        var pilotData = _.find(masterData.pilotList, function(item){
+        var pilotData = __.find(masterData.pilotList, function(item){
             return item.id === id
         });
         return pilotIcon({
