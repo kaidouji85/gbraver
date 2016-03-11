@@ -1,3 +1,4 @@
+var __ = require('underscore');
 var pictNumber = require('../animation/pictNumber');
 var batteryMertor = require('./batteryMertor');
 var customBar = require('./customBar');
@@ -26,7 +27,7 @@ module.exports = function(spec,my) {
         that.addChild(NumberBack(WIDTH-core.assets[core.PICT_MINI_NUMBER].width/10*4,32));
         that.addChild(NumberBack(WIDTH-core.assets[core.PICT_MINI_NUMBER].width/10*4,48));
 
-        that.maxHpArray = _.mapObject(statusArray,function(status){return status.hp});
+        that.maxHpArray = __.mapObject(statusArray,function(status){return status.hp});
         that.hpMerterArray = createAndAddObjectArray(HpMerter);
         that.hpNumberArray = createAndAddObjectArray(HpNumber);
         that.activeBarArray = createAndAddObjectArray(ActiveBar);
@@ -47,7 +48,7 @@ module.exports = function(spec,my) {
      * @param creator オブジェクト生成関数
      */
     function createAndAddObjectArray(creator) {
-        return _.mapObject(statusArray,function(status,uid){
+        return __.mapObject(statusArray,function(status,uid){
             var obj = creator(uid);
             that.addChild(obj);
             return obj;
