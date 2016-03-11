@@ -300,7 +300,7 @@ module.exports = function(spec, my) {
      * @param data サーバからのデータ
      */
     function onResp(data){
-        var methodMap = {
+        __.chain({
             wait: 'doWaitPhase',
             atackCommand: 'doAtackCommandPhase',
             charge: 'doChargePhase',
@@ -309,9 +309,10 @@ module.exports = function(spec, my) {
             gameEnd: 'doGameEnd',
             pilotSkill: 'doPilotSkill',
             armdozerAbility: 'doArmdozerAbility'
-        };
-        __.each(methodMap, function(val, key){
-            key === data.phase && that.currentScene[val](data);
+        }).filter(function(val, key){
+            return key === data.phase;
+        }).each(function(val, key) {
+            that.currentScene[val](data);
         });
     }
 
@@ -371,7 +372,7 @@ module.exports = function(spec, my) {
      * @param data データ
      */
     that.ee.on('serverResp', function(message, data){
-        var methodMap = {
+        __.chain({
             successSetArmdozer: that.changeTopScene,
             gameStart: onGameStart,
             resp: onResp,
@@ -382,9 +383,10 @@ module.exports = function(spec, my) {
             enterRoomError: onEnterRoomError,
             successSetPilot: that.changeTopScene,
             battleError: onBattleError
-        };
-        __.each(methodMap, function(val, key) {
-            message === key && val(data);
+        }).filter(function(val, key){
+            return message === key;
+        }).each(function(val, key){
+            val(data);
         });
     });
 
