@@ -31,7 +31,7 @@ function doTest(){
 
     function pushRegreshButton(){
         testUtil.touch(Game.currentScene.refreshButton);
-        Game.onSendMessage(sendGetRoomInfo);
+        Game.ee.once('sendMessage', sendGetRoomInfo);
     }
 
     function sendGetRoomInfo(message,data){
@@ -49,7 +49,7 @@ function doTest(){
     }
 
     function successGetRoomInfo() {
-        Game.emitServerResp('successGetRoomInfo',{
+        Game.ee.emit('serverResp', 'successGetRoomInfo',{
             '0' : [],
             '1' : ['test001@gmail.com','test002@gmail.com'],
             '2' : ['test003@gmail.com','test004@gmail.com'],

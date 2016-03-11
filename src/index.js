@@ -1,43 +1,94 @@
 var game = require('./game/game');
+var __ = require('underscore');
+var Promise = require('bluebird');
+var socket = io.connect(location.origin);
 
 enchant();
-window.onload = function() {
-    var socket = io.connect(location.origin);
-    var userId = $("meta[name=userId]").attr('content');
-    var contentBaseUrl = $("meta[name=contentBaseUrl]").attr('content');//TODO : テストコードがない
-    var masterData;
-    var userData;
-    var stageData;
-    var Game;
 
-    //ユーザ認証する
-    socket.emit('auth', {
-        userId : userId
+/**
+ * ユーザ認証を実行する
+ * @returns {Promise} ユーザ情報
+ */
+function doAuth(userId) {
+    return new Promise(function(resolve, reject){
+        //ユーザ認証する
+        socket.emit('auth', {
+            userId : userId
+        });
+
+        //ユーザ認証成功
+        socket.on('successAuth', resolve);
     });
-    //console.log(getTime()+' emit auth');//test
+}
 
-    //ユーザ認証成功
-    socket.on('successAuth', function(data) {
-        //console.log(getTime()+' successAuth');//test
-        userData = data;
-        getMasterData();
-    });
-
-    function getMasterData(){
-        //console.log(getTime()+' getMasterData');//test
+/**
+ * マスタデータを取得する
+ * @returns {Promise} マスタデータ
+ */
+function getMasterData() {
+    return new Promise(function(resolve, reject){
         socket.emit('getMasterData');
-        socket.once('successGetMasterData',successGetMasterData);
-    }
+        socket.once('successGetMasterData',resolve);
+    });
+}
 
-    function successGetMasterData(data){
-        //console.log(getTime()+' successGetMasterData');//test
-        masterData = data;
-        initGame();
-    }
+/**
+ * enchant.jsのgame.omloadのイベントハンドラ
+ * @param Game Gameオブジェクト
+ */
+function onLoad(Game) {
+    Game.changeTopScene();
+    Game.ee.on('sendMessage', function(message,data){
+        socket.emit(message,data);
+    });
 
-    function initGame(){
-        //console.log(getTime()+' initGame');//test
-        Game = new game({
+    __.each([
+        'succesEnterRoom',
+        'successSetArmdozer',
+        'gameStart',
+        'resp',
+        'dissolveRoom',
+        'successLeaveRoom',
+        'successGetRoomInfo',
+        'enterRoomError',
+        'successSetPilot',
+        'battleError'
+    ], function(item){
+        socket.on(item, function(data){
+            Game.ee.emit('serverResp', item, data);
+        });
+    });
+
+    __.each({
+        logOff: function() {
+            window.location = location.origin+'/logOff';
+        },
+        reconnecting: function() {
+            console.log('reconnecting');
+            window.location = location.origin;
+        },
+        noLoginError: function() {
+            console.log('no login error.');
+            console.log(data);
+            window.location = location.origin;
+        }
+    }, function(val, key){
+        socket.on(key, val);
+    });
+}
+
+/**
+ *  Gブレイバーのメイン関数
+ */
+window.onload = function() {
+    var userId = $("meta[name=userId]").attr('content');
+    var contentBaseUrl = $("meta[name=contentBaseUrl]").attr('content');
+    var userData;
+    doAuth(userId).then(function(data){
+        userData = data;
+        return getMasterData();
+    }).then(function(masterData){
+        var Game = new game({
             userId : userId,
             contentBaseUrl : contentBaseUrl,
             armdozerId : userData.armdozerId,
@@ -47,76 +98,9 @@ window.onload = function() {
             stageData : masterData.stageData,
             scenarioData : masterData.scenarioData
         });
-        //console.log(getTime()+' load start');//test
         Game.start();
-        Game.onload = function() {
-            //console.log(getTime()+' load complate');//test
-            Game.changeTopScene();
-            Game.onSendMessage(function(message,data){
-                socket.emit(message,data);
-            });
-            //TODO : テストコードがない
-            Game.onLogOff(function(){
-                window.location = location.origin+'/logOff';
-            });
-
-            socket.on('succesEnterRoom', function() {
-                Game.emitServerResp('succesEnterRoom');
-            });
-
-            socket.on('successSetArmdozer', function(data) {
-                Game.emitServerResp('successSetArmdozer',data);
-            });
-
-            socket.on("gameStart", function(data){
-                Game.emitServerResp('gameStart',data);
-            });
-
-            socket.on('resp', function(data){
-                Game.emitServerResp('resp',data);
-            });
-
-            socket.on('dissolveRoom', function(data){
-                Game.emitServerResp('dissolveRoom',data);
-            });
-
-            socket.on('successLeaveRoom',function(){
-                Game.emitServerResp('successLeaveRoom',null);
-            });
-
-            socket.on('successGetRoomInfo',function(data){
-                Game.emitServerResp('successGetRoomInfo',data);
-            });
-
-            socket.on('enterRoomError',function(data){
-                Game.emitServerResp('enterRoomError',data);
-            });
-
-            socket.on('successSetPilot',function(data){
-                Game.emitServerResp('successSetPilot',data);
-            });
-
-            //TODO : 自動テストがない
-            socket.on('reconnecting',function(){
-                console.log('reconnecting');
-                window.location = location.origin;
-            });
-
-            //TODO : 自動テストがない
-            socket.on('noLoginError',function(data){
-                console.log('no login error.');
-                console.log(data);
-                window.location = location.origin;
-            });
-
-            socket.on('battleError',function(data){
-                Game.emitServerResp('battleError',data);
-            });
+        Game.onload = function(){
+            onLoad(Game);
         };
-    }
-
-    function getTime(){
-        var time = new Date();
-        return time.getHours()+':'+time.getMinutes()+':'+time.getSeconds()+':'+time.getMilliseconds();
-    }
+    });
 };

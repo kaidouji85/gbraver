@@ -34,7 +34,7 @@ function doTest(){
     }
 
     function pushNextButton(){
-        Game.onSendMessage(assertOfMessaage);
+        Game.ee.once('sendMessage', assertOfMessaage);
         testUtil.touch(Game.currentScene);
         testUtil.touch(Game.currentScene);
     }
@@ -63,13 +63,13 @@ function doTest(){
                 status : testDataInst.getPlayerData('test002@gmail.com').status
             }
         };
-        Game.onChangeScene(assertOfChangeScene);
-        Game.emitServerResp('gameStart',serverResp);
+        Game.ee.once('changeScene', assertOfChangeScene);
+        Game.ee.emit('serverResp', 'gameStart',serverResp);
     }
 
     function assertOfChangeScene(scene){
         assert.equal(scene,'battle','戦闘画面へ遷移する');
         assert.equal(Game.getBattleMode(),'story','戦闘モードがストーリーである');
-        Game.onSendMessage(testUtil.finishTest);
+        Game.ee.once('sendMessage', testUtil.finishTest);
     }
 }

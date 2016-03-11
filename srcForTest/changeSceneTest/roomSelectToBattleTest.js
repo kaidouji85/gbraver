@@ -32,7 +32,7 @@ function doTest(){
             Game.changeRoomSelectScene(roomInfo);
             //console.log('ルーム2で入室');
             testUtil.touch(Game.currentScene.enterRoomButtonArray[2]);
-            Game.onSendMessage(assertSendMessage);
+            Game.ee.once('sendMessage', assertSendMessage);
         };
     }
 
@@ -46,7 +46,7 @@ function doTest(){
     }
 
     function successEnterRoom(){
-        Game.emitServerResp('succesEnterRoom',{});
+        Game.ee.emit('serverResp', 'succesEnterRoom',{});
         gameStart();
     }
 
@@ -63,14 +63,14 @@ function doTest(){
                 status : testDataInst.getPlayerData('test002@gmail.com').status
             }
         };
-        Game.onChangeScene(assertChangeScene);
-        Game.emitServerResp('gameStart',gameStartData);
+        Game.ee.once('changeScene', assertChangeScene);
+        Game.ee.emit('serverResp', 'gameStart',gameStartData);
     }
 
     function assertChangeScene(scene) {
         assert.equal(scene, 'battle', '戦闘画面へ遷移する');
         assert.equal(Game.getBattleMode(),'twoPlay','戦闘モードが対戦プレイである');
-        Game.onSendMessage(assertSendMessage2);
+        Game.ee.once('sendMessage', assertSendMessage2);
     }
 
     function assertSendMessage2(message, data){

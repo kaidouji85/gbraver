@@ -30,7 +30,7 @@ function doTest(){
     function pushBattleRoomButton(){
         //console.log('対戦ルーム入室ボタンを押す');
         testUtil.touch(Game.currentScene.battleRoomButton);
-        Game.onSendMessage(sendGetRoomInfo);
+        Game.ee.once('sendMessage', sendGetRoomInfo);
     }
 
     function sendGetRoomInfo(message,data) {
@@ -55,8 +55,8 @@ function doTest(){
             '3' : [],
             '4' : []
         };
-        Game.onChangeScene(assertOfChangeScene);
-        Game.emitServerResp('successGetRoomInfo',data);
+        Game.ee.once('changeScene', assertOfChangeScene);
+        Game.ee.emit('serverResp', 'successGetRoomInfo',data);
     }
 
     function assertOfChangeScene(scene){
