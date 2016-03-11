@@ -37,7 +37,7 @@ function doTest(){
     function pushChangeButton(){
         console.log('戻るボタンを押す');
         testUtil.touch(Game.currentScene.prevButton);
-        Game.onChangeScene(assertOfChangeScene);
+        Game.ee.once('changeScene', assertOfChangeScene);
     }
 
     function assertOfChangeScene(scene){

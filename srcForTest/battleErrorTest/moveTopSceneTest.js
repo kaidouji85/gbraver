@@ -56,16 +56,16 @@ function doTest(){
                 }
             }
         };
-        Game.emitServerResp('resp',waitPhaseData);
-        Game.onSendMessage(function(message,data){
+        Game.ee.emit('serverResp', 'resp',waitPhaseData);
+        Game.ee.once('sendMessage', function(message,data){
             //message,dataはplayerChargeTestで確認済み
             emitBattleError();
         });
     }
 
     function emitBattleError(){
-        Game.onChangeScene(assertOfChangeScene);
-        Game.emitServerResp('battleError',null);
+        Game.ee.once('changeScene', assertOfChangeScene);
+        Game.ee.emit('serverResp', 'battleError',null);
     }
 
     function assertOfChangeScene(scene){
