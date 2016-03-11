@@ -47,7 +47,7 @@ function doTest(){
     }
 
     function emitServeResp(){
-        Game.onChangeScene(assertOfChangeScene);
+        Game.ee.once('changeScene', assertOfChangeScene);
         Game.emitServerResp('successSetArmdozer',true);
     }
 

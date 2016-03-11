@@ -220,7 +220,7 @@ function doTest(){
             '3' : [],
             '4' : []
         };
-        Game.onChangeScene(assertOfChangeScene);
+        Game.ee.once('changeScene', assertOfChangeScene);
         Game.emitServerResp('successGetRoomInfo',data);
     }
 

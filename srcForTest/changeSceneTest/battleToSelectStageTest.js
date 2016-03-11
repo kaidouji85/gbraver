@@ -197,7 +197,7 @@ function doTest(){
     }
 
     function pushBattleEndIcon(){
-        Game.onChangeScene(assertOfChangeScene);
+        Game.ee.once('changeScene', assertOfChangeScene);
         testUtil.touch(Game.currentScene.battleEndIcon);
     }
 

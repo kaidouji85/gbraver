@@ -1,4 +1,5 @@
 var __ = require('underscore');
+var EventEmitter = require('event-emitter');
 var gameBase = require('./gameBase');
 var battleScene = require('../scene/battleScene');
 var roomSelectScene = require('../scene/roomSelectScene');
@@ -13,45 +14,41 @@ module.exports = function(spec, my) {
      * ゲームコア
      */
     var contentBaseUrl = spec&&spec.contentBaseUrl || location.origin;
-    var core = gameBase({
+    var that = gameBase({
         contentBaseUrl : contentBaseUrl
     });
     var userId = spec.userId;
     var armdozerId = spec.armdozerId;
     var pilotId = spec.pilotId;
+
     var pilotList = spec.pilotList;
     var armdozerList = spec.armdozerList;
     var stageData = spec.stageData;
     var scenarioData = spec.scenarioData;
+
     var currentScenarioId = 'first';
     var nextScenarioId = null;
-    var battleMode = core.BATTLE_MODE_TWO_PLAY;
-    var emitChangeScene = function(scene){};
+    var battleMode = that.BATTLE_MODE_TWO_PLAY;
+
     var emitSendMessage = function(message,data){};
     var emitLogOff = function(){};
+
+    that.ee = new EventEmitter();
 
     /**
      * シーン変更のヘルパー関数
      * @param scene 変更するシーン
      */
     function replaceScene(scene) {
-        core.replaceScene(scene);
-        emitChangeScene(scene.getName());
+        that.replaceScene(scene);
+        that.ee.emit('changeScene', scene.getName());
     }
-
-    /**
-     * シーン変更が起きた際のイベントハンドラ
-     * @param fn コールバック関数
-     */
-    core.onChangeScene = function(fn){
-        emitChangeScene = fn;
-    };
 
     /**
      * サーバへのメッセージ送信が起きた際のイベントハンドラ
      * @param fn コールバック関数
      */
-    core.onSendMessage = function(fn){
+    that.onSendMessage = function(fn){
         emitSendMessage = fn;
     };
 
@@ -59,7 +56,7 @@ module.exports = function(spec, my) {
      * ログオフした際のイベントハンドラ
      * @param fn
      */
-    core.onLogOff = function(fn){
+    that.onLogOff = function(fn){
         emitLogOff = fn;
     }
 
@@ -67,7 +64,7 @@ module.exports = function(spec, my) {
      * アームドーザIDを取得する
      * @returns {string} アームドーザID
      */
-    core.getArmdozerId = function() {
+    that.getArmdozerId = function() {
         return armdozerId;
     }
 
@@ -75,7 +72,7 @@ module.exports = function(spec, my) {
      * パイロットIDを取得する
      * @returns {string} パイロットID
      */
-    core.getPilotId = function(){
+    that.getPilotId = function(){
         return pilotId;
     }
 
@@ -83,7 +80,7 @@ module.exports = function(spec, my) {
      * 戦闘モードを取得する
      * @returns {string} 戦闘モード
      */
-    core.getBattleMode = function(){
+    that.getBattleMode = function(){
         return battleMode;
     }
 
@@ -91,7 +88,7 @@ module.exports = function(spec, my) {
      * 戦闘モードを設定する
      * @param mode 戦闘モード
      */
-    core.setBattleMode = function(mode){
+    that.setBattleMode = function(mode){
         battleMode = mode;
     }
 
@@ -99,7 +96,7 @@ module.exports = function(spec, my) {
      * シナリオIDを取得する
      * @returns {string} シナリオID
      */
-    core.getScenarioId = function(){
+    that.getScenarioId = function(){
         return currentScenarioId;
     }
 
@@ -107,7 +104,7 @@ module.exports = function(spec, my) {
      * シナリオIDを設定する
      * @param id シナリオID
      */
-    core.setScenarioId = function(id){
+    that.setScenarioId = function(id){
         currentScenarioId = id;
     }
 
@@ -115,7 +112,7 @@ module.exports = function(spec, my) {
      * 次のシナリオIDを取得する
      * @returns {string} 次のシナリオID
      */
-    core.getNextScenarioId = function(){
+    that.getNextScenarioId = function(){
         return nextScenarioId;
     }
 
@@ -123,7 +120,7 @@ module.exports = function(spec, my) {
      * 次のシナリオIDを設定する
      * @param id シナリオID
      */
-    core.setNextScenarioId = function(id){
+    that.setNextScenarioId = function(id){
         nextScenarioId = id;
     }
 
@@ -132,21 +129,21 @@ module.exports = function(spec, my) {
      *
      * @param spec battleSceneに渡すspec
      */
-    core.changeBattleScene = function(spec){
+    that.changeBattleScene = function(spec){
         spec.userId = userId;
         var scene = battleScene(spec);
         scene.onCommand(function(command){
             emitSendMessage('command',command);
         });
         scene.onPushBattleEndIcon(function(isWin){
-            if(battleMode===core.BATTLE_MODE_TWO_PLAY){
+            if(battleMode===that.BATTLE_MODE_TWO_PLAY){
                 emitSendMessage('getRoomInfo',null);
-            } else if(battleMode===core.BATTLE_MODE_SINGLE_PLAY) {
-                core.changeSelectStageScene();
-            } else if(battleMode===core.BATTLE_MODE_STORY){
+            } else if(battleMode===that.BATTLE_MODE_SINGLE_PLAY) {
+                that.changeSelectStageScene();
+            } else if(battleMode===that.BATTLE_MODE_STORY){
                 currentScenarioId = isWin ? nextScenarioId : currentScenarioId;
                 nextScenarioId = null;
-                core.changeStoryScene(currentScenarioId);
+                that.changeStoryScene(currentScenarioId);
             }
         });
         replaceScene(scene);
@@ -157,8 +154,8 @@ module.exports = function(spec, my) {
      *
      * @param roomInfo ルーム情報
      */
-    core.changeRoomSelectScene = function(roomInfo){
-        battleMode = core.BATTLE_MODE_TWO_PLAY;
+    that.changeRoomSelectScene = function(roomInfo){
+        battleMode = that.BATTLE_MODE_TWO_PLAY;
         var scene = roomSelectScene({
             roomInfo : roomInfo
         });
@@ -166,7 +163,7 @@ module.exports = function(spec, my) {
             emitSendMessage('enterRoom',data);
         });
         scene.onPushPrevButton(function(data){
-            core.changeTopScene();
+            that.changeTopScene();
         });
         scene.onLeaveRoom(function(){
             emitSendMessage('leaveRoom',null);
@@ -181,7 +178,7 @@ module.exports = function(spec, my) {
      * トップシーンに変更する
      *
      */
-    core.changeTopScene = function(){
+    that.changeTopScene = function(){
         var scene = topScene({
             armdozerId : armdozerId,
             pilotId : pilotId,
@@ -189,22 +186,22 @@ module.exports = function(spec, my) {
             pilotList : pilotList
         });
         scene.onPushSelectArmdozerButton(function(){
-            core.changeSelectArmdozerScene();
+            that.changeSelectArmdozerScene();
         });
         scene.onPushBattleRoom(function(){
             emitSendMessage('getRoomInfo',null);
         });
         scene.onPushSelectPilotButton(function(){
-            core.changeSelectPilotScene();
+            that.changeSelectPilotScene();
         });
         scene.onPushSelectStageButton(function(){
-            core.changeSelectStageScene();
+            that.changeSelectStageScene();
         });
         scene.onPushLogOffButton(function(){
             emitLogOff();
         });
         scene.onPushStoryButton(function(){
-            core.changeStoryScene(currentScenarioId);
+            that.changeStoryScene(currentScenarioId);
         });
         replaceScene(scene);
     };
@@ -213,13 +210,13 @@ module.exports = function(spec, my) {
      * パイロット選択シーンに変更する
      *
      */
-    core.changeSelectPilotScene = function() {
+    that.changeSelectPilotScene = function() {
         var scene = selectPilotScene({
             pilotList : pilotList,
             selectPilotId : pilotId
         });
         scene.onPushPrevButton(function(){
-            core.changeTopScene();
+            that.changeTopScene();
         });
         scene.onPushOkButton(function(l_pilotId){
             var data = {
@@ -235,7 +232,7 @@ module.exports = function(spec, my) {
      * アームドーザ選択シーンに変更する
      *
      */
-    core.changeSelectArmdozerScene = function(){
+    that.changeSelectArmdozerScene = function(){
         var scene = selectArmdozerScene({
             armdozerList : armdozerList,
             selectArmdozerId : armdozerId
@@ -248,7 +245,7 @@ module.exports = function(spec, my) {
             armdozerId = l_armdozerId;
         });
         scene.onPushPrevButton(function(){
-            core.changeTopScene();
+            that.changeTopScene();
         });replaceScene(scene);
     }
 
@@ -256,13 +253,13 @@ module.exports = function(spec, my) {
      * ステージ選択シーンに変更する
      *
      */
-    core.changeSelectStageScene = function(){
+    that.changeSelectStageScene = function(){
         var scene = selectStageScene({
             stageData : stageData,
             armdozerList : armdozerList
         });
         scene.onPushPrevButton(function(){
-            core.changeTopScene();
+            that.changeTopScene();
         });
         scene.onPushStageButon(function(enemyId,pilotId,routineId){
             var data = {
@@ -272,7 +269,7 @@ module.exports = function(spec, my) {
             };
             emitSendMessage('startSinglePlay',data);
         });
-        battleMode = core.BATTLE_MODE_SINGLE_PLAY;
+        battleMode = that.BATTLE_MODE_SINGLE_PLAY;
         replaceScene(scene);
     }
 
@@ -281,7 +278,7 @@ module.exports = function(spec, my) {
      *
      * @param senarioId シナリオID
      */
-    core.changeStoryScene = function(senarioId){
+    that.changeStoryScene = function(senarioId){
         var scene = storyScene({
             scenarioData :
                 __.chain(scenarioData)
@@ -297,7 +294,7 @@ module.exports = function(spec, my) {
         scene.onChangeNextStory(function(p_nextScenarioId){
             nextScenarioId = p_nextScenarioId;
         });
-        battleMode = core.BATTLE_MODE_STORY;
+        battleMode = that.BATTLE_MODE_STORY;
         replaceScene(scene);
     }
 
@@ -306,8 +303,8 @@ module.exports = function(spec, my) {
      * @param data サーバレスポンス
      */
     function onGameStart(data) {
-        core.changeBattleScene({
-            timeOver : core.COMMAND_TIME_OVER,
+        that.changeBattleScene({
+            timeOver : that.COMMAND_TIME_OVER,
             statusArray : __.mapObject(data,function(val, key){
                 return val.status;
             })
@@ -333,7 +330,7 @@ module.exports = function(spec, my) {
             armdozerAbility: 'doArmdozerAbility'
         };
         __.each(methodMap, function(val, key){
-            key === data.phase && core.currentScene[val](data);
+            key === data.phase && that.currentScene[val](data);
         });
     }
 
@@ -342,8 +339,8 @@ module.exports = function(spec, my) {
      * @param data サーバからのデータ
      */
     function onDissolveRoom(data) {
-        if(core.currentScene.getName()==='battle'){
-            core.currentScene.doDissolveRoom();
+        if(that.currentScene.getName()==='battle'){
+            that.currentScene.doDissolveRoom();
         }
     }
 
@@ -352,8 +349,8 @@ module.exports = function(spec, my) {
      * @param data サーバからのデータ
      */
     function onSuccesEnterRoom(data) {
-        if(core.currentScene.getName()==='selectRoom'){
-            core.currentScene.emitSuccesEnterRoom();
+        if(that.currentScene.getName()==='selectRoom'){
+            that.currentScene.emitSuccesEnterRoom();
         }
     }
 
@@ -362,8 +359,8 @@ module.exports = function(spec, my) {
      * @param data サーバからのデータ
      */
     function onEnterRoomError(data) {
-        if(core.currentScene.getName()==='selectRoom') {
-            core.currentScene.emitEnterRoomError(data);
+        if(that.currentScene.getName()==='selectRoom') {
+            that.currentScene.emitEnterRoomError(data);
         }
     }
 
@@ -372,10 +369,10 @@ module.exports = function(spec, my) {
      * @param data サーバからのデータ
      */
     function onBattleError(data) {
-        if(core.currentScene.getName()==='battle'){
-            core.changeTopScene();
-        } else if(core.currentScene.getName()==='selectRoom') {
-            core.currentScene.emitEnterRoomError('そのコネクションは既に入室しています。');
+        if(that.currentScene.getName()==='battle'){
+            that.changeTopScene();
+        } else if(that.currentScene.getName()==='selectRoom') {
+            that.currentScene.emitEnterRoomError('そのコネクションは既に入室しています。');
         }
     }
 
@@ -384,17 +381,17 @@ module.exports = function(spec, my) {
      * @param message メッセージ
      * @param data データ
      */
-    core.emitServerResp = function(message, data){
+    that.emitServerResp = function(message, data){
         var methodMap = {
-            successSetArmdozer: core.changeTopScene,
+            successSetArmdozer: that.changeTopScene,
             gameStart: onGameStart,
             resp: onResp,
             dissolveRoom: onDissolveRoom,
             succesEnterRoom: onSuccesEnterRoom,
             successLeaveRoom: function() {emitSendMessage('getRoomInfo',null);},
-            successGetRoomInfo: core.changeRoomSelectScene,
+            successGetRoomInfo: that.changeRoomSelectScene,
             enterRoomError: onEnterRoomError,
-            successSetPilot: core.changeTopScene,
+            successSetPilot: that.changeTopScene,
             battleError: onBattleError
         };
         __.each(methodMap, function(val, key) {
@@ -402,5 +399,5 @@ module.exports = function(spec, my) {
         });
     };
 
-    return core;
+    return that;
 }

@@ -63,7 +63,7 @@ function doTest(){
                 status : testDataInst.getPlayerData('test002@gmail.com').status
             }
         };
-        Game.onChangeScene(assertChangeScene);
+        Game.ee.once('changeScene', assertChangeScene);
         Game.emitServerResp('gameStart',gameStartData);
     }
 

@@ -64,7 +64,7 @@ function doTest(){
     }
 
     function emitBattleError(){
-        Game.onChangeScene(assertOfChangeScene);
+        Game.ee.once('changeScene', assertOfChangeScene);
         Game.emitServerResp('battleError',null);
     }
 

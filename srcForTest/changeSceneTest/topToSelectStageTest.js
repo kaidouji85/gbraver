@@ -29,7 +29,7 @@ function doTest(){
 
     function pushSelectStageButton(){
         testUtil.touch(Game.currentScene.selectStageButton);
-        Game.onChangeScene(assertOfChangeScene);
+        Game.ee.once('changeScene', assertOfChangeScene);
     }
 
     function assertOfChangeScene(scene){
