@@ -56,7 +56,7 @@ window.onload = function() {
                 socket.emit(message,data);
             });
             //TODO : テストコードがない
-            Game.onLogOff(function(){
+            Game.ee.on('logOff', function(){
                 window.location = location.origin+'/logOff';
             });
 

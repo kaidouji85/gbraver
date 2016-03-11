@@ -30,9 +30,6 @@ module.exports = function(spec, my) {
     var nextScenarioId = null;
     var battleMode = that.BATTLE_MODE_TWO_PLAY;
 
-    var emitSendMessage = function(message,data){};
-    var emitLogOff = function(){};
-
     that.ee = new EventEmitter();
 
     /**
@@ -42,22 +39,6 @@ module.exports = function(spec, my) {
     function replaceScene(scene) {
         that.replaceScene(scene);
         that.ee.emit('changeScene', scene.getName());
-    }
-
-    /**
-     * サーバへのメッセージ送信が起きた際のイベントハンドラ
-     * @param fn コールバック関数
-     */
-    that.onSendMessage = function(fn){
-        emitSendMessage = fn;
-    };
-
-    /**
-     * ログオフした際のイベントハンドラ
-     * @param fn
-     */
-    that.onLogOff = function(fn){
-        emitLogOff = fn;
     }
 
     /**
@@ -198,7 +179,7 @@ module.exports = function(spec, my) {
             that.changeSelectStageScene();
         });
         scene.onPushLogOffButton(function(){
-            emitLogOff();
+            that.ee.emit('logOff');
         });
         scene.onPushStoryButton(function(){
             that.changeStoryScene(currentScenarioId);
@@ -355,6 +336,14 @@ module.exports = function(spec, my) {
     }
 
     /**
+     * サーバからsuccessLeaveRoomが返された際のイベントハンドラ
+     * @param data サーバからのデータ
+     */
+    function onSuccessLeaveRoom() {
+        that.ee.emit('sendMessage', 'getRoomInfo',null);
+    }
+
+    /**
      * サーバからenterRoomErrorが返された際のイベントハンドラ
      * @param data サーバからのデータ
      */
@@ -388,7 +377,7 @@ module.exports = function(spec, my) {
             resp: onResp,
             dissolveRoom: onDissolveRoom,
             succesEnterRoom: onSuccesEnterRoom,
-            successLeaveRoom: function() {that.ee.emit('sendMessage', 'getRoomInfo',null);},
+            successLeaveRoom: onSuccessLeaveRoom,
             successGetRoomInfo: that.changeRoomSelectScene,
             enterRoomError: onEnterRoomError,
             successSetPilot: that.changeTopScene,
