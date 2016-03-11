@@ -41,7 +41,7 @@ function doTest(){
     }
 
     function enterRoomError() {
-        Game.emitServerResp('enterRoomError','任意のエラーメッセージ。');
+        Game.ee.emit('serverResp', 'enterRoomError','任意のエラーメッセージ。');
         Game.currentScene.tl.delay(1).then(assertOfErrorMessage);
     }
 

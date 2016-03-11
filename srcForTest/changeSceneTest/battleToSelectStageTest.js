@@ -57,7 +57,7 @@ function doTest(){
                 }
             }
         };
-        Game.emitServerResp('resp',waitPhaseData);
+        Game.ee.emit('serverResp', 'resp',waitPhaseData);
         Game.ee.once('sendMessage', function(message,data){
             //message,dataはenemyAtackTestで確認済み
             atackCommandPhase();
@@ -84,7 +84,7 @@ function doTest(){
                 }
             }
         };
-        Game.emitServerResp('resp',atackCommandPhaseData);
+        Game.ee.emit('serverResp', 'resp',atackCommandPhaseData);
         Game.ee.once('sendMessage', function(message,data){
             //message,dataはenemyAtackTestで確認済み
             defenthCommandPhase();
@@ -111,7 +111,7 @@ function doTest(){
                 }
             }
         };
-        Game.emitServerResp('resp',defenthCommandData);
+        Game.ee.emit('serverResp', 'resp',defenthCommandData);
         selectCommand();
     }
 
@@ -149,7 +149,7 @@ function doTest(){
                 }
             }
         };
-        Game.emitServerResp('resp',damagePhaseData);
+        Game.ee.emit('serverResp', 'resp',damagePhaseData);
         Game.ee.once('sendMessage', function(message,data){
             //message,dataはplayerAtackTestで確認済み
             Game.currentScene.tl.delay(30).then(gameEnd);
@@ -177,7 +177,7 @@ function doTest(){
                 }
             }
         };
-        Game.emitServerResp('resp',gameEndData);
+        Game.ee.emit('serverResp', 'resp',gameEndData);
         Game.ee.once('sendMessage', assertOfGameEnd);
     }
 
@@ -191,7 +191,7 @@ function doTest(){
     }
 
     function doDissolveRoom(){
-        Game.emitServerResp('dissolveRoom',null);
+        Game.ee.emit('serverResp', 'dissolveRoom',null);
         assert.equal(Game.currentScene.battleEndIcon.getVisible(),true,'戦闘終了ボタンが表示されている');
         Game.currentScene.tl.delay(30).then(pushBattleEndIcon);
     }

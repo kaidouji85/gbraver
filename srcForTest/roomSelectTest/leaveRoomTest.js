@@ -46,7 +46,7 @@ function doTest(){
     }
 
     function successEnterRoom() {
-        Game.emitServerResp('succesEnterRoom',{});
+        Game.ee.emit('serverResp', 'succesEnterRoom',{});
         assert.equal(Game.currentScene.leaveRoomButton.getVisible(),true,'退出ボタンが表示されている');
         assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
         assert.equal(Game.currentScene.mesWindow.getText(),'プレイヤーの入室待ち','メッセージが正しい');
@@ -70,7 +70,7 @@ function doTest(){
 
     function successLeaveRoom() {
         Game.ee.once('sendMessage', sendGetRoomInfo);
-        Game.emitServerResp('successLeaveRoom',null);
+        Game.ee.emit('serverResp', 'successLeaveRoom',null);
     }
 
     function sendGetRoomInfo(message,data){
@@ -84,7 +84,7 @@ function doTest(){
     }
 
     function respSuccessGetRoomInfo(){
-        Game.emitServerResp('successGetRoomInfo',{
+        Game.ee.emit('serverResp', 'successGetRoomInfo',{
             '0' : [],
             '1' : ['test001@gmail.com','test002@gmail.com'],
             '2' : ['test003@gmail.com','test004@gmail.com'],

@@ -51,7 +51,7 @@ function doTest(){
             }
         };
         Game.ee.once('sendMessage', assertOfArmdozerAbilityPhase);
-        Game.emitServerResp('resp',data);
+        Game.ee.emit('serverResp', 'resp',data);
     }
 
     function assertOfArmdozerAbilityPhase(message,data){

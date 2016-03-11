@@ -51,7 +51,7 @@ function doTest(){
                 }
             }
         };
-        Game.emitServerResp('resp',waitPhaseData);
+        Game.ee.emit('serverResp', 'resp',waitPhaseData);
         Game.ee.once('sendMessage', function(message,data){
             //message、dataはenemyChargeTestで確認済み
             assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
@@ -80,7 +80,7 @@ function doTest(){
                 }
             }
         };
-        Game.emitServerResp('resp',data);
+        Game.ee.emit('serverResp', 'resp',data);
         assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
         assert.equal(Game.currentScene.mesWindow.getText(),'対戦相手がコマンドを選択中......','メッセージが正しい');
         Game.ee.once('sendMessage', sendCommandForAttackCommand);
@@ -118,7 +118,7 @@ function doTest(){
                 }
             }
         };
-        Game.emitServerResp('resp',data);
+        Game.ee.emit('serverResp', 'resp',data);
         assert.equal(Game.currentScene.mesWindow.getVisible(),false,'メッセージウインドウが表示されない');
         selectCommnad();
     }
@@ -168,7 +168,7 @@ function doTest(){
             }
         };
         
-        Game.emitServerResp('resp',damagePhaseData);
+        Game.ee.emit('serverResp', 'resp',damagePhaseData);
         assert.equal(Game.currentScene.mesWindow.getVisible(),false,'メッセージウインドウが表示されない');
         Game.ee.once('sendMessage', sendCommandForDamagePhase);
     }
@@ -208,7 +208,7 @@ function doTest(){
                 }
             }
         };
-        Game.emitServerResp('resp',data);
+        Game.ee.emit('serverResp', 'resp',data);
         Game.ee.once('sendMessage', function(message,command) {
             assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
             assert.equal(Game.currentScene.mesWindow.getText(),'通信待機中','メッセージが正しい');

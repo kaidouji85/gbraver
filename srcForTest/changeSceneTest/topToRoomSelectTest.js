@@ -56,7 +56,7 @@ function doTest(){
             '4' : []
         };
         Game.ee.once('changeScene', assertOfChangeScene);
-        Game.emitServerResp('successGetRoomInfo',data);
+        Game.ee.emit('serverResp', 'successGetRoomInfo',data);
     }
 
     function assertOfChangeScene(scene){

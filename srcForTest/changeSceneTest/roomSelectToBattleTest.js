@@ -46,7 +46,7 @@ function doTest(){
     }
 
     function successEnterRoom(){
-        Game.emitServerResp('succesEnterRoom',{});
+        Game.ee.emit('serverResp', 'succesEnterRoom',{});
         gameStart();
     }
 
@@ -64,7 +64,7 @@ function doTest(){
             }
         };
         Game.ee.once('changeScene', assertChangeScene);
-        Game.emitServerResp('gameStart',gameStartData);
+        Game.ee.emit('serverResp', 'gameStart',gameStartData);
     }
 
     function assertChangeScene(scene) {

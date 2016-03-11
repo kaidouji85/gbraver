@@ -52,7 +52,7 @@ function doTest() {
             }
         }; 
 
-        Game.emitServerResp('resp',waitPhaseData);
+        Game.ee.emit('serverResp', 'resp',waitPhaseData);
         Game.ee.once('sendMessage', sendCommandForWaitPhase);
     }
     
@@ -88,7 +88,7 @@ function doTest() {
             }
         }; 
         
-        Game.emitServerResp('resp',atackCommand);
+        Game.ee.emit('serverResp', 'resp',atackCommand);
         assert.equal(Game.currentScene.mesWindow.getVisible(),false,'メッセージウインドウが表示されない');
         selectCommand();
     }
@@ -132,7 +132,7 @@ function doTest() {
                 }
             }
         };
-        Game.emitServerResp('resp',chargeData);
+        Game.ee.emit('serverResp', 'resp',chargeData);
         assert.equal(Game.currentScene.mesWindow.getVisible(),false,'メッセージウインドウが表示されない');
         Game.ee.once('sendMessage', sendCommandForChargePhase);
     } 

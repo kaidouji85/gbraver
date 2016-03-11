@@ -61,39 +61,39 @@ window.onload = function() {
             });
 
             socket.on('succesEnterRoom', function() {
-                Game.emitServerResp('succesEnterRoom');
+                Game.ee.emit('serverResp', 'succesEnterRoom');
             });
 
             socket.on('successSetArmdozer', function(data) {
-                Game.emitServerResp('successSetArmdozer',data);
+                Game.ee.emit('serverResp', 'successSetArmdozer',data);
             });
 
             socket.on("gameStart", function(data){
-                Game.emitServerResp('gameStart',data);
+                Game.ee.emit('serverResp', 'gameStart',data);
             });
 
             socket.on('resp', function(data){
-                Game.emitServerResp('resp',data);
+                Game.ee.emit('serverResp', 'resp',data);
             });
 
             socket.on('dissolveRoom', function(data){
-                Game.emitServerResp('dissolveRoom',data);
+                Game.ee.emit('serverResp', 'dissolveRoom',data);
             });
 
             socket.on('successLeaveRoom',function(){
-                Game.emitServerResp('successLeaveRoom',null);
+                Game.ee.emit('serverResp', 'successLeaveRoom',null);
             });
 
             socket.on('successGetRoomInfo',function(data){
-                Game.emitServerResp('successGetRoomInfo',data);
+                Game.ee.emit('serverResp', 'successGetRoomInfo',data);
             });
 
             socket.on('enterRoomError',function(data){
-                Game.emitServerResp('enterRoomError',data);
+                Game.ee.emit('serverResp', 'enterRoomError',data);
             });
 
             socket.on('successSetPilot',function(data){
-                Game.emitServerResp('successSetPilot',data);
+                Game.ee.emit('serverResp', 'successSetPilot',data);
             });
 
             //TODO : 自動テストがない
@@ -110,7 +110,7 @@ window.onload = function() {
             });
 
             socket.on('battleError',function(data){
-                Game.emitServerResp('battleError',data);
+                Game.ee.emit('serverResp', 'battleError',data);
             });
         };
     }

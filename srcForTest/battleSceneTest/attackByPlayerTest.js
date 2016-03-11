@@ -51,7 +51,7 @@ function doTest(){
                 }
             }
         };
-        Game.emitServerResp('resp',waitPhaseData);
+        Game.ee.emit('serverResp', 'resp',waitPhaseData);
         Game.ee.once('sendMessage', function(message,data){
             //message,dataはplayerChargeTestで確認済み
             assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
@@ -80,7 +80,7 @@ function doTest(){
                 }
             }
         };
-        Game.emitServerResp('resp',atackCommandPhaseData);
+        Game.ee.emit('serverResp', 'resp',atackCommandPhaseData);
         selectCommand();
     }
     
@@ -127,7 +127,7 @@ function doTest(){
                 }
             }
         };
-        Game.emitServerResp('resp',defenthCommandData);
+        Game.ee.emit('serverResp', 'resp',defenthCommandData);
         Game.ee.once('sendMessage', sendCommandForDefenthCommandPhase);
     }
     
@@ -166,7 +166,7 @@ function doTest(){
                 }
             }
         };
-        Game.emitServerResp('resp',damagePhaseData);
+        Game.ee.emit('serverResp', 'resp',damagePhaseData);
         assert.equal(Game.currentScene.mesWindow.getVisible(),false,'メッセージウインドウが表示されない');
         Game.ee.once('sendMessage', sendCommandForDamagePhase);
     }
@@ -206,7 +206,7 @@ function doTest(){
                 }
             }
         };
-        Game.emitServerResp('resp',waitPhaseData);
+        Game.ee.emit('serverResp', 'resp',waitPhaseData);
         assert.equal(Game.currentScene.mesWindow.getVisible(),false,'メッセージウインドウが表示されない');
         Game.ee.once('sendMessage', function(){
             assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');

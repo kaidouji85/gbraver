@@ -48,7 +48,7 @@ function doTest(){
 
     function emitServeResp(){
         Game.ee.once('changeScene', assertOfChangeScene);
-        Game.emitServerResp('successSetPilot',true);
+        Game.ee.emit('serverResp', 'successSetPilot',true);
     }
 
     function assertOfChangeScene(scene){

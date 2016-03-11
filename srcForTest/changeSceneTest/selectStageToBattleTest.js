@@ -57,7 +57,7 @@ function doTest(){
             }
         };
         Game.ee.once('changeScene', assertOfChangeScene);
-        Game.emitServerResp('gameStart',serverResp);
+        Game.ee.emit('serverResp', 'gameStart',serverResp);
     }
 
     function assertOfChangeScene(scene){

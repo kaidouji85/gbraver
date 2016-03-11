@@ -52,7 +52,7 @@ function doTest(){
                 }
             }
         };
-        Game.emitServerResp('resp',waitPhaseData);
+        Game.ee.emit('serverResp', 'resp',waitPhaseData);
         Game.ee.once('sendMessage', function(message,data){
             //message,dataはplayerChargeTestで確認済み
             assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
@@ -81,7 +81,7 @@ function doTest(){
                 }
             }
         };
-        Game.emitServerResp('resp',atackCommandPhaseData);
+        Game.ee.emit('serverResp', 'resp',atackCommandPhaseData);
         selectCommand();
         Game.ee.once('sendMessage', sendCommandForAttackCommand);
     }

@@ -370,7 +370,7 @@ module.exports = function(spec, my) {
      * @param message メッセージ
      * @param data データ
      */
-    that.emitServerResp = function(message, data){
+    that.ee.on('serverResp', function(message, data){
         var methodMap = {
             successSetArmdozer: that.changeTopScene,
             gameStart: onGameStart,
@@ -386,7 +386,7 @@ module.exports = function(spec, my) {
         __.each(methodMap, function(val, key) {
             message === key && val(data);
         });
-    };
+    });
 
     return that;
 }

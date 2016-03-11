@@ -56,7 +56,7 @@ function doTest(){
                 }
             }
         };
-        Game.emitServerResp('resp',waitPhaseData);
+        Game.ee.emit('serverResp', 'resp',waitPhaseData);
         Game.ee.once('sendMessage', function(message,data){
             //message,dataはplayerChargeTestで確認済み
             emitBattleError();
@@ -65,7 +65,7 @@ function doTest(){
 
     function emitBattleError(){
         Game.ee.once('changeScene', assertOfChangeScene);
-        Game.emitServerResp('battleError',null);
+        Game.ee.emit('serverResp', 'battleError',null);
     }
 
     function assertOfChangeScene(scene){
