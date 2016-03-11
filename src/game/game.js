@@ -133,11 +133,11 @@ module.exports = function(spec, my) {
         spec.userId = userId;
         var scene = battleScene(spec);
         scene.onCommand(function(command){
-            emitSendMessage('command',command);
+            that.ee.emit('sendMessage', 'command',command);
         });
         scene.onPushBattleEndIcon(function(isWin){
             if(battleMode===that.BATTLE_MODE_TWO_PLAY){
-                emitSendMessage('getRoomInfo',null);
+                that.ee.emit('sendMessage', 'getRoomInfo',null);
             } else if(battleMode===that.BATTLE_MODE_SINGLE_PLAY) {
                 that.changeSelectStageScene();
             } else if(battleMode===that.BATTLE_MODE_STORY){
@@ -160,16 +160,16 @@ module.exports = function(spec, my) {
             roomInfo : roomInfo
         });
         scene.onEnterRoom(function(data){
-            emitSendMessage('enterRoom',data);
+            that.ee.emit('sendMessage', 'enterRoom',data);
         });
         scene.onPushPrevButton(function(data){
             that.changeTopScene();
         });
         scene.onLeaveRoom(function(){
-            emitSendMessage('leaveRoom',null);
+            that.ee.emit('sendMessage', 'leaveRoom',null);
         });
         scene.onPushRefreshButton(function(){
-            emitSendMessage('getRoomInfo',null);
+            that.ee.emit('sendMessage', 'getRoomInfo',null);
         });
         replaceScene(scene);
     };
@@ -189,7 +189,7 @@ module.exports = function(spec, my) {
             that.changeSelectArmdozerScene();
         });
         scene.onPushBattleRoom(function(){
-            emitSendMessage('getRoomInfo',null);
+            that.ee.emit('sendMessage', 'getRoomInfo',null);
         });
         scene.onPushSelectPilotButton(function(){
             that.changeSelectPilotScene();
@@ -222,7 +222,7 @@ module.exports = function(spec, my) {
             var data = {
                 pilotId : l_pilotId
             };
-            emitSendMessage('setPilot',data);
+            that.ee.emit('sendMessage', 'setPilot',data);
             pilotId = l_pilotId;
         });
         replaceScene(scene);
@@ -241,7 +241,7 @@ module.exports = function(spec, my) {
             var sendData = {
                 armdozerId : l_armdozerId
             };
-            emitSendMessage('setArmdozer',sendData);
+            that.ee.emit('sendMessage', 'setArmdozer',sendData);
             armdozerId = l_armdozerId;
         });
         scene.onPushPrevButton(function(){
@@ -267,7 +267,7 @@ module.exports = function(spec, my) {
                 pilotId : pilotId,
                 routineId : routineId
             };
-            emitSendMessage('startSinglePlay',data);
+            that.ee.emit('sendMessage', 'startSinglePlay',data);
         });
         battleMode = that.BATTLE_MODE_SINGLE_PLAY;
         replaceScene(scene);
@@ -289,7 +289,7 @@ module.exports = function(spec, my) {
             pilotList : pilotList
         });
         scene.onEndStory(function(battle){
-            emitSendMessage('startSinglePlay',battle);
+            that.ee.emit('sendMessage', 'startSinglePlay',battle);
         });
         scene.onChangeNextStory(function(p_nextScenarioId){
             nextScenarioId = p_nextScenarioId;
@@ -309,7 +309,7 @@ module.exports = function(spec, my) {
                 return val.status;
             })
         });
-        emitSendMessage('command',{
+        that.ee.emit('sendMessage', 'command',{
             method : 'ready'
         });
     }
@@ -388,7 +388,7 @@ module.exports = function(spec, my) {
             resp: onResp,
             dissolveRoom: onDissolveRoom,
             succesEnterRoom: onSuccesEnterRoom,
-            successLeaveRoom: function() {emitSendMessage('getRoomInfo',null);},
+            successLeaveRoom: function() {that.ee.emit('sendMessage', 'getRoomInfo',null);},
             successGetRoomInfo: that.changeRoomSelectScene,
             enterRoomError: onEnterRoomError,
             successSetPilot: that.changeTopScene,

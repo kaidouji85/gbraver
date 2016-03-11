@@ -52,7 +52,7 @@ function doTest() {
             }
         };
         Game.emitServerResp('resp',waitPhaseData);
-        Game.onSendMessage(sendCommandForWaitPhase);
+        Game.ee.once('sendMessage', sendCommandForWaitPhase);
     }
     
     function sendCommandForWaitPhase(message,data){
@@ -89,7 +89,7 @@ function doTest() {
         Game.emitServerResp('resp',atackCommandData);
         assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
         assert.equal(Game.currentScene.mesWindow.getText(),'対戦相手がコマンドを選択中......','メッセージが正しい');
-        Game.onSendMessage(sendCommandForAttackCommandPhase);
+        Game.ee.once('sendMessage', sendCommandForAttackCommandPhase);
     }
     
     function sendCommandForAttackCommandPhase(message,data){
@@ -126,7 +126,7 @@ function doTest() {
         };
         Game.emitServerResp('resp',chargeData);
         assert.equal(Game.currentScene.mesWindow.getVisible(),false,'メッセージウインドウが表示されない');
-        Game.onSendMessage(sendCommandForChargePhase);
+        Game.ee.once('sendMessage', sendCommandForChargePhase);
     }
 
     function sendCommandForChargePhase(message,data){

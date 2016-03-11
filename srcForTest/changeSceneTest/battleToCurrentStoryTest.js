@@ -63,7 +63,7 @@ function doTest(){
             }
         };
         Game.emitServerResp('resp',waitPhaseData);
-        Game.onSendMessage(function(message,data){
+        Game.ee.once('sendMessage', function(message,data){
             //message,dataはenemyAtackTestで確認済み
             atackCommandPhase();
         });
@@ -90,7 +90,7 @@ function doTest(){
             }
         };
         Game.emitServerResp('resp',atackCommandPhaseData);
-        Game.onSendMessage(function(message,data){
+        Game.ee.once('sendMessage', function(message,data){
             //message,dataはenemyAtackTestで確認済み
             defenthCommandPhase();
         });
@@ -124,7 +124,7 @@ function doTest(){
         testUtil.touch(Game.currentScene.plusIcon);
         testUtil.touch(Game.currentScene.okIcon);
 
-        Game.onSendMessage(function(message,data){
+        Game.ee.once('sendMessage', function(message,data){
             //message,dataはplayerAtackTestで確認済み
             damagePhase();
         });
@@ -155,7 +155,7 @@ function doTest(){
             }
         };
         Game.emitServerResp('resp',damagePhaseData);
-        Game.onSendMessage(function(message,data){
+        Game.ee.once('sendMessage', function(message,data){
             //message,dataはplayerAtackTestで確認済み
             Game.currentScene.tl.delay(30).then(gameEnd);
         });
@@ -183,7 +183,7 @@ function doTest(){
             }
         };
         Game.emitServerResp('resp',gameEndData);
-        Game.onSendMessage(assertOfGameEnd);
+        Game.ee.once('sendMessage', assertOfGameEnd);
     }
 
     function assertOfGameEnd(message,data){

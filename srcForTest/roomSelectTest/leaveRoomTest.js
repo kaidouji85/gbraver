@@ -32,7 +32,7 @@ function doTest(){
             Game.changeRoomSelectScene(roomInfo);
             //console.log('ルーム2で入室');
             testUtil.touch(Game.currentScene.enterRoomButtonArray[2]);
-            Game.onSendMessage(sendEnterRoomCoomand);
+            Game.ee.once('sendMessage', sendEnterRoomCoomand);
         };
     }
 
@@ -54,7 +54,7 @@ function doTest(){
     }
 
     function pushLeaveRoomButton(){
-        Game.onSendMessage(sendLeaveRoomCommand);
+        Game.ee.once('sendMessage', sendLeaveRoomCommand);
         testUtil.touch(Game.currentScene.leaveRoomButton);
     }
 
@@ -69,7 +69,7 @@ function doTest(){
     }
 
     function successLeaveRoom() {
-        Game.onSendMessage(sendGetRoomInfo);
+        Game.ee.once('sendMessage', sendGetRoomInfo);
         Game.emitServerResp('successLeaveRoom',null);
     }
 

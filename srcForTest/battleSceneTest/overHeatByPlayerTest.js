@@ -53,7 +53,7 @@ function doTest() {
         };
 
         Game.emitServerResp('resp',waitPhaseData);
-        Game.onSendMessage(sendCommandForWaitPhase);
+        Game.ee.once('sendMessage', sendCommandForWaitPhase);
     }
 
     function sendCommandForWaitPhase(message,data){

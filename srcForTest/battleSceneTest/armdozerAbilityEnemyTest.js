@@ -50,7 +50,7 @@ function doTest(){
                 }
             }
         };
-        Game.onSendMessage(assertOfArmdozerAbilityPhase);
+        Game.ee.once('sendMessage', assertOfArmdozerAbilityPhase);
         Game.emitServerResp('resp',data);
     }
 

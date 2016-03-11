@@ -33,7 +33,7 @@ function doTest(){
     }
 
     function pushOkButton(){
-        Game.onSendMessage(assertOfSendMessage)
+        Game.ee.once('sendMessage', assertOfSendMessage)
         testUtil.touch(Game.currentScene.okButton);
     }
 

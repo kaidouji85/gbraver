@@ -31,7 +31,7 @@ function doTest(){
 
     function pushRegreshButton(){
         testUtil.touch(Game.currentScene.refreshButton);
-        Game.onSendMessage(sendGetRoomInfo);
+        Game.ee.once('sendMessage', sendGetRoomInfo);
     }
 
     function sendGetRoomInfo(message,data){

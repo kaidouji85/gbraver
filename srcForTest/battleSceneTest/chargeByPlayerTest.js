@@ -53,7 +53,7 @@ function doTest() {
         }; 
 
         Game.emitServerResp('resp',waitPhaseData);
-        Game.onSendMessage(sendCommandForWaitPhase);
+        Game.ee.once('sendMessage', sendCommandForWaitPhase);
     }
     
     function sendCommandForWaitPhase(message,data){
@@ -96,7 +96,7 @@ function doTest() {
     function selectCommand() {
         assert.deepEqual(Game.currentScene.chargeIcon.getPict(),Game.assets[Game.PICT_BUTTON],'チャージボタンが通常の色である')
         testUtil.touch(Game.currentScene.chargeIcon);
-        Game.onSendMessage(sendCommandForAttackCommandPhase);
+        Game.ee.once('sendMessage', sendCommandForAttackCommandPhase);
     }
     
     function sendCommandForAttackCommandPhase(message,data){
@@ -134,7 +134,7 @@ function doTest() {
         };
         Game.emitServerResp('resp',chargeData);
         assert.equal(Game.currentScene.mesWindow.getVisible(),false,'メッセージウインドウが表示されない');
-        Game.onSendMessage(sendCommandForChargePhase);
+        Game.ee.once('sendMessage', sendCommandForChargePhase);
     } 
     
     function sendCommandForChargePhase(message,data){

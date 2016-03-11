@@ -33,7 +33,7 @@ function doTest(){
     function enterRoom(){
         //ルーム3を押す
         testUtil.touch(Game.currentScene.enterRoomButtonArray[3]);
-        Game.onSendMessage(sendEnterRoomCommand);
+        Game.ee.once('sendMessage', sendEnterRoomCommand);
     }
 
     function sendEnterRoomCommand(message,data){

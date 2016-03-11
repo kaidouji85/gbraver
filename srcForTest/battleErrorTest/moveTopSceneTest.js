@@ -57,7 +57,7 @@ function doTest(){
             }
         };
         Game.emitServerResp('resp',waitPhaseData);
-        Game.onSendMessage(function(message,data){
+        Game.ee.once('sendMessage', function(message,data){
             //message,dataはplayerChargeTestで確認済み
             emitBattleError();
         });

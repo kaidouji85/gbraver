@@ -52,7 +52,7 @@ window.onload = function() {
         Game.onload = function() {
             //console.log(getTime()+' load complate');//test
             Game.changeTopScene();
-            Game.onSendMessage(function(message,data){
+            Game.ee.on('sendMessage', function(message,data){
                 socket.emit(message,data);
             });
             //TODO : テストコードがない

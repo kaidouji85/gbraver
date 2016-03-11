@@ -53,7 +53,7 @@ function doTest(){
             }
         };
         Game.emitServerResp('resp',waitPhaseData);
-        Game.onSendMessage(function(message,data){
+        Game.ee.once('sendMessage', function(message,data){
             //message,dataはplayerChargeTestで確認済み
             assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
             assert.equal(Game.currentScene.mesWindow.getText(),'通信待機中','メッセージが正しい');
@@ -83,18 +83,18 @@ function doTest(){
         };
         Game.emitServerResp('resp',atackCommandPhaseData);
         selectCommand();
-        Game.onSendMessage(sendCommandForAttackCommand);
+        Game.ee.once('sendMessage', sendCommandForAttackCommand);
     }
 
     function selectCommand(){
-        Game.onSendMessage(sendCommandForAttackCommand);
+        Game.ee.once('sendMessage', sendCommandForAttackCommand);
         testUtil.touch(Game.currentScene.atackIcon);
         testUtil.touch(Game.currentScene.okIcon);
     }
 
     function sendCommandForAttackCommand(message,data){
         assert.equal(Game.currentScene.playerTurnTimer.getVisible(),false,'ターンタイマーが表示されていない');
-        Game.onSendMessage(function(){
+        Game.ee.once('sendMessage', function(){
             new Exception('メッセージ送信が2回呼ばれたのでエラー発生');
         });
         //3秒待つ

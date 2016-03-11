@@ -29,7 +29,7 @@ function doTest(){
 
     function pushStageButton(){
         testUtil.touch(Game.currentScene.stageButtonArray[1]);
-        Game.onSendMessage(asertOfMessage);
+        Game.ee.once('sendMessage', asertOfMessage);
     }
 
     function asertOfMessage(message,data) {
@@ -63,6 +63,6 @@ function doTest(){
     function assertOfChangeScene(scene){
         assert.equal(scene,'battle','戦闘画面へ遷移する');
         assert.equal(Game.getBattleMode(),'singlePlay','戦闘モードがシングルプレイである');
-        Game.onSendMessage(testUtil.finishTest);
+        Game.ee.once('sendMessage', testUtil.finishTest);
     }
 }
