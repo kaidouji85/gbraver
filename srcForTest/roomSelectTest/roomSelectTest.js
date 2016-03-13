@@ -48,7 +48,7 @@ function doTest(){
     function enterRoom(){
         //ルーム2を押す
         testUtil.touch(Game.currentScene.enterRoomButtonArray[2]);
-        Game.onSendMessage(sendEnterRoomCommand);
+        Game.ee.once('sendMessage', sendEnterRoomCommand);
     }
 
     function sendEnterRoomCommand(message,data){
@@ -70,7 +70,7 @@ function doTest(){
     }
 
     function successEnterRoom() {
-        Game.emitServerResp('succesEnterRoom',{});
+        Game.ee.emit('serverResp', 'succesEnterRoom',{});
         assert.equal(Game.currentScene.leaveRoomButton.getVisible(),true,'退出ボタンが表示されている');
         assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
         assert.equal(Game.currentScene.mesWindow.getText(),'プレイヤーの入室待ち','メッセージが正しい');

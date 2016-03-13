@@ -29,7 +29,7 @@ function doTest(){
 
     function pushStageButton(){
         testUtil.touch(Game.currentScene.stageButtonArray[1]);
-        Game.onSendMessage(asertOfMessage);
+        Game.ee.once('sendMessage', asertOfMessage);
     }
 
     function asertOfMessage(message,data) {
@@ -56,13 +56,13 @@ function doTest(){
                 status : testDataInst.getPlayerData('test001@gmail.com').status
             }
         };
-        Game.onChangeScene(assertOfChangeScene);
-        Game.emitServerResp('gameStart',serverResp);
+        Game.ee.once('changeScene', assertOfChangeScene);
+        Game.ee.emit('serverResp', 'gameStart',serverResp);
     }
 
     function assertOfChangeScene(scene){
         assert.equal(scene,'battle','戦闘画面へ遷移する');
         assert.equal(Game.getBattleMode(),'singlePlay','戦闘モードがシングルプレイである');
-        Game.onSendMessage(testUtil.finishTest);
+        Game.ee.once('sendMessage', testUtil.finishTest);
     }
 }

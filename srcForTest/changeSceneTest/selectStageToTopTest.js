@@ -28,7 +28,7 @@ function dpoTest(){
     }
 
     function pushPrevtButton(){
-        Game.onChangeScene(assertOfChangeScene);
+        Game.ee.once('changeScene', assertOfChangeScene);
         testUtil.touch(Game.currentScene.prevButton);
     }
 

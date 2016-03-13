@@ -33,7 +33,7 @@ function doTest(){
     function enterRoom(){
         //ルーム3を押す
         testUtil.touch(Game.currentScene.enterRoomButtonArray[3]);
-        Game.onSendMessage(sendEnterRoomCommand);
+        Game.ee.once('sendMessage', sendEnterRoomCommand);
     }
 
     function sendEnterRoomCommand(message,data){
@@ -41,7 +41,7 @@ function doTest(){
     }
 
     function enterRoomError() {
-        Game.emitServerResp('enterRoomError','任意のエラーメッセージ。');
+        Game.ee.emit('serverResp', 'enterRoomError','任意のエラーメッセージ。');
         Game.currentScene.tl.delay(1).then(assertOfErrorMessage);
     }
 

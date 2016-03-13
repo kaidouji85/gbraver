@@ -33,7 +33,7 @@ function doTest(){
     }
 
     function pushOkButton(){
-        Game.onSendMessage(assertOfSendMessage)
+        Game.ee.once('sendMessage', assertOfSendMessage)
         testUtil.touch(Game.currentScene.okButton);
     }
 
@@ -47,8 +47,8 @@ function doTest(){
     }
 
     function emitServeResp(){
-        Game.onChangeScene(assertOfChangeScene);
-        Game.emitServerResp('successSetArmdozer',true);
+        Game.ee.once('changeScene', assertOfChangeScene);
+        Game.ee.emit('serverResp', 'successSetArmdozer',true);
     }
 
     function assertOfChangeScene(scene){

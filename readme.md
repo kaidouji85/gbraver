@@ -95,11 +95,19 @@ GブレイバーのクライアントはWebパックを使用しているため�
 
 #### プロダクトだけビルドする
 
+    # 通常ビルド
     grunt webpack:product
+    
+    # watch
+    grunt webpack:watchProduct
 
 #### テストコード
 
+    # 通常ビルド
     grunt webpack:test
+
+    # watch
+    grunt webpack:watchTest
 
 ### ローカル環境の起動方法
 以下コマンドを実行します。

@@ -32,7 +32,7 @@ function doTest(){
             Game.changeRoomSelectScene(roomInfo);
             //console.log('ルーム2で入室');
             testUtil.touch(Game.currentScene.enterRoomButtonArray[2]);
-            Game.onSendMessage(sendEnterRoomCoomand);
+            Game.ee.once('sendMessage', sendEnterRoomCoomand);
         };
     }
 
@@ -46,7 +46,7 @@ function doTest(){
     }
 
     function successEnterRoom() {
-        Game.emitServerResp('succesEnterRoom',{});
+        Game.ee.emit('serverResp', 'succesEnterRoom',{});
         assert.equal(Game.currentScene.leaveRoomButton.getVisible(),true,'退出ボタンが表示されている');
         assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
         assert.equal(Game.currentScene.mesWindow.getText(),'プレイヤーの入室待ち','メッセージが正しい');
@@ -54,7 +54,7 @@ function doTest(){
     }
 
     function pushLeaveRoomButton(){
-        Game.onSendMessage(sendLeaveRoomCommand);
+        Game.ee.once('sendMessage', sendLeaveRoomCommand);
         testUtil.touch(Game.currentScene.leaveRoomButton);
     }
 
@@ -69,8 +69,8 @@ function doTest(){
     }
 
     function successLeaveRoom() {
-        Game.onSendMessage(sendGetRoomInfo);
-        Game.emitServerResp('successLeaveRoom',null);
+        Game.ee.once('sendMessage', sendGetRoomInfo);
+        Game.ee.emit('serverResp', 'successLeaveRoom',null);
     }
 
     function sendGetRoomInfo(message,data){
@@ -84,7 +84,7 @@ function doTest(){
     }
 
     function respSuccessGetRoomInfo(){
-        Game.emitServerResp('successGetRoomInfo',{
+        Game.ee.emit('serverResp', 'successGetRoomInfo',{
             '0' : [],
             '1' : ['test001@gmail.com','test002@gmail.com'],
             '2' : ['test003@gmail.com','test004@gmail.com'],

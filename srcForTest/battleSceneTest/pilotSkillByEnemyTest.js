@@ -51,8 +51,8 @@ function doTest(){
                 }
             }
         };
-        Game.emitServerResp('resp',waitPhaseData);
-        Game.onSendMessage(function(message,data){
+        Game.ee.emit('serverResp', 'resp',waitPhaseData);
+        Game.ee.once('sendMessage', function(message,data){
             Game.currentScene.tl.delay(30).then(atackCommandPhase);
         });
     }
@@ -77,8 +77,8 @@ function doTest(){
                 }
             }
         };
-        Game.emitServerResp('resp',atackCommandPhaseData);
-        Game.onSendMessage(sendCommandForAttackCommand)
+        Game.ee.emit('serverResp', 'resp',atackCommandPhaseData);
+        Game.ee.once('sendMessage', sendCommandForAttackCommand)
     }
 
     function sendCommandForAttackCommand(message,data){
@@ -112,8 +112,8 @@ function doTest(){
                 }
             }
         };
-        Game.emitServerResp('resp',pilotSkillData);
-        Game.onSendMessage(sendCommandForPilotSkill);
+        Game.ee.emit('serverResp', 'resp',pilotSkillData);
+        Game.ee.once('sendMessage', sendCommandForPilotSkill);
     }
 
     function sendCommandForPilotSkill(message,data) {
@@ -147,8 +147,8 @@ function doTest(){
                 }
             }
         };
-        Game.emitServerResp('resp',attackCommandPhase2Data);
-        Game.onSendMessage(assertOfAttackCommand2);
+        Game.ee.emit('serverResp', 'resp',attackCommandPhase2Data);
+        Game.ee.once('sendMessage', assertOfAttackCommand2);
     }
 
     function assertOfAttackCommand2(){

@@ -52,8 +52,8 @@ function doTest(){
                 }
             }
         };
-        Game.emitServerResp('resp',waitPhaseData);
-        Game.onSendMessage(function(message,data){
+        Game.ee.emit('serverResp', 'resp',waitPhaseData);
+        Game.ee.once('sendMessage', function(message,data){
             //message、dataはenemyChargeTestで確認済み
             Game.currentScene.tl.delay(30).then(atackCommandPhase);
         });
@@ -79,8 +79,8 @@ function doTest(){
                 }
             }
         };
-        Game.emitServerResp('resp',data);
-        Game.onSendMessage(defenthCommandPhase);
+        Game.ee.emit('serverResp', 'resp',data);
+        Game.ee.once('sendMessage', defenthCommandPhase);
     }
 
     function defenthCommandPhase() {
@@ -103,18 +103,18 @@ function doTest(){
                 }
             }
         };
-        Game.emitServerResp('resp',data);
+        Game.ee.emit('serverResp', 'resp',data);
         selectCommnad();
     }
 
     function selectCommnad(){
-        Game.onSendMessage(sendCommandForDefenseCommand);
+        Game.ee.once('sendMessage', sendCommandForDefenseCommand);
         testUtil.touch(Game.currentScene.okIcon);
     }
 
     function sendCommandForDefenseCommand(){
         assert.equal(Game.currentScene.playerTurnTimer.getVisible(),false,'ターンタイマーが表示されていない');
-        Game.onSendMessage(function(){
+        Game.ee.once('sendMessage', function(){
             new Exception('メッセージ送信が2回呼ばれたのでエラー発生');
         });
         //3秒待つ

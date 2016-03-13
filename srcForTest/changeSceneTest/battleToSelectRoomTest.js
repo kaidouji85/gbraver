@@ -59,8 +59,8 @@ function doTest(){
                 }
             }
         };
-        Game.emitServerResp('resp',waitPhaseData);
-        Game.onSendMessage(function(message,data){
+        Game.ee.emit('serverResp', 'resp',waitPhaseData);
+        Game.ee.once('sendMessage', function(message,data){
             //message,dataはenemyAtackTestで確認済み
             atackCommandPhase();
         });
@@ -86,8 +86,8 @@ function doTest(){
                 }
             }
         };
-        Game.emitServerResp('resp',atackCommandPhaseData);
-        Game.onSendMessage(function(message,data){
+        Game.ee.emit('serverResp', 'resp',atackCommandPhaseData);
+        Game.ee.once('sendMessage', function(message,data){
             //message,dataはenemyAtackTestで確認済み
             defenthCommandPhase();
         });
@@ -113,7 +113,7 @@ function doTest(){
                 }
             }
         };
-        Game.emitServerResp('resp',defenthCommandData);
+        Game.ee.emit('serverResp', 'resp',defenthCommandData);
         selectCommand();
     }
 
@@ -121,7 +121,7 @@ function doTest(){
         testUtil.touch(Game.currentScene.plusIcon);
         testUtil.touch(Game.currentScene.okIcon);
 
-        Game.onSendMessage(function(message,data){
+        Game.ee.once('sendMessage', function(message,data){
             //message,dataはplayerAtackTestで確認済み
             damagePhase();
         });
@@ -151,8 +151,8 @@ function doTest(){
                 }
             }
         };
-        Game.emitServerResp('resp',damagePhaseData);
-        Game.onSendMessage(function(message,data){
+        Game.ee.emit('serverResp', 'resp',damagePhaseData);
+        Game.ee.once('sendMessage', function(message,data){
             //message,dataはplayerAtackTestで確認済み
             Game.currentScene.tl.delay(30).then(gameEnd);
         });
@@ -179,8 +179,8 @@ function doTest(){
                 }
             }
         };
-        Game.emitServerResp('resp',gameEndData);
-        Game.onSendMessage(assertOfGameEnd);
+        Game.ee.emit('serverResp', 'resp',gameEndData);
+        Game.ee.once('sendMessage', assertOfGameEnd);
     }
 
     function assertOfGameEnd(message,data){
@@ -193,13 +193,13 @@ function doTest(){
     }
 
     function doDissolveRoom(){
-        Game.emitServerResp('dissolveRoom',null);
+        Game.ee.emit('serverResp', 'dissolveRoom',null);
         assert.equal(Game.currentScene.battleEndIcon.getVisible(),true,'戦闘終了ボタンが表示されている');
         Game.currentScene.tl.delay(30).then(pushBattleEndIcon);
     }
 
     function pushBattleEndIcon(){
-        Game.onSendMessage(assertOfSendMessage2);
+        Game.ee.once('sendMessage', assertOfSendMessage2);
         testUtil.touch(Game.currentScene.battleEndIcon);
     }
 
@@ -220,8 +220,8 @@ function doTest(){
             '3' : [],
             '4' : []
         };
-        Game.onChangeScene(assertOfChangeScene);
-        Game.emitServerResp('successGetRoomInfo',data);
+        Game.ee.once('changeScene', assertOfChangeScene);
+        Game.ee.emit('serverResp', 'successGetRoomInfo',data);
     }
 
     function assertOfChangeScene(scene){

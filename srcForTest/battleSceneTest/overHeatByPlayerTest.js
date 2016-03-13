@@ -52,8 +52,8 @@ function doTest() {
             }
         };
 
-        Game.emitServerResp('resp',waitPhaseData);
-        Game.onSendMessage(sendCommandForWaitPhase);
+        Game.ee.emit('serverResp', 'resp',waitPhaseData);
+        Game.ee.once('sendMessage', sendCommandForWaitPhase);
     }
 
     function sendCommandForWaitPhase(message,data){
@@ -81,7 +81,7 @@ function doTest() {
             }
         };
 
-        Game.emitServerResp('resp',atackCommand);
+        Game.ee.emit('serverResp', 'resp',atackCommand);
         selectCommand();
     }
 

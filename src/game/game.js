@@ -1,3 +1,5 @@
+var __ = require('underscore');
+var EventEmitter = require('event-emitter');
 var gameBase = require('./gameBase');
 var battleScene = require('../scene/battleScene');
 var roomSelectScene = require('../scene/roomSelectScene');
@@ -12,66 +14,152 @@ module.exports = function(spec, my) {
      * ゲームコア
      */
     var contentBaseUrl = spec&&spec.contentBaseUrl || location.origin;
-    var core = gameBase({
+    var that = gameBase({
         contentBaseUrl : contentBaseUrl
     });
     var userId = spec.userId;
     var armdozerId = spec.armdozerId;
     var pilotId = spec.pilotId;
+
     var pilotList = spec.pilotList;
     var armdozerList = spec.armdozerList;
     var stageData = spec.stageData;
     var scenarioData = spec.scenarioData;
-    var currentScenarioId = getStartScenarioId();
-    var nextScenarioId = null;
-    var battleMode = core.BATTLE_MODE_TWO_PLAY;
-    var emitChangeScene = function(scene){};
-    var emitSendMessage = function(message,data){};
-    var emitLogOff = function(){};
 
-    core.changeBattleScene = function(spec){
+    var currentScenarioId = 'first';
+    var nextScenarioId = null;
+    var battleMode = that.BATTLE_MODE_TWO_PLAY;
+
+    that.ee = new EventEmitter();
+
+    /**
+     * シーン変更のヘルパー関数
+     * @param scene 変更するシーン
+     */
+    function replaceScene(scene) {
+        that.replaceScene(scene);
+        that.ee.emit('changeScene', scene.getName());
+    }
+
+    /**
+     * アームドーザIDを取得する
+     * @returns {string} アームドーザID
+     */
+    that.getArmdozerId = function() {
+        return armdozerId;
+    }
+
+    /**
+     * パイロットIDを取得する
+     * @returns {string} パイロットID
+     */
+    that.getPilotId = function(){
+        return pilotId;
+    }
+
+    /**
+     * 戦闘モードを取得する
+     * @returns {string} 戦闘モード
+     */
+    that.getBattleMode = function(){
+        return battleMode;
+    }
+
+    /**
+     * 戦闘モードを設定する
+     * @param mode 戦闘モード
+     */
+    that.setBattleMode = function(mode){
+        battleMode = mode;
+    }
+
+    /**
+     * シナリオIDを取得する
+     * @returns {string} シナリオID
+     */
+    that.getScenarioId = function(){
+        return currentScenarioId;
+    }
+
+    /**
+     * シナリオIDを設定する
+     * @param id シナリオID
+     */
+    that.setScenarioId = function(id){
+        currentScenarioId = id;
+    }
+
+    /**
+     * 次のシナリオIDを取得する
+     * @returns {string} 次のシナリオID
+     */
+    that.getNextScenarioId = function(){
+        return nextScenarioId;
+    }
+
+    /**
+     * 次のシナリオIDを設定する
+     * @param id シナリオID
+     */
+    that.setNextScenarioId = function(id){
+        nextScenarioId = id;
+    }
+
+    /**
+     * 戦闘シーンに変更する
+     *
+     * @param spec battleSceneに渡すspec
+     */
+    that.changeBattleScene = function(spec){
         spec.userId = userId;
         var scene = battleScene(spec);
         scene.onCommand(function(command){
-            emitSendMessage('command',command);
+            that.ee.emit('sendMessage', 'command',command);
         });
         scene.onPushBattleEndIcon(function(isWin){
-            if(battleMode===core.BATTLE_MODE_TWO_PLAY){
-                emitSendMessage('getRoomInfo',null);
-            } else if(battleMode===core.BATTLE_MODE_SINGLE_PLAY) {
-                core.changeSelectStageScene();
-            } else if(battleMode===core.BATTLE_MODE_STORY){
+            if(battleMode===that.BATTLE_MODE_TWO_PLAY){
+                that.ee.emit('sendMessage', 'getRoomInfo',null);
+            } else if(battleMode===that.BATTLE_MODE_SINGLE_PLAY) {
+                that.changeSelectStageScene();
+            } else if(battleMode===that.BATTLE_MODE_STORY){
                 currentScenarioId = isWin ? nextScenarioId : currentScenarioId;
                 nextScenarioId = null;
-                core.changeStoryScene(currentScenarioId);
+                that.changeStoryScene(currentScenarioId);
             }
         });
-        core.pushScene(scene);
-        emitChangeScene(core.currentScene.getName());
+        replaceScene(scene);
     };
 
-    core.changeRoomSelectScene = function(roomInfo){
-        battleMode = core.BATTLE_MODE_TWO_PLAY;
+    /**
+     * ルームセレクトシーンに変更する
+     *
+     * @param roomInfo ルーム情報
+     */
+    that.changeRoomSelectScene = function(roomInfo){
+        battleMode = that.BATTLE_MODE_TWO_PLAY;
         var scene = roomSelectScene({
             roomInfo : roomInfo
         });
         scene.onEnterRoom(function(data){
-            emitSendMessage('enterRoom',data);
+            that.ee.emit('sendMessage', 'enterRoom',data);
         });
         scene.onPushPrevButton(function(data){
-            core.changeTopScene();
+            that.changeTopScene();
         });
         scene.onLeaveRoom(function(){
-            emitSendMessage('leaveRoom',null);
+            that.ee.emit('sendMessage', 'leaveRoom',null);
         });
         scene.onPushRefreshButton(function(){
-            emitSendMessage('getRoomInfo',null);
+            that.ee.emit('sendMessage', 'getRoomInfo',null);
         });
-        core.replaceScene(scene);
-        emitChangeScene(core.currentScene.getName());
+        replaceScene(scene);
     };
-    
-    core.changeTopScene = function(){
+
+    /**
+     * トップシーンに変更する
+     *
+     */
+    that.changeTopScene = function(){
         var scene = topScene({
             armdozerId : armdozerId,
             pilotId : pilotId,
@@ -79,49 +167,53 @@ module.exports = function(spec, my) {
             pilotList : pilotList
         });
         scene.onPushSelectArmdozerButton(function(){
-            core.changeSelectArmdozerScene();
+            that.changeSelectArmdozerScene();
         });
         scene.onPushBattleRoom(function(){
-            emitSendMessage('getRoomInfo',null);
+            that.ee.emit('sendMessage', 'getRoomInfo',null);
         });
         scene.onPushSelectPilotButton(function(){
-            core.changeSelectPilotScene();
+            that.changeSelectPilotScene();
         });
         scene.onPushSelectStageButton(function(){
-            core.changeSelectStageScene();
+            that.changeSelectStageScene();
         });
         scene.onPushLogOffButton(function(){
-            emitLogOff();
+            that.ee.emit('logOff');
         });
         scene.onPushStoryButton(function(){
-            core.changeStoryScene(currentScenarioId);
+            that.changeStoryScene(currentScenarioId);
         });
-
-        core.replaceScene(scene);
-        emitChangeScene(core.currentScene.getName());
+        replaceScene(scene);
     };
 
-    core.changeSelectPilotScene = function() {
+    /**
+     * パイロット選択シーンに変更する
+     *
+     */
+    that.changeSelectPilotScene = function() {
         var scene = selectPilotScene({
             pilotList : pilotList,
             selectPilotId : pilotId
         });
         scene.onPushPrevButton(function(){
-            core.changeTopScene();
+            that.changeTopScene();
         });
         scene.onPushOkButton(function(l_pilotId){
             var data = {
                 pilotId : l_pilotId
             };
-            emitSendMessage('setPilot',data);
+            that.ee.emit('sendMessage', 'setPilot',data);
             pilotId = l_pilotId;
-            currentScenarioId = getStartScenarioId();
         });
-        core.replaceScene(scene);
-        emitChangeScene(core.currentScene.getName());
+        replaceScene(scene);
     }
 
-    core.changeSelectArmdozerScene = function(){
+    /**
+     * アームドーザ選択シーンに変更する
+     *
+     */
+    that.changeSelectArmdozerScene = function(){
         var scene = selectArmdozerScene({
             armdozerList : armdozerList,
             selectArmdozerId : armdozerId
@@ -130,23 +222,25 @@ module.exports = function(spec, my) {
             var sendData = {
                 armdozerId : l_armdozerId
             };
-            emitSendMessage('setArmdozer',sendData);
+            that.ee.emit('sendMessage', 'setArmdozer',sendData);
             armdozerId = l_armdozerId;
         });
         scene.onPushPrevButton(function(){
-            core.changeTopScene();
-        });
-        core.replaceScene(scene);
-        emitChangeScene(core.currentScene.getName());
+            that.changeTopScene();
+        });replaceScene(scene);
     }
 
-    core.changeSelectStageScene = function(){
+    /**
+     * ステージ選択シーンに変更する
+     *
+     */
+    that.changeSelectStageScene = function(){
         var scene = selectStageScene({
             stageData : stageData,
             armdozerList : armdozerList
         });
         scene.onPushPrevButton(function(){
-            core.changeTopScene();
+            that.changeTopScene();
         });
         scene.onPushStageButon(function(enemyId,pilotId,routineId){
             var data = {
@@ -154,169 +248,147 @@ module.exports = function(spec, my) {
                 pilotId : pilotId,
                 routineId : routineId
             };
-            emitSendMessage('startSinglePlay',data);
+            that.ee.emit('sendMessage', 'startSinglePlay',data);
         });
-        core.replaceScene(scene);
-        battleMode = core.BATTLE_MODE_SINGLE_PLAY;
-        emitChangeScene(core.currentScene.getName());
+        battleMode = that.BATTLE_MODE_SINGLE_PLAY;
+        replaceScene(scene);
     }
 
-    core.changeStoryScene = function(senarioId){
+    /**
+     * ストーリーシーンに変更する
+     *
+     * @param senarioId シナリオID
+     */
+    that.changeStoryScene = function(senarioId){
         var scene = storyScene({
-            scenarioData : getScenarioData(senarioId),
+            scenarioData :
+                __.chain(scenarioData)
+                    .filter(function(item){return item.id === senarioId;})
+                    .map(function(item){return item.data})
+                    .first()
+                    .value(),
             pilotList : pilotList
         });
         scene.onEndStory(function(battle){
-            emitSendMessage('startSinglePlay',battle);
+            that.ee.emit('sendMessage', 'startSinglePlay',battle);
         });
         scene.onChangeNextStory(function(p_nextScenarioId){
             nextScenarioId = p_nextScenarioId;
         });
-        core.replaceScene(scene);
-        battleMode = core.BATTLE_MODE_STORY;
-        emitChangeScene(core.currentScene.getName());
+        battleMode = that.BATTLE_MODE_STORY;
+        replaceScene(scene);
     }
 
-    core.onChangeScene = function(fn){
-        emitChangeScene = fn;
-    };
-    
-    core.onSendMessage = function(fn){
-        emitSendMessage = fn;
-    };
-
-    core.onLogOff = function(fn){
-        emitLogOff = fn;
-    }
-    
-    core.emitServerResp = function(message,data){
-        switch(message) {
-            case 'successSetArmdozer' :
-                core.changeTopScene();
-                break;
-            case 'gameStart' :
-                var statusArray = {};
-                for (var uid in data) {
-                    statusArray[uid] = data[uid].status;
-                }
-                core.changeBattleScene({
-                    timeOver : core.COMMAND_TIME_OVER,
-                    statusArray : statusArray
-                });
-                emitSendMessage('command',{
-                    method : 'ready'
-                });
-                break;
-            case 'resp' :
-                changePhase(data);
-                break;
-            case 'dissolveRoom':
-                if(core.currentScene.getName()==='battle'){
-                    core.currentScene.doDissolveRoom();
-                }
-                break;
-            case 'succesEnterRoom':
-                if(core.currentScene.getName()==='selectRoom'){
-                    core.currentScene.emitSuccesEnterRoom();
-                }
-                break;
-            case 'successLeaveRoom':
-                emitSendMessage('getRoomInfo',null);
-                break;
-            case 'successGetRoomInfo':
-                core.changeRoomSelectScene(data);
-                break;
-            case 'enterRoomError':
-                if(core.currentScene.getName()==='selectRoom') {
-                    core.currentScene.emitEnterRoomError(data);
-                }
-                break;
-            case 'successSetPilot':
-                core.changeTopScene();
-                break;
-            case 'battleError' :    //TODO : 自動テストがない
-                if(core.currentScene.getName()==='battle'){
-                    core.changeTopScene();
-                } else if(core.currentScene.getName()==='selectRoom') {
-                    core.currentScene.emitEnterRoomError('そのコネクションは既に入室しています。');
-                }
-                break;
-        }
-    };
-
-    core.getArmdozerId = function() {
-        return armdozerId;
+    /**
+     * サーバからgameStartが返された際のイベントハンドラ
+     * @param data サーバレスポンス
+     */
+    function onGameStart(data) {
+        that.changeBattleScene({
+            timeOver : that.COMMAND_TIME_OVER,
+            statusArray : __.mapObject(data,function(val, key){
+                return val.status;
+            })
+        });
+        that.ee.emit('sendMessage', 'command',{
+            method : 'ready'
+        });
     }
 
-    core.getPilotId = function(){
-        return pilotId;
+    /**
+     * サーバからrespが返された際のイベントハンドラ
+     * @param data サーバからのデータ
+     */
+    function onResp(data){
+        __.chain({
+            wait: 'doWaitPhase',
+            atackCommand: 'doAtackCommandPhase',
+            charge: 'doChargePhase',
+            defenthCommand: 'doDefenthCommandPhase',
+            damage: 'doDamagePhase',
+            gameEnd: 'doGameEnd',
+            pilotSkill: 'doPilotSkill',
+            armdozerAbility: 'doArmdozerAbility'
+        }).filter(function(val, key){
+            return key === data.phase;
+        }).each(function(val, key) {
+            that.currentScene[val](data);
+        });
     }
 
-    core.getBattleMode = function(){
-        return battleMode;
-    }
-
-    core.setBattleMode = function(mode){
-        battleMode = mode;
-    }
-
-    core.getScenarioId = function(){
-        return currentScenarioId;
-    }
-
-    core.setScenarioId = function(id){
-        currentScenarioId = id;
-    }
-
-    core.getNextScenarioId = function(){
-        return nextScenarioId;
-    }
-
-    core.setNextScenarioId = function(id){
-        nextScenarioId = id;
-    }
-
-    function changePhase(data){
-        var phase = data.phase;
-        switch(phase) {
-            case 'wait':
-                core.currentScene.doWaitPhase(data);
-                break;
-            case 'atackCommand':
-                core.currentScene.doAtackCommandPhase(data);
-                break;
-            case 'charge':
-                core.currentScene.doChargePhase(data);
-                break;
-            case 'defenthCommand':
-                core.currentScene.doDefenthCommandPhase(data);
-                break;
-            case 'damage':
-                core.currentScene.doDamagePhase(data);
-                break;
-            case 'gameEnd':
-                core.currentScene.doGameEnd(data);
-                break;
-            case 'pilotSkill':
-                core.currentScene.doPilotSkill(data);
-                break;
-            case 'armdozerAbility':
-                core.currentScene.doArmdozerAbility(data);
-                break;
+    /**
+     * サーバからdissolveRoomが返された際のイベントハンドラ
+     * @param data サーバからのデータ
+     */
+    function onDissolveRoom(data) {
+        if(that.currentScene.getName()==='battle'){
+            that.currentScene.doDissolveRoom();
         }
     }
 
-    function getScenarioData(scenarioId){
-        for(var i in scenarioData){
-            if(scenarioData[i].id===scenarioId){
-                return scenarioData[i].data;
-            }
+    /**
+     * サーバからsuccesEnterRoomが返された際のイベントハンドラ
+     * @param data サーバからのデータ
+     */
+    function onSuccesEnterRoom(data) {
+        if(that.currentScene.getName()==='selectRoom'){
+            that.currentScene.emitSuccesEnterRoom();
         }
     }
 
-    function getStartScenarioId() {
-        return 'first';
+    /**
+     * サーバからsuccessLeaveRoomが返された際のイベントハンドラ
+     * @param data サーバからのデータ
+     */
+    function onSuccessLeaveRoom() {
+        that.ee.emit('sendMessage', 'getRoomInfo',null);
     }
 
-    return core;
+    /**
+     * サーバからenterRoomErrorが返された際のイベントハンドラ
+     * @param data サーバからのデータ
+     */
+    function onEnterRoomError(data) {
+        if(that.currentScene.getName()==='selectRoom') {
+            that.currentScene.emitEnterRoomError(data);
+        }
+    }
+
+    /**
+     * サーバからbattleErrorが返された際のイベントハンドラ
+     * @param data サーバからのデータ
+     */
+    function onBattleError(data) {
+        if(that.currentScene.getName()==='battle'){
+            that.changeTopScene();
+        } else if(that.currentScene.getName()==='selectRoom') {
+            that.currentScene.emitEnterRoomError('そのコネクションは既に入室しています。');
+        }
+    }
+
+    /**
+     * サーバからメッセージが来た際のイベントハンドラ
+     * @param message メッセージ
+     * @param data データ
+     */
+    that.ee.on('serverResp', function(message, data){
+        __.chain({
+            successSetArmdozer: that.changeTopScene,
+            gameStart: onGameStart,
+            resp: onResp,
+            dissolveRoom: onDissolveRoom,
+            succesEnterRoom: onSuccesEnterRoom,
+            successLeaveRoom: onSuccessLeaveRoom,
+            successGetRoomInfo: that.changeRoomSelectScene,
+            enterRoomError: onEnterRoomError,
+            successSetPilot: that.changeTopScene,
+            battleError: onBattleError
+        }).filter(function(val, key){
+            return message === key;
+        }).each(function(val, key){
+            val(data);
+        });
+    });
+
+    return that;
 }

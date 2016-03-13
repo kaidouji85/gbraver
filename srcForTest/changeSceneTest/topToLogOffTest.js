@@ -29,7 +29,7 @@ function doTest(){
 
     function pushLogOffButton(){
         testUtil.touch(Game.currentScene.logOffButton);
-        Game.onLogOff(assertOfLogOff);
+        Game.ee.on('logOff', assertOfLogOff);
     }
 
     function assertOfLogOff(){
