@@ -2,7 +2,7 @@ var gameBase = require('../../src/game/gameBase');
 var testUtil = require('../testlib/testUtil');
 var testData = require('../testlib/testData')();
 var tournamentTable = require('../../src/tournament/tournamentTable');
-
+var CONST = require('../../src/tournament/const');
 
 enchant();
 window.onload = doTest;
@@ -17,21 +17,45 @@ function doTest() {
 
     function initTournament(){
         testTournament = tournamentTable({
-            participants: [
-                {pilotId: 'kyoko'},
-                {pilotId: 'akane'},
+            // 表示位置
+            x: 160,
+            y: 200,
+            // トーナメントデータ
+            data: {
+                left: {
+                    left: {
+                        left: { pilotId: 'kyoko' },
+                        right: { pilotId: 'akane' },
+                        state: CONST.TOURNAMENT_STATE.NO_RESULT
+                    },
+                    right: {
+                        left: { pilotId: 'iori' },
+                        right: { pilotId: 'akira' },
+                        state: CONST.TOURNAMENT_STATE.NO_RESULT
+                    },
+                    state: CONST.TOURNAMENT_STATE.NO_RESULT
+                },
+                right: {
+                    left: {
+                        left: { pilotId: 'kyoko' },
+                        right: { pilotId: 'akane' },
+                        state: CONST.TOURNAMENT_STATE.NO_RESULT
+                    },
+                    right: {
+                        left: { pilotId: 'iori' },
+                        right: { pilotId: 'akira' },
+                        state: CONST.TOURNAMENT_STATE.NO_RESULT
+                    },
+                    state: CONST.TOURNAMENT_STATE.NO_RESULT
+                },
+                state: CONST.TOURNAMENT_STATE.NO_RESULT
+            },
+            // Gブレイバーのマスタ系データ
+            master: testData.getMasterData()
+        }
 
-                {pilotId: 'iori'},
-                {pilotId: 'akira'},
 
-                {pilotId: 'kyoko'},
-                {pilotId: 'akane'},
-
-                {pilotId: 'iori'},
-                {pilotId: 'akira'}
-            ],
-            masterData: testData.getMasterData()
-        });
+        );
 
         testGame.currentScene.backgroundColor = 'black';
         testGame.currentScene.addChild(testTournament);

@@ -39,7 +39,9 @@ module.exports = function(spec,my){
     core.PICT_BATTERY_MERTER_DOWN = core.PICT_PREFIX+'batteryMerterDown.png';
     core.PICT_SPECIAL_MERTER_UP = core.PICT_PREFIX+'specialMerterUp.png';
     core.PICT_SPECIAL_MERTER_DOWN = core.PICT_PREFIX+'specialMerterDown.png';
-    core.PICT_TOURNAMENT_BASE = core.PICT_PREFIX + 'tournamentBase.png';
+    core.PICT_TOURNAMENT_BLOCK_1 = core.PICT_PREFIX+'tournamentBlock1.png';
+    core.PICT_TOURNAMENT_BLOCK_2 = core.PICT_PREFIX+'tournamentBlock2.png';
+    core.PICT_TOURNAMENT_BLOCK_3 = core.PICT_PREFIX+'tournamentBlock3.png';
 
     core.SOUND_PREFIX = contentBaseUrl+'/sound/';
     core.SOUND_BATTLE = core.SOUND_PREFIX + 'game_maoudamashii_1_battle34.mp3';
@@ -50,6 +52,7 @@ module.exports = function(spec,my){
     core.SOUND_PUSH_BUTTON = core.SOUND_PREFIX + 'tm2_switch001.wav';
     core.SOUND_OPEN_BATTERY = core.SOUND_PREFIX + 'power21.wav';
     core.SOUND_WAKE_UP = core.SOUND_PREFIX + 'mecha20.wav';
+
     core.WAIT_TIME_ACTIVE_RESET = 30;
     core.ICON_WIDTH = 124;
     core.ICON_HEIGHT = 40;
@@ -81,6 +84,7 @@ module.exports = function(spec,my){
     core.bgm = bgmManager();
     preLoad();
 
+    //TODO 定数からの自動読み込みにする
     function preLoad() {
         core.preload(core.PICT_PREFIX+'GranBraver.PNG');
         core.preload(core.PICT_PREFIX+'wakeUpGranBraver.PNG');
@@ -132,7 +136,9 @@ module.exports = function(spec,my){
         core.preload(core.PICT_BATTERY_MERTER_DOWN);
         core.preload(core.PICT_SPECIAL_MERTER_UP);
         core.preload(core.PICT_SPECIAL_MERTER_DOWN);
-        core.preload(core.PICT_TOURNAMENT_BASE);
+        core.preload(core.PICT_TOURNAMENT_BLOCK_1);
+        core.preload(core.PICT_TOURNAMENT_BLOCK_2);
+        core.preload(core.PICT_TOURNAMENT_BLOCK_3);
 
         core.preload(core.SOUND_BATTLE);
         core.preload(core.SOUND_ATTACK_HIT);

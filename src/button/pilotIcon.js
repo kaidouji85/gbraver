@@ -17,8 +17,9 @@ module.exports = function(spec,my){
 
     var GRID_WINDOW_SIZE = 16;
 
-    init();
-    function init(){
+    (function(){
+        that.x = spec.x || 0;
+        that.y = spec.y || 0;
         pilotButton = gridWindow({
             pict : windowPict,
             width : width,
@@ -30,7 +31,7 @@ module.exports = function(spec,my){
         miniPilot.image = createFaceIcon(pilotPict);
         miniPilot.scaleX = scaleX;
         that.addChild(miniPilot);
-    }
+    })()
 
     that.getVisible = function(){
         return visible;
