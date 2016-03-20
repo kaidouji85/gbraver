@@ -66,6 +66,10 @@ module.exports = function tournamentTable(spec) {
             x: x,
             y: y + LINE_WIDTH/2,
             data: param.data.left
+        })).concat(createBlock1({
+            x: x,
+            y: y + BLOCK2_HEIGHT - LINE_WIDTH/2,
+            data: param.data.right
         }));
     }
 
