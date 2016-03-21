@@ -6,7 +6,7 @@ var BLOCK3_WIDTH = 48;
 var BLOCK3_HEIGHT = 8;
 var BLOCK2_WIDTH = 8;
 var BLOCK2_HEIGHT = 184;
-var BLOCK1_WIDTH = 72;
+var BLOCK1_WIDTH = 56;
 var BLOCK1_HEIGHT = 88;
 var PILOT_ICON_WIDTH = 64;
 var PILOT_ICON_HEIGHT = 64;
@@ -28,20 +28,21 @@ module.exports = function tournamentTable(spec) {
     var that = new Group();
 
     (function() {
+        var x = spec.x - BLOCK3_WIDTH/2;
         var table = [].concat([touranmentBlock({
-            x: spec.x,
+            x: x,
             y: spec.y,
             image: core.assets[core.PICT_TOURNAMENT_BLOCK_3],
             width: BLOCK3_WIDTH,
             height: BLOCK3_HEIGHT,
             state: spec.data.state
         })]).concat(createBlock2({
-            x: spec.x,
+            x: x,
             y: spec.y,
             data: spec.data.left,
             direction: DIRECTION_LEFT
         })).concat(createBlock2({
-            x: spec.x + BLOCK3_WIDTH,
+            x: x + BLOCK3_WIDTH,
             y: spec.y,
             data: spec.data.right,
             direction: DIRECTION_RIGHT
@@ -137,7 +138,7 @@ module.exports = function tournamentTable(spec) {
             return item.id === param.pilotId;
         });
         return pilotIcon({
-            x: isLeft ? (param.x - PILOT_ICON_WIDTH) : (param.x + PILOT_ICON_WIDTH + LINE_WIDTH),
+            x: isLeft ? (param.x - PILOT_ICON_WIDTH) : (param.x + BLOCK1_WIDTH),
             y: param.y - PILOT_ICON_HEIGHT/2,
             windowPict: core.assets[core.PICT_BLACK_WINDOW],
             pilotPict: core.assets[core.PICT_PREFIX+pilotData.pict],
