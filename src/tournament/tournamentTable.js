@@ -11,6 +11,8 @@ var BLOCK1_HEIGHT = 88;
 var PILOT_ICON_WIDTH = 64;
 var PILOT_ICON_HEIGHT = 64;
 var LINE_WIDTH = 8;
+var DIRECTION_RIGHT = 'DIRECTION_RIGHT';
+var DIRECTION_LEFT = 'DIRECTION_LEFT';
 
 /**
  * トーナメントブロック
@@ -33,10 +35,16 @@ module.exports = function tournamentTable(spec) {
             width: BLOCK3_WIDTH,
             height: BLOCK3_HEIGHT,
             state: spec.data.state
-        })]).concat(createBlosk2({
+        })]).concat(createBlock2({
             x: spec.x,
             y: spec.y,
-            data: spec.data.left
+            data: spec.data.left,
+            direction: DIRECTION_LEFT
+        })).concat(createBlock2({
+            x: spec.x + BLOCK3_WIDTH,
+            y: spec.y,
+            data: spec.data.right,
+            direction: DIRECTION_RIGHT
         }));
 
         table.forEach(function(val){
@@ -50,10 +58,12 @@ module.exports = function tournamentTable(spec) {
      *        param.x x座標
      *        param.y y座標
      *        param.data トーナメントデータ
+     *        param.direction トーナメントブロックの方向
      * @returns {Object[]} Node配列
      */
-    function createBlosk2(param) {
-        var x = param.x - BLOCK2_WIDTH;
+    function createBlock2(param) {
+        var isLeft = param.direction === DIRECTION_LEFT;
+        var x = isLeft ? (param.x - BLOCK2_WIDTH) : (param.x + BLOCK2_WIDTH - LINE_WIDTH);
         var y = param.y - BLOCK2_HEIGHT/2;
         return [touranmentBlock({
             x: x,
@@ -61,14 +71,17 @@ module.exports = function tournamentTable(spec) {
             image: core.assets[core.PICT_TOURNAMENT_BLOCK_2],
             width: BLOCK2_WIDTH,
             height: BLOCK2_HEIGHT,
+            scaleX: param.direction === DIRECTION_LEFT ? 1 : -1,
             state: param.data.state
         })].concat(createBlock1({
             x: x,
             y: y + LINE_WIDTH/2,
+            direction: param.direction,
             data: param.data.left
         })).concat(createBlock1({
             x: x,
             y: y + BLOCK2_HEIGHT - LINE_WIDTH/2,
+            direction: param.direction,
             data: param.data.right
         }));
     }
@@ -79,10 +92,12 @@ module.exports = function tournamentTable(spec) {
      *        param.x x座標
      *        param.y y座標
      *        param.data トーナメントデータ
+     *        param.direction トーナメントブロックの方向
      * @returns {Object[]} Node配列
      */
     function createBlock1(param) {
-        var x = param.x - BLOCK1_WIDTH;
+        var isLeft = param.direction === DIRECTION_LEFT;
+        var x = isLeft ? (param.x - BLOCK1_WIDTH) : (param.x + LINE_WIDTH);
         var y = param.y - BLOCK1_HEIGHT/2;
         return [touranmentBlock({
             x: x,
@@ -90,15 +105,18 @@ module.exports = function tournamentTable(spec) {
             image: core.assets[core.PICT_TOURNAMENT_BLOCK_1],
             width: BLOCK1_WIDTH,
             height: BLOCK1_HEIGHT,
+            scaleX: param.direction === DIRECTION_LEFT ? 1 : -1,
             state: param.data.state
         })].concat([
             createPilotIcon({
                 x: x,
                 y: y,
+                direction: param.direction,
                 pilotId: param.data.left.pilotId
             }), createPilotIcon({
                 x: x,
                 y: y + BLOCK1_HEIGHT,
+                direction: param.direction,
                 pilotId: param.data.right.pilotId
             })
         ]);
@@ -110,21 +128,24 @@ module.exports = function tournamentTable(spec) {
      *        param.x x座標
      *        param.y y座標
      *        param.pilotId パイロットID
+     *        param.direction パイロットの向いてる方向
      * @returns {Object} パイロットアイコン
      */
     function createPilotIcon(param) {
+        var isLeft = param.direction === DIRECTION_LEFT;
         var pilotData = __.find(spec.master.pilotList, function(item){
             return item.id === param.pilotId;
         });
         return pilotIcon({
-            x: param.x - PILOT_ICON_WIDTH,
+            x: isLeft ? (param.x - PILOT_ICON_WIDTH) : (param.x + PILOT_ICON_WIDTH + LINE_WIDTH),
             y: param.y - PILOT_ICON_HEIGHT/2,
-            windowPict : core.assets[core.PICT_BLACK_WINDOW],
-            pilotPict : core.assets[core.PICT_PREFIX+pilotData.pict],
-            pictTopMargin : pilotData.pictTopMargin,
-            pictLeftMargin : pilotData.pictLeftMargin,
-            width : 4,
-            height : 4
+            windowPict: core.assets[core.PICT_BLACK_WINDOW],
+            pilotPict: core.assets[core.PICT_PREFIX+pilotData.pict],
+            pictTopMargin: pilotData.pictTopMargin,
+            pictLeftMargin: pilotData.pictLeftMargin,
+            width: 4,
+            height: 4,
+            scaleX: isLeft ? -1 : 1
         });
     }
 

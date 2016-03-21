@@ -37,13 +37,13 @@ function doTest() {
                 },
                 right: {
                     left: {
-                        left: { pilotId: 'kyoko' },
-                        right: { pilotId: 'akane' },
+                        left: { pilotId: 'akira' },
+                        right: { pilotId: 'iori' },
                         state: CONST.TOURNAMENT_STATE.NO_RESULT
                     },
                     right: {
-                        left: { pilotId: 'iori' },
-                        right: { pilotId: 'akira' },
+                        left: { pilotId: 'akane' },
+                        right: { pilotId: 'kyoko' },
                         state: CONST.TOURNAMENT_STATE.NO_RESULT
                     },
                     state: CONST.TOURNAMENT_STATE.NO_RESULT
