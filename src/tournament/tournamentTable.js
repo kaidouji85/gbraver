@@ -29,21 +29,22 @@ module.exports = function tournamentTable(spec) {
 
     (function() {
         var x = spec.x - BLOCK3_WIDTH/2;
+        var y = spec.y - BLOCK3_HEIGHT/2;
         var table = [].concat([touranmentBlock({
             x: x,
-            y: spec.y,
+            y: y,
             image: core.assets[core.PICT_TOURNAMENT_BLOCK_3],
             width: BLOCK3_WIDTH,
             height: BLOCK3_HEIGHT,
             state: spec.data.state
         })]).concat(createBlock2({
             x: x,
-            y: spec.y,
+            y: y,
             data: spec.data.left,
             direction: DIRECTION_LEFT
         })).concat(createBlock2({
             x: x + BLOCK3_WIDTH,
-            y: spec.y,
+            y: y,
             data: spec.data.right,
             direction: DIRECTION_RIGHT
         }));
@@ -65,7 +66,7 @@ module.exports = function tournamentTable(spec) {
     function createBlock2(param) {
         var isLeft = param.direction === DIRECTION_LEFT;
         var x = isLeft ? (param.x - BLOCK2_WIDTH) : (param.x + BLOCK2_WIDTH - LINE_WIDTH);
-        var y = param.y - BLOCK2_HEIGHT/2;
+        var y = param.y - BLOCK2_HEIGHT/2 + BLOCK3_HEIGHT/2;
         return [touranmentBlock({
             x: x,
             y: y,

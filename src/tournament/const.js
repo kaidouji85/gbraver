@@ -7,8 +7,8 @@ module.exports = {
      */
     TOURNAMENT_STATE: {
         NO_RESULT: 0,
-        RIGHT_WIN: 1,
-        LEFT_WIN: 2
+        LEFT_WIN: 1,
+        RIGHT_WIN: 2
     },
 
     /**
