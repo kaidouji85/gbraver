@@ -281,11 +281,11 @@ module.exports = function(spec,my){
         }
     ];
 
-    that.getUserData = function(userId,cb){
+    that.getUserData = function(userId){
         return searchUser(userId);
     }
 
-    that.getPlayerData = function(userId,cb){
+    that.getPlayerData = function(userId){
         var userData = searchUser(userId);
         var armdozerData = searchArmdozer(userData.armdozerId);
         var pilotData = searchPilot(userData.pilotId);
