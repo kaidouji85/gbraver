@@ -16,7 +16,7 @@ test.describe('画面テスト', function() {
             build();
         util = testUtil({
             baseUrl : BASE_URL,
-            webdriver : driver
+            driver : driver
         });
     });
 

@@ -1,26 +1,27 @@
-module.exports = testUtil;
+var webdriver = require('selenium-webdriver');
 
-function testUtil(spec,my) {
+/**
+ * テストユーティリティ
+ * @param spec
+ *        spec.driver WebDriverオブジェクト
+ *        spec.url ベースURL
+ * @returns {Object} テストユーティリティ
+ */
+module.exports = function(spec) {
     var that = {};
-    var baseUrl = spec.baseUrl;
-    var webdriver = spec.webdriver;
 
-    that.doClientTest =doClientTest;
+    /**
+     * テストを実行する
+     * @param fileName テストコード名
+     */
+    that.doClientTest = function(fileName) {
+        var url = spec.baseUrl+'/testClient?code='+fileName;
+        var driver = spec.driver;
+        var until = webdriver.until;
 
-    function doClientTest(testCode) {
-        var url = baseUrl+'/testClient?code='+testCode;
-        webdriver.get(url);
-        webdriver.wait(function () {
-            return webdriver.getTitle().then(function (title) {
-                return testCode === title;
-            });
-        }, 1000);
-
-        webdriver.wait(function () {
-            return webdriver.getTitle().then(function (title) {
-                return 'finish' === title;
-            });
-        }, 22000);
+        driver.get(url);
+        driver.wait(until.titleIs(fileName), 1000);
+        driver.wait(until.titleIs('finish'), 22000);
     }
 
     return that;
