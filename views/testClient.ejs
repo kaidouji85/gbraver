@@ -10,6 +10,10 @@
     <script type="text/javascript">
         writeHeader('/header.html');
         writeHeader('/testHeader.html');
+        window.jsErrors = [];
+        window.onerror = function(errorMessage) {
+            window.jsErrors.push(errorMessage);
+        }
     </script>
     <script type="text/javascript" src="<%= testCode %>" name="testCode"></script>
     <style type="text/css">
