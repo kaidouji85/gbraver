@@ -11,6 +11,25 @@ module.exports = function(spec) {
     var that = {};
 
     /**
+     * テスト実行を待つ
+     * クライアント側でエラーが発生した場合は、即座に中止する
+     * @returns {Object} Promise
+     */
+    function waitTest() {
+        var driver = spec.driver;
+        return driver.executeScript(function(){
+            return window.jsErrors;
+        }).then(function(jsErrors) {
+            if(jsErrors.length > 0) {
+                throw new Error(jsErrors);
+            }
+            return driver.getTitle();
+        }).then(function(title) {
+            return title === 'finish';
+        });
+    }
+
+    /**
      * テストを実行する
      * @param fileName テストコード名
      */
@@ -21,7 +40,7 @@ module.exports = function(spec) {
 
         driver.get(url);
         driver.wait(until.titleIs(fileName), 1000);
-        driver.wait(until.titleIs('finish'), 22000);
+        driver.wait(waitTest, 22000);
     }
 
     return that;
