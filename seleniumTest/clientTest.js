@@ -1,7 +1,6 @@
 var PORT = process.env.PORT || 3000;
 var BASE_URL = 'http://localhost:'+PORT;
 var TEST_DIR = 'buildForTest';
-var assert = require('chai').assert;
 var webdriver = require('selenium-webdriver');
 var test = require('selenium-webdriver/testing');
 var testUtil = require('./testUtil.js');
@@ -25,20 +24,14 @@ test.describe('画面テスト', function() {
         driver.quit();
     });
 
-    globTestJs();
-    function globTestJs(){
+    (function(){
         var tg = testGlob();
         var fileList = tg.glob(TEST_DIR+'/javascripts');
-        var file;
-        for(var i in fileList){
-            file = fileList[i].slice(TEST_DIR.length+1);
-            doTest(file);
-        }
-    }
-
-    function doTest(testFile){
-        test.it(testFile, function(){
-            util.doClientTest(testFile);
+        fileList.forEach(function(item){
+            var fileName = item.slice(TEST_DIR.length+1);
+            test.it(fileName, function(){
+                util.doClientTest(fileName);
+            });
         });
-    }
+    })();
 });
