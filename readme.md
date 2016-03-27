@@ -124,11 +124,11 @@ GブレイバーのクライアントはWebパックを使用しているため�
 
 ####DAOテスト
 
-    mocha mongoDbTest/ -R spec
+    mocha mongoDbTest/
 
 ####画面系テスト
 
-    mocha seleniumTest/ -R spec
+    mocha --timeout 100000 seleniumTest/
 
 - 画面系テストはsrcForTest配下に置かれた、*Test.jsが実行されます。
 - ホスト名:ポート/testList でテスト一覧が出ます
