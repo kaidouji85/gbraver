@@ -1,8 +1,8 @@
-var _ = require('underscore');
+var __ = require('underscore');
+var gameTestConfig = require('../game.test.config');
 
 function routes(spec,my){
     var that = {};
-    var testGlob = spec.testGlob;
     var contentBaseUrl = spec.contentBaseUrl;
 
 
@@ -34,16 +34,11 @@ function routes(spec,my){
     }
 
     that.testList = function(req, res){
-        var tg = testGlob();
-        var testDir = 'srcForTest';
-        var testList = tg.glob(testDir);
-        var urlList = _.map(testList,function(path){
-            return 'javascripts' + path.slice(testDir.length);
-        });
+        var testList = gameTestConfig.TEST_FILES();
         res.render('testList',{
             title : 'テスト一覧 (total'+testList.length + ')',
             testList : testList,
-            urlList: urlList
+            urlList: testList
         });
     }
 

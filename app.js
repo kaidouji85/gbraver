@@ -7,6 +7,8 @@ var CONTENT_BASE_URL = process.env.CONTENT_BASE_URL || BASE_URL;
 var TWITTER_CONSUMER_KEY = process.env.TWITTER_CONSUMER_KEY;
 var TWITTER_CONSUMER_SECRET = process.env.TWITTER_CONSUMER_SECRET;
 
+var gameTestConfig = require('./game.test.config');
+
 /**
  * Module dependencies.
  */
@@ -17,10 +19,9 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var methodOverride = require('method-override');
 var morgan = require('morgan');
-var errorhandler = require('errorhandler')
+var errorhandler = require('errorhandler');
 var routes = require('./routes')({
-    contentBaseUrl : CONTENT_BASE_URL,
-    testGlob : require('./testGlob')   //TODO : 本番環境時にはtestGlobを設定しないようにする
+    contentBaseUrl : CONTENT_BASE_URL
 });
 var path = require('path');
 var mongoDao = require('./server/mongoDao');
@@ -46,8 +47,8 @@ app.use(passport.session());
 // development only
 if ('development' == app.get('env')) {
     app.use(errorhandler());
-    app.use(express.static(path.join(__dirname, 'publicForTest')));
-    app.use(express.static(path.join(__dirname, 'buildForTest')));
+    app.use(express.static(path.join(__dirname, gameTestConfig.TEST_PUBLIC_DIR)));
+    app.use(express.static(path.join(__dirname, gameTestConfig.TEST_BUILD_DIR)));
 }
 
 //DB
