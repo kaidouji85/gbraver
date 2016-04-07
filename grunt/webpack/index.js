@@ -1,6 +1,23 @@
+var __ = require('underscore');
+
+/**
+ * webpack.config.jsからwatch系ビルドを生成する
+ * @param testConfig 元にするwebpack.config.js
+ * @returns {*}
+ */
+function createWatch(testConfig) {
+    return __.extend({}, testConfig, {
+        cache: true,
+        watch: true,
+        keepalive: true
+    });
+}
+
 module.exports = {
-    product: require('./webpack.config.js'),
-    test: require('./webpack.test.config.js'),
-    watchProduct: require('./webpack.watch.config.js'),
-    watchTest : require('./webpack.watch.test.config.js')
+    product: require('./product.js'),
+    test: require('./test'),
+    clientTest: require('./clientTest'),
+    watchProduct: createWatch(require('./product.js')),
+    watchTest: createWatch(require('./test')),
+    watchClientTest: createWatch(require('./clientTest')),
 }

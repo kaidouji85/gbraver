@@ -18,7 +18,7 @@ module.exports = function(mongo) {
             cmd : 'git push heroku master:master --force'
         },
         pushHerokuBeta : {
-            cmd : 'git push beta develop:master --force'
+            cmd : 'git push beta `git rev-parse --abbrev-ref HEAD`:master --force'
         },
         test : {
             cmd : __.reduce([
@@ -27,7 +27,7 @@ module.exports = function(mongo) {
                 'otherApi',
                 'singlePlay',
                 'twoPlay'], function(memo, now){
-                return memo + 'mocha --reporter progress unitTest/'+ now + '/; ' }, '')
+                return memo + 'mocha --reporter progress test/server/'+ now + '/; ' }, '')
         }
     };
 }
