@@ -15,7 +15,7 @@ function createTestFlieEntries() {
 }
 
 /**
- * ゲーム画面テストのビルド設定
+ * ゲーム画面テストのwebpack.config.js
  * @type {object}
  */
 module.exports = {

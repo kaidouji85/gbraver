@@ -1,7 +1,8 @@
-var game = require('./game/game');
-var __ = require('underscore');
-var Promise = require('bluebird');
-var socket = io.connect(location.origin);
+'use strict';
+import game from './game/game';
+import __ from 'underscore';
+import Promise from 'bluebird';
+const socket = io.connect(location.origin);
 
 enchant();
 
@@ -10,7 +11,7 @@ enchant();
  * @returns {Promise} ユーザ情報
  */
 function doAuth(userId) {
-    return new Promise(function(resolve, reject){
+    return new Promise((resolve, reject)=>{
         //ユーザ認証する
         socket.emit('auth', {
             userId : userId
@@ -26,7 +27,7 @@ function doAuth(userId) {
  * @returns {Promise} マスタデータ
  */
 function getMasterData() {
-    return new Promise(function(resolve, reject){
+    return new Promise((resolve, reject)=>{
         socket.emit('getMasterData');
         socket.once('successGetMasterData',resolve);
     });
@@ -38,7 +39,7 @@ function getMasterData() {
  */
 function onLoad(Game) {
     Game.changeTopScene();
-    Game.ee.on('sendMessage', function(message,data){
+    Game.ee.on('sendMessage', (message,data)=>{
         socket.emit(message,data);
     });
 
@@ -53,42 +54,38 @@ function onLoad(Game) {
         'enterRoomError',
         'successSetPilot',
         'battleError'
-    ], function(item){
+    ], (item)=>{
         socket.on(item, function(data){
             Game.ee.emit('serverResp', item, data);
         });
     });
 
     __.each({
-        logOff: function() {
-            window.location = location.origin+'/logOff';
-        },
-        reconnecting: function() {
+        logOff: ()=>window.location = location.origin+'/logOff',
+        reconnecting: ()=> {
             console.log('reconnecting');
             window.location = location.origin;
         },
-        noLoginError: function() {
+        noLoginError: ()=> {
             console.log('no login error.');
             console.log(data);
             window.location = location.origin;
         }
-    }, function(val, key){
-        socket.on(key, val);
-    });
+    }, (val, key)=> socket.on(key, val));
 }
 
 /**
  *  Gブレイバーのメイン関数
  */
 window.onload = function() {
-    var userId = $("meta[name=userId]").attr('content');
-    var contentBaseUrl = $("meta[name=contentBaseUrl]").attr('content');
-    var userData;
+    let userId = $("meta[name=userId]").attr('content');
+    let contentBaseUrl = $("meta[name=contentBaseUrl]").attr('content');
+    let userData;
     doAuth(userId).then(function(data){
         userData = data;
         return getMasterData();
-    }).then(function(masterData){
-        var Game = new game({
+    }).then((masterData)=>{
+        let Game = new game({
             userId : userId,
             contentBaseUrl : contentBaseUrl,
             armdozerId : userData.armdozerId,
@@ -99,8 +96,6 @@ window.onload = function() {
             scenarioData : masterData.scenarioData
         });
         Game.start();
-        Game.onload = function(){
-            onLoad(Game);
-        };
+        Game.onload = ()=> onLoad(Game);
     });
 };

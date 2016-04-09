@@ -1,7 +1,7 @@
 var glob = require('glob');
 
 /**
- * クライアントユニットテストのビルド設定
+ * クライアントユニットテストのwebpack.config.js
  * @type {Object}
  */
 module.exports = {

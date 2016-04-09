@@ -1,5 +1,5 @@
 /**
- * プロダクトのビルド設定
+ * プロダクトのwebpack.config.js
  * @type {Object}
  */
 module.exports = {
