@@ -25,9 +25,9 @@ function collectBlock(data) {
 
     switch(data.state) {
         case CONST.TOURNAMENT_STATE.LEFT_WIN:
-            return data.left;
+            return collectBlock(data.left);
         case CONST.TOURNAMENT_STATE.RIGHT_WIN:
-            return data.right;
+            return collectBlock(data.right);
         default:
             return __.extend({}, data, {
                 right: collectBlock(data.right),
