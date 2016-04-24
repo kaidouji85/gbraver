@@ -7,7 +7,7 @@ import * as CONST from '../../../../client/tournament/const';
  *
  */
 describe('対戦相手の取得', function(){
-    it('1回戦目の対戦相手が取得できる', ()=> {
+    describe('1回戦目の対戦相手が取得できる', ()=> {
         let data = {
             left: {
                 left: {
@@ -47,15 +47,15 @@ describe('対戦相手の取得', function(){
             {id: 'enemy005', expected: data.right.left.left},
             {id: 'enemy006', expected: data.right.right.right},
             {id: 'boss', expected: data.right.right.left},
-        ]
+        ];
 
-        patterns.forEach(item=>{
+        patterns.forEach(item => it(item.id+'の対戦相手のデータがただしく取得できている', ()=>{
             let result = getOpopenet(data, item.id);
-            assert.deepEqual(result, item.expected, item.id+'の対戦相手のデータがただしく取得できている');
-        });
+            assert.deepEqual(result, item.expected);
+        }));
     });
 
-    it('2回戦目の対戦相手が取得できる', ()=> {
+    describe('2回戦目の対戦相手が取得できる', ()=> {
         let data = {
             left: {
                 left: {
@@ -87,19 +87,26 @@ describe('対戦相手の取得', function(){
         };
 
         let patterns = [
+            // 勝利したパイロットで検索すると対戦相手を返す
             {id: 'player', expected: data.left.right.right},
             {id: 'enemy003', expected: data.left.left.left},
             {id: 'enemy005', expected: data.right.right.right},
-            {id: 'boss', expected: data.right.left.right}
-        ]
+            {id: 'boss', expected: data.right.left.right},
 
-        patterns.forEach(item=>{
+            // 負けたパイロットで検索した場合はnullを返す
+            {id: 'enemy001', expected: null},
+            {id: 'enemy002', expected: null},
+            {id: 'enemy004', expected: null},
+            {id: 'enemy006', expected: null},
+        ];
+
+        patterns.forEach(item => it(item.id+'の対戦相手のデータがただしく取得できている', ()=>{
             let result = getOpopenet(data, item.id);
-            assert.deepEqual(result, item.expected, item.id+'の対戦相手のデータがただしく取得できている');
-        });
+            assert.deepEqual(result, item.expected);
+        }));
     });
 
-    it('3回戦目の対戦相手が取得できる', ()=> {
+    describe('3回戦目の対戦相手が取得できる', ()=> {
         let data = {
             left: {
                 left: {
@@ -131,13 +138,22 @@ describe('対戦相手の取得', function(){
         };
 
         let patterns = [
+            // 勝利したパイロットで検索すると対戦相手を返す
             {id: 'player', expected: data.right.right.right},
-            {id: 'boss', expected: data.left.left.left}
-        ]
+            {id: 'boss', expected: data.left.left.left},
 
-        patterns.forEach(item=>{
+            // 負けたパイロットで検索した場合はnullを返す
+            {id: 'enemy001', expected: null},
+            {id: 'enemy002', expected: null},
+            {id: 'enemy003', expected: null},
+            {id: 'enemy004', expected: null},
+            {id: 'enemy005', expected: null},
+            {id: 'enemy006', expected: null},
+        ];
+
+        patterns.forEach(item => it(item.id+'の対戦相手のデータがただしく取得できている', ()=>{
             let result = getOpopenet(data, item.id);
-            assert.deepEqual(result, item.expected, item.id+'の対戦相手のデータがただしく取得できている');
-        });
+            assert.deepEqual(result, item.expected);
+        }));
     });
 });
