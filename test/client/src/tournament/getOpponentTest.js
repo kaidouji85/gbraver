@@ -54,4 +54,48 @@ describe('対戦相手の取得', function(){
             assert.deepEqual(result, item.expected, item.id+'の対戦相手のデータがただしく取得できている');
         });
     });
+
+    it('2回戦目の対戦相手が取得できる', ()=> {
+        let data = {
+            left: {
+                left: {
+                    left: { id:'player' },
+                    right: { id:'enemy001'},
+                    state: CONST.TOURNAMENT_STATE.LEFT_WIN
+                },
+                right: {
+                    left: { id:'enemy002'},
+                    right: { id:'enemy003'},
+                    state: CONST.TOURNAMENT_STATE.RIGHT_WIN
+                },
+                state: CONST.TOURNAMENT_STATE.NO_RESULT
+            },
+            right: {
+                left: {
+                    left: { id:'enemy004' },
+                    right: { id:'enemy005' },
+                    state: CONST.TOURNAMENT_STATE.RIGHT_WIN
+                },
+                right: {
+                    left: { id:'enemy006' },
+                    right: { id:'boss' },
+                    state: CONST.TOURNAMENT_STATE.RIGHT_WIN
+                },
+                state: CONST.TOURNAMENT_STATE.NO_RESULT
+            },
+            state: CONST.TOURNAMENT_STATE.NO_RESULT
+        };
+
+        let patterns = [
+            {id: 'player', expected: data.left.right.right},
+            {id: 'enemy003', expected: data.left.left.left},
+            {id: 'enemy005', expected: data.right.right.right},
+            {id: 'boss', expected: data.right.left.right}
+        ]
+
+        patterns.forEach(item=>{
+            let result = getOpopenet(data, item.id);
+            assert.deepEqual(result, item.expected, item.id+'の対戦相手のデータがただしく取得できている');
+        });
+    });
 });
