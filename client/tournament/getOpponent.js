@@ -23,17 +23,18 @@ function collectBlock(data) {
         return data;
     }
 
-    switch(data.state) {
-        case CONST.TOURNAMENT_STATE.LEFT_WIN:
-            return collectBlock(data.left);
-        case CONST.TOURNAMENT_STATE.RIGHT_WIN:
-            return collectBlock(data.right);
-        default:
-            return __.extend({}, data, {
-                right: collectBlock(data.right),
-                left: collectBlock(data.left)
-            });
+    if(data.state === CONST.TOURNAMENT_STATE.LEFT_WIN) {
+        return collectBlock(data.left);
     }
+
+    if (data.state === CONST.TOURNAMENT_STATE.RIGHT_WIN) {
+        return collectBlock(data.right);
+    }
+
+    return __.extend({}, data, {
+        right: collectBlock(data.right),
+        left: collectBlock(data.left)
+    });
 }
 
 // TODO テストを書く
