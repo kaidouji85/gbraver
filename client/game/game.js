@@ -143,6 +143,8 @@ module.exports = function(spec) {
                 pilotList: spec.pilotList
             }
         });
+        scene.ee.on('startBattle',(opponent)=>
+            that.ee.emit('sendMessage', 'startSinglePlay',__.pick(opponent, 'enemyId','pilotId','routineId')));
         replaceScene(scene);
     }
 

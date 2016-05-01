@@ -19,7 +19,9 @@ const TEST_DATA = {
             },
             right: {
                 id: 'enemy1',
-                pilotId: 'akane'
+                enemyId: 'landozer',
+                pilotId: 'akane',
+                routineId: 'zero'
             },
             state: CONST.TOURNAMENT_STATE.NO_RESULT
         },
@@ -82,7 +84,16 @@ window.onload = function () {
     }
 
     function onChangeScene(sceneName) {
-       testUtil.finishTest();
+        Game.ee.once('sendMessage', onSendMessage);
     }
-
+    
+    function onSendMessage(message, data) {
+        assert.equal(message, 'startSinglePlay');
+        assert.deepEqual(data, {
+            enemyId: 'landozer',
+            pilotId : 'akane',
+            routineId: 'zero'
+        });
+        testUtil.finishTest();
+    }
 }
