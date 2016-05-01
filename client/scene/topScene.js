@@ -3,6 +3,9 @@ var pilotIcon = require('../button/pilotIcon');
 var messageWindow = require('../window/messageWindow');
 var titleWindow = require('../window/titleWindow');
 
+const BUTTON_RIGHT_X = 8;
+const BUTTON_LEFT_X = 168;
+
 module.exports = function(spec,my){
     var that = new Scene();
     var armdozerId = spec.armdozerId;
@@ -16,7 +19,6 @@ module.exports = function(spec,my){
     that.onPushSelectArmdozerButton = onPushSelectArmdozerButton;
     that.onPushSelectStageButton = onPushSelectStageButton;
     that.onPushLogOffButton = onPushLogOffButton;
-    that.onPushStoryButton = onPushStoryButton;
     
     var core = enchant.Core.instance;
     var emitPushBattleRoom = function(){};
@@ -24,7 +26,6 @@ module.exports = function(spec,my){
     var emitPushSelectArmdozerButton = function(){};
     var emitPushSelectStageButton = function(){};
     var emitPushLogOffButton = function(){};
-    var emitPushStoryButton = function(){};
     
     initSprite();
     function initSprite(){
@@ -52,37 +53,13 @@ module.exports = function(spec,my){
         that.pilotSprite.y = 100;
         that.addChild(that.pilotSprite);
 
-        //ストーリーモードボタン
-        that.storyButton = pictButton({
-            text : 'ストーリーモード',
-            pict : core.assets[core.PICT_BUTTON]
-        });
-        that.storyButton.x = 8;
-        that.storyButton.y = 300;
-        that.storyButton.addEventListener(Event.TOUCH_END,function(){
-            emitPushStoryButton();
-        });
-        that.addChild(that.storyButton);
-
-        //ステージセレクトボタン
-        that.selectStageButton = pictButton({
-            text : '練習モード',
-            pict : core.assets[core.PICT_BUTTON]
-        });
-        that.selectStageButton.x = 168;
-        that.selectStageButton.y = 300;
-        that.selectStageButton.addEventListener(Event.TOUCH_END,function(){
-            emitPushSelectStageButton();
-        });
-        that.addChild(that.selectStageButton);
-
         //対戦ルーム入室ボタン
         that.battleRoomButton = pictButton({
             text : '対戦モード',
             pict : core.assets[core.PICT_BUTTON]
         });
-        that.battleRoomButton.x = 8;
-        that.battleRoomButton.y = 364;
+        that.battleRoomButton.x = BUTTON_RIGHT_X;
+        that.battleRoomButton.y = 300;
         that.battleRoomButton.addEventListener(Event.TOUCH_END,function(e){
             that.battleRoomButton.setVisible(false);
             that.selectArmdozerButton.setVisible(false);
@@ -95,12 +72,24 @@ module.exports = function(spec,my){
         });
         that.addChild(that.battleRoomButton);
 
+        //ステージセレクトボタン
+        that.selectStageButton = pictButton({
+            text : '練習モード',
+            pict : core.assets[core.PICT_BUTTON]
+        });
+        that.selectStageButton.x = BUTTON_LEFT_X;
+        that.selectStageButton.y = 300;
+        that.selectStageButton.addEventListener(Event.TOUCH_END,function(){
+            emitPushSelectStageButton();
+        });
+        that.addChild(that.selectStageButton);
+
         //アームドーザ選択ボタン
         that.selectArmdozerButton = pictButton({
             text : 'アームドーザ選択',
             pict : core.assets[core.PICT_BUTTON]
         });
-        that.selectArmdozerButton.x = 168;
+        that.selectArmdozerButton.x = BUTTON_RIGHT_X;
         that.selectArmdozerButton.y = 364;
         that.selectArmdozerButton.addEventListener(Event.TOUCH_END,function(e){
             emitPushSelectArmdozerButton();
@@ -112,8 +101,8 @@ module.exports = function(spec,my){
             text : 'パイロット選択',
             pict : core.assets[core.PICT_BUTTON]
         });
-        that.selectPilotButton.x = 8;
-        that.selectPilotButton.y = 428;
+        that.selectPilotButton.x = BUTTON_LEFT_X;
+        that.selectPilotButton.y = 364;
         that.selectPilotButton.addEventListener(Event.TOUCH_END,function(e){
             emitPushSelectPilotButton();
         });
@@ -124,7 +113,7 @@ module.exports = function(spec,my){
             text : 'ログオフ',
             pict : core.assets[core.PICT_OVERHEAT_BUTTON]
         });
-        that.logOffButton.x = 168;
+        that.logOffButton.x = BUTTON_LEFT_X;
         that.logOffButton.y = 428;
         that.logOffButton.addEventListener(Event.TOUCH_END,function(){
             that.battleRoomButton.setVisible(false);
@@ -177,10 +166,6 @@ module.exports = function(spec,my){
 
     function onPushSelectStageButton(fn){
         emitPushSelectStageButton = fn;
-    }
-
-    function onPushStoryButton(fn){
-        emitPushStoryButton = fn;
     }
 
     function getArmdozerPictByArmdozerId(armdozerId){

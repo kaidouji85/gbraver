@@ -7,7 +7,6 @@ var topScene = require('../scene/topScene');
 var selectPilotScene = require('../scene/selectPilotScene');
 var selectArmdozerScene = require('../scene/selectArmdozerScene');
 var selectStageScene = require('../scene/selectStageScene');
-var storyScene = require('../scene/storyScene');
 
 module.exports = function(spec, my) {
     /**
@@ -121,10 +120,6 @@ module.exports = function(spec, my) {
                 that.ee.emit('sendMessage', 'getRoomInfo',null);
             } else if(battleMode===that.BATTLE_MODE_SINGLE_PLAY) {
                 that.changeSelectStageScene();
-            } else if(battleMode===that.BATTLE_MODE_STORY){
-                currentScenarioId = isWin ? nextScenarioId : currentScenarioId;
-                nextScenarioId = null;
-                that.changeStoryScene(currentScenarioId);
             }
         });
         replaceScene(scene);
@@ -180,9 +175,6 @@ module.exports = function(spec, my) {
         });
         scene.onPushLogOffButton(function(){
             that.ee.emit('logOff');
-        });
-        scene.onPushStoryButton(function(){
-            that.changeStoryScene(currentScenarioId);
         });
         replaceScene(scene);
     };
@@ -251,31 +243,6 @@ module.exports = function(spec, my) {
             that.ee.emit('sendMessage', 'startSinglePlay',data);
         });
         battleMode = that.BATTLE_MODE_SINGLE_PLAY;
-        replaceScene(scene);
-    }
-
-    /**
-     * ストーリーシーンに変更する
-     *
-     * @param senarioId シナリオID
-     */
-    that.changeStoryScene = function(senarioId){
-        var scene = storyScene({
-            scenarioData :
-                __.chain(scenarioData)
-                    .filter(function(item){return item.id === senarioId;})
-                    .map(function(item){return item.data})
-                    .first()
-                    .value(),
-            pilotList : pilotList
-        });
-        scene.onEndStory(function(battle){
-            that.ee.emit('sendMessage', 'startSinglePlay',battle);
-        });
-        scene.onChangeNextStory(function(p_nextScenarioId){
-            nextScenarioId = p_nextScenarioId;
-        });
-        battleMode = that.BATTLE_MODE_STORY;
         replaceScene(scene);
     }
 
