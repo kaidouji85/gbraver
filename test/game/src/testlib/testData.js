@@ -1,4 +1,4 @@
-module.exports = function(spec,my){
+module.exports = function(){
     var that = {};
     var userArray = [
         {

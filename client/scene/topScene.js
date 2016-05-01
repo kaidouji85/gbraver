@@ -19,6 +19,10 @@ module.exports = function(spec,my){
     that.backgroundColor = "black";
     that.ee = new EventEmitter();
 
+    /**
+     * シーン名を取得する
+     * @returns {string} シーン名
+     */
     that.getName = function(){
         return 'top';
     }
@@ -26,7 +30,42 @@ module.exports = function(spec,my){
     that.addEventListener(Event.ENTER,function(){
         core.bgm.setMute();
     });
-    
+
+    /**
+     * ボタンを非表示にする
+     */
+    function invisibleButtons() {
+        that.tournamentButton.setVisible(false);
+        that.battleRoomButton.setVisible(false);
+        that.selectArmdozerButton.setVisible(false);
+        that.selectPilotButton.setVisible(false);
+        that.logOffButton.setVisible(false);
+    }
+
+    /**
+     * アームドーザの画像名を取得する
+     *
+     * @param armdozerId アームドーザID
+     * @returns {String} アームドーザの画像名
+     */
+    function getArmdozerPictByArmdozerId(armdozerId){
+        let data = __.find(armdozerList, data=>data.armdozerId === armdozerId);
+        return data.pictName;
+    }
+
+    /**
+     * パイロットデータを取得
+     *
+     * @param pilotId パイロットID
+     * @returns {Objevt} パイロットデータ
+     */
+    function getPilotData(pilotId){
+        return __.find(pilotList, pilot=>pilot.id === pilotId);
+    }
+
+    /**
+     * オブジェクトを生成してシーンに追加する
+     */
     (function(){
         //背景
         that.background = new Sprite(core.SYSTEM_BG_WIDTH,core.SYSTEM_BG_HEIGHT);
@@ -66,7 +105,7 @@ module.exports = function(spec,my){
             that.ee.emit('pushBattleRoomButton');
         });
         that.addChild(that.battleRoomButton);
-        
+
         // トーナメントモード
         that.tournamentButton = pictButton({
             text : 'トーナメント',
@@ -129,39 +168,7 @@ module.exports = function(spec,my){
         that.mesWindow.y = core.MESSAGE_WINDOW_Y;
         that.mesWindow.setVisible(false);
         that.addChild(that.mesWindow);
-    }());
+    })();
 
-    /**
-     * ボタンを非表示にする
-     */
-    function invisibleButtons() {
-        that.tournamentButton.setVisible(false);
-        that.battleRoomButton.setVisible(false);
-        that.selectArmdozerButton.setVisible(false);
-        that.selectPilotButton.setVisible(false);
-        that.logOffButton.setVisible(false);
-    }
-
-    /**
-     * アームドーザの画像名を取得する
-     *
-     * @param armdozerId アームドーザID
-     * @returns {String} アームドーザの画像名
-     */
-    function getArmdozerPictByArmdozerId(armdozerId){
-        let data = __.find(armdozerList, data=>data.armdozerId === armdozerId);
-        return data.pictName;
-    }
-
-    /**
-     * パイロットデータを取得
-     *
-     * @param pilotId パイロットID
-     * @returns {Objevt} パイロットデータ
-     */
-    function getPilotData(pilotId){
-        return __.find(pilotList, pilot=>pilot.id === pilotId);
-    }
-    
     return that;
 }
