@@ -6,10 +6,9 @@ import roomSelectScene from '../scene/roomSelectScene';
 import topScene from '../scene/topScene';
 import selectPilotScene from '../scene/selectPilotScene';
 import selectArmdozerScene from '../scene/selectArmdozerScene';
-import selectStageScene from '../scene/selectStageScene';
 import tournamentScene from '../scene/tournamentScene';
 
-module.exports = function(spec, my) {
+module.exports = function(spec) {
     /**
      * ゲームコア
      */
@@ -20,14 +19,8 @@ module.exports = function(spec, my) {
     var userId = spec.userId;
     var armdozerId = spec.armdozerId;
     var pilotId = spec.pilotId;
-
     var pilotList = spec.pilotList;
     var armdozerList = spec.armdozerList;
-    var stageData = spec.stageData;
-    var scenarioData = spec.scenarioData;
-
-    var currentScenarioId = 'first';
-    var nextScenarioId = null;
     var battleMode = that.BATTLE_MODE_TWO_PLAY;
 
     that.ee = new EventEmitter();
@@ -74,29 +67,19 @@ module.exports = function(spec, my) {
     }
 
     /**
-     * シナリオIDを取得する
-     * @returns {string} シナリオID
-     */
-    that.getScenarioId = function(){
-        return currentScenarioId;
-    }
-
-    /**
      * 戦闘シーンに変更する
      *
-     * @param spec battleSceneに渡すspec
+     * @param param battleSceneに渡すspec
      */
-    that.changeBattleScene = function(spec){
-        spec.userId = userId;
-        var scene = battleScene(spec);
+    that.changeBattleScene = function(param){
+        param.userId = userId;
+        var scene = battleScene(param);
         scene.onCommand(function(command){
             that.ee.emit('sendMessage', 'command',command);
         });
         scene.onPushBattleEndIcon(function(isWin){
             if(battleMode===that.BATTLE_MODE_TWO_PLAY){
                 that.ee.emit('sendMessage', 'getRoomInfo',null);
-            } else if(battleMode===that.BATTLE_MODE_SINGLE_PLAY) {
-                that.changeSelectStageScene();
             }
         });
         replaceScene(scene);
@@ -138,7 +121,7 @@ module.exports = function(spec, my) {
             armdozerList : armdozerList,
             pilotList : pilotList
         });
-        scene.ee.on('pushTournamentButton',  ()=>that.changeTournamentScene());
+        scene.ee.on('pushTournamentButton',  ()=>that.changeTournamentScene('basic'));
         scene.ee.on('pushSelectArmdozer',()=>that.changeSelectArmdozerScene());
         scene.ee.on('pushBattleRoomButton',()=>that.ee.emit('sendMessage', 'getRoomInfo',null));
         scene.ee.on('pushSelectPilotButton', ()=>that.changeSelectPilotScene());
@@ -148,9 +131,18 @@ module.exports = function(spec, my) {
 
     /**
      * トーナメントシーンに遷移する
+     *
+     * @param {String} tournamentId トーナメントID
      */
-    that.changeTournamentScene = function() {
-        let scene = tournamentScene();
+    that.changeTournamentScene = function(tournamentId) {
+        let data = __.find(spec.tournamentList, item=>item.tournamentId === tournamentId);
+        let scene = tournamentScene({
+            data,
+            master: {
+                armdozerList: spec.armdozerList,
+                pilotList: spec.pilotList
+            }
+        });
         replaceScene(scene);
     }
 
@@ -194,30 +186,6 @@ module.exports = function(spec, my) {
         scene.onPushPrevButton(function(){
             that.changeTopScene();
         });replaceScene(scene);
-    }
-
-    /**
-     * ステージ選択シーンに変更する
-     *
-     */
-    that.changeSelectStageScene = function(){
-        var scene = selectStageScene({
-            stageData : stageData,
-            armdozerList : armdozerList
-        });
-        scene.onPushPrevButton(function(){
-            that.changeTopScene();
-        });
-        scene.onPushStageButon(function(enemyId,pilotId,routineId){
-            var data = {
-                enemyId : enemyId,
-                pilotId : pilotId,
-                routineId : routineId
-            };
-            that.ee.emit('sendMessage', 'startSinglePlay',data);
-        });
-        battleMode = that.BATTLE_MODE_SINGLE_PLAY;
-        replaceScene(scene);
     }
 
     /**

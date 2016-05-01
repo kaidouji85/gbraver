@@ -100,8 +100,6 @@ module.exports = function(spec){
     core.MESSAGE_BATTLE_END = 'ボタンを押して下さい';
     core.MESSAGE_WINDOW_Y = 276;
     core.BATTLE_MODE_TWO_PLAY = 'twoPlay';
-    core.BATTLE_MODE_SINGLE_PLAY = 'singlePlay';
-    core.BATTLE_MODE_STORY = 'story';
 
     core.fps = 40;
     core.bgm = bgmManager();

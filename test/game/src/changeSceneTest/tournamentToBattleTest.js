@@ -1,15 +1,16 @@
 /**
- * トーナメントシーンの表示テスト
- * 本テストでは同シーンをエラーなく表示できることを確認するため、アサーションは書かない
+ * トーナメントから戦闘画面に遷移するテスト
  */
 
 import tournamentScene from '../../../../client/scene/tournamentScene';
-import gameBase from '../../../../client/game/gameBase';
+import game from '../../../../client/game/game';
 import testUtil from '../testlib/testUtil';
 import testData from '../testlib/testData';
 import CONST from '../../../../client/tournament/const';
 
 const TEST_DATA = {
+    tournamentId: 'basic',
+
     left: {
         left: {
             left: {
@@ -65,18 +66,23 @@ const TEST_DATA = {
 enchant();
 window.onload = function () {
     let assert = chai.assert;
-    let testGame = gameBase();
-    let testScene = null;
+    let Game = game({
+        userId : 'test001@gmail.com',
+        armdozerId : 'granBraver',
+        pilotId : 'kyoko',
+        armdozerList : testData().getMasterData().armdozerList,
+        pilotList : testData().getMasterData().pilotList,
+        tournamentList: [TEST_DATA]
+    });
 
-    testGame.start();
-    testGame.onload = initScene;
-
-    function initScene(){
-        let testScene = tournamentScene({
-            data: TEST_DATA,
-            master: testData().getMasterData()
-        });
-        testGame.replaceScene(testScene);
-        testUtil.finishTest();
+    Game.start();
+    Game.onload = function() {
+        Game.ee.once('changeScene', onChangeScene);
+        Game.changeTournamentScene('basic');
     }
+
+    function onChangeScene(sceneName) {
+       testUtil.finishTest();
+    }
+
 }
