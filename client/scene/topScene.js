@@ -68,15 +68,15 @@ module.exports = function(spec,my){
         that.addChild(that.battleRoomButton);
         
         // トーナメントモード
-        that.selectTournamentButton = pictButton({
+        that.tournamentButton = pictButton({
             text : 'トーナメント',
             pict : core.assets[core.PICT_BUTTON]
         });
-        that.selectTournamentButton.x = BUTTON_LEFT_X;
-        that.selectTournamentButton.y = 300;
-        that.selectTournamentButton.addEventListener(Event.TOUCH_END, 
-            ()=> that.ee.emit('pushSelectTournamentButton'));
-        that.addChild(that.selectTournamentButton);
+        that.tournamentButton.x = BUTTON_LEFT_X;
+        that.tournamentButton.y = 300;
+        that.tournamentButton.addEventListener(Event.TOUCH_END,
+            ()=> that.ee.emit('pushTournamentButton'));
+        that.addChild(that.tournamentButton);
 
         //アームドーザ選択ボタン
         that.selectArmdozerButton = pictButton({
@@ -135,6 +135,7 @@ module.exports = function(spec,my){
      * ボタンを非表示にする
      */
     function invisibleButtons() {
+        that.tournamentButton.setVisible(false);
         that.battleRoomButton.setVisible(false);
         that.selectArmdozerButton.setVisible(false);
         that.selectPilotButton.setVisible(false);

@@ -138,7 +138,7 @@ module.exports = function(spec, my) {
             armdozerList : armdozerList,
             pilotList : pilotList
         });
-        scene.ee.on('pushSelectTournamentButton',  ()=>that.changeTournamentScene());
+        scene.ee.on('pushTournamentButton',  ()=>that.changeTournamentScene());
         scene.ee.on('pushSelectArmdozer',()=>that.changeSelectArmdozerScene());
         scene.ee.on('pushBattleRoomButton',()=>that.ee.emit('sendMessage', 'getRoomInfo',null));
         scene.ee.on('pushSelectPilotButton', ()=>that.changeSelectPilotScene());
