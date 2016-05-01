@@ -17,8 +17,7 @@ function doTest(){
             armdozerPict : 'GranBraver.PNG',
             pilotPict : 'kyoko.png',
             armdozerList : testDataInst.getMasterData().armdozerList,
-            pilotList : testDataInst.getMasterData().pilotList,
-            stageData : testDataInst.getStageData()
+            pilotList : testDataInst.getMasterData().pilotList
         });
         Game.start();
         Game.onload = function(){

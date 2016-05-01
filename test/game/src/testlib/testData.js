@@ -260,27 +260,6 @@ module.exports = function(){
         }
     ];
 
-    var stageData = [
-        {
-            title : '初級',
-            enemyId : 'landozer',
-            pilotId : 'kyoko',
-            routineId : 'attack3'
-        },
-        {
-            title : '中級',
-            enemyId : 'granBraver',
-            pilotId : 'akane',
-            routineId : 'attack3'
-        },
-        {
-            title : '上級',
-            enemyId : 'zeroBraver',
-            pilotId : 'iori',
-            routineId : 'attack3'
-        }
-    ];
-
     that.getUserData = function(userId){
         return searchUser(userId);
     }
@@ -311,11 +290,7 @@ module.exports = function(){
         };
         return masterData;
     }
-
-    that.getStageData = function(){
-        return stageData;
-    }
-
+    
     function searchUser(userId){
         for(var i=0; i<userArray.length; i++){
             if(userId===userArray[i].userId){
