@@ -1,12 +1,13 @@
-var __ = require('underscore');
-var EventEmitter = require('event-emitter');
-var gameBase = require('./gameBase');
-var battleScene = require('../scene/battleScene');
-var roomSelectScene = require('../scene/roomSelectScene');
-var topScene = require('../scene/topScene');
-var selectPilotScene = require('../scene/selectPilotScene');
-var selectArmdozerScene = require('../scene/selectArmdozerScene');
-var selectStageScene = require('../scene/selectStageScene');
+import __ from 'underscore';
+import EventEmitter from 'event-emitter';
+import gameBase from './gameBase';
+import battleScene from '../scene/battleScene';
+import roomSelectScene from '../scene/roomSelectScene';
+import topScene from '../scene/topScene';
+import selectPilotScene from '../scene/selectPilotScene';
+import selectArmdozerScene from '../scene/selectArmdozerScene';
+import selectStageScene from '../scene/selectStageScene';
+import tournamentScene from '../scene/tournamentScene';
 
 module.exports = function(spec, my) {
     /**
@@ -81,30 +82,6 @@ module.exports = function(spec, my) {
     }
 
     /**
-     * シナリオIDを設定する
-     * @param id シナリオID
-     */
-    that.setScenarioId = function(id){
-        currentScenarioId = id;
-    }
-
-    /**
-     * 次のシナリオIDを取得する
-     * @returns {string} 次のシナリオID
-     */
-    that.getNextScenarioId = function(){
-        return nextScenarioId;
-    }
-
-    /**
-     * 次のシナリオIDを設定する
-     * @param id シナリオID
-     */
-    that.setNextScenarioId = function(id){
-        nextScenarioId = id;
-    }
-
-    /**
      * 戦闘シーンに変更する
      *
      * @param spec battleSceneに渡すspec
@@ -161,27 +138,24 @@ module.exports = function(spec, my) {
             armdozerList : armdozerList,
             pilotList : pilotList
         });
-        scene.onPushSelectArmdozerButton(function(){
-            that.changeSelectArmdozerScene();
-        });
-        scene.onPushBattleRoom(function(){
-            that.ee.emit('sendMessage', 'getRoomInfo',null);
-        });
-        scene.onPushSelectPilotButton(function(){
-            that.changeSelectPilotScene();
-        });
-        scene.onPushSelectStageButton(function(){
-            that.changeSelectStageScene();
-        });
-        scene.onPushLogOffButton(function(){
-            that.ee.emit('logOff');
-        });
+        scene.ee.on('pushSelectTournamentButton',  ()=>that.changeTournamentScene());
+        scene.ee.on('pushSelectArmdozer',()=>that.changeSelectArmdozerScene());
+        scene.ee.on('pushBattleRoomButton',()=>that.ee.emit('sendMessage', 'getRoomInfo',null));
+        scene.ee.on('pushSelectPilotButton', ()=>that.changeSelectPilotScene());
+        scene.ee.on('logOff', ()=>that.ee.emit('logOff'));
         replaceScene(scene);
     };
 
     /**
+     * トーナメントシーンに遷移する
+     */
+    that.changeTournamentScene = function() {
+        let scene = tournamentScene();
+        replaceScene(scene);
+    }
+
+    /**
      * パイロット選択シーンに変更する
-     *
      */
     that.changeSelectPilotScene = function() {
         var scene = selectPilotScene({

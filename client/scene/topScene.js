@@ -1,34 +1,33 @@
-var pictButton = require('../button/pictButton');
-var pilotIcon = require('../button/pilotIcon');
-var messageWindow = require('../window/messageWindow');
-var titleWindow = require('../window/titleWindow');
+import __ from 'underscore';
+import pictButton from '../button/pictButton';
+import pilotIcon from '../button/pilotIcon';
+import messageWindow from '../window/messageWindow';
+import titleWindow from '../window/titleWindow';
+import EventEmitter from 'event-emitter';
 
 const BUTTON_RIGHT_X = 8;
 const BUTTON_LEFT_X = 168;
 
 module.exports = function(spec,my){
-    var that = new Scene();
-    var armdozerId = spec.armdozerId;
-    var pilotId = spec.pilotId;
-    var armdozerList = spec.armdozerList;
-    var pilotList = spec.pilotList;
+    let that = new Scene();
+    let core = enchant.Core.instance;
+    let armdozerId = spec.armdozerId;
+    let pilotId = spec.pilotId;
+    let armdozerList = spec.armdozerList;
+    let pilotList = spec.pilotList;
 
     that.backgroundColor = "black";
-    that.onPushBattleRoom = onPushBattleRoom;
-    that.onPushSelectPilotButton = onPushSelectPilotButton;
-    that.onPushSelectArmdozerButton = onPushSelectArmdozerButton;
-    that.onPushSelectStageButton = onPushSelectStageButton;
-    that.onPushLogOffButton = onPushLogOffButton;
+    that.ee = new EventEmitter();
+
+    that.getName = function(){
+        return 'top';
+    }
+
+    that.addEventListener(Event.ENTER,function(){
+        core.bgm.setMute();
+    });
     
-    var core = enchant.Core.instance;
-    var emitPushBattleRoom = function(){};
-    var emitPushSelectPilotButton = function(){};
-    var emitPushSelectArmdozerButton = function(){};
-    var emitPushSelectStageButton = function(){};
-    var emitPushLogOffButton = function(){};
-    
-    initSprite();
-    function initSprite(){
+    (function(){
         //背景
         that.background = new Sprite(core.SYSTEM_BG_WIDTH,core.SYSTEM_BG_HEIGHT);
         that.background.image = core.assets[core.PICT_BG_GROUND2];
@@ -42,7 +41,7 @@ module.exports = function(spec,my){
         that.addChild(that.selectArmdozerSprite);
 
         //選択中パイロット
-        var pilotData = getPilotData(pilotId)
+        let pilotData = getPilotData(pilotId)
         that.pilotSprite = pilotIcon({
             windowPict : core.assets[core.PICT_BLACK_WINDOW],
             pilotPict : core.assets[core.PICT_PREFIX + pilotData.pict],
@@ -60,29 +59,24 @@ module.exports = function(spec,my){
         });
         that.battleRoomButton.x = BUTTON_RIGHT_X;
         that.battleRoomButton.y = 300;
-        that.battleRoomButton.addEventListener(Event.TOUCH_END,function(e){
-            that.battleRoomButton.setVisible(false);
-            that.selectArmdozerButton.setVisible(false);
-            that.selectStageButton.setVisible(false);
-            that.selectPilotButton.setVisible(false);
-            that.logOffButton.setVisible(false);
+        that.battleRoomButton.addEventListener(Event.TOUCH_END,(e)=>{
+            invisibleButtons();
             that.mesWindow.setText(core.MESSAGE_GET_ROOMINFO);
             that.mesWindow.setVisible(true);
-            emitPushBattleRoom();
+            that.ee.emit('pushBattleRoomButton');
         });
         that.addChild(that.battleRoomButton);
-
-        //ステージセレクトボタン
-        that.selectStageButton = pictButton({
-            text : '練習モード',
+        
+        // トーナメントモード
+        that.selectTournamentButton = pictButton({
+            text : 'トーナメント',
             pict : core.assets[core.PICT_BUTTON]
         });
-        that.selectStageButton.x = BUTTON_LEFT_X;
-        that.selectStageButton.y = 300;
-        that.selectStageButton.addEventListener(Event.TOUCH_END,function(){
-            emitPushSelectStageButton();
-        });
-        that.addChild(that.selectStageButton);
+        that.selectTournamentButton.x = BUTTON_LEFT_X;
+        that.selectTournamentButton.y = 300;
+        that.selectTournamentButton.addEventListener(Event.TOUCH_END, 
+            ()=> that.ee.emit('pushSelectTournamentButton'));
+        that.addChild(that.selectTournamentButton);
 
         //アームドーザ選択ボタン
         that.selectArmdozerButton = pictButton({
@@ -91,9 +85,8 @@ module.exports = function(spec,my){
         });
         that.selectArmdozerButton.x = BUTTON_RIGHT_X;
         that.selectArmdozerButton.y = 364;
-        that.selectArmdozerButton.addEventListener(Event.TOUCH_END,function(e){
-            emitPushSelectArmdozerButton();
-        });
+        that.selectArmdozerButton.addEventListener(Event.TOUCH_END,
+            ()=>that.ee.emit('pushSelectArmdozer'));
         that.addChild(that.selectArmdozerButton);
 
         //パイロット選択ボタン
@@ -103,9 +96,7 @@ module.exports = function(spec,my){
         });
         that.selectPilotButton.x = BUTTON_LEFT_X;
         that.selectPilotButton.y = 364;
-        that.selectPilotButton.addEventListener(Event.TOUCH_END,function(e){
-            emitPushSelectPilotButton();
-        });
+        that.selectPilotButton.addEventListener(Event.TOUCH_END,()=>that.ee.emit('pushSelectPilotButton'));
         that.addChild(that.selectPilotButton);
 
         //ログオフボタン
@@ -115,15 +106,11 @@ module.exports = function(spec,my){
         });
         that.logOffButton.x = BUTTON_LEFT_X;
         that.logOffButton.y = 428;
-        that.logOffButton.addEventListener(Event.TOUCH_END,function(){
-            that.battleRoomButton.setVisible(false);
-            that.selectArmdozerButton.setVisible(false);
-            that.selectStageButton.setVisible(false);
-            that.selectPilotButton.setVisible(false);
-            that.logOffButton.setVisible(false);
+        that.logOffButton.addEventListener(Event.TOUCH_END, ()=>{
+            invisibleButtons();
             that.mesWindow.setText(core.MESSAGE_LOGOFF);
             that.mesWindow.setVisible(true);
-            emitPushLogOffButton();
+            that.ee.emit('logOff');
         });
         that.addChild(that.logOffButton);
 
@@ -142,50 +129,37 @@ module.exports = function(spec,my){
         that.mesWindow.y = core.MESSAGE_WINDOW_Y;
         that.mesWindow.setVisible(false);
         that.addChild(that.mesWindow);
+    }());
+
+    /**
+     * ボタンを非表示にする
+     */
+    function invisibleButtons() {
+        that.battleRoomButton.setVisible(false);
+        that.selectArmdozerButton.setVisible(false);
+        that.selectPilotButton.setVisible(false);
+        that.logOffButton.setVisible(false);
     }
 
-    that.getName = function(){
-        return 'top';
-    }
-
-    that.addEventListener(Event.ENTER,function(){
-        core.bgm.setMute();
-    });
-
-    function onPushBattleRoom(fn){
-        emitPushBattleRoom = fn;
-    }
-
-    function onPushSelectPilotButton(fn){
-        emitPushSelectPilotButton = fn;
-    }
-
-    function onPushSelectArmdozerButton(fn){
-        emitPushSelectArmdozerButton = fn;
-    }
-
-    function onPushSelectStageButton(fn){
-        emitPushSelectStageButton = fn;
-    }
-
+    /**
+     * アームドーザの画像名を取得する
+     *
+     * @param armdozerId アームドーザID
+     * @returns {String} アームドーザの画像名
+     */
     function getArmdozerPictByArmdozerId(armdozerId){
-        for(var i in armdozerList){
-            if(armdozerList[i].armdozerId === armdozerId) {
-                return armdozerList[i].pictName;
-            }
-        }
+        let data = __.find(armdozerList, data=>data.armdozerId === armdozerId);
+        return data.pictName;
     }
 
+    /**
+     * パイロットデータを取得
+     *
+     * @param pilotId パイロットID
+     * @returns {Objevt} パイロットデータ
+     */
     function getPilotData(pilotId){
-        for(var i in pilotList){
-            if(pilotList[i].id === pilotId){
-                return pilotList[i];
-            }
-        }
-    }
-
-    function onPushLogOffButton(fn) {
-        emitPushLogOffButton = fn;
+        return __.find(pilotList, pilot=>pilot.id === pilotId);
     }
     
     return that;
