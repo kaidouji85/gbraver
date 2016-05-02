@@ -1,43 +1,89 @@
 var __ = require('underscore');
+var glob = require('glob');
+var gameTestConfig = require('../../game.test.config');
 
 /**
- * ビルド系のwebpack.config.jsに共通設定を追加して返す
- * @param config webpack.config.js
- * @return {obejct}
- */
-function createBuild(config) {
-    return __.extend({}, config, {
-            module: {
-                loaders: [
-                    { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" }
-                ]
-            }
-        });
-}
-
-/**
- * webpack.config.jsからwatch系ビルドを生成する
- * @param config webpack.config.js
+ * テストファイルのエントリーを生成する
  * @returns {Object}
+ *          { テストファイル名: テストファイルのパス , ......}
  */
-function createWatch(config) {
-    return __.extend({}, config, {
-        cache: true,
-        watch: true,
-        keepalive: true
+function createTestFlieEntries() {
+    var names = gameTestConfig.TEST_FILES();
+    var entries = __.map(names, function(item){
+        return gameTestConfig.TEST_SRC_DIR + item;
     });
+    return __.object(names, entries);
 }
 
-var build = {
-    product: createBuild(require('./product.js')),
-    test: createBuild(require('./test')),
-    clientTest: createBuild(require('./clientTest'))
+/**
+ * WATCHの共通設定
+ */
+var watch = {
+    cache: true,
+    watch: true,
+    keepalive: true
+}
+
+/**
+ * プロダクトのビルド設定
+ */
+var product = {
+    entry: "./client/index.js",
+    output: {
+        path: './public/javascripts/',
+        filename: 'index.js'
+    },
+    devtool: 'inline-source-map'
 };
 
-var watch = {
-    watchProduct: createWatch(build.product),
-    watchTest: createWatch(build.test),
-    watchClientTest: createWatch(build.clientTest),
-}
+/**
+ * 画面テストのビルド設定
+ */
+var test = {
+    entry: createTestFlieEntries(),
+    output: {
+        path: gameTestConfig.TEST_BUILD_DIR,
+        filename: '[name]'
+    },
+    devtool: 'inline-source-map'
+};
 
-module.exports = __.extend({}, build, watch);
+/**
+ * 画面のユニットテストのビルド設定
+ */
+var clientTest = {
+    entry: glob.sync('./test/client/src/**/*.js'),
+    output: {
+        path: './test/client/build/',
+        filename: 'test.js'
+    },
+    devtool: 'inline-source-map'
+};
+
+module.exports = {
+    // 共通ビルド設定
+    options: {
+        module: {
+            loaders: [
+                { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" }
+            ]
+        }
+    },
+    // プロダクトのビルド
+    product: product,
+
+    // 画面テストのビルド
+    test: test,
+
+    // 画面のユニットテストのビルド
+    clientTest: clientTest,
+    
+    // プロダクトのWATCH 
+    watchProduct: __.extend({}, product, watch),
+    
+    // 画面テストのWATCH
+    watchTest: __.extend({}, test, watch),
+    
+    // 画面のユニットテストのWATCH
+    watchClientTest: __.extend({}, clientTest, watch)
+}

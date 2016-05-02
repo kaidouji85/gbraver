@@ -1,9 +1,7 @@
-var product = require('../webpack/product');
-var test = require('../webpack/test')
-var clientTest = require('../webpack/clientTest');
+var webpack = require('../webpack');
 
 module.exports = {
-    product: [product.output.path + product.output.filename],
-    test: [test.output.path],
-    clientTest: [clientTest.output.path]
+    product: [webpack.product.output.path + webpack.product.output.filename],
+    test: [webpack.test.output.path],
+    clientTest: [webpack.clientTest.output.path]
 }
