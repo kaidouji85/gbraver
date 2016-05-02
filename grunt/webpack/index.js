@@ -124,6 +124,15 @@ module.exports = function(target) {
         watchTest: __.extend({}, test(target), watch),
 
         // 画面のユニットテストのWATCH
-        watchClientTest: __.extend({}, clientTest, watch)
+        watchClientTest: __.extend({}, clientTest, watch),
+
+        // DBシェルのビルド
+        db: {
+            entry: './dbShell/index.js',
+            output: {
+                path: './dbShell/build',
+                filename: 'index.js'
+            },
+        }
     }
 }
