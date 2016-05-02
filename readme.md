@@ -130,20 +130,18 @@ GブレイバーのクライアントはWebパックを使用しているため�
 ### ローカルでのテスト実行方法
 
 テストの実行コマンドは以下の通りです。
-#### サーバのテスト
+サーバサイド以外はテスト実行前にビルドを済ませてください。
 
-    mocha test/server
+#### サーバサイド
+    grunt exec:serverTest
 
-####DAOテスト
-
-    mocha test/db
-
-####画面系テスト
-
-    mocha --timeout 100000 test/game/clientTest
-
+#### ゲーム画面テスト
+    grunt exec:gameTest
+        
 - http://localhot:8080/testList でテスト一覧が出ます
-- テスト実行前にはテストコードをビルドして下さい
+
+#### クライアントユニットテスト
+    karma start
 
 ##herokuへのデプロイ方法
 (1)前提条件
