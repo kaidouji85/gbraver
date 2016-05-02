@@ -1,5 +1,8 @@
 /**
  * Grunt設定ファイル
+ * 
+ * コマンドライン引数
+ *      --target ビルド対象のファイル
  */
 module.exports = function(grunt) {
     var config = grunt.file.readJSON('./GruntConfig.json');
@@ -7,7 +10,7 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
         aws_s3: require('./grunt/aws_s3')(config.s3),
         exec: require('./grunt/exec')(config.mongo),
-        webpack: require('./grunt/webpack'),
+        webpack: require('./grunt/webpack')(grunt.option('target')),
         clean: require('./grunt/clean'),
     });
 

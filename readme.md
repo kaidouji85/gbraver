@@ -103,8 +103,16 @@ GブレイバーのクライアントはWebパックを使用しているため�
     # 通常ビルド
     grunt buildTest
 
+    # ファイル単体のビルド
+    grunt buildTest --target テストファイル名
+    
     # watch
     grunt watchTest
+    
+    # ファイル単体のwatch
+    grunt watchTest --target テストファイル名
+
+単体ビルドのファイル名はtest/game/srcの下から書くこと
 
 #### クライアントユニットテスト
     # 通常ビルド

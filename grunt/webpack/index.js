@@ -37,15 +37,47 @@ var product = {
 };
 
 /**
- * 画面テストのビルド設定
+ * 画面テストの全ファイルをビルドする設定
  */
-var test = {
+var buildAllTest = {
     entry: createTestFlieEntries(),
     output: {
         path: gameTestConfig.TEST_BUILD_DIR,
         filename: '[name]'
     },
     devtool: 'inline-source-map'
+}
+
+/**
+ * 画面テストの単体ファイルをビルドする設定
+ *
+ * @param target ビルドファイル名
+ * @returns {Object} 面テストの単体ファイルをビルドする設定
+ */
+function buildSingleTest(target) {
+    return {
+        entry: gameTestConfig.TEST_SRC_DIR + target,
+        output: {
+            path: gameTestConfig.TEST_BUILD_DIR,
+            filename: target
+        },
+        devtool: 'inline-source-map'
+    }
+}
+
+/**
+ * 画面テストのビルド設定を返す
+ *
+ * @param target ビルド対象のファイル名
+ * @returns {Object} 画面テストのビルド設定
+ */
+function test(target) {
+
+    if (!!target) {
+        return buildSingleTest(target);
+    }
+
+    return buildAllTest;
 };
 
 /**
@@ -60,30 +92,38 @@ var clientTest = {
     devtool: 'inline-source-map'
 };
 
-module.exports = {
-    // 共通ビルド設定
-    options: {
-        module: {
-            loaders: [
-                { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" }
-            ]
-        }
-    },
-    // プロダクトのビルド
-    product: product,
+/**
+ * webpackの設定
+ *
+ * @param target ビルド対象のファイル名
+ * @returns {Object} webpackの設定
+ */
+module.exports = function(target) {
+    return {
+        // 共通ビルド設定
+        options: {
+            module: {
+                loaders: [
+                    { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" }
+                ]
+            }
+        },
+        // プロダクトのビルド
+        product: product,
 
-    // 画面テストのビルド
-    test: test,
+        // 画面テストのビルド
+        test: test(target),
 
-    // 画面のユニットテストのビルド
-    clientTest: clientTest,
-    
-    // プロダクトのWATCH 
-    watchProduct: __.extend({}, product, watch),
-    
-    // 画面テストのWATCH
-    watchTest: __.extend({}, test, watch),
-    
-    // 画面のユニットテストのWATCH
-    watchClientTest: __.extend({}, clientTest, watch)
+        // 画面のユニットテストのビルド
+        clientTest: clientTest,
+
+        // プロダクトのWATCH
+        watchProduct: __.extend({}, product, watch),
+
+        // 画面テストのWATCH
+        watchTest: __.extend({}, test(target), watch),
+
+        // 画面のユニットテストのWATCH
+        watchClientTest: __.extend({}, clientTest, watch)
+    }
 }
