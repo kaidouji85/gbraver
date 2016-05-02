@@ -166,10 +166,12 @@ herokuに環境変数を登録します。ここでは環境変数登録バッ�
     heroku config:set CONTENT_BASE_URL="静的コンテンツのベースURL" --app $herokuAppName
 
 (4)herokuへデプロイ  
-以下コマンドでherokuにデプロイします。
 
+    #プロダクション環境へのデプロイ
     grunt deploy
-
+    
+    # ベータ環境へのデプロイ
+    grunt deployBeta
 
 ## 素材提供
 [DOGA L-3(ロボットグラフィック)](http://doga.jp/2010/programs/dogal/index.html#dogal3)  
