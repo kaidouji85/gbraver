@@ -11,3 +11,4 @@ public/images/Thumbs.db
 public/javascripts/index.js
 test/game/build
 test/client/build
+dbShell/build/

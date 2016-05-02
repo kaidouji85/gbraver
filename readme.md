@@ -53,7 +53,7 @@ gruntタスクの設定ファイルであるGruntConfig.jsonを作成します�
 ・mongodb  
 
 (2)githubからソースコードのコピー  
-githubからプロジェクトをダウントードします。
+githubからプロジェクトをダウンロードします。
 
 
 (3)依存ライブラリのインストール  
@@ -68,7 +68,7 @@ githubからプロジェクトをダウントードします。
 (4)データベースの初期化  
 以下コマンドで、データベースを初期化します。  
 
-    mongo ホスト名/gbraver dbShell/createDB.js
+    grunt mongoLocal
 
 (5)startup.shの作成
 node.jsの起動と同時に環境変数を設定するように、startup.shを作成します。

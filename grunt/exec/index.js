@@ -1,4 +1,5 @@
 var __ = require('underscore');
+var DB_SHELL_PATH = 'dbShell/build/index.js';
 
 module.exports = function(mongo) {
     return {
@@ -6,13 +7,16 @@ module.exports = function(mongo) {
             cmd: 'mongo ' + mongo.product.url +
             ' -u '+mongo.product.user +
             ' -p'+ mongo.product.password +
-            ' dbShell/createDB.js'
+            ' ' + DB_SHELL_PATH
         },
         mongoBeta : {
             cmd: 'mongo ' + mongo.beta.url +
             ' -u '+mongo.beta.user +
             ' -p'+ mongo.beta.password +
-            ' dbShell/createDB.js'
+            ' ' + DB_SHELL_PATH
+        },
+        mongoLocal: {
+            cmd: 'mongo localhost/gbraver ' + DB_SHELL_PATH
         },
         pushHeroku : {
             cmd : 'git push heroku master:master --force'
