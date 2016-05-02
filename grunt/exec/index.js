@@ -1,4 +1,5 @@
 var __ = require('underscore');
+var DB_SHELL_PATH = 'dbShell/build/index.js';
 
 module.exports = function(mongo) {
     return {
@@ -6,13 +7,16 @@ module.exports = function(mongo) {
             cmd: 'mongo ' + mongo.product.url +
             ' -u '+mongo.product.user +
             ' -p'+ mongo.product.password +
-            ' dbShell/createDB.js'
+            ' ' + DB_SHELL_PATH
         },
         mongoBeta : {
             cmd: 'mongo ' + mongo.beta.url +
             ' -u '+mongo.beta.user +
             ' -p'+ mongo.beta.password +
-            ' dbShell/createDB.js'
+            ' ' + DB_SHELL_PATH
+        },
+        mongoLocal: {
+            cmd: 'mongo localhost/gbraver ' + DB_SHELL_PATH
         },
         pushHeroku : {
             cmd : 'git push heroku master:master --force'
@@ -20,7 +24,7 @@ module.exports = function(mongo) {
         pushHerokuBeta : {
             cmd : 'git push beta `git rev-parse --abbrev-ref HEAD`:master --force'
         },
-        test : {
+        serverTest : {
             cmd : __.reduce([
                 'battle',
                 'enemyRoutine',
@@ -28,6 +32,9 @@ module.exports = function(mongo) {
                 'singlePlay',
                 'twoPlay'], function(memo, now){
                 return memo + 'mocha --reporter progress test/server/'+ now + '/; ' }, '')
+        },
+        gameTest: {
+            cmd: 'mocha --timeout 100000 test/game/clientTest'
         }
     };
 }

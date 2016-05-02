@@ -2,7 +2,7 @@ var __ = require('underscore');
 
 /**
  * Grunt設定ファイル
- * 
+ *
  * コマンドライン引数
  *      --env 実行環境
  *         heroku heroku環境
@@ -30,12 +30,36 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-webpack');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-aws-s3');
+
+    // 本番環境にデプロイする
+    // ローカル環境から実行すること
+    grunt.registerTask(
+        'deploy',[
+            'aws_s3:cleanProduct',
+            'aws_s3:uploadProduct',
+            'buildDb',
+            'exec:mongo',
+            'exec:pushHeroku']);
+
+    // ベータ環境にデプロイする
+    // ローカル環境から実行すること
+    grunt.registerTask(
+        'deployBeta',[
+            'buildDb',
+            'exec:mongoBeta',
+            'exec:pushHerokuBeta']);
+
+    // ローカルDBにマスタデータを反映する
+    grunt.registerTask('mongoLocal',[
+        'buildDb',
+        'exec:mongoLocal'
+    ]);
     
-    grunt.registerTask('deploy',['aws_s3:cleanProduct','aws_s3:uploadProduct','exec:mongo','exec:pushHeroku']);
-    grunt.registerTask('deployBeta',['exec:mongoBeta','exec:pushHerokuBeta']);
+    // ビルド関連のタスク
     grunt.registerTask('build', ['clean:product', 'webpack:product']);
     grunt.registerTask('buildTest', ['clean:test', 'webpack:test']);
     grunt.registerTask('buildClientTest', ['clean:clientTest', 'webpack:clientTest']);
+    grunt.registerTask('buildDb', ['clean:db', 'webpack:db']);
     grunt.registerTask('watch', ['clean:product', 'webpack:watchProduct']);
     grunt.registerTask('watchTest', ['clean:test', 'webpack:watchTest']);
     grunt.registerTask('watchClientTest', ['clean:clientTest', 'webpack:watchClientTest']);

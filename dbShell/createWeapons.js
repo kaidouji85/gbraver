@@ -6,7 +6,7 @@
  * @param power 攻撃力
  * @returns {Weapons} 武器データ
  */
-function createWeapons(power) {
+export default function createWeapons(power) {
     return {
         1 : {
             name : '武器',
