@@ -8,9 +8,9 @@
   },
   "private": true,
   "scripts": {
-    "postinstall": "grunt --gruntfile Gruntfile.heroku.js build",
+    "postinstall": "grunt build --env=heroku",
     "start": "./shell/startup.sh",
-    "test": "grunt --gruntfile Gruntfile.js exec:test"
+    "test": "grunt exec:test"
   },
   "dependencies": {
     "babel-core": "^6.7.6",
