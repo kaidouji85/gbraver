@@ -1,18 +1,30 @@
+var __ = require('underscore');
+
 /**
  * Grunt設定ファイル
  * 
  * コマンドライン引数
+ *      --env 実行環境
+ *         heroku heroku環境
+ *         指定なし ローカル環境
  *      --target ビルド対象のファイル
  */
 module.exports = function(grunt) {
-    var config = grunt.file.readJSON('./GruntConfig.json');
+    // 全環境共通設定
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        aws_s3: require('./grunt/aws_s3')(config.s3),
-        exec: require('./grunt/exec')(config.mongo),
         webpack: require('./grunt/webpack')(grunt.option('target')),
         clean: require('./grunt/clean'),
     });
+
+    // ローカル環境の場合、認証情報が必要なタスクを追加する
+    if (grunt.option('env') !== 'heroku') {
+        var config = grunt.file.readJSON('./GruntConfig.json');
+        grunt.config.merge({
+            aws_s3: require('./grunt/aws_s3')(config.s3),
+            exec: require('./grunt/exec')(config.mongo),
+        });
+    }
 
     grunt.loadNpmTasks('grunt-exec');
     grunt.loadNpmTasks('grunt-webpack');
