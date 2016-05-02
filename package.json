@@ -10,7 +10,7 @@
   "scripts": {
     "postinstall": "grunt build --env=heroku",
     "start": "./shell/startup.sh",
-    "test": "grunt exec:test"
+    "test": "grunt exec:serverTest"
   },
   "dependencies": {
     "babel-core": "^6.7.6",
