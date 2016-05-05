@@ -8,22 +8,54 @@ import selectPilotScene from '../scene/selectPilotScene';
 import selectArmdozerScene from '../scene/selectArmdozerScene';
 import tournamentScene from '../scene/tournamentScene';
 
+/**
+ * ゲームクラス
+ *
+ * @param spec パラメータ
+ *         spec.userId ユーザID
+ *         spec.armdozerId ユーザが選択しているアームドーザID
+ *         spec.pilotId ユーザが選択しているパイロットID
+ *         spec.armdozerList アームドーザマスタ
+ *         spec.pilotList パイロットマスタ
+ */
 module.exports = function(spec) {
     /**
      * ゲームコア
      */
-    var contentBaseUrl = spec&&spec.contentBaseUrl || location.origin;
-    var that = gameBase({
+    let contentBaseUrl = spec&&spec.contentBaseUrl || location.origin;
+    let that = gameBase({
         contentBaseUrl : contentBaseUrl
     });
-    var userId = spec.userId;
-    var armdozerId = spec.armdozerId;
-    var pilotId = spec.pilotId;
-    var pilotList = spec.pilotList;
-    var armdozerList = spec.armdozerList;
-    var battleMode = that.BATTLE_MODE_TWO_PLAY;
+
+    /**
+     * ゲームの状態をまとめた変数。
+     * 変則として変数値が変わるのは、これだけである。
+     *
+     * @type {Object}
+     */
+    let state = {
+        armdozerId: spec.armdozerId,
+        pilotId: spec.pilotId,
+        battleMode: that.BATTLE_MODE_TWO_PLAY
+    }
 
     that.ee = new EventEmitter();
+
+    /**
+     * 状態を更新する
+     *
+     * @param newState 新しいState
+     */
+    function setState(newState) {
+        __.extend(state, newState);
+    }
+
+    /**
+     * 状態を取得する
+     *
+     * @returns 状態
+     */
+    that.getState = ()=>state;
 
     /**
      * シーン変更のヘルパー関数
@@ -39,7 +71,7 @@ module.exports = function(spec) {
      * @returns {string} アームドーザID
      */
     that.getArmdozerId = function() {
-        return armdozerId;
+        return state.armdozerId;
     }
 
     /**
@@ -47,7 +79,7 @@ module.exports = function(spec) {
      * @returns {string} パイロットID
      */
     that.getPilotId = function(){
-        return pilotId;
+        return state.pilotId;
     }
 
     /**
@@ -55,15 +87,15 @@ module.exports = function(spec) {
      * @returns {string} 戦闘モード
      */
     that.getBattleMode = function(){
-        return battleMode;
+        return state.battleMode;
     }
 
     /**
      * 戦闘モードを設定する
-     * @param mode 戦闘モード
+     * @param battleMode 戦闘モード
      */
-    that.setBattleMode = function(mode){
-        battleMode = mode;
+    that.setBattleMode = function(battleMode){
+        setState({battleMode});
     }
 
     /**
@@ -72,7 +104,7 @@ module.exports = function(spec) {
      * @param param battleSceneに渡すspec
      */
     that.changeBattleScene = function(param){
-        param.userId = userId;
+        param.userId = spec.userId;
         var scene = battleScene(param);
         scene.onCommand(function(command){
             that.ee.emit('sendMessage', 'command',command);
@@ -87,7 +119,7 @@ module.exports = function(spec) {
      * @param isWin 戦闘に勝利したか否かのフラグ
      */
     function changeBattleToNextScene(isWin) {
-        switch(battleMode) {
+        switch(state.battleMode) {
             case that.BATTLE_MODE_TWO_PLAY:
                 return that.ee.emit('sendMessage', 'getRoomInfo',null);
             case that.BATTLE_MODE_TOURNAMENT:
@@ -103,7 +135,8 @@ module.exports = function(spec) {
      * @param roomInfo ルーム情報
      */
     that.changeRoomSelectScene = function(roomInfo){
-        battleMode = that.BATTLE_MODE_TWO_PLAY;
+        setState({battleMode: that.BATTLE_MODE_TWO_PLAY});
+
         var scene = roomSelectScene({
             roomInfo : roomInfo
         });
@@ -128,10 +161,10 @@ module.exports = function(spec) {
      */
     that.changeTopScene = function(){
         var scene = topScene({
-            armdozerId : armdozerId,
-            pilotId : pilotId,
-            armdozerList : armdozerList,
-            pilotList : pilotList
+            armdozerId : state.armdozerId,
+            pilotId : state.pilotId,
+            armdozerList : spec.armdozerList,
+            pilotList : spec.pilotList
         });
         scene.ee.on('pushTournamentButton',  that.changeTournamentScene);
         scene.ee.on('pushSelectArmdozer',()=>that.changeSelectArmdozerScene());
@@ -145,7 +178,7 @@ module.exports = function(spec) {
      * トーナメントシーンに遷移する
      */
     that.changeTournamentScene = function() {
-        battleMode = that.BATTLE_MODE_TOURNAMENT;
+        setState({battleMode: that.BATTLE_MODE_TOURNAMENT});
 
         let tournamentId = 'basic';//TODO 後でトーナメントデータを持ってくる方法を考える
         let data = __.find(spec.tournamentList, item=>item.tournamentId === tournamentId);
@@ -166,18 +199,16 @@ module.exports = function(spec) {
      */
     that.changeSelectPilotScene = function() {
         var scene = selectPilotScene({
-            pilotList : pilotList,
-            selectPilotId : pilotId
+            pilotList : spec.pilotList,
+            selectPilotId : state.pilotId
         });
         scene.onPushPrevButton(function(){
             that.changeTopScene();
         });
-        scene.onPushOkButton(function(l_pilotId){
-            var data = {
-                pilotId : l_pilotId
-            };
+        scene.onPushOkButton(function(pilotId){
+            var data = { pilotId };
             that.ee.emit('sendMessage', 'setPilot',data);
-            pilotId = l_pilotId;
+            setState({pilotId});
         });
         replaceScene(scene);
     }
@@ -188,15 +219,13 @@ module.exports = function(spec) {
      */
     that.changeSelectArmdozerScene = function(){
         var scene = selectArmdozerScene({
-            armdozerList : armdozerList,
-            selectArmdozerId : armdozerId
+            armdozerList : spec.armdozerList,
+            selectArmdozerId : state.armdozerId
         });
-        scene.onPushOkButton(function(l_armdozerId){
-            var sendData = {
-                armdozerId : l_armdozerId
-            };
+        scene.onPushOkButton(function(armdozerId){
+            var sendData = { armdozerId };
             that.ee.emit('sendMessage', 'setArmdozer',sendData);
-            armdozerId = l_armdozerId;
+            setState({ armdozerId });
         });
         scene.onPushPrevButton(function(){
             that.changeTopScene();

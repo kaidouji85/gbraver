@@ -29,7 +29,7 @@ function doTest(){
     }
 
     function onLoad(){
-        Game.setBattleMode('twoPlay');
+        Game.setBattleMode(Game.BATTLE_MODE_TWO_PLAY);
         Game.changeBattleScene({
             statusArray : statusArray
         });
