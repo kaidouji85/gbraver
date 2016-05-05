@@ -99,7 +99,8 @@ module.exports = function(spec){
     core.MESSAGE_LOGOFF = 'ログオフ中';
     core.MESSAGE_BATTLE_END = 'ボタンを押して下さい';
     core.MESSAGE_WINDOW_Y = 276;
-    core.BATTLE_MODE_TWO_PLAY = 'twoPlay';
+    core.BATTLE_MODE_TOURNAMENT = 'BATTLE_MODE_TOURNAMENT';
+    core.BATTLE_MODE_TWO_PLAY = 'BATTLE_MODE_TWO_PLAY';
 
     core.fps = 40;
     core.bgm = bgmManager();

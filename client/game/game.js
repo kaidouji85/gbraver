@@ -77,13 +77,25 @@ module.exports = function(spec) {
         scene.onCommand(function(command){
             that.ee.emit('sendMessage', 'command',command);
         });
-        scene.onPushBattleEndIcon(function(isWin){
-            if(battleMode===that.BATTLE_MODE_TWO_PLAY){
-                that.ee.emit('sendMessage', 'getRoomInfo',null);
-            }
-        });
+        scene.onPushBattleEndIcon(changeBattleToNextScene);
         replaceScene(scene);
     };
+
+    /**
+     * 戦闘シーンから次のシーンへ遷移する
+     * 
+     * @param isWin 戦闘に勝利したか否かのフラグ
+     */
+    function changeBattleToNextScene(isWin) {
+        switch(battleMode) {
+            case that.BATTLE_MODE_TWO_PLAY:
+                return that.ee.emit('sendMessage', 'getRoomInfo',null);
+            case that.BATTLE_MODE_TOURNAMENT:
+                return that.changeTournamentScene();
+            default:
+                return;
+        }
+    }
 
     /**
      * ルームセレクトシーンに変更する
@@ -121,7 +133,7 @@ module.exports = function(spec) {
             armdozerList : armdozerList,
             pilotList : pilotList
         });
-        scene.ee.on('pushTournamentButton',  ()=>that.changeTournamentScene('basic'));
+        scene.ee.on('pushTournamentButton',  that.changeTournamentScene);
         scene.ee.on('pushSelectArmdozer',()=>that.changeSelectArmdozerScene());
         scene.ee.on('pushBattleRoomButton',()=>that.ee.emit('sendMessage', 'getRoomInfo',null));
         scene.ee.on('pushSelectPilotButton', ()=>that.changeSelectPilotScene());
@@ -131,10 +143,11 @@ module.exports = function(spec) {
 
     /**
      * トーナメントシーンに遷移する
-     *
-     * @param {String} tournamentId トーナメントID
      */
-    that.changeTournamentScene = function(tournamentId) {
+    that.changeTournamentScene = function() {
+        battleMode = that.BATTLE_MODE_TOURNAMENT;
+
+        let tournamentId = 'basic';//TODO 後でトーナメントデータを持ってくる方法を考える
         let data = __.find(spec.tournamentList, item=>item.tournamentId === tournamentId);
         let scene = tournamentScene({
             data,

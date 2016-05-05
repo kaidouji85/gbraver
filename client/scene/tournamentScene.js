@@ -36,6 +36,10 @@ export default function tournamentScene(spec) {
     /** シーン名 */
     that.getName = ()=>'tournament';
 
+    that.getState = function() {
+        return ;
+    }
+
     /**
      * スプライトを生成する
      */
