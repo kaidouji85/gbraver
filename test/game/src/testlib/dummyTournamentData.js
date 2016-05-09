@@ -24,11 +24,15 @@ const DUMMY_TOURNAMNT = [{
             right: {
                 left: {
                     id: 'enemy2',
-                    pilotId: 'iori'
+                    enemyId: 'landozer',
+                    pilotId: 'iori',
+                    routineId: 'zero'
                 },
                 right: {
                     id: 'enemy3',
-                    pilotId: 'akira'
+                    enemyId: 'landozer',
+                    pilotId: 'akira',
+                    routineId: 'zero'
                 },
                 state: CONST.TOURNAMENT_STATE.NO_RESULT
             },
@@ -38,7 +42,9 @@ const DUMMY_TOURNAMNT = [{
             left: {
                 left: {
                     id: 'enemy4',
-                    pilotId: 'akira'
+                    enemyId: 'landozer',
+                    pilotId: 'akira',
+                    routineId: 'zero'
                 },
                 right: {
                     pilotId: 'iori'
@@ -48,11 +54,15 @@ const DUMMY_TOURNAMNT = [{
             right: {
                 left: {
                     id: 'enemy5',
-                    pilotId: 'akane'
+                    enemyId: 'landozer',
+                    pilotId: 'akane',
+                    routineId: 'zero'
                 },
                 right: {
                     id: 'boss',
-                    pilotId: 'kyoko'
+                    enemyId: 'landozer',
+                    pilotId: 'kyoko',
+                    routineId: 'zero'
                 },
                 state: CONST.TOURNAMENT_STATE.NO_RESULT
             },

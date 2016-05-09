@@ -19,6 +19,9 @@ const PLAYER_ID = 'player';
  */
 export default function tournamentScene(spec) {
     let that = new Scene();
+    let core = enchant.Core.instance;
+
+    that.addEventListener(Event.ENTER,()=>core.bgm.setMute());
 
     /**
      * シーンの初期化

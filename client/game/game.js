@@ -7,6 +7,7 @@ import topScene from '../scene/topScene';
 import selectPilotScene from '../scene/selectPilotScene';
 import selectArmdozerScene from '../scene/selectArmdozerScene';
 import tournamentScene from '../scene/tournamentScene';
+import updateTableState from '../tournament/updateTableState';
 
 /**
  * ゲームクラス
@@ -36,7 +37,9 @@ module.exports = function(spec) {
     let state = {
         armdozerId: spec.armdozerId,
         pilotId: spec.pilotId,
-        battleMode: that.BATTLE_MODE_TWO_PLAY
+        battleMode: that.BATTLE_MODE_TWO_PLAY,
+        //TODO 後でトーナメントデータを持ってくる方法を考える
+        tournamentState: __.find(spec.tournamentList, item=>item.tournamentId === 'basic')
     }
 
     that.ee = new EventEmitter();
@@ -109,7 +112,7 @@ module.exports = function(spec) {
         scene.onCommand(function(command){
             that.ee.emit('sendMessage', 'command',command);
         });
-        scene.onPushBattleEndIcon(changeBattleToNextScene);
+        scene.onPushBattleEndIcon(changeSceneFromBattle);
         replaceScene(scene);
     };
 
@@ -118,14 +121,17 @@ module.exports = function(spec) {
      * 
      * @param isWin 戦闘に勝利したか否かのフラグ
      */
-    function changeBattleToNextScene(isWin) {
-        switch(state.battleMode) {
-            case that.BATTLE_MODE_TWO_PLAY:
-                return that.ee.emit('sendMessage', 'getRoomInfo',null);
-            case that.BATTLE_MODE_TOURNAMENT:
-                return that.changeTournamentScene();
-            default:
-                return;
+    function changeSceneFromBattle(isWin) {
+        if (state.battleMode === that.BATTLE_MODE_TWO_PLAY) {
+            that.ee.emit('sendMessage', 'getRoomInfo',null);
+            return;
+        }
+        
+        if (state.battleMode === that.BATTLE_MODE_TOURNAMENT) {
+            let tournamentState = updateTableState(state.tournamentState, isWin);
+            setState({ tournamentState });
+            that.changeTournamentScene();
+            return;
         }
     }
 
@@ -180,10 +186,8 @@ module.exports = function(spec) {
     that.changeTournamentScene = function() {
         setState({battleMode: that.BATTLE_MODE_TOURNAMENT});
 
-        let tournamentId = 'basic';//TODO 後でトーナメントデータを持ってくる方法を考える
-        let data = __.find(spec.tournamentList, item=>item.tournamentId === tournamentId);
         let scene = tournamentScene({
-            data,
+            data: state.tournamentState,
             master: {
                 armdozerList: spec.armdozerList,
                 pilotList: spec.pilotList
