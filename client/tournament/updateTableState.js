@@ -1,7 +1,27 @@
 // TODO １ブロック戦以外も更新できるようにする
 // TODO ユニットテストを書く
-import {TOURNAMENT_STATE} from './const';
+import {TOURNAMENT_STATE, ID_TYPE} from './const';
 import __ from 'underscore';
+
+/**
+ * 対戦ブロックの状態を計算して返す
+ *
+ * @param data 対戦ブロックのデータ
+ * @returns {number} トーナメントの状態
+ */
+function getState(data) {
+    let dataArray = [data.left.id, data.right.id];
+
+    if ( __.contains(dataArray, ID_TYPE.PLAYER) && __.contains(dataArray, ID_TYPE.BOSS)) {
+        return data.left.id === ID_TYPE.PLAYER ? TOURNAMENT_STATE.LEFT_WIN : TOURNAMENT_STATE.RIGHT_WIN;
+    }
+
+    if (__.contains(dataArray, ID_TYPE.BOSS)) {
+        return data.left.id === ID_TYPE.BOSS ? TOURNAMENT_STATE.LEFT_WIN : TOURNAMENT_STATE.RIGHT_WIN;
+    }
+
+    return TOURNAMENT_STATE.LEFT_WIN;
+}
 
 /**
  * 第3ブロックの状態を更新する
@@ -10,9 +30,8 @@ import __ from 'underscore';
  * @returns {Object} 更新した第3ブロック
  */
 function update1Block(data) {
-    return __.extend({}, data, {
-        state: TOURNAMENT_STATE.LEFT_WIN
-    });
+    let state = getState(data);
+    return __.extend({}, data, {state});
 }
 
 /**
