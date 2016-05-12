@@ -41,12 +41,18 @@ function getMasterData() {
  * @param Game Gameオブジェクト
  */
 function onLoad(Game) {
+    let executeLogOff = ()=>window.location = location.origin+'/logOff';
+    let executeReload = ()=> window.location = location.origin;
+
+    // Clientからサーバへ通信するイベントを登録する
     Game.changeTopScene();
     Game.ee.on('sendMessage', (message,data)=>{
         socket.emit(message,data);
     });
+    Game.ee.on('logOff', executeLogOff);
 
-    __.each([
+    // サーバからClientへ通信するイベントを登録する(戦闘系のみ)
+    let serverRespForBattleList = [
         'succesEnterRoom',
         'successSetArmdozer',
         'gameStart',
@@ -57,24 +63,14 @@ function onLoad(Game) {
         'enterRoomError',
         'successSetPilot',
         'battleError'
-    ], (item)=>{
-        socket.on(item, function(data){
-            Game.ee.emit('serverResp', item, data);
-        });
-    });
+    ];
+    __.each(serverRespForBattleList,
+        (message)=>socket.on(message, (data)=>Game.ee.emit('serverResp', message, data)));
 
-    __.each({
-        logOff: ()=>window.location = location.origin+'/logOff',
-        reconnecting: ()=> {
-            console.log('reconnecting');
-            window.location = location.origin;
-        },
-        noLoginError: ()=> {
-            console.log('no login error.');
-            console.log(data);
-            window.location = location.origin;
-        }
-    }, (val, key)=> socket.on(key, val));
+    // サーバからClientへ通信するイベントを登録する(戦闘系以外)
+    socket.on('logOff', executeLogOff);
+    socket.on('reconnecting', executeReload);
+    socket.on('noLoginError', executeReload);
 }
 
 /**

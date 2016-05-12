@@ -28,7 +28,7 @@ export default function createPilot() {
         pictLeftMargin : 64,
         shout : 'まぁ、当然の結果ね',
         type : 'recoverHp',
-        value : 0.50,
+        value : 0.30,
         hp : 500,
         power : 100,
         defense : 300,
@@ -62,7 +62,7 @@ export default function createPilot() {
         hp : 300,
         power : 300,
         defense : 300,
-        speed : 25
+        speed : 15
     });
 
     db.pilots.insert({
