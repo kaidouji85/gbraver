@@ -3,7 +3,7 @@ var assert = require('chai').assert;
 var func = require('../../../client/func');
 
 describe('試しに作ってみたテスト', function(){
-    it('テスト1', function() {
+    it('テスト1', ()=> {
         assert.equal(func(), 'test');
     });
 });

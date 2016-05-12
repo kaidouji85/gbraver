@@ -53,7 +53,7 @@ gruntタスクの設定ファイルであるGruntConfig.jsonを作成します�
 ・mongodb  
 
 (2)githubからソースコードのコピー  
-githubからプロジェクトをダウントードします。
+githubからプロジェクトをダウンロードします。
 
 
 (3)依存ライブラリのインストール  
@@ -68,7 +68,7 @@ githubからプロジェクトをダウントードします。
 (4)データベースの初期化  
 以下コマンドで、データベースを初期化します。  
 
-    mongo ホスト名/gbraver dbShell/createDB.js
+    grunt mongoLocal
 
 (5)startup.shの作成
 node.jsの起動と同時に環境変数を設定するように、startup.shを作成します。
@@ -103,8 +103,16 @@ GブレイバーのクライアントはWebパックを使用しているため�
     # 通常ビルド
     grunt buildTest
 
+    # ファイル単体のビルド
+    grunt buildTest --target テストファイル名
+    
     # watch
     grunt watchTest
+    
+    # ファイル単体のwatch
+    grunt watchTest --target テストファイル名
+
+単体ビルドのファイル名はtest/game/srcの下から書くこと
 
 #### クライアントユニットテスト
     # 通常ビルド
@@ -122,20 +130,18 @@ GブレイバーのクライアントはWebパックを使用しているため�
 ### ローカルでのテスト実行方法
 
 テストの実行コマンドは以下の通りです。
-#### サーバのテスト
+サーバサイド以外はテスト実行前にビルドを済ませてください。
 
-    mocha test/server
+#### サーバサイド
+    grunt exec:serverTest
 
-####DAOテスト
-
-    mocha test/db
-
-####画面系テスト
-
-    mocha --timeout 100000 test/game/clientTest
-
+#### ゲーム画面テスト
+    grunt exec:gameTest
+        
 - http://localhot:8080/testList でテスト一覧が出ます
-- テスト実行前にはテストコードをビルドして下さい
+
+#### クライアントユニットテスト
+    karma start
 
 ##herokuへのデプロイ方法
 (1)前提条件
@@ -158,10 +164,12 @@ herokuに環境変数を登録します。ここでは環境変数登録バッ�
     heroku config:set CONTENT_BASE_URL="静的コンテンツのベースURL" --app $herokuAppName
 
 (4)herokuへデプロイ  
-以下コマンドでherokuにデプロイします。
 
+    #プロダクション環境へのデプロイ
     grunt deploy
-
+    
+    # ベータ環境へのデプロイ
+    grunt deployBeta
 
 ## 素材提供
 [DOGA L-3(ロボットグラフィック)](http://doga.jp/2010/programs/dogal/index.html#dogal3)  
