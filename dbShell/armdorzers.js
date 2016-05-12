@@ -48,8 +48,8 @@ export default function createArmdozer() {
         weapons : createWeapons(1600),
         ability: {
             type : 'boostActive',
-            active : 0.6,
-            threshold : 0.4
+            active : 0.7,
+            threshold : 0.3
         }
     });
 
