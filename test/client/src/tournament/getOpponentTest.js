@@ -7,7 +7,7 @@ import * as CONST from '../../../../client/tournament/const';
  *
  */
 describe('対戦相手の取得', function(){
-    describe('1回戦目の対戦相手が取得できる', ()=> {
+    it('1回戦目の対戦相手が取得できる', ()=> {
         let data = {
             left: {
                 left: {
@@ -49,13 +49,13 @@ describe('対戦相手の取得', function(){
             {id: 'boss', expected: data.right.right.left},
         ];
 
-        patterns.forEach(item => it(item.id+'の対戦相手のデータがただしく取得できている', ()=>{
+        patterns.forEach(item =>{
             let result = getOpopenet(data, item.id);
-            assert.deepEqual(result, item.expected);
-        }));
+            assert.deepEqual(result, item.expected, `{item.id}の対戦相手のデータがただしく取得できている`);
+        });
     });
 
-    describe('2回戦目の対戦相手が取得できる', ()=> {
+    it('2回戦目の対戦相手が取得できる', ()=> {
         let data = {
             left: {
                 left: {
@@ -100,13 +100,13 @@ describe('対戦相手の取得', function(){
             {id: 'enemy006', expected: null},
         ];
 
-        patterns.forEach(item => it(item.id+'の対戦相手のデータがただしく取得できている', ()=>{
+        patterns.forEach(item =>{
             let result = getOpopenet(data, item.id);
-            assert.deepEqual(result, item.expected);
-        }));
+            assert.deepEqual(result, item.expected, `{item.id}の対戦相手のデータがただしく取得できている`);
+        });
     });
 
-    describe('3回戦目の対戦相手が取得できる', ()=> {
+    it('3回戦目の対戦相手が取得できる', ()=> {
         let data = {
             left: {
                 left: {
@@ -151,9 +151,9 @@ describe('対戦相手の取得', function(){
             {id: 'enemy006', expected: null},
         ];
 
-        patterns.forEach(item => it(item.id+'の対戦相手のデータがただしく取得できている', ()=>{
+        patterns.forEach(item =>{
             let result = getOpopenet(data, item.id);
-            assert.deepEqual(result, item.expected);
-        }));
+            assert.deepEqual(result, item.expected, `{item.id}の対戦相手のデータがただしく取得できている`);
+        });
     });
 });

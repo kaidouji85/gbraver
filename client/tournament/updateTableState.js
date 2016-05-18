@@ -1,7 +1,9 @@
 // TODO １ブロック戦以外も更新できるようにする
 // TODO ユニットテストを書く
-import {TOURNAMENT_STATE, ID_TYPE} from './const';
 import __ from 'underscore';
+import {TOURNAMENT_STATE, ID_TYPE} from './const';
+import compressionBlock from './compressionBlock';
+import isTournamentBlock from './isTournamentBlock';
 
 /**
  * 対戦ブロックの状態を計算して返す
@@ -24,27 +26,27 @@ function getState(data) {
 }
 
 /**
- * 第3ブロックの状態を更新する
+ * トーナメントブロックを再帰的に更新する
  *
- * @param data 第3ブロックのデータ
- * @returns {Object} 更新した第3ブロック
+ * @param block ブロックのデータ
+ * @returns {Object} 更新したトーナメントブロック
  */
-function update1Block(data) {
-    let state = getState(data);
-    return __.extend({}, data, {state});
-}
+function updateBlock(block) {
+    if (!isTournamentBlock(block)) {
+        return block;
+    }
 
-/**
- * 第2ブロックの状態を更新する
- *
- * @param data 第2ブロックのデータ
- * @returns {Object} 更新した第2ブロック
- */
-function update2Block(data) {
-    return __.extend({}, data, {
-        left: update1Block(data.left),
-        right: update1Block(data.right)
+    let canUpdate = block.state === TOURNAMENT_STATE.NO_RESULT
+        && block.left.state !== TOURNAMENT_STATE.NO_RESULT
+        && block.right.state !== TOURNAMENT_STATE.NO_RESULT;
+    let newState = canUpdate ? getState(compressionBlock(block)) : block.state;
+
+    return __.extend({}, block, {
+        state: newState,
+        left: updateBlock(block.left),
+        right: updateBlock(block.right)
     });
+
 }
 
 /**
@@ -59,8 +61,5 @@ export default function updateTableState(table, isWin) {
         return table;
     }
 
-    return __.extend({}, table, {
-        left: update2Block(table.left),
-        right: update2Block(table.right)
-    });
+    return updateBlock(table);
 }

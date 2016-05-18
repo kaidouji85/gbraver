@@ -1,41 +1,5 @@
-import * as CONST from './const';
-import __ from 'underscore';
-
-/**
- * 指定したデータがトーナメントブロックか否かを判定する
- *
- * @param data データ
- * @returns {boolean} 判定結果
- */
-function isTournamentBlock(data) {
-    return !!data.right && !!data.left;
-}
-
-// TODO テストを書く
-/**
- * 勝敗が決したブロックを一つにまとめる
- *
- * @param data トーナメントデータ
- * @returns {Object} まとめた後のトーナメントデータ
- */
-function collectBlock(data) {
-    if(!isTournamentBlock(data)) {
-        return data;
-    }
-
-    if(data.state === CONST.TOURNAMENT_STATE.LEFT_WIN) {
-        return collectBlock(data.left);
-    }
-
-    if (data.state === CONST.TOURNAMENT_STATE.RIGHT_WIN) {
-        return collectBlock(data.right);
-    }
-
-    return __.extend({}, data, {
-        right: collectBlock(data.right),
-        left: collectBlock(data.left)
-    });
-}
+import isTournamentBlock from './isTournamentBlock';
+import compressionBlock from './compressionBlock';
 
 // TODO テストを書く
 /**
@@ -75,7 +39,7 @@ function getBLockById(data, id) {
  * @returns {Object} 対戦相手のデータ
  */
 export default function getOpponent(data, id) {
-    let collectData = collectBlock(data);
+    let collectData = compressionBlock(data);
     let targetBlock = getBLockById(collectData, id);
     if (!targetBlock) {
         return null;
