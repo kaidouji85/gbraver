@@ -8,6 +8,7 @@ import selectPilotScene from '../scene/selectPilotScene';
 import selectArmdozerScene from '../scene/selectArmdozerScene';
 import tournamentScene from '../scene/tournamentScene';
 import updateTableState from '../tournament/updateTableState';
+import isFinishTournament from '../tournament/isFinishTournament';
 
 /**
  * ゲームクラス
@@ -38,10 +39,12 @@ module.exports = function(spec) {
         armdozerId: spec.armdozerId,
         pilotId: spec.pilotId,
         battleMode: that.BATTLE_MODE_TWO_PLAY,
-        //TODO 後でトーナメントデータを持ってくる方法を考える
-        tournamentState: __.find(spec.tournamentList, item=>item.tournamentId === 'basic')
+        tournamentState: {}
     }
 
+    /**
+     * 本クラスは外部とのイベントのやりとりを、このイベントエミッターを通して行う
+     */
     that.ee = new EventEmitter();
 
     /**
@@ -49,9 +52,7 @@ module.exports = function(spec) {
      *
      * @param newState 新しいState
      */
-    function setState(newState) {
-        __.extend(state, newState);
-    }
+    that.setState = (newState) => __.extend(state, newState);
 
     /**
      * 状態を取得する
@@ -98,7 +99,7 @@ module.exports = function(spec) {
      * @param battleMode 戦闘モード
      */
     that.setBattleMode = function(battleMode){
-        setState({battleMode});
+        that.setState({battleMode});
     }
 
     /**
@@ -122,17 +123,18 @@ module.exports = function(spec) {
      * @param isWin 戦闘に勝利したか否かのフラグ
      */
     function changeSceneFromBattle(isWin) {
-        if (state.battleMode === that.BATTLE_MODE_TWO_PLAY) {
-            that.ee.emit('sendMessage', 'getRoomInfo',null);
-            return;
+        let map = {
+            [that.BATTLE_MODE_TWO_PLAY]: ()=>that.ee.emit('sendMessage', 'getRoomInfo',null),
+            [that.BATTLE_MODE_TOURNAMENT]: () => {
+                let tournamentState = isWin ? updateTableState(state.tournamentState)
+                    : state.tournamentState;
+                that.setState({ tournamentState });
+                isFinishTournament(tournamentState) ?
+                    that.changeTopScene() : that.changeTournamentScene();
+            }
         }
-        
-        if (state.battleMode === that.BATTLE_MODE_TOURNAMENT) {
-            let tournamentState = updateTableState(state.tournamentState, isWin);
-            setState({ tournamentState });
-            that.changeTournamentScene();
-            return;
-        }
+
+        map[state.battleMode] &&  map[state.battleMode]();
     }
 
     /**
@@ -141,7 +143,7 @@ module.exports = function(spec) {
      * @param roomInfo ルーム情報
      */
     that.changeRoomSelectScene = function(roomInfo){
-        setState({battleMode: that.BATTLE_MODE_TWO_PLAY});
+        that.setState({battleMode: that.BATTLE_MODE_TWO_PLAY});
 
         var scene = roomSelectScene({
             roomInfo : roomInfo
@@ -172,7 +174,12 @@ module.exports = function(spec) {
             armdozerList : spec.armdozerList,
             pilotList : spec.pilotList
         });
-        scene.ee.on('pushTournamentButton',  that.changeTournamentScene);
+        scene.ee.on('pushTournamentButton', ()=>{
+            // TODO 後でトーナメントデータを持ってくる方法を考える
+            let tournamentState = __.find(spec.tournamentList, item=>item.tournamentId === 'basic');
+            that.setState({tournamentState});
+            that.changeTournamentScene();
+        });
         scene.ee.on('pushSelectArmdozer',()=>that.changeSelectArmdozerScene());
         scene.ee.on('pushBattleRoomButton',()=>that.ee.emit('sendMessage', 'getRoomInfo',null));
         scene.ee.on('pushSelectPilotButton', ()=>that.changeSelectPilotScene());
@@ -184,7 +191,7 @@ module.exports = function(spec) {
      * トーナメントシーンに遷移する
      */
     that.changeTournamentScene = function() {
-        setState({battleMode: that.BATTLE_MODE_TOURNAMENT});
+        that.setState({battleMode: that.BATTLE_MODE_TOURNAMENT});
 
         let scene = tournamentScene({
             data: state.tournamentState,
@@ -212,7 +219,7 @@ module.exports = function(spec) {
         scene.onPushOkButton(function(pilotId){
             var data = { pilotId };
             that.ee.emit('sendMessage', 'setPilot',data);
-            setState({pilotId});
+            that.setState({pilotId});
         });
         replaceScene(scene);
     }
@@ -229,7 +236,7 @@ module.exports = function(spec) {
         scene.onPushOkButton(function(armdozerId){
             var sendData = { armdozerId };
             that.ee.emit('sendMessage', 'setArmdozer',sendData);
-            setState({ armdozerId });
+            that.setState({ armdozerId });
         });
         scene.onPushPrevButton(function(){
             that.changeTopScene();

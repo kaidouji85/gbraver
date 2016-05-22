@@ -1,8 +1,8 @@
 /**
  * トーナメントから戦闘画面に遷移するテスト
+ *
+ * トーナメントが完了していない場合、戦闘画面に遷移する
  */
-
-import tournamentScene from '../../../../client/scene/tournamentScene';
 import game from '../../../../client/game/game';
 import testUtil from '../testlib/testUtil';
 import testData from '../testlib/testData';
@@ -74,16 +74,17 @@ window.onload = function () {
         pilotId : 'kyoko',
         armdozerList : testData().getMasterData().armdozerList,
         pilotList : testData().getMasterData().pilotList,
-        tournamentList: [TEST_DATA]
     });
 
     Game.start();
     Game.onload = function() {
-        Game.ee.once('changeScene', onChangeScene);
-        Game.changeTournamentScene('basic');
+        // トーナメントの状態をテスト用にセットする
+        Game.setState({tournamentState: TEST_DATA});
+        Game.ee.once('changeScene', changeTournamentScene);
+        Game.changeTournamentScene();
     }
 
-    function onChangeScene(sceneName) {
+    function changeTournamentScene(sceneName) {
         Game.ee.once('sendMessage', onSendMessage);
     }
     
