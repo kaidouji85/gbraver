@@ -2,7 +2,6 @@ import __ from 'underscore';
 import * as CONST from './const';
 import isTournamentBlock from './isTournamentBlock';
 
-// TODO テストを書く
 /**
  * 勝敗が決したブロックを一つにまとめる
  *
