@@ -9,8 +9,6 @@ import testData from '../testlib/testData';
 import CONST from '../../../../client/tournament/const';
 
 const TEST_DATA = {
-    tournamentId: 'basic',
-
     left: {
         left: {
             left: {

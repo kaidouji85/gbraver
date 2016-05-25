@@ -9,6 +9,7 @@ import selectArmdozerScene from '../scene/selectArmdozerScene';
 import tournamentScene from '../scene/tournamentScene';
 import updateTableState from '../tournament/updateTableState';
 import isFinishTournament from '../tournament/isFinishTournament';
+import createTournamentTableData from '../tournament/createTournamentTableData';
 
 /**
  * ゲームクラス
@@ -19,6 +20,7 @@ import isFinishTournament from '../tournament/isFinishTournament';
  *         spec.pilotId ユーザが選択しているパイロットID
  *         spec.armdozerList アームドーザマスタ
  *         spec.pilotList パイロットマスタ
+ *         spec.tournamentList トーナメントデータ
  */
 module.exports = function(spec) {
     /**
@@ -176,7 +178,8 @@ module.exports = function(spec) {
         });
         scene.ee.on('pushTournamentButton', ()=>{
             // TODO 後でトーナメントデータを持ってくる方法を考える
-            let tournamentState = __.find(spec.tournamentList, item=>item.tournamentId === 'basic');
+            let playerData = __.pick(state, 'pilotId', 'armdozerId');
+            let tournamentState = createTournamentTableData(spec.tournamentData, playerData);
             that.setState({tournamentState});
             that.changeTournamentScene();
         });
