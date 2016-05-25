@@ -6,7 +6,6 @@ import CONST from '../../../../client/tournament/const';
  */
 const DUMMY_TOURNAMNT = [{
         tournamentId: 'basic',
-
         left: {
             left: {
                 left: {
@@ -47,13 +46,16 @@ const DUMMY_TOURNAMNT = [{
                     routineId: 'zero'
                 },
                 right: {
-                    pilotId: 'iori'
+                    id: 'enemy5',
+                    enemyId: 'landozer',
+                    pilotId: 'iori',
+                    routineId: 'zero'
                 },
                 state: CONST.TOURNAMENT_STATE.NO_RESULT
             },
             right: {
                 left: {
-                    id: 'enemy5',
+                    id: 'enemy6',
                     enemyId: 'landozer',
                     pilotId: 'akane',
                     routineId: 'zero'
