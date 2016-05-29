@@ -10,6 +10,23 @@ import EventEmitter from 'event-emitter';
 const PLAYER_ID = 'player';
 
 /**
+ * スプライトを生成する
+ *
+ * @param spec 本クラスに与えらたパラメータ
+ * @retuns {Object} 生成したスプライト
+ */
+function createSprite(spec) {
+    let table = tournamentTable({
+        x: 160,
+        y: 260,
+        data: spec.data,
+        master: spec.master
+    });
+
+    return {table};
+}
+
+/**
  * トーナメントシーン
  *
  * @param spec パラメータ
@@ -30,7 +47,7 @@ export default function tournamentScene(spec) {
         that.backgroundColor = 'black';
         that.ee = new EventEmitter();
         
-        that.sprites = createSprite();
+        that.sprites = createSprite(spec);
         __.each(that.sprites, item=>that.addChild(item));
 
         executeTournament();
@@ -44,24 +61,10 @@ export default function tournamentScene(spec) {
     }
 
     /**
-     * スプライトを生成する
-     */
-    function createSprite() {
-        let table = tournamentTable({
-            x: 160,
-            y: 260,
-            data: spec.data,
-            master: spec.master
-        });
-
-        return {table};
-    }
-
-    /**
      * 対戦相手を表示後、戦闘画面に遷移する
      */
     function executeTournament() {
-        that.tl.delay(30).then(()=>{
+        that.tl.delay(120).then(()=>{
             let oppenent = getOpponent(spec.data, PLAYER_ID);
             that.ee.emit('startBattle', oppenent);
         });

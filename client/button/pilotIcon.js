@@ -1,6 +1,12 @@
 var gridWindow = require('../window/gridWindow');
 
-module.exports = function(spec,my){
+/**
+ * パイロットアンコンを生成して返す
+ *
+ * @param spec パラメータ
+ * @returns {Object} パイロットアイコン
+ */
+module.exports = function(spec){
     var that = new Group();
     var core = enchant.Core.instance;
     var windowPict = spec.windowPict;
@@ -30,6 +36,7 @@ module.exports = function(spec,my){
         miniPilot = new Sprite(width * GRID_WINDOW_SIZE,height * GRID_WINDOW_SIZE);
         miniPilot.image = createFaceIcon(pilotPict);
         miniPilot.scaleX = scaleX;
+        miniPilot.opacity = spec.opacity || 1.0;
         that.addChild(miniPilot);
     })()
 

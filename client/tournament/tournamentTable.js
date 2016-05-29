@@ -1,18 +1,19 @@
-var touranmentBlock = require('./tournamentBlock');
-var pilotIcon = require('../button/pilotIcon');
-var __ = require('underscore');
+import touranmentBlock from './tournamentBlock';
+import pilotIcon from '../button/pilotIcon';
+import getOpponent from './getOpponent';
+import __ from 'underscore';
+import {ID_TYPE} from './const';
 
-var BLOCK3_WIDTH = 48;
-var BLOCK3_HEIGHT = 8;
-var BLOCK2_WIDTH = 8;
-var BLOCK2_HEIGHT = 184;
-var BLOCK1_WIDTH = 56;
-var BLOCK1_HEIGHT = 88;
-var PILOT_ICON_WIDTH = 64;
-var PILOT_ICON_HEIGHT = 64;
-var LINE_WIDTH = 8;
-var DIRECTION_RIGHT = 'DIRECTION_RIGHT';
-var DIRECTION_LEFT = 'DIRECTION_LEFT';
+const BLOCK3_WIDTH = 48;
+const BLOCK3_HEIGHT = 8;
+const BLOCK2_WIDTH = 8;
+const BLOCK2_HEIGHT = 184;
+const BLOCK1_WIDTH = 56;
+const BLOCK1_HEIGHT = 88;
+const PILOT_ICON_SIZE = 64;
+const LINE_WIDTH = 8;
+const DIRECTION_RIGHT = 'DIRECTION_RIGHT';
+const DIRECTION_LEFT = 'DIRECTION_LEFT';
 
 /**
  * トーナメントブロック
@@ -24,8 +25,9 @@ var DIRECTION_LEFT = 'DIRECTION_LEFT';
  * @returns {Group} トーナメントブロック
  */
 module.exports = function tournamentTable(spec) {
-    var core = enchant.Core.instance;
-    var that = new Group();
+    let core = enchant.Core.instance;
+    let opponent = getOpponent(spec.data, ID_TYPE.PLAYER);
+    let that = new Group();
 
     (function() {
         var x = spec.x - BLOCK3_WIDTH/2;
@@ -114,12 +116,13 @@ module.exports = function tournamentTable(spec) {
                 x: x,
                 y: y,
                 direction: param.direction,
-                pilotId: param.data.left.pilotId
-            }), createPilotIcon({
+                data: param.data.left
+            }),
+            createPilotIcon({
                 x: x,
                 y: y + BLOCK1_HEIGHT,
                 direction: param.direction,
-                pilotId: param.data.right.pilotId
+                data: param.data.right
             })
         ]);
     }
@@ -129,25 +132,28 @@ module.exports = function tournamentTable(spec) {
      * @param param パラメータ
      *        param.x x座標
      *        param.y y座標
-     *        param.pilotId パイロットID
      *        param.direction パイロットの向いてる方向
+     *        param.data キャラクターノードのデータ
      * @returns {Object} パイロットアイコン
      */
     function createPilotIcon(param) {
-        var isLeft = param.direction === DIRECTION_LEFT;
-        var pilotData = __.find(spec.master.pilotList, function(item){
-            return item.id === param.pilotId;
-        });
+        let isLeft = param.direction === DIRECTION_LEFT;
+        let pilotData = __.find(spec.master.pilotList,
+            (item)=>item.id === param.data.pilotId);
+        let isPlayer = param.data.id === ID_TYPE.PLAYER;
+        let opponentId = opponent ? opponent.id : null;
+        let isOpponent = param.data.id === opponentId;
         return pilotIcon({
-            x: isLeft ? (param.x - PILOT_ICON_WIDTH) : (param.x + BLOCK1_WIDTH),
-            y: param.y - PILOT_ICON_HEIGHT/2,
+            x: isLeft ? (param.x - PILOT_ICON_SIZE) : (param.x + BLOCK1_WIDTH),
+            y: param.y - PILOT_ICON_SIZE/2,
             windowPict: core.assets[core.PICT_BLACK_WINDOW],
             pilotPict: core.assets[core.PICT_PREFIX+pilotData.pict],
             pictTopMargin: pilotData.pictTopMargin,
             pictLeftMargin: pilotData.pictLeftMargin,
             width: 4,
             height: 4,
-            scaleX: isLeft ? -1 : 1
+            scaleX: isLeft ? -1 : 1,
+            opacity: (isPlayer || isOpponent) ? 1.0 : 0.4
         });
     }
 
