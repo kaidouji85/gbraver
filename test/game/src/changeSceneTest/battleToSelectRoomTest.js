@@ -22,15 +22,14 @@ function doTest(){
             armdozerId : 'landozer',
             pilotId : 'kyoko',
             armdozerList : testDataInst.getMasterData().armdozerList,
-            pilotList : testDataInst.getMasterData().pilotList,
-            stageData : testDataInst.getStageData()
+            pilotList : testDataInst.getMasterData().pilotList
         });
         Game.start();
         Game.onload = onLoad;
     }
 
     function onLoad(){
-        Game.setBattleMode('twoPlay');
+        Game.setBattleMode(Game.BATTLE_MODE_TWO_PLAY);
         Game.changeBattleScene({
             statusArray : statusArray
         });
