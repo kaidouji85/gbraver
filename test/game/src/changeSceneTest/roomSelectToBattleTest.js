@@ -17,8 +17,7 @@ function doTest(){
             armdozerPict : 'GranBraver.PNG',
             pilotPict : 'kyoko.png',
             armdozerList : testDataInst.getMasterData().armdozerList,
-            pilotList : testDataInst.getMasterData().pilotList,
-            stageData : testDataInst.getStageData()
+            pilotList : testDataInst.getMasterData().pilotList
         });
         Game.start();
         Game.onload = function(){
@@ -69,7 +68,7 @@ function doTest(){
 
     function assertChangeScene(scene) {
         assert.equal(scene, 'battle', '戦闘画面へ遷移する');
-        assert.equal(Game.getBattleMode(),'twoPlay','戦闘モードが対戦プレイである');
+        assert.equal(Game.getState().battleMode, Game.BATTLE_MODE_TWO_PLAY, '戦闘モードが対戦プレイである');
         Game.ee.once('sendMessage', assertSendMessage2);
     }
 

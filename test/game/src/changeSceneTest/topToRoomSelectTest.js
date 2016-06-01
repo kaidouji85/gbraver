@@ -17,8 +17,7 @@ function doTest(){
             armdozerId : 'granBraver',
             pilotId : 'kyoko',
             armdozerList : testDataInst.getMasterData().armdozerList,
-            pilotList : testDataInst.getMasterData().pilotList,
-            stageData : testDataInst.getStageData()
+            pilotList : testDataInst.getMasterData().pilotList
         });
         Game.start();
         Game.onload = function(){
@@ -38,7 +37,7 @@ function doTest(){
         assert.equal(data,null,'サーバ送信データが正しい');
         assert.equal(Game.currentScene.battleRoomButton.getVisible(),false,'対戦ルーム入室ボタンが表示されない');
         assert.equal(Game.currentScene.selectArmdozerButton.getVisible(),false,'アームドーザ選択ボタンが表示されない');
-        assert.equal(Game.currentScene.selectStageButton.getVisible(),false,'ステージセレクトボタンが表示されない');
+        assert.equal(Game.currentScene.tournamentButton.getVisible(),false,'トーナメントモードボタンが表示されない');
         assert.equal(Game.currentScene.selectPilotButton.getVisible(),false,'パイロット選択ボタンが表示されない');
         assert.equal(Game.currentScene.mesWindow.getVisible(),true,'メッセージウインドウが表示される');
         assert.equal(Game.currentScene.logOffButton.getVisible(),false,'ログオフボタンが非表示');

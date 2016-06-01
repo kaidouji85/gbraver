@@ -24,29 +24,29 @@ function doTest() {
             data: {
                 left: {
                     left: {
-                        left: { pilotId: 'kyoko' },
-                        right: { pilotId: 'akane' },
-                        state: CONST.TOURNAMENT_STATE.LEFT_WIN
+                        left: { id:'player', pilotId: 'kyoko' },
+                        right: { id:'enemy01', pilotId: 'akane' },
+                        state: CONST.TOURNAMENT_STATE.NO_RESULT
                     },
                     right: {
-                        left: { pilotId: 'iori' },
-                        right: { pilotId: 'akira' },
-                        state: CONST.TOURNAMENT_STATE.RIGHT_WIN
+                        left: { id:'enemy02',pilotId: 'iori' },
+                        right: { id:'enemy03', pilotId: 'akira' },
+                        state: CONST.TOURNAMENT_STATE.NO_RESULT
                     },
-                    state: CONST.TOURNAMENT_STATE.LEFT_WIN
+                    state: CONST.TOURNAMENT_STATE.NO_RESULT
                 },
                 right: {
                     left: {
-                        left: { pilotId: 'akira' },
-                        right: { pilotId: 'iori' },
-                        state: CONST.TOURNAMENT_STATE.LEFT_WIN
+                        left: { id:'enemy04', pilotId: 'akira' },
+                        right: { id:'enemy05', pilotId: 'iori' },
+                        state: CONST.TOURNAMENT_STATE.NO_RESULT
                     },
                     right: {
-                        left: { pilotId: 'akane' },
-                        right: { pilotId: 'kyoko' },
-                        state: CONST.TOURNAMENT_STATE.RIGHT_WIN
+                        left: { id:'enemy06', pilotId: 'akane' },
+                        right: { id:'boss', pilotId: 'kyoko' },
+                        state: CONST.TOURNAMENT_STATE.NO_RESULT
                     },
-                    state: CONST.TOURNAMENT_STATE.LEFT_WIN
+                    state: CONST.TOURNAMENT_STATE.NO_RESULT
                 },
                 state: CONST.TOURNAMENT_STATE.NO_RESULT
             },

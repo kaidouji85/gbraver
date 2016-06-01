@@ -1,36 +1,67 @@
-var __ = require('underscore');
-var EventEmitter = require('event-emitter');
-var gameBase = require('./gameBase');
-var battleScene = require('../scene/battleScene');
-var roomSelectScene = require('../scene/roomSelectScene');
-var topScene = require('../scene/topScene');
-var selectPilotScene = require('../scene/selectPilotScene');
-var selectArmdozerScene = require('../scene/selectArmdozerScene');
-var selectStageScene = require('../scene/selectStageScene');
-var storyScene = require('../scene/storyScene');
+import __ from 'underscore';
+import EventEmitter from 'event-emitter';
+import gameBase from './gameBase';
+import battleScene from '../scene/battleScene';
+import roomSelectScene from '../scene/roomSelectScene';
+import topScene from '../scene/topScene';
+import selectPilotScene from '../scene/selectPilotScene';
+import selectArmdozerScene from '../scene/selectArmdozerScene';
+import tournamentScene from '../scene/tournamentScene';
+import updateTableState from '../tournament/updateTableState';
+import isFinishTournament from '../tournament/isFinishTournament';
+import createTournamentTableData from '../tournament/createTournamentTableData';
 
-module.exports = function(spec, my) {
+/**
+ * ゲームクラス
+ *
+ * @param spec パラメータ
+ *         spec.userId ユーザID
+ *         spec.armdozerId ユーザが選択しているアームドーザID
+ *         spec.pilotId ユーザが選択しているパイロットID
+ *         spec.armdozerList アームドーザマスタ
+ *         spec.pilotList パイロットマスタ
+ *         spec.tournamentList トーナメントデータ
+ */
+module.exports = function(spec) {
     /**
      * ゲームコア
      */
-    var contentBaseUrl = spec&&spec.contentBaseUrl || location.origin;
-    var that = gameBase({
+    let contentBaseUrl = spec&&spec.contentBaseUrl || location.origin;
+    let that = gameBase({
         contentBaseUrl : contentBaseUrl
     });
-    var userId = spec.userId;
-    var armdozerId = spec.armdozerId;
-    var pilotId = spec.pilotId;
 
-    var pilotList = spec.pilotList;
-    var armdozerList = spec.armdozerList;
-    var stageData = spec.stageData;
-    var scenarioData = spec.scenarioData;
+    /**
+     * ゲームの状態をまとめた変数。
+     * 変則として変数値が変わるのは、これだけである。
+     *
+     * @type {Object}
+     */
+    let state = {
+        armdozerId: spec.armdozerId,
+        pilotId: spec.pilotId,
+        battleMode: that.BATTLE_MODE_TWO_PLAY,
+        tournamentState: {}
+    }
 
-    var currentScenarioId = 'first';
-    var nextScenarioId = null;
-    var battleMode = that.BATTLE_MODE_TWO_PLAY;
-
+    /**
+     * 本クラスは外部とのイベントのやりとりを、このイベントエミッターを通して行う
+     */
     that.ee = new EventEmitter();
+
+    /**
+     * 状態を更新する
+     *
+     * @param newState 新しいState
+     */
+    that.setState = (newState) => __.extend(state, newState);
+
+    /**
+     * 状態を取得する
+     *
+     * @returns 状態
+     */
+    that.getState = ()=>state;
 
     /**
      * シーン変更のヘルパー関数
@@ -46,7 +77,7 @@ module.exports = function(spec, my) {
      * @returns {string} アームドーザID
      */
     that.getArmdozerId = function() {
-        return armdozerId;
+        return state.armdozerId;
     }
 
     /**
@@ -54,7 +85,7 @@ module.exports = function(spec, my) {
      * @returns {string} パイロットID
      */
     that.getPilotId = function(){
-        return pilotId;
+        return state.pilotId;
     }
 
     /**
@@ -62,73 +93,51 @@ module.exports = function(spec, my) {
      * @returns {string} 戦闘モード
      */
     that.getBattleMode = function(){
-        return battleMode;
+        return state.battleMode;
     }
 
     /**
      * 戦闘モードを設定する
-     * @param mode 戦闘モード
+     * @param battleMode 戦闘モード
      */
-    that.setBattleMode = function(mode){
-        battleMode = mode;
-    }
-
-    /**
-     * シナリオIDを取得する
-     * @returns {string} シナリオID
-     */
-    that.getScenarioId = function(){
-        return currentScenarioId;
-    }
-
-    /**
-     * シナリオIDを設定する
-     * @param id シナリオID
-     */
-    that.setScenarioId = function(id){
-        currentScenarioId = id;
-    }
-
-    /**
-     * 次のシナリオIDを取得する
-     * @returns {string} 次のシナリオID
-     */
-    that.getNextScenarioId = function(){
-        return nextScenarioId;
-    }
-
-    /**
-     * 次のシナリオIDを設定する
-     * @param id シナリオID
-     */
-    that.setNextScenarioId = function(id){
-        nextScenarioId = id;
+    that.setBattleMode = function(battleMode){
+        that.setState({battleMode});
     }
 
     /**
      * 戦闘シーンに変更する
      *
-     * @param spec battleSceneに渡すspec
+     * @param param battleSceneに渡すspec
      */
-    that.changeBattleScene = function(spec){
-        spec.userId = userId;
-        var scene = battleScene(spec);
+    that.changeBattleScene = function(param){
+        param.userId = spec.userId;
+        var scene = battleScene(param);
         scene.onCommand(function(command){
             that.ee.emit('sendMessage', 'command',command);
         });
-        scene.onPushBattleEndIcon(function(isWin){
-            if(battleMode===that.BATTLE_MODE_TWO_PLAY){
-                that.ee.emit('sendMessage', 'getRoomInfo',null);
-            } else if(battleMode===that.BATTLE_MODE_SINGLE_PLAY) {
-                that.changeSelectStageScene();
-            } else if(battleMode===that.BATTLE_MODE_STORY){
-                currentScenarioId = isWin ? nextScenarioId : currentScenarioId;
-                nextScenarioId = null;
-                that.changeStoryScene(currentScenarioId);
-            }
-        });
+        scene.onPushBattleEndIcon(changeSceneFromBattle);
         replaceScene(scene);
     };
+
+    /**
+     * 戦闘シーンから次のシーンへ遷移する
+     * 
+     * @param isWin 戦闘に勝利したか否かのフラグ
+     */
+    function changeSceneFromBattle(isWin) {
+        let map = {
+            [that.BATTLE_MODE_TWO_PLAY]: ()=>that.ee.emit('sendMessage', 'getRoomInfo',null),
+            [that.BATTLE_MODE_TOURNAMENT]: () => {
+                let tournamentState = isWin ? updateTableState(state.tournamentState)
+                    : state.tournamentState;
+                that.setState({ tournamentState });
+                isFinishTournament(tournamentState) ?
+                    that.changeTopScene() : that.changeTournamentScene();
+            }
+        }
+
+        map[state.battleMode] &&  map[state.battleMode]();
+    }
 
     /**
      * ルームセレクトシーンに変更する
@@ -136,7 +145,8 @@ module.exports = function(spec, my) {
      * @param roomInfo ルーム情報
      */
     that.changeRoomSelectScene = function(roomInfo){
-        battleMode = that.BATTLE_MODE_TWO_PLAY;
+        that.setState({battleMode: that.BATTLE_MODE_TWO_PLAY});
+
         var scene = roomSelectScene({
             roomInfo : roomInfo
         });
@@ -161,50 +171,58 @@ module.exports = function(spec, my) {
      */
     that.changeTopScene = function(){
         var scene = topScene({
-            armdozerId : armdozerId,
-            pilotId : pilotId,
-            armdozerList : armdozerList,
-            pilotList : pilotList
+            armdozerId : state.armdozerId,
+            pilotId : state.pilotId,
+            armdozerList : spec.armdozerList,
+            pilotList : spec.pilotList
         });
-        scene.onPushSelectArmdozerButton(function(){
-            that.changeSelectArmdozerScene();
+        scene.ee.on('pushTournamentButton', ()=>{
+            // TODO 後でトーナメントデータを持ってくる方法を考える
+            let playerData = __.pick(state, 'pilotId', 'armdozerId');
+            let tournamentState = createTournamentTableData(spec.tournamentData, playerData);
+            that.setState({tournamentState});
+            that.changeTournamentScene();
         });
-        scene.onPushBattleRoom(function(){
-            that.ee.emit('sendMessage', 'getRoomInfo',null);
-        });
-        scene.onPushSelectPilotButton(function(){
-            that.changeSelectPilotScene();
-        });
-        scene.onPushSelectStageButton(function(){
-            that.changeSelectStageScene();
-        });
-        scene.onPushLogOffButton(function(){
-            that.ee.emit('logOff');
-        });
-        scene.onPushStoryButton(function(){
-            that.changeStoryScene(currentScenarioId);
-        });
+        scene.ee.on('pushSelectArmdozer',()=>that.changeSelectArmdozerScene());
+        scene.ee.on('pushBattleRoomButton',()=>that.ee.emit('sendMessage', 'getRoomInfo',null));
+        scene.ee.on('pushSelectPilotButton', ()=>that.changeSelectPilotScene());
+        scene.ee.on('logOff', ()=>that.ee.emit('logOff'));
         replaceScene(scene);
     };
 
     /**
+     * トーナメントシーンに遷移する
+     */
+    that.changeTournamentScene = function() {
+        that.setState({battleMode: that.BATTLE_MODE_TOURNAMENT});
+
+        let scene = tournamentScene({
+            data: state.tournamentState,
+            master: {
+                armdozerList: spec.armdozerList,
+                pilotList: spec.pilotList
+            }
+        });
+        scene.ee.on('startBattle',(opponent)=>
+            that.ee.emit('sendMessage', 'startSinglePlay',__.pick(opponent, 'enemyId','pilotId','routineId')));
+        replaceScene(scene);
+    }
+
+    /**
      * パイロット選択シーンに変更する
-     *
      */
     that.changeSelectPilotScene = function() {
         var scene = selectPilotScene({
-            pilotList : pilotList,
-            selectPilotId : pilotId
+            pilotList : spec.pilotList,
+            selectPilotId : state.pilotId
         });
         scene.onPushPrevButton(function(){
             that.changeTopScene();
         });
-        scene.onPushOkButton(function(l_pilotId){
-            var data = {
-                pilotId : l_pilotId
-            };
+        scene.onPushOkButton(function(pilotId){
+            var data = { pilotId };
             that.ee.emit('sendMessage', 'setPilot',data);
-            pilotId = l_pilotId;
+            that.setState({pilotId});
         });
         replaceScene(scene);
     }
@@ -215,68 +233,17 @@ module.exports = function(spec, my) {
      */
     that.changeSelectArmdozerScene = function(){
         var scene = selectArmdozerScene({
-            armdozerList : armdozerList,
-            selectArmdozerId : armdozerId
+            armdozerList : spec.armdozerList,
+            selectArmdozerId : state.armdozerId
         });
-        scene.onPushOkButton(function(l_armdozerId){
-            var sendData = {
-                armdozerId : l_armdozerId
-            };
+        scene.onPushOkButton(function(armdozerId){
+            var sendData = { armdozerId };
             that.ee.emit('sendMessage', 'setArmdozer',sendData);
-            armdozerId = l_armdozerId;
+            that.setState({ armdozerId });
         });
         scene.onPushPrevButton(function(){
             that.changeTopScene();
         });replaceScene(scene);
-    }
-
-    /**
-     * ステージ選択シーンに変更する
-     *
-     */
-    that.changeSelectStageScene = function(){
-        var scene = selectStageScene({
-            stageData : stageData,
-            armdozerList : armdozerList
-        });
-        scene.onPushPrevButton(function(){
-            that.changeTopScene();
-        });
-        scene.onPushStageButon(function(enemyId,pilotId,routineId){
-            var data = {
-                enemyId : enemyId,
-                pilotId : pilotId,
-                routineId : routineId
-            };
-            that.ee.emit('sendMessage', 'startSinglePlay',data);
-        });
-        battleMode = that.BATTLE_MODE_SINGLE_PLAY;
-        replaceScene(scene);
-    }
-
-    /**
-     * ストーリーシーンに変更する
-     *
-     * @param senarioId シナリオID
-     */
-    that.changeStoryScene = function(senarioId){
-        var scene = storyScene({
-            scenarioData :
-                __.chain(scenarioData)
-                    .filter(function(item){return item.id === senarioId;})
-                    .map(function(item){return item.data})
-                    .first()
-                    .value(),
-            pilotList : pilotList
-        });
-        scene.onEndStory(function(battle){
-            that.ee.emit('sendMessage', 'startSinglePlay',battle);
-        });
-        scene.onChangeNextStory(function(p_nextScenarioId){
-            nextScenarioId = p_nextScenarioId;
-        });
-        battleMode = that.BATTLE_MODE_STORY;
-        replaceScene(scene);
     }
 
     /**

@@ -2,6 +2,8 @@
 import game from './game/game';
 import __ from 'underscore';
 import Promise from 'bluebird';
+import DummyTournament from './tournament/dummyData'; //TODO マスタデータにトーナメントを追加したら消す
+
 const socket = io.connect(location.origin);
 
 enchant();
@@ -88,8 +90,7 @@ window.onload = function() {
             pilotId : userData.pilotId,
             armdozerList : masterData.armdozerList,
             pilotList : masterData.pilotList,
-            stageData : masterData.stageData,
-            scenarioData : masterData.scenarioData
+            tournamentData: DummyTournament
         });
         Game.start();
         Game.onload = ()=> onLoad(Game);
