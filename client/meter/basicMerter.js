@@ -9,7 +9,7 @@ module.exports = function(spec,my) {
     var core = enchant.Core.instance;
 
     var userId = spec.userId;
-    var statusArray = $.extend(true, {}, spec.statusArray);
+    var statusArray = __.clone(spec.statusArray);
 
     var WIDTH = 320;
     var HEIGHT = 64;

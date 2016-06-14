@@ -1,3 +1,4 @@
+var __ = require('underscore');
 var ArmdozerSprite = require('../animation/ArmdozerSprite');
 var batteryNumber = require('../animation/batteryNumber');
 var cutInSprite = require('../animation/cutInSprite');
@@ -17,7 +18,7 @@ module.exports = function(spec,my){
     var COMMAND_X_2 = 168;
     var COMMAND_Y_1 = 358;
     var COMMAND_Y_2 = 422;
-    that.statusArray = $.extend(true, {}, spec.statusArray);
+    that.statusArray = __.clone(spec.statusArray);
     that.userId = spec.userId;
     that.timeOver = spec.timeOver || 600;
     that.backgroundColor = "black";

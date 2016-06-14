@@ -47,7 +47,6 @@ app.use(passport.session());
 // development only
 if ('development' == app.get('env')) {
     app.use(errorhandler());
-    app.use(express.static(path.join(__dirname, gameTestConfig.TEST_PUBLIC_DIR)));
     app.use(express.static(path.join(__dirname, gameTestConfig.TEST_BUILD_DIR)));
 }
 

@@ -13,15 +13,15 @@ enchant();
  * @returns {Promise} ユーザ情報
  */
 function doAuth(userId) {
-    return new Promise((resolve, reject)=>{
-        //ユーザ認証する
-        socket.emit('auth', {
-            userId : userId
-        });
-
-        //ユーザ認証成功
-        socket.on('successAuth', resolve);
+  return new Promise((resolve, reject)=>{
+    //ユーザ認証する
+    socket.emit('auth', {
+      userId : userId
     });
+
+    //ユーザ認証成功
+    socket.on('successAuth', resolve);
+  });
 }
 
 /**
@@ -29,10 +29,10 @@ function doAuth(userId) {
  * @returns {Promise} マスタデータ
  */
 function getMasterData() {
-    return new Promise((resolve, reject)=>{
-        socket.emit('getMasterData');
-        socket.once('successGetMasterData',resolve);
-    });
+  return new Promise((resolve, reject)=>{
+    socket.emit('getMasterData');
+    socket.once('successGetMasterData',resolve);
+  });
 }
 
 /**
@@ -40,59 +40,59 @@ function getMasterData() {
  * @param Game Gameオブジェクト
  */
 function onLoad(Game) {
-    let executeLogOff = ()=>window.location = location.origin+'/logOff';
-    let executeReload = ()=> window.location = location.origin;
+  let executeLogOff = ()=>window.location = location.origin+'/logOff';
+  let executeReload = ()=> window.location = location.origin;
 
-    // Clientからサーバへ通信するイベントを登録する
-    Game.changeTopScene();
-    Game.ee.on('sendMessage', (message,data)=>{
-        socket.emit(message,data);
-    });
-    Game.ee.on('logOff', executeLogOff);
+  // Clientからサーバへ通信するイベントを登録する
+  Game.changeTopScene();
+  Game.ee.on('sendMessage', (message,data)=>{
+    socket.emit(message,data);
+  });
+  Game.ee.on('logOff', executeLogOff);
 
-    // サーバからClientへ通信するイベントを登録する(戦闘系のみ)
-    let serverRespForBattleList = [
-        'succesEnterRoom',
-        'successSetArmdozer',
-        'gameStart',
-        'resp',
-        'dissolveRoom',
-        'successLeaveRoom',
-        'successGetRoomInfo',
-        'enterRoomError',
-        'successSetPilot',
-        'battleError'
-    ];
-    __.each(serverRespForBattleList,
-        (message)=>socket.on(message, (data)=>Game.ee.emit('serverResp', message, data)));
+  // サーバからClientへ通信するイベントを登録する(戦闘系のみ)
+  let serverRespForBattleList = [
+    'succesEnterRoom',
+    'successSetArmdozer',
+    'gameStart',
+    'resp',
+    'dissolveRoom',
+    'successLeaveRoom',
+    'successGetRoomInfo',
+    'enterRoomError',
+    'successSetPilot',
+    'battleError'
+  ];
+  __.each(serverRespForBattleList,
+    (message)=>socket.on(message, (data)=>Game.ee.emit('serverResp', message, data)));
 
-    // サーバからClientへ通信するイベントを登録する(戦闘系以外)
-    socket.on('logOff', executeLogOff);
-    socket.on('reconnecting', executeReload);
-    socket.on('noLoginError', executeReload);
+  // サーバからClientへ通信するイベントを登録する(戦闘系以外)
+  socket.on('logOff', executeLogOff);
+  socket.on('reconnecting', executeReload);
+  socket.on('noLoginError', executeReload);
 }
 
 /**
  *  Gブレイバーのメイン関数
  */
 window.onload = function() {
-    let userId = $("meta[name=userId]").attr('content');
-    let contentBaseUrl = $("meta[name=contentBaseUrl]").attr('content');
-    let userData;
-    doAuth(userId).then(function(data){
-        userData = data;
-        return getMasterData();
-    }).then((masterData)=>{
-        let Game = new game({
-            userId : userId,
-            contentBaseUrl : contentBaseUrl,
-            armdozerId : userData.armdozerId,
-            pilotId : userData.pilotId,
-            armdozerList : masterData.armdozerList,
-            pilotList : masterData.pilotList,
-            tournamentData: DummyTournament
-        });
-        Game.start();
-        Game.onload = ()=> onLoad(Game);
+  let userId = document.querySelector("meta[name=userId]").getAttribute('content');
+  let contentBaseUrl = document.querySelector("meta[name=contentBaseUrl]").getAttribute('content');
+  let userData;
+  doAuth(userId).then(function(data){
+    userData = data;
+    return getMasterData();
+  }).then((masterData)=>{
+    let Game = new game({
+      userId : userId,
+      contentBaseUrl : contentBaseUrl,
+      armdozerId : userData.armdozerId,
+      pilotId : userData.pilotId,
+      armdozerList : masterData.armdozerList,
+      pilotList : masterData.pilotList,
+      tournamentData: DummyTournament
     });
+    Game.start();
+    Game.onload = ()=> onLoad(Game);
+  });
 };

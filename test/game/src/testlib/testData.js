@@ -1,3 +1,5 @@
+var __ = require('underscore');
+
 module.exports = function(){
     var that = {};
     var userArray = [
@@ -294,7 +296,7 @@ module.exports = function(){
     function searchUser(userId){
         for(var i=0; i<userArray.length; i++){
             if(userId===userArray[i].userId){
-                return $.extend(true, {}, userArray[i]);
+                return __.clone(userArray[i]);
             }
         }
     }
@@ -302,7 +304,7 @@ module.exports = function(){
     function searchArmdozer(armdozerId){
         for(var i=0; i<armdozerArray.length; i++){
             if(armdozerArray[i].armdozerId === armdozerId){
-                return $.extend(true, {}, armdozerArray[i]);
+                return __.clone(armdozerArray[i]);
             }
         }
     }
@@ -310,7 +312,7 @@ module.exports = function(){
     function searchPilot(pilotId){
         for(var i=0; i<pilotArray.length; i++){
             if(pilotArray[i].id===pilotId){
-                return $.extend(true, {}, pilotArray[i]);
+                return __.clone(pilotArray[i]);
             }
         }
     }
