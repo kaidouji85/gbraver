@@ -5,10 +5,10 @@ chromedriver
 chromedriver.exe
 .idea/
 GruntConfig.json
-shell/
 public/Thumbs.db
 public/images/Thumbs.db
 public/javascripts/index.js
 test/game/build
 test/client/build
 dbShell/build/
+startup.sh

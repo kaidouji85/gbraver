@@ -1,29 +1,22 @@
 機動倶楽部Gブレイバー
-=======
-
-## はじめに
-機動倶楽部Gブレイバーとは、kaidouji85が趣味で作成している通信対戦ゲームです。
-node.js、socket.io、enchant.jsがあれば簡単に出来るだろうという軽いノリで作りました。
-
+===================
 
 ## ゲームについて
-詳細は以下ページをご参照ください。  
 <http://gbraver.jimdo.com/%E9%81%8A%E3%81%B3%E6%96%B9/>
 
-##環境変数の設定
-本プログラムを実行する前に、以下の環境変数を設定する必要があります。
+## 環境変数の設定
 
-| 環境変数名 | 説明  | 必須 | デフォルト値 |
-|:----------|:-----|:-----|:-----------|
-| GOOGLE_CLIENT_ID | GoogleOAuth2.0のClient ID | ○ | - |
-| GOOGLE_CLIENT_SECRET | GoogleOAuth2.0のGOOGLE CLIENT SECRET | ○ | - |
-| TWITTER_CONSUMER_KEY | Twitter Oauth認証用のconsume key | ○ | - |
-| TWITTER_CONSUMER_SECRET | Twitter Oauth認証用のconsumer secret | ○ | - |
-| PORT | 起動するポート番号 |  | 3000 |
-| BASE_URL | OAuth2.0のリダイレクト先のベースURL |  | localhost |
-| CONTENT_BASE_URL | 静的コンテンツの配置先URL |  | BASE_URLの値 |
+| 環境変数名               | 説明                                   | 必須 | デフォルト値    |
+|:------------------------|:--------------------------------------|:-----|:--------------|
+| GOOGLE_CLIENT_ID        | GoogleOAuth2.0のClient ID             | ○    |               |
+| GOOGLE_CLIENT_SECRET    | GoogleOAuth2.0のGOOGLE CLIENT SECRET  | ○    | -             |
+| TWITTER_CONSUMER_KEY    | Twitter Oauth認証用のconsume key       | ○    | -             |
+| TWITTER_CONSUMER_SECRET | Twitter Oauth認証用のconsumer secret   | ○    | -             |
+| PORT                    | 起動するポート番号                      |       | 3000          |
+| BASE_URL                | OAuth2.0のリダイレクト先のベースURL      |       | localhost     |
+| CONTENT_BASE_URL        | 静的コンテンツの配置先URL                |       | BASE_URLの値  |
 
-##GruntConfig.jsonの作成
+## GruntConfig.jsonの作成
 gruntタスクの設定ファイルであるGruntConfig.jsonを作成します。
 ```javascript
 {
@@ -45,20 +38,18 @@ gruntタスクの設定ファイルであるGruntConfig.jsonを作成します�
     }
 }
 ```
-##ローカル環境で開発をする
-### ローカル環境への導入
+## ローカル環境での開発
+### 開発環境構築
 (1)必須ソフトウェア  
 導入の前提として、以下のソフトがインストールされている必要があります。  
-・node.js  
+・node.js
 ・mongodb  
 
 (2)githubからソースコードのコピー  
 githubからプロジェクトをダウンロードします。
 
-
 (3)依存ライブラリのインストール  
-プロジェクトフォルダのルートに移動して、以下コマンドで依存ライブラリをインストールします。  
-
+  
     npm install -g mocha
     npm install -g grunt-cli
     npm install -g karma-cli
@@ -66,82 +57,79 @@ githubからプロジェクトをダウンロードします。
 
 
 (4)データベースの初期化  
-以下コマンドで、データベースを初期化します。  
 
     grunt mongoLocal
 
-(5)startup.shの作成
-node.jsの起動と同時に環境変数を設定するように、startup.shを作成します。
-startup.shの場所はshell配下に置いて下さい。
 
-    #!/bin/sh
-
-    GOOGLE_CLIENT_ID="GoogleOAuth2.0のClient ID"
-    GOOGLE_CLIENT_SECRET="GoogleOAuth2.0のGOOGLE CLIENT SECRET"
-    TWITTER_CONSUMER_KEY="TWITTERのCONSUMER_KEY"
-    TWITTER_CONSUMER_SECRET="TWITTERのCONSUMER_SECRET"
-
-    export GOOGLE_CLIENT_ID
-    export GOOGLE_CLIENT_SECRET
-
-    nodemon app.js
-
-### ローカル環境でのビルド方法
-GブレイバーのクライアントはWebパックを使用しているため、ビルドが必要になります。
-ビルド対象はプロダクトコード、テストコードになります。
+### フロントエンドのビルド
 
 #### プロダクト
 
-    # 通常ビルド
-    grunt build
+```bash
+# 通常ビルド
+grunt build
     
-    # watch
-    grunt watch
+# watch
+grunt watch
+```
 
-#### ゲーム画面テスト
+#### ユニットテスト
 
-    # 通常ビルド
-    grunt buildTest
-
-    # ファイル単体のビルド
-    grunt buildTest --target テストファイル名
+```bash
+# 通常ビルド
+grunt buildClientTest
     
-    # watch
-    grunt watchTest
+# watch
+grunt watchClientTest
+```    
+
+#### 画面テスト
+```
+ # 通常ビルド
+ grunt buildTest
+
+ # ファイル単体のビルド
+ grunt buildTest --target テストファイル名
     
-    # ファイル単体のwatch
-    grunt watchTest --target テストファイル名
+ # watch
+ grunt watchTest
+    
+ # ファイル単体のwatch
+ grunt watchTest --target テストファイル名
+```
 
 単体ビルドのファイル名はtest/game/srcの下から書くこと
 
-#### クライアントユニットテスト
-    # 通常ビルド
-    grunt buildClientTest
-    
-    # watch
-    grunt watchClientTest
+### サーバの起動
 
-### ローカル環境の起動方法
-以下コマンドを実行します。
-   
-    npm start
+```
+npm start
+```
 
+### テスト実行
 
-### ローカルでのテスト実行方法
-
-テストの実行コマンドは以下の通りです。
-サーバサイド以外はテスト実行前にビルドを済ませてください。
-
-#### サーバサイド
+#### サーバサイドのユニットテスト
     grunt exec:serverTest
 
-#### ゲーム画面テスト
-    grunt exec:gameTest
-        
-- http://localhot:8080/testList でテスト一覧が出ます
-
-#### クライアントユニットテスト
+#### クライアントサイドのユニットテスト
     karma start
+
+#### 画面テスト
+(1)個別に実行
+
+- サーバを起動させる
+```bash
+npm start
+```
+- http://localhot:8080/testList を開く
+- テスト一覧が表示されるので、任意のテストをクリックする
+
+(2)一斉に実行
+
+```
+grunt exec:gameTest
+```
+
 
 ##herokuへのデプロイ方法
 (1)前提条件
@@ -150,20 +138,7 @@ GブレイバーのクライアントはWebパックを使用しているため�
 (2)herokuインスタンスの用意
 herokuインスタンスを用意します。アドオンでMongoHqを追加して下さい。
 
-(3)環境変数の登録
-herokuに環境変数を登録します。ここでは環境変数登録バッチのテンプレートを示します。
-
-    #!/bin/sh
-
-    herokuAppName="herokuアプリ名"
-    heroku config:set BASE_URL="herokuアプリのURL" --app $herokuAppName
-    heroku config:set GOOGLE_CLIENT_ID="GoogleOAuth2.0のClient ID" --app $herokuAppName
-    heroku config:set GOOGLE_CLIENT_SECRET="GoogleOAuth2.0のGOOGLE CLIENT SECRET" --app $herokuAppName
-    heroku config:set TWITTER_CONSUMER_KEY="Twitter Oauth認証用のconsume key" --app $herokuAppName
-    heroku config:set TWITTER_CONSUMER_SECRET="Twitter Oauth認証用のconsumer secret" --app $herokuAppName  
-    heroku config:set CONTENT_BASE_URL="静的コンテンツのベースURL" --app $herokuAppName
-
-(4)herokuへデプロイ  
+(3)herokuへデプロイ  
 
     #プロダクション環境へのデプロイ
     grunt deploy

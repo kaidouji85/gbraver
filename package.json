@@ -9,7 +9,7 @@
   "private": true,
   "scripts": {
     "postinstall": "grunt build --env=heroku",
-    "start": "./shell/startup.sh",
+    "start": "nodemon app.js",
     "test": "grunt exec:serverTest"
   },
   "dependencies": {
