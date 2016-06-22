@@ -23,18 +23,6 @@ module.exports = function(mongo) {
         },
         pushHerokuBeta : {
             cmd : 'git push beta `git rev-parse --abbrev-ref HEAD`:master --force'
-        },
-        serverTest : {
-            cmd : __.reduce([
-                'battle',
-                'enemyRoutine',
-                'otherApi',
-                'singlePlay',
-                'twoPlay'], function(memo, now){
-                return memo + 'mocha --reporter progress test/server/'+ now + '/; ' }, '')
-        },
-        gameTest: {
-            cmd: 'mocha --timeout 100000 test/game/clientTest'
         }
     };
 }

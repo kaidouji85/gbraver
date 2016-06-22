@@ -77,25 +77,25 @@ grunt watch
 
 ```bash
 # 通常ビルド
-grunt buildClientTest
+grunt buildUnitTest
     
 # watch
-grunt watchClientTest
+grunt watchUnitTest
 ```    
 
 #### 画面テスト
 ```
  # 通常ビルド
- grunt buildTest
+ grunt buildGameTest
 
  # ファイル単体のビルド
- grunt buildTest --target テストファイル名
+ grunt buildGameTest --target テストファイル名
     
  # watch
- grunt watchTest
+ grunt watchGameTest
     
  # ファイル単体のwatch
- grunt watchTest --target テストファイル名
+ grunt watchGameTest --target テストファイル名
 ```
 
 単体ビルドのファイル名はtest/game/srcの下から書くこと
@@ -109,10 +109,18 @@ npm start
 ### テスト実行
 
 #### サーバサイドのユニットテスト
-    grunt exec:serverTest
+
+```
+mocha test/server/*
+```
+ 
+※サーバサイドのユニットテストは一気に実行すると、1、２個落ちることがある。その場合は、落ちたテストだけ個別に実行すること。
 
 #### クライアントサイドのユニットテスト
-    karma start
+
+```
+karma start
+```
 
 #### 画面テスト
 事前にサーバを起動させる。
@@ -124,7 +132,7 @@ npm start
 (2)一斉に実行
 
 ```
-grunt exec:gameTest
+mocha --timeout 100000 test/game/clientTest
 ```
 
 
