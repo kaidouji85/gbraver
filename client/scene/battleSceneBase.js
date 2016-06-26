@@ -35,10 +35,10 @@ module.exports = function(spec,my){
 
     (function() {
         //背景(地面)
-        that.ground = new Sprite(320,256);
+        that.ground = new Sprite(320,272);
         that.ground.image = core.assets[core.PICT_BG_GROUND];
         that.ground.x = 0;
-        that.ground.y = 80;
+        that.ground.y = 64;
         that.addChild(that.ground);
 
         //コマンドウインドウ
@@ -60,7 +60,7 @@ module.exports = function(spec,my){
                 height : 4
             });
             that.pilotIconArray[uid].x = uid===that.userId ? 256 : 0;
-            that.pilotIconArray[uid].y = 80;
+            that.pilotIconArray[uid].y = 64;
             that.addChild(that.pilotIconArray[uid]);
 
             //キャラクタースプライト
