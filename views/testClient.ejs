@@ -5,16 +5,14 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="contentBaseUrl" content="<%=  contentBaseUrl %>">
     <title><%= testCode %></title>
-    <script type="text/javascript" src="/javascripts/lib/jquery-2.0.3.min.js"></script>
-    <script type="text/javascript" src="/javascripts/others/header.js"></script>
     <script type="text/javascript">
-        writeHeader('/header.html');
-        writeHeader('/testHeader.html');
         window.jsErrors = [];
         window.onerror = function(errorMessage) {
             window.jsErrors.push(errorMessage);
         }
     </script>
+    <script type="text/javascript" src="/javascripts/chai.js"></script>
+    <script type="text/javascript" src="/javascripts/enchant.js"></script>
     <script type="text/javascript" src="<%= testCode %>" name="testCode"></script>
     <style type="text/css">
         body {margin: 0;}

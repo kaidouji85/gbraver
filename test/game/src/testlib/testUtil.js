@@ -17,6 +17,6 @@ module.exports = {
      */
     finishTest: function(){
         console.log('finish');
-        $('title').text('finish');
+        document.querySelector('title').innerHTML = 'finish'
     }
 };

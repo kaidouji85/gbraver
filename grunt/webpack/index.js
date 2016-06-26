@@ -71,7 +71,7 @@ function buildSingleTest(target) {
  * @param target ビルド対象のファイル名
  * @returns {Object} 画面テストのビルド設定
  */
-function test(target) {
+function gameTest(target) {
 
     if (!!target) {
         return buildSingleTest(target);
@@ -83,7 +83,7 @@ function test(target) {
 /**
  * 画面のユニットテストのビルド設定
  */
-var clientTest = {
+var unitTest = {
     entry: glob.sync('./test/client/src/**/*.js'),
     output: {
         path: './test/client/build/',
@@ -112,19 +112,19 @@ module.exports = function(target) {
         product: product,
 
         // 画面テストのビルド
-        test: test(target),
+        gameTest: gameTest(target),
 
         // 画面のユニットテストのビルド
-        clientTest: clientTest,
+        unitTest: unitTest,
 
         // プロダクトのWATCH
         watchProduct: __.extend({}, product, watch),
 
         // 画面テストのWATCH
-        watchTest: __.extend({}, test(target), watch),
+        watchGameTest: __.extend({}, gameTest(target), watch),
 
         // 画面のユニットテストのWATCH
-        watchClientTest: __.extend({}, clientTest, watch),
+        watchUnitTest: __.extend({}, unitTest, watch),
 
         // DBシェルのビルド
         db: {

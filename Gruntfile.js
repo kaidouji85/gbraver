@@ -57,10 +57,10 @@ module.exports = function(grunt) {
     
     // ビルド関連のタスク
     grunt.registerTask('build', ['clean:product', 'webpack:product']);
-    grunt.registerTask('buildTest', ['clean:test', 'webpack:test']);
-    grunt.registerTask('buildClientTest', ['clean:clientTest', 'webpack:clientTest']);
+    grunt.registerTask('buildGameTest', ['clean:gameTest', 'webpack:gameTest']);
+    grunt.registerTask('buildUnitTest', ['clean:unitTest', 'webpack:unitTest']);
     grunt.registerTask('buildDb', ['clean:db', 'webpack:db']);
     grunt.registerTask('watch', ['clean:product', 'webpack:watchProduct']);
-    grunt.registerTask('watchTest', ['clean:test', 'webpack:watchTest']);
-    grunt.registerTask('watchClientTest', ['clean:clientTest', 'webpack:watchClientTest']);
+    grunt.registerTask('watchGameTest', ['clean:gameTest', 'webpack:watchGameTest']);
+    grunt.registerTask('watchUnitTest', ['clean:unitTest', 'webpack:watchUnitTest']);
 }
