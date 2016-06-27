@@ -1,9 +1,9 @@
 var scrollObject = require('./scrollObject');
 
-module.exports = function(spec,my) {
+module.exports = function(spec) {
     var that = new Group();
     var WIDTH = 320;
-    var HEIGHT = 256;
+    var HEIGHT = 272;
     var MAX_ARRAY = 2;
 
     var pict = spec.pict;

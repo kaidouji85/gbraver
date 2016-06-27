@@ -76,7 +76,7 @@ module.exports = function(spec,my){
         that.armdozerAbilityBack = scrollBackGround({
             pict : core.assets[core.PICT_WAKEUP_BACK]
         });
-        that.armdozerAbilityBack.y = 80;
+        that.armdozerAbilityBack.y = 64;
         that.armdozerAbilityBack.setVisible(false);
         that.armdozerAbilityBack.setOpacity(0.7);
         that.addChild(that.armdozerAbilityBack);
