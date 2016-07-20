@@ -72,6 +72,13 @@ module.exports = function(spec,my){
             that.addChild(that.charaSpriteArray[uid]);
         }
 
+        // フェンス
+        that.fence = new Sprite(320,272);
+        that.fence.image = core.assets[core.PICT_FENCE];
+        that.fence.x = 0;
+        that.fence.y = 64;
+        that.addChild(that.fence);
+
         //アームドーザアビリティ発動背景
         that.armdozerAbilityBack = scrollBackGround({
             pict : core.assets[core.PICT_WAKEUP_BACK]

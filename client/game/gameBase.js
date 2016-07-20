@@ -61,7 +61,8 @@ module.exports = function(spec){
         PICT_SPECIAL_MERTER_DOWN: core.PICT_PREFIX+'specialMerterDown.png',
         PICT_TOURNAMENT_BLOCK_1: core.PICT_PREFIX+'tournamentBlock1.png',
         PICT_TOURNAMENT_BLOCK_2: core.PICT_PREFIX+'tournamentBlock2.png',
-        PICT_TOURNAMENT_BLOCK_3: core.PICT_PREFIX+'tournamentBlock3.png'
+        PICT_TOURNAMENT_BLOCK_3: core.PICT_PREFIX+'tournamentBlock3.png',
+        PICT_FENCE:  core.PICT_PREFIX+'fence.png',
     };
 
     core.SOUND_PREFIX = contentBaseUrl+'/sound/';
