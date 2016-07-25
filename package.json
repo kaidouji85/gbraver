@@ -3,7 +3,7 @@
   "version": "0.5.0",
   "description": "It is an online game that was made by a combination of socket.io and enchant.js",
   "author": {
-    "name": "Y.Takeuchi",
+    "name": "Yuusuke Takeuchi",
     "email": "kaidouji85@gmail.com"
   },
   "private": true,
@@ -56,5 +56,6 @@
   },
   "engines": {
     "node": "6.x"
-  }
+  },
+  "license" : "MIT License"
 }

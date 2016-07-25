@@ -1,8 +1,13 @@
 機動倶楽部Gブレイバー
-===================
+===========
 
-## ゲームについて
-<http://gbraver.jimdo.com/%E9%81%8A%E3%81%B3%E6%96%B9/>
+This software is released under the MIT License, see LICENSE.txt.
+
+
+## はじめに
+socket.ioとenchant.jsで作られた対戦ゲームです。
+Yuusuke Takeuchiが趣味として作っています。
+
 
 ## 環境変数の設定
 
@@ -126,7 +131,7 @@ karma start
 事前にサーバを起動させる。
 
 (1)個別に実行
-- http://localhot:8080/testList を開く
+- http://localhot:3000/testList を開く
 - テスト一覧が表示されるので、任意のテストをクリックする
 
 (2)一斉に実行
@@ -160,7 +165,5 @@ herokuインスタンスを用意します。アドオンでMongoHqを追加し�
 
 
 ## その他
-進捗状況をニコニコ動画で配信してます <http://www.nicovideo.jp/mylist/52628047>
 中の人のブログです。 毎日プログラム  <http://blog.livedoor.jp/kaidouji85/>    
 安定版 <http://gbraver.herokuapp.com/>  
-β版 <http://gbraver-beta.herokuapp.com/>
