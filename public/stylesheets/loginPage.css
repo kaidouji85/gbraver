@@ -1,7 +1,8 @@
 body {
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-    background-color: black;
+    background: linear-gradient(to bottom, rgba(0,0,0,1) 0%,rgba(30,87,153,1) 37%,rgba(124,173,214,1) 50%,rgba(30,87,153,1) 64%,rgba(0,0,0,1) 100%);
     margin: 0px;
+    padding-bottom: 50px
 }
 
 a {
