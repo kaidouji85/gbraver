@@ -51,7 +51,7 @@ if ('development' == app.get('env')) {
 }
 
 //DB
-var mongoUri = process.env.MONGOHQ_URL || 'mongodb://localhost/gbraver';
+var mongoUri = process.env.MONGODB_URI || 'mongodb://localhost/gbraver';
 var dao = mongoDao({url : mongoUri});
 
 //Passport

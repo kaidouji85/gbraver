@@ -146,7 +146,7 @@ mocha --timeout 100000 test/game/clientTest
 ・heorokuコマンドが使えるようにして下さい。
 
 (2)herokuインスタンスの用意
-herokuインスタンスを用意します。アドオンでMongoHqを追加して下さい。
+herokuインスタンスを用意します。アドオンでmlab Mongoを追加して下さい。
 
 (3)herokuへデプロイ  
 
