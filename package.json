@@ -9,8 +9,9 @@
   "private": true,
   "scripts": {
     "postinstall": "grunt build --env=heroku",
-    "start": "nodemon app.js",
-    "test": "grunt exec:serverTest"
+    "start": "node app.js",
+    "test": "mocha test/server/*",
+    "debug": "nodemon --inspect --debug-brk app.js"
   },
   "dependencies": {
     "babel-core": "^6.7.6",
