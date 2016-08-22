@@ -1,5 +1,5 @@
 機動倶楽部Gブレイバー
-===========
+==================
 
 This software is released under the MIT License, see LICENSE.txt.
 
@@ -8,21 +8,23 @@ This software is released under the MIT License, see LICENSE.txt.
 socket.ioとenchant.jsで作られた対戦ゲームです。
 Yuusuke Takeuchiが趣味として作っています。
 
+## 開発環境構築
+(1)必須ソフトウェアのインストール
+・node.js
+・mongodb  
 
-## 環境変数の設定
+(2)環境変数の設定
 
-| 環境変数名               | 説明                                   | 必須 | デフォルト値    |
-|:------------------------|:--------------------------------------|:-----|:--------------|
-| GOOGLE_CLIENT_ID        | GoogleOAuth2.0のClient ID             | ○    |               |
-| GOOGLE_CLIENT_SECRET    | GoogleOAuth2.0のGOOGLE CLIENT SECRET  | ○    | -             |
-| TWITTER_CONSUMER_KEY    | Twitter Oauth認証用のconsume key       | ○    | -             |
-| TWITTER_CONSUMER_SECRET | Twitter Oauth認証用のconsumer secret   | ○    | -             |
-| PORT                    | 起動するポート番号                      |       | 3000          |
-| BASE_URL                | OAuth2.0のリダイレクト先のベースURL      |       | localhost     |
-| CONTENT_BASE_URL        | 静的コンテンツの配置先URL                |       | BASE_URLの値  |
+| 環境変数名               | 説明                                   |
+|:------------------------|:--------------------------------------|
+| GOOGLE_CLIENT_ID        | GoogleOAuth2.0のClient ID             |
+| GOOGLE_CLIENT_SECRET    | GoogleOAuth2.0のGOOGLE CLIENT SECRET  |
+| TWITTER_CONSUMER_KEY    | Twitter Oauth認証用のconsume key       |
+| TWITTER_CONSUMER_SECRET | Twitter Oauth認証用のconsumer secret   |
 
-## GruntConfig.jsonの作成
-gruntタスクの設定ファイルであるGruntConfig.jsonを作成します。
+(3)GruntConfig.jsonの作成
+gruntタスクの設定ファイルであるGruntConfig.jsonを、readme.mdがある階層に作成します。
+
 ```javascript
 {
     "s3" :{
@@ -43,118 +45,120 @@ gruntタスクの設定ファイルであるGruntConfig.jsonを作成します�
     }
 }
 ```
-## ローカル環境での開発
-### 開発環境構築
-(1)必須ソフトウェア  
-導入の前提として、以下のソフトがインストールされている必要があります。  
-・node.js
-・mongodb  
 
-(2)githubからソースコードのコピー  
-githubからプロジェクトをダウンロードします。
-
-(3)依存ライブラリのインストール  
-  
-    npm install -g mocha
-    npm install -g grunt-cli
-    npm install -g karma-cli
-    npm install
-
-
-(4)データベースの初期化  
-
-    grunt mongoLocal
-
-
-### フロントエンドのビルド
-
-#### プロダクト
-
-```bash
-# 通常ビルド
-grunt build
-    
-# watch
-grunt watch
+(4)依存ライブラリのインストール
+```  
+npm install -g mocha
+npm install -g grunt-cli
+npm install -g karma-cli
+npm install
 ```
 
-#### ユニットテスト
-
-```bash
-# 通常ビルド
-grunt buildUnitTest
-    
-# watch
-grunt watchUnitTest
-```    
-
-#### 画面テスト
+(5)データベースの初期化  
 ```
- # 通常ビルド
- grunt buildGameTest
-
- # ファイル単体のビルド
- grunt buildGameTest --target テストファイル名
-    
- # watch
- grunt watchGameTest
-    
- # ファイル単体のwatch
- grunt watchGameTest --target テストファイル名
+grunt mongoLocal
 ```
 
-単体ビルドのファイル名はtest/game/srcの下から書くこと
 
-### サーバの起動
-
+## ローカル環境での起動方法 
+### 通常起動
+(1)サーバの起動
 ```
 npm start
 ```
 
-### テスト実行
+(2)サーバにアクセス
+ブラウザを開いて以下にアクセスする
+http://localhost:3000
 
+
+### デバッグ実行
+
+
+(1)サーバをデバッグモードで起動
+以下コマンドを実行する
+```
+npm run debug
+```
+
+コマンドラインに「chrome-devtools://...」と表示されるので、これをコピーしてchromeのurlに貼り付ける
+
+(2)サーバにアクセス
+ブラウザを開いて以下にアクセスする
+http://localhost:3000
+
+元ネタ
+http://qiita.com/y_fujieda/items/c190cbcc2fab6dd49809
+
+
+## テスト実行方法
 #### サーバサイドのユニットテスト
 
 ```
 mocha test/server/*
 ```
- 
 ※サーバサイドのユニットテストは一気に実行すると、1、２個落ちることがある。その場合は、落ちたテストだけ個別に実行すること。
 
 #### クライアントサイドのユニットテスト
-
 ```
+grunt buildUnitTest
 karma start
 ```
 
 #### 画面テスト
-事前にサーバを起動させる。
-
-(1)個別に実行
-- http://localhot:3000/testList を開く
-- テスト一覧が表示されるので、任意のテストをクリックする
-
-(2)一斉に実行
-
+##### 個別に実行
+(1)テストのビルド
 ```
+grunt buildGameTest
+```
+(2)ブラウザでアクセス
+http://localhot:3000/testList を開く。
+テスト一覧が表示されるので、任意のテストをクリックする。
+
+#### 一斉に実行
+```
+grunt buildGameTest
 mocha --timeout 100000 test/game/clientTest
 ```
 
-
 ##herokuへのデプロイ方法
-(1)前提条件
-・heorokuコマンドが使えるようにして下さい。
+### 前提
+- heroku-toolbeltをインストールしている
+- ステージング環境、本番環境の2環境があるとします
 
-(2)herokuインスタンスの用意
-herokuインスタンスを用意します。アドオンでmlab Mongoを追加して下さい。
+### ステージング環境へのデプロイ
+(1)環境変数の設定
+以下の環境変数をherokuに設定する。
+この操作は1回行いえば、以降はやらなくよい。
 
-(3)herokuへデプロイ  
+| 環境変数名               | 説明                                   |
+|:------------------------|:--------------------------------------|
+| GOOGLE_CLIENT_ID        | GoogleOAuth2.0のClient ID             |
+| GOOGLE_CLIENT_SECRET    | GoogleOAuth2.0のGOOGLE CLIENT SECRET  |
+| TWITTER_CONSUMER_KEY    | Twitter Oauth認証用のconsume key       |
+| TWITTER_CONSUMER_SECRET | Twitter Oauth認証用のconsumer secret   |
+| BASE_URL                | デプロイ先のheroku環境のベースURL        |
 
-    #プロダクション環境へのデプロイ
-    grunt deploy
-    
-    # ベータ環境へのデプロイ
-    grunt deployBeta
+
+(2)デプロイコマンド
+```
+grunt deployBeta
+```
+
+### 本番環境へのデプロイ
+(1)環境変数の設定
+ステージング環境で設定したものに加え、以下を追加で設定する。
+これもステージング環境同様、1回だけ設定すればいい。
+
+| 環境変数名               | 説明                                   |
+|:------------------------|:--------------------------------------|
+| CONTENT_BASE_URL        | 静的コンテンツの配置先URL                |
+
+
+(2)デプロイコマンド
+```
+grunt deploy
+```
 
 ## 素材提供
 [DOGA L-3(ロボットグラフィック)](http://doga.jp/2010/programs/dogal/index.html#dogal3)  
@@ -164,6 +168,33 @@ herokuインスタンスを用意します。アドオンでmlab Mongoを追加�
 [キャラクターなんとか機(女の子グラフィック)](http://khmix.sakura.ne.jp/download.shtml)
 
 
+## 付録
+### タスク一覧
+
+| コマンド                                      | 説明 |
+|:---------------------------------------------|:----|
+| npm start                                    | プロダクトの実行 |
+| npm run debug                                | プロダクトのデバッグ実行 |
+| mocha test/server/*                          | サーバ側のユニットテスト |
+| grunt build                                  | プロダクトのビルド |
+| grunt watch                                  | プロダクトのインクリメンタルビルド |
+| grunt buildUnitTest                          | クライアント側ユニットテストのビルド |
+| grunt watchUnitTest                          | クライアント側ユニットテストのインクリメンタルビルド |
+| grunt buildGameTest                          | 全てのの画面テストのビルド |
+| grunt buildGameTest --target テストファイル名  | ファイル単体での画面、テストファイル名はtest/game/srcの下から書くこと |
+
+### 環境変数一覧
+
+| 環境変数名               | 説明                                   | 必須 | デフォルト値    |
+|:------------------------|:--------------------------------------|:-----|:--------------|
+| GOOGLE_CLIENT_ID        | GoogleOAuth2.0のClient ID             | ○    |               |
+| GOOGLE_CLIENT_SECRET    | GoogleOAuth2.0のGOOGLE CLIENT SECRET  | ○    | -             |
+| TWITTER_CONSUMER_KEY    | Twitter Oauth認証用のconsume key       | ○    | -             |
+| TWITTER_CONSUMER_SECRET | Twitter Oauth認証用のconsumer secret   | ○    | -             |
+| PORT                    | 起動するポート番号                      |       | 3000          |
+| BASE_URL                | OAuth2.0のリダイレクト先のベースURL      |       | localhost     |
+| CONTENT_BASE_URL        | 静的コンテンツの配置先URL                |       | BASE_URLの値  |
+
 ## その他
 中の人のブログです。 毎日プログラム  <http://blog.livedoor.jp/kaidouji85/>    
-安定版 <http://gbraver.herokuapp.com/>  
+サービス公開先 <http://gbraver.herokuapp.com/>  
