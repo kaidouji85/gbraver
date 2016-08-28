@@ -1,6 +1,6 @@
 var pictButton = require('../button/pictButton');
 var pilotButton = require('../button/pilotButton');
-var getSkillDescription = require('../others/skillDescription').getSkillDescription;
+var getSkillDescription = require('../util/skillDescription').getSkillDescription;
 var gridWindow = require('../window/gridWindow');
 var messageWindow = require('../window/messageWindow');
 var titleWindow = require('../window/titleWindow');

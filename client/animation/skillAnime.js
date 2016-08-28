@@ -1,4 +1,4 @@
-var getSkillDescription = require('../others/skillDescription').getSkillDescription;
+var getSkillDescription = require('../util/skillDescription').getSkillDescription;
 
 module.exports = function(spec,my){
     var that = {};

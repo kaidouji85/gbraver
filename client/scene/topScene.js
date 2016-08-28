@@ -133,6 +133,11 @@ module.exports = function(spec,my){
     that.selectPilotButton.addEventListener(Event.TOUCH_END,()=>that.ee.emit('pushSelectPilotButton'));
     that.addChild(that.selectPilotButton);
 
+    // ログアウトボタン
+    that.logoutButton = new Sprite(75, 60);
+    that.logoutButton.image = core.assets[core.PICT_LOGOUTBUTTON];
+    that.addChild(that.logoutButton);
+
     //メッセージウインドウ
     that.mesWindow = messageWindow({
       pict : core.assets[core.PICT_WINDOW]

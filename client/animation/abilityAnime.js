@@ -1,4 +1,4 @@
-var getArmdozerAbilityDescription = require('../others/abilityDescription').getArmdozerAbilityDescription;
+var getArmdozerAbilityDescription = require('../util/abilityDescription').getArmdozerAbilityDescription;
 
 module.exports = function(spec,my){
     var that = {};

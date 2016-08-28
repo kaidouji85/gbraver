@@ -1,4 +1,4 @@
-var rand = require('../others/rand');
+var rand = require('../util/rand');
 
 module.exports = function(spec,my) {
     var SPRITE_WIDTH = 160;
