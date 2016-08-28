@@ -34,7 +34,11 @@ module.exports = function(spec,my){
    * ボタンを非表示にする
    */
   function invisibleButtons() {
-
+    that.battleRoomButton.setVisible(false);
+    that.tournamentButton.setVisible(false);
+    that.selectArmdozerButton.setVisible(false);
+    that.selectPilotButton.setVisible(false);
+    that.logoutButton.visible = false;
   }
 
   /**
@@ -138,6 +142,12 @@ module.exports = function(spec,my){
     that.logoutButton = new Sprite(64, 64);
     that.logoutButton.image = core.assets[core.PICT_LOGOUT_BUTTON];
     that.logoutButton.x = 256;
+    that.addEventListener(Event.TOUCH_END, ()=>{
+      invisibleButtons();
+      that.mesWindow.setText(core.MESSAGE_LOGOFF);
+      that.mesWindow.setVisible(true);
+      that.ee.emit('logOff');
+    });
     that.addChild(that.logoutButton);
 
     //メッセージウインドウ
