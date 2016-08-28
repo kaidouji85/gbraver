@@ -63,7 +63,7 @@ module.exports = function(spec){
         PICT_TOURNAMENT_BLOCK_2: core.PICT_PREFIX+'tournamentBlock2.png',
         PICT_TOURNAMENT_BLOCK_3: core.PICT_PREFIX+'tournamentBlock3.png',
         PICT_FENCE:  core.PICT_PREFIX+'fence.png',
-        PICT_LOGOUTBUTTON: `${core.PICT_PREFIX}logoutButton.png`
+        PICT_LOGOUT_BUTTON: `${core.PICT_PREFIX}logoutButton.png`
     };
 
     core.SOUND_PREFIX = contentBaseUrl+'/sound/';

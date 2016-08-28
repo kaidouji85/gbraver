@@ -34,6 +34,7 @@ module.exports = function(spec,my){
    * ボタンを非表示にする
    */
   function invisibleButtons() {
+
   }
 
   /**
@@ -134,8 +135,9 @@ module.exports = function(spec,my){
     that.addChild(that.selectPilotButton);
 
     // ログアウトボタン
-    that.logoutButton = new Sprite(75, 60);
-    that.logoutButton.image = core.assets[core.PICT_LOGOUTBUTTON];
+    that.logoutButton = new Sprite(64, 64);
+    that.logoutButton.image = core.assets[core.PICT_LOGOUT_BUTTON];
+    that.logoutButton.x = 256;
     that.addChild(that.logoutButton);
 
     //メッセージウインドウ
