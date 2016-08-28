@@ -38,7 +38,7 @@ module.exports = function(spec,my){
     that.tournamentButton.setVisible(false);
     that.selectArmdozerButton.setVisible(false);
     that.selectPilotButton.setVisible(false);
-    that.logoutButton.visible = false;
+    that.logOffButton.visible = false;
   }
 
   /**
@@ -139,16 +139,16 @@ module.exports = function(spec,my){
     that.addChild(that.selectPilotButton);
 
     // ログアウトボタン
-    that.logoutButton = new Sprite(64, 64);
-    that.logoutButton.image = core.assets[core.PICT_LOGOUT_BUTTON];
-    that.logoutButton.x = 256;
-    that.addEventListener(Event.TOUCH_END, ()=>{
+    that.logOffButton = new Sprite(64, 64);
+    that.logOffButton.image = core.assets[core.PICT_LOGOUT_BUTTON];
+    that.logOffButton.x = 256;
+    that.logOffButton.addEventListener(Event.TOUCH_END, ()=>{
       invisibleButtons();
       that.mesWindow.setText(core.MESSAGE_LOGOFF);
       that.mesWindow.setVisible(true);
       that.ee.emit('logOff');
     });
-    that.addChild(that.logoutButton);
+    that.addChild(that.logOffButton);
 
     //メッセージウインドウ
     that.mesWindow = messageWindow({
