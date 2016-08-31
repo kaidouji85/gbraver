@@ -1,6 +1,8 @@
 var __ = require('underscore');
+var path = require('path');
 var glob = require('glob');
 var gameTestConfig = require('../../game.test.config');
+
 
 /**
  * テストファイルのエントリーを生成する
@@ -106,6 +108,14 @@ module.exports = function(target) {
                 loaders: [
                     { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" }
                 ]
+            },
+            resolve: {
+                // require、importをする時のエイリアスを設定する
+                // パス指定は path.resolve(Readme.mdからの相対パス) で書く
+                alias: {
+                    'client': path.resolve('client'),
+                    'game-test': path.resolve('test/game/src')
+                }
             }
         },
         // プロダクトのビルド

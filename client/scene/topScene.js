@@ -1,8 +1,10 @@
 import __ from 'underscore';
-import pictButton from '../button/pictButton';
-import messageWindow from '../window/messageWindow';
 import EventEmitter from 'event-emitter';
-import {createRect} from '../util/surfUtil';
+
+import pictButton from 'client/button/pictButton';
+import messageWindow from 'client/window/messageWindow';
+import {createRect} from 'client/util/surfUtil';
+import button from 'client/sprite/button';
 
 const BUTTON_RIGHT_X = 8;
 const BUTTON_LEFT_X = 168;
@@ -38,7 +40,7 @@ module.exports = function(spec,my){
     that.tournamentButton.setVisible(false);
     that.selectArmdozerButton.setVisible(false);
     that.selectPilotButton.setVisible(false);
-    that.logOffButton.visible = false;
+    that.logOffButton.setVisible(false);
   }
 
   /**
@@ -139,8 +141,7 @@ module.exports = function(spec,my){
     that.addChild(that.selectPilotButton);
 
     // ログアウトボタン
-    that.logOffButton = new Sprite(64, 64);
-    that.logOffButton.image = core.assets[core.PICT_LOGOUT_BUTTON];
+    that.logOffButton = button({image: core.assets[core.PICT_LOGOUT_BUTTON]});
     that.logOffButton.x = 256;
     that.logOffButton.addEventListener(Event.TOUCH_END, ()=>{
       invisibleButtons();
